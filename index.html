@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punit Ganjara | Interactive Resume</title>
     <style>
-        /* This removes all default spacing around the edges */
+        /* Standard full-width layout */
         body, html { 
             margin: 0; 
             padding: 0; 
             width: 100%;
-            height: 100%;
             background-color: #ffffff; 
-            overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+            font-family: Arial, sans-serif;
         }
         
-        /* This makes the container take up the full width of the screen */
         .h5p-container-wrapper {
             width: 100%;
             margin: 0;
@@ -24,6 +22,8 @@
 
         #h5p-container {
             width: 100%;
+            /* Removing the forced height so the H5P player 
+               can use its own internal height setting */
         }
     </style>
 </head>
