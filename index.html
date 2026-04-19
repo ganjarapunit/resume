@@ -5,25 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punit Ganjara | Interactive Resume</title>
     <style>
-        /* This removes all default spacing around the edges */
+        /* Removes all default spacing and locks the height to the viewport */
         body, html { 
             margin: 0; 
             padding: 0; 
             width: 100%;
             height: 100%;
             background-color: #ffffff; 
-            overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+            overflow: hidden; /* Prevents double scrollbars */
         }
         
-        /* This makes the container take up the full width of the screen */
-        .h5p-container-wrapper {
+        /* Forces the container to be exactly the height of the screen */
+        .h5p-container-wrapper, #h5p-container {
             width: 100%;
+            height: 100vh;
             margin: 0;
             padding: 0;
         }
 
-        #h5p-container {
-            width: 100%;
+        /* Essential: This forces the H5P player's internal components to respect the 100vh height */
+        .h5p-iframe-wrapper, iframe {
+            height: 100% !important;
         }
     </style>
 </head>
