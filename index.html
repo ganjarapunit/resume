@@ -8,7 +8,9 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: #ffffff; font-family: Arial, sans-serif;
-            overflow: hidden;
+            /* Allow vertical scrolling for landscape/small screens */
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* Toggle Button - Visible on ALL screens */
@@ -16,7 +18,7 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            z-index: 2000; /* Highest level */
+            z-index: 2000;
             background: #20457c;
             color: white;
             border: none;
@@ -25,13 +27,13 @@
             cursor: pointer;
             font-size: 22px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: block !important; /* Force visibility */
+            display: block !important;
         }
 
         .wrapper { 
-            display: flex; 
-            width: 100vw; 
-            height: 100vh; 
+            display: block; 
+            width: 100%; 
+            min-height: 100vh;
             position: relative; 
         }
 
@@ -52,11 +54,11 @@
             text-align: center;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1500;
-            transform: translateX(-100%); /* Hidden by default */
+            transform: translateX(-100%);
             box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            overflow-y: auto; /* Allow sidebar to scroll if screen is very short */
         }
 
-        /* When the sidebar is toggled on */
         .sidebar.active {
             transform: translateX(0);
         }
@@ -70,20 +72,30 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
+        /* Adjustments for landscape (short) screens */
+        @media (max-height: 500px) {
+            .profile-pic { width: 100px; height: 100px; margin-bottom: 10px; }
+            .sidebar { padding-top: 60px; }
+        }
+
         .contact-info { font-size: 15px; line-height: 1.8; color: #444; }
         .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; border-bottom: 1px solid #20457c; }
 
-        /* Content Area - Always Full Screen */
+        /* Content Area - Natural height to allow scrolling */
         .content-area { 
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            width: 100%;
+            min-height: 100vh;
         }
 
-        #h5p-container { width: 100%; height: 100% !important; }
-        .h5p-iframe-wrapper, iframe { height: 100% !important; width: 100% !important; border: none; }
+        #h5p-container { width: 100%; height: auto; }
+        
+        /* Force a minimum height so the timeline doesn't squash in landscape */
+        .h5p-iframe-wrapper, iframe { 
+            min-height: 650px !important; 
+            width: 100% !important; 
+            border: none; 
+        }
 
-        /* Darken background when sidebar is open */
         .overlay-bg {
             position: fixed;
             top: 0; left: 0;
