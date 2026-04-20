@@ -11,96 +11,105 @@
             overflow: hidden;
         }
 
-        /* Toggle Button - Optimized for touch */
+        /* Toggle Button - Visible on ALL screens */
         .menu-toggle {
             position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1100; /* Higher than sidebar */
+            top: 20px;
+            left: 20px;
+            z-index: 2000; /* Highest level */
             background: #20457c;
             color: white;
             border: none;
-            padding: 12px 16px;
-            border-radius: 4px;
+            padding: 12px 18px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 20px;
-            display: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: block !important; /* Force visibility */
         }
 
-        .wrapper { display: flex; width: 100%; height: 100vh; position: relative; }
+        .wrapper { 
+            display: flex; 
+            width: 100vw; 
+            height: 100vh; 
+            position: relative; 
+        }
 
+        /* Sidebar as an OVERLAY */
         .sidebar {
-            width: 280px; min-width: 280px; height: 100%;
-            background-color: #fafafa; border-right: 1px solid #eaeaea;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 60px 20px 40px 20px; /* Increased top padding for button clearance */
-            box-sizing: border-box; text-align: center;
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1500;
+            transform: translateX(-100%); /* Hidden by default */
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
         }
 
-        /* Desktop Collapse */
-        .sidebar.collapsed {
-            transform: translateX(-280px);
-            position: absolute;
+        /* When the sidebar is toggled on */
+        .sidebar.active {
+            transform: translateX(0);
         }
 
         .profile-pic {
-            width: 150px; height: 150px;
+            width: 180px; height: 180px;
             object-fit: cover;
-            border-radius: 50%; margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 50%; 
+            margin-bottom: 25px;
+            border: 4px solid #fafafa;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .contact-info { font-size: 14px; line-height: 1.6; color: #555; }
-        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; }
+        .contact-info { font-size: 15px; line-height: 1.8; color: #444; }
+        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; border-bottom: 1px solid #20457c; }
 
+        /* Content Area - Always Full Screen */
         .content-area { 
-            flex: 1; 
-            height: 100%; 
-            overflow: hidden; 
-            width: 100%;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
         }
 
         #h5p-container { width: 100%; height: 100% !important; }
         .h5p-iframe-wrapper, iframe { height: 100% !important; width: 100% !important; border: none; }
 
-        /* Mobile specific fixes */
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                transform: translateX(-100%); /* Completely off-screen by default */
-            }
-
-            .sidebar.active {
-                transform: translateX(0); /* Slide in over the content */
-            }
-
-            /* Prevent H5P from being squeezed on mobile */
-            .content-area {
-                width: 100vw;
-            }
+        /* Darken background when sidebar is open */
+        .overlay-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1400;
         }
+        .overlay-bg.active { display: block; }
     </style>
 </head>
 <body>
 
-    <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleSidebar()">☰</button>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
 
     <div class="wrapper">
         <aside class="sidebar" id="sidebar">
             <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
             <p class="contact-info">
                 <strong>Punit Ganjara</strong><br>
+                Learning Experience Designer<br><br>
                 ganjarapunit@gmail.com<br>
                 +84-822-523-395<br>
                 HCMC, Vietnam<br><br>
-                <a href="https://linkedin.com/in/ganjarapunit" target="_blank">LinkedIn Profile</a>
+                <a href="https://linkedin.com/in/ganjarapunit" target="_blank">View LinkedIn</a>
             </p>
         </aside>
 
@@ -113,11 +122,9 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('collapsed');
-            }
+            const bg = document.getElementById('overlay-bg');
+            sidebar.classList.toggle('active');
+            bg.classList.toggle('active');
         }
 
         const el = document.getElementById('h5p-container');
