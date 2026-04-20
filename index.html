@@ -94,7 +94,6 @@
         // Toggle Function
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            // Toggle 'active' for mobile view and 'collapsed' for desktop if you want
             if (window.innerWidth <= 768) {
                 sidebar.classList.toggle('active');
             } else {
@@ -107,7 +106,9 @@
         const options = {
             h5pJsonPath: './activity-data', 
             frameJs: './frame.bundle.js',
-            frameCss: './styles/h5p.css'
+            frameCss: './styles/h5p.css',
+            // Updated setting to load the latest experience first
+            start_at_end: true 
         };
         new H5PStandalone.H5P(el, options);
     </script>
