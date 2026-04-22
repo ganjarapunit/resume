@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punit Ganjara | Interactive Portfolio</title>
+    <style>
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #ffffff; font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 2000;
+            background: #20457c;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: block !important;
+        }
+
+        .wrapper { 
+            display: block; 
+            width: 100%; 
+            min-height: 100vh;
+            position: relative; 
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1500;
+            transform: translateX(-100%);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .profile-pic {
+            width: 180px; height: 180px;
+            object-fit: cover;
+            border-radius: 50%; 
+            margin-bottom: 25px;
+            border: 4px solid #fafafa;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Project Section Styling */
+        .projects-section {
+            width: 100%;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .projects-section h3 {
+            color: #20457c;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #20457c;
+            padding-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-link {
+            display: block;
+            padding: 12px;
+            background: #f1f5f9;
+            color: #20457c;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .project-link:hover {
+            background: #e2e8f0;
+            border-left: 4px solid #20457c;
+            transform: translateX(5px);
+        }
+
+        @media (max-height: 500px) {
+            .profile-pic { width: 100px; height: 100px; margin-bottom: 10px; }
+            .sidebar { padding-top: 60px; }
+        }
+
+        .contact-info { font-size: 14px; line-height: 1.6; color: #444; margin-bottom: 20px; }
+        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; }
+
+        .content-area { 
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        #h5p-container { width: 100%; height: auto; }
+        
+        .h5p-iframe-wrapper, iframe { 
+            min-height: 650px !important; 
+            width: 100% !important; 
+            border: none; 
+        }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1400;
+        }
+        .overlay-bg.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
+
+    <div class="wrapper">
+        <aside class="sidebar" id="sidebar">
+            <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
+            
+            <div class="contact-info">
+                <strong>Punit Ganjara</strong><br>
+                Learning Experience Designer<br><br>
+                ganjarapunit@gmail.com<br>
+                +84-822-523-395<br>
+                HCMC, Vietnam<br><br>
+                <a href="https://linkedin.com/in/ganjarapunit" target="_blank">View LinkedIn</a>
+            </div>
+
+            <div class="projects-section">
+                <h3>Projects</h3>
+                <a href="ielts-masterclass/" class="project-link">
+                    🚀 IELTS Speaking Masterclass
+                </a>
+                <!-- You can add more project links here in the future -->
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <div id="h5p-container"></div>
+        </main>
+    </div>
+
+    <script src="main.bundle.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const bg = document.getElementById('overlay-bg');
+            sidebar.classList.toggle('active');
+            bg.classList.toggle('active');
+        }
+
+        const el = document.getElementById('h5p-container');
+        const options = {
+            h5pJsonPath: './activity-data', 
+            frameJs: './frame.bundle.js',
+            frameCss: './styles/h5p.css',
+            start_at_end: true 
+        };
+        new H5PStandalone.H5P(el, options);
+    </script>
+</body>
+</html>
