@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Quiz - Punit Ganjara Portfolio">
+    <title>Interactive Quiz | Punit Ganjara</title>
+    <!-- CSS is now relative to the parent directory -->
+    <link rel="stylesheet" href="../portfolio_style.css">
+</head>
+<body>
+
+    <button class="menu-toggle" id="menu-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="sidebar">
+        <span id="menu-icon">☰</span>
+    </button>
+    
+    <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()" aria-hidden="true"></div>
+
+    <div class="wrapper">
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main Navigation">
+            <div class="profile-pic-container">
+                <!-- Image path updated to parent directory -->
+                <img src="../profile.png" alt="Punit Ganjara Profile Picture" class="profile-pic">
+            </div>
+            
+            <div class="contact-info">
+                <h2>Punit Ganjara</h2>
+                <p>Learning Experience Designer</p>
+                
+                <div class="contact-details">
+                    <div>📧 <a href="mailto:ganjarapunit@gmail.com">ganjarapunit@gmail.com</a></div>
+                    <div>📱 <a href="tel:+84822523395">+84-822-523-395</a></div>
+                    <div>📍 HCMC, Vietnam</div>
+                    <div>🔗 <a href="https://linkedin.com/in/ganjarapunit" target="_blank" rel="noopener">LinkedIn Profile</a></div>
+                </div>
+            </div>
+
+            <nav class="projects-section">
+                <h3>Navigation</h3>
+                <a href="../index.html" class="project-link">
+                    <span>🏠</span> Back to Home
+                </a>
+                <a href="../ielts-masterclass/index.html" class="project-link">
+                    <span>🚀</span> IELTS Speaking Masterclass
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content-area" id="main-content">
+            <h1 class="visually-hidden">Interactive Quiz Content</h1>
+            <div id="h5p-container" role="application" aria-label="Interactive H5P Content">
+                <!-- H5P content will be injected here -->
+            </div>
+            <div id="status-region" aria-live="polite" class="visually-hidden"></div>
+        </main>
+    </div>
+
+    <!-- Screen reader utility for hidden headings -->
+    <style>
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+
+    <!-- Path updated to parent directory -->
+    <script src="../main.bundle.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const bg = document.getElementById('overlay-bg');
+            const btn = document.getElementById('menu-btn');
+            const icon = document.getElementById('menu-icon');
+            const status = document.getElementById('status-region');
+            
+            const isActive = sidebar.classList.toggle('active');
+            bg.classList.toggle('active');
+            
+            btn.setAttribute('aria-expanded', isActive);
+            icon.textContent = isActive ? '✕' : '☰';
+            
+            if (isActive) {
+                status.textContent = "Menu opened";
+                setTimeout(() => {
+                    const firstLink = sidebar.querySelector('a');
+                    if (firstLink) firstLink.focus();
+                }, 400);
+                document.body.style.overflow = 'hidden';
+            } else {
+                status.textContent = "Menu closed";
+                document.body.style.overflow = '';
+                btn.focus();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('sidebar').classList.contains('active')) {
+                toggleSidebar();
+            }
+            
+            if (e.key === 'Tab' && document.getElementById('sidebar').classList.contains('active')) {
+                const sidebar = document.getElementById('sidebar');
+                const focusableEls = sidebar.querySelectorAll('a, button');
+                const first = focusableEls[0];
+                const last = focusableEls[focusableEls.length - 1];
+                
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        last.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        first.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        });
+
+        // H5P Initialization with updated paths
+        const el = document.getElementById('h5p-container');
+        const options = {
+            h5pJsonPath: '../activity-data', 
+            frameJs: '../frame.bundle.js',
+            frameCss: '../styles/h5p.css', // Assumes styles folder is in root
+            start_at_end: true 
+        };
+        
+        try {
+            if (typeof H5PStandalone !== 'undefined') {
+                new H5PStandalone.H5P(el, options);
+            } else {
+                el.innerHTML = '<p style="padding: 2rem; text-align: center;">H5P library not loaded. Check your paths.</p>';
+            }
+        } catch (err) {
+            console.error("H5P Initialization failed:", err);
+        }
+    </script>
+</body>
+</html>
