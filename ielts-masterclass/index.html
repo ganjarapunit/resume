@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="scorm_wrapper.js"></script>
+</head>
+<body>
+    <div class="course-shell">
+        <header>
+            <p style="text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 700; font-size: 0.8rem;">Punit's SCORM Portfolio</p>
+            <h1>IELTS Speaking Masterclass</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">A premium, comprehensive guide to mastering the three parts of the IELTS speaking exam.</p>
+        </header>
+
+        <main class="grid">
+            <!-- Part 1 -->
+            <section class="section-card">
+                <span class="tag">Stage 01: The Interview</span>
+                <div class="exam-header-strip">Part 1: Introduction & Interview</div>
+                <h2>Hometown & Daily Life</h2>
+                <p>Learn how to provide natural, expanded answers for introductory questions.</p>
+                
+                <div class="audio-block">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">MODEL ANSWER (~1 MINUTE)</p>
+                    <audio controls src="assets/part1_model.mp3"></audio>
+                    <button class="transcript-btn" onclick="toggleTranscript('t1')" id="btn-t1">Show Transcript</button>
+                    <div id="t1" class="transcript" hidden>
+                        "Well, I'd like to tell you a bit about my hometown. I live in a vibrant, coastal city that is really a mix of two worlds. On one hand, we have these ancient, narrow streets filled with historical architecture that dates back several centuries. On the other hand, there is this incredibly modern skyline with glass skyscrapers that light up beautifully at night. What I love most about living there is the convenience. Everything is within walking distance, from bustling local markets where you can find fresh produce every morning, to quiet, hidden cafes where I often spend my weekends reading. The people are also incredibly warm and welcoming, which creates a real sense of community. Recently, I've started spending more time at the newly developed waterfront park. It's a great place to jog or just sit and watch the sunset after a long day of work. It’s that balance of urban energy and natural beauty that makes it such a special place for me to call home."
+                    </div>
+                </div>
+
+                <div class="recorder-block">
+                    <div>
+                        <p style="font-weight: 700; margin: 0;">Practice Your Delivery</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Record yourself and compare with the model.</p>
+                    </div>
+                    <button id="record-1" class="btn btn-record" onclick="toggleRecord(1)">Start Recording</button>
+                    <audio id="playback-1" controls hidden style="margin-left: 1rem; width: 200px;"></audio>
+                </div>
+            </section>
+
+            <!-- Part 2 -->
+            <section class="section-card">
+                <span class="tag">Stage 02: The Long Turn</span>
+                <div class="exam-header-strip">Part 2: Individual Long Turn</div>
+                <h2>Describing Technology</h2>
+                <p>Master the art of the 2-minute monologue with a structured approach.</p>
+                
+                <!-- IELTS Cue Card -->
+                <div class="cue-card">
+                    <p class="cue-header">Describe a piece of technology you find useful.</p>
+                    <p class="cue-instruction">You should say:</p>
+                    <ul>
+                        <li>what it is</li>
+                        <li>when and where you got it</li>
+                        <li>what you use it for</li>
+                        <li>and explain why you find it so useful.</li>
+                    </ul>
+                </div>
+
+                <div class="audio-block">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">MODEL ANSWER (~2 MINUTES)</p>
+                    <audio controls src="assets/part2_model.mp3"></audio>
+                    <button class="transcript-btn" onclick="toggleTranscript('t2')" id="btn-t2">Show Transcript</button>
+                    <div id="t2" class="transcript" hidden>
+                        "I'd like to talk about a piece of technology that I find absolutely indispensable in my daily life, and that is my smartwatch. I actually received this as a graduation gift from my parents about a year ago, and to be honest, I didn't realize just how much it would change my routine until I started wearing it every single day. The watch itself is quite sleek, with a minimalist black band and a customizable digital face. But what really matters is what it can do. Primarily, it functions as a comprehensive health tracker. It monitors my heart rate, tracks my steps, and even analyzes my sleep patterns. For someone like me who tries to maintain a healthy lifestyle while balancing a busy work schedule, having that data at my fingertips is incredibly motivating. Beyond fitness, it’s a powerful organizational tool. It syncs perfectly with my phone, so I can see my calendar appointments and receive notifications without having to constantly reach for my device. This has actually helped me become less distracted by my phone, as I only look at the watch for urgent alerts. One specific reason why I find it so useful is the GPS feature. I'm an avid runner, and being able to track my routes and pace without carrying a heavy phone is a total game-changer. It gives me a sense of freedom when I'm outdoors. Overall, this smartwatch isn't just a gadget to me; it's like a personal assistant on my wrist. It helps me stay disciplined with my health goals and keeps me on track with my professional responsibilities. I think in today's fast-paced world, having technology that simplifies your life rather than complicating it is truly valuable, and that's exactly what this watch does for me."
+                    </div>
+                </div>
+
+                <div class="recorder-block">
+                    <div>
+                        <p style="font-weight: 700; margin: 0;">Practice Your 2-Minute Turn</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Use the 'PPF' technique: Past, Present, Future.</p>
+                    </div>
+                    <button id="record-2" class="btn btn-record" onclick="toggleRecord(2)">Start Recording</button>
+                    <audio id="playback-2" controls hidden style="margin-left: 1rem; width: 200px;"></audio>
+                </div>
+            </section>
+
+            <!-- Part 3 -->
+            <section class="section-card">
+                <span class="tag">Stage 03: The Discussion</span>
+                <div class="exam-header-strip">Part 3: Two-way Discussion</div>
+                <h2>Abstract Analysis</h2>
+                <p>Prepare for complex questions that test your ability to speculate and compare.</p>
+                
+                <div class="discussion-points">
+                    <div class="point-card">
+                        <h3>Impact of Tech</h3>
+                        <p>"How has technology changed the way we communicate with relatives?"</p>
+                        <audio controls src="assets/part3_model_1.mp3" style="margin-top: 1rem;"></audio>
+                        <button class="transcript-btn" onclick="toggleTranscript('t3_1')" id="btn-t3_1">Show Transcript</button>
+                        <div id="t3_1" class="transcript" hidden>
+                            "That's a fascinating question. In my view, the impact of technology on communication, especially across different generations, is a double-edged sword. To start with, we have to acknowledge the incredible democratization of communication. In the past, keeping in touch with relatives who lived in another country was an expensive and time-consuming process involving international letters or incredibly costly long-distance phone calls. Today, we have high-definition video conferencing and instant messaging that allow for real-time connection. This has, in many ways, bridged the physical gap between families. However, there's another side to this story. While we are more 'connected' than ever, there’s a growing concern that the quality of our communication is actually declining. We see younger generations who are incredibly adept at digital communication but may struggle with the nuances of face-to-face interaction—things like reading body language, maintaining eye contact, or navigating complex emotional subtext. This can lead to a sense of isolation even when we are constantly interacting online. Furthermore, we must consider the 'digital divide' that often separates younger people from their older relatives. While many seniors have embraced technology, there is still a significant portion of the elderly population that feels alienated by the rapid pace of technological change. This can inadvertently lead to social exclusion, where the very tools meant to bring us together end up creating a barrier between those who are tech-savvy and those who are not. Another critical aspect is the issue of privacy and the boundaries of communication. In the digital age, the line between public and private life has become increasingly blurred. We often share intimate details of our lives on social media platforms, which can lead to a loss of genuine personal connection in favor of a curated, artificial image of ourselves. This obsession with 'likes' and digital validation can deeply affect our self-esteem and the way we value real-world relationships. In conclusion, while technology has provided us with unprecedented tools for staying in touch, it has also introduced complex social challenges that we are still learning to navigate. The key, I believe, lies in using technology as a supplement to, rather than a replacement for, the authentic, deep-seated human connections that can only be built through presence and undivided attention."
+                        </div>
+                    </div>
+                    <div class="point-card">
+                        <h3>Future Trends</h3>
+                        <p>"Will artificial intelligence replace human teachers in the future?"</p>
+                        <audio controls src="assets/part3_model_2.mp3" style="margin-top: 1rem;"></audio>
+                        <button class="transcript-btn" onclick="toggleTranscript('t3_2')" id="btn-t3_2">Show Transcript</button>
+                        <div id="t3_2" class="transcript" hidden>
+                            "The question of whether artificial intelligence will eventually replace human teachers is one of the most debated topics in modern education. To address this, we first need to look at what AI is exceptionally good at. AI systems are unrivaled when it comes to data processing and personalization. They can analyze a student's learning patterns in real-time, identifying specific gaps in knowledge and providing tailored exercises that adapt to the student's pace. This level of individualization is almost impossible for a human teacher to achieve in a classroom of thirty or forty students. AI can provide instant feedback, handle repetitive grading tasks, and offer access to a vast, global library of information. However, and this is a crucial 'however,' education is far more than just the transfer of data or the mastery of a curriculum. Education is a profoundly social and emotional process. A human teacher provides mentorship, inspiration, and emotional support—things that an algorithm, no matter how sophisticated, simply cannot replicate. A teacher can sense when a student is feeling discouraged, can offer a word of encouragement that changes a student's entire outlook, and can model ethical decision-making and empathy. These 'soft skills' are the cornerstone of a holistic education. Furthermore, teachers play a vital role in fostering critical thinking and collaborative problem-solving. While AI can provide answers, a teacher guides the student through the process of asking the right questions, challenging assumptions, and engaging in meaningful debate with their peers. The classroom is a laboratory for social interaction, and the teacher is the facilitator who helps students navigate the complexities of human relationships and social responsibility. Looking toward the future, I don't see AI as a replacement for teachers, but rather as a powerful 'co-pilot.' By automating administrative tasks and providing deep insights into student progress, AI can actually free up teachers to do what they do best: focus on the individual needs of their students, provide mentorship, and foster a love of learning. The most effective educational systems of the future will be those that successfully integrate the efficiency and analytical power of AI with the irreplaceable warmth, intuition, and inspiration of human educators. It's about synergy, not substitution. We should embrace AI as a tool that empowers teachers to be more effective, rather than a threat that aims to remove the human heart from the center of the educational experience."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recorder-block">
+                    <div>
+                        <p style="font-weight: 700; margin: 0;">Discussion Practice</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Explain your opinions with clear examples.</p>
+                    </div>
+                    <button id="record-3" class="btn btn-record" onclick="toggleRecord(3)">Start Recording</button>
+                    <audio id="playback-3" controls hidden style="margin-left: 1rem; width: 200px;"></audio>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="complete-btn" class="btn btn-success" onclick="finishAndExit()">
+                <span id="btn-text">Mark as Course Completed</span>
+                <span id="tick-icon" style="display: none; margin-left: 10px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        let mediaRecorders = {};
+        let audioChunks = {};
+
+        window.onload = function() { initCourse(); };
+
+        function toggleTranscript(id) {
+            const el = document.getElementById(id);
+            const btn = document.getElementById('btn-' + id);
+            const isHidden = el.hasAttribute('hidden');
+            if (isHidden) {
+                el.removeAttribute('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                btn.innerText = 'Hide Transcript';
+            } else {
+                el.setAttribute('hidden', '');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.innerText = 'Show Transcript';
+            }
+        }
+
+        async function toggleRecord(id) {
+            const btn = document.getElementById('record-' + id);
+            const playback = document.getElementById('playback-' + id);
+
+            if (btn.innerText === 'Start Recording') {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const mediaRecorder = new MediaRecorder(stream);
+                mediaRecorders[id] = mediaRecorder;
+                audioChunks[id] = [];
+                mediaRecorder.ondataavailable = event => audioChunks[id].push(event.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks[id], { type: 'audio/wav' });
+                    playback.src = URL.createObjectURL(audioBlob);
+                    playback.hidden = false;
+                };
+                mediaRecorder.start();
+                btn.innerText = 'Stop Recording';
+                btn.classList.add('recording');
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerText = 'Start Recording';
+                btn.classList.remove('recording');
+            }
+        }
+
+        function finishAndExit() {
+            setCompletion();
+            const btn = document.getElementById('complete-btn');
+            const btnText = document.getElementById('btn-text');
+            const tick = document.getElementById('tick-icon');
+            btn.style.background = '#10b981';
+            btn.style.transform = 'scale(1.05)';
+            btnText.innerText = 'Course Completed!';
+            tick.style.display = 'inline-block';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+                alert("SCORM Status: Completed. Your progress has been saved!");
+            }, 300);
+        }
+    </script>
+</body>
+</html>

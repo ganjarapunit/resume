@@ -8,12 +8,10 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: #ffffff; font-family: Arial, sans-serif;
-            /* Allow vertical scrolling for landscape/small screens */
             overflow-x: hidden;
             overflow-y: auto;
         }
 
-        /* Toggle Button - Visible on ALL screens */
         .menu-toggle {
             position: fixed;
             top: 20px;
@@ -37,7 +35,6 @@
             position: relative; 
         }
 
-        /* Sidebar as an OVERLAY */
         .sidebar {
             position: fixed;
             top: 0;
@@ -56,7 +53,7 @@
             z-index: 1500;
             transform: translateX(-100%);
             box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            overflow-y: auto; /* Allow sidebar to scroll if screen is very short */
+            overflow-y: auto;
         }
 
         .sidebar.active {
@@ -72,16 +69,51 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        /* Adjustments for landscape (short) screens */
+        /* Project Section Styling */
+        .projects-section {
+            width: 100%;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .projects-section h3 {
+            color: #20457c;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #20457c;
+            padding-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-link {
+            display: block;
+            padding: 12px;
+            background: #f1f5f9;
+            color: #20457c;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .project-link:hover {
+            background: #e2e8f0;
+            border-left: 4px solid #20457c;
+            transform: translateX(5px);
+        }
+
         @media (max-height: 500px) {
             .profile-pic { width: 100px; height: 100px; margin-bottom: 10px; }
             .sidebar { padding-top: 60px; }
         }
 
-        .contact-info { font-size: 15px; line-height: 1.8; color: #444; }
-        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; border-bottom: 1px solid #20457c; }
+        .contact-info { font-size: 14px; line-height: 1.6; color: #444; margin-bottom: 20px; }
+        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; }
 
-        /* Content Area - Natural height to allow scrolling */
         .content-area { 
             width: 100%;
             min-height: 100vh;
@@ -89,7 +121,6 @@
 
         #h5p-container { width: 100%; height: auto; }
         
-        /* Force a minimum height so the timeline doesn't squash in landscape */
         .h5p-iframe-wrapper, iframe { 
             min-height: 650px !important; 
             width: 100% !important; 
@@ -115,14 +146,23 @@
     <div class="wrapper">
         <aside class="sidebar" id="sidebar">
             <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
-            <p class="contact-info">
+            
+            <div class="contact-info">
                 <strong>Punit Ganjara</strong><br>
                 Learning Experience Designer<br><br>
                 ganjarapunit@gmail.com<br>
                 +84-822-523-395<br>
                 HCMC, Vietnam<br><br>
                 <a href="https://linkedin.com/in/ganjarapunit" target="_blank">View LinkedIn</a>
-            </p>
+            </div>
+
+            <div class="projects-section">
+                <h3>Projects</h3>
+                <a href="ielts-masterclass/" class="project-link">
+                    🚀 IELTS Speaking Masterclass
+                </a>
+                <!-- You can add more project links here in the future -->
+            </div>
         </aside>
 
         <main class="content-area">
