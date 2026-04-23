@@ -26,19 +26,43 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
+<<<<<<< HEAD
     padding: 2.5rem 1rem;
+=======
+<<<<<<< HEAD
+    padding: 2.5rem 1rem;
+=======
+    padding: 4rem 1.5rem;
+>>>>>>> c6e6d7c0a6bb14a53aef1129bc0ac2ede497f6b1
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
 }
 
 .course-shell {
     width: 100%;
+<<<<<<< HEAD
     max-width: 1400px;
+=======
+<<<<<<< HEAD
+    max-width: 1400px;
+=======
+    max-width: 1000px;
+>>>>>>> c6e6d7c0a6bb14a53aef1129bc0ac2ede497f6b1
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 2.5rem;
     border: 1px solid var(--glass-border);
     box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
     padding: 3rem 2.5rem;
+=======
+<<<<<<< HEAD
+    padding: 3rem 2.5rem;
+=======
+    padding: 4rem;
+>>>>>>> c6e6d7c0a6bb14a53aef1129bc0ac2ede497f6b1
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
     display: flex;
     flex-direction: column;
 }
@@ -359,11 +383,23 @@ audio {
 
 /* Responsive */
 @media (max-width: 1024px) {
+<<<<<<< HEAD
     .course-shell { padding: 2.5rem 2rem; }
+=======
+<<<<<<< HEAD
+    .course-shell { padding: 2.5rem 2rem; }
+=======
+    .course-shell { padding: 4rem 2.5rem; }
+>>>>>>> c6e6d7c0a6bb14a53aef1129bc0ac2ede497f6b1
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
     .discussion-points { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 
 @media (max-width: 768px) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
     body { padding: 1.5rem 0.5rem; }
     .course-shell { border-radius: 1.75rem; padding: 2rem 1.5rem; }
     h1 { font-size: 2.5rem; }
@@ -378,6 +414,24 @@ audio {
     .playback-area { flex-direction: column; }
     .section-card { padding: 1.5rem 1rem; }
     h1 { font-size: 2rem; }
+<<<<<<< HEAD
+=======
+=======
+    body { padding: 2rem 1rem; }
+    .course-shell { border-radius: 2rem; padding: 3rem 2rem; }
+    h1 { font-size: 2.5rem; }
+    .section-card { padding: 2.5rem 2rem; }
+    .card-body { padding: 2.25rem; }
+}
+
+@media (max-width: 600px) {
+    .course-shell { padding: 2.5rem 1.25rem; }
+    .recorder-controls { flex-direction: column; align-items: stretch; }
+    .playback-area { flex-direction: column; }
+    .section-card { padding: 2rem 1.25rem; }
+    h1 { font-size: 2.2rem; }
+>>>>>>> c6e6d7c0a6bb14a53aef1129bc0ac2ede497f6b1
+>>>>>>> d45f5ba806e1b9190aa3de5e0920dce6f3523aea
 }
 
 @keyframes pulse {
