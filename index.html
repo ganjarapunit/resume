@@ -3,193 +3,655 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punit Ganjara | Interactive Portfolio</title>
+    <title>Punit Ganjara | Learning Experience Designer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #ffffff; font-family: Arial, sans-serif;
-            overflow-x: hidden;
-            overflow-y: auto;
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #38a169;
+            --text: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --bg: #f7fafc;
+            --sidebar-width: 340px;
+            --sidebar-bg: #ffffff;
+            --border: #e2e8f0;
         }
 
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Toggle */
         .menu-toggle {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 2000;
-            background: #20457c;
-            color: white;
+            top: 16px;
+            left: 16px;
+            z-index: 2001;
+            background: white;
+            color: var(--primary);
             border: none;
-            padding: 12px 18px;
-            border-radius: 5px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 22px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: block !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            background: var(--primary);
+            color: white;
         }
 
         .wrapper { 
-            display: block; 
+            display: flex; 
             width: 100%; 
             min-height: 100vh;
             position: relative; 
         }
 
+        /* Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 300px;
-            height: 100%;
-            background-color: #ffffff;
-            border-right: 1px solid #ddd;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 80px 20px 40px 20px;
-            box-sizing: border-box;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1500;
-            transform: translateX(-100%);
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) transparent;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.04);
+            border-right: 1px solid var(--border);
         }
 
+        /* Sidebar closed state (default on mobile) */
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        /* Sidebar open state */
         .sidebar.active {
             transform: translateX(0);
+            box-shadow: 20px 0 60px rgba(0,0,0,0.15);
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 40px 32px 32px;
+            background: linear-gradient(180deg, #f8fafc 0%, transparent 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            flex-shrink: 0;
         }
 
         .profile-pic {
-            width: 180px; height: 180px;
+            width: 80px; 
+            height: 80px;
             object-fit: cover;
-            border-radius: 50%; 
-            margin-bottom: 25px;
-            border: 4px solid #fafafa;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            border: 2px solid var(--border);
         }
 
-        /* Project Section Styling */
-        .projects-section {
-            width: 100%;
-            margin-top: 30px;
-            text-align: left;
+        .status-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border: 3px solid white;
+            border-radius: 50%;
         }
 
-        .projects-section h3 {
-            color: #20457c;
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #20457c;
-            padding-bottom: 5px;
-            display: block;
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 4px 0;
+            letter-spacing: -0.3px;
+        }
+
+        .profile-role {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .profile-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .profile-location i {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Sidebar Content */
+        .sidebar-content {
+            flex: 1;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Section Styling */
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .section-icon i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
+            color: var(--text-secondary);
+        }
+
+        .bio-text {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Contact Links */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+
+        .contact-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(4px);
+            border-color: var(--primary);
+        }
+
+        .contact-item i {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .contact-item span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin-top: auto;
         }
 
         .project-link {
-            display: block;
-            padding: 12px;
-            background: #f1f5f9;
-            color: #20457c;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            color: var(--text);
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
             margin-bottom: 10px;
             transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+            border: 1px solid var(--border);
         }
 
         .project-link:hover {
-            background: #e2e8f0;
-            border-left: 4px solid #20457c;
-            transform: translateX(5px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.2);
         }
 
-        @media (max-height: 500px) {
-            .profile-pic { width: 100px; height: 100px; margin-bottom: 10px; }
-            .sidebar { padding-top: 60px; }
+        .project-link .icon-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
-        .contact-info { font-size: 14px; line-height: 1.6; color: #444; margin-bottom: 20px; }
-        .contact-info a { color: #20457c; text-decoration: none; font-weight: bold; }
-
-        .content-area { 
-            width: 100%;
-            min-height: 100vh;
+        .project-link i {
+            width: 20px;
+            height: 20px;
         }
 
-        #h5p-container { width: 100%; height: auto; }
-        
-        .h5p-iframe-wrapper, iframe { 
-            min-height: 650px !important; 
-            width: 100% !important; 
-            border: none; 
+        .project-link:hover i {
+            opacity: 0.9;
         }
 
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 8px 0;
+        }
+
+        /* Overlay */
         .overlay-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(26, 32, 44, 0.5);
             display: none;
             z-index: 1400;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        .overlay-bg.active { display: block; }
+
+        .overlay-bg.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Content Area */
+        .content-area { 
+            flex: 1;
+            margin-left: 0;
+            padding: 80px 24px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        #h5p-container { 
+            width: 100%; 
+            max-width: 1100px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--border);
+            min-height: 400px;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive H5P container */
+        .h5p-iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            border: none;
+            display: block;
+        }
+
+        /* Desktop: Show sidebar by default */
+        @media (min-width: 1025px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+
+            .content-area {
+                margin-left: var(--sidebar-width);
+                padding: 60px 40px;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .overlay-bg {
+                display: none !important;
+            }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            :root { --sidebar-width: 300px; }
+            
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 20px 0 60px rgba(0,0,0,0.15);
+            }
+
+            .content-area {
+                padding: 80px 32px 40px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .sidebar { 
+                width: 85%; 
+            }
+
+            .sidebar-header { 
+                padding: 32px 20px 24px; 
+            }
+
+            .sidebar-content { 
+                padding: 20px; 
+            }
+
+            #h5p-container { 
+                border-radius: 16px; 
+                min-height: 350px;
+            }
+
+            .profile-pic { 
+                width: 64px; 
+                height: 64px; 
+                border-radius: 16px; 
+            }
+
+            .profile-name {
+                font-size: 1.1rem;
+            }
+
+            .contact-item {
+                padding: 10px 14px;
+                font-size: 0.8rem;
+            }
+
+            .project-link {
+                padding: 14px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* H5P Content Responsive Fixes */
+        @media (max-width: 768px) {
+            .h5p-iframe {
+                min-height: 450px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .h5p-iframe {
+                min-height: 400px;
+            }
+        }
+
+        /* Loading State */
+        .h5p-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        .h5p-loading i {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin { 
+            from { transform: rotate(0deg); } 
+            to { transform: rotate(360deg); } 
+        }
     </style>
 </head>
 <body>
 
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <button class="menu-toggle" id="menu-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation">
+        <i data-lucide="menu" id="menu-icon"></i>
+    </button>
     <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
 
     <div class="wrapper">
         <aside class="sidebar" id="sidebar">
-            <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
-            
-            <div class="contact-info">
-                <strong>Punit Ganjara</strong><br>
-                Learning Experience Designer<br><br>
-                ganjarapunit@gmail.com<br>
-                +84-822-523-395<br>
-                HCMC, Vietnam<br><br>
-                <a href="https://linkedin.com/in/ganjarapunit" target="_blank">View LinkedIn</a>
+            <!-- Header with Profile -->
+            <div class="sidebar-header">
+                <div class="profile-wrapper">
+                    <div class="profile-pic-container">
+                        <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
+                        <div class="status-indicator"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="profile-name">Punit Ganjara</h1>
+                        <p class="profile-role">Learning Experience Designer</p>
+                        <div class="profile-location">
+                            <i data-lucide="map-pin"></i>
+                            Ho Chi Minh City, Vietnam
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="projects-section">
-                <h3>Projects</h3>
-                <a href="ielts-masterclass/" class="project-link">
-                    → IELTS Speaking Masterclass
-                </a>
-                <a href="interactive-quiz/" class="project-link">
-                    → Take the Interactive Quiz
-                </a>
-                <!-- You can add more project links here in the future -->
+            <!-- Main Content -->
+            <div class="sidebar-content">
+                
+                <!-- About Section -->
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <span class="section-title">About</span>
+                    </div>
+                    <p class="bio-text">Creating immersive, evidence-based learning experiences that bridge the gap between pedagogy and technology.</p>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i data-lucide="mail"></i>
+                        </div>
+                        <span class="section-title">Contact</span>
+                    </div>
+                    <div class="contact-list">
+                        <a href="mailto:ganjarapunit@gmail.com" class="contact-item">
+                            <i data-lucide="mail"></i>
+                            <span>ganjarapunit@gmail.com</span>
+                        </a>
+                        <a href="tel:+84822523395" class="contact-item">
+                            <i data-lucide="phone"></i>
+                            <span>+84 822 523 395</span>
+                        </a>
+                        <a href="https://linkedin.com/in/ganjarapunit" target="_blank" class="contact-item">
+                            <i data-lucide="linkedin"></i>
+                            <span>linkedin.com/in/ganjarapunit</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Projects Section -->
+                <div class="sidebar-section projects-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i data-lucide="folder"></i>
+                        </div>
+                        <span class="section-title">Projects</span>
+                    </div>
+                    <a href="ielts-masterclass/" class="project-link">
+                        <div class="icon-box">
+                            <i data-lucide="graduation-cap"></i>
+                            <span>IELTS Masterclass</span>
+                        </div>
+                        <i data-lucide="arrow-right" style="width:16px; height:16px;"></i>
+                    </a>
+                    <a href="interactive-quiz/" class="project-link">
+                        <div class="icon-box">
+                            <i data-lucide="target"></i>
+                            <span>Interactive Quiz</span>
+                        </div>
+                        <i data-lucide="arrow-right" style="width:16px; height:16px;"></i>
+                    </a>
+                </div>
+
             </div>
         </aside>
 
         <main class="content-area">
-            <div id="h5p-container"></div>
+            <div id="h5p-container">
+                <div class="h5p-loading">
+                    <i data-lucide="loader"></i>
+                    <p>Loading interactive content...</p>
+                </div>
+            </div>
         </main>
     </div>
 
     <script src="main.bundle.js"></script>
     <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Toggle Sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const bg = document.getElementById('overlay-bg');
+            const menuBtn = document.getElementById('menu-btn');
+            
             sidebar.classList.toggle('active');
             bg.classList.toggle('active');
+            
+            // Update Icon
+            if (sidebar.classList.contains('active')) {
+                menuBtn.innerHTML = '<i data-lucide="x"></i>';
+            } else {
+                menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            }
+            lucide.createIcons();
         }
 
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('sidebar');
+                const bg = document.getElementById('overlay-bg');
+                const menuBtn = document.getElementById('menu-btn');
+                
+                sidebar.classList.remove('active');
+                bg.classList.remove('active');
+                menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+                lucide.createIcons();
+            }
+        });
+
+        // Initialize H5P
         const el = document.getElementById('h5p-container');
         const options = {
-            h5pJsonPath: './activity-data', 
+            h5pJsonPath: './activity-data',
             frameJs: './frame.bundle.js',
             frameCss: './styles/h5p.css',
-            start_at_end: true 
+            start_at_end: true
         };
-        new H5PStandalone.H5P(el, options);
+        
+        try {
+            new H5PStandalone.H5P(el, options);
+        } catch (e) {
+            console.error("H5P failed to load:", e);
+            el.innerHTML = `
+                <div class="h5p-loading">
+                    <i data-lucide="alert-circle"></i>
+                    <p>Unable to load content. Please refresh the page.</p>
+                </div>
+            `;
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>
