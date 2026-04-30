@@ -1643,3 +1643,8 @@ button.h5p-core-cancel-button:focus {
     clear: both;
   }
 }
+@media screen and (max-width: 600px) {
+  html.h5p-iframe .h5p-content {
+    font-size: 14px !important; /* Adjust this value as needed */
+  }
+}
