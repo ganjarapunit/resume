@@ -120,11 +120,3 @@
   margin: 2em;
   border-radius: .5em;
 }
-/* Removes the vertical scrollbar from the timeline body */
-.h5p-timeline .vtl-timeline {
-    overflow-y: hidden !important;
-}
-/* Ensures the container doesn't force a scrollbar */
-.h5p-content {
-    height: auto !important;
-}
