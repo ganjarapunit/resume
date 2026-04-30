@@ -107,6 +107,7 @@ html.h5p-iframe, html.h5p-iframe > body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 html.h5p-iframe .h5p-theme,
 html.h5p-iframe > body .h5p-theme,
@@ -154,7 +155,7 @@ html.h5p-iframe .h5p-semi-fullscreen .h5p-content {
 .h5p-container {
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 .h5p-iframe-wrapper.h5p-fullscreen {
   background-color: #000;
@@ -264,6 +265,7 @@ div.h5p-fullscreen {
 .h5p-iframe-wrapper {
   width: auto;
   height: auto;
+  overflow: hidden;
 }
 
 .h5p-fullscreen .h5p-iframe-wrapper,
@@ -535,9 +537,9 @@ div.h5p-fullscreen {
   color: var(--h5p-theme-text-secondary);
 }
 .h5p-popup-dialog.h5p-open .h5p-scroll-content {
-  overflow: auto;
+  overflow: hidden;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   height: 100%;
 }
 .h5p-popup-dialog .h5p-scroll-content::-webkit-scrollbar {
