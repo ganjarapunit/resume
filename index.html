@@ -221,21 +221,32 @@
         /* ── H5P Wrap ── */
         .h5p-wrap {
             width: 100%; max-width: 1200px; flex: 1;
-            background: white; border-radius: var(--r-lg); overflow: hidden;
+            background: white; border-radius: var(--r-lg); 
+            overflow: visible; /* Changed from hidden to allow scaling */
             box-shadow: 0 20px 60px rgba(0,0,0,.09), 0 1px 0 rgba(255,255,255,.8) inset;
             border: 1px solid rgba(255,255,255,.9);
             animation: riseUp .7s cubic-bezier(.23,1,.32,1) both;
             min-height: calc(100vh - 72px);
         }
+
         #h5p-container { width: 100%; min-height: inherit; }
 
-        .h5p-loading {
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            min-height: 480px; gap: 16px; color: var(--text-muted);
+        /* NEW: Fixes the sidebar in edited-image.jpg */
+        #h5p-container iframe {
+            overflow: hidden !important; 
+            height: 100% !important;
+            border: none;
         }
-        .h5p-loading svg { width: 40px; height: 40px; animation: spin 1.8s linear infinite; color: var(--primary); opacity: .5; }
-        .h5p-loading p { font-size: .9rem; font-weight: 500; }
+
+        /* NEW: Responsive "Zoom Out" for mobile */
+        @media (max-width: 768px) {
+            #h5p-container {
+                transform: scale(0.95); 
+                transform-origin: top center;
+                width: 105.2%; 
+                margin-left: -2.6%;
+            }
+        }
 
         @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
         @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
@@ -282,6 +293,7 @@
         }
     </style>
 </head>
+<script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script>
 <body>
 
     <!-- Always-visible toggle -->
@@ -433,7 +445,7 @@
                 h5pJsonPath: './activity-data',
                 frameJs:     './frame.bundle.js',
                 frameCss:    './styles/h5p.css',
-                start_at_end: true
+                start_at_end: false // Changed from true
             });
             const obs = new MutationObserver(() => {
                 if (container.querySelectorAll('iframe, .h5p-container').length > 0) {
