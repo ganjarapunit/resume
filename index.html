@@ -369,10 +369,10 @@
         </aside>
 
         <!-- Main Content Area -->
-<main class="main-content" id="mainContent">
+<main class="main-content" id="mainContent" style="width: 100%; box-sizing: border-box;">
     
-    <!-- H5P Interactive Module Section -->
-    <div class="h5p-wrap">
+    <!-- H5P Wrap: Ensure it scales down -->
+    <div class="h5p-wrap" style="width: 100%; max-width: 1200px; margin-bottom: 24px;">
         <div id="h5p-container">
             <div class="h5p-loading" id="h5p-loading">
                 <i data-lucide="loader-2"></i>
@@ -381,27 +381,22 @@
         </div>
     </div>
 
-    <!-- Learning Analytics Section (Added) -->
-    <section id="analytics-section" style="width: 100%; max-width: 1200px; margin-top: 48px; scroll-margin-top: 100px; animation: riseUp 0.8s ease-out both;">
-        <div style="background: white; padding: 32px; border-radius: var(--r-lg); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0,0,0,.04);">
+    <!-- Analytics Section: Add padding for small screens -->
+    <section id="analytics-section" style="width: 100%; max-width: 1200px; margin-top: 24px; scroll-margin-top: 100px; animation: riseUp 0.8s ease-out both;">
+        <div style="background: white; padding: clamp(16px, 5vw, 32px); border-radius: var(--r-lg); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0,0,0,.04); overflow: hidden;">
             
             <!-- Header for Analytics -->
-            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
-                <div style="background: rgba(16,185,129,.1); color: var(--accent); padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i data-lucide="bar-chart-3" style="width: 24px; height: 24px;"></i>
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
+                <div style="background: rgba(16,185,129,.1); color: var(--accent); padding: 8px; border-radius: 10px; flex-shrink: 0;">
+                    <i data-lucide="bar-chart-3" style="width: 20px; height: 20px;"></i>
                 </div>
                 <div>
-                    <h2 style="font-size: 1.6rem; color: var(--primary-dark); margin: 0; line-height: 1.2;">Learning Data & Impact</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Real-time xAPI tracking via Veracity LRS</p>
+                    <h2 style="font-size: clamp(1.2rem, 4vw, 1.6rem); color: var(--primary-dark); margin: 0; line-height: 1.2;">Learning Data & Impact</h2>
                 </div>
             </div>
-            
-            <p style="color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; max-width: 800px;">
-                Evidence-based design requires data. Below is a live dashboard tracking learner interactions, response accuracy, and engagement levels within the modules above.
-            </p>
 
-            <!-- Responsive Dashboard Container -->
-            <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; border-radius: var(--r-md); overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc;">
+            <!-- Responsive Dashboard Container (Keep 16:9 ratio) -->
+            <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; border-radius: var(--r-md); overflow: hidden; border: 1px solid #e2e8f0;">
                 <iframe 
                     src="https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/" 
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
@@ -409,11 +404,6 @@
                 </iframe>
             </div>
 
-            <!-- Context Footer -->
-            <div style="margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-light); padding: 12px; background: #f8fafc; border-radius: 8px;">
-                <i data-lucide="info" style="width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0;"></i>
-                <span>Data shown represents anonymized interactions. This implementation demonstrates proficiency in xAPI statement generation and LRS integration.</span>
-            </div>
         </div>
     </section>
 </main>
