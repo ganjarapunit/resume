@@ -119,10 +119,10 @@
 
         .about-blurb { font-size: .84rem; line-height: 1.65; color: var(--text-muted); }
 
-        /* Updated Contact Items for better responsiveness with multiple lines */
+        /* Multi-line contact info */
         .contact-list { display: flex; flex-direction: column; gap: 8px; }
         .contact-item {
-            display: flex; align-items: flex-start; gap: 12px;
+            display: flex; align-items: flex-start; gap: 10px;
             color: var(--text-muted); text-decoration: none;
             font-size: .85rem; font-weight: 500;
             padding: 8px 12px; border-radius: var(--r-sm);
@@ -174,7 +174,7 @@
             font-size: .72rem; color: var(--text-light); text-align: center;
         }
 
-        /* ── Overlay (mobile only) ── */
+        /* ── Overlay ── */
         .overlay {
             position: fixed; inset: 0;
             background: rgba(15,23,42,.45);
@@ -232,11 +232,6 @@
         @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 
         /* ════ RESPONSIVE ════ */
-        @media (max-width: 1199px) {
-            :root { --sidebar-w: 290px; }
-            .main-content { padding: 24px 28px 36px; }
-        }
-
         @media (max-width: 1023px) {
             .sidebar { transform: translateX(-100%); box-shadow: none; }
             .layout.sidebar-open .sidebar { transform: translateX(0); box-shadow: 8px 0 60px rgba(0,0,0,.12); }
@@ -246,15 +241,6 @@
             .menu-toggle { left: 16px !important; }
             .main-content { margin-left: 0; padding: 72px 20px 36px; }
             .h5p-wrap { border-radius: var(--r-md); min-height: calc(100svh - 120px); }
-        }
-
-        @media (max-width: 640px) {
-            :root { --sidebar-w: min(85vw, 300px); }
-            .sidebar-header { padding: 32px 20px 22px; }
-            .sidebar-body   { padding: 18px 20px; }
-            .main-content   { padding: 68px 14px 28px; }
-            .profile-name   { font-size: 1.25rem; }
-            .avatar-wrap, .profile-pic { width: 76px; height: 76px; }
         }
     </style>
 </head>
@@ -267,6 +253,7 @@
     <div class="overlay" id="overlay" onclick="toggleSidebar()" aria-hidden="true"></div>
 
     <div class="layout" id="layout">
+
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="avatar-wrap">
@@ -286,7 +273,7 @@
             <div class="sidebar-body">
                 <section>
                     <p class="section-label">About</p>
-                    <p class="about-blurb">Designing immersive, evidence-based learning experiences that bridge pedagogy and technology.</p>
+                    <p class="about-blurb">Designing immersive, evidence-based learning experiences that bridge pedagogy and technology — helping learners achieve real-world outcomes.</p>
                 </section>
 
                 <section>
@@ -296,10 +283,12 @@
                             <i data-lucide="mail"></i><span>ganjarapunit@gmail.com</span>
                         </a>
                         <a href="tel:+919096105012" class="contact-item">
-                            <i data-lucide="phone"></i><span>+84 822 523 395<br>+91 90961 05012</span>
+                            <i data-lucide="phone"></i>
+                            <span>+84 822 523 395<br>+91 90961 05012</span>
                         </a>
                         <div class="contact-item">
-                            <i data-lucide="map-pin"></i><span>Ho Chi Minh City, VN<br>Mumbai, India</span>
+                            <i data-lucide="map-pin"></i>
+                            <span>Ho Chi Minh City, VN<br>Mumbai, India</span>
                         </div>
                         <a href="https://linkedin.com/in/ganjarapunit" target="_blank" rel="noopener" class="contact-item">
                             <i data-lucide="linkedin"></i><span>linkedin.com/in/ganjarapunit</span>
@@ -318,6 +307,11 @@
                         <a href="interactive-quiz/" class="project-link">
                             <div class="link-icon"><i data-lucide="layers"></i></div>
                             <span class="link-text">Interactive Quiz</span>
+                            <i data-lucide="arrow-right" class="link-arrow"></i>
+                        </a>
+                        <a href="https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/" target="_blank" class="project-link">
+                            <div class="link-icon"><i data-lucide="bar-chart-3"></i></div>
+                            <span class="link-text">Learning Analytics</span>
                             <i data-lucide="arrow-right" class="link-arrow"></i>
                         </a>
                     </nav>
@@ -341,9 +335,9 @@
     <script src="main.bundle.js"></script>
     <script>
         lucide.createIcons();
+
         const layout = document.getElementById('layout');
         const overlay = document.getElementById('overlay');
-        const menuBtn = document.getElementById('menuBtn');
         const menuIcon = document.getElementById('menuIcon');
         const isMobile = () => window.innerWidth <= 1023;
 
@@ -359,12 +353,30 @@
             lucide.createIcons();
         }
 
-        window.addEventListener('resize', () => {
-            if (!isMobile()) {
-                layout.classList.remove('sidebar-open');
-                overlay.classList.remove('active');
+        // H5P Initialization Logic
+        const container = document.getElementById('h5p-container');
+        const loadingEl = document.getElementById('h5p-loading');
+
+        try {
+            new H5PStandalone.H5P(container, {
+                h5pJsonPath: './activity-data',
+                frameJs:     './frame.bundle.js',
+                frameCss:    './styles/h5p.css',
+                start_at_end: true
+            });
+            const obs = new MutationObserver(() => {
+                if (container.querySelectorAll('iframe, .h5p-container').length > 0) {
+                    loadingEl && loadingEl.remove();
+                    obs.disconnect();
+                }
+            });
+            obs.observe(container, { childList: true, subtree: true });
+        } catch (e) {
+            console.error('H5P failed:', e);
+            if (loadingEl) {
+                loadingEl.innerHTML = `<p style="color:#ef4444;font-weight:600;">Module failed to load</p>`;
             }
-        });
+        }
     </script>
 </body>
 </html>
