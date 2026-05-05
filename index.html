@@ -258,6 +258,56 @@
         .h5p-loading p { font-size: .9rem; font-weight: 500; }
 
         @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ── Welcome Wrap ── */
+        .welcome-wrap {
+            width: 100%; max-width: 800px; flex: 1;
+            display: flex; flex-direction: column; justify-content: center;
+            animation: riseUp .7s cubic-bezier(.23,1,.32,1) both;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: var(--r-lg);
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.09), 0 1px 0 rgba(255,255,255,.8) inset;
+            border: 1px solid rgba(255,255,255,.9);
+            text-align: center;
+        }
+
+        .welcome-icon {
+            width: 80px; height: 80px; margin: 0 auto 24px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 12px 32px rgba(32,69,124,.25);
+        }
+        .welcome-icon svg { width: 36px; height: 36px; color: white; }
+
+        .welcome-title {
+            font-size: 2rem; font-weight: 800; color: var(--primary-dark);
+            margin-bottom: 12px; letter-spacing: -.5px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem; color: var(--text-muted); line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .cta-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 16px 32px; border-radius: var(--r-md);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white; font-size: 1rem; font-weight: 700;
+            text-decoration: none;
+            transition: all .3s ease;
+            box-shadow: 0 8px 24px rgba(32,69,124,.3);
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px rgba(32,69,124,.4);
+        }
+        .cta-btn svg { width: 20px; height: 20px; }
         @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 
         /* ════ RESPONSIVE ════ */
@@ -284,7 +334,7 @@
 
             .menu-toggle { left: auto !important; right: 16px; top: 16px; }
             .main-content { margin-left: 0; padding: 72px 20px 36px; }
-            .h5p-wrap { border-radius: var(--r-md); min-height: calc(100svh - 120px); }
+            .welcome-wrap { border-radius: var(--r-md); min-height: calc(100svh - 120px); }
         }
 
         /* Small mobile */
@@ -294,11 +344,13 @@
             .sidebar-body   { padding: 18px 20px; }
             .sidebar-footer { padding: 14px 20px; }
             .main-content   { padding: 68px 14px 28px; }
-            .h5p-wrap       { border-radius: 14px; }
+            .welcome-wrap       { border-radius: 14px; }
             .profile-name   { font-size: 1.25rem; }
             .avatar-wrap, .profile-pic { width: 76px; height: 76px; }
             .profile-pic    { border-radius: 20px; }
             .avatar-ring    { border-radius: 24px; }
+            .welcome-card { padding: 32px 24px; }
+            .welcome-title { font-size: 1.5rem; }
         }
 
         /* Compact mobile — very small vertical screens */
@@ -406,6 +458,11 @@
                 <section>
                     <p class="section-label">Portfolio</p>
                     <nav class="project-nav">
+                        <a href="h5p.html" target="_blank" rel="noopener" class="project-link">
+                            <div class="link-icon"><i data-lucide="play-circle"></i></div>
+                            <span class="link-text">Interactive H5P Activity</span>
+                            <i data-lucide="arrow-right" class="link-arrow"></i>
+                        </a>
                         <a href="ielts-masterclass/" target="_blank" rel="noopener" class="project-link">
                             <div class="link-icon"><i data-lucide="graduation-cap"></i></div>
                             <span class="link-text">IELTS Speaking Masterclass</span>
@@ -431,19 +488,26 @@
 
         <!-- Main -->
         <main class="main-content" id="mainContent">
-            <div class="h5p-wrap">
-                <div id="h5p-container">
-                    <div class="h5p-loading" id="h5p-loading">
-                        <i data-lucide="loader-2"></i>
-                        <p>Initializing interactive module…</p>
+            <div class="welcome-wrap">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i data-lucide="graduation-cap"></i>
                     </div>
+                    <h2 class="welcome-title">Welcome to My Portfolio</h2>
+                    <p class="welcome-subtitle">
+                        Explore immersive, evidence-based learning experiences designed to drive real outcomes.<br>
+                        Click below to launch the interactive H5P activity in a new tab.
+                    </p>
+                    <a href="h5p.html" target="_blank" rel="noopener" class="cta-btn">
+                        <i data-lucide="external-link"></i>
+                        Launch Interactive Activity
+                    </a>
                 </div>
             </div>
         </main>
 
     </div>
 
-    <script src="main.bundle.js"></script>
     <script>
         function toggleConnect() {
             const list = document.getElementById('contactList');
@@ -497,40 +561,6 @@
                 overlay.classList.remove('active');
             }
         });
-
-        // H5P
-        const container = document.getElementById('h5p-container');
-        const loadingEl = document.getElementById('h5p-loading');
-
-        try {
-            new H5PStandalone.H5P(container, {
-                h5pJsonPath: './activity-data',
-                frameJs:     './frame.bundle.js',
-                frameCss:    './styles/h5p.css',
-                start_at_end: true
-            });
-            const obs = new MutationObserver(() => {
-                if (container.querySelectorAll('iframe, .h5p-container').length > 0) {
-                    loadingEl && loadingEl.remove();
-                    obs.disconnect();
-                }
-            });
-            obs.observe(container, { childList: true, subtree: true });
-        } catch (e) {
-            console.error('H5P failed:', e);
-            if (loadingEl) {
-                loadingEl.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                         stroke="#ef4444" stroke-width="1.5" style="width:40px;height:40px;opacity:.7">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="8" x2="12" y2="12"/>
-                        <line x1="12" y1="16" x2="12.01" y2="16"/>
-                    </svg>
-                    <p style="color:#ef4444;font-weight:600;">Module failed to load</p>
-                    <p style="font-size:.8rem;color:#94a3b8;">Ensure activity-data is present and the page is served from a local server.</p>
-                `;
-            }
-        }
     </script>
 </body>
 </html>
