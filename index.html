@@ -300,6 +300,36 @@
             .profile-pic    { border-radius: 20px; }
             .avatar-ring    { border-radius: 24px; }
         }
+
+        /* Compact mobile — very small vertical screens */
+        @media (max-width: 400px), (max-height: 700px) and (max-width: 640px) {
+            .sidebar-header { padding: 24px 16px 16px; }
+            .sidebar-body   { padding: 14px 16px; gap: 18px; }
+            .sidebar-footer { padding: 12px 16px; }
+            .avatar-wrap, .profile-pic { width: 64px; height: 64px; }
+            .profile-pic    { border-radius: 18px; }
+            .avatar-ring    { border-radius: 20px; }
+            .profile-name   { font-size: 1.1rem; margin-bottom: 4px; }
+            .profile-tagline { font-size: .72rem; }
+            .skill-badge    { font-size: .64rem; padding: 3px 8px; }
+            .skills-wrap    { gap: 4px; margin-top: 12px; }
+            .section-label  { font-size: .62rem; margin-bottom: 8px; }
+            .about-blurb    { font-size: .78rem; line-height: 1.5; }
+            .connect-btn    { font-size: .78rem; padding: 8px 12px; }
+            .contact-item   { font-size: .78rem; padding: 6px 10px; }
+            .project-link   { font-size: .8rem; padding: 10px 12px; gap: 10px; }
+            .link-icon      { width: 28px; height: 28px; border-radius: 8px; }
+            .link-icon svg  { width: 14px; height: 14px; }
+            .link-arrow     { width: 14px; height: 14px; }
+            .sidebar-footer { font-size: .64rem; }
+            .main-content   { padding: 60px 10px 20px; }
+            .h5p-wrap       { min-height: calc(100svh - 88px); border-radius: 12px; }
+        }
+
+        /* H5P timeline compact for small screens */
+        @media (max-width: 480px), (max-height: 700px) {
+            #h5p-container iframe { min-height: calc(100svh - 100px) !important; }
+        }
     </style>
 </head>
 <body>
