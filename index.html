@@ -4,141 +4,312 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punit Ganjara | Learning Experience Designer</title>
+    <meta name="description" content="Portfolio of Punit Ganjara — Learning Experience Designer crafting immersive, evidence-based digital learning experiences.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* ── Tokens ── */
         :root {
-            --primary: #20457c;
-            --primary-dark: #162f56;
-            --accent: #10b981;
-            --text-muted: #64748b;
-            --text-light: #94a3b8;
-            --bg: #f1f5f9;
-            --glass-bg: rgba(255,255,255,0.72);
-            --glass-border: rgba(255,255,255,0.45);
-            --sidebar-w: 320px;
+            --primary:       #20457c;
+            --primary-light: #3b6fb3;
+            --primary-dark:  #162f56;
+            --accent:        #10b981;
+            --text:          #0f172a;
+            --text-muted:    #64748b;
+            --text-light:    #94a3b8;
+            --bg:            #f1f5f9;
+            --glass-bg:      rgba(255,255,255,0.72);
+            --glass-border:  rgba(255,255,255,0.45);
+            --sidebar-w:     320px;
+            --ease:          0.35s cubic-bezier(0.4,0,0.2,1);
             --r-lg: 24px; --r-md: 16px; --r-sm: 10px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #0f172a; display: flex; min-height: 100vh; }
 
-        /* Sidebar */
+        html, body {
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Ambient blobs */
+        body::before, body::after {
+            content: ''; position: fixed; z-index: -1;
+            border-radius: 50%; filter: blur(90px); pointer-events: none;
+        }
+        body::before {
+            top: -120px; right: -80px; width: 560px; height: 560px;
+            background: radial-gradient(circle, rgba(32,69,124,.13) 0%, transparent 70%);
+        }
+        body::after {
+            bottom: -100px; left: -60px; width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(16,185,129,.10) 0%, transparent 70%);
+        }
+
+        /* ── Layout ── */
+        .layout { display: flex; min-height: 100vh; }
+
+        /* ── Sidebar ── */
         .sidebar {
-            position: fixed; inset: 0 auto 0 0; width: var(--sidebar-w);
-            background: var(--glass-bg); backdrop-filter: blur(28px);
-            border-right: 1px solid var(--glass-border); display: flex; flex-direction: column; z-index: 1000;
+            position: fixed; inset: 0 auto 0 0;
+            width: var(--sidebar-w);
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: 4px 0 40px rgba(0,0,0,.06);
+            display: flex; flex-direction: column;
+            overflow-y: auto; overflow-x: hidden;
+            z-index: 1000;
+            transition: transform var(--ease), box-shadow var(--ease), width var(--ease);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(32,69,124,.25) transparent;
+        }
+        .sidebar::-webkit-scrollbar { width: 3px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(32,69,124,.25); border-radius: 99px; }
+
+        .layout.sidebar-closed .sidebar { transform: translateX(-100%); }
+        .layout.sidebar-closed .main-content { margin-left: 0; }
+
+        /* ── Sidebar Header ── */
+        .sidebar-header {
+            padding: 40px 28px 28px;
+            background: linear-gradient(160deg, rgba(32,69,124,.08) 0%, transparent 100%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .avatar-wrap { position: relative; width: 88px; height: 88px; margin-bottom: 18px; }
+        .avatar-ring {
+            position: absolute; inset: -4px; border-radius: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--accent)); z-index: 0;
+        }
+        .profile-pic {
+            position: relative; z-index: 1;
+            width: 88px; height: 88px; object-fit: cover;
+            border-radius: 24px; border: 3px solid white; display: block;
+            transition: transform .45s ease;
+        }
+        .sidebar:hover .profile-pic { transform: scale(1.04) rotate(-1.5deg); }
+        .profile-name {
+            font-size: 1.45rem; font-weight: 800;
+            color: var(--primary-dark); letter-spacing: -.4px; line-height: 1.2; margin-bottom: 6px;
+        }
+        .profile-tagline {
+            font-size: .82rem; font-weight: 600;
+            color: var(--accent); text-transform: uppercase; letter-spacing: .8px;
+        }
+        .skills-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+        .skill-badge {
+            font-size: .72rem; font-weight: 600; padding: 4px 10px;
+            border-radius: 99px; background: rgba(32,69,124,.08);
+            color: var(--primary); border: 1px solid rgba(32,69,124,.15);
         }
 
-        .sidebar-header { padding: 40px 28px 28px; text-align: center; border-bottom: 1px solid var(--glass-border); }
-        
-        /* Profile Image Fix */
-        .profile-img { 
-            width: 100px; height: 100px; border-radius: 50%; 
-            object-fit: cover; margin-bottom: 16px; 
-            border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .profile-name { font-size: 1.45rem; font-weight: 800; color: var(--primary-dark); }
-        .profile-tagline { font-size: .82rem; font-weight: 600; color: var(--accent); text-transform: uppercase; margin-top: 4px; }
-
+        /* ── Sidebar Body ── */
         .sidebar-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; gap: 28px; }
-        .section-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; color: var(--text-light); margin-bottom: 12px; }
 
-        .contact-list { display: flex; flex-direction: column; gap: 8px; }
-        .contact-item {
-            display: flex; align-items: flex-start; gap: 10px;
-            color: var(--text-muted); text-decoration: none; font-size: .85rem;
-            padding: 8px 12px; border-radius: var(--r-sm); transition: 0.25s;
+        .section-label {
+            font-size: .68rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.6px; color: var(--text-light); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .contact-item:hover { background: rgba(32,69,124,.07); color: var(--primary); }
-        
-        /* Hardcoded SVG sizes to ensure visibility */
-        .contact-item svg, .contact-item i { width: 18px; height: 18px; flex-shrink: 0; }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
 
+        .about-blurb { font-size: .84rem; line-height: 1.65; color: var(--text-muted); }
+
+        .contact-list { display: flex; flex-direction: column; gap: 6px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: .85rem; font-weight: 500;
+            padding: 8px 12px; border-radius: var(--r-sm);
+            transition: all .25s ease;
+        }
+        .contact-item:hover { background: rgba(32,69,124,.07); color: var(--primary); transform: translateX(3px); }
+        .contact-item svg { width: 15px; height: 15px; flex-shrink: 0; opacity: .65; }
+        .contact-item:hover svg { opacity: 1; }
+        .contact-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Project links */
         .project-nav { display: flex; flex-direction: column; gap: 10px; }
         .project-link {
-            display: flex; align-items: center; gap: 12px; padding: 14px 16px;
-            background: white; color: var(--primary); text-decoration: none;
-            border-radius: var(--r-md); font-size: .88rem; font-weight: 700;
-            border: 1px solid var(--glass-border); transition: 0.3s;
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 16px; background: white; color: var(--primary);
+            text-decoration: none; border-radius: var(--r-md);
+            font-size: .88rem; font-weight: 700;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+            transition: all .3s cubic-bezier(.175,.885,.32,1.275);
+            position: relative; overflow: hidden;
         }
-        .project-link:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(32,69,124,.2); }
-        .link-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(32,69,124,.08); display: flex; align-items: center; justify-content: center; }
+        .project-link::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            opacity: 0; transition: opacity .3s ease;
+        }
+        .project-link:hover::before { opacity: 1; }
+        .project-link:hover { color: white; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(32,69,124,.2); }
+        .link-icon {
+            position: relative; z-index: 1; width: 34px; height: 34px;
+            border-radius: 10px; background: rgba(32,69,124,.08);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: background .3s ease;
+        }
+        .project-link:hover .link-icon { background: rgba(255,255,255,.15); }
+        .link-icon svg { width: 16px; height: 16px; }
+        .link-text { position: relative; z-index: 1; flex: 1; }
+        .link-arrow {
+            position: relative; z-index: 1; width: 16px; height: 16px;
+            opacity: .5; transition: transform .25s ease, opacity .25s ease;
+        }
+        .project-link:hover .link-arrow { transform: translateX(3px); opacity: 1; }
 
-        .main-content { flex: 1; margin-left: var(--sidebar-w); padding: 40px; }
-        .h5p-wrap { background: white; border-radius: var(--r-lg); min-height: 80vh; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.09); }
+        /* Analytics Sub-link Styling */
+        .analytics-link {
+            display: flex; align-items: center; gap: 8px;
+            margin-left: 20px; padding: 8px 12px;
+            font-size: 0.78rem; font-weight: 600;
+            color: var(--text-muted); text-decoration: none;
+            border-radius: var(--r-sm); transition: all 0.25s ease;
+            background: rgba(32,69,124,0.03);
+            border: 1px dashed var(--glass-border);
+        }
+        .analytics-link:hover {
+            color: var(--accent); background: white; transform: translateX(3px);
+        }
+
+        /* ── Sidebar Footer ── */
+        .sidebar-footer {
+            padding: 18px 28px; border-top: 1px solid var(--glass-border);
+            font-size: .72rem; color: var(--text-light); text-align: center;
+        }
+
+        /* ── Menu Toggle ── */
+        .menu-toggle {
+            position: fixed; top: 16px; left: calc(var(--sidebar-w) + 16px); z-index: 1100;
+            width: 44px; height: 44px; border-radius: var(--r-sm);
+            background: white; border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 14px rgba(0,0,0,.08);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--primary); transition: left var(--ease), background .25s ease, transform .25s ease;
+            backdrop-filter: blur(8px);
+        }
+        .layout.sidebar-closed .menu-toggle { left: 16px; }
+
+        /* ── Main Content ── */
+        .main-content {
+            flex: 1; margin-left: var(--sidebar-w); padding: 24px 40px 40px;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            transition: margin-left var(--ease);
+        }
+
+        /* ── H5P Wrap ── */
+        .h5p-wrap {
+            width: 100%; max-width: 1200px; flex: 1;
+            background: white; border-radius: var(--r-lg); overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,.09);
+            border: 1px solid rgba(255,255,255,.9);
+            animation: riseUp .7s cubic-bezier(.23,1,.32,1) both;
+            min-height: calc(100vh - 72px);
+        }
+        #h5p-container { width: 100%; min-height: inherit; }
+
+        @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <!-- Ensure profile-pic.jpg is in your root folder -->
-            <img src="profile-pic.jpg" alt="Punit Ganjara" class="profile-img">
-            <h1 class="profile-name">Punit Ganjara</h1>
-            <p class="profile-tagline">Learning Experience Designer</p>
-        </div>
+    <button class="menu-toggle" id="menuBtn" onclick="toggleSidebar()" aria-label="Toggle Navigation">
+        <i data-lucide="panel-left-close" id="menuIcon"></i>
+    </button>
 
-        <div class="sidebar-body">
-            <section>
-                <p class="section-label">Connect</p>
-                <div class="contact-list">
-                    <a href="mailto:ganjarapunit@gmail.com" class="contact-item">
-                        <i data-lucide="mail"></i><span>ganjarapunit@gmail.com</span>
-                    </a>
-                    <div class="contact-item">
-                        <i data-lucide="phone"></i>
-                        <span>+84 822 523 395</span>
-                    </div>
-                    <!-- Direct SVG for LinkedIn to bypass loading issues -->
-                    <a href="https://linkedin.com/in/ganjarapunit" target="_blank" class="contact-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                        <span>LinkedIn Profile</span>
-                    </a>
+    <div class="layout" id="layout">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="avatar-wrap">
+                    <div class="avatar-ring"></div>
+                    <img src="profile.png" alt="Punit Ganjara" class="profile-pic">
                 </div>
-            </section>
+                <h1 class="profile-name">Punit Ganjara</h1>
+                <p class="profile-tagline">Learning Experience Designer</p>
+                <div class="skills-wrap">
+                    <span class="skill-badge">End-to-End Course Design</span>
+                    <span class="skill-badge">eLearning Development</span>
+                    <span class="skill-badge">xAPI</span>
+                    <span class="skill-badge">SCORM</span>
+                </div>
+            </div>
 
-            <section>
-                <p class="section-label">Portfolio</p>
-                <nav class="project-nav">
-                    <a href="ielts-masterclass/" class="project-link">
-                        <div class="link-icon"><i data-lucide="graduation-cap"></i></div>
-                        <span>IELTS Speaking</span>
-                    </a>
-                    <a href="interactive-quiz/" class="project-link">
-                        <div class="link-icon"><i data-lucide="layers"></i></div>
-                        <span>Interactive Quiz</span>
-                    </a>
-                    <a href="https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/" target="_blank" class="project-link">
-                        <div class="link-icon"><i data-lucide="bar-chart-3"></i></div>
-                        <span>Learning Analytics</span>
-                    </a>
-                </nav>
-            </section>
-        </div>
-    </aside>
+            <div class="sidebar-body">
+                <section>
+                    <p class="section-label">About</p>
+                    <p class="about-blurb">Designing immersive, evidence-based learning experiences that bridge pedagogy and technology.</p>
+                </section>
 
-    <main class="main-content">
-        <div class="h5p-wrap">
-            <div id="h5p-container"></div>
-        </div>
-    </main>
+                <section>
+                    <p class="section-label">Connect</p>
+                    <div class="contact-list">
+                        <a href="mailto:ganjarapunit@gmail.com" class="contact-item">
+                            <i data-lucide="mail"></i><span>ganjarapunit@gmail.com</span>
+                        </a>
+                        <!-- UPDATED PHONE -->
+                        <a href="tel:+919096105012" class="contact-item">
+                            <i data-lucide="phone"></i><span>+91 9096105012</span>
+                        </a>
+                        <!-- UPDATED LOCATION -->
+                        <div class="contact-item">
+                            <i data-lucide="map-pin"></i><span>Mumbai, India</span>
+                        </div>
+                        <a href="https://linkedin.com/in/ganjarapunit" target="_blank" rel="noopener" class="contact-item">
+                            <i data-lucide="linkedin"></i><span>linkedin.com/in/ganjarapunit</span>
+                        </a>
+                    </div>
+                </section>
 
-    <!-- Script order is vital for H5P -->
+                <section>
+                    <p class="section-label">Portfolio</p>
+                    <nav class="project-nav">
+                        <a href="ielts-masterclass/" class="project-link">
+                            <div class="link-icon"><i data-lucide="graduation-cap"></i></div>
+                            <span class="link-text">IELTS Speaking Masterclass</span>
+                            <i data-lucide="arrow-right" class="link-arrow"></i>
+                        </a>
+                        <div>
+                            <a href="interactive-quiz/" class="project-link" style="margin-bottom: 8px;">
+                                <div class="link-icon"><i data-lucide="layers"></i></div>
+                                <span class="link-text">Interactive Quiz</span>
+                                <i data-lucide="arrow-right" class="link-arrow"></i>
+                            </a>
+                            <!-- ADDED LEARNING ANALYTICS LINK -->
+                            <a href="https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/" target="_blank" class="analytics-link">
+                                <i data-lucide="bar-chart-3"></i><span>Learning Analytics</span>
+                            </a>
+                        </div>
+                    </nav>
+                </section>
+            </div>
+
+            <div class="sidebar-footer">&copy; 2026 Punit Ganjara &mdash; All rights reserved</div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <div class="h5p-wrap">
+                <div id="h5p-container"></div>
+            </div>
+        </main>
+    </div>
+
     <script src="main.bundle.js"></script>
     <script>
-        // 1. Initialize Icons
         lucide.createIcons();
-
-        // 2. Initialize H5P
-        const container = document.getElementById('h5p-container');
-        if (window.H5PStandalone) {
-            new H5PStandalone.H5P(container, {
-                h5pJsonPath: './activity-data',
-                frameJs: './frame.bundle.js',
-                frameCss: './styles/h5p.css'
-            });
+        function toggleSidebar() {
+            const layout = document.getElementById('layout');
+            const isClosed = layout.classList.toggle('sidebar-closed');
+            document.getElementById('menuIcon').setAttribute('data-lucide', isClosed ? 'panel-left-open' : 'panel-left-close');
+            lucide.createIcons();
         }
     </script>
 </body>
