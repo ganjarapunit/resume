@@ -439,7 +439,7 @@
                 const isOpen = layout.classList.toggle('sidebar-open');
                 overlay.classList.toggle('active', isOpen);
                 menuBtn.setAttribute('aria-expanded', isOpen);
-                menuIcon.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
+                menuIcon.setAttribute('data-lucide', isOpen ? 'panel-left-close' : 'panel-left');
             } else {
                 // Desktop: collapse/expand pushing content
                 const isClosed = layout.classList.toggle('sidebar-closed');
