@@ -143,13 +143,15 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
   font-size:13px;font-weight:600;color:var(--text);transition:var(--ease);user-select:none
 }
 .sort-item:hover{border-color:var(--primary-light);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
-.sort-item.placed{opacity:0.3;pointer-events:none}
+.sort-item.selected{border-color:var(--primary);background:rgba(32,69,124,.08);box-shadow:0 0 0 3px rgba(32,69,124,.15)}
+.sort-item.placed{opacity:0.4;pointer-events:none;border-style:dashed}
 .sort-buckets{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sort-bucket{
   background:white;border-radius:var(--r-md);padding:16px;min-height:120px;
-  border:2px dashed #e2e8f0;transition:var(--ease)
+  border:2px dashed #e2e8f0;transition:var(--ease);cursor:default
 }
-.sort-bucket.drag-over{border-color:var(--primary);background:rgba(32,69,124,.04)}
+.sort-bucket.can-receive{cursor:pointer}
+.sort-bucket.can-receive:hover{border-color:var(--primary);background:rgba(32,69,124,.04);transform:translateY(-2px)}
 .sort-bucket h5{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px}
 .sort-bucket .bucket-items{display:flex;flex-wrap:wrap;gap:6px}
 .sort-bucket .bucket-item{
@@ -429,16 +431,18 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
     <!-- ═══ SLIDE 4: What AI Can & Can't Do ═══ -->
     <div class="slide" data-slide="3">
       <h2 class="slide-heading"><span class="icon">⚖️</span>What AI Can &amp; Can't Do</h2>
-      <p class="slide-sub">Click each statement to sort it into the right bucket. See how you do!</p>
+      <p class="slide-sub">Click an item to select it, then click a bucket to place it. Click a placed item to return it to the middle.</p>
       <div class="sort-area" id="sortArea">
         <div class="sort-items" id="sortItems"></div>
         <div class="sort-buckets">
-          <div class="sort-bucket" data-bucket="can">
+          <div class="sort-bucket" data-bucket="can" onclick="clickBucket('can')">
             <h5>✅ AI Can Do This</h5>
+            <p class="sort-bucket-hint" style="font-size:11px;color:var(--text-light);margin-bottom:8px">Click here after selecting an item</p>
             <div class="bucket-items" id="bucketCan"></div>
           </div>
-          <div class="sort-bucket" data-bucket="cant">
+          <div class="sort-bucket" data-bucket="cant" onclick="clickBucket('cant')">
             <h5>❌ AI Cannot (Reliably) Do This</h5>
+            <p class="sort-bucket-hint" style="font-size:11px;color:var(--text-light);margin-bottom:8px">Click here after selecting an item</p>
             <div class="bucket-items" id="bucketCant"></div>
           </div>
         </div>
@@ -799,7 +803,7 @@ function flipCard(el){
   document.getElementById('flipCount').textContent = flipCount;
 }
 
-/* ═══ Sort Activity ═══ */
+/* ═══ Sort Activity (Click-to-Select, Click-to-Place) ═══ */
 var sortStatements = [
   {text:'Draft a professional email', answer:'can'},
   {text:'Feel genuine human emotions', answer:'cant'},
@@ -809,8 +813,11 @@ var sortStatements = [
   {text:'Make subjective ethical judgments', answer:'cant'}
 ];
 var sortPlacements = new Array(sortStatements.length).fill(null);
+var selectedSortIdx = null;
 
 function initSort(){
+  selectedSortIdx = null;
+  // Clear any leftover selected state
   var container = document.getElementById('sortItems');
   container.innerHTML = '';
   sortStatements.forEach(function(s, i){
@@ -818,24 +825,73 @@ function initSort(){
     el.className = 'sort-item';
     el.textContent = s.text;
     el.dataset.index = i;
-    el.onclick = function(){ placeSortItem(i); };
+    el.onclick = function(){
+      if(sortPlacements[i] !== null) return; // already placed — handled by bucket click
+      clickSortItem(i);
+    };
     container.appendChild(el);
   });
+  updateBucketHints();
 }
 
-function placeSortItem(idx){
-  if(sortPlacements[idx] === null){
-    // Not yet placed — move to "can" first, then toggle
-    sortPlacements[idx] = 'can';
-  } else if(sortPlacements[idx] === 'can'){
-    sortPlacements[idx] = 'cant';
+function updateBucketHints(){
+  var can = document.querySelector('.sort-bucket[data-bucket="can"]');
+  var cant = document.querySelector('.sort-bucket[data-bucket="cant"]');
+  if(selectedSortIdx !== null){
+    can.classList.add('can-receive');
+    cant.classList.add('can-receive');
   } else {
-    sortPlacements[idx] = null;
+    can.classList.remove('can-receive');
+    cant.classList.remove('can-receive');
   }
-  renderBuckets();
 }
 
-function renderBuckets(){
+function clickSortItem(idx){
+  // Placed items can only be clicked in their bucket
+  if(sortPlacements[idx] !== null) return;
+  // Toggle selection: if same item clicked again, deselect
+  if(selectedSortIdx === idx) {
+    selectedSortIdx = null;
+  } else {
+    selectedSortIdx = idx;
+  }
+  updateSortUI();
+  updateBucketHints();
+}
+
+function clickBucket(bucket){
+  if(selectedSortIdx === null) return; // nothing selected
+  var idx = selectedSortIdx;
+  var text = sortStatements[idx].text;
+  // Place the selected item into this bucket
+  sortPlacements[idx] = bucket;
+  selectedSortIdx = null;
+  updateSortUI();
+  xAPI.interacted(3, 'sort-place', text + ' → ' + bucket);
+}
+
+function clickPlacedItem(idx){
+  // Return placed item to the middle (unplace it)
+  sortPlacements[idx] = null;
+  selectedSortIdx = null;
+  updateSortUI();
+}
+
+function updateSortUI(){
+  // Render unplaced items in the center
+  var container = document.getElementById('sortItems');
+  container.innerHTML = '';
+  sortStatements.forEach(function(s, i){
+    if(sortPlacements[i] !== null) return; // already placed
+    var el = document.createElement('div');
+    el.className = 'sort-item' + (selectedSortIdx === i ? ' selected' : '');
+    el.textContent = s.text;
+    el.dataset.index = i;
+    el.onclick = function(){ clickSortItem(i); };
+    container.appendChild(el);
+  });
+
+  // Render bucket contents
   var can = document.getElementById('bucketCan');
   var cant = document.getElementById('bucketCant');
   can.innerHTML = '';
@@ -845,26 +901,23 @@ function renderBuckets(){
       var el = document.createElement('span');
       el.className = 'bucket-item';
       el.textContent = sortStatements[i].text;
-      el.onclick = function(){ placeSortItem(i); };
+      el.onclick = function(){ clickPlacedItem(i); };
       can.appendChild(el);
     } else if(p === 'cant'){
       var el = document.createElement('span');
       el.className = 'bucket-item';
       el.textContent = sortStatements[i].text;
-      el.onclick = function(){ placeSortItem(i); };
+      el.onclick = function(){ clickPlacedItem(i); };
       cant.appendChild(el);
     }
   });
-  // Update source items visibility
-  document.querySelectorAll('.sort-item').forEach(function(el, i){
-    if(sortPlacements[i] !== null) el.classList.add('placed');
-    else el.classList.remove('placed');
-  });
-  // Reset feedback
+
+  // Reset feedback so user can re-check
   var fb = document.getElementById('sortFeedback');
   fb.classList.remove('show','success','error');
   document.getElementById('checkSortBtn').style.display = '';
   document.getElementById('sortNextBtn').style.display = 'none';
+  updateBucketHints();
 }
 
 function checkSort(){
