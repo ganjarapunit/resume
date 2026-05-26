@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #20457c;
+    --primary-light: #3b6fb3;
+    --primary-dark: #162f56;
+    --accent: #10b981;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-light: #94a3b8;
+    --bg: #f8fafc;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border: #e2e8f0;
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    --r-lg: 24px;
+    --r-md: 16px;
+    --r-sm: 10px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+}
+
+.course-shell {
+    width: 100%;
+    max-width: 1400px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 2.5rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.portfolio-badge {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 3.75rem);
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0.5rem 0;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    max-width: 650px;
+    margin: 1.5rem auto 0;
+    line-height: 1.6;
+}
+
+main {
+    flex: 1;
+}
+
+.content-card {
+    background: var(--card-bg);
+    border-radius: var(--r-lg);
+    padding: 3rem;
+    border: 1px solid white;
+    box-shadow: var(--shadow);
+    margin-bottom: 2.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(32, 69, 124, 0.08);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.card-icon svg { width: 24px; height: 24px; }
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+}
+
+.content-card > p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+footer {
+    margin-top: 3rem;
+}
+
+.btn {
+    padding: 1rem 2.25rem;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    box-shadow: 0 15px 30px -8px rgba(32, 69, 124, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -8px rgba(32, 69, 124, 0.5);
+}
+
+@media (max-width: 1024px) {
+    .course-shell { padding: 2.5rem 2rem; }
+}
+
+@media (max-width: 768px) {
+    body { padding: 1.5rem 0.5rem; }
+    .course-shell { border-radius: 1.75rem; padding: 2rem 1.5rem; }
+    h1 { font-size: 2.5rem; }
+    .content-card { padding: 2rem 1.5rem; }
+}
+
+@media (max-width: 600px) {
+    body { padding: 1rem 0.25rem; }
+    .course-shell { border-radius: 1.25rem; padding: 1.5rem 1rem; }
+    .content-card { padding: 1.5rem 1rem; }
+    h1 { font-size: 2rem; }
+}
