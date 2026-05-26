@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="DataPrivacyCompliance_v1_0" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="apexOrg">
+    <organization identifier="apexOrg">
+      <title>Data Privacy: Handle with Care</title>
+      <item identifier="scoItem" identifierref="scoResource">
+        <title>Data Privacy Compliance Scenario</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="scoResource" type="webcontent" adlcp:scormtype="sco">
+      <file href="index.html"/>
+    </resource>
+  </resources>
+</manifest>

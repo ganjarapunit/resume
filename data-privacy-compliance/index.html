@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Privacy: Handle with Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a365d;--primary-light:#2a4a7f;--primary-dark:#0f2440;--primary-glow:#3b82f6;--success:#38a169;--success-bg:#f0fff4;--success-border:#c6f6d5;--danger:#e53e3e;--danger-bg:#fff5f5;--danger-border:#fed7d7;--warning:#d69e2e;--warning-bg:#fffff0;--warning-border:#fefcbf;--neutral:#718096;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--text-secondary:#4a5568;--text-muted:#a0aec0;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 30px rgba(0,0,0,0.12);--radius:12px;--radius-sm:8px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+#app{max-width:860px;margin:0 auto;padding:0 20px 40px;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:0 0 var(--radius) var(--radius);padding:24px 32px 20px;margin:0 -20px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
+header::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.05),transparent);border-radius:50%}
+header::after{content:'';position:absolute;bottom:-30%;left:10%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.03),transparent);border-radius:50%}
+.header-inner{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.header-left{flex:1}
+.course-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.3px;line-height:1.3}
+.course-subtitle{font-size:13px;color:rgba(255,255,255,0.7);font-weight:400;margin-top:2px}
+.step-indicator{background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;letter-spacing:0.3px;border:1px solid rgba(255,255,255,0.1)}
+.progress-track{height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-top:16px;overflow:hidden;position:relative;z-index:1}
+.progress-bar{height:100%;background:linear-gradient(90deg,#63b3ed,#90cdf4);border-radius:2px;width:0%;transition:width 0.6s cubic-bezier(0.4,0,0.2,1)}
+.scene{flex:1;margin-top:24px;opacity:0;transform:translateY(12px);transition:opacity 0.4s ease,transform 0.4s ease}
+.scene.visible{opacity:1;transform:translateY(0)}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow-md);padding:32px;margin-bottom:20px;border:1px solid rgba(0,0,0,0.04)}
+.scene-heading{font-size:22px;font-weight:700;color:var(--primary);margin-bottom:16px;letter-spacing:-0.3px;line-height:1.3}
+.scene-story{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:24px}
+.scene-story p{margin-bottom:12px}
+.scene-story p:last-child{margin-bottom:0}
+.choice-btn{display:block;width:100%;padding:16px 20px;margin-bottom:12px;background:var(--card-bg);border:2px solid #e2e8f0;border-radius:var(--radius-sm);cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--text);text-align:left;transition:var(--transition);position:relative;overflow:hidden}
+.choice-btn:hover:not(:disabled){border-color:var(--primary-light);background:#f7fafc;transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.choice-btn:active:not(:disabled){transform:translateY(0)}
+.choice-btn:disabled{cursor:not-allowed;opacity:0.7}
+.choice-btn .choice-icon{display:inline-block;width:28px;height:28px;border-radius:50%;border:2px solid #e2e8f0;text-align:center;line-height:24px;font-size:13px;font-weight:700;color:var(--text-muted);margin-right:12px;transition:var(--transition);flex-shrink:0}
+.choice-btn:hover:not(:disabled) .choice-icon{border-color:var(--primary-light);color:var(--primary-light)}
+.choice-btn .choice-text{flex:1}
+.choice-btn .choice-label{display:inline-flex;align-items:center;gap:12px;width:100%}
+.choice-btn.selected-correct{border-color:var(--success);background:var(--success-bg)}
+.choice-btn.selected-correct .choice-icon{border-color:var(--success);background:var(--success);color:#fff}
+.choice-btn.selected-incorrect{border-color:var(--danger);background:var(--danger-bg)}
+.choice-btn.selected-incorrect .choice-icon{border-color:var(--danger);background:var(--danger);color:#fff}
+.choice-btn.selected-neutral{border-color:var(--warning);background:var(--warning-bg)}
+.choice-btn.selected-neutral .choice-icon{border-color:var(--warning);background:var(--warning);color:#fff}
+.email-wrapper{margin-bottom:24px;border:1px solid #e2e8f0;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
+.email-bar{background:#f8fafc;padding:10px 16px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:8px}
+.email-dot{width:10px;height:10px;border-radius:50%}
+.email-dot.red{background:#fc8181}
+.email-dot.yellow{background:#f6e05e}
+.email-dot.green{background:#68d391}
+.email-field{padding:10px 16px;border-bottom:1px solid #f0f0f0;font-size:13px;color:var(--text-secondary);display:flex}
+.email-field:last-of-type{border-bottom:1px solid #e2e8f0}
+.email-label{font-weight:600;color:var(--text);min-width:60px;flex-shrink:0}
+.email-value{color:var(--text-secondary)}
+.email-value.urgent{color:var(--danger);font-weight:600}
+.email-body{padding:16px;font-size:14px;color:var(--text-secondary);line-height:1.7;background:#fff}
+.email-body p{margin-bottom:10px}
+.email-body p:last-child{margin-bottom:0}
+.email-body .email-signature{margin-top:12px;color:var(--text-muted)}
+.feedback-panel{margin-top:20px;padding:20px;border-radius:var(--radius-sm);animation:fadeSlideIn 0.3s ease}
+.feedback-panel.positive{background:var(--success-bg);border:1px solid var(--success-border)}
+.feedback-panel.negative{background:var(--danger-bg);border:1px solid var(--danger-border)}
+.feedback-panel.neutral{background:var(--warning-bg);border:1px solid var(--warning-border)}
+.feedback-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.feedback-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.feedback-icon.check{background:var(--success);color:#fff}
+.feedback-icon.x{background:var(--danger);color:#fff}
+.feedback-icon.warning{background:var(--warning);color:#fff}
+.feedback-title{font-weight:600;font-size:15px}
+.feedback-title.positive-text{color:var(--success)}
+.feedback-title.negative-text{color:var(--danger)}
+.feedback-title.neutral-text{color:var(--warning)}
+.feedback-text{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.tip-box{margin-top:16px;padding:16px;background:rgba(59,130,246,0.06);border-radius:var(--radius-sm);border-left:3px solid var(--primary-light)}
+.tip-box .tip-label{font-size:12px;font-weight:700;color:var(--primary-light);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tip-box .tip-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:12px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition)}
+.continue-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,54,93,0.3)}
+.continue-btn .arrow{transition:transform 0.2s ease}
+.continue-btn:hover .arrow{transform:translateX(3px)}
+.outcome-screen{text-align:center;padding:20px 0}
+.outcome-badge{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;box-shadow:var(--shadow-md)}
+.outcome-badge.hero{background:var(--success-bg);border:3px solid var(--success)}
+.outcome-badge.close-call{background:var(--warning-bg);border:3px solid var(--warning)}
+.outcome-badge.breach{background:var(--danger-bg);border:3px solid var(--danger)}
+.outcome-title{font-size:28px;font-weight:800;margin-bottom:4px;letter-spacing:-0.5px}
+.outcome-title.hero{color:var(--success)}
+.outcome-title.close-call{color:var(--warning)}
+.outcome-title.breach{color:var(--danger)}
+.outcome-subtitle{font-size:15px;color:var(--text-secondary);margin-bottom:24px}
+.score-display{display:flex;justify-content:center;gap:32px;margin-bottom:28px;flex-wrap:wrap}
+.score-item{text-align:center}
+.score-value{font-size:36px;font-weight:800;line-height:1}
+.score-value.hero{color:var(--success)}
+.score-value.close-call{color:var(--warning)}
+.score-value.breach{color:var(--danger)}
+.score-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:600;margin-top:4px}
+.outcome-details{background:#f8fafc;border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:left}
+.outcome-details h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
+.outcome-details ul{list-style:none;padding:0}
+.outcome-details li{padding:6px 0;font-size:14px;color:var(--text-secondary);display:flex;align-items:flex-start;gap:8px}
+.outcome-details li::before{content:'✓';color:var(--success);font-weight:700;flex-shrink:0}
+.lessons-box{background:rgba(59,130,246,0.05);border-radius:var(--radius-sm);padding:20px;margin-bottom:24px;text-align:left;border:1px solid rgba(59,130,246,0.1)}
+.lessons-box h4{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.lessons-box ul{list-style:none;padding:0}
+.lessons-box li{padding:6px 0;font-size:14px;color:var(--text-secondary);display:flex;align-items:flex-start;gap:8px}
+.lessons-box li::before{content:'→';color:var(--primary-light);font-weight:700;flex-shrink:0}
+.retry-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:var(--transition)}
+.retry-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,54,93,0.3)}
+.intro-badge{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.intro-badge span{background:rgba(26,54,93,0.08);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:600;color:var(--primary);letter-spacing:0.3px}
+.scenario-setup{background:#f8fafc;border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:20px;border-left:3px solid var(--primary-light)}
+.scenario-setup p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.scenario-setup strong{color:var(--text)}
+.consequences{margin-top:16px;padding:16px;border-radius:var(--radius-sm);font-size:14px;line-height:1.6}
+a{color:var(--primary-light);text-decoration:none}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.scene.visible .card{animation:slideUp 0.4s ease forwards}
+.scene.visible .card:nth-child(2){animation-delay:0.1s}
+@media(max-width:640px){
+  #app{padding:0 12px 32px}
+  header{padding:18px 20px 16px;border-radius:0;margin:0 -12px}
+  .course-title{font-size:17px}
+  .card{padding:20px}
+  .scene-heading{font-size:19px}
+  .choice-btn{padding:14px 16px;font-size:13px}
+  .email-field{font-size:12px}
+  .outcome-title{font-size:24px}
+  .score-display{gap:20px}
+  .score-value{font-size:30px}
+  .header-inner{flex-direction:column;gap:10px}
+  .step-indicator{align-self:flex-start}
+}
+@media(max-width:400px){
+  .choice-btn .choice-label{gap:8px}
+  .choice-btn .choice-icon{width:24px;height:24px;line-height:20px;font-size:11px;margin-right:8px}
+  .choice-btn{padding:12px 12px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="course-title">Data Privacy: Handle with Care</div>
+        <div class="course-subtitle">Interactive Branching Scenario</div>
+      </div>
+      <div id="stepIndicator" class="step-indicator">Start</div>
+    </div>
+    <div class="progress-track">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+  </header>
+  <main id="scene" class="scene"></main>
+</div>
+<script>
+/* ==============================
+   SCORM 1.2 API Wrapper
+   ============================== */
+const SCORM = (function(){
+  let api = null;
+  let initialized = false;
+  function findAPI(win){
+    var depth = 0;
+    while(win && depth < 10){
+      if(win.API) return win.API;
+      if(win.API_1484_11) return win.API_1484_11;
+      try{win = win.parent;}catch(e){break;}
+      depth++;
+    }
+    return null;
+  }
+  return {
+    init(){
+      api = findAPI(window);
+      if(api){
+        var result = api.LMSInitialize('');
+        if(result) initialized = true;
+      }
+    },
+    set(key, val){
+      if(api) api.LMSSetValue(key, String(val));
+    },
+    get(key){
+      if(api) return api.LMSGetValue(key);
+      return null;
+    },
+    commit(){
+      if(api) api.LMSCommit('');
+    },
+    finish(){
+      if(api && initialized){
+        api.LMSFinish('');
+        initialized = false;
+      }
+    },
+    saveScore(score, max, min, status){
+      this.set('cmi.core.score.raw', score);
+      this.set('cmi.core.score.max', max || 100);
+      this.set('cmi.core.score.min', min || 0);
+      this.set('cmi.core.lesson_status', status || 'completed');
+      this.set('cmi.core.lesson_location', '');
+      this.commit();
+    },
+    isActive(){ return !!api; }
+  };
+})();
+
+/* ==============================
+   xAPI Handler
+   ============================== */
+const xAPI = (function(){
+  var cfg = {
+    endpoint: localStorage.getItem('xapi_endpoint') || '',
+    auth: localStorage.getItem('xapi_auth') || '',
+    actor: {
+      objectType: 'Agent',
+      name: localStorage.getItem('xapi_name') || 'Learner',
+      mbox: localStorage.getItem('xapi_mbox') || 'mailto:learner@example.com'
+    }
+  };
+  function send(stmt){
+    stmt.actor = cfg.actor;
+    stmt.timestamp = new Date().toISOString();
+    stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    if(cfg.endpoint){
+      var h = new Headers();
+      h.append('Content-Type','application/json');
+      h.append('X-Experience-API-Version','1.0.3');
+      if(cfg.auth) h.append('Authorization',cfg.auth);
+      fetch(cfg.endpoint,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
+        .catch(function(){ /* LRS may be unreachable */ });
+    }
+  }
+  return {
+    interact(nodeId, choiceText, score, path){
+      send({
+        verb:{id:'http://adlnet.gov/expapi/verbs/interacted',display:{'en-US':'interacted'}},
+        object:{
+          id:'http://apexdigital.com/data-privacy/scenario/'+nodeId,
+          definition:{name:{'en-US':'Decision: '+nodeId},description:{'en-US':'Choice: '+choiceText}}
+        },
+        result:{
+          score:{raw:score,min:0,max:100},
+          extensions:{
+            'http://apexdigital.com/ext/choice':choiceText,
+            'http://apexdigital.com/ext/node':nodeId,
+            'http://apexdigital.com/ext/path':path||''
+          }
+        }
+      });
+    },
+    complete(score, ending, correct, total, visited){
+      send({
+        verb:{id:'http://adlnet.gov/expapi/verbs/completed',display:{'en-US':'completed'}},
+        object:{
+          id:'http://apexdigital.com/data-privacy-course',
+          definition:{name:{'en-US':'Data Privacy: Handle with Care'},description:{'en-US':'Data Privacy Compliance Branching Scenario'}}
+        },
+        result:{
+          score:{raw:score,min:0,max:100},
+          completion:true,
+          success:score>=80,
+          extensions:{
+            'http://apexdigital.com/ext/ending':ending,
+            'http://apexdigital.com/ext/correct':correct,
+            'http://apexdigital.com/ext/total':total,
+            'http://apexdigital.com/ext/nodes':visited.join(',')
+          }
+        }
+      });
+    }
+  };
+})();
+
+/* ==============================
+   Scenario Data
+   ============================== */
+var correctCount = 0;
+var totalChoices = 0;
+var visitedNodes = [];
+var cumulativeScore = 50;
+
+var TIPS = {
+  phishing: 'Phishing emails often create urgency and invoke authority (like a CFO) to bypass your judgment. Always verify the sender domain carefully.',
+  verification: 'Verify sensitive data requests through a separate, trusted communication channel. Call the person using a number you already know, not one from the email.',
+  escalation: 'When something feels wrong, escalate. IT Security teams are trained to assess threats — let them do their job.',
+  data_sharing: 'Sensitive customer data should never be shared via email. Use encrypted, audited data sharing platforms with access controls.',
+  policy: 'Formal data request procedures protect everyone. A signed request creates accountability and an audit trail.',
+  training: 'Regular security awareness training reduces phishing susceptibility by up to 70%. Knowledge is your best defense.',
+  incident: 'Time is critical in a data breach. The faster you report, the more damage you can contain. Every minute counts.',
+  accountability: 'Accountability in data privacy isn\'t about blame — it\'s about owning outcomes and improving processes for next time.',
+  documentation: 'Always maintain an audit trail. Documenting data access decisions protects you and your organization.',
+  culture: 'A strong security culture starts with individual vigilance. Every employee is a front-line defender of customer data.'
+};
+
+var NODES = {
+  intro:{
+    id:'intro',step:'Introduction',heading:'Scenario Brief',type:'intro',
+    story:'<div class="scenario-setup"><p><strong>Role:</strong> Customer Support Specialist, Apex Digital Solutions</p><p><strong>Industry:</strong> Mid-sized SaaS company with ~500 employees</p><p><strong>Situation:</strong> It\'s 2:30 PM on a busy Wednesday. Your inbox pings with an urgent email from the CFO.</p></div>',
+    email:{
+      from:'"Mark Reeves" <mark.reeves@apex-digital.com>',
+      to:'you@apex-digital.com',
+      subject:'URGENT: Compliance Audit – Customer Data Required',
+      body:'<p>Hi,</p><p>I\'m conducting a last-minute compliance audit ahead of our quarterly SEC review. I need a spreadsheet of all customer email addresses and phone numbers by end of day today.</p><p>This is urgent — please prioritize this above all other tasks.</p><p>Thanks,<br>Mark Reeves<br>CFO, Apex Digital Solutions</p>'
+    },
+    choices:[{text:'Open the email and assess the request',next:'d1',score:0,correct:true,icon:'check',feedback:'You\'ve opened the email and are now assessing its legitimacy. Trusting your instincts is the first step in data privacy.',tip:'Phishing attacks succeed because they look legitimate. Always pause and assess unexpected data requests, even from senior leadership.'}]
+  },
+  d1:{
+    id:'d1',step:'Decision 1 of 5',heading:'Your Inbox, Your Call',type:'decision',
+    story:'Reading the email, your instincts are divided. The request seems legitimate — it\'s from the CFO, after all. But something feels off: the CFO has never emailed you directly, the urgency feels manufactured, and the request for bulk customer data is unusual. What do you do?',
+    choices:[
+      {text:'Reply with the requested data — it\'s the CFO',next:'d2_breach',score:-10,correct:false,icon:'x',feedback:'Sharing customer data without verification is a breach of data protection principles. Legitimate data requests always follow formal channels.',tip:TIPS.data_sharing},
+      {text:'Reply cautiously asking for audit details',next:'d2_neutral',score:5,correct:false,icon:'warning',feedback:'Asking for verification shows awareness of privacy protocols. However, if this is a phishing attempt, you\'ve now alerted the attacker.',tip:TIPS.verification},
+      {text:'Forward to IT Security — this feels suspicious',next:'d2_hero',score:10,correct:true,icon:'check',feedback:'Outstanding judgment! Forwarding suspicious requests to IT is exactly the right protocol. You\'ve just demonstrated strong security awareness.',tip:TIPS.escalation}
+    ]
+  },
+  d2_breach:{
+    id:'d2_breach',step:'Decision 2 of 5',heading:'The Follow-Up Request',type:'decision',
+    story:'Within 30 minutes, "Mark" replies: "Perfect. Now I need the complete customer database — including payment history, internal support tickets, and account notes. The SEC audit deadline is tomorrow morning." Your stomach tightens.',
+    choices:[
+      {text:'Send the full database — urgency suggests it\'s real',next:'d3_breach',score:-10,correct:false,icon:'x',feedback:'Payments data and internal notes are highly sensitive. No legitimate audit would request this via email — this is a major red flag.',tip:TIPS.phishing},
+      {text:'Reply questioning why payment data is needed',next:'d3_mid',score:5,correct:false,icon:'warning',feedback:'Good instinct to question — but the damage was already done by sending initial data. You\'re on the right track now to contain it.',tip:TIPS.verification},
+      {text:'Call your direct manager immediately to flag this',next:'d3_mid',score:10,correct:true,icon:'check',feedback:'Smart escalation! Involving your manager creates an audit trail and brings in another layer of scrutiny. This is exactly right.',tip:TIPS.escalation}
+    ]
+  },
+  d2_neutral:{
+    id:'d2_neutral',step:'Decision 2 of 5',heading:'Pushback from Above',type:'decision',
+    story:'"Mark" replies within minutes, visibly annoyed: "This comes directly from the CEO. I\'ve CC\'d your department director for visibility. Please comply promptly." Your director immediately messages: "Mark, let\'s get this sorted."',
+    choices:[
+      {text:'Apologize and send the data — director said so',next:'d3_mid',score:-5,correct:false,icon:'x',feedback:'Pressure from leadership is real, but data privacy policies exist for everyone. Even directors can be part of a phishing chain.',tip:TIPS.policy},
+      {text:'Call the CFO using the official company directory number',next:'d3_neutral',score:5,correct:true,icon:'check',feedback:'Brilliant lateral thinking! Verbal verification through official channels is a best practice for sensitive data requests.',tip:TIPS.verification},
+      {text:'Reply all requesting a formal signed data request form',next:'d3_hero',score:10,correct:true,icon:'check',feedback:'Perfect! A formal data request creates a proper paper trail and deters unauthorized access attempts. Policy compliance at its best.',tip:TIPS.policy}
+    ]
+  },
+  d2_hero:{
+    id:'d2_hero',step:'Decision 2 of 5',heading:'IT Confirms Your Suspicion',type:'decision',
+    story:'IT Security responds within 15 minutes: "This is a targeted phishing campaign. The email originated from a lookalike domain — apex-digita1.com instead of apex-digital.com. Do not engage. We\'re tracing the source and blocking the sender."',
+    choices:[
+      {text:'Let IT handle it and return to your tasks',next:'d3_passive',score:0,correct:false,icon:'warning',feedback:'You\'ve done the right thing by reporting. But staying engaged could help prevent future incidents across the company.',tip:TIPS.training},
+      {text:'Ask IT about security awareness training opportunities',next:'d3_hero',score:5,correct:true,icon:'check',feedback:'Proactive learning mindset! Continuous improvement in security awareness benefits everyone.',tip:TIPS.training},
+      {text:'Warn your team in the company Slack channel',next:'d3_hero',score:5,correct:true,icon:'check',feedback:'Outstanding community thinking! Spreading awareness protects the entire organization from the same attack.',tip:TIPS.culture}
+    ]
+  },
+  d3_breach:{
+    id:'d3_breach',step:'Decision 3 of 5',heading:'The Situation Escalates',type:'decision',
+    story:'The "CFO" now requests employee HR records including salaries, performance reviews, and personal contact information. A colleague in the next cubicle mentions they received the same email. Data is flowing out.',
+    choices:[
+      {text:'Send the HR data — you\'re already committed',next:'d4_breach',score:-15,correct:false,icon:'x',feedback:'Sunk cost fallacy. It\'s never too late to stop a breach. Every additional record makes the incident exponentially worse.',tip:TIPS.incident},
+      {text:'Stop everything and call the whistleblower hotline',next:'d4_breach',score:0,correct:false,icon:'warning',feedback:'Better late than never. The anonymous hotline exists for exactly these situations — use it.',tip:TIPS.accountability},
+      {text:'Contact IT Security directly to report your concerns',next:'d4_mid',score:5,correct:true,icon:'check',feedback:'Good recovery move. IT can help contain the damage and begin incident response before more data is exposed.',tip:TIPS.incident}
+    ]
+  },
+  d3_neutral:{
+    id:'d3_neutral',step:'Decision 3 of 5',heading:'Verification Complete',type:'decision',
+    story:'You call the CFO\'s official number. The real Mark Reeves answers: "I never sent that email. Thank you for checking — you may have just prevented a serious data breach." Relief washes over you.',
+    choices:[
+      {text:'Report the phishing attempt to IT and move on',next:'d4_neutral',score:5,correct:true,icon:'check',feedback:'Reporting is essential. IT can now protect other colleagues who may have received the same email.',tip:TIPS.incident},
+      {text:'Ask IT to run company-wide phishing simulations',next:'d4_hero',score:10,correct:true,icon:'check',feedback:'Forward-thinking! Simulated phishing attacks reduce susceptibility across organizations by building muscle memory.',tip:TIPS.training},
+      {text:'Suggest implementing a formal data request protocol',next:'d4_hero',score:10,correct:true,icon:'check',feedback:'Systemic improvements create lasting security. A formal protocol prevents this for everyone going forward.',tip:TIPS.policy}
+    ]
+  },
+  d3_hero:{
+    id:'d3_hero',step:'Decision 3 of 5',heading:'You\'re Making a Difference',type:'decision',
+    story:'IT Security sends a company-wide commendation for your vigilance. The phishing email has been blocked across the organization. Your manager pulls you aside: "We\'re starting a Data Privacy Committee. Interested?"',
+    choices:[
+      {text:'Yes — volunteer for the committee',next:'d4_hero_active',score:10,correct:true,icon:'check',feedback:'Becoming part of the solution! Your real-world experience is invaluable for shaping data privacy policy.',tip:TIPS.culture},
+      {text:'Take security awareness training first to learn more',next:'d4_hero_active',score:5,correct:true,icon:'check',feedback:'Continuous learning is a hallmark of security-conscious professionals. Knowledge empowers better decisions.',tip:TIPS.training},
+      {text:'Decline — you just want to move on',next:'d4_neutral',score:0,correct:false,icon:'warning',feedback:'That\'s entirely fair. But consider: security champions are needed at every organizational level.',tip:TIPS.culture}
+    ]
+  },
+  d3_passive:{
+    id:'d3_passive',step:'Decision 3 of 5',heading:'Aftermath and Opportunity',type:'decision',
+    story:'IT handles the phishing incident successfully. A company-wide email announces the attempted attack and thanks those who reported it. Your manager acknowledges your role in catching it.',
+    choices:[
+      {text:'Attend the optional security workshop next week',next:'d4_hero_passive',score:5,correct:true,icon:'check',feedback:'Excellent initiative! Optional training attendance demonstrates genuine commitment to security.',tip:TIPS.training},
+      {text:'Skip it — you already handled it well',next:'d4_neutral',score:-5,correct:false,icon:'x',feedback:'Even experts can learn more. Phishing tactics evolve constantly — staying current is essential.',tip:TIPS.training},
+      {text:'Volunteer to help colleagues spot phishing attempts',next:'d4_hero_active',score:10,correct:true,icon:'check',feedback:'Peer education is one of the most effective security interventions. Colleagues learn best from each other.',tip:TIPS.culture}
+    ]
+  },
+  d3_mid:{
+    id:'d3_mid',step:'Decision 3 of 5',heading:'Navigating the Grey Zone',type:'decision',
+    story:'You\'re in a tough spot. Some data was already shared. IT has been notified and is assessing the exposure. The company\'s Data Protection Officer wants to meet with you.',
+    choices:[
+      {text:'Come clean fully about what was shared and when',next:'d4_mid',score:5,correct:true,icon:'check',feedback:'Transparency is crucial in incident response. Early and honest disclosure significantly limits damage.',tip:TIPS.accountability},
+      {text:'Downplay what you sent — minimize involvement',next:'d4_breach',score:-10,correct:false,icon:'x',feedback:'Hiding or minimizing mistakes compounds the problem. Breaches nearly always come to light during investigation.',tip:TIPS.accountability},
+      {text:'Report everything to the Data Protection Officer',next:'d4_hero',score:10,correct:true,icon:'check',feedback:'Excellent judgment. The DPO is specifically trained to handle data incidents with minimal legal and reputational fallout.',tip:TIPS.escalation}
+    ]
+  },
+  d4_breach:{
+    id:'d4_breach',step:'Decision 4 of 5',heading:'The Breach Unfolds',type:'decision',
+    story:'News breaks: customer data has appeared on a dark web monitoring service. The company is launching a formal investigation. A forensic audit has begun, and your name has been flagged in connection with the data release.',
+    choices:[
+      {text:'Hide your involvement, delete emails, deny everything',next:'d5_breach',score:-15,correct:false,icon:'x',feedback:'Obstruction of an investigation is a serious offense that can lead to termination and legal liability.',tip:TIPS.accountability},
+      {text:'Cooperate fully and provide all communication records',next:'d5_breach',score:5,correct:true,icon:'check',feedback:'Full cooperation is your best path forward. Honest disclosure mitigates consequences and enables learning.',tip:TIPS.accountability},
+      {text:'Resign before the investigation concludes',next:'d5_breach',score:-10,correct:false,icon:'x',feedback:'Resigning doesn\'t erase responsibility. It may also waive certain employment protections and appear evasive.',tip:TIPS.accountability}
+    ]
+  },
+  d4_neutral:{
+    id:'d4_neutral',step:'Decision 4 of 5',heading:'A Crossroads',type:'decision',
+    story:'The phishing incident has been contained. Your company is drafting updated data handling policies, and you\'ve been invited to contribute your perspective as someone on the front lines.',
+    choices:[
+      {text:'Provide detailed feedback on the new data request process',next:'d5_neutral',score:5,correct:true,icon:'check',feedback:'Your frontline perspective is invaluable for creating practical, usable policies that colleagues will actually follow.',tip:TIPS.policy},
+      {text:'Acknowledge the policies and return to normal',next:'d5_neutral',score:0,correct:false,icon:'warning',feedback:'Acknowledging policies is the minimum. Active engagement in security culture creates stronger organizational defense.',tip:TIPS.culture},
+      {text:'Volunteer to pilot the new protocols in your department',next:'d5_hero',score:10,correct:true,icon:'check',feedback:'Outstanding leadership! Early adopters help refine processes and model security best practices for others.',tip:TIPS.culture}
+    ]
+  },
+  d4_hero:{
+    id:'d4_hero',step:'Decision 4 of 5',heading:'Privacy Champion Rising',type:'decision',
+    story:'Your handling of the phishing incident has been noticed at the executive level. The Chief Privacy Officer personally emails you about a potential role as a department Data Privacy Advocate.',
+    choices:[
+      {text:'Accept the role enthusiastically',next:'d5_hero',score:10,correct:true,icon:'check',feedback:'Your career growth and organizational impact align perfectly. Data privacy expertise is increasingly valuable.',tip:TIPS.culture},
+      {text:'Ask to shadow the role for a month first',next:'d5_neutral',score:0,correct:false,icon:'warning',feedback:'Thoughtful consideration shows maturity. But opportunities have momentum — don\'t wait too long to decide.',tip:TIPS.training},
+      {text:'Suggest a colleague who\'s also passionate about privacy',next:'d5_hero',score:5,correct:true,icon:'check',feedback:'Building a community of privacy advocates multiplies your collective impact across the organization.',tip:TIPS.culture}
+    ]
+  },
+  d4_hero_active:{
+    id:'d4_hero_active',step:'Decision 4 of 5',heading:'Your Initiative Gains Momentum',type:'decision',
+    story:'Your proactive approach has inspired others. Several colleagues across departments have reached out asking how to get involved in data privacy. The timing is perfect — the company is redesigning its privacy training program.',
+    choices:[
+      {text:'Lead the development of new privacy training content',next:'d5_hero',score:15,correct:true,icon:'check',feedback:'Training development is high-impact — it scales your knowledge across the entire organization.',tip:TIPS.training},
+      {text:'Organize a lunch-and-learn series on data privacy',next:'d5_hero',score:10,correct:true,icon:'check',feedback:'Peer learning events build community and make security knowledge accessible and engaging.',tip:TIPS.culture},
+      {text:'Compile resources and let colleagues self-study',next:'d5_neutral',score:-5,correct:false,icon:'x',feedback:'Resources are helpful, but guided learning has far higher engagement and knowledge retention.',tip:TIPS.training}
+    ]
+  },
+  d4_hero_passive:{
+    id:'d4_hero_passive',step:'Decision 4 of 5',heading:'Building on Your Success',type:'decision',
+    story:'After attending the security workshop, you feel more confident identifying phishing attempts. The facilitator noticed your engagement and asked if you\'d consider becoming your department\'s security liaison.',
+    choices:[
+      {text:'Accept the security liaison role',next:'d5_hero',score:10,correct:true,icon:'check',feedback:'Becoming a liaison bridges communication between IT Security and your department — a vital function.',tip:TIPS.culture},
+      {text:'Decline but offer to help informally',next:'d5_neutral',score:0,correct:false,icon:'warning',feedback:'Even informal help is valuable, but a formal role gives you authority to drive real change.',tip:TIPS.culture},
+      {text:'Ask to co-facilitate the next workshop instead',next:'d5_hero',score:10,correct:true,icon:'check',feedback:'Co-facilitation develops your leadership skills while serving the organization\'s security goals.',tip:TIPS.training}
+    ]
+  },
+  d4_mid:{
+    id:'d4_mid',step:'Decision 4 of 5',heading:'Damage Control and Recovery',type:'decision',
+    story:'You\'ve come forward about the data you shared before the red flags went up. IT is assessing the exposure. The good news: early indications suggest limited damage. The company appreciates your honesty.',
+    choices:[
+      {text:'Cooperate fully and provide complete email records',next:'d5_neutral',score:10,correct:true,icon:'check',feedback:'Full transparency is always the best policy in security incidents. It enables thorough investigation.',tip:TIPS.accountability},
+      {text:'Comply minimally — answer only what you\'re asked',next:'d5_breach',score:-5,correct:false,icon:'x',feedback:'Minimal compliance can appear evasive. Proactive cooperation demonstrates integrity and builds trust.',tip:TIPS.accountability},
+      {text:'Request to help design better protocols going forward',next:'d5_neutral',score:5,correct:true,icon:'check',feedback:'Turning a mistake into systemic improvement shows growth mindset and leadership potential.',tip:TIPS.policy}
+    ]
+  },
+  d5_breach:{
+    id:'d5_breach',step:'Final Decision — 5 of 5',heading:'The Moment of Truth',type:'decision',
+    story:'The investigation has concluded. Customer data was exposed to an unauthorized party. Several accounts have been compromised. The board is determining consequences. You\'ve been called to make a final statement.',
+    choices:[
+      {text:'Accept full responsibility and commit to learning',next:'ending_closecall',score:15,correct:true,icon:'check',feedback:'Accountability is the first step toward rebuilding trust. This response demonstrates integrity and growth.',tip:TIPS.accountability},
+      {text:'Deflect blame and minimize your role',next:'ending_breach',score:-10,correct:false,icon:'x',feedback:'Avoiding accountability damages your professional reputation and career prospects in any industry.',tip:TIPS.accountability}
+    ]
+  },
+  d5_neutral:{
+    id:'d5_neutral',step:'Final Decision — 5 of 5',heading:'Your Path Forward',type:'decision',
+    story:'The dust has settled. Your company is implementing stronger data privacy safeguards. You\'ve learned firsthand how quickly a suspicious email can escalate. One final choice shapes your privacy legacy.',
+    choices:[
+      {text:'Commit to being a privacy champion going forward',next:'ending_closecall',score:10,correct:true,icon:'check',feedback:'Every champion starts with a single commitment. Your dedication today shapes your impact tomorrow.',tip:TIPS.culture},
+      {text:'Go above and beyond — request to lead privacy initiatives',next:'ending_hero',score:15,correct:true,icon:'check',feedback:'Leadership emerges from action. Your experience gives you unique insight to drive meaningful change.',tip:TIPS.culture},
+      {text:'Return to business as usual — more vigilant this time',next:'ending_closecall',score:0,correct:false,icon:'warning',feedback:'Vigilance is good, but active participation in security culture creates lasting organizational change.',tip:TIPS.culture}
+    ]
+  },
+  d5_hero:{
+    id:'d5_hero',step:'Final Decision — 5 of 5',heading:'Your Data Privacy Legacy',type:'decision',
+    story:'You\'ve become a trusted voice in data privacy at Apex Digital Solutions. From spotting a suspicious email to leading privacy initiatives, your journey has been remarkable. What\'s your final commitment?',
+    choices:[
+      {text:'Launch a company-wide Data Privacy Awareness campaign',next:'ending_hero',score:15,correct:true,icon:'check',feedback:'Awareness campaigns create lasting cultural change. You\'ll protect not just data, but your company\'s reputation.',tip:TIPS.culture},
+      {text:'Mentor colleagues as the go-to privacy resource',next:'ending_hero',score:10,correct:true,icon:'check',feedback:'Mentorship multiplies your impact exponentially. Your experience will guide countless future decisions.',tip:TIPS.culture},
+      {text:'Do both — launch the campaign and mentor others',next:'ending_hero',score:15,correct:true,icon:'check',feedback:'Bold commitment inspires others. Your leadership will define your organization\'s privacy culture for years.',tip:TIPS.culture}
+    ]
+  },
+  ending_hero:{
+    id:'ending_hero',type:'outcome',title:'Data Hero',
+    badge:'🛡️',color:'#38a169',
+    message:'Congratulations! You successfully protected your organization\'s data and strengthened its privacy posture.',
+    details:[
+      'You identified and properly escalated a sophisticated phishing attempt',
+      'You followed security protocols at every step',
+      'You helped improve organizational data privacy practices',
+      'You became a trusted privacy advocate and mentor'
+    ],
+    lessons:[
+      'Always verify the source of sensitive data requests through official channels',
+      'When in doubt, forward to IT Security — trust your instincts',
+      'Data privacy is everyone\'s responsibility at every level',
+      'Proactive security awareness and training prevents breaches before they happen'
+    ]
+  },
+  ending_closecall:{
+    id:'ending_closecall',type:'outcome',title:'Close Call',
+    badge:'⚠️',color:'#d69e2e',
+    message:'You avoided a major disaster, but there are important lessons to take forward.',
+    details:[
+      'You showed some good data privacy instincts',
+      'Some data may have been shared before verification',
+      'Your organization was exposed to unnecessary risk',
+      'You have clear opportunities to strengthen your approach'
+    ],
+    lessons:[
+      'Never share sensitive data without proper authorization and verification',
+      'Verify unusual requests through a separate, trusted communication channel',
+      'Report suspicious activity immediately — hesitation can be costly',
+      'Continuous learning in data privacy is essential for every professional'
+    ]
+  },
+  ending_breach:{
+    id:'ending_breach',type:'outcome',title:'Data Breach Occured',
+    badge:'🔴',color:'#e53e3e',
+    message:'A data breach occurred. Customer information was exposed to unauthorized parties.',
+    details:[
+      'Customer data was exfiltrated by an unauthorized third party',
+      'The organization suffered reputational and potential legal damage',
+      'Several accounts were compromised as a result',
+      'This could have been prevented with proper verification protocols'
+    ],
+    lessons:[
+      'Always verify the identity of anyone requesting sensitive data',
+      'Customer data should never be shared via email without encryption',
+      'Trust your instincts — if something feels wrong, stop and escalate',
+      'Data privacy compliance is not optional — it protects everyone'
+    ]
+  }
+};
+
+/* ==============================
+   State & Scoring
+   ============================== */
+var state = { currentNode:'intro', waitingForContinue:false };
+
+function getEnding(endingId){
+  return NODES[endingId] || NODES.ending_closecall;
+}
+
+function calculateFinalScore(endingId){
+  var base = cumulativeScore;
+  if(endingId === 'ending_hero') return Math.min(Math.max(base,80),100);
+  if(endingId === 'ending_closecall') return Math.min(Math.max(base,40),79);
+  return Math.max(base,10);
+}
+
+function getProgressPercent(nodeId){
+  var order = ['intro','d1','d2_breach','d2_neutral','d2_hero','d3_breach','d3_neutral','d3_hero','d3_passive','d3_mid','d4_breach','d4_neutral','d4_hero','d4_hero_active','d4_hero_passive','d4_mid','d5_breach','d5_neutral','d5_hero','ending_hero','ending_closecall','ending_breach'];
+  var idx = order.indexOf(nodeId);
+  if(idx < 0) return 0;
+  var maxIdx = 13;
+  return Math.min(Math.round((idx / maxIdx) * 100), 100);
+}
+
+/* ==============================
+   Rendering Engine
+   ============================== */
+function render(nodeId){
+  var node = NODES[nodeId];
+  if(!node) return;
+  state.currentNode = nodeId;
+  state.waitingForContinue = false;
+  visitedNodes.push(nodeId);
+  document.getElementById('stepIndicator').textContent = node.step || '';
+  document.getElementById('progressBar').style.width = getProgressPercent(nodeId) + '%';
+  var container = document.getElementById('scene');
+  container.classList.remove('visible');
+  if(node.type === 'outcome'){
+    renderOutcome(node, container);
+  } else if(node.type === 'intro'){
+    renderIntro(node, container);
+  } else {
+    renderDecision(node, container);
+  }
+  setTimeout(function(){ container.classList.add('visible'); }, 30);
+}
+
+function renderIntro(node, container){
+  var html = '<div class="card">';
+  html += '<div class="intro-badge"><span>Interactive Scenario</span><span>Data Privacy</span></div>';
+  html += '<h1 class="scene-heading">'+node.heading+'</h1>';
+  html += node.story;
+  html += '<div id="feedbackArea"></div>';
+  if(node.email){
+    html += '<div class="email-wrapper">';
+    html += '<div class="email-bar"><span class="email-dot red"></span><span class="email-dot yellow"></span><span class="email-dot green"></span></div>';
+    html += '<div class="email-field"><span class="email-label">From:</span><span class="email-value">'+node.email.from+'</span></div>';
+    html += '<div class="email-field"><span class="email-label">To:</span><span class="email-value">'+node.email.to+'</span></div>';
+    html += '<div class="email-field"><span class="email-label">Subject:</span><span class="email-value urgent">'+node.email.subject+'</span></div>';
+    html += '<div class="email-body">'+node.email.body+'</div>';
+    html += '</div>';
+  }
+  html += renderChoices(node.choices, node.id);
+  html += '</div>';
+  container.innerHTML = html;
+  attachChoiceHandlers(node.choices, node.id, container);
+}
+
+function renderDecision(node, container){
+  var html = '<div class="card">';
+  html += '<h2 class="scene-heading">'+node.heading+'</h2>';
+  html += '<div class="scene-story">'+node.story+'</div>';
+  html += '<div class="choices-container">';
+  node.choices.forEach(function(c,i){
+    html += '<button class="choice-btn" data-index="'+i+'"><span class="choice-label"><span class="choice-icon">'+(c.icon==='check'?'✓':c.icon==='x'?'✗':'!')+'</span><span class="choice-text">'+c.text+'</span></span></button>';
+  });
+  html += '</div>';
+  html += '<div id="feedbackArea"></div>';
+  html += '</div>';
+  container.innerHTML = html;
+  var buttons = container.querySelectorAll('.choice-btn');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = parseInt(this.getAttribute('data-index'));
+      handleChoice(node.id, idx, container);
+    });
+  });
+}
+
+function renderChoices(choices, nodeId){
+  var html = '<div class="choices-container" style="margin-top:20px">';
+  choices.forEach(function(c,i){
+    html += '<button class="choice-btn" data-index="'+i+'"><span class="choice-label"><span class="choice-icon">'+(c.icon==='check'?'✓':c.icon==='x'?'✗':'!')+'</span><span class="choice-text">'+c.text+'</span></span></button>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function attachChoiceHandlers(choices, nodeId, container){
+  var buttons = container.querySelectorAll('.choice-btn');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = parseInt(this.getAttribute('data-index'));
+      handleChoice(nodeId, idx, container);
+    });
+  });
+}
+
+function handleChoice(nodeId, choiceIdx, container){
+  var node = NODES[nodeId];
+  if(!node || !node.choices || state.waitingForContinue) return;
+  var choice = node.choices[choiceIdx];
+  if(!choice) return;
+  state.waitingForContinue = true;
+  totalChoices++;
+  cumulativeScore += choice.score;
+  if(choice.correct) correctCount++;
+  var buttons = container.querySelectorAll('.choice-btn');
+  buttons.forEach(function(b,i){
+    b.disabled = true;
+    var ci = parseInt(b.getAttribute('data-index'));
+    var ch = node.choices[ci];
+    if(i === choiceIdx){
+      if(ch.correct) b.classList.add('selected-correct');
+      else if(ch.icon === 'warning') b.classList.add('selected-neutral');
+      else b.classList.add('selected-incorrect');
+    } else {
+      b.style.opacity = '0.4';
+    }
+  });
+  var iconClass = choice.correct ? 'check' : (choice.icon==='warning' ? 'warning' : 'x');
+  var titleClass = choice.correct ? 'positive-text' : (choice.icon==='warning' ? 'neutral-text' : 'negative-text');
+  var panelClass = choice.correct ? 'positive' : (choice.icon==='warning' ? 'neutral' : 'negative');
+  var feedbackHtml = '<div class="feedback-panel '+panelClass+'">';
+  feedbackHtml += '<div class="feedback-header"><span class="feedback-icon '+iconClass+'">'+(iconClass==='check'?'✓':iconClass==='x'?'✗':'!')+'</span><span class="feedback-title '+titleClass+'">'+(choice.correct?'Correct Approach':choice.icon==='warning'?'Proceed with Caution':'Security Risk')+'</span></div>';
+  feedbackHtml += '<div class="feedback-text">'+choice.feedback+'</div>';
+  if(choice.tip){
+    feedbackHtml += '<div class="tip-box"><div class="tip-label">💡 Data Privacy Tip</div><div class="tip-text">'+choice.tip+'</div></div>';
+  }
+  feedbackHtml += '<button class="continue-btn" id="continueBtn">Continue <span class="arrow">→</span></button>';
+  feedbackHtml += '</div>';
+  var area = document.getElementById('feedbackArea');
+  if(area) area.innerHTML = feedbackHtml;
+  xAPI.interact(nodeId, choice.text, cumulativeScore, choice.correct ? 'correct' : (choice.icon==='warning' ? 'neutral' : 'incorrect'));
+  SCORM.set('cmi.core.score.raw', cumulativeScore);
+  SCORM.set('cmi.core.lesson_location', nodeId);
+  SCORM.commit();
+  document.getElementById('continueBtn').addEventListener('click', function(){
+    render(choice.next);
+  });
+}
+
+function renderOutcome(node, container){
+  var endingClass = node.id === 'ending_hero' ? 'hero' : (node.id === 'ending_closecall' ? 'close-call' : 'breach');
+  var finalScore = calculateFinalScore(node.id);
+  var status = finalScore >= 80 ? 'completed' : (finalScore >= 40 ? 'completed' : 'failed');
+  var html = '<div class="card outcome-screen">';
+  html += '<div class="outcome-badge '+endingClass+'">'+node.badge+'</div>';
+  html += '<h2 class="outcome-title '+endingClass+'">'+node.title+'</h2>';
+  html += '<p class="outcome-subtitle">'+node.message+'</p>';
+  html += '<div class="score-display">';
+  html += '<div class="score-item"><div class="score-value '+endingClass+'">'+finalScore+'</div><div class="score-label">Final Score</div></div>';
+  html += '<div class="score-item"><div class="score-value">'+correctCount+'/'+totalChoices+'</div><div class="score-label">Correct Choices</div></div>';
+  html += '<div class="score-item"><div class="score-value">'+visitedNodes.length+'</div><div class="score-label">Scenes Visited</div></div>';
+  html += '</div>';
+  html += '<div class="outcome-details"><h4>What Happened</h4><ul>';
+  node.details.forEach(function(d){ html += '<li>'+d+'</li>'; });
+  html += '</ul></div>';
+  html += '<div class="lessons-box"><h4>📋 Key Lessons Learned</h4><ul>';
+  node.lessons.forEach(function(l){ html += '<li>'+l+'</li>'; });
+  html += '</ul></div>';
+  html += '<button class="retry-btn" id="retryBtn">🔄 Retry Scenario</button>';
+  html += '</div>';
+  container.innerHTML = html;
+  SCORM.saveScore(finalScore, 100, 0, status);
+  xAPI.complete(finalScore, node.id, correctCount, totalChoices, visitedNodes);
+  document.getElementById('retryBtn').addEventListener('click', function(){ resetScenario(); });
+}
+
+function resetScenario(){
+  correctCount = 0;
+  totalChoices = 0;
+  visitedNodes = [];
+  cumulativeScore = 50;
+  state.waitingForContinue = false;
+  SCORM.set('cmi.core.lesson_status','incomplete');
+  SCORM.set('cmi.core.score.raw',0);
+  SCORM.commit();
+  render('intro');
+}
+
+/* ==============================
+   Initialization
+   ============================== */
+function init(){
+  SCORM.init();
+  SCORM.set('cmi.core.lesson_status','incomplete');
+  SCORM.set('cmi.core.score.raw',0);
+  SCORM.set('cmi.core.score.max',100);
+  SCORM.set('cmi.core.score.min',0);
+  SCORM.commit();
+  render('intro');
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      var cb = document.getElementById('continueBtn');
+      if(cb) cb.click();
+    }
+  });
+}
+window.addEventListener('load', init);
+window.addEventListener('beforeunload', function(){ SCORM.finish(); });
+</script>
+</body>
+</html>
