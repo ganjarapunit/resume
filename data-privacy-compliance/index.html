@@ -118,6 +118,10 @@ a{color:var(--primary-light);text-decoration:none}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .scene.visible .card{animation:slideUp 0.4s ease forwards}
 .scene.visible .card:nth-child(2){animation-delay:0.1s}
+.back-bar{display:flex;align-items:center;gap:6px;padding:10px 0 6px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:var(--transition)}
+.back-bar:hover{color:var(--primary-light)}
+.back-bar svg{width:16px;height:16px;transition:transform 0.2s ease}
+.back-bar:hover svg{transform:translateX(-3px)}
 @media(max-width:640px){
   #app{padding:0 12px 32px}
   header{padding:18px 20px 16px;border-radius:0;margin:0 -12px}
@@ -141,6 +145,10 @@ a{color:var(--primary-light);text-decoration:none}
 </head>
 <body>
 <div id="app">
+  <a href="../" class="back-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    Back to Portfolio
+  </a>
   <header>
     <div class="header-inner">
       <div class="header-left">
