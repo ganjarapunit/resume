@@ -53,6 +53,10 @@
           border: 1px solid rgba(255,255,255,0.4);
       }
 
+      .back-bar{display:flex;align-items:center;gap:6px;padding:16px 0 4px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .25s ease;max-width:1100px;margin:0 auto}
+      .back-bar:hover{color:var(--primary)}
+      .back-bar svg{width:16px;height:16px;transition:transform .2s ease}
+      .back-bar:hover svg{transform:translateX(-3px)}
       @media (max-width: 768px) {
           .portfolio-frame { margin: 20px 15px; padding: 20px; }
       }
@@ -60,6 +64,10 @@
 </head>
 <body>
 
+    <a href="../" class="back-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Back to Portfolio
+    </a>
     <header class="custom-header">
         <h1>Professional Communication Quiz</h1>
         <p>Curriculum Development • English Language Teaching</p>
