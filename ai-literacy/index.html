@@ -22,18 +22,26 @@
   --ease:0.35s cubic-bezier(0.4,0,0.2,1);
 }
 html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-/* ═══════════ LEARNER MODAL ═══════════ */
-.modal-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.modal-overlay.hidden{display:none}
-.modal-card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:40px 36px 32px;width:min(420px,92vw);box-shadow:var(--shadow-xl);text-align:center}
-.modal-card h2{font-size:1.35rem;font-weight:700;color:var(--primary);margin-bottom:6px}
-.modal-card p{font-size:.9rem;color:var(--text-muted);margin-bottom:24px;line-height:1.5}
-.modal-field{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s ease;margin-bottom:12px;background:#fff}
-.modal-field:focus{border-color:var(--primary)}
-.modal-btn{width:100%;padding:13px;border:none;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease}
-.modal-btn:hover{opacity:.88}
-.modal-skip{display:inline-block;margin-top:12px;font-size:.82rem;color:var(--text-light);cursor:pointer;text-decoration:underline;border:none;background:none;font-family:'Outfit',sans-serif}
-.modal-skip:hover{color:var(--text-muted)}
+/* ═══════════ LEARNER BANNER ═══════════ */
+.learner-banner{position:fixed;top:52px;left:0;right:0;z-index:99;background:var(--primary);color:#fff;padding:6px 24px;font-size:.78rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.learner-banner span{opacity:.9}
+.learner-banner a{color:#fff;text-decoration:underline;cursor:pointer;font-weight:600}
+.learner-banner a:hover{opacity:.8}
+/* ═══════════ COMMUNITY PANEL ═══════════ */
+.community-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:20px 24px;margin-top:24px;text-align:left}
+.community-panel h3{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.community-panel p{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
+.community-list{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.community-list li{background:#fff;border:1px solid #e2e8f0;border-radius:var(--r-sm);padding:6px 14px;font-size:.82rem;font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px}
+.community-list li .badge{font-size:.65rem;background:var(--accent);color:#fff;border-radius:99px;padding:1px 8px;font-weight:600}
+/* ═══════════ NAME FORM (embedded in slide 0) ═══════════ */
+.name-form{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.name-form input{flex:1;min-width:160px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.85rem;outline:none;transition:border-color .25s ease;background:#fff}
+.name-form input:focus{border-color:var(--primary)}
+.name-form button{padding:10px 22px;border:none;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease;white-space:nowrap}
+.name-form button:hover{opacity:.88}
+.name-form .skip-link{background:none;border:none;color:var(--text-light);font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:10px 8px}
+.name-form .skip-link:hover{color:var(--text-muted)}
 body::before,body::after{content:'';position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);pointer-events:none}
 body::before{top:-120px;right:-80px;width:560px;height:560px;background:radial-gradient(circle,rgba(32,69,124,.13) 0%,transparent 70%)}
 body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-gradient(circle,rgba(16,185,129,.10) 0%,transparent 70%)}
@@ -58,7 +66,7 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
 }
 
 /* ═══════════ APP LAYOUT ═══════════ */
-#app{max-width:860px;margin:0 auto;padding:60px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
+#app{max-width:860px;margin:0 auto;padding:88px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
 
 /* ═══════════ HEADER ═══════════ */
 .course-header{
@@ -316,6 +324,9 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
   <span class="course-badge">AI Literacy</span>
 </div>
 
+<!-- ═══ LEARNER BANNER ═══ -->
+<div id="learnerBanner" class="learner-banner"></div>
+
 <!-- ═══ APP ═══ -->
 <div id="app">
 
@@ -352,6 +363,14 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
           <li>Evaluate AI-generated content for accuracy, bias, and limitations</li>
           <li>Make ethical decisions when using AI tools on the job</li>
         </ul>
+      </div>
+      <div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--accent);border-radius:var(--r-md);padding:16px 20px;margin-bottom:14px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Enter your name so we can track your progress</div>
+        <div class="name-form">
+          <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name">
+          <button onclick="setLearnerName()">Save Name</button>
+          <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
+        </div>
       </div>
       <button class="btn btn-primary btn-block" onclick="goToSlide(1)">
         Start Learning <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
@@ -587,7 +606,14 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
           </li>
         </ul>
       </div>
-      <div style="text-align:center">
+      <div class="community-panel" id="communityPanel">
+        <h3><i data-lucide="users" style="width:18px;height:18px"></i> Course Community</h3>
+        <p>People who have completed this course</p>
+        <ul class="community-list" id="communityList">
+          <li style="color:var(--text-light);font-size:.82rem">Loading...</li>
+        </ul>
+      </div>
+      <div style="text-align:center;margin-top:12px">
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">📖 Continue learning with <a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank" style="color:var(--primary)">AI For Everyone (Coursera)</a></p>
         <a href="../" class="btn btn-primary"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>
       </div>
@@ -595,18 +621,6 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
 
   </div><!-- /slide-container -->
 </div><!-- /app -->
-
-<!-- ═══ Learner Registration Modal ═══ -->
-<div id="learnerModal" class="modal-overlay">
-  <div class="modal-card">
-    <h2>👋 Before You Start</h2>
-    <p>Enter your name so we can track your progress. Your information stays on your device.</p>
-    <input id="learnerName" class="modal-field" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" required>
-    <input id="learnerEmail" class="modal-field" type="email" placeholder="Email (optional)" autocomplete="email">
-    <button class="modal-btn" onclick="saveLearner()">Start Learning</button>
-    <button class="modal-skip" onclick="skipLearner()">Continue anonymously</button>
-  </div>
-</div>
 
 <script>
 /* ═══════════════════════════════════════════════
@@ -678,56 +692,102 @@ var SCORM = (function(){
 })();
 
 /* ═══════════════════════════════════════════════
-   Learner Identity Resolution
+   Learner Identity — auto-generates a unique ID
+   per visitor so Veracity always sees distinct agents
    ═══════════════════════════════════════════════ */
-function getLearner(){
-  var stored = localStorage.getItem('xapi_learner');
-  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
-  return null;
+function generateId(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:r&3|8;return v.toString(16);}); }
+function getVisitorId(){
+  var id = localStorage.getItem('xapi_visitor_id');
+  if(!id){ id = generateId(); localStorage.setItem('xapi_visitor_id', id); }
+  return id;
+}
+function getLearnerName(){
+  return localStorage.getItem('xapi_learner_name') || '';
+}
+function setLearnerName(){
+  var name = document.getElementById('learnerName').value.trim();
+  if(!name) return;
+  localStorage.setItem('xapi_learner_name', name);
+  document.getElementById('nameFormBox').style.display = 'none';
+  window.currentActor = resolveActor();
+  updateBanner();
+  xAPI.launched();
+}
+function skipLearnerName(){
+  localStorage.setItem('xapi_learner_skipped', '1');
+  document.getElementById('nameFormBox').style.display = 'none';
+  window.currentActor = resolveActor();
+  updateBanner();
+  xAPI.launched();
 }
 function resolveActor(){
-  var learner = getLearner();
-  if(learner && learner.name){
-    var mbox = learner.email || learner.name.replace(/\s+/g,'.').toLowerCase()+'@learner.veracity';
-    return {mbox:'mailto:'+mbox, name:learner.name, objectType:'Agent'};
-  }
-  return {mbox:'mailto:anonymous@learner.veracity', name:'Anonymous Learner', objectType:'Agent'};
+  var name = getLearnerName();
+  var vid = getVisitorId();
+  if(name) return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
+  return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
 }
-function saveLearner(){
-  var name = document.getElementById('learnerName').value.trim();
-  var email = document.getElementById('learnerEmail').value.trim();
-  if(!name){ document.getElementById('learnerName').focus(); return; }
-  localStorage.setItem('xapi_learner', JSON.stringify({name:name, email:email || ''}));
-  document.getElementById('learnerModal').classList.add('hidden');
-  window.currentActor = resolveActor();
-  xAPI.launched();
+function updateBanner(){
+  var banner = document.getElementById('learnerBanner');
+  if(!banner) return;
+  var name = getLearnerName() || 'Learner-'+getVisitorId().slice(0,8);
+  banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span><a onclick="showNameForm()">Change name</a>';
 }
-function skipLearner(){
-  localStorage.setItem('xapi_learner', JSON.stringify({name:'', email:''}));
-  document.getElementById('learnerModal').classList.add('hidden');
-  window.currentActor = resolveActor();
-  xAPI.launched();
+function showNameForm(){
+  document.getElementById('nameFormBox').style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════
+   LRS Community — fetch learners from Veracity
+   ═══════════════════════════════════════════════ */
+var LRS_ENDPOINT = 'https://adapt-course.lrs.io/xapi/statements';
+var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
+function fetchCommunity(){
+  var list = document.getElementById('communityList');
+  if(!list) return;
+  list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">Loading...</li>';
+  fetch(LRS_ENDPOINT+'?verb=http://adlnet.gov/expapi/verbs/completed&activity=https://ganjarapunit.github.io/resume/ai-literacy/&limit=100', {
+    headers:{'Authorization':LRS_AUTH,'X-Experience-API-Version':'1.0.3'}
+  }).then(function(r){ return r.json(); }).then(function(data){
+    var seen = {}, learners = [];
+    (data.statements || []).forEach(function(s){
+      var actor = s.actor;
+      if(!actor) return;
+      var key = actor.mbox || actor.name || (actor.account ? actor.account.name : '');
+      if(seen[key]) return;
+      seen[key] = true;
+      learners.push({name:actor.name || 'Anonymous', mbox:actor.mbox});
+    });
+    if(learners.length === 0){
+      list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">No learners yet — be the first!</li>';
+      return;
+    }
+    var now = new Date();
+    var isYou = getLearnerName() || getVisitorId();
+    list.innerHTML = learners.map(function(l){
+      var badge = '';
+      if(l.name === getLearnerName()) badge = ' <span class="badge">You</span>';
+      return '<li>' + l.name + badge + '</li>';
+    }).join('');
+  }).catch(function(){
+    list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">Could not load community data</li>';
+  });
 }
 
 /* ═══════════════════════════════════════════════
    xAPI Statement Sender — Veracity LRS
    ═══════════════════════════════════════════════ */
 var xAPI = (function(){
-  var LRS_ENDPOINT = 'https://adapt-course.lrs.io/xapi/statements';
-  var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
-
   var statements = [];
+  var _launched = false;
   function actor(){ return window.currentActor || resolveActor(); }
   var base = {
     context: function(){
-      var l = getLearner();
       return {
         platform:'PunitPortfolio',
         language:'en-US',
         extensions:{
           'https://ganjarapunit.github.io/resume/extensions/course':'ai-literacy',
-          'https://ganjarapunit.github.io/resume/extensions/learner-name': l && l.name ? l.name : 'Anonymous',
-          'https://ganjarapunit.github.io/resume/extensions/learner-email': l && l.email ? l.email : ''
+          'https://ganjarapunit.github.io/resume/extensions/visitor-id': getVisitorId()
         }
       };
     },
@@ -760,6 +820,8 @@ var xAPI = (function(){
   }
   return {
     launched: function(){
+      if(_launched) return;
+      _launched = true;
       return sendStatement({
         actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/launched', display:{'en-US':'launched'}},
@@ -1233,35 +1295,37 @@ function init(){
   SCORM.set('cmi.core.score.min',0);
   SCORM.commit();
 
-  // Check URL params for learner identity
+  // Ensure a visitor ID always exists (creates one if not)
+  getVisitorId();
+
+  // Check URL params to pre-fill name
   var params = new URLSearchParams(window.location.search);
   var urlName = params.get('name');
-  var urlEmail = params.get('email');
-  if(urlName && !getLearner()){
-    localStorage.setItem('xapi_learner', JSON.stringify({name:urlName, email:urlEmail||''}));
+  if(urlName && !getLearnerName()){
+    localStorage.setItem('xapi_learner_name', urlName);
+    document.getElementById('nameFormBox').style.display = 'none';
   }
 
   // Check SCORM API for LMS-provided student name
   var scormName = SCORM.get('cmi.core.student_name') || SCORM.get('cmi.learner_name');
-  if(scormName && !getLearner()){
-    localStorage.setItem('xapi_learner', JSON.stringify({name:scormName, email:''}));
+  if(scormName && !getLearnerName()){
+    localStorage.setItem('xapi_learner_name', scormName);
+    document.getElementById('nameFormBox').style.display = 'none';
   }
 
   window.currentActor = resolveActor();
 
-  // Show modal if no name registered
-  var learner = getLearner();
-  if(!learner || !learner.name){
-    document.getElementById('learnerModal').classList.remove('hidden');
-    if(urlName) document.getElementById('learnerName').value = urlName;
-    if(urlEmail) document.getElementById('learnerEmail').value = urlEmail;
-  } else {
+  // Hide name form if already registered or skipped
+  if(getLearnerName() || localStorage.getItem('xapi_learner_skipped')){
+    document.getElementById('nameFormBox').style.display = 'none';
     xAPI.launched();
   }
 
+  updateBanner();
   initSort();
   initQuiz();
   updateSlideUI();
+  fetchCommunity();
   if(typeof lucide !== 'undefined') lucide.createIcons();
   
   // Mark complete when reaching the last slide
