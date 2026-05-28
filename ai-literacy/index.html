@@ -713,6 +713,16 @@ function setLearnerName(){
   sessionStorage.setItem('xapi_learner_name', name);
   window.currentActor = resolveActor();
   updateBanner();
+  // Visual feedback: collapse the form and show a brief confirmation
+  document.getElementById('nameFormBox').style.display = 'none';
+  var banner = document.getElementById('learnerBanner');
+  if(banner){
+    var flash = document.createElement('span');
+    flash.textContent = ' ✓ Saved';
+    flash.style.cssText = 'color:#34d399;font-weight:700;font-size:.75rem;margin-left:4px';
+    banner.querySelector('span').appendChild(flash);
+    setTimeout(function(){ if(flash.parentNode) flash.remove(); }, 2500);
+  }
 }
 function skipLearnerName(){
   sessionStorage.setItem('xapi_learner_skipped', '1');
