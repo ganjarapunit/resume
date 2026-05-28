@@ -1,7 +1,6 @@
 const CMI5 = (function() {
     const params = new URLSearchParams(window.location.search);
 
-    // ── LRS config: prefer cmi5 launch params, fall back to Veracity LRS ──
     const LRS_ENDPOINT = params.get("endpoint") || "https://portfolio-testing.lrs.io/xapi/statements";
     const LRS_AUTH = params.get("auth") || "Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==";
     const ACTIVITY_ID = params.get("activityId") || "https://ganjarapunit.github.io/resume/giving-constructive-feedback/";
@@ -20,12 +19,24 @@ const CMI5 = (function() {
         return id;
     }
 
+    function getLearnerName() {
+        return sessionStorage.getItem('cmi5_learner_name') || '';
+    }
+
     function getActor() {
         if (params.get("actor")) {
             try {
                 var a = JSON.parse(decodeURIComponent(params.get("actor")));
                 return { objectType: "Agent", mbox: a.mbox, account: a.account, name: a.name };
             } catch (e) {}
+        }
+        var name = getLearnerName();
+        if (name) {
+            return {
+                objectType: "Agent",
+                account: { homePage: "https://ganjarapunit.github.io/resume", name: getVisitorId() },
+                name: name
+            };
         }
         return {
             objectType: "Agent",
@@ -82,6 +93,13 @@ const CMI5 = (function() {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/initialized",
                 display: { "en-US": "initialized" }
+            });
+        },
+
+        launched: function() {
+            sendStatement({
+                id: "http://adlnet.gov/expapi/verbs/launched",
+                display: { "en-US": "launched" }
             });
         },
 

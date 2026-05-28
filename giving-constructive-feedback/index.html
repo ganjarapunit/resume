@@ -259,6 +259,19 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
 .btn-success:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(32,69,124,.3)}
 .btn-block{width:100%;justify-content:center}
 
+.name-form{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap}
+.name-form input{flex:1;min-width:160px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.85rem;outline:none;transition:border-color .25s ease;background:#fff}
+.name-form input:focus{border-color:var(--primary)}
+.name-form button{padding:10px 22px;border:none;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease;white-space:nowrap}
+.name-form button:hover{opacity:.88}
+.name-form .skip-link{background:none;border:none;color:var(--text-light);font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:10px 8px}
+.name-form .skip-link:hover{color:var(--text-muted)}
+
+.learner-banner{position:fixed;top:52px;left:0;right:0;z-index:99;background:var(--primary);color:#fff;padding:6px 24px;font-size:.78rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.learner-banner span{opacity:.9}
+.learner-banner a{color:#fff;text-decoration:underline;cursor:pointer;font-weight:600}
+.learner-banner a:hover{opacity:.8}
+
 .score-display{text-align:center;padding:32px}
 .score-display .score-circle{
   width:110px;height:110px;border-radius:50%;margin:0 auto 20px;
@@ -331,6 +344,8 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
   <span class="course-badge">cmi5 • Microlearning</span>
 </div>
 
+<div id="learnerBanner" class="learner-banner"></div>
+
 <div id="app">
 
   <div class="course-header">
@@ -364,7 +379,16 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
           <li>Craft clear, actionable feedback statements</li>
         </ul>
       </div>
-      <button class="btn btn-primary btn-block" onclick="goToSlide(1)">
+      <div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--accent);border-radius:var(--r-md);padding:16px 20px;margin-bottom:14px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
+        <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>
+        <div class="name-form">
+          <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name">
+          <button onclick="setLearnerName()">Save Name</button>
+          <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="startCourse()" id="startBtn">
         Start Learning <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
       </button>
     </div>
@@ -612,6 +636,67 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
 <script>
 let currentSlide = 0;
 const TOTAL_SLIDES = 7;
+let _launched = false;
+
+// ── Learner Identity ──
+function getLearnerName() {
+  return sessionStorage.getItem('cmi5_learner_name') || '';
+}
+
+function setLearnerName() {
+  var name = document.getElementById('learnerName').value.trim();
+  if (!name) return;
+  sessionStorage.setItem('cmi5_learner_name', name);
+  document.getElementById('nameFormBox').style.display = 'none';
+  updateBanner();
+  var flash = document.createElement('span');
+  flash.textContent = ' ✓ Saved';
+  flash.style.cssText = 'color:#34d399;font-weight:700;font-size:.75rem;margin-left:4px';
+  var banner = document.getElementById('learnerBanner');
+  if (banner) {
+    var span = banner.querySelector('span');
+    if (span) span.appendChild(flash);
+    setTimeout(function(){ if(flash.parentNode) flash.remove(); }, 2500);
+  }
+}
+
+function skipLearnerName() {
+  sessionStorage.setItem('cmi5_learner_skipped', '1');
+  document.getElementById('nameFormBox').style.display = 'none';
+  updateBanner();
+}
+
+function updateBanner() {
+  var banner = document.getElementById('learnerBanner');
+  if (!banner) return;
+  var name = getLearnerName() || 'Learner-' + (localStorage.getItem('cmi5_visitor_id') || '').slice(0, 8);
+  banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
+    + '<span style="display:flex;align-items:center;gap:8px">'
+    + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Outfit\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Change name</button>'
+    + '</span>';
+}
+
+function showNameForm() {
+  document.getElementById('nameFormBox').style.display = 'block';
+  var input = document.getElementById('learnerName');
+  if (input) { input.value = ''; input.focus(); }
+}
+
+function startCourse() {
+  var nameInput = document.getElementById('learnerName');
+  if (nameInput && nameInput.value.trim() && !getLearnerName()) {
+    setLearnerName();
+  }
+  if (!getLearnerName() && !sessionStorage.getItem('cmi5_learner_skipped')) {
+    skipLearnerName();
+  }
+  document.getElementById('nameFormBox').style.display = 'none';
+  if (typeof CMI5 !== 'undefined' && !_launched) {
+    _launched = true;
+    CMI5.launched();
+  }
+  goToSlide(1);
+}
 
 // ── Slide Navigation ──
 function goToSlide(n) {
