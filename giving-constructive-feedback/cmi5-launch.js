@@ -1,46 +1,53 @@
 const CMI5 = (function() {
     const params = new URLSearchParams(window.location.search);
-    const launchData = {
-        endpoint: params.get("endpoint"),
-        auth: params.get("auth"),
-        actor: params.get("actor") ? JSON.parse(decodeURIComponent(params.get("actor"))) : null,
-        registration: params.get("registration"),
-        activityId: params.get("activityId") || "https://ganjarapunit.github.io/resume/giving-constructive-feedback/",
-        fetch: params.get("fetch")
-    };
+
+    // ── LRS config: prefer cmi5 launch params, fall back to Veracity LRS ──
+    const LRS_ENDPOINT = params.get("endpoint") || "https://portfolio-testing.lrs.io/xapi/statements";
+    const LRS_AUTH = params.get("auth") || "Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==";
+    const ACTIVITY_ID = params.get("activityId") || "https://ganjarapunit.github.io/resume/giving-constructive-feedback/";
+    const REGISTRATION = params.get("registration") || crypto.randomUUID();
+
+    function generateId() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 3 | 8);
+            return v.toString(16);
+        });
+    }
+
+    function getVisitorId() {
+        var id = localStorage.getItem('cmi5_visitor_id');
+        if (!id) { id = generateId(); localStorage.setItem('cmi5_visitor_id', id); }
+        return id;
+    }
 
     function getActor() {
-        if (!launchData.actor) return {
-            objectType: "Agent",
-            account: {
-                homePage: "https://ganjarapunit.github.io/resume",
-                name: "anonymous-" + Date.now()
-            },
-            name: "Learner"
-        };
+        if (params.get("actor")) {
+            try {
+                var a = JSON.parse(decodeURIComponent(params.get("actor")));
+                return { objectType: "Agent", mbox: a.mbox, account: a.account, name: a.name };
+            } catch (e) {}
+        }
         return {
             objectType: "Agent",
-            mbox: launchData.actor.mbox,
-            account: launchData.actor.account,
-            name: launchData.actor.name
+            account: { homePage: "https://ganjarapunit.github.io/resume", name: getVisitorId() },
+            name: "Learner-" + getVisitorId().slice(0, 8)
         };
     }
 
     function sendStatement(verb, result, contextExtras) {
-        if (!launchData.endpoint) return Promise.resolve();
-        const statement = {
+        var statement = {
             actor: getActor(),
             verb: verb,
             object: {
                 objectType: "Activity",
-                id: launchData.activityId,
+                id: ACTIVITY_ID,
                 definition: {
                     name: { "en-US": "Giving Constructive Feedback" },
                     description: { "en-US": "A microlearning module on delivering effective feedback in the workplace." }
                 }
             },
             context: {
-                registration: launchData.registration,
+                registration: REGISTRATION,
                 contextActivities: {
                     category: [{
                         id: "http://www.adlnet.gov/expapi/activities/profile",
@@ -52,16 +59,18 @@ const CMI5 = (function() {
         };
         if (result) statement.result = result;
         if (contextExtras) Object.assign(statement.context, contextExtras);
-        const authHeader = launchData.auth || "";
-        return fetch(launchData.endpoint + "/statements", {
-            method: "POST",
-            headers: {
-                "Authorization": authHeader,
-                "Content-Type": "application/json",
-                "X-Experience-API-Version": "1.0.3"
-            },
-            body: JSON.stringify(statement)
-        }).catch(function() {});
+
+        try {
+            fetch(LRS_ENDPOINT, {
+                method: "POST",
+                headers: {
+                    "Authorization": LRS_AUTH,
+                    "Content-Type": "application/json",
+                    "X-Experience-API-Version": "1.0.3"
+                },
+                body: JSON.stringify(statement)
+            }).catch(function() {});
+        } catch (e) {}
     }
 
     return {
@@ -80,32 +89,21 @@ const CMI5 = (function() {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/completed",
                 display: { "en-US": "completed" }
-            }, {
-                completion: true,
-                success: success !== false
-            });
+            }, { completion: true, success: success !== false });
         },
 
         pass: function(score) {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/passed",
                 display: { "en-US": "passed" }
-            }, {
-                completion: true,
-                success: true,
-                score: score || { scaled: 1 }
-            });
+            }, { completion: true, success: true, score: score || { scaled: 1 } });
         },
 
         fail: function(score) {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/failed",
                 display: { "en-US": "failed" }
-            }, {
-                completion: true,
-                success: false,
-                score: score || { scaled: 0 }
-            });
+            }, { completion: true, success: false, score: score || { scaled: 0 } });
         },
 
         terminate: function() {
@@ -119,9 +117,7 @@ const CMI5 = (function() {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/progressed",
                 display: { "en-US": "progressed" }
-            }, {
-                extensions: { "https://w3id.org/xapi/cmi5/result/extensions/progress": pct }
-            });
+            }, { extensions: { "https://w3id.org/xapi/cmi5/result/extensions/progress": pct } });
         },
 
         interacted: function(action, details) {
@@ -140,11 +136,7 @@ const CMI5 = (function() {
             sendStatement({
                 id: "http://adlnet.gov/expapi/verbs/answered",
                 display: { "en-US": "answered" }
-            }, {
-                response: questionId,
-                success: correct,
-                completion: true
-            });
+            }, { response: questionId, success: correct, completion: true });
         }
     };
 })();
