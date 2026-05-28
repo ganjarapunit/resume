@@ -702,23 +702,25 @@ function getVisitorId(){
   return id;
 }
 function getLearnerName(){
-  return localStorage.getItem('xapi_learner_name') || '';
+  // sessionStorage so identity resets each browser session — prevents
+  // one person's name persisting for the next user on the same machine.
+  return sessionStorage.getItem('xapi_learner_name') || '';
 }
 function setLearnerName(){
   var name = document.getElementById('learnerName').value.trim();
   if(!name) return;
-  localStorage.setItem('xapi_learner_name', name);
+  sessionStorage.setItem('xapi_learner_name', name);
   document.getElementById('nameFormBox').style.display = 'none';
   window.currentActor = resolveActor();
   updateBanner();
-  xAPI.launched();
+  if(!xAPI.wasLaunched()) xAPI.launched();
 }
 function skipLearnerName(){
-  localStorage.setItem('xapi_learner_skipped', '1');
+  sessionStorage.setItem('xapi_learner_skipped', '1');
   document.getElementById('nameFormBox').style.display = 'none';
   window.currentActor = resolveActor();
   updateBanner();
-  xAPI.launched();
+  if(!xAPI.wasLaunched()) xAPI.launched();
 }
 function resolveActor(){
   var name = getLearnerName();
@@ -730,10 +732,15 @@ function updateBanner(){
   var banner = document.getElementById('learnerBanner');
   if(!banner) return;
   var name = getLearnerName() || 'Learner-'+getVisitorId().slice(0,8);
-  banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span><a onclick="showNameForm()">Change name</a>';
+  banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
+    + '<span style="display:flex;align-items:center;gap:8px">'
+    + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Outfit\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
+    + '</span>';
 }
 function showNameForm(){
   document.getElementById('nameFormBox').style.display = 'block';
+  var input = document.getElementById('learnerName');
+  if(input){ input.value = ''; input.focus(); }
 }
 
 /* ═══════════════════════════════════════════════
@@ -753,7 +760,10 @@ function fetchCommunity(){
 var xAPI = (function(){
   var statements = [];
   var _launched = false;
-  function actor(){ return window.currentActor || resolveActor(); }
+  // Always resolve actor fresh from storage — never rely on a stale cached
+  // window.currentActor, in case the learner changed their name mid-session.
+  function actor(){ return resolveActor(); }
+  function wasLaunched(){ return _launched; }
   var base = {
     context: function(){
       return {
@@ -847,6 +857,7 @@ var xAPI = (function(){
         timestamp:base.timestamp()
       });
     },
+    wasLaunched: function(){ return wasLaunched(); },
     getStatements: function(){ return statements; },
     flushAll: function(){
       var pending = statements.splice(0, statements.length);
@@ -1272,25 +1283,26 @@ function init(){
   // Ensure a visitor ID always exists (creates one if not)
   getVisitorId();
 
-  // Check URL params to pre-fill name
+  // Check URL params to pre-fill name (e.g. ?name=Jane)
   var params = new URLSearchParams(window.location.search);
   var urlName = params.get('name');
   if(urlName && !getLearnerName()){
-    localStorage.setItem('xapi_learner_name', urlName);
+    sessionStorage.setItem('xapi_learner_name', urlName);
     document.getElementById('nameFormBox').style.display = 'none';
   }
 
   // Check SCORM API for LMS-provided student name
   var scormName = SCORM.get('cmi.core.student_name') || SCORM.get('cmi.learner_name');
   if(scormName && !getLearnerName()){
-    localStorage.setItem('xapi_learner_name', scormName);
+    sessionStorage.setItem('xapi_learner_name', scormName);
     document.getElementById('nameFormBox').style.display = 'none';
   }
 
+  // Always resolve a fresh actor — never reuse a stale cached reference
   window.currentActor = resolveActor();
 
-  // Hide name form if already registered or skipped
-  if(getLearnerName() || localStorage.getItem('xapi_learner_skipped')){
+  // Hide name form if already registered or skipped in THIS session
+  if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
     document.getElementById('nameFormBox').style.display = 'none';
     xAPI.launched();
   }
