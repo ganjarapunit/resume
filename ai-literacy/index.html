@@ -744,33 +744,7 @@ var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYT
 function fetchCommunity(){
   var list = document.getElementById('communityList');
   if(!list) return;
-  list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">Loading...</li>';
-  fetch(LRS_ENDPOINT+'?verb=http://adlnet.gov/expapi/verbs/completed&activity=https://ganjarapunit.github.io/resume/ai-literacy/&limit=100', {
-    headers:{'Authorization':LRS_AUTH,'X-Experience-API-Version':'1.0.3'}
-  }).then(function(r){ return r.json(); }).then(function(data){
-    var seen = {}, learners = [];
-    (data.statements || []).forEach(function(s){
-      var actor = s.actor;
-      if(!actor) return;
-      var key = actor.mbox || actor.name || (actor.account ? actor.account.name : '');
-      if(seen[key]) return;
-      seen[key] = true;
-      learners.push({name:actor.name || 'Anonymous', mbox:actor.mbox});
-    });
-    if(learners.length === 0){
-      list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">No learners yet — be the first!</li>';
-      return;
-    }
-    var now = new Date();
-    var isYou = getLearnerName() || getVisitorId();
-    list.innerHTML = learners.map(function(l){
-      var badge = '';
-      if(l.name === getLearnerName()) badge = ' <span class="badge">You</span>';
-      return '<li>' + l.name + badge + '</li>';
-    }).join('');
-  }).catch(function(){
-    list.innerHTML = '<li style="color:var(--text-light);font-size:.82rem">Could not load community data</li>';
-  });
+  list.innerHTML = '<li style="color:var(--text-muted);font-size:.82rem;width:100%;text-align:center">View all learners in <a href="https://adapt-course.lrs.io/" target="_blank" style="color:var(--primary);text-decoration:underline">Veracity Dashboard</a></li>';
 }
 
 /* ═══════════════════════════════════════════════
