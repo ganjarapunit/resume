@@ -365,14 +365,15 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
         </ul>
       </div>
       <div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--accent);border-radius:var(--r-md);padding:16px 20px;margin-bottom:14px">
-        <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Enter your name so we can track your progress</div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
+        <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Enter your name so your progress is tracked to you. Your name will appear on the course leaderboard.</div>
         <div class="name-form">
           <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name">
           <button onclick="setLearnerName()">Save Name</button>
           <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" onclick="goToSlide(1)">
+      <button class="btn btn-primary btn-block" onclick="startCourse()">
         Start Learning <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
       </button>
     </div>
@@ -710,17 +711,33 @@ function setLearnerName(){
   var name = document.getElementById('learnerName').value.trim();
   if(!name) return;
   sessionStorage.setItem('xapi_learner_name', name);
-  document.getElementById('nameFormBox').style.display = 'none';
   window.currentActor = resolveActor();
   updateBanner();
-  if(!xAPI.wasLaunched()) xAPI.launched();
 }
 function skipLearnerName(){
   sessionStorage.setItem('xapi_learner_skipped', '1');
-  document.getElementById('nameFormBox').style.display = 'none';
   window.currentActor = resolveActor();
   updateBanner();
+}
+function startCourse(){
+  // If the input field has text but "Save Name" wasn't clicked, grab it now
+  var nameInput = document.getElementById('learnerName');
+  if(nameInput && nameInput.value.trim() && !getLearnerName()){
+    setLearnerName();
+  }
+  // Capture identity: if no name was entered and not already skipped,
+  // treat as anonymous (generates a Learner-xxxxx ID).
+  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
+    skipLearnerName();
+  }
+  // Now send the very first xAPI statement — this is the point of no
+  // return for identity. The learner has seen who they're tracked as
+  // in the banner and clicked "Start Learning" to confirm.
+  window.currentActor = resolveActor();
   if(!xAPI.wasLaunched()) xAPI.launched();
+  // Hide the name form and go to the first content slide
+  document.getElementById('nameFormBox').style.display = 'none';
+  goToSlide(1);
 }
 function resolveActor(){
   var name = getLearnerName();
@@ -1302,24 +1319,29 @@ function init(){
   var urlName = params.get('name');
   if(urlName && !getLearnerName()){
     sessionStorage.setItem('xapi_learner_name', urlName);
-    document.getElementById('nameFormBox').style.display = 'none';
   }
 
   // Check SCORM API for LMS-provided student name
   var scormName = SCORM.get('cmi.core.student_name') || SCORM.get('cmi.learner_name');
   if(scormName && !getLearnerName()){
     sessionStorage.setItem('xapi_learner_name', scormName);
-    document.getElementById('nameFormBox').style.display = 'none';
+  }
+
+  // Pre-fill the input field if a name was set from URL/SCORM/previous session
+  var existingName = getLearnerName();
+  var nameInput = document.getElementById('learnerName');
+  if(existingName && nameInput){
+    nameInput.value = existingName;
   }
 
   // Always resolve a fresh actor — never reuse a stale cached reference
   window.currentActor = resolveActor();
 
-  // Hide name form if already registered or skipped in THIS session
-  if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
-    document.getElementById('nameFormBox').style.display = 'none';
-    xAPI.launched();
-  }
+  // Show the name form — even if a name exists in sessionStorage.
+  // We NEVER auto-send xAPI.launched() here, because the person sitting
+  // at this browser right now might NOT be the person whose name is stored.
+  // Launch only fires when they explicitly click "Start Learning" below.
+  document.getElementById('nameFormBox').style.display = 'block';
 
   updateBanner();
   initSort();
