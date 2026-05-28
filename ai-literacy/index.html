@@ -749,19 +749,16 @@ function showNameForm(){
 // ═══════════════════════════════════════════════════════════
 // Veracity LRS Configuration
 // ═══════════════════════════════════════════════════════════
-// The correct xAPI endpoint is at /lrs/xapi/statements (NOT /xapi/statements).
+// LRS: portfolio-testing (Veracity LRS)
+// Endpoint: https://portfolio-testing.lrs.io/xapi/statements
+// Auth: API access key (base64-encoded "key:secret")
 // CORS is properly configured for GitHub Pages origin.
-// If you see "invalid login" in the browser console, your API keys
-// have expired — generate new ones in Veracity Dashboard:
-//   1. Go to https://lrs.io → your LRS → "xAPI Access Keys"
-//   2. Create a new key
-//   3. Update LRS_AUTH below with the new base64-encoded "username:password"
-var LRS_ENDPOINT = 'https://adapt-course.lrs.io/lrs/xapi/statements';
+var LRS_ENDPOINT = 'https://portfolio-testing.lrs.io/xapi/statements';
 var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
 function fetchCommunity(){
   var list = document.getElementById('communityList');
   if(!list) return;
-  list.innerHTML = '<li style="color:var(--text-muted);font-size:.82rem;width:100%;text-align:center">View all learners in <a href="https://adapt-course.lrs.io/" target="_blank" style="color:var(--primary);text-decoration:underline">Veracity Dashboard</a></li>';
+  list.innerHTML = '<li style="color:var(--text-muted);font-size:.82rem;width:100%;text-align:center">View all learners in <a href="https://portfolio-testing.lrs.io/" target="_blank" style="color:var(--primary);text-decoration:underline">Veracity Dashboard</a></li>';
 }
 
 /* ═══════════════════════════════════════════════
