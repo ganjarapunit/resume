@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<course xmlns="http://www.agilix.com/cmiframework/course.xsd"
+       id="giving-constructive-feedback"
+       title="Giving Constructive Feedback">
+  <description>A microlearning module on delivering effective, constructive feedback in the workplace using the SBI model.</description>
+  <version>1.0</version>
+
+  <au id="au-1"
+      title="Giving Constructive Feedback"
+      url="index.html"
+      moveOn="Completed"
+      masteryScore="80">
+    <objective id="feedback-sbi-model" />
+  </au>
+</course>

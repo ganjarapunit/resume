@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giving Constructive Feedback | Punit Ganjara</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="cmi5-launch.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#20457c;--primary-light:#3b6fb3;--primary-dark:#162f56;
+  --accent:#10b981;--accent-light:#34d399;--warning:#f59e0b;--danger:#ef4444;
+  --text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;
+  --bg:#f1f5f9;--glass-bg:rgba(255,255,255,0.78);--glass-border:rgba(255,255,255,0.45);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.06);--shadow-md:0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.1);
+  --r-lg:24px;--r-md:16px;--r-sm:10px;
+  --ease:0.35s cubic-bezier(0.4,0,0.2,1);
+}
+html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before,body::after{content:'';position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);pointer-events:none}
+body::before{top:-120px;right:-80px;width:560px;height:560px;background:radial-gradient(circle,rgba(32,69,124,.13) 0%,transparent 70%)}
+body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-gradient(circle,rgba(16,185,129,.10) 0%,transparent 70%)}
+
+.back-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--glass-border);padding:10px 24px;
+  display:flex;align-items:center;justify-content:space-between
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--primary);text-decoration:none;font-size:.85rem;font-weight:600;
+  padding:8px 16px;border-radius:var(--r-sm);transition:all .25s ease
+}
+.back-btn:hover{background:rgba(32,69,124,.08);transform:translateX(-3px)}
+.back-btn svg{width:16px;height:16px}
+.course-badge{
+  font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--text-muted);background:rgba(32,69,124,.06);padding:4px 12px;border-radius:99px
+}
+
+#app{max-width:860px;margin:0 auto;padding:88px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
+
+.course-header{
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  border-radius:0 0 var(--r-lg) var(--r-lg);padding:32px 36px 24px;
+  margin:0 -20px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)
+}
+.course-header::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(255,255,255,0.06),transparent);border-radius:50%
+}
+.course-header::after{
+  content:'';position:absolute;bottom:-30%;left:10%;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(255,255,255,0.04),transparent);border-radius:50%
+}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.header-left{flex:1}
+.course-title{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.4px;line-height:1.3}
+.course-subtitle{font-size:13px;color:rgba(255,255,255,0.7);font-weight:400;margin-top:4px}
+.slide-counter{
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);padding:6px 16px;
+  border-radius:20px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;
+  letter-spacing:.3px;border:1px solid rgba(255,255,255,0.1)
+}
+.progress-track{height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-top:16px;overflow:hidden;position:relative;z-index:1}
+.progress-fill{height:100%;background:linear-gradient(90deg,#60a5fa,#93c5fd);border-radius:2px;width:0%;transition:width 0.6s cubic-bezier(0.4,0,0.2,1)}
+
+.slide-container{flex:1;margin-top:24px;position:relative;perspective:1000px}
+.slide{
+  background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-radius:var(--r-lg);padding:36px;border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-md);display:none;animation:slideIn 0.45s cubic-bezier(0.23,1,0.32,1) both;
+  min-height:440px;
+}
+.slide.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-heading{font-size:24px;font-weight:700;color:var(--primary-dark);margin-bottom:12px;letter-spacing:-.4px;line-height:1.3}
+.slide-heading .icon{display:inline-block;margin-right:10px;vertical-align:middle}
+.slide-sub{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:24px}
+.slide-body{font-size:15px;color:var(--text);line-height:1.7}
+
+.objectives-box{
+  background:rgba(32,69,124,.06);border-radius:var(--r-md);padding:20px 24px;
+  margin-bottom:24px;border-left:4px solid var(--primary)
+}
+.objectives-box h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--primary);margin-bottom:10px}
+.objectives-box ul{list-style:none;padding:0}
+.objectives-box li{padding:4px 0;font-size:14px;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px}
+.objectives-box li::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{
+  background:white;border-radius:var(--r-md);padding:20px;text-align:center;
+  border:1px solid var(--glass-border);box-shadow:var(--shadow-sm);transition:var(--ease)
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.stat-number{font-size:28px;font-weight:800;color:var(--primary);line-height:1}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:8px;font-weight:500}
+
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.flip-card{
+  background:white;border-radius:var(--r-md);padding:20px;cursor:pointer;
+  border:1px solid var(--glass-border);box-shadow:var(--shadow-sm);
+  transition:var(--ease);position:relative;overflow:hidden
+}
+.flip-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.flip-card.flipped{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff}
+.flip-card.flipped .card-front{opacity:0;display:none}
+.flip-card .card-back{display:none;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.95)}
+.flip-card.flipped .card-back{display:block}
+.flip-card .card-icon{width:40px;height:40px;border-radius:10px;background:rgba(32,69,124,.08);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.flip-card.flipped .card-icon{background:rgba(255,255,255,.15)}
+.flip-card .card-icon svg{width:20px;height:20px;color:var(--primary)}
+.flip-card.flipped .card-icon svg{color:#fff}
+.flip-card .card-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.flip-card.flipped .card-title{color:#fff}
+.flip-card .card-hint{font-size:11px;color:var(--text-light);font-weight:500}
+.flip-card.flipped .card-hint{color:rgba(255,255,255,0.6)}
+
+.sbi-steps{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+.sbi-step{
+  background:white;border-radius:var(--r-md);padding:20px 24px;
+  border:1px solid var(--glass-border);box-shadow:var(--shadow-sm);
+  transition:var(--ease);cursor:pointer;position:relative;overflow:hidden
+}
+.sbi-step:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.sbi-step .step-header{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.sbi-step .step-letter{
+  width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;color:#fff;flex-shrink:0
+}
+.sbi-step .step-letter.s{background:var(--primary)}
+.sbi-step .step-letter.b{background:var(--accent)}
+.sbi-step .step-letter.i{background:var(--warning)}
+.sbi-step .step-name{font-size:16px;font-weight:700;color:var(--text)}
+.sbi-step .step-brief{font-size:13px;color:var(--text-muted)}
+.sbi-step .step-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:14px;color:var(--text-secondary);line-height:1.6}
+.sbi-step.expanded .step-detail{display:block}
+.sbi-step .step-arrow{transition:transform .3s ease;margin-left:auto;color:var(--text-light)}
+.sbi-step.expanded .step-arrow{transform:rotate(180deg)}
+.sbi-example{
+  background:rgba(16,185,129,.06);border-radius:var(--r-md);padding:20px 24px;
+  border:1px solid rgba(16,185,129,.2);margin-bottom:20px
+}
+.sbi-example .example-label{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.sbi-example .example-text{font-size:14px;color:var(--text);line-height:1.7;font-style:italic}
+
+.sort-area{margin-bottom:24px}
+.sort-intro{font-size:14px;color:var(--text-muted);margin-bottom:14px;font-weight:500}
+.sort-items{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;justify-content:center}
+.sort-item{
+  padding:12px 20px;border-radius:var(--r-sm);background:white;
+  border:2px solid #e2e8f0;cursor:pointer;font-family:'Outfit',sans-serif;
+  font-size:13px;font-weight:600;color:var(--text);transition:var(--ease);user-select:none
+}
+.sort-item:hover{border-color:var(--primary-light);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.sort-item.selected{border-color:var(--primary);background:rgba(32,69,124,.08);box-shadow:0 0 0 3px rgba(32,69,124,.15)}
+.sort-item.placed{opacity:0.4;pointer-events:none;border-style:dashed}
+.sort-buckets{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sort-bucket{
+  background:white;border-radius:var(--r-md);padding:16px;min-height:120px;
+  border:2px dashed #e2e8f0;transition:var(--ease);cursor:default
+}
+.sort-bucket.can-receive{cursor:pointer}
+.sort-bucket.can-receive:hover{border-color:var(--primary);background:rgba(32,69,124,.04);transform:translateY(-2px)}
+.sort-bucket h5{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px}
+.sort-bucket .bucket-items{display:flex;flex-wrap:wrap;gap:6px}
+.sort-bucket .bucket-item{
+  padding:6px 14px;border-radius:6px;background:rgba(32,69,124,.08);
+  font-size:12px;font-weight:500;color:var(--primary);cursor:pointer;transition:var(--ease)
+}
+.sort-bucket .bucket-item:hover{background:rgba(32,69,124,.15)}
+.bucket-correct{border-color:var(--accent)!important;background:rgba(16,185,129,.04)!important}
+.bucket-incorrect{border-color:var(--danger)!important;background:rgba(239,68,68,.04)!important}
+
+.scenario-card{
+  background:white;border-radius:var(--r-md);padding:24px;margin-bottom:20px;
+  border:1px solid var(--glass-border);box-shadow:var(--shadow-sm)
+}
+.scenario-card .scenario-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 12px;
+  border-radius:99px;background:rgba(245,158,11,.1);color:var(--warning);
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px
+}
+.scenario-card .scenario-text{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:16px}
+
+.quiz-question{margin-bottom:20px}
+.quiz-question .q-text{font-size:15px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border:2px solid #e2e8f0;border-radius:var(--r-sm);cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);
+  transition:var(--ease);background:white;width:100%;text-align:left
+}
+.quiz-opt:hover:not(.disabled){border-color:var(--primary-light);background:#f8fafc;transform:translateX(3px)}
+.quiz-opt .radio-circle{
+  width:20px;height:20px;border-radius:50%;border:2px solid #e2e8f0;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--ease)
+}
+.quiz-opt.selected .radio-circle{border-color:var(--primary);background:var(--primary)}
+.quiz-opt.selected .radio-circle::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+.quiz-opt.correct{border-color:var(--accent);background:rgba(16,185,129,.06)}
+.quiz-opt.correct .radio-circle{border-color:var(--accent);background:var(--accent)}
+.quiz-opt.incorrect{border-color:var(--danger);background:rgba(239,68,68,.06)}
+.quiz-opt.incorrect .radio-circle{border-color:var(--danger);background:var(--danger)}
+.quiz-opt.disabled{cursor:default;opacity:.8}
+.quiz-feedback{
+  margin-top:8px;padding:10px 14px;border-radius:var(--r-sm);
+  font-size:13px;line-height:1.5;display:none
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:rgba(16,185,129,.08);color:#065f46;border:1px solid rgba(16,185,129,.2)}
+.quiz-feedback.incorrect{background:rgba(239,68,68,.08);color:#991b1b;border:1px solid rgba(239,68,68,.2)}
+
+.scenario-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  border:2px solid #e2e8f0;border-radius:var(--r-sm);cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);
+  transition:var(--ease);background:white;width:100%;text-align:left;margin-bottom:8px
+}
+.scenario-opt:hover:not(.disabled){border-color:var(--primary-light);background:#f8fafc;transform:translateY(-1px)}
+.scenario-opt .opt-letter{
+  width:28px;height:28px;border-radius:50%;border:2px solid #e2e8f0;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:12px;font-weight:700;color:var(--text-muted);transition:var(--ease)
+}
+.scenario-opt:hover:not(.disabled) .opt-letter{border-color:var(--primary-light);color:var(--primary-light)}
+.scenario-opt.selected{border-color:var(--primary);background:rgba(32,69,124,.06)}
+.scenario-opt.selected .opt-letter{border-color:var(--primary);background:var(--primary);color:#fff}
+.scenario-opt.selected-correct{
+  border-color:var(--accent);background:rgba(16,185,129,.06)
+}
+.scenario-opt.selected-correct .opt-letter{border-color:var(--accent);background:var(--accent);color:#fff}
+.scenario-opt.selected-wrong{
+  border-color:var(--danger);background:rgba(239,68,68,.06)
+}
+.scenario-opt.selected-wrong .opt-letter{border-color:var(--danger);background:var(--danger);color:#fff}
+.scenario-opt.disabled{opacity:.6;cursor:default}
+
+.btn-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 28px;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;transition:var(--ease);
+  border:none;text-decoration:none
+}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;box-shadow:0 4px 12px rgba(32,69,124,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(32,69,124,.3)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:white;color:var(--primary);border:1px solid var(--glass-border);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{background:rgba(32,69,124,.06);transform:translateY(-2px)}
+.btn-success{background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;box-shadow:0 4px 12px rgba(16,185,129,.25)}
+.btn-success:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,185,129,.3)}
+.btn-block{width:100%;justify-content:center}
+
+.score-display{text-align:center;padding:32px}
+.score-display .score-circle{
+  width:110px;height:110px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;font-weight:800;color:#fff
+}
+.score-circle.passed{background:linear-gradient(135deg,var(--accent),var(--accent-light))}
+.score-circle.failed{background:linear-gradient(135deg,var(--danger),#f87171)}
+.score-display .score-label{font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.score-display .score-detail{font-size:14px;color:var(--text-muted);margin-bottom:20px}
+
+.check{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;
+  font-size:12px;margin-right:8px;flex-shrink:0
+}
+
+.feedback-box{
+  padding:16px 20px;border-radius:var(--r-md);margin-bottom:20px;
+  font-size:14px;line-height:1.6;display:none
+}
+.feedback-box.show{display:block}
+.feedback-box.success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#065f46}
+.feedback-box.error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#991b1b}
+.feedback-box.info{background:rgba(32,69,124,.06);border:1px solid rgba(32,69,124,.15);color:var(--primary)}
+
+.tip-box{
+  margin-top:12px;padding:14px 18px;background:rgba(59,130,246,0.06);
+  border-radius:var(--r-sm);border-left:3px solid var(--primary-light)
+}
+.tip-box .tip-label{font-size:11px;font-weight:700;color:var(--primary-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.tip-box .tip-text{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+#summaryChecklist{list-style:none;padding:0}
+#summaryChecklist li{
+  padding:8px 0;font-size:14px;color:var(--text-muted);
+  display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid #f1f5f9
+}
+#summaryChecklist li:last-child{border-bottom:none}
+#summaryChecklist li .check{min-width:22px}
+
+@media(max-width:768px){
+  .course-header{padding:24px 20px 18px}
+  .slide{padding:24px 20px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .flip-grid{grid-template-columns:1fr 1fr}
+  .sort-buckets{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .course-title{font-size:18px}
+  .slide-heading{font-size:20px}
+  .stats-grid{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr}
+  .btn-row{flex-direction:column}
+  .btn{width:100%;justify-content:center}
+  .slide-counter{font-size:11px;padding:4px 12px}
+}
+@media(max-width:400px){
+  .course-header{padding:18px 14px 14px}
+  .slide{padding:18px 14px}
+  .back-bar{padding:8px 12px}
+  .back-btn{font-size:.78rem;padding:6px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
+  <span class="course-badge">cmi5 • Microlearning</span>
+</div>
+
+<div id="app">
+
+  <div class="course-header">
+    <div class="header-top">
+      <div class="header-left">
+        <div class="course-title">Giving Constructive Feedback</div>
+        <div class="course-subtitle">A microlearning module on delivering feedback that drives growth</div>
+      </div>
+      <div class="slide-counter" id="slideCounter">1 / 7</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="slide-container" id="slidesContainer">
+
+    <!-- ═══ SLIDE 0: Title ═══ -->
+    <div class="slide active" data-slide="0">
+      <div style="text-align:center;padding:30px 0 10px">
+        <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 12px 32px rgba(32,69,124,.25)">
+          <i data-lucide="message-square" style="width:32px;height:32px;color:#fff"></i>
+        </div>
+        <h2 class="slide-heading" style="font-size:28px;margin-bottom:8px">Giving Constructive Feedback</h2>
+        <p class="slide-sub" style="font-size:16px">Learn to deliver feedback that motivates, develops, and strengthens workplace relationships</p>
+      </div>
+      <div class="objectives-box">
+        <h4>🎯 Learning Objectives</h4>
+        <ul>
+          <li>Distinguish between constructive and destructive feedback</li>
+          <li>Apply the SBI (Situation-Behavior-Impact) model</li>
+          <li>Choose appropriate feedback approaches for different scenarios</li>
+          <li>Craft clear, actionable feedback statements</li>
+        </ul>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="goToSlide(1)">
+        Start Learning <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+      </button>
+    </div>
+
+    <!-- ═══ SLIDE 1: Why Feedback Matters ═══ -->
+    <div class="slide" data-slide="1">
+      <h2 class="slide-heading"><span class="icon">📊</span>Why Feedback Matters</h2>
+      <p class="slide-sub">Feedback is the backbone of growth. Done well, it builds trust. Done poorly, it damages relationships.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">65%</div><div class="stat-label">of employees say they want more feedback than they receive</div></div>
+        <div class="stat-card"><div class="stat-number">4.6×</div><div class="stat-label">more likely to be engaged when feedback is strengths-based</div></div>
+        <div class="stat-card"><div class="stat-number">43%</div><div class="stat-label">of high-performing employees receive weekly feedback</div></div>
+        <div class="stat-card"><div class="stat-number">57%</div><div class="stat-label">prefer constructive feedback over praise alone</div></div>
+      </div>
+      <div class="feedback-box info show" style="display:block">
+        <strong>💡 Key insight:</strong> The goal of constructive feedback is not to criticize — it's to help the other person grow and succeed.
+      </div>
+      <p class="slide-sub" style="margin-bottom:12px;font-weight:600;color:var(--text)">Tap each card to explore a key concept.</p>
+      <div class="flip-grid" id="flipGrid1">
+        <div class="flip-card" onclick="flipCard(this,1)">
+          <div class="card-front">
+            <div class="card-icon"><i data-lucide="target"></i></div>
+            <div class="card-title">Feedback vs Criticism</div>
+            <div class="card-hint">Tap to learn →</div>
+          </div>
+          <div class="card-back">
+            <div class="card-icon"><i data-lucide="target"></i></div>
+            <div class="card-title" style="color:#fff">Feedback vs Criticism</div>
+            Feedback focuses on behavior and offers a path forward. Criticism attacks the person. Feedback says "Here's what happened and how to improve." Criticism says "You're wrong."
+          </div>
+        </div>
+        <div class="flip-card" onclick="flipCard(this,1)">
+          <div class="card-front">
+            <div class="card-icon"><i data-lucide="heart"></i></div>
+            <div class="card-title">Psychological Safety</div>
+            <div class="card-hint">Tap to learn →</div>
+          </div>
+          <div class="card-back">
+            <div class="card-icon"><i data-lucide="heart"></i></div>
+            <div class="card-title" style="color:#fff">Psychological Safety</div>
+            People can only receive feedback well when they feel safe. Build trust first, then deliver feedback. Without safety, even well-intended feedback feels like an attack.
+          </div>
+        </div>
+        <div class="flip-card" onclick="flipCard(this,1)">
+          <div class="card-front">
+            <div class="card-icon"><i data-lucide="clock"></i></div>
+            <div class="card-title">Timing Matters</div>
+            <div class="card-hint">Tap to learn →</div>
+          </div>
+          <div class="card-back">
+            <div class="card-icon"><i data-lucide="clock"></i></div>
+            <div class="card-title" style="color:#fff">Timing Matters</div>
+            Give feedback as close to the event as possible, but choose your moment. Never give feedback when either party is angry or stressed. A delayed calm conversation beats an immediate heated one.
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goToSlide(0)"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back</button>
+        <button class="btn btn-primary" onclick="goToSlide(2)">Next <i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 2: The SBI Model ═══ -->
+    <div class="slide" data-slide="2">
+      <h2 class="slide-heading"><span class="icon">🧩</span>The SBI Model</h2>
+      <p class="slide-sub">A simple, powerful framework for structuring feedback: <strong>S</strong>ituation · <strong>B</strong>ehavior · <strong>I</strong>mpact</p>
+      <div class="sbi-steps" id="sbiSteps">
+        <div class="sbi-step" onclick="toggleSBI(this)">
+          <div class="step-header">
+            <div class="step-letter s">S</div>
+            <div>
+              <div class="step-name">Situation</div>
+              <div class="step-brief">Describe where and when the behavior occurred</div>
+            </div>
+            <i data-lucide="chevron-down" class="step-arrow" style="width:18px;height:18px"></i>
+          </div>
+          <div class="step-detail">Set the context by being specific about time and place. "During yesterday's team standup..." or "In Tuesday's client meeting..." This helps the person recall the exact event without feeling ambushed.</div>
+        </div>
+        <div class="sbi-step" onclick="toggleSBI(this)">
+          <div class="step-header">
+            <div class="step-letter b">B</div>
+            <div>
+              <div class="step-name">Behavior</div>
+              <div class="step-brief">Describe the specific behavior you observed</div>
+            </div>
+            <i data-lucide="chevron-down" class="step-arrow" style="width:18px;height:18px"></i>
+          </div>
+          <div class="step-detail">Stick to observable facts — not interpretations. Instead of "you were rude," say "you interrupted the client three times." Avoid judgmental language. Describe what you saw or heard, not what you assumed.</div>
+        </div>
+        <div class="sbi-step" onclick="toggleSBI(this)">
+          <div class="step-header">
+            <div class="step-letter i">I</div>
+            <div>
+              <div class="step-name">Impact</div>
+              <div class="step-brief">Explain the effect of the behavior</div>
+            </div>
+            <i data-lucide="chevron-down" class="step-arrow" style="width:18px;height:18px"></i>
+          </div>
+          <div class="step-detail">Share the impact on you, the team, or the outcome. "It made the client feel unheard" or "It delayed our timeline by two days." Impact creates the "why" — without it, feedback feels arbitrary.</div>
+        </div>
+      </div>
+      <div class="sbi-example">
+        <div class="example-label">✨ Example SBI Statement</div>
+        <div class="example-text">"<strong>Situation:</strong> In yesterday's sprint review, <strong>Behavior:</strong> you interrupted Sarah three times while she was presenting her progress. <strong>Impact:</strong> It made her hesitant to continue sharing, and the team missed hearing about an important blocker."</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goToSlide(1)"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back</button>
+        <button class="btn btn-primary" onclick="goToSlide(3)">Next <i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 3: Sorting Activity ═══ -->
+    <div class="slide" data-slide="3">
+      <h2 class="slide-heading"><span class="icon">🏷️</span>Constructive or Destructive?</h2>
+      <p class="slide-sub">Click an item to select it, then click a bucket to place it. Click a placed item to return it to the middle.</p>
+      <div class="sort-area" id="sortArea">
+        <div class="sort-items" id="sortItems"></div>
+        <div class="sort-buckets">
+          <div class="sort-bucket" data-bucket="constructive" onclick="clickBucket('constructive')">
+            <h5>✅ Constructive Feedback</h5>
+            <p class="sort-bucket-hint" style="font-size:11px;color:var(--text-light);margin-bottom:8px">Click here after selecting an item</p>
+            <div class="bucket-items" id="bucketConstructive"></div>
+          </div>
+          <div class="sort-bucket" data-bucket="destructive" onclick="clickBucket('destructive')">
+            <h5>❌ Destructive Feedback</h5>
+            <p class="sort-bucket-hint" style="font-size:11px;color:var(--text-light);margin-bottom:8px">Click here after selecting an item</p>
+            <div class="bucket-items" id="bucketDestructive"></div>
+          </div>
+        </div>
+      </div>
+      <div class="feedback-box" id="sortFeedback"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goToSlide(2)"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back</button>
+        <button class="btn btn-primary" onclick="checkSort()" id="checkSortBtn">Check My Answers <i data-lucide="check" style="width:16px;height:16px"></i></button>
+        <button class="btn btn-success" onclick="goToSlide(4)" id="sortNextBtn" style="display:none">Next <i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 4: Scenario Practice ═══ -->
+    <div class="slide" data-slide="4">
+      <h2 class="slide-heading"><span class="icon">🎭</span>Scenario Practice</h2>
+      <p class="slide-sub">Read each scenario and choose the most constructive response.</p>
+      <div id="scenarioContainer">
+        <div class="scenario-card" data-scenario="0">
+          <div class="scenario-badge"><i data-lucide="message-square" style="width:12px;height:12px"></i> Scenario 1 of 3</div>
+          <div class="scenario-text">A team member consistently arrives 5-10 minutes late to morning standups, causing the team to wait or recap. How do you address this?</div>
+          <div class="scenario-opt" data-value="0" onclick="selectScenario(0,0)">
+            <span class="opt-letter">A</span>
+            "You're always late and it's disrespectful to everyone."
+          </div>
+          <div class="scenario-opt" data-value="1" onclick="selectScenario(0,1)">
+            <span class="opt-letter">B</span>
+            "I've noticed you've been arriving after standup starts this week. Is everything okay? The team benefits from your input at the start."
+          </div>
+          <div class="scenario-opt" data-value="2" onclick="selectScenario(0,2)">
+            <span class="opt-letter">C</span>
+            "Just so you know, standup starts at 9 AM. Try to be on time."
+          </div>
+          <div class="feedback-box" id="scenarioFeedback0"></div>
+        </div>
+        <div class="scenario-card" data-scenario="1" style="display:none">
+          <div class="scenario-badge"><i data-lucide="message-square" style="width:12px;height:12px"></i> Scenario 2 of 3</div>
+          <div class="scenario-text">A colleague's presentation included several factual errors that a client noticed. You need to give feedback before the next client meeting.</div>
+          <div class="scenario-opt" data-value="0" onclick="selectScenario(1,0)">
+            <span class="opt-letter">A</span>
+            "Your presentation had mistakes. Please fix them before the next meeting."
+          </div>
+          <div class="scenario-opt" data-value="1" onclick="selectScenario(1,1)">
+            <span class="opt-letter">B</span>
+            "The client flagged three data points in your deck. Let's sit down together to review the sources before we resubmit — I want to make sure we're both aligned."
+          </div>
+          <div class="scenario-opt" data-value="2" onclick="selectScenario(1,2)">
+            <span class="opt-letter">C</span>
+            "I'll just fix the errors myself this time."
+          </div>
+          <div class="feedback-box" id="scenarioFeedback1"></div>
+        </div>
+        <div class="scenario-card" data-scenario="2" style="display:none">
+          <div class="scenario-badge"><i data-lucide="message-square" style="width:12px;height:12px"></i> Scenario 3 of 3</div>
+          <div class="scenario-text">A junior developer wrote excellent code but their documentation is sparse, making it hard for others to maintain. You're their mentor.</div>
+          <div class="scenario-opt" data-value="0" onclick="selectScenario(2,0)">
+            <span class="opt-letter">A</span>
+            "Your code is great, but your documentation is terrible. Nobody can understand what you wrote."
+          </div>
+          <div class="scenario-opt" data-value="1" onclick="selectScenario(2,1)">
+            <span class="opt-letter">B</span>
+            "Next time, please write better documentation."
+          </div>
+          <div class="scenario-opt" data-value="2" onclick="selectScenario(2,2)">
+            <span class="opt-letter">C</span>
+            "Your implementation of the login feature is really solid. One thing that would help the team: adding more context in the comments about your logic. For example, explaining your approach to error handling would make it easier for others to build on your work."
+          </div>
+          <div class="feedback-box" id="scenarioFeedback2"></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goToSlide(3)"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back</button>
+        <button class="btn btn-primary" onclick="goToSlide(5)">Next <i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 5: Knowledge Check ═══ -->
+    <div class="slide" data-slide="5">
+      <h2 class="slide-heading"><span class="icon">📝</span>Knowledge Check</h2>
+      <p class="slide-sub">Answer the following questions to test your understanding of constructive feedback.</p>
+      <div id="quizContainer"></div>
+      <div class="feedback-box" id="quizFeedback"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goToSlide(4)"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back</button>
+        <button class="btn btn-primary" onclick="submitQuiz()" id="quizSubmitBtn">Submit Answers <i data-lucide="check" style="width:16px;height:16px"></i></button>
+        <button class="btn btn-success" onclick="goToSlide(6)" id="quizNextBtn" style="display:none">See Results <i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 6: Summary & Score ═══ -->
+    <div class="slide" data-slide="6">
+      <h2 class="slide-heading" style="text-align:center"><span class="icon">🎉</span>Congratulations!</h2>
+      <div class="score-display" id="scoreDisplay">
+        <div class="score-circle" id="scoreCircle">—</div>
+        <div class="score-label" id="scoreLabel">Module Complete</div>
+        <div class="score-detail" id="scoreDetail">You now have practical tools for delivering constructive feedback.</div>
+      </div>
+      <div style="background:white;border-radius:var(--r-md);padding:24px;margin-bottom:20px;border:1px solid var(--glass-border)">
+        <h4 style="font-size:14px;font-weight:700;color:var(--primary-dark);margin-bottom:12px">📌 Key Takeaways</h4>
+        <ul id="summaryChecklist">
+          <li><span class="check">✓</span> Feedback focuses on behavior, not the person — it offers a path forward</li>
+          <li><span class="check">✓</span> Use the SBI model: Situation → Behavior → Impact</li>
+          <li><span class="check">✓</span> Be specific, timely, and describe observable facts, not judgments</li>
+          <li><span class="check">✓</span> Build psychological safety before delivering feedback</li>
+          <li><span class="check">✓</span> Start with positive intent and offer support for improvement</li>
+        </ul>
+      </div>
+      <div style="text-align:center;margin-top:12px">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">📖 Want to go deeper? Explore <a href="https://www.ccl.org/articles/leading-effectively-articles/situation-behavior-impact-the-key-to-meaningful-feedback/" target="_blank" style="color:var(--primary)">SBI Model resources from CCL</a></p>
+        <a href="../" class="btn btn-primary"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>
+      </div>
+    </div>
+
+  </div><!-- /slide-container -->
+</div><!-- /app -->
+
+<script>
+let currentSlide = 0;
+const TOTAL_SLIDES = 7;
+
+// ── Slide Navigation ──
+function goToSlide(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.slide[data-slide="${n}"]`).classList.add('active');
+  currentSlide = n;
+  document.getElementById('slideCounter').textContent = n === 6 ? 'Complete' : `${n + 1} / 7`;
+  document.getElementById('progressFill').style.width = Math.round((n / 6) * 100) + '%';
+  lucide.createIcons();
+  if (typeof CMI5 !== 'undefined') {
+    CMI5.progressed(Math.round((n / 6) * 100));
+    CMI5.interacted('navigate', `Slide ${n + 1}`);
+  }
+}
+
+// ── Flip Cards ──
+let flippedCards1 = new Set();
+function flipCard(el, slideId) {
+  el.classList.toggle('flipped');
+  if (slideId === 1) {
+    if (el.classList.contains('flipped')) flippedCards1.add(el);
+    else flippedCards1.delete(el);
+  }
+}
+
+// ── SBI Accordion ──
+function toggleSBI(el) {
+  el.classList.toggle('expanded');
+}
+
+// ── Sorting Activity ──
+let sortItems = [
+  { text: '"You always mess up the reports."', correct: 'destructive' },
+  { text: '"I noticed three data points were off in your report. Let me show you the correct source."', correct: 'constructive' },
+  { text: '"Your effort on this project has been really inconsistent lately."', correct: 'destructive' },
+  { text: '"In Monday\'s client call, you spoke over the client twice. It made them feel rushed. Let\'s practice active listening."', correct: 'constructive' },
+  { text: '"You\'re just not a team player."', correct: 'destructive' },
+  { text: '"Your last three pull requests have had merge conflicts. Can we pair on resolving them tomorrow?"', correct: 'constructive' },
+  { text: '"Nobody likes working with you on projects."', correct: 'destructive' },
+  { text: '"During the retro, you interrupted Jen three times. It seemed to discourage her from sharing. What do you think was going on?"', correct: 'constructive' }
+];
+let selectedItem = null;
+let placedItems = { constructive: [], destructive: [] };
+let sortChecked = false;
+
+function initSort() {
+  const container = document.getElementById('sortItems');
+  container.innerHTML = '';
+  sortItems.forEach((item, i) => {
+    const el = document.createElement('div');
+    el.className = 'sort-item';
+    el.textContent = item.text;
+    el.dataset.index = i;
+    el.onclick = () => selectSortItem(i);
+    container.appendChild(el);
+  });
+}
+
+function selectSortItem(index) {
+  if (sortChecked) return;
+  if (selectedItem === index) {
+    document.querySelectorAll('.sort-item')[index]?.classList.remove('selected');
+    selectedItem = null;
+    document.querySelectorAll('.sort-bucket').forEach(b => b.classList.remove('can-receive'));
+    return;
+  }
+  document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll(`.sort-item[data-index="${index}"]`).forEach(el => el.classList.add('selected'));
+  selectedItem = index;
+  document.querySelectorAll('.sort-bucket').forEach(b => b.classList.add('can-receive'));
+}
+
+function clickBucket(type) {
+  if (selectedItem === null || sortChecked) return;
+  const index = selectedItem;
+  const item = sortItems[index];
+  // Remove from other bucket if present
+  ['constructive', 'destructive'].forEach(t => {
+    const pos = placedItems[t].indexOf(index);
+    if (pos > -1) placedItems[t].splice(pos, 1);
+  });
+  placedItems[type].push(index);
+  selectedItem = null;
+  document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.sort-bucket').forEach(b => b.classList.remove('can-receive'));
+  renderBuckets();
+}
+
+function renderBuckets() {
+  ['constructive', 'destructive'].forEach(type => {
+    const bucket = document.getElementById('bucket' + type.charAt(0).toUpperCase() + type.slice(1));
+    bucket.innerHTML = '';
+    placedItems[type].forEach(idx => {
+      const el = document.createElement('span');
+      el.className = 'bucket-item';
+      el.textContent = sortItems[idx].text;
+      el.onclick = () => removeFromBucket(idx);
+      bucket.appendChild(el);
+    });
+  });
+  // Show all unplaced items, hide placed ones
+  document.querySelectorAll('.sort-item').forEach(el => {
+    const idx = parseInt(el.dataset.index);
+    const placed = placedItems.constructive.includes(idx) || placedItems.destructive.includes(idx);
+    el.classList.toggle('placed', placed);
+  });
+}
+
+function removeFromBucket(idx) {
+  if (sortChecked) return;
+  ['constructive', 'destructive'].forEach(t => {
+    const pos = placedItems[t].indexOf(idx);
+    if (pos > -1) placedItems[t].splice(pos, 1);
+  });
+  renderBuckets();
+}
+
+function checkSort() {
+  sortChecked = true;
+  let correct = 0;
+  let total = sortItems.length;
+  ['constructive', 'destructive'].forEach(type => {
+    placedItems[type].forEach(idx => {
+      const bucketEl = document.getElementById('bucket' + type.charAt(0).toUpperCase() + type.slice(1));
+      const itemEl = bucketEl.querySelector(`.bucket-item`);
+      if (sortItems[idx].correct === type) {
+        correct++;
+      }
+    });
+  });
+  // Visual feedback on buckets
+  ['constructive', 'destructive'].forEach(type => {
+    const bucket = document.getElementById('bucket' + type.charAt(0).toUpperCase() + type.slice(1));
+    const parent = bucket.closest('.sort-bucket');
+    placedItems[type].forEach(idx => {
+      if (sortItems[idx].correct === type) {
+        parent.classList.add('bucket-correct');
+      } else {
+        parent.classList.add('bucket-incorrect');
+      }
+    });
+  });
+  const fb = document.getElementById('sortFeedback');
+  fb.className = 'feedback-box show';
+  if (correct === total) {
+    fb.className += ' success';
+    fb.innerHTML = '<strong>✓ Perfect!</strong> You correctly identified all constructive and destructive feedback examples.';
+  } else if (correct >= total * 0.75) {
+    fb.className += ' success';
+    fb.innerHTML = `<strong>✓ Great job!</strong> You got ${correct} of ${total} correct. Review the SBI model for the ones you missed.`;
+  } else if (correct >= total * 0.5) {
+    fb.className += ' info';
+    fb.innerHTML = `<strong>Good start!</strong> You got ${correct} of ${total} correct. Review the SBI model above and try again.`;
+  } else {
+    fb.className += ' error';
+    fb.innerHTML = `<strong>Let's review.</strong> You got ${correct} of ${total} correct. Tap "Check" on the SBI model slide and try this exercise again.`;
+  }
+  document.getElementById('checkSortBtn').style.display = 'none';
+  document.getElementById('sortNextBtn').style.display = 'inline-flex';
+  if (typeof CMI5 !== 'undefined') {
+    CMI5.interacted('sort-activity', `${correct}/${total} correct`);
+  }
+}
+
+// ── Scenario Practice ──
+const scenarioAnswers = { 0: 1, 1: 1, 2: 2 };
+const scenarioFeedback = [
+  { correct: 'That\'s right! Option B uses the SBI model naturally — it names the situation and behavior, shows care, and invites dialogue.', wrong: 'Remember: effective feedback is specific, non-judgmental, and shows positive intent. Try using the SBI model.' },
+  { correct: 'Excellent! Option B uses SBI, offers collaboration, and shows support — the hallmarks of constructive feedback.', wrong: 'Constructive feedback addresses the issue directly but collaboratively. It focuses on the behavior and offers support.' },
+  { correct: 'Perfect! Option C starts with genuine praise, then uses SBI to frame the improvement area, and ends with the positive impact on the team.', wrong: 'The best approach combines recognition of strengths with specific, actionable suggestions for improvement.' }
+];
+let scenarioAnswered = { 0: false, 1: false, 2: false };
+let scenarioCurrent = 0;
+
+function selectScenario(sIdx, choice) {
+  if (scenarioAnswered[sIdx]) return;
+  const card = document.querySelector(`.scenario-card[data-scenario="${sIdx}"]`);
+  const opts = card.querySelectorAll('.scenario-opt');
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (i === choice) {
+      o.classList.add(choice === scenarioAnswers[sIdx] ? 'selected-correct' : 'selected-wrong');
+    }
+    if (i === scenarioAnswers[sIdx] && i !== choice) {
+      o.classList.add('selected-correct');
+    }
+  });
+  scenarioAnswered[sIdx] = true;
+  const fb = document.getElementById(`scenarioFeedback${sIdx}`);
+  fb.className = 'feedback-box show ' + (choice === scenarioAnswers[sIdx] ? 'success' : 'error');
+  fb.innerHTML = choice === scenarioAnswers[sIdx] ? scenarioFeedback[sIdx].correct : scenarioFeedback[sIdx].wrong;
+  if (typeof CMI5 !== 'undefined') {
+    CMI5.answered(`scenario-${sIdx}`, choice === scenarioAnswers[sIdx]);
+  }
+  // Show next scenario
+  if (sIdx < 2) {
+    setTimeout(() => {
+      document.querySelector(`.scenario-card[data-scenario="${sIdx}"]`).style.display = 'none';
+      document.querySelector(`.scenario-card[data-scenario="${sIdx + 1}"]`).style.display = 'block';
+    }, 1500);
+  }
+}
+
+// ── Knowledge Check Quiz ──
+const quizData = [
+  { q: 'What does the "B" in the SBI model stand for?', opts: ['Belief', 'Behavior', 'Blame', 'Background'], correct: 1 },
+  { q: 'When is the best time to give constructive feedback?', opts: ['As soon as possible after the event, when both parties are calm', 'Wait for the annual performance review', 'In front of the team so everyone learns', 'Send it by email to avoid awkwardness'], correct: 0 },
+  { q: 'Which of the following is an example of constructive feedback?', opts: ['"You\'re always late to meetings."', '"You need to try harder."', '"I noticed you\'ve arrived late to the last three standups. Is there something affecting your mornings?"', '"Everyone is frustrated with your attitude."'], correct: 2 },
+  { q: 'What is the primary goal of constructive feedback?', opts: ['To point out mistakes', 'To document poor performance', 'To help the person grow and improve', 'To assert authority'], correct: 2 }
+];
+let quizAnswers = {};
+let quizSubmitted = false;
+
+function initQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `<div class="q-text">${qi + 1}. ${q.q}</div><div class="quiz-options" data-q="${qi}">` +
+      q.opts.map((o, oi) => `<div class="quiz-opt" data-value="${oi}" onclick="selectQuizOpt(${qi}, ${oi})"><div class="radio-circle"></div>${o}</div>`).join('') +
+      `</div><div class="quiz-feedback" id="qFeedback${qi}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function selectQuizOpt(qi, oi) {
+  if (quizSubmitted) return;
+  quizAnswers[qi] = oi;
+  const opts = document.querySelectorAll(`.quiz-options[data-q="${qi}"] .quiz-opt`);
+  opts.forEach((o, i) => o.classList.toggle('selected', i === oi));
+  if (typeof CMI5 !== 'undefined') {
+    CMI5.interacted('quiz', `Question ${qi + 1}: selected option ${oi}`);
+  }
+}
+
+function submitQuiz() {
+  let correct = 0;
+  const total = quizData.length;
+  quizData.forEach((q, qi) => {
+    const fb = document.getElementById(`qFeedback${qi}`);
+    const ans = quizAnswers[qi];
+    if (ans === undefined) return;
+    const opts = document.querySelectorAll(`.quiz-options[data-q="${qi}"] .quiz-opt`);
+    opts.forEach((o, i) => {
+      o.classList.add('disabled');
+      if (i === q.correct) o.classList.add('correct');
+      if (i === ans && ans !== q.correct) o.classList.add('incorrect');
+    });
+    if (ans === q.correct) {
+      correct++;
+      fb.className = 'quiz-feedback show correct';
+      fb.textContent = '✓ Correct!';
+    } else {
+      fb.className = 'quiz-feedback show incorrect';
+      fb.textContent = `✗ The correct answer was: ${q.opts[q.correct]}`;
+    }
+  });
+  quizSubmitted = true;
+  const pct = Math.round((correct / total) * 100);
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'feedback-box show ' + (pct >= 80 ? 'success' : pct >= 50 ? 'info' : 'error');
+  fb.innerHTML = pct >= 80 ? `<strong>✓ Great work!</strong> You scored ${correct}/${total}.` : pct >= 50 ? `<strong>Good effort!</strong> You scored ${correct}/${total}. Review the SBI model and try again.` : `<strong>Keep practicing!</strong> You scored ${correct}/${total}. Review the earlier slides and retake the quiz.`;
+  document.getElementById('quizSubmitBtn').style.display = 'none';
+  document.getElementById('quizNextBtn').style.display = 'inline-flex';
+  if (typeof CMI5 !== 'undefined') {
+    CMI5.answered('quiz', pct >= 80);
+  }
+  // Save final score
+  window.finalScore = pct;
+  window.quizCorrect = correct;
+  window.quizTotal = total;
+}
+
+// ── Results Slide ──
+const origGoToSlide = goToSlide;
+goToSlide = function(n) {
+  if (n === 6) showResults();
+  origGoToSlide(n);
+};
+
+function showResults() {
+  const score = window.finalScore || 0;
+  const circle = document.getElementById('scoreCircle');
+  const label = document.getElementById('scoreLabel');
+  const detail = document.getElementById('scoreDetail');
+  circle.textContent = score + '%';
+  circle.className = 'score-circle ' + (score >= 80 ? 'passed' : 'failed');
+  label.textContent = score >= 80 ? '🎉 Feedback Champion!' : '💪 Keep Practicing';
+  detail.textContent = score >= 80 ? 'You demonstrated strong understanding of constructive feedback principles.' : 'Review the SBI model and try the scenarios again to strengthen your skills.';
+  if (typeof CMI5 !== 'undefined') {
+    if (score >= 80) { CMI5.pass({ scaled: score / 100 }); }
+    else { CMI5.fail({ scaled: score / 100 }); }
+    CMI5.complete(score >= 80);
+  }
+  lucide.createIcons();
+}
+
+// ── Initialize ──
+document.addEventListener('DOMContentLoaded', function() {
+  lucide.createIcons();
+  initSort();
+  initQuiz();
+});
+</script>
+</body>
+</html>
