@@ -746,7 +746,17 @@ function showNameForm(){
 /* ═══════════════════════════════════════════════
    LRS Community — fetch learners from Veracity
    ═══════════════════════════════════════════════ */
-var LRS_ENDPOINT = 'https://adapt-course.lrs.io/xapi/statements';
+// ═══════════════════════════════════════════════════════════
+// Veracity LRS Configuration
+// ═══════════════════════════════════════════════════════════
+// The correct xAPI endpoint is at /lrs/xapi/statements (NOT /xapi/statements).
+// CORS is properly configured for GitHub Pages origin.
+// If you see "invalid login" in the browser console, your API keys
+// have expired — generate new ones in Veracity Dashboard:
+//   1. Go to https://lrs.io → your LRS → "xAPI Access Keys"
+//   2. Create a new key
+//   3. Update LRS_AUTH below with the new base64-encoded "username:password"
+var LRS_ENDPOINT = 'https://adapt-course.lrs.io/lrs/xapi/statements';
 var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
 function fetchCommunity(){
   var list = document.getElementById('communityList');
@@ -779,15 +789,18 @@ var xAPI = (function(){
   };
   function sendStatement(stmt){
     statements.push(stmt);
-    console.log('[xAPI]', JSON.stringify(stmt));
-    // Post to LRS immediately
+    console.log('[xAPI] Sending:', JSON.stringify(stmt));
     if(typeof fetch !== 'undefined'){
       try {
         fetch(LRS_ENDPOINT, {
           method:'POST',
           headers:{'Content-Type':'application/json','Authorization':LRS_AUTH,'X-Experience-API-Version':'1.0.3'},
           body:JSON.stringify(stmt)
-        }).catch(function(err){ console.warn('[xAPI] Send failed:', err); });
+        }).then(function(r){
+          if(r.status === 204) { console.log('[xAPI] ✓ Statement stored'); }
+          else if(r.status === 401) { console.error('[xAPI] ✗ INVALID LOGIN — API keys expired. Generate new ones in Veracity Dashboard → xAPI Access Keys'); }
+          else { r.text().then(function(t){ console.warn('[xAPI] Unexpected response', r.status, t); }); }
+        }).catch(function(err){ console.warn('[xAPI] Network error (CORS?):', err); });
       } catch(e){}
     }
     return stmt;
@@ -799,7 +812,11 @@ var xAPI = (function(){
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':LRS_AUTH,'X-Experience-API-Version':'1.0.3'},
         body:JSON.stringify(stmts)
-      }).catch(function(err){ console.warn('[xAPI] Batch send failed:', err); });
+      }).then(function(r){
+        if(r.status === 204) { console.log('[xAPI] ✓ Batch stored ('+stmts.length+' statements)'); }
+        else if(r.status === 401) { console.error('[xAPI] ✗ Batch failed — invalid login'); }
+        else { r.text().then(function(t){ console.warn('[xAPI] Batch unexpected', r.status, t); }); }
+      }).catch(function(err){ console.warn('[xAPI] Batch network error:', err); });
     } catch(e){}
   }
   return {
