@@ -22,6 +22,18 @@
   --ease:0.35s cubic-bezier(0.4,0,0.2,1);
 }
 html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* ═══════════ LEARNER MODAL ═══════════ */
+.modal-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.modal-overlay.hidden{display:none}
+.modal-card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:40px 36px 32px;width:min(420px,92vw);box-shadow:var(--shadow-xl);text-align:center}
+.modal-card h2{font-size:1.35rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.modal-card p{font-size:.9rem;color:var(--text-muted);margin-bottom:24px;line-height:1.5}
+.modal-field{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s ease;margin-bottom:12px;background:#fff}
+.modal-field:focus{border-color:var(--primary)}
+.modal-btn{width:100%;padding:13px;border:none;border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease}
+.modal-btn:hover{opacity:.88}
+.modal-skip{display:inline-block;margin-top:12px;font-size:.82rem;color:var(--text-light);cursor:pointer;text-decoration:underline;border:none;background:none;font-family:'Outfit',sans-serif}
+.modal-skip:hover{color:var(--text-muted)}
 body::before,body::after{content:'';position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);pointer-events:none}
 body::before{top:-120px;right:-80px;width:560px;height:560px;background:radial-gradient(circle,rgba(32,69,124,.13) 0%,transparent 70%)}
 body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-gradient(circle,rgba(16,185,129,.10) 0%,transparent 70%)}
@@ -584,6 +596,18 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
   </div><!-- /slide-container -->
 </div><!-- /app -->
 
+<!-- ═══ Learner Registration Modal ═══ -->
+<div id="learnerModal" class="modal-overlay">
+  <div class="modal-card">
+    <h2>👋 Before You Start</h2>
+    <p>Enter your name so we can track your progress. Your information stays on your device.</p>
+    <input id="learnerName" class="modal-field" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" required>
+    <input id="learnerEmail" class="modal-field" type="email" placeholder="Email (optional)" autocomplete="email">
+    <button class="modal-btn" onclick="saveLearner()">Start Learning</button>
+    <button class="modal-skip" onclick="skipLearner()">Continue anonymously</button>
+  </div>
+</div>
+
 <script>
 /* ═══════════════════════════════════════════════
    SCORM 1.2 API Wrapper
@@ -654,6 +678,38 @@ var SCORM = (function(){
 })();
 
 /* ═══════════════════════════════════════════════
+   Learner Identity Resolution
+   ═══════════════════════════════════════════════ */
+function getLearner(){
+  var stored = localStorage.getItem('xapi_learner');
+  if(stored){ try{ return JSON.parse(stored); }catch(e){} }
+  return null;
+}
+function resolveActor(){
+  var learner = getLearner();
+  if(learner && learner.name){
+    var mbox = learner.email || learner.name.replace(/\s+/g,'.').toLowerCase()+'@learner.veracity';
+    return {mbox:'mailto:'+mbox, name:learner.name, objectType:'Agent'};
+  }
+  return {mbox:'mailto:anonymous@learner.veracity', name:'Anonymous Learner', objectType:'Agent'};
+}
+function saveLearner(){
+  var name = document.getElementById('learnerName').value.trim();
+  var email = document.getElementById('learnerEmail').value.trim();
+  if(!name){ document.getElementById('learnerName').focus(); return; }
+  localStorage.setItem('xapi_learner', JSON.stringify({name:name, email:email || ''}));
+  document.getElementById('learnerModal').classList.add('hidden');
+  window.currentActor = resolveActor();
+  xAPI.launched();
+}
+function skipLearner(){
+  localStorage.setItem('xapi_learner', JSON.stringify({name:'', email:''}));
+  document.getElementById('learnerModal').classList.add('hidden');
+  window.currentActor = resolveActor();
+  xAPI.launched();
+}
+
+/* ═══════════════════════════════════════════════
    xAPI Statement Sender — Veracity LRS
    ═══════════════════════════════════════════════ */
 var xAPI = (function(){
@@ -661,12 +717,19 @@ var xAPI = (function(){
   var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
 
   var statements = [];
+  function actor(){ return window.currentActor || resolveActor(); }
   var base = {
-    actor: {mbox:'mailto:ganjarapunit@gmail.com', name:'Punit Ganjara', objectType:'Agent'},
-    context: {
-      platform:'PunitPortfolio',
-      language:'en-US',
-      extensions:{'https://ganjarapunit.github.io/resume/extensions/course':'ai-literacy'}
+    context: function(){
+      var l = getLearner();
+      return {
+        platform:'PunitPortfolio',
+        language:'en-US',
+        extensions:{
+          'https://ganjarapunit.github.io/resume/extensions/course':'ai-literacy',
+          'https://ganjarapunit.github.io/resume/extensions/learner-name': l && l.name ? l.name : 'Anonymous',
+          'https://ganjarapunit.github.io/resume/extensions/learner-email': l && l.email ? l.email : ''
+        }
+      };
     },
     timestamp: function(){ return new Date().toISOString(); }
   };
@@ -698,7 +761,7 @@ var xAPI = (function(){
   return {
     launched: function(){
       return sendStatement({
-        actor:base.actor, context:base.context,
+        actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/launched', display:{'en-US':'launched'}},
         object:{id:'https://ganjarapunit.github.io/resume/ai-literacy/', objectType:'Activity',
           definition:{name:{'en-US':'AI Literacy for the Workplace'},
@@ -709,7 +772,7 @@ var xAPI = (function(){
     progressed: function(slide, total){
       var pct = Math.round(((slide+1)/total)*100);
       return sendStatement({
-        actor:base.actor, context:base.context,
+        actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/progressed', display:{'en-US':'progressed'}},
         object:{id:'https://ganjarapunit.github.io/resume/ai-literacy/', objectType:'Activity',
           definition:{name:{'en-US':'AI Literacy for the Workplace'}}},
@@ -719,7 +782,7 @@ var xAPI = (function(){
     },
     interacted: function(slide, action, details){
       return sendStatement({
-        actor:base.actor, context:base.context,
+        actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/interacted', display:{'en-US':'interacted'}},
         object:{id:'https://ganjarapunit.github.io/resume/ai-literacy/slide-'+slide, objectType:'Activity',
           definition:{name:{'en-US':action}, description:{'en-US':details}}},
@@ -728,7 +791,7 @@ var xAPI = (function(){
     },
     answered: function(questionId, response, correct, score){
       return sendStatement({
-        actor:base.actor, context:base.context,
+        actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/answered', display:{'en-US':'answered'}},
         object:{id:'https://ganjarapunit.github.io/resume/ai-literacy/question/'+questionId, objectType:'Activity',
           definition:{name:{'en-US':'Quiz Question '+questionId},
@@ -740,7 +803,7 @@ var xAPI = (function(){
     },
     completed: function(score, maxScore, success){
       return sendStatement({
-        actor:base.actor, context:base.context,
+        actor:actor(), context:base.context(),
         verb:{id:'http://adlnet.gov/expapi/verbs/completed', display:{'en-US':'completed'}},
         object:{id:'https://ganjarapunit.github.io/resume/ai-literacy/', objectType:'Activity',
           definition:{name:{'en-US':'AI Literacy for the Workplace'}}},
@@ -1169,7 +1232,33 @@ function init(){
   SCORM.set('cmi.core.score.max',100);
   SCORM.set('cmi.core.score.min',0);
   SCORM.commit();
-  xAPI.launched();
+
+  // Check URL params for learner identity
+  var params = new URLSearchParams(window.location.search);
+  var urlName = params.get('name');
+  var urlEmail = params.get('email');
+  if(urlName && !getLearner()){
+    localStorage.setItem('xapi_learner', JSON.stringify({name:urlName, email:urlEmail||''}));
+  }
+
+  // Check SCORM API for LMS-provided student name
+  var scormName = SCORM.get('cmi.core.student_name') || SCORM.get('cmi.learner_name');
+  if(scormName && !getLearner()){
+    localStorage.setItem('xapi_learner', JSON.stringify({name:scormName, email:''}));
+  }
+
+  window.currentActor = resolveActor();
+
+  // Show modal if no name registered
+  var learner = getLearner();
+  if(!learner || !learner.name){
+    document.getElementById('learnerModal').classList.remove('hidden');
+    if(urlName) document.getElementById('learnerName').value = urlName;
+    if(urlEmail) document.getElementById('learnerEmail').value = urlEmail;
+  } else {
+    xAPI.launched();
+  }
+
   initSort();
   initQuiz();
   updateSlideUI();
