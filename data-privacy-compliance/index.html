@@ -196,9 +196,8 @@ a{color:var(--primary-light);text-decoration:none}
   <button id="startBtn" onclick="startScenario()" style="display:none; width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:'Outfit',sans-serif; font-size:15px; transition:all 0.2s ease">
     Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>
   </button>
-<div id="nameOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:999"></div>
 <div class="back-bar">
-  <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
+  <a href="../" class="back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to Portfolio</a>
   <span class="course-badge">DATA PRIVACY</span>
 </div>
 <div id="app">
@@ -232,8 +231,8 @@ function setLearnerName(){
   if(!name) return;
   sessionStorage.setItem('xapi_learner_name', name);
   console.log('[xAPI] Name saved:', name);
+  document.getElementById('nameFormBox').style.display = 'none';
   updateBanner();
-  // Show a brief confirmation flash
   var banner = document.getElementById('learnerBanner');
   if(banner){
     var flash = document.createElement('span');
@@ -264,7 +263,6 @@ function updateBanner(){
 }
 function showNameForm(){
   document.getElementById('nameFormBox').style.display = 'block';
-  document.getElementById('nameOverlay').style.display = 'block';
   var input = document.getElementById('learnerName');
   if(input){ input.value = ''; input.focus(); }
 }
@@ -282,7 +280,7 @@ function startScenario(){
   xAPI.launched();
   console.log('[xAPI] Scenario started');
   document.getElementById('nameFormBox').style.display = 'none';
-  document.getElementById('nameOverlay').style.display = 'none';
+  document.getElementById('startBtn').style.display = 'none';
 }
 
 /* ==============================
@@ -723,8 +721,8 @@ function renderIntro(node, container){
     html += '<div class="email-body">'+node.email.body+'</div>';
     html += '</div>';
   }
-  
-  html += '<div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-top:24px;margin-bottom:24px;display:none">';
+  html += renderChoices(node.choices, node.id);
+  html += '<div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-top:24px;margin-bottom:24px">';
   html += '<div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who\'s taking this course?</div>';
   html += '<div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>';
   html += '<div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
@@ -733,21 +731,12 @@ function renderIntro(node, container){
   html += '<button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>';
   html += '</div>';
   html += '</div>';
-  
-  html += '<button id="startBtn" onclick="startScenario()" style="display:none; width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
+  html += '<button id="startBtn" onclick="startScenario()" style="width:100%; margin-top:8px; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
   html += 'Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>';
   html += '</button>';
-
   html += '</div>';
   container.innerHTML = html;
   attachChoiceHandlers(node.choices, node.id, container);
-  
-  // Initial visibility check
-  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
-    document.getElementById('nameFormBox').style.display = 'block';
-  } else {
-    document.getElementById('startBtn').style.display = 'block';
-  }
   if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
@@ -883,13 +872,7 @@ function resetScenario(){
    ============================== */
 function init(){
   console.log('[xAPI] init() started — using LRS:', LRS_ENDPOINT);
-  if(typeof lucide !== 'undefined') lucide.createIcons();
   updateBanner();
-  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
-    showNameForm();
-  } else {
-    startScenario();
-  }
   SCORM.init();
   SCORM.set('cmi.core.lesson_status','incomplete');
   SCORM.set('cmi.core.score.raw',0);
@@ -897,6 +880,11 @@ function init(){
   SCORM.set('cmi.core.score.min',0);
   SCORM.commit();
   render('intro');
+  // After render('intro'), the nameFormBox and startBtn exist in the DOM.
+  // If the user already has a name, hide the form.
+  if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
+    document.getElementById('nameFormBox').style.display = 'none';
+  }
   document.addEventListener('keydown', function(e){
     if(e.key === 'Enter'){
       var cb = document.getElementById('continueBtn');
