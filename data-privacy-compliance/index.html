@@ -227,24 +227,31 @@ function getVisitorId(){
 }
 function getLearnerName(){ return sessionStorage.getItem('xapi_learner_name') || ''; }
 function setLearnerName(){
-  var name = document.getElementById('learnerName').value.trim();
-  if(!name) return;
-  sessionStorage.setItem('xapi_learner_name', name);
-  console.log('[xAPI] Name saved:', name);
-  document.getElementById('nameFormBox').style.display = 'none';
-  updateBanner();
-  var banner = document.getElementById('learnerBanner');
-  if(banner){
-    var flash = document.createElement('span');
-    flash.textContent = ' ✓ Saved';
-    flash.style.cssText = 'color:#38a169;font-weight:700;font-size:.75rem;margin-left:4px';
-    banner.querySelector('span').appendChild(flash);
-    setTimeout(function(){ if(flash.parentNode) flash.remove(); }, 2500);
-  }
+  try {
+    var name = document.getElementById('learnerName').value.trim();
+    console.log('[DP] setLearnerName called, name="'+name+'"');
+    if(!name) return;
+    sessionStorage.setItem('xapi_learner_name', name);
+    console.log('[DP] Name saved to sessionStorage');
+    var fb = document.getElementById('nameFormBox');
+    if(fb) fb.style.display = 'none';
+    updateBanner();
+    var banner = document.getElementById('learnerBanner');
+    if(banner){
+      var flash = document.createElement('span');
+      flash.textContent = ' ✓ Saved';
+      flash.style.cssText = 'color:#38a169;font-weight:700;font-size:.75rem;margin-left:4px';
+      banner.querySelector('span').appendChild(flash);
+      setTimeout(function(){ if(flash.parentNode) flash.remove(); }, 2500);
+    }
+  } catch(e) { console.error('[DP] setLearnerName ERROR:', e); }
 }
 function skipLearnerName(){
   sessionStorage.setItem('xapi_learner_skipped', '1');
+  var fb = document.getElementById('nameFormBox');
+  if(fb) fb.style.display = 'none';
   updateBanner();
+  console.log('[DP] Learner skipped name entry');
 }
 function resolveActor(){
   var name = getLearnerName();
@@ -267,20 +274,26 @@ function showNameForm(){
   if(input){ input.value = ''; input.focus(); }
 }
 function startScenario(){
-  // Grab name from input if the user typed one but didn't click "Save Name"
-  var nameInput = document.getElementById('learnerName');
-  if(nameInput && nameInput.value.trim() && !getLearnerName()){
-    sessionStorage.setItem('xapi_learner_name', nameInput.value.trim());
-    updateBanner();
-  }
-  // Generate identity if still missing
-  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
-    skipLearnerName();
-  }
-  xAPI.launched();
-  console.log('[xAPI] Scenario started');
-  document.getElementById('nameFormBox').style.display = 'none';
-  document.getElementById('startBtn').style.display = 'none';
+  try {
+    console.log('[DP] startScenario() called');
+    // Grab name from input if the user typed one but didn't click "Save Name"
+    var nameInput = document.getElementById('learnerName');
+    if(nameInput && nameInput.value.trim() && !getLearnerName()){
+      console.log('[DP] Grabbing name from input:', nameInput.value.trim());
+      sessionStorage.setItem('xapi_learner_name', nameInput.value.trim());
+      updateBanner();
+    }
+    // Generate identity if still missing
+    if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
+      skipLearnerName();
+    }
+    xAPI.launched();
+    console.log('[xAPI] Scenario started');
+    var fb = document.getElementById('nameFormBox');
+    if(fb) fb.style.display = 'none';
+    var btn = document.getElementById('startBtn');
+    if(btn) btn.style.display = 'none';
+  } catch(e) { console.error('[DP] startScenario ERROR:', e); }
 }
 
 /* ==============================
@@ -762,6 +775,7 @@ function renderDecision(node, container){
 }
 
 function renderChoices(choices, nodeId){
+  if(!choices || !choices.length) return '';
   var html = '<div class="choices-container" style="margin-top:20px">';
   choices.forEach(function(c,i){
     html += '<button class="choice-btn" data-index="'+i+'"><span class="choice-label"><span class="choice-icon">'+(c.icon==='check'?'✓':c.icon==='x'?'✗':'!')+'</span><span class="choice-text">'+c.text+'</span></span></button>';
@@ -771,6 +785,7 @@ function renderChoices(choices, nodeId){
 }
 
 function attachChoiceHandlers(choices, nodeId, container){
+  if(!choices || !choices.length) return;
   var buttons = container.querySelectorAll('.choice-btn');
   buttons.forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -871,26 +886,32 @@ function resetScenario(){
    Initialization
    ============================== */
 function init(){
-  console.log('[xAPI] init() started — using LRS:', LRS_ENDPOINT);
-  updateBanner();
-  SCORM.init();
-  SCORM.set('cmi.core.lesson_status','incomplete');
-  SCORM.set('cmi.core.score.raw',0);
-  SCORM.set('cmi.core.score.max',100);
-  SCORM.set('cmi.core.score.min',0);
-  SCORM.commit();
-  render('intro');
-  // After render('intro'), the nameFormBox and startBtn exist in the DOM.
-  // If the user already has a name, hide the form.
-  if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
-    document.getElementById('nameFormBox').style.display = 'none';
-  }
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Enter'){
-      var cb = document.getElementById('continueBtn');
-      if(cb) cb.click();
+  try {
+    console.log('[xAPI] init() started — using LRS:', LRS_ENDPOINT);
+    updateBanner();
+    SCORM.init();
+    SCORM.set('cmi.core.lesson_status','incomplete');
+    SCORM.set('cmi.core.score.raw',0);
+    SCORM.set('cmi.core.score.max',100);
+    SCORM.set('cmi.core.score.min',0);
+    SCORM.commit();
+    render('intro');
+    // After render('intro'), the nameFormBox and startBtn exist in the DOM.
+    // If the user already has a name, hide the form.
+    if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
+      var fb = document.getElementById('nameFormBox');
+      if(fb) fb.style.display = 'none';
     }
-  });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        var cb = document.getElementById('continueBtn');
+        if(cb) cb.click();
+      }
+    });
+    console.log('[xAPI] init() complete');
+  } catch(e) {
+    console.error('[xAPI] init() ERROR:', e);
+  }
 }
 window.addEventListener('load', init);
 window.addEventListener('DOMContentLoaded', function() {
