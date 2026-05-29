@@ -859,6 +859,7 @@ function resetScenario(){
    ============================== */
 function init(){
   console.log('[xAPI] init() started — using LRS:', LRS_ENDPOINT);
+  if(typeof lucide !== 'undefined') lucide.createIcons();
   updateBanner();
   if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
     showNameForm();
