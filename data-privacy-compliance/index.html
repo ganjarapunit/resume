@@ -184,16 +184,18 @@ a{color:var(--primary-light);text-decoration:none}
 </head>
 <body>
 <div id="learnerBanner" class="learner-banner"></div>
-<div id="nameFormBox" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1000; background:white; border:1px solid var(--primary-light); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-lg); width:90%; max-width:400px; text-align:center">
-  <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px">👤 Who's taking this course?</div>
-  <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Enter your name so your progress is tracked to you.</div>
-  <div class="name-form" style="justify-content:center">
-    <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name">
-    <button onclick="setLearnerName()">Save Name</button>
-    <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
+  <div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:24px;display:none">
+    <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
+    <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>
+    <div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px">
+      <button onclick="setLearnerName()">Save Name</button>
+      <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
+    </div>
   </div>
-  <button onclick="startScenario()" style="margin-top:20px; width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer">Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:4px"></i></button>
-</div>
+  <button id="startBtn" onclick="startScenario()" style="display:none; width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:'Outfit',sans-serif; font-size:15px; transition:all 0.2s ease">
+    Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>
+  </button>
 <div id="nameOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:999"></div>
 <div class="back-bar">
   <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
@@ -721,10 +723,32 @@ function renderIntro(node, container){
     html += '<div class="email-body">'+node.email.body+'</div>';
     html += '</div>';
   }
-  html += renderChoices(node.choices, node.id);
+  
+  html += '<div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-top:24px;margin-bottom:24px;display:none">';
+  html += '<div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who\'s taking this course?</div>';
+  html += '<div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>';
+  html += '<div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
+  html += '<input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px">';
+  html += '<button onclick="setLearnerName()">Save Name</button>';
+  html += '<button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>';
+  html += '</div>';
+  html += '</div>';
+  
+  html += '<button id="startBtn" onclick="startScenario()" style="display:none; width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
+  html += 'Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>';
+  html += '</button>';
+
   html += '</div>';
   container.innerHTML = html;
   attachChoiceHandlers(node.choices, node.id, container);
+  
+  // Initial visibility check
+  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
+    document.getElementById('nameFormBox').style.display = 'block';
+  } else {
+    document.getElementById('startBtn').style.display = 'block';
+  }
+  if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function renderDecision(node, container){
