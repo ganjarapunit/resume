@@ -881,6 +881,12 @@ function init(){
   });
 }
 window.addEventListener('load', init);
+window.addEventListener('DOMContentLoaded', function() {
+  if(typeof lucide !== 'undefined') {
+    lucide.createIcons();
+    console.log('[Lucide] Icons initialized on DOMContentLoaded');
+  }
+});
 window.addEventListener('beforeunload', function(){ SCORM.finish(); });
 </script>
 </body>
