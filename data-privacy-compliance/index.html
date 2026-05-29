@@ -152,6 +152,10 @@ a{color:var(--primary-light);text-decoration:none}
 .name-form button:hover{opacity:.88}
 .name-form .skip-link{background:none;border:none;color:var(--text-muted);font-family:'Inter',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:10px 8px}
 .name-form .skip-link:hover{color:var(--text)}
+.course-badge{
+  font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--text-muted);background:rgba(32,69,124,.06);padding:4px 12px;border-radius:99px
+}
 </style>
 </head>
 <body>
@@ -164,11 +168,13 @@ a{color:var(--primary-light);text-decoration:none}
     <button onclick="setLearnerName()">Save Name</button>
     <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
   </div>
+  <button onclick="startScenario()" style="margin-top:20px; width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer">Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:4px"></i></button>
 </div>
 <div id="nameOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:999"></div>
 <div id="app">
     <div class="back-bar">
       <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
+      <span class="course-badge">DATA PRIVACY</span>
     </div>
   <header>
     <div class="header-inner">
@@ -237,6 +243,14 @@ function showNameForm(){
   document.getElementById('nameOverlay').style.display = 'block';
   var input = document.getElementById('learnerName');
   if(input){ input.value = ''; input.focus(); }
+}
+function startScenario(){
+  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
+    skipLearnerName();
+  }
+  xAPI.launched();
+  document.getElementById('nameFormBox').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
 }
 
 /* ==============================
@@ -812,6 +826,8 @@ function init(){
   updateBanner();
   if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
     showNameForm();
+  } else {
+    startScenario();
   }
   SCORM.init();
   SCORM.set('cmi.core.lesson_status','incomplete');
@@ -820,7 +836,6 @@ function init(){
   SCORM.set('cmi.core.score.min',0);
   SCORM.commit();
   render('intro');
-  xAPI.launched();
   document.addEventListener('keydown', function(e){
     if(e.key === 'Enter'){
       var cb = document.getElementById('continueBtn');
