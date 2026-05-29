@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Privacy: Handle with Care</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--primary:#1a365d;--primary-light:#2a4a7f;--primary-dark:#0f2440;--primary-glow:#3b82f6;--success:#38a169;--success-bg:#f0fff4;--success-border:#c6f6d5;--danger:#e53e3e;--danger-bg:#fff5f5;--danger-border:#fed7d7;--warning:#d69e2e;--warning-bg:#fffff0;--warning-border:#fefcbf;--neutral:#718096;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--text-secondary:#4a5568;--text-muted:#a0aec0;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 30px rgba(0,0,0,0.12);--radius:12px;--radius-sm:8px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+:root{--primary:#20457c;--primary-light:#3b6fb3;--primary-dark:#162f56;--accent:#10b981;--success:#38a169;--success-bg:#f0fff4;--success-border:#c6f6d5;--danger:#e53e3e;--danger-bg:#fff5f5;--danger-border:#fed7d7;--warning:#d69e2e;--warning-bg:#fffff0;--warning-border:#fefcbf;--neutral:#718096;--bg:#f1f5f9;--card-bg:#ffffff;--text:#0f172a;--text-secondary:#4a5568;--text-muted:#64748b;--shadow-sm:0 1px 3px rgba(0,0,0,0.06);--shadow-md:0 4px 16px rgba(0,0,0,0.08);--shadow-lg:0 8px 30px rgba(0,0,0,0.12);--radius:12px;--radius-sm:8px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
 #app{max-width:860px;margin:0 auto;padding:88px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
 header{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:0 0 var(--radius) var(--radius);padding:24px 32px 20px;margin:0 -20px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
 header::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.05),transparent);border-radius:50%}
@@ -181,11 +181,11 @@ a{color:var(--primary-light);text-decoration:none}
   <button onclick="startScenario()" style="margin-top:20px; width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer">Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:4px"></i></button>
 </div>
 <div id="nameOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:999"></div>
+<div class="back-bar">
+  <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
+  <span class="course-badge">DATA PRIVACY</span>
+</div>
 <div id="app">
-    <div class="back-bar">
-      <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
-      <span class="course-badge">DATA PRIVACY</span>
-    </div>
   <header>
     <div class="header-inner">
       <div class="header-left">
@@ -234,20 +234,8 @@ function skipLearnerName(){
 function resolveActor(){
   var name = getLearnerName();
   var vid = getVisitorId();
-  var actor;
-  if(name) actor = {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
-  else actor = {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
-  console.log('[xAPI] Resolved actor:', JSON.stringify(actor));
-  // Update banner to show the resolved name
-  var banner = document.getElementById('learnerBanner');
-  if(banner){
-    var displayName = actor.name;
-    banner.innerHTML = '<span>Tracked as: <strong>' + displayName + '</strong></span>'
-      + '<span style="display:flex;align-items:center;gap:8px">'
-      + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Inter\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
-      + '</span>';
-  }
-  return actor;
+  if(name) return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
+  return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
 }
 function updateBanner(){
   var banner = document.getElementById('learnerBanner');
@@ -255,7 +243,7 @@ function updateBanner(){
   var name = getLearnerName() || 'Learner-'+getVisitorId().slice(0,8);
   banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
     + '<span style="display:flex;align-items:center;gap:8px">'
-    + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Inter\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
+    + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Outfit\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
     + '</span>';
 }
 function showNameForm(){
@@ -336,29 +324,23 @@ const SCORM = (function(){
 /* ==============================
    xAPI Handler
    ============================== */
+var LRS_ENDPOINT = 'https://portfolio-testing.lrs.io/xapi/statements';
+var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
+console.log('[xAPI] Endpoint:', LRS_ENDPOINT);
+console.log('[xAPI] Auth present:', !!LRS_AUTH);
+
 const xAPI = (function(){
-  var cfg = {
-    endpoint: localStorage.getItem('xapi_endpoint') || 'https://portfolio-testing.lrs.io/xapi/',
-    auth: localStorage.getItem('xapi_auth') || 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==',
-    actor: {
-      objectType: 'Agent',
-      name: localStorage.getItem('xapi_name') || 'Learner',
-      mbox: localStorage.getItem('xapi_mbox') || 'mailto:learner@example.com'
-    }
-  };
-  console.log('[xAPI] Endpoint:', cfg.endpoint);
-  console.log('[xAPI] Auth present:', !!cfg.auth);
   function send(stmt){
     stmt.actor = resolveActor();
     stmt.timestamp = new Date().toISOString();
     stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     console.log('[xAPI] Sending:', JSON.stringify(stmt));
-    if(cfg.endpoint){
+    if(LRS_ENDPOINT){
       var h = new Headers();
       h.append('Content-Type','application/json');
       h.append('X-Experience-API-Version','1.0.3');
-      if(cfg.auth) h.append('Authorization',cfg.auth);
-      fetch(cfg.endpoint,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
+      if(LRS_AUTH) h.append('Authorization',LRS_AUTH);
+      fetch(LRS_ENDPOINT,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
         .then(function(r){
           if(r.status === 204) { console.log('[xAPI] ✓ Statement stored'); }
           else if(r.status === 401) { console.error('[xAPI] ✗ INVALID LOGIN — API keys expired. Generate new ones in Veracity Dashboard → xAPI Access Keys'); }
@@ -858,9 +840,7 @@ function resetScenario(){
    Initialization
    ============================== */
 function init(){
-  console.log('[xAPI] init() started');
-  console.log('[xAPI] localStorage endpoint:', localStorage.getItem('xapi_endpoint'));
-  console.log('[xAPI] localStorage auth:', !!localStorage.getItem('xapi_auth'));
+  console.log('[xAPI] init() started — using LRS:', LRS_ENDPOINT);
   updateBanner();
   if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
     showNameForm();
