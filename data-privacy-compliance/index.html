@@ -184,18 +184,6 @@ a{color:var(--primary-light);text-decoration:none}
 </head>
 <body>
 <div id="learnerBanner" class="learner-banner"></div>
-  <div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:24px;display:none">
-    <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
-    <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>
-    <div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px">
-      <button onclick="setLearnerName()">Save Name</button>
-      <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
-    </div>
-  </div>
-  <button id="startBtn" onclick="startScenario()" style="display:none; width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:'Outfit',sans-serif; font-size:15px; transition:all 0.2s ease">
-    Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>
-  </button>
 <div class="back-bar">
   <a href="../" class="back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to Portfolio</a>
   <span class="course-badge">DATA PRIVACY</span>
@@ -214,6 +202,18 @@ a{color:var(--primary-light);text-decoration:none}
     </div>
   </header>
   <main id="scene" class="scene"></main>
+  <div id="nameFormBox" style="display:none;background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:16px;max-width:860px;margin-left:auto;margin-right:auto">
+    <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
+    <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>
+    <div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:.85rem;outline:none;transition:border-color .25s ease;background:#fff">
+      <button id="saveNameBtn" style="padding:10px 22px;border:none;border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease;white-space:nowrap">Save Name</button>
+      <button id="skipNameBtn" style="background:none;border:none;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:10px 8px">Continue anonymously</button>
+    </div>
+  </div>
+  <button id="startBtn" style="display:none;width:100%;max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px;padding:14px;background:var(--primary);color:white;border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;font-size:15px;transition:all 0.2s ease">
+    Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>
+  </button>
 </div>
 <script>
 /* ==============================
@@ -735,29 +735,9 @@ function renderIntro(node, container){
     html += '</div>';
   }
   html += renderChoices(node.choices, node.id);
-  html += '<div id="nameFormBox" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-top:24px;margin-bottom:24px">';
-  html += '<div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who\'s taking this course?</div>';
-  html += '<div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>';
-  html += '<div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
-  html += '<input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px">';
-  html += '<button id="saveNameBtn">Save Name</button>';
-  html += '<button id="skipNameBtn" class="skip-link">Continue anonymously</button>';
-  html += '</div>';
-  html += '</div>';
-  html += '<button id="startBtn" style="width:100%; margin-top:8px; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
-  html += 'Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>';
-  html += '</button>';
   html += '</div>';
   container.innerHTML = html;
   attachChoiceHandlers(node.choices, node.id, container);
-  // Attach event handlers for the name form and start button
-  var saveBtn = document.getElementById('saveNameBtn');
-  if(saveBtn) saveBtn.addEventListener('click', function(){ setLearnerName(); });
-  var skipBtn = document.getElementById('skipNameBtn');
-  if(skipBtn) skipBtn.addEventListener('click', function(){ skipLearnerName(); });
-  var start = document.getElementById('startBtn');
-  if(start) start.addEventListener('click', function(){ startScenario(); });
-  if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function renderDecision(node, container){
@@ -903,22 +883,34 @@ function init(){
     SCORM.set('cmi.core.score.min',0);
     SCORM.commit();
     render('intro');
-    // After render('intro'), the nameFormBox and startBtn exist in the DOM.
-    // If the user already has a name, hide the form.
+    // Set up event listeners for the static name form and start button
+    var saveBtn = document.getElementById('saveNameBtn');
+    if(saveBtn) saveBtn.addEventListener('click', function(){ setLearnerName(); });
+    var skipBtn = document.getElementById('skipNameBtn');
+    if(skipBtn) skipBtn.addEventListener('click', function(){ skipLearnerName(); });
+    var start = document.getElementById('startBtn');
+    if(start) start.addEventListener('click', function(){ startScenario(); });
+    // Show appropriate UI based on learner identity
+    var nameForm = document.getElementById('nameFormBox');
+    var startBtn = document.getElementById('startBtn');
     if(getLearnerName() || sessionStorage.getItem('xapi_learner_skipped')){
-      var fb = document.getElementById('nameFormBox');
-      if(fb) fb.style.display = 'none';
+      if(nameForm) nameForm.style.display = 'none';
+      if(startBtn) startBtn.style.display = 'block';
+    } else {
+      if(nameForm) nameForm.style.display = 'block';
+      if(startBtn) startBtn.style.display = 'block';
     }
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){
-        var cb = document.getElementById('continueBtn');
-        if(cb) cb.click();
-      }
-    });
-    console.log('[xAPI] init() complete');
+    if(typeof lucide !== 'undefined') lucide.createIcons();
+    console.log('[xAPI] init() complete — nameForm:', !!nameForm, 'startBtn:', !!startBtn);
   } catch(e) {
     console.error('[xAPI] init() ERROR:', e);
   }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      var cb = document.getElementById('continueBtn');
+      if(cb) cb.click();
+    }
+  });
 }
 window.addEventListener('load', init);
 window.addEventListener('DOMContentLoaded', function() {
