@@ -740,16 +740,23 @@ function renderIntro(node, container){
   html += '<div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>';
   html += '<div class="name-form" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
   html += '<input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" style="flex:1;min-width:160px">';
-  html += '<button onclick="setLearnerName()">Save Name</button>';
-  html += '<button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>';
+  html += '<button id="saveNameBtn">Save Name</button>';
+  html += '<button id="skipNameBtn" class="skip-link">Continue anonymously</button>';
   html += '</div>';
   html += '</div>';
-  html += '<button id="startBtn" onclick="startScenario()" style="width:100%; margin-top:8px; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
+  html += '<button id="startBtn" style="width:100%; margin-top:8px; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:\'Outfit\',sans-serif; font-size:15px; transition:all 0.2s ease">';
   html += 'Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>';
   html += '</button>';
   html += '</div>';
   container.innerHTML = html;
   attachChoiceHandlers(node.choices, node.id, container);
+  // Attach event handlers for the name form and start button
+  var saveBtn = document.getElementById('saveNameBtn');
+  if(saveBtn) saveBtn.addEventListener('click', function(){ setLearnerName(); });
+  var skipBtn = document.getElementById('skipNameBtn');
+  if(skipBtn) skipBtn.addEventListener('click', function(){ skipLearnerName(); });
+  var start = document.getElementById('startBtn');
+  if(start) start.addEventListener('click', function(){ startScenario(); });
   if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
