@@ -234,8 +234,20 @@ function skipLearnerName(){
 function resolveActor(){
   var name = getLearnerName();
   var vid = getVisitorId();
-  if(name) return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
-  return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
+  var actor;
+  if(name) actor = {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
+  else actor = {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
+  console.log('[xAPI] Resolved actor:', JSON.stringify(actor));
+  // Update banner to show the resolved name
+  var banner = document.getElementById('learnerBanner');
+  if(banner){
+    var displayName = actor.name;
+    banner.innerHTML = '<span>Tracked as: <strong>' + displayName + '</strong></span>'
+      + '<span style="display:flex;align-items:center;gap:8px">'
+      + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Inter\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
+      + '</span>';
+  }
+  return actor;
 }
 function updateBanner(){
   var banner = document.getElementById('learnerBanner');
@@ -326,7 +338,7 @@ const SCORM = (function(){
    ============================== */
 const xAPI = (function(){
   var cfg = {
-    endpoint: localStorage.getItem('xapi_endpoint') || 'https://portfolio-testing.lrs.io/xapi/statements',
+    endpoint: localStorage.getItem('xapi_endpoint') || 'https://portfolio-testing.lrs.io/xapi/',
     auth: localStorage.getItem('xapi_auth') || 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==',
     actor: {
       objectType: 'Agent',
@@ -334,6 +346,8 @@ const xAPI = (function(){
       mbox: localStorage.getItem('xapi_mbox') || 'mailto:learner@example.com'
     }
   };
+  console.log('[xAPI] Endpoint:', cfg.endpoint);
+  console.log('[xAPI] Auth present:', !!cfg.auth);
   function send(stmt){
     stmt.actor = resolveActor();
     stmt.timestamp = new Date().toISOString();
@@ -844,6 +858,9 @@ function resetScenario(){
    Initialization
    ============================== */
 function init(){
+  console.log('[xAPI] init() started');
+  console.log('[xAPI] localStorage endpoint:', localStorage.getItem('xapi_endpoint'));
+  console.log('[xAPI] localStorage auth:', !!localStorage.getItem('xapi_auth'));
   updateBanner();
   if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
     showNameForm();
