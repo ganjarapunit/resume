@@ -3,7 +3,7 @@
   "agent": {
     "portfolio-expander": {
       "description": "Generates SCORM 2004, xAPI, and cmi5 learning packages. Designs curriculum, builds interactive content with glassmorphism UI, and packages for LMS deployment.",
-      "path": ".opencode/agents/portfolio-expander.md"
+      "path": "portfolio-expander.md"
     }
   }
 }
