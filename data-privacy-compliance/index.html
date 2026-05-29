@@ -9,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--primary:#1a365d;--primary-light:#2a4a7f;--primary-dark:#0f2440;--primary-glow:#3b82f6;--success:#38a169;--success-bg:#f0fff4;--success-border:#c6f6d5;--danger:#e53e3e;--danger-bg:#fff5f5;--danger-border:#fed7d7;--warning:#d69e2e;--warning-bg:#fffff0;--warning-border:#fefcbf;--neutral:#718096;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--text-secondary:#4a5568;--text-muted:#a0aec0;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 30px rgba(0,0,0,0.12);--radius:12px;--radius-sm:8px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
-#app{max-width:860px;margin:0 auto;padding:0 20px 40px;min-height:100vh;display:flex;flex-direction:column}
+#app{max-width:860px;margin:0 auto;padding:88px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
 header{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:0 0 var(--radius) var(--radius);padding:24px 32px 20px;margin:0 -20px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
 header::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.05),transparent);border-radius:50%}
 header::after{content:'';position:absolute;bottom:-30%;left:10%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.03),transparent);border-radius:50%}
@@ -118,12 +118,22 @@ a{color:var(--primary-light);text-decoration:none}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .scene.visible .card{animation:slideUp 0.4s ease forwards}
 .scene.visible .card:nth-child(2){animation-delay:0.1s}
-.back-bar{display:flex;align-items:center;gap:6px;padding:10px 0 6px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:var(--transition)}
-.back-bar:hover{color:var(--primary-light)}
-.back-bar svg{width:16px;height:16px;transition:transform 0.2s ease}
-.back-bar:hover svg{transform:translateX(-3px)}
+.back-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,0.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.45);padding:10px 24px;
+  display:flex;align-items:center;justify-content:space-between
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--primary);text-decoration:none;font-size:.85rem;font-weight:600;
+  padding:8px 16px;border-radius:var(--radius-sm);transition:all .25s ease
+}
+.back-btn:hover{background:rgba(32,69,124,.08);transform:translateX(-3px)}
+.back-btn svg{width:16px;height:16px}
 @media(max-width:640px){
-  #app{padding:0 12px 32px}
+  #app{padding:88px 12px 32px}
+  .back-bar{padding:8px 12px}
   header{padding:18px 20px 16px;border-radius:0;margin:0 -12px}
   .course-title{font-size:17px}
   .card{padding:20px}
@@ -205,9 +215,9 @@ function setLearnerName(){
   var name = document.getElementById('learnerName').value.trim();
   if(!name) return;
   sessionStorage.setItem('xapi_learner_name', name);
+  console.log('[xAPI] Name saved:', name);
   updateBanner();
-  document.getElementById('nameFormBox').style.display = 'none';
-  document.getElementById('nameOverlay').style.display = 'none';
+  // Show a brief confirmation flash
   var banner = document.getElementById('learnerBanner');
   if(banner){
     var flash = document.createElement('span');
@@ -220,8 +230,6 @@ function setLearnerName(){
 function skipLearnerName(){
   sessionStorage.setItem('xapi_learner_skipped', '1');
   updateBanner();
-  document.getElementById('nameFormBox').style.display = 'none';
-  document.getElementById('nameOverlay').style.display = 'none';
 }
 function resolveActor(){
   var name = getLearnerName();
@@ -245,10 +253,18 @@ function showNameForm(){
   if(input){ input.value = ''; input.focus(); }
 }
 function startScenario(){
+  // Grab name from input if the user typed one but didn't click "Save Name"
+  var nameInput = document.getElementById('learnerName');
+  if(nameInput && nameInput.value.trim() && !getLearnerName()){
+    sessionStorage.setItem('xapi_learner_name', nameInput.value.trim());
+    updateBanner();
+  }
+  // Generate identity if still missing
   if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
     skipLearnerName();
   }
   xAPI.launched();
+  console.log('[xAPI] Scenario started');
   document.getElementById('nameFormBox').style.display = 'none';
   document.getElementById('nameOverlay').style.display = 'none';
 }
@@ -322,13 +338,18 @@ const xAPI = (function(){
     stmt.actor = resolveActor();
     stmt.timestamp = new Date().toISOString();
     stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    console.log('[xAPI] Sending:', JSON.stringify(stmt));
     if(cfg.endpoint){
       var h = new Headers();
       h.append('Content-Type','application/json');
       h.append('X-Experience-API-Version','1.0.3');
       if(cfg.auth) h.append('Authorization',cfg.auth);
       fetch(cfg.endpoint,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
-        .catch(function(){ /* LRS may be unreachable */ });
+        .then(function(r){
+          if(r.status === 204) { console.log('[xAPI] ✓ Statement stored'); }
+          else if(r.status === 401) { console.error('[xAPI] ✗ INVALID LOGIN — API keys expired. Generate new ones in Veracity Dashboard → xAPI Access Keys'); }
+          else { r.text().then(function(t){ console.warn('[xAPI] Unexpected response', r.status, t); }); }
+        }).catch(function(err){ console.warn('[xAPI] Network error (CORS?):', err); });
     }
   }
   return {
