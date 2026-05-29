@@ -141,9 +141,31 @@ a{color:var(--primary-light);text-decoration:none}
   .choice-btn .choice-icon{width:24px;height:24px;line-height:20px;font-size:11px;margin-right:8px}
   .choice-btn{padding:12px 12px;font-size:12px}
 }
+.learner-banner{position:fixed;top:52px;left:0;right:0;z-index:99;background:var(--primary);color:#fff;padding:6px 24px;font-size:.78rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.learner-banner span{opacity:.9}
+.learner-banner a{color:#fff;text-decoration:underline;cursor:pointer;font-weight:600}
+.learner-banner a:hover{opacity:.8}
+.name-form{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.name-form input{flex:1;min-width:160px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:.85rem;outline:none;transition:border-color .25s ease;background:#fff}
+.name-form input:focus{border-color:var(--primary)}
+.name-form button{padding:10px 22px;border:none;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--primary);color:#fff;transition:opacity .25s ease;white-space:nowrap}
+.name-form button:hover{opacity:.88}
+.name-form .skip-link{background:none;border:none;color:var(--text-muted);font-family:'Inter',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:10px 8px}
+.name-form .skip-link:hover{color:var(--text)}
 </style>
 </head>
 <body>
+<div id="learnerBanner" class="learner-banner"></div>
+<div id="nameFormBox" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1000; background:white; border:1px solid var(--primary-light); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-lg); width:90%; max-width:400px; text-align:center">
+  <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px">👤 Who's taking this course?</div>
+  <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Enter your name so your progress is tracked to you.</div>
+  <div class="name-form" style="justify-content:center">
+    <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name">
+    <button onclick="setLearnerName()">Save Name</button>
+    <button class="skip-link" onclick="skipLearnerName()">Continue anonymously</button>
+  </div>
+</div>
+<div id="nameOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:999"></div>
 <div id="app">
     <div class="back-bar">
       <a href="../" class="back-btn"><i data-lucide="arrow-left"></i> Back to Portfolio</a>
@@ -163,6 +185,60 @@ a{color:var(--primary-light);text-decoration:none}
   <main id="scene" class="scene"></main>
 </div>
 <script>
+/* ==============================
+   Learner Identity Management
+   ============================== */
+function generateId(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:r&3|8;return v.toString(16);}); }
+function getVisitorId(){
+  var id = localStorage.getItem('xapi_visitor_id');
+  if(!id){ id = generateId(); localStorage.setItem('xapi_visitor_id', id); }
+  return id;
+}
+function getLearnerName(){ return sessionStorage.getItem('xapi_learner_name') || ''; }
+function setLearnerName(){
+  var name = document.getElementById('learnerName').value.trim();
+  if(!name) return;
+  sessionStorage.setItem('xapi_learner_name', name);
+  updateBanner();
+  document.getElementById('nameFormBox').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
+  var banner = document.getElementById('learnerBanner');
+  if(banner){
+    var flash = document.createElement('span');
+    flash.textContent = ' ✓ Saved';
+    flash.style.cssText = 'color:#38a169;font-weight:700;font-size:.75rem;margin-left:4px';
+    banner.querySelector('span').appendChild(flash);
+    setTimeout(function(){ if(flash.parentNode) flash.remove(); }, 2500);
+  }
+}
+function skipLearnerName(){
+  sessionStorage.setItem('xapi_learner_skipped', '1');
+  updateBanner();
+  document.getElementById('nameFormBox').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
+}
+function resolveActor(){
+  var name = getLearnerName();
+  var vid = getVisitorId();
+  if(name) return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:name, objectType:'Agent'};
+  return {account:{homePage:'https://ganjarapunit.github.io/resume', name:vid}, name:'Learner-'+vid.slice(0,8), objectType:'Agent'};
+}
+function updateBanner(){
+  var banner = document.getElementById('learnerBanner');
+  if(!banner) return;
+  var name = getLearnerName() || 'Learner-'+getVisitorId().slice(0,8);
+  banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
+    + '<span style="display:flex;align-items:center;gap:8px">'
+    + '<button onclick="showNameForm()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:6px;padding:3px 12px;font-family:\'Inter\',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer">Not you?</button>'
+    + '</span>';
+}
+function showNameForm(){
+  document.getElementById('nameFormBox').style.display = 'block';
+  document.getElementById('nameOverlay').style.display = 'block';
+  var input = document.getElementById('learnerName');
+  if(input){ input.value = ''; input.focus(); }
+}
+
 /* ==============================
    SCORM 1.2 API Wrapper
    ============================== */
@@ -229,7 +305,7 @@ const xAPI = (function(){
     }
   };
   function send(stmt){
-    stmt.actor = cfg.actor;
+    stmt.actor = resolveActor();
     stmt.timestamp = new Date().toISOString();
     stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     if(cfg.endpoint){
@@ -733,6 +809,10 @@ function resetScenario(){
    Initialization
    ============================== */
 function init(){
+  updateBanner();
+  if(!getLearnerName() && !sessionStorage.getItem('xapi_learner_skipped')){
+    showNameForm();
+  }
   SCORM.init();
   SCORM.set('cmi.core.lesson_status','incomplete');
   SCORM.set('cmi.core.score.raw',0);
