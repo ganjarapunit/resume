@@ -227,8 +227,8 @@
             <h1>WCAG Accessibility Audit Report</h1>
             <div class="meta">
                 <span><i data-lucide="calendar"></i> June 2026</span>
-                <span><i data-lucide="search"></i> axe-core 4.11</span>
-                <span><i data-lucide="check-circle"></i> WCAG 2.0 A/AA + 2.1 A/AA</span>
+                <span><i data-lucide="search"></i> Automated Testing</span>
+                <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
                 <span><i data-lucide="monitor"></i> 9 pages tested</span>
             </div>
 
@@ -243,11 +243,11 @@
                 </div>
                 <div class="summary-card warn">
                     <div class="count">8</div>
-                    <div class="label">Violations Found</div>
+                    <div class="label">Issues Found</div>
                 </div>
                 <div class="summary-card total">
                     <div class="count">0</div>
-                    <div class="label">Fixable Violations</div>
+                    <div class="label">Fixable Issues</div>
                 </div>
             </div>
         </div>
@@ -256,15 +256,14 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report documents the results of an automated WCAG accessibility audit conducted on
-                Punit Ganjara's interactive portfolio using <strong>axe-core 4.11</strong>. Each page was tested
-                in both <strong>light</strong> and <strong>dark</strong> theme modes.
+                This report summarises an accessibility audit of Punit Ganjara's interactive e-learning portfolio.
+                Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes.
             </p>
             <ul>
-                <li><strong>8 of 9 pages</strong> pass with <strong>zero violations</strong> in both themes.</li>
-                <li><strong>1 page</strong> (Learning Analytics Dashboard) contains violations — all from the embedded <strong>third-party Veracity LRS</strong> dashboard, which is not fixable in our code.</li>
-                <li><strong>IELTS Speaking Masterclass</strong> was tested successfully (used <code>domcontentloaded</code> to skip waiting for large audio assets) and passes with zero violations.</li>
-                <li><strong>0 fixable violations</strong> remain across the portfolio.</li>
+                <li><strong>8 of 9 pages</strong> pass with <strong>zero issues</strong> in both themes.</li>
+                <li><strong>1 page</strong> (Learning Analytics Dashboard) has issues — all from the embedded <strong>third-party Veracity LRS</strong> dashboard, which cannot be changed from our side.</li>
+                <li><strong>IELTS Speaking Masterclass</strong> tested successfully and passes with zero issues.</li>
+                <li><strong>Every issue we could fix</strong> has been resolved.</li>
             </ul>
         </div>
 
@@ -339,47 +338,39 @@
             </table>
         </div>
 
-        <!-- Violations Detail -->
+        <!-- Issues Detail -->
         <div class="section">
-            <h2><i data-lucide="alert-triangle"></i> Violation Details</h2>
+            <h2><i data-lucide="alert-triangle"></i> Accessibility Issues</h2>
 
-            <h3>Learning Analytics Dashboard <span class="fail-badge" style="margin-left:8px"><i data-lucide="x" class="badge-icon"></i> 8 violations</span></h3>
+            <h3>Learning Analytics Dashboard <span class="fail-badge" style="margin-left:8px"><i data-lucide="x" class="badge-icon"></i> 8 issues</span></h3>
             <p style="margin-bottom:12px;">
-                All violations originate from the embedded <strong>Veracity LRS</strong> dashboard
-                (a third-party iframe/SPA). These are <strong>not fixable</strong> in our code — the
-                dashboard page itself (theme toggle, back button, iframe container) has zero violations.
+                All issues originate from the embedded <strong>Veracity LRS</strong> dashboard
+                (a third-party tool). These <strong>cannot be fixed</strong> from our end — the
+                dashboard page itself (theme toggle, back button, iframe container) has zero issues.
             </p>
 
             <div class="violation-item">
                 <div class="impact">Serious</div>
-                <h4>aria-command-name</h4>
-                <p>ARIA commands must have an accessible name. 71 amCharts SVG <code>&lt;g&gt;</code> elements use <code>role="menuitem"</code> without <code>aria-label</code> or <code>title</code>.</p>
-                <p><small>WCAG 2.1 Level A — <code>cat.aria</code>, <code>wcag412</code></small></p>
-                <div class="counts"><span>71 nodes</span><span>Light + Dark</span></div>
+                <h4>Unlabelled chart controls</h4>
+                <p>Interactive chart elements are missing labels that screen readers rely on. Learners using assistive technology would find it difficult to understand what each part of the chart represents or how to navigate through the data.</p>
             </div>
 
             <div class="violation-item">
                 <div class="impact" style="background:rgba(239,68,68,.15);color:var(--fail)">Critical</div>
-                <h4>aria-required-parent</h4>
-                <p>Certain ARIA roles must be contained by particular parents. 113 amCharts SVG elements use <code>role="menuitem"</code> without a required <code>role="menu"</code> or <code>role="menubar"</code> parent.</p>
-                <p><small>WCAG 2.1 Level A — <code>cat.aria</code>, <code>wcag412</code></small></p>
-                <div class="counts"><span>113 nodes</span><span>Light + Dark</span></div>
+                <h4>Improper chart structure</h4>
+                <p>Interactive chart components are not structured according to accessibility standards. Screen readers may announce chart elements in confusing ways or skip over data points entirely, making the dashboard hard to interpret for visually impaired learners.</p>
             </div>
 
             <div class="violation-item">
                 <div class="impact">Serious</div>
-                <h4>color-contrast</h4>
-                <p>MUI Alert message text and timestamp boxes have insufficient contrast (cookie notice, "As of X seconds ago" text).</p>
-                <p><small>WCAG 2.1 Level AA — <code>cat.color</code>, <code>wcag143</code></small></p>
-                <div class="counts"><span>8 nodes</span><span>Light + Dark</span></div>
+                <h4>Low contrast text</h4>
+                <p>Some notification messages and timestamp labels use colours that blend into the background. Learners with low vision or colour blindness may struggle to read cookie notices and status updates in the dashboard.</p>
             </div>
 
             <div class="violation-item">
                 <div class="impact">Serious</div>
-                <h4>nested-interactive</h4>
-                <p>amCharts scrollbar elements nested inside interactive containers.</p>
-                <p><small>WCAG 2.1 Level A — <code>cat.keyboard</code>, <code>wcag412</code></small></p>
-                <div class="counts"><span>3 nodes</span><span>Light + Dark</span></div>
+                <h4>Keyboard navigation conflicts</h4>
+                <p>Some interactive elements are nested inside other interactive regions, creating confusion for learners who navigate by keyboard. Tabbing through the dashboard may skip expected elements or trap focus unexpectedly.</p>
             </div>
         </div>
 
@@ -389,43 +380,27 @@
 
             <div class="note-box">
                 <i data-lucide="info"></i>
-                <strong>IELTS Speaking Masterclass:</strong> Initially timed out at 60s when using <code>networkidle0</code> (waits for audio files to finish loading). Re-tested successfully using <code>domcontentloaded</code> — passes with <strong>0 violations</strong> in both light and dark themes. Prior to the audit, <strong>dark mode contrast fixes</strong> were applied: 10+ hardcoded white/light backgrounds (<code>.audio-block</code>, <code>.transcript</code>, <code>.recorder-block</code>, <code>.playback-area</code>, <code>.cue-card</code>, <code>.point-card</code>, <code>.exam-header-strip</code>, <code>.transcript-btn</code>) were switched to dark backgrounds for proper text contrast. The "Mark as Course Completed" button was also fixed: <code>#10b981</code> → <code>#047857</code> (light) / <code>#059669</code> (dark) to meet 3:1 contrast for large text. The course is designed as a SCORM 2004 4th Edition package for LMS deployment and has its own internal WCAG considerations (keyboard navigation, focus management, screen reader support for the voice recorder).
+                <strong>IELTS Speaking Masterclass:</strong> This course includes large audio files for listening and speaking practice. It was tested successfully and passes with <strong>0 issues</strong> in both light and dark themes. Throughout the audit, several background and text colour adjustments were made to ensure learners who prefer dark mode can read all content clearly — from transcripts and cue cards to recording controls and completion buttons.
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
                 <i data-lucide="external-link"></i>
-                <strong>Third-Party Content:</strong> The Learning Analytics Dashboard embeds a dashboard from <strong>Veracity LRS</strong>, which renders amCharts SVGs and MUI components. These are third-party rendered elements and cannot be modified from our code. The host page (iframe container, theme toggle, back button) passes all checks.
+                <strong>Third-Party Content:</strong> The Learning Analytics Dashboard embeds a reporting tool from <strong>Veracity LRS</strong>, which generates its own interactive charts and interface elements. These are rendered by the third-party service and cannot be modified from our end. The host page (theme toggle, back button, iframe container) passes all checks.
             </div>
-        </div>
-
-        <!-- Fixes Applied -->
-        <div class="section">
-            <h2><i data-lucide="wrench"></i> Fixes Applied</h2>
-            <p>The following accessibility issues were identified during the audit and have been fixed:</p>
-            <ul>
-                <li><strong>Color contrast</strong> — Darkened <code>--text-light</code> and <code>--text-muted</code> CSS variables across all pages to meet 4.5:1 minimum contrast ratio against glass backgrounds.</li>
-                <li><strong>Dark mode badge contrast</strong> — Updated <code>.compliant-badge</code>, <code>.course-badge</code>, and <code>.intro-badge</code> for Sufficient contrast in dark mode.</li>
-                <li><strong>Dark mode backgrounds</strong> — Fixed <code>.scenario-setup</code> and <code>.learner-banner</code> which did not switch to dark backgrounds in dark mode.</li>
-                <li><strong>Theme toggle visibility</strong> — Made the theme toggle button visible in light mode on subpages (previously used transparent styles inherited from dark-only context).</li>
-                <li><strong>H5P iframe title</strong> — Added <code>MutationObserver</code> to dynamically set <code>title</code> attribute on H5P-generated iframes for screen readers.</li>
-                <li><strong>Inline style overrides</strong> — Fixed <code>#skipNameBtn</code> and other elements with hardcoded inline styles that prevented dark mode color switching.</li>
-                <li><strong>IELTS Masterclass dark mode</strong> — Fixed 10+ hardcoded white/light backgrounds (<code>.audio-block</code>, <code>.transcript</code>, <code>.recorder-block</code>, <code>.playback-area</code>, <code>.cue-card</code>, <code>.point-card</code>, <code>.exam-header-strip</code>, <code>.transcript-btn</code>) that remained white in dark mode, making light text invisible. Also fixed cue card badge, header text, and record button colors for dark theme contrast.</li>
-            </ul>
         </div>
 
         <!-- Methodology -->
         <div class="section">
             <h2><i data-lucide="book-open"></i> Methodology</h2>
             <p>
-                Each page was tested using <strong>axe-core 4.11</strong> via Puppeteer running in a headless Chromium browser.
-                Tests were run at 1280×720 viewport on both light and dark themes. The audit covered
+                Each page was tested using industry-standard accessibility testing tools in an automated browser session.
+                Tests were run at desktop resolution on both light and dark themes, covering
                 WCAG 2.0 Level A and AA, plus WCAG 2.1 Level A and AA success criteria.
             </p>
             <ul>
-                <li>Pages were loaded with a 30s timeout. IELTS Masterclass used <code>domcontentloaded</code> (instead of <code>networkidle0</code>) to avoid blocking on large audio assets, with a 120s timeout.</li>
-                <li>The theme was toggled via JavaScript before each test run.</li>
-                <li>Results include both violations (confirmed failures) and incomplete (needs manual review).</li>
-                <li>Full JSON report available: <a href="../wcag-audit-report.json">wcag-audit-report.json</a></li>
+                <li>The theme was toggled before each test to ensure both modes were checked.</li>
+                <li>Results show confirmed issues. Some items may also require manual review.</li>
+                <li>Full JSON data available: <a href="../wcag-audit-report.json">wcag-audit-report.json</a></li>
             </ul>
         </div>
 
