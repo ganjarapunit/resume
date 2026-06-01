@@ -5,13 +5,53 @@
     <!-- This line tells the browser to redirect after 0 seconds -->
     <meta http-equiv="refresh" content="0; url=https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/">
     <title>Redirecting to Learning Analytics...</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #64748b; }
+        body { font-family: 'Outfit', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #64748b; background: #f1f5f9; }
+        [data-theme="dark"] body { background: #0b1120; color: #94a3b8; }
+        .theme-toggle {
+            position: fixed; top: 16px; right: 16px; z-index: 1100;
+            width: 44px; height: 44px; border-radius: 10px;
+            background: white; border: 1px solid rgba(255,255,255,0.45);
+            box-shadow: 0 4px 14px rgba(0,0,0,.08);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: #64748b; transition: all .25s ease;
+            backdrop-filter: blur(8px);
+        }
+        .theme-toggle svg { width: 20px; height: 20px; }
+        .theme-toggle:hover { background: #20457c; color: white; }
+        [data-theme="dark"] .theme-toggle { background: rgba(30,41,59,0.8); border-color: rgba(255,255,255,0.08); }
+        [data-theme="dark"] .theme-toggle:hover { background: #3b82f6; color: white; }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i data-lucide="moon" id="themeIcon"></i>
+    </button>
     <p>Redirecting to the Veracity LRS Dashboard...</p>
     <script>
+        // Theme toggle
+        function toggleTheme(){
+            var html=document.documentElement;
+            var isDark=html.getAttribute('data-theme')==='dark';
+            html.setAttribute('data-theme',isDark?'light':'dark');
+            localStorage.setItem('theme',isDark?'light':'dark');
+            updateThemeIcon();
+        }
+        function updateThemeIcon(){
+            var icon=document.getElementById('themeIcon');
+            if(!icon)return;
+            var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+            icon.setAttribute('data-lucide',isDark?'sun':'moon');
+            if(typeof lucide!=='undefined')lucide.createIcons();
+        }
+        (function(){
+            var saved=localStorage.getItem('theme');
+            if(saved){document.documentElement.setAttribute('data-theme',saved);}
+            else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark');}
+            updateThemeIcon();
+        })();
+
         // Backup redirect in case the meta tag fails
         window.location.href = "https://lrs.io/integrations/embedableDashboards/dfbc5bbd-661b-402e-a99f-ad6050d9efa8/";
     </script>

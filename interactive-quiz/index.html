@@ -11,6 +11,7 @@
           --bg: #f1f5f9;
           --glass: rgba(255, 255, 255, 0.95);
           --shadow: 0 20px 40px rgba(0,0,0,0.08);
+          --text-muted: #64748b;
       }
       
       body {
@@ -60,9 +61,52 @@
       @media (max-width: 768px) {
           .portfolio-frame { margin: 20px 15px; padding: 20px; }
       }
+
+      /* ── Dark Theme ── */
+      [data-theme="dark"] {
+          --primary: #3b82f6;
+          --bg: #0b1120;
+          --glass: rgba(30, 41, 59, 0.85);
+          --shadow: 0 20px 40px rgba(0,0,0,0.3);
+          --text-muted: #94a3b8;
+      }
+      [data-theme="dark"] body { background: #0b1120; }
+      [data-theme="dark"] .custom-header { background: #1e3a5f; }
+      [data-theme="dark"] .portfolio-frame {
+          background: var(--glass);
+          border-color: rgba(255,255,255,0.08);
+      }
+
+      /* ── Theme Toggle ── */
+      .theme-toggle {
+          position: fixed; top: 16px; right: 16px; z-index: 1100;
+          width: 44px; height: 44px; border-radius: 10px;
+          background: white; border: 1px solid rgba(255,255,255,0.45);
+          box-shadow: 0 4px 14px rgba(0,0,0,.08);
+          cursor: pointer; display: flex; align-items: center; justify-content: center;
+          color: #64748b; transition: all .25s ease;
+          backdrop-filter: blur(8px);
+      }
+      .theme-toggle svg { width: 20px; height: 20px; }
+      .theme-toggle:hover { background: #112049; color: white; transform: scale(1.05); }
+      [data-theme="dark"] .theme-toggle {
+          background: rgba(30,41,59,0.8);
+          border-color: rgba(255,255,255,0.08);
+      }
+      [data-theme="dark"] .theme-toggle:hover { background: #3b82f6; color: white; }
+      @media (max-width: 768px) {
+          .theme-toggle { width: 38px; height: 38px; top: 14px; right: 14px; }
+          .theme-toggle svg { width: 17px; height: 17px; }
+      }
     </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"
+            aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i data-lucide="moon" id="themeIcon"></i>
+    </button>
 
     <a href="../" class="back-bar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
@@ -76,6 +120,30 @@
     <main class="portfolio-frame">
         <div class="h5p-content" data-content-id="69dbff5e6af4229570c5aaf2"></div>
     </main>
+
+<script>
+/* ── Theme Toggle ── */
+function toggleTheme(){
+  var html=document.documentElement;
+  var isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  localStorage.setItem('theme',isDark?'light':'dark');
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  var icon=document.getElementById('themeIcon');
+  if(!icon)return;
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  icon.setAttribute('data-lucide',isDark?'sun':'moon');
+  if(typeof lucide!=='undefined')lucide.createIcons();
+}
+(function(){
+  var saved=localStorage.getItem('theme');
+  if(saved){document.documentElement.setAttribute('data-theme',saved);}
+  else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark');}
+  updateThemeIcon();
+})();
+</script>
 
 </body>
 </html>
