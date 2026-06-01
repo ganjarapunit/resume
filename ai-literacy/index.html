@@ -38,11 +38,13 @@ html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);backgrou
 [data-theme="dark"] .learner-banner{background:#1e3a5f}
 .theme-toggle{
   display:inline-flex;align-items:center;justify-content:center;
-  width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);
-  background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;transition:all .25s ease
+  width:36px;height:36px;border-radius:8px;border:1px solid rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.06);color:#475569;cursor:pointer;transition:all .25s ease
 }
 .theme-toggle svg{width:17px;height:17px}
-.theme-toggle:hover{background:rgba(255,255,255,0.2);transform:scale(1.05)}
+.theme-toggle:hover{background:rgba(0,0,0,0.1);transform:scale(1.05)}
+[data-theme="dark"] .theme-toggle{border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff}
+[data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,0.2)}
 /* ═══════════ LEARNER BANNER ═══════════ */
 .learner-banner{position:fixed;top:52px;left:0;right:0;z-index:99;background:var(--primary);color:#fff;padding:6px 24px;font-size:.78rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
 .learner-banner span{opacity:1}
