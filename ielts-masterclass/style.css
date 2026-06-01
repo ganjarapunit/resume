@@ -319,13 +319,17 @@ audio {
 }
 
 .btn-success {
-    background: var(--accent);
+    background: #047857;
     color: white;
     width: 100%;
     margin-top: 5rem;
     padding: 1.5rem;
     font-size: 1.25rem;
-    box-shadow: 0 15px 30px -8px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 15px 30px -8px rgba(4, 120, 87, 0.4);
+}
+[data-theme="dark"] .btn-success {
+    background: #059669;
+    box-shadow: 0 15px 30px -8px rgba(5, 150, 105, 0.4);
 }
 
 /* Discussion Grid */
@@ -420,6 +424,63 @@ audio {
     border-color: var(--border);
 }
 [data-theme="dark"] .discussion-prompt { color: #cbd5e1; }
+[data-theme="dark"] .audio-block {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: var(--border);
+}
+[data-theme="dark"] .transcript {
+    background: rgba(15, 23, 42, 0.8);
+    color: #cbd5e1;
+    border-color: var(--border);
+}
+[data-theme="dark"] .recorder-block {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: var(--border);
+}
+[data-theme="dark"] .playback-area {
+    background: rgba(15, 23, 42, 0.7);
+}
+[data-theme="dark"] .cue-card {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: var(--border);
+}
+[data-theme="dark"] .cue-card::before {
+    background: #1e293b;
+    color: #fbbf24;
+    border-color: #374151;
+}
+[data-theme="dark"] .cue-header {
+    color: var(--text);
+}
+[data-theme="dark"] .point-card {
+    background: var(--card-bg);
+    border-color: var(--border);
+}
+[data-theme="dark"] .exam-header-strip {
+    background: rgba(15, 23, 42, 0.5);
+    color: var(--primary);
+    border-color: var(--border);
+}
+[data-theme="dark"] .transcript-btn {
+    background: rgba(30, 41, 59, 0.5);
+    border-color: var(--border);
+    color: var(--primary);
+}
+[data-theme="dark"] .transcript-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+[data-theme="dark"] .btn-record {
+    background: #1e3a5f;
+    color: white;
+}
+[data-theme="dark"] .btn-record:hover {
+    background: #2563eb;
+    color: white;
+}
+[data-theme="dark"] .btn-record.recording {
+    background: #dc2626;
+}
 
 /* ── Theme Toggle (in index.html) ── */
 .theme-toggle {

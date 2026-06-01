@@ -263,7 +263,7 @@
             <ul>
                 <li><strong>8 of 9 pages</strong> pass with <strong>zero violations</strong> in both themes.</li>
                 <li><strong>1 page</strong> (Learning Analytics Dashboard) contains violations — all from the embedded <strong>third-party Veracity LRS</strong> dashboard, which is not fixable in our code.</li>
-                <li><strong>1 page</strong> (IELTS Speaking Masterclass) could not be tested via headless browser due to large audio assets timing out at 60s.</li>
+                <li><strong>IELTS Speaking Masterclass</strong> was tested successfully (used <code>domcontentloaded</code> to skip waiting for large audio assets) and passes with zero violations.</li>
                 <li><strong>0 fixable violations</strong> remain across the portfolio.</li>
             </ul>
         </div>
@@ -331,9 +331,9 @@
                     </tr>
                     <tr>
                         <td class="page-name">IELTS Speaking Masterclass</td>
-                        <td style="text-align:center">—</td>
-                        <td style="text-align:center">—</td>
-                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Timeout</span></td>
+                        <td style="text-align:center">0</td>
+                        <td style="text-align:center">0</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -389,7 +389,7 @@
 
             <div class="note-box">
                 <i data-lucide="info"></i>
-                <strong>IELTS Speaking Masterclass:</strong> Could not be tested via automated headless browser — the page loads large audio files (TTS narration) and dependencies that prevent navigation within 60s. The course is designed as a SCORM 2004 4th Edition package for LMS deployment and has its own internal WCAG considerations (keyboard navigation, focus management, screen reader support for the voice recorder).
+                <strong>IELTS Speaking Masterclass:</strong> Initially timed out at 60s when using <code>networkidle0</code> (waits for audio files to finish loading). Re-tested successfully using <code>domcontentloaded</code> — passes with <strong>0 violations</strong> in both light and dark themes. Prior to the audit, <strong>dark mode contrast fixes</strong> were applied: 10+ hardcoded white/light backgrounds (<code>.audio-block</code>, <code>.transcript</code>, <code>.recorder-block</code>, <code>.playback-area</code>, <code>.cue-card</code>, <code>.point-card</code>, <code>.exam-header-strip</code>, <code>.transcript-btn</code>) were switched to dark backgrounds for proper text contrast. The "Mark as Course Completed" button was also fixed: <code>#10b981</code> → <code>#047857</code> (light) / <code>#059669</code> (dark) to meet 3:1 contrast for large text. The course is designed as a SCORM 2004 4th Edition package for LMS deployment and has its own internal WCAG considerations (keyboard navigation, focus management, screen reader support for the voice recorder).
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
@@ -409,6 +409,7 @@
                 <li><strong>Theme toggle visibility</strong> — Made the theme toggle button visible in light mode on subpages (previously used transparent styles inherited from dark-only context).</li>
                 <li><strong>H5P iframe title</strong> — Added <code>MutationObserver</code> to dynamically set <code>title</code> attribute on H5P-generated iframes for screen readers.</li>
                 <li><strong>Inline style overrides</strong> — Fixed <code>#skipNameBtn</code> and other elements with hardcoded inline styles that prevented dark mode color switching.</li>
+                <li><strong>IELTS Masterclass dark mode</strong> — Fixed 10+ hardcoded white/light backgrounds (<code>.audio-block</code>, <code>.transcript</code>, <code>.recorder-block</code>, <code>.playback-area</code>, <code>.cue-card</code>, <code>.point-card</code>, <code>.exam-header-strip</code>, <code>.transcript-btn</code>) that remained white in dark mode, making light text invisible. Also fixed cue card badge, header text, and record button colors for dark theme contrast.</li>
             </ul>
         </div>
 
@@ -421,7 +422,7 @@
                 WCAG 2.0 Level A and AA, plus WCAG 2.1 Level A and AA success criteria.
             </p>
             <ul>
-                <li>Pages were loaded with a 30s timeout (60s for IELTS Masterclass).</li>
+                <li>Pages were loaded with a 30s timeout. IELTS Masterclass used <code>domcontentloaded</code> (instead of <code>networkidle0</code>) to avoid blocking on large audio assets, with a 120s timeout.</li>
                 <li>The theme was toggled via JavaScript before each test run.</li>
                 <li>Results include both violations (confirmed failures) and incomplete (needs manual review).</li>
                 <li>Full JSON report available: <a href="../wcag-audit-report.json">wcag-audit-report.json</a></li>

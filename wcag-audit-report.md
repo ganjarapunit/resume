@@ -2,12 +2,7 @@
 
 **Date:** 2026-06-01
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
-**Pages Tested:** 9 (8 automated, 1 timeout)
-
-## Notes
-
-- **IELTS Speaking Masterclass**: Could not be tested via automated audit — the page contains heavy audio files and dependencies that prevent headless browser navigation within 60s. The course is designed as a SCORM 2004 4th Edition package for LMS deployment and has its own internal WCAG considerations (keyboard navigation, focus management, screen reader support for voice recorder).
-- **Learning Analytics Dashboard**: All 8 violations originate from the **embedded Veracity LRS** iframe/SPA, which renders third-party amCharts SVGs and MUI components. These are not fixable in our code — the dashboard page itself (theme toggle, back button, iframe container) has no violations.
+**Pages Tested:** 9
 
 ## Summary
 
@@ -30,60 +25,58 @@
 ### Learning Analytics Dashboard (light theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 71
+  - Affected elements: 65
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#effbfb" fill-opacit`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ccf1f1" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d7f4f4" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#f9fdfd" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 113
+  - Affected elements: 107
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 8
+  - Affected elements: 9
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
-  - `<div class="MuiBox-root css-b9dlvo">As of 696 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 727 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 747 ms ago</div>`
 
 - **nested-interactive** (serious): Interactive controls must not be nested
-  - Affected elements: 3
+  - Affected elements: 2
   - Reference: https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=axeAPI
-  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26" aria-valuet`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuete`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
 
 ### Learning Analytics Dashboard (dark theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 71
+  - Affected elements: 65
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#effbfb" fill-opacit`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ccf1f1" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d7f4f4" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#f9fdfd" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 113
+  - Affected elements: 107
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 8
+  - Affected elements: 9
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
-  - `<div class="MuiBox-root css-b9dlvo">As of 696 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 727 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 747 ms ago</div>`
 
 - **nested-interactive** (serious): Interactive controls must not be nested
-  - Affected elements: 3
+  - Affected elements: 2
   - Reference: https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=axeAPI
-  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26" aria-valuet`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuete`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
 
@@ -91,7 +84,7 @@
 
 ### Main Portfolio (index.html)
 - **URL:** /
-- **Tab-focusable elements:** 16
+- **Tab-focusable elements:** 17
 
 #### ☀️ Light Theme
 - Violations: 0
@@ -157,13 +150,18 @@
 
 ### IELTS Speaking Masterclass
 - **URL:** /ielts-masterclass/index.html
-- **Tab-focusable elements:** 0
+- **Tab-focusable elements:** 10
 
-⚠️ Error: Navigation timeout of 60000 ms exceeded
+#### ☀️ Light Theme
+- Violations: 0
+- Incomplete: 1
+#### 🌙 Dark Theme
+- Violations: 0
+- Incomplete: 1
 
 ### IELTS Portfolio Index
 - **URL:** /ielts-masterclass/portfolio_index.html
-- **Tab-focusable elements:** 5
+- **Tab-focusable elements:** 6
 
 #### ☀️ Light Theme
 - Violations: 0
@@ -174,7 +172,7 @@
 
 ### Learning Analytics Dashboard
 - **URL:** /learning-analytics/index.html
-- **Tab-focusable elements:** 136
+- **Tab-focusable elements:** 125
 
 #### ☀️ Light Theme
 - Violations: 4
@@ -182,10 +180,10 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 71 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 113 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 8 |
-| nested-interactive | serious | Interactive controls must not be nested | 3 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 65 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 107 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
+| nested-interactive | serious | Interactive controls must not be nested | 2 |
 
 #### 🌙 Dark Theme
 - Violations: 4
@@ -193,10 +191,10 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 71 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 113 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 8 |
-| nested-interactive | serious | Interactive controls must not be nested | 3 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 65 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 107 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
+| nested-interactive | serious | Interactive controls must not be nested | 2 |
 
 
 ## Recommendations

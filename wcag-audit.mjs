@@ -23,7 +23,7 @@ const PAGES = [
   ['/data-privacy-compliance/index.html', 'Data Privacy Compliance', '#app'],
   ['/giving-constructive-feedback/index.html', 'Giving Constructive Feedback', '#app'],
   ['/interactive-quiz/index.html', 'Interactive Quiz (H5P)', '#h5p-container'],
-  ['/ielts-masterclass/index.html', 'IELTS Speaking Masterclass', '#course-shell'],
+  ['/ielts-masterclass/index.html', 'IELTS Speaking Masterclass', '.course-shell'],
   ['/ielts-masterclass/portfolio_index.html', 'IELTS Portfolio Index', '#h5p-container'],
   ['/learning-analytics/index.html', 'Learning Analytics Dashboard', 'body'],
 ];
@@ -110,15 +110,17 @@ async function runAudit() {
 
     // Increase timeout for large pages (IELTS Masterclass needs more time)
     const isIELTS = url.includes('ielts-masterclass/index.html');
-    await page.setDefaultNavigationTimeout(isIELTS ? 60000 : 30000);
+    await page.setDefaultNavigationTimeout(isIELTS ? 120000 : 30000);
 
     try {
-      await page.goto(`${BASE_URL}${url}`, { waitUntil: 'networkidle0' });
+      // Use domcontentloaded for IELTS to avoid waiting for large audio files
+      const waitUntil = isIELTS ? 'domcontentloaded' : 'networkidle0';
+      await page.goto(`${BASE_URL}${url}`, { waitUntil });
 
       // Wait for the key element to appear
       if (waitFor) {
         try {
-          await page.waitForSelector(waitFor, { timeout: 10000 });
+          await page.waitForSelector(waitFor, { timeout: isIELTS ? 20000 : 10000 });
         } catch {
           console.log(`  ⚠️  Warning: Could not find selector "${waitFor}"`);
         }
