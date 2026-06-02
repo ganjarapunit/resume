@@ -151,6 +151,110 @@
         <i data-lucide="moon" id="themeIcon"></i>
     </button>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- ════ xAPI Configuration ════ -->
+    <script>
+        var LRS_ENDPOINT = 'https://portfolio-testing.lrs.io/xapi/statements';
+        var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
+        console.log('[xAPI] Endpoint:', LRS_ENDPOINT);
+        console.log('[xAPI] Auth present:', !!LRS_AUTH);
+
+        /* ── Learner Identity ── */
+        function generateId(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:r&3|8;return v.toString(16);}); }
+        function getVisitorId(){
+            var id = localStorage.getItem('xapi_visitor_id');
+            if(!id){ id = generateId(); localStorage.setItem('xapi_visitor_id', id); }
+            return id;
+        }
+        function getLearnerName(){ return sessionStorage.getItem('xapi_learner_name') || ''; }
+        function resolveActor(){
+            var name = getLearnerName();
+            var vid = getVisitorId();
+            if(name) return { account:{ homePage:'https://ganjarapunit.github.io/resume', name:vid }, name:name, objectType:'Agent' };
+            return { account:{ homePage:'https://ganjarapunit.github.io/resume', name:vid }, name:'Learner-'+vid.slice(0,8), objectType:'Agent' };
+        }
+
+        /* ── xAPI Sender ── */
+        const xAPI = (function(){
+            function send(stmt){
+                stmt.actor = resolveActor();
+                stmt.timestamp = new Date().toISOString();
+                stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+                console.log('[xAPI] Sending:', JSON.stringify(stmt));
+                if(LRS_ENDPOINT){
+                    var h = new Headers();
+                    h.append('Content-Type','application/json');
+                    h.append('X-Experience-API-Version','1.0.3');
+                    if(LRS_AUTH) h.append('Authorization',LRS_AUTH);
+                    fetch(LRS_ENDPOINT,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
+                        .then(function(r){
+                            if(r.status === 204) { console.log('[xAPI] ✓ Statement stored'); }
+                            else if(r.status === 401) { console.error('[xAPI] ✗ INVALID LOGIN — API keys expired. Generate new ones in Veracity Dashboard → xAPI Access Keys'); }
+                            else { r.text().then(function(t){ console.warn('[xAPI] Unexpected response', r.status, t); }); }
+                        }).catch(function(err){ console.warn('[xAPI] Network error (CORS?):', err); });
+                }
+            }
+            return {
+                launched: function(){
+                    send({
+                        verb:{ id:'http://adlnet.gov/expapi/verbs/launched', display:{'en-US':'launched'} },
+                        object:{
+                            id:'http://apexdigital.com/customer-service-branching',
+                            definition:{
+                                name:{'en-US':'Customer Service De-Escalation Mastery'},
+                                description:{'en-US':'Interactive H5P branching scenario for customer service de-escalation techniques'}
+                            }
+                        }
+                    });
+                },
+                sendStatement: function(stmt){
+                    send(stmt);
+                }
+            };
+        })();
+
+        /* ── H5P xAPI Bridge ── */
+        function initH5PXAPIBridge(){
+            if(window.H5P && H5P.externalDispatcher){
+                console.log('[xAPI] H5P externalDispatcher found — attaching bridge');
+                H5P.externalDispatcher.on('xAPI', function(event){
+                    try {
+                        var stmt = event.getStatement();
+                        if(stmt && stmt.verb){
+                            // Replace H5P's default actor with our real one
+                            stmt.actor = resolveActor();
+                            // Ensure timestamp
+                            if(!stmt.timestamp) stmt.timestamp = new Date().toISOString();
+                            // Ensure statement ID
+                            if(!stmt.id) stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+                            // Set the registration to tie sessions together
+                            if(!stmt.context) stmt.context = {};
+                            stmt.context.registration = getVisitorId();
+                            // Send to LRS
+                            xAPI.sendStatement(stmt);
+                        }
+                    } catch(e){
+                        console.warn('[xAPI] Error processing H5P xAPI event:', e);
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
+
+        (function waitForH5P(){
+            if(!initH5PXAPIBridge()){
+                setTimeout(waitForH5P, 500);
+            }
+        })();
+
+        /* ── Auto-launch on page load ── */
+        document.addEventListener('DOMContentLoaded', function(){
+            setTimeout(function(){
+                xAPI.launched();
+                console.log('[xAPI] Launched statement sent');
+            }, 1000);
+        });
+    </script>
     <div class="h5p-page">
         <a href="./" class="back-bar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
