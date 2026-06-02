@@ -201,7 +201,7 @@
 
 
 ### Customer Service De-Escalation Mastery
-- **URL:** /customer-service-mastery.html
+- **URL:** /customer-service-mastery
 - **Tab-focusable elements:** 2
 
 #### ☀️ Light Theme
