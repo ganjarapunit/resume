@@ -439,6 +439,73 @@
         .cta-btn svg { width: 20px; height: 20px; }
         @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 
+        /* ════ FRONT PAGE H5P DROPDOWN ════ */
+        .h5p-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(32,69,124,.15);
+        }
+        .h5p-section-label {
+            font-size: .75rem; font-weight: 600; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .h5p-front-toggle {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 16px 32px; border-radius: var(--r-md);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white; font-size: 1rem; font-weight: 700;
+            border: none; cursor: pointer;
+            transition: all .3s ease;
+            box-shadow: 0 8px 24px rgba(32,69,124,.3);
+            width: 100%;
+        }
+        .h5p-front-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px rgba(32,69,124,.4);
+        }
+        .h5p-front-toggle svg { width: 20px; height: 20px; }
+        .h5p-front-toggle .arrow-icon {
+            transition: transform .3s ease;
+        }
+        .h5p-front-toggle.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .h5p-front-menu {
+            display: none;
+            margin-top: 12px;
+            background: white;
+            border: 1px solid rgba(32,69,124,.12);
+            border-radius: var(--r-md);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,.06);
+        }
+        [data-theme="dark"] .h5p-front-menu {
+            background: rgba(30,41,59,.9);
+            border-color: rgba(255,255,255,.08);
+        }
+        .h5p-front-menu.open { display: block; }
+        .h5p-front-menu a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 20px;
+            color: var(--text); text-decoration: none;
+            transition: background .2s ease;
+            border-bottom: 1px solid rgba(32,69,124,.08);
+        }
+        [data-theme="dark"] .h5p-front-menu a {
+            color: #e2e8f0;
+            border-color: rgba(255,255,255,.06);
+        }
+        .h5p-front-menu a:last-child { border-bottom: none; }
+        .h5p-front-menu a:hover { background: rgba(32,69,124,.06); }
+        [data-theme="dark"] .h5p-front-menu a:hover { background: rgba(255,255,255,.06); }
+        .h5p-front-menu a .badge {
+            font-size: .65rem; font-weight: 600; padding: 2px 8px;
+            border-radius: 99px;
+            background: var(--accent); color: white;
+            margin-left: auto; white-space: nowrap;
+        }
+
         /* ════ RESPONSIVE ════ */
 
         /* Tablet */
@@ -726,6 +793,28 @@
                         <span class="compliant-badge">xAPI & cmi5</span>
                         </a>
                     </div>
+
+                    <!-- Front-page H5P Activities dropdown -->
+                    <div class="h5p-section">
+                        <div class="h5p-section-label">H5P Interactive Activities</div>
+                        <button class="h5p-front-toggle" onclick="toggleFrontH5p()" aria-expanded="false" aria-controls="h5pFrontMenu">
+                            <i data-lucide="layers"></i>
+                            Browse H5P Activities
+                            <i data-lucide="chevron-down" class="arrow-icon" style="margin-left:auto;"></i>
+                        </button>
+                        <div id="h5pFrontMenu" class="h5p-front-menu" role="menu">
+                            <a href="customer-service-mastery.html" target="_blank" rel="noopener" role="menuitem">
+                                <i data-lucide="message-circle" style="width:18px;height:18px;color:var(--primary);"></i>
+                                Customer Service De-Escalation Mastery
+                                <span class="badge">NEW</span>
+                            </a>
+                            <a href="h5p.html" target="_blank" rel="noopener" role="menuitem">
+                                <i data-lucide="activity" style="width:18px;height:18px;color:var(--primary);"></i>
+                                Interactive Timeline Resume
+                                <span class="badge">H5P</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -743,7 +832,7 @@
 
         lucide.createIcons();
 
-        /* ── H5P Dropdown Toggle ── */
+        /* ── H5P Dropdown Toggles ── */
         function toggleH5pMenu(e) {
             e.preventDefault();
             const btn = e.currentTarget;
@@ -751,6 +840,14 @@
             const isOpen = menu.classList.toggle('open');
             btn.classList.toggle('active', isOpen);
             btn.setAttribute('aria-expanded', isOpen);
+        }
+        function toggleFrontH5p() {
+            const btn = document.querySelector('.h5p-front-toggle');
+            const menu = document.getElementById('h5pFrontMenu');
+            const isOpen = menu.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', isOpen);
+            lucide.createIcons();
         }
 
         const layout  = document.getElementById('layout');
