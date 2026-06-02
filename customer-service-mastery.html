@@ -16,6 +16,7 @@
             --text:          #0f172a;
             --text-muted:    #566579;
             --bg:            #f1f5f9;
+            --r-sm: 10px;
             --r-lg: 24px;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -136,6 +137,79 @@
             border-color: rgba(255,255,255,0.08);
         }
         [data-theme="dark"] .theme-toggle:hover { background: #3b82f6; color: white; }
+        /* ── Learner Name Entry ── */
+        .learner-banner {
+            font-size: .78rem; font-weight: 500; text-align: center;
+            padding: 6px 16px; background: #1e3a5f; color: #94a3b8;
+            display: none;
+        }
+        .learner-banner strong { color: #e2e8f0; }
+        .learner-banner button {
+            background: none; border: none; color: #60a5fa;
+            font: inherit; font-size: .75rem; text-decoration: underline;
+            cursor: pointer; margin-left: 8px;
+        }
+        .name-overlay {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 480px; padding: 40px 24px;
+            text-align: center;
+        }
+        .name-overlay.hidden { display: none; }
+        .name-overlay .icon-wrap {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(16,185,129,.12), rgba(32,69,124,.08));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 16px;
+        }
+        .name-overlay .icon-wrap svg { width: 26px; height: 26px; color: var(--primary); }
+        .name-overlay h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+        .name-overlay p { font-size: .88rem; color: var(--text-muted); max-width: 400px; line-height: 1.6; margin-bottom: 24px; }
+        .name-form-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .name-form-row input {
+            flex: 1; min-width: 200px; max-width: 300px;
+            padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: .9rem; outline: none;
+            transition: border-color .25s ease; background: #fff;
+        }
+        .name-form-row input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(32,69,124,.1); }
+        .name-form-row .btn-primary {
+            padding: 12px 28px; border: none; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: .9rem; font-weight: 600;
+            cursor: pointer; background: var(--primary); color: #fff;
+            transition: opacity .25s ease; white-space: nowrap;
+        }
+        .name-form-row .btn-primary:hover { opacity: .9; }
+        .name-form-row .btn-skip {
+            background: none; border: none; color: var(--text-muted);
+            font-family: 'Outfit', sans-serif; font-size: .82rem;
+            cursor: pointer; text-decoration: underline; padding: 10px 8px;
+        }
+        .start-btn-wrap {
+            display: none; margin-top: 20px;
+        }
+        .start-btn-wrap.visible { display: block; }
+        .start-btn-wrap button {
+            padding: 14px 48px; border: none; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff; box-shadow: 0 8px 24px rgba(32,69,124,.3);
+            transition: all .3s ease;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .start-btn-wrap button:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(32,69,124,.4); }
+        .start-btn-wrap button svg { width: 18px; height: 18px; }
+        [data-theme="dark"] .name-form-row input { background: rgba(15,23,42,.6); border-color: rgba(255,255,255,.1); color: var(--text); }
+        [data-theme="dark"] .name-form-row input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+        [data-theme="dark"] .name-form-row .btn-primary { background: var(--primary-dark); }
+        [data-theme="dark"] .start-btn-wrap button { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
+        @media (max-width: 640px) {
+            .name-overlay { min-height: 360px; padding: 24px 16px; }
+            .name-overlay h2 { font-size: 1.1rem; }
+            .name-form-row input { min-width: 160px; }
+        }
+
         @media (max-width: 1023px) {
             .theme-toggle { top: 16px; right: 16px; }
         }
@@ -218,18 +292,24 @@
                 console.log('[xAPI] H5P externalDispatcher found — attaching bridge');
                 H5P.externalDispatcher.on('xAPI', function(event){
                     try {
-                        var stmt = event.getStatement();
+                        // H5P xAPI events have the statement in different locations
+                        var stmt = null;
+                        if(event.getStatement) {
+                            stmt = event.getStatement();
+                        } else if(event.data && event.data.getStatement) {
+                            stmt = event.data.getStatement();
+                        } else if(event.statement) {
+                            stmt = event.statement;
+                        } else if(event.data && event.data.statement) {
+                            stmt = event.data.statement;
+                        }
                         if(stmt && stmt.verb){
                             // Replace H5P's default actor with our real one
                             stmt.actor = resolveActor();
-                            // Ensure timestamp
                             if(!stmt.timestamp) stmt.timestamp = new Date().toISOString();
-                            // Ensure statement ID
                             if(!stmt.id) stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
-                            // Set the registration to tie sessions together
                             if(!stmt.context) stmt.context = {};
                             stmt.context.registration = getVisitorId();
-                            // Send to LRS
                             xAPI.sendStatement(stmt);
                         }
                     } catch(e){
@@ -247,21 +327,36 @@
             }
         })();
 
-        /* ── Auto-launch on page load ── */
-        document.addEventListener('DOMContentLoaded', function(){
-            setTimeout(function(){
-                xAPI.launched();
-                console.log('[xAPI] Launched statement sent');
-            }, 1000);
-        });
+        /* ── Launched fires from startScenario() after name entry ── */
     </script>
+    <div id="learnerBanner" class="learner-banner"></div>
     <div class="h5p-page">
         <a href="./" class="back-bar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back to Portfolio
         </a>
         <div class="h5p-wrap">
-            <div id="h5p-container">
+            <!-- Name overlay shown before content starts -->
+            <div id="nameOverlay" class="name-overlay">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h2>Customer Service De-Escalation Mastery</h2>
+                <p>Practice real-world de-escalation techniques through interactive branching scenarios. Your progress is tracked for personalised feedback.</p>
+                <div class="name-form-row">
+                    <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" enterkeyhint="done">
+                    <button id="saveNameBtn" class="btn-primary" onclick="saveLearnerName()">Save Name</button>
+                    <button id="skipNameBtn" class="btn-skip" onclick="skipLearnerName()">Continue anonymously</button>
+                </div>
+                <div id="startBtnWrap" class="start-btn-wrap">
+                    <button onclick="startScenario()">
+                        Start Scenario
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <!-- H5P content loads here after start -->
+            <div id="h5pContainer" style="display:none;">
                 <div class="h5p-loading" id="h5p-loading">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
@@ -273,33 +368,100 @@
     </div>
     <script src="main.bundle.js"></script>
     <script>
-        const container = document.getElementById('h5p-container');
-        const loadingEl = document.getElementById('h5p-loading');
-        try {
-            new H5PStandalone.H5P(container, {
-                h5pJsonPath: './h5p-activities/customer-service-mastery',
-                frameJs:     './frame.bundle.js',
-                frameCss:    './styles/h5p.css'
-            });
-            const obs = new MutationObserver(() => {
-                const iframes = container.querySelectorAll('iframe');
-                if (iframes.length > 0 || container.querySelectorAll('.h5p-container').length > 0) {
-                    iframes.forEach(function(iframe) {
-                        if (!iframe.getAttribute('title')) {
-                            iframe.setAttribute('title', 'Customer Service De-Escalation Mastery - Branching Scenario');
-                        }
-                    });
-                    loadingEl && loadingEl.remove();
-                    obs.disconnect();
-                }
-            });
-            obs.observe(container, { childList: true, subtree: true });
-        } catch (e) {
-            console.error('H5P failed:', e);
-            if (loadingEl) {
-                loadingEl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" style="width:40px;height:40px;opacity:.7"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:#ef4444;font-weight:600;">Scenario failed to load</p><p style="font-size:.8rem;color:#94a3b8;">Ensure h5p-activities/customer-service-mastery is present and the page is served from a local server.</p>';
+        /* ── Learner Name Management ── */
+        function saveLearnerName(){
+            var name = document.getElementById('learnerName').value.trim();
+            if(!name) return;
+            sessionStorage.setItem('xapi_learner_name', name);
+            updateLearnerBanner();
+            showStartButton();
+        }
+        function skipLearnerName(){
+            sessionStorage.setItem('xapi_learner_skipped', '1');
+            showStartButton();
+        }
+        function updateLearnerBanner(){
+            var name = sessionStorage.getItem('xapi_learner_name');
+            var banner = document.getElementById('learnerBanner');
+            if(name && banner){
+                banner.style.display = 'block';
+                banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
+                    + '<button onclick="showNameForm()">Not you?</button>';
             }
         }
+        function showNameForm(){
+            document.getElementById('nameOverlay').classList.remove('hidden');
+            document.getElementById('h5pContainer').style.display = 'none';
+            document.getElementById('startBtnWrap').classList.remove('visible');
+            document.getElementById('learnerName').focus();
+        }
+        function showStartButton(){
+            document.getElementById('startBtnWrap').classList.add('visible');
+        }
+
+        /* ── Start Scenario (delayed H5P init) ── */
+        var h5pInitialized = false;
+        function startScenario(){
+            if(h5pInitialized) return;
+            h5pInitialized = true;
+            // Hide name overlay, show H5P container
+            document.getElementById('nameOverlay').classList.add('hidden');
+            var h5pContainer = document.getElementById('h5pContainer');
+            h5pContainer.style.display = 'block';
+            var loadingEl = document.getElementById('h5p-loading');
+            // Init H5P
+            try {
+                new H5PStandalone.H5P(h5pContainer, {
+                    h5pJsonPath: './h5p-activities/customer-service-mastery',
+                    frameJs:     './frame.bundle.js',
+                    frameCss:    './styles/h5p.css'
+                });
+                var obs = new MutationObserver(function(){
+                    var iframes = h5pContainer.querySelectorAll('iframe');
+                    if (iframes.length > 0 || h5pContainer.querySelectorAll('.h5p-container').length > 0) {
+                        iframes.forEach(function(iframe) {
+                            if (!iframe.getAttribute('title')) {
+                                iframe.setAttribute('title', 'Customer Service De-Escalation Mastery - Branching Scenario');
+                            }
+                        });
+                        if(loadingEl) loadingEl.remove();
+                        obs.disconnect();
+                        // Send xAPI launched once H5P content is loaded
+                        setTimeout(function(){ xAPI.launched(); }, 500);
+                    }
+                });
+                obs.observe(h5pContainer, { childList: true, subtree: true });
+            } catch (e) {
+                console.error('H5P failed:', e);
+                if (loadingEl) {
+                    loadingEl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" style="width:40px;height:40px;opacity:.7"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:#ef4444;font-weight:600;">Scenario failed to load</p><p style="font-size:.8rem;color:#94a3b8;">Ensure h5p-activities/customer-service-mastery is present and the page is served from a local server.</p>';
+                }
+            }
+        }
+
+        /* ── Enter key saves name ── */
+        document.addEventListener('DOMContentLoaded', function(){
+            var input = document.getElementById('learnerName');
+            if(input){
+                input.addEventListener('keydown', function(e){
+                    if(e.key === 'Enter'){
+                        e.preventDefault();
+                        saveLearnerName();
+                    }
+                });
+            }
+        });
+
+        /* ── Auto-show start button if returning learner ── */
+        (function initNameFlow(){
+            var name = sessionStorage.getItem('xapi_learner_name');
+            var skipped = sessionStorage.getItem('xapi_learner_skipped');
+            if(name || skipped){
+                showStartButton();
+                updateLearnerBanner();
+            }
+        })();
+
         function toggleTheme() {
             const html = document.documentElement;
             const isDark = html.getAttribute('data-theme') === 'dark';

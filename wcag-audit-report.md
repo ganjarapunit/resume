@@ -26,21 +26,21 @@
 ### Learning Analytics Dashboard (light theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 74
+  - Affected elements: 67
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 116
+  - Affected elements: 111
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 8
+  - Affected elements: 9
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
   - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
@@ -49,28 +49,28 @@
 - **nested-interactive** (serious): Interactive controls must not be nested
   - Affected elements: 3
   - Reference: https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=axeAPI
-  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26" aria-valuet`
+  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuete`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group amcharts-Scrollbar-group" role="scrollbar" aria-valuemin="0" ar`
+  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
 
 ### Learning Analytics Dashboard (dark theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 74
+  - Affected elements: 67
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 116
+  - Affected elements: 111
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 8
+  - Affected elements: 9
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
   - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
@@ -79,9 +79,9 @@
 - **nested-interactive** (serious): Interactive controls must not be nested
   - Affected elements: 3
   - Reference: https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=axeAPI
-  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26" aria-valuet`
+  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
   - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuete`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group amcharts-Scrollbar-group" role="scrollbar" aria-valuemin="0" ar`
+  - `<g class="amcharts-Sprite-grou..." role="scrollbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" aria-valuete`
 
 ## Detailed Breakdown
 
@@ -175,7 +175,7 @@
 
 ### Learning Analytics Dashboard
 - **URL:** /learning-analytics/index.html
-- **Tab-focusable elements:** 139
+- **Tab-focusable elements:** 131
 
 #### ☀️ Light Theme
 - Violations: 4
@@ -183,9 +183,9 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 74 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 116 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 8 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 67 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 111 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
 #### 🌙 Dark Theme
@@ -194,22 +194,22 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 74 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 116 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 8 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 67 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 111 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
 
 ### Customer Service De-Escalation Mastery
-- **URL:** /customer-service-mastery
-- **Tab-focusable elements:** 2
+- **URL:** /customer-service-mastery.html
+- **Tab-focusable elements:** 6
 
 #### ☀️ Light Theme
 - Violations: 0
-- Incomplete: 1
+- Incomplete: 0
 #### 🌙 Dark Theme
 - Violations: 0
-- Incomplete: 1
+- Incomplete: 0
 
 ## Recommendations
 
