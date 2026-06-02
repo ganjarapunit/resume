@@ -1,0 +1,880 @@
+{
+  "branchingScenario": {
+    "title": "Customer Service De-Escalation Mastery",
+    "startScreen": {
+      "startScreenTitle": "Customer Service<br/>De-Escalation Mastery",
+      "startScreenSubtitle": "A realistic branching scenario where your choices determine the outcome.<br/><br/>You are a customer service representative at TechGear Inc. Alex Mercer, a small business owner, just lost a $50,000 contract because of a delayed laptop delivery — and he's standing at your desk, furious.<br/><br/>Can you de-escalate the situation and turn this disaster into a service recovery success?",
+      "startScreenImage": {
+        "path": "angry-customer.jpg",
+        "mime": "image/jpeg"
+      }
+    },
+    "endScreens": [
+      {
+        "endScreenTitle": "🌟 Outstanding Service Recovery!",
+        "endScreenSubtitle": "You handled a difficult situation with empathy, professionalism, and creativity. The customer leaves satisfied and will recommend your company to others. You've demonstrated master-level de-escalation skills.",
+        "endScreenImage": {
+          "path": "success.jpg",
+          "mime": "image/jpeg"
+        },
+        "endScreenScore": 0,
+        "contentId": -1
+      },
+      {
+        "endScreenTitle": "👍 Adequate Outcome",
+        "endScreenSubtitle": "You resolved the issue, but the customer leaves with some reservations. While the problem was fixed, your approach could have been warmer and more proactive. Review the feedback to level up your skills.",
+        "endScreenImage": {
+          "path": "neutral.jpg",
+          "mime": "image/jpeg"
+        },
+        "endScreenScore": 0,
+        "contentId": -2
+      },
+      {
+        "endScreenTitle": "⚠️ Customer Remains Unsatisfied",
+        "endScreenSubtitle": "The customer accepts the resolution but is unhappy with the experience. They're likely to share negative feedback and may take their business elsewhere. Review the better alternative choices to improve.",
+        "endScreenImage": {
+          "path": "stressed.jpg",
+          "mime": "image/jpeg"
+        },
+        "endScreenScore": 0,
+        "contentId": -3
+      },
+      {
+        "endScreenTitle": "❌ Customer Lost — Service Failure",
+        "endScreenSubtitle": "This interaction went poorly. The customer is leaving angry, will post negative reviews, and may escalate to management or regulatory bodies. Please review the de-escalation techniques shown in the feedback.",
+        "endScreenImage": {
+          "path": "angry-customer.jpg",
+          "mime": "image/jpeg"
+        },
+        "endScreenScore": 0,
+        "contentId": -4
+      }
+    ],
+    "content": [
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Service Desk — Monday Morning</strong><br/><br/>A customer, Alex Mercer, approaches your desk, face red with frustration. He slams a damaged box on the counter and raises his voice:<br/><br/><em>\"Three weeks! You promised three-day delivery on this laptop. I had a presentation for a $50,000 client — and I lost the deal because your company couldn't deliver. This is completely unacceptable!\"</em><br/><br/>Other customers are starting to look. How do you respond first?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"I can hear how frustrating this is, Alex. Let me personally look into your order right now. Give me two minutes and I will find every option to make this right for you.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 1,
+                  "feedback": {
+                    "title": "✅ Excellent: Empathy + Action",
+                    "subtitle": "You validated his feelings, used his name, and committed to personal action. This de-escalates tension and builds rapport.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"Sir, please calm down. There's no need to shout. I can only help you if you lower your voice and tell me what happened.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 2,
+                  "feedback": {
+                    "title": "❌ Mistake: Told customer to calm down",
+                    "subtitle": "Telling an angry person to \"calm down\" almost always escalates the situation. It feels dismissive and condescending.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"I understand you're upset, but I need you to fill out this complaint form first. Then I'll submit it to the appropriate department for review.\"</p>",
+                  "correct": false,
+                  "score": 3,
+                  "nextContentId": 3,
+                  "feedback": {
+                    "title": "⚠️ Suboptimal: Too bureaucratic too soon",
+                    "subtitle": "While polite, you've added friction and hidden behind procedure. Angry customers need empathy first, paperwork second.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 3
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-01-opening-move"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 1,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Investigation Phase</strong><br/><br/>Alex takes a breath, slightly calmer. You check the system and find the laptop was damaged in transit three weeks ago and a replacement was never triggered. It's now out of stock.<br/><br/><em>\"So what are you going to do about it? I needed that laptop. This has cost me real money.\"</em></p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"I'm authorizing overnight shipping on a comparable model with upgraded specs — at no additional cost. I'm also adding a $100 credit for your trouble. You'll have it by 9 AM tomorrow, and I'll personally track the delivery.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 4,
+                  "feedback": {
+                    "title": "✅ Excellent: Overdeliver with ownership",
+                    "subtitle": "You provided a concrete solution, compensated for the inconvenience, and took personal responsibility. This is service recovery gold.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"I can process a full refund immediately. It will show up in your account within 3-5 business days. I'm sorry for the inconvenience.\"</p>",
+                  "correct": false,
+                  "score": 5,
+                  "nextContentId": 4,
+                  "feedback": {
+                    "title": "⚠️ OK: Refund offered but no initiative",
+                    "subtitle": "A refund solves the transaction but doesn't address the customer's emotional or business needs. The customer still leaves empty-handed.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 5
+                  }
+                },
+                {
+                  "text": "<p>\"This really happened at the warehouse, not our store. You'll need to file a claim with the shipping company for compensation. I can give you the claim form.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 4,
+                  "feedback": {
+                    "title": "❌ Mistake: Blame-shifting",
+                    "subtitle": "Customers don't care about your internal processes — they care about their problem being solved. Blame-shifting erodes trust.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-02-cooperative"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 4,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Escalation Phase</strong><br/><br/>Alex's face reddens. He pounds the desk lightly and raises his voice further:<br/><br/><em>\"Don't tell me to calm down! I want to speak to your manager RIGHT NOW! This is the worst service I've ever experienced!\"</em><br/><br/>Other customers are watching. The atmosphere is tense.</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"You're right to be angry, Alex, and I own that. Before I get my manager, give me 60 seconds to show you what I CAN do to fix this right now. If you're not satisfied after that, I'll personally get my manager immediately.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 5,
+                  "feedback": {
+                    "title": "✅ Excellent: Own + Redirect + Offer",
+                    "subtitle": "You validated the anger, took ownership, and offered a concrete path forward. This often turns the situation around.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"I understand. Let me get my manager right away. Please wait here.\"</p>",
+                  "correct": false,
+                  "score": 2,
+                  "nextContentId": 7,
+                  "feedback": {
+                    "title": "⚠️ Suboptimal: Abdicated responsibility",
+                    "subtitle": "Passing the customer to a manager is sometimes necessary, but it undermines your authority and frustrates the customer further.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 2
+                  }
+                },
+                {
+                  "text": "<p>\"Look, I'm just trying to help you. If you're going to be this aggressive, maybe you should take your business elsewhere.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 7,
+                  "feedback": {
+                    "title": "❌ Critical Failure: Escalated the conflict",
+                    "subtitle": "Challenging an angry customer and suggesting they leave is a fireable offense. The customer demands to see a manager, and now Sarah Chen must clean up the mess.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-02-defensive"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 5,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Process Maze</strong><br/><br/>Alex reluctantly fills out the form you gave him, but his frustration is boiling over:<br/><br/><em>\"I can't believe I have to fill out a form to get what I was already promised. Your company's bureaucracy is unbelievable. I'm this close to taking my business elsewhere.\"</em></p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"You know what, Alex — forget the form. I'm overriding the process right now. Let me handle this personally and get you a solution immediately.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 4,
+                  "feedback": {
+                    "title": "✅ Excellent: Cut through red tape",
+                    "subtitle": "When a customer is frustrated with bureaucracy, showing you have the authority to bypass it is powerful. You've earned trust.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"I understand your frustration, but the form is company policy. Without it, I can't process anything in the system. Let me fill it out for you while we talk.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 6,
+                  "feedback": {
+                    "title": "❌ Mistake: Hid behind policy",
+                    "subtitle": "Hiding behind \"policy\" when a customer is already angry about bureaucracy will push them over the edge.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"Let me fill in the details from my end to speed this up. Meanwhile, I'm going to check if we can get you a better solution than the standard process allows.\"</p>",
+                  "correct": false,
+                  "score": 5,
+                  "nextContentId": 5,
+                  "feedback": {
+                    "title": "⚠️ OK: Helped with process + sought better solution",
+                    "subtitle": "You're easing the process AND looking for a better outcome. This is decent but the form itself was the original mistake.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 5
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-02-bureaucratic"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 4,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: The Final Hurdle</strong><br/><br/>Alex is somewhat appeased but remains cautious:<br/><br/><em>\"OK, so you say 9 AM tomorrow. How do I know you'll actually follow through? Promises from customer service don't mean much to me anymore.\"</em><br/><br/>This is the moment of truth — will you build or break trust?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"Here's my direct line and email. If that laptop doesn't arrive by 9:30 AM tomorrow, call ME — not the company switchboard, me. I'll personally hand-deliver a replacement from our flagship store. I'm putting my name on this.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 8,
+                  "feedback": {
+                    "title": "✅ Masterful: Personal accountability",
+                    "subtitle": "A personal guarantee is the most powerful trust-building tool in service recovery. You've committed your own credibility.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"Our system will send you tracking updates via email and SMS in real time. You can monitor the delivery status on our portal.\"</p>",
+                  "correct": false,
+                  "score": 4,
+                  "nextContentId": 8,
+                  "feedback": {
+                    "title": "⚠️ Adequate: Process-based reassurance",
+                    "subtitle": "This is factually helpful but emotionally cold. The customer wants human reassurance, not system notifications.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 4
+                  }
+                },
+                {
+                  "text": "<p>\"I assure you, our company takes customer satisfaction very seriously. We value your business and have strict quality controls in place.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 8,
+                  "feedback": {
+                    "title": "❌ Poor: Corporate platitudes",
+                    "subtitle": "Vague corporate language when a customer needs a personal commitment comes across as insincere and hollow.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-03-resolution"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 8,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: The Recovery Opportunity</strong><br/><br/>Alex has calmed but is still skeptical:<br/><br/><em>\"Alright... you're trying. But I need more than just getting what I was supposed to get in the first place. This has cost me time, money, and a client.\"</em><br/><br/>You have a chance to turn a detractor into a promoter.</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"You're absolutely right, and I'm going to make this right beyond just the product. I'm upgrading you to our premium model at no cost, adding a $150 apology credit, and a 20% discount on your next order. Plus my personal number if anything — and I mean anything — goes wrong.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 9,
+                  "feedback": {
+                    "title": "✅ Excellent: Go above and beyond",
+                    "subtitle": "When you've damaged trust, meeting expectations isn't enough — you need to overdeliver. This creates a \"service recovery paradox.\"",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"I'll upgrade the shipping to overnight and add a $50 gift card for the inconvenience. I hope you'll give us another chance.\"</p>",
+                  "correct": false,
+                  "score": 5,
+                  "nextContentId": 9,
+                  "feedback": {
+                    "title": "⚠️ OK: Moderate compensation",
+                    "subtitle": "Some compensation is offered but it feels standard rather than personalized. Customer is placated but not delighted.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 5
+                  }
+                },
+                {
+                  "text": "<p>\"I've already expedited the order. What more do you want me to do? The refund policy is clearly stated on our website.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 9,
+                  "feedback": {
+                    "title": "❌ Poor: Defensive and dismissive",
+                    "subtitle": "Asking \"what more do you want\" when someone is already upset comes across as hostile. You've undone any progress.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-03-recovery"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 9,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Deep Skepticism</strong><br/><br/>Alex crosses his arms and shakes his head:<br/><br/><em>\"I don't trust your company anymore. Every time I call, I get a different story. Why should I believe anything you say now?\"</em><br/><br/>Trust has been broken. How do you rebuild it?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"I completely understand your distrust, and honestly, based on what you've been through, I'd feel the same way. Here's what I'm going to do: I'll put everything in writing right now — a confirmation email with my direct extension, specific commitments with timelines, and a personal guarantee. If anything falls through, you call me directly, not a call center.\"</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 10,
+                  "feedback": {
+                    "title": "✅ Excellent: Transparency + Personal commitment",
+                    "subtitle": "Validating their distrust and offering concrete, written commitments with personal accountability is the fastest path to rebuilding trust.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>\"I promise things are different now. Our company has implemented new training and quality control measures. You can trust that we've improved.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 10,
+                  "feedback": {
+                    "title": "❌ Poor: Empty corporate reassurance",
+                    "subtitle": "Vague promises without concrete action or personal accountability won't rebuild trust — especially after a bureaucratic experience.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"I'm adding a $75 apology credit to your account, no strings attached. And I'll personally monitor your case and send you daily updates until it's resolved to your satisfaction.\"</p>",
+                  "correct": false,
+                  "score": 7,
+                  "nextContentId": 10,
+                  "feedback": {
+                    "title": "⚠️ OK: Compensation + Monitoring",
+                    "subtitle": "Compensation helps, and personal monitoring shows commitment. But without the personal guarantee, it still feels slightly transactional.",
+                    "image": {
+                      "path": "partial.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 7
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-03-mistrust"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 10,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Manager Takes Over</strong><br/><br/>Sarah Chen, the shift manager, arrives. She's professional but the room is tense. She turns to you:<br/><br/><em>\"I'll handle this. Thank you.\"</em><br/><br/>Sarah listens to Alex's complaint and reviews the order history. How does she handle it?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>Sarah apologizes sincerely, immediately authorizes overnight replacement with a comparable upgraded model, adds $100 credit, and gives Alex her direct contact information. She handles the situation with warmth and authority.</p>",
+                  "correct": true,
+                  "score": 10,
+                  "nextContentId": 11,
+                  "feedback": {
+                    "title": "✅ Manager handled it well",
+                    "subtitle": "Sarah's calm authority and decisive action saved the situation. The customer is satisfied, though you've lost the opportunity to build the relationship yourself.",
+                    "image": {
+                      "path": "check-green.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "<p>Sarah backs up your earlier behavior, telling Alex that \"our staff followed correct procedure\" and that the refund policy is standard. She offers no additional compensation.</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": 11,
+                  "feedback": {
+                    "title": "❌ Manager doubles down on failure",
+                    "subtitle": "When management defends poor service instead of correcting it, the customer feels ganged up on. The situation is unrecoverable.",
+                    "image": {
+                      "path": "cross-red.svg",
+                      "mime": "image/svg+xml",
+                      "width": 200,
+                      "height": 200
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-03-managed"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": 11,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Closing the Interaction</strong><br/><br/>Alex nods, accepting your resolution plan. The tension has dissipated. He adjusts his jacket and takes a breath:<br/><br/><em>\"Alright... I appreciate that you're actually doing something about this. I guess I'll wait for the delivery tomorrow.\"</em><br/><br/>The interaction is winding down. How do you close?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"Thank you, Alex. I've saved my direct contact info to your account — if anything doesn't go exactly as planned, you call me directly. I'll also follow up with you tomorrow morning to make sure everything's on track. You deserve a smooth experience from here on out.\"</p>",
+                  "correct": true,
+                  "score": 0,
+                  "nextContentId": -1,
+                  "feedback": {
+                    "title": "✅ Masterful close: Personal follow-through",
+                    "subtitle": "Ending with a specific, personal commitment to follow up tomorrow reinforces trust and leaves a lasting positive impression.",
+                    "image": {
+                      "path": "handshake.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"Thanks for your patience, Alex. The replacement is on its way and you'll get a tracking number shortly. Have a good day.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -2,
+                  "feedback": {
+                    "title": "⚠️ Adequate: Standard closing",
+                    "subtitle": "Polite but transactional. You've missed the opportunity to deepen the service recovery with a personal touch.",
+                    "image": {
+                      "path": "neutral.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"OK, it's all set in the system now. The delivery team will handle it from here.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -3,
+                  "feedback": {
+                    "title": "❌ Poor: Abrupt handoff",
+                    "subtitle": "Ending the conversation so abruptly after a heated interaction leaves the customer feeling like just another ticket number.",
+                    "image": {
+                      "path": "stressed.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-04-reflection-resolution"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": -1,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: The Relationship Rebuild</strong><br/><br/>Alex allows himself a small, reluctant smile:<br/><br/><em>\"You know what? I appreciate that you actually listened. Most people just read from a script. You didn't.\"</em><br/><br/>You've earned a moment of genuine connection. How do you cement it?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"That means a lot, Alex. I know trust isn't rebuilt in one conversation, so I'm going to prove it through action. You'll hear from me tomorrow morning, and I'm giving you my personal email — not the generic support address. If there's ever an issue, you bypass the system and come straight to me.\"</p>",
+                  "correct": true,
+                  "score": 0,
+                  "nextContentId": -1,
+                  "feedback": {
+                    "title": "✅ Excellent: Cemented trust with accountability",
+                    "subtitle": "Acknowledging the fragility of trust and committing to action-based proof creates a lasting service recovery effect.",
+                    "image": {
+                      "path": "success.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"Thank you, Alex. I'm glad I could help. Your feedback has been noted and we'll use it to improve our processes.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -2,
+                  "feedback": {
+                    "title": "⚠️ OK: Professional but generic",
+                    "subtitle": "Polite and professional, but the corporate language (\"noted for improvement\") feels hollow after a personal moment.",
+                    "image": {
+                      "path": "office-meeting.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"Great, I'm glad that's sorted. Is there anything else I can help you with today?\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -3,
+                  "feedback": {
+                    "title": "❌ Missed opportunity: Rushed closure",
+                    "subtitle": "Moving immediately to \"anything else?\" after an emotional interaction shows you're focused on efficiency, not the person.",
+                    "image": {
+                      "path": "stressed.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-04-reflection-trust"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": -1,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: Lingering Doubt</strong><br/><br/>Alex is less hostile now but his arms remain crossed. He looks at you with narrowed eyes:<br/><br/><em>\"I'll believe it when I see it. I've heard promises before.\"</em><br/><br/>The door is open, but only a crack. How do you leave things?</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"You're right to be cautious, and I respect that. Here's what I'm going to do: I'll send you a text message right now with my direct number. Tomorrow at 8 AM, you'll get a status update from me personally — not an automated message. At 9 AM, you'll have your laptop. I'll check in at noon to make sure everything is working. Skepticism is earned, and I'm going to earn your trust back one action at a time.\"</p>",
+                  "correct": true,
+                  "score": 0,
+                  "nextContentId": -2,
+                  "feedback": {
+                    "title": "✅ Good: Concrete commitment timeline",
+                    "subtitle": "Specific, time-bound commitments with personal accountability can slowly rebuild trust even with deeply skeptical customers.",
+                    "image": {
+                      "path": "trust.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"I understand. Well, the system will take it from here. You should receive everything as promised.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -3,
+                  "feedback": {
+                    "title": "❌ Poor: Abandoned the relationship",
+                    "subtitle": "When a customer is skeptical, retreating to \"the system will handle it\" confirms their distrust. You needed to over-communicate.",
+                    "image": {
+                      "path": "stressed.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-04-reflection-skepticism"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": -2,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      },
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p><strong>Scene: After the Manager's Intervention</strong><br/><br/>Sarah Chen has handled the situation and Alex is leaving. She turns to you for a debrief:<br/><br/><em>\"That was a tough one. What did you learn from this interaction?\"</em><br/><br/>The conversation with your manager is a learning opportunity.</p>",
+              "alternatives": [
+                {
+                  "text": "<p>\"I learned that I should have taken ownership earlier instead of escalating to you. Alex needed someone to take personal responsibility, not pass him up the chain. Next time, I'll try to solve it myself before asking for help.\"</p>",
+                  "correct": true,
+                  "score": 0,
+                  "nextContentId": -2,
+                  "feedback": {
+                    "title": "✅ Growth mindset: Self-aware reflection",
+                    "subtitle": "Recognizing your own mistake and identifying a specific improvement shows emotional intelligence and professional growth.",
+                    "image": {
+                      "path": "office-meeting.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                },
+                {
+                  "text": "<p>\"I think the customer was just unreasonable from the start. Some people you just can't please.\"</p>",
+                  "correct": false,
+                  "score": 0,
+                  "nextContentId": -4,
+                  "feedback": {
+                    "title": "❌ Deflection: No accountability",
+                    "subtitle": "Blaming the customer instead of reflecting on your own approach means you'll repeat the same mistakes. This is a stagnation trap.",
+                    "image": {
+                      "path": "paperwork.jpg",
+                      "mime": "image/jpeg"
+                    },
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          },
+          "subContentId": "bq-04-reflection-manager"
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Continue",
+        "nextContentId": -2,
+        "feedback": {
+          "title": "",
+          "subtitle": ""
+        },
+        "forceContentFinished": false,
+        "contentBehaviour": "none"
+      }
+    ],
+    "scoringOptionGroup": {
+      "scoringOption": "dynamic-score",
+      "includeInteractionsScores": true
+    },
+    "behaviour": {
+      "enableBackwardsNavigation": true,
+      "forceContentFinished": false,
+      "randomizeBranchingQuestions": false
+    },
+    "l10n": {
+      "startScreenButtonText": "Begin Scenario",
+      "endScreenButtonText": "Restart Scenario",
+      "backButtonText": "Back",
+      "disableProceedButtonText": "Complete the current module to proceed",
+      "replayButtonText": "Replay",
+      "scoreText": "Your score:",
+      "fullscreenAria": "Fullscreen"
+    }
+  }
+}

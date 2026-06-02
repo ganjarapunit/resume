@@ -1,0 +1,127 @@
+[
+  {
+    "name": "branchingQuestion",
+    "type": "group",
+    "label": "Branching Question",
+    "importance": "high",
+    "fields": [
+      {
+        "name": "question",
+        "type": "text",
+        "widget": "html",
+        "label": "Question",
+        "importance": "high",
+        "enterMode": "p",
+        "tags": [
+          "strong",
+          "em",
+          "del",
+          "code",
+          "a"
+        ]
+      },
+      {
+        "name": "alternatives",
+        "type": "list",
+        "label": "Alternatives",
+        "importance": "high",
+        "entity": "Alternative",
+        "min": 2,
+        "max": 4,
+        "field": {
+          "name": "alternative",
+          "type": "group",
+          "importance": "high",
+          "fields": [
+            {
+              "name": "text",
+              "type": "text",
+              "widget": "html",
+              "label": "Text",
+              "importance": "high",
+              "enterMode": "p",
+              "tags": [
+                "strong",
+                "em",
+                "del",
+                "code",
+                "a"
+              ]
+            },
+            {
+              "name": "correct",
+              "type": "boolean",
+              "label": "Correct",
+              "importance": "high",
+              "default": false
+            },
+            {
+              "name": "score",
+              "type": "number",
+              "label": "Score",
+              "importance": "low",
+              "default": 0
+            },
+            {
+              "name": "nextContentId",
+              "type": "number",
+              "label": "Next Content ID",
+              "importance": "high",
+              "widget": "none"
+            },
+            {
+              "name": "feedback",
+              "type": "group",
+              "label": "Alternative feedback",
+              "expanded": true,
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "text",
+                  "label": "Feedback title",
+                  "optional": true,
+                  "widget": "html",
+                  "enterMode": "p",
+                  "tags": [
+                    "strong",
+                    "em",
+                    "del",
+                    "code",
+                    "a"
+                  ]
+                },
+                {
+                  "name": "subtitle",
+                  "type": "text",
+                  "label": "Feedback text",
+                  "optional": true,
+                  "widget": "html",
+                  "enterMode": "p",
+                  "tags": [
+                    "strong",
+                    "em",
+                    "del",
+                    "code",
+                    "a"
+                  ]
+                },
+                {
+                  "name": "image",
+                  "type": "image",
+                  "label": "Feedback image",
+                  "optional": true
+                },
+                {
+                  "name": "endScreenScore",
+                  "type": "number",
+                  "label": "Score for this alternative",
+                  "optional": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

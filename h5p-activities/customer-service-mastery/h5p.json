@@ -1,0 +1,27 @@
+{
+  "title": "Customer Service De-Escalation Mastery",
+  "type": "H5P.BranchingScenario",
+  "language": "en",
+  "license": "CC BY-SA",
+  "mainLibrary": "H5P.BranchingScenario",
+  "embedTypes": [
+    "iframe"
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.BranchingScenario",
+      "majorVersion": 1,
+      "minorVersion": 8
+    },
+    {
+      "machineName": "H5P.BranchingQuestion",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    }
+  ]
+}
