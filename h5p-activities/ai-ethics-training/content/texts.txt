@@ -1,0 +1,9 @@
+Text[0] (contentId=0) → nextId:1 | FinFlow HQ — Sprint Review RoomThe data science team beams with pride as they demo their new AI recommendation engine. T
+Text[2] (contentId=2) → nextId:3 | Photo by Beatriz Cattel on UnsplashData Science Team RoomYou've called an urgent meeting with the data science team. The
+Text[4] (contentId=4) → nextId:5 | Photo by Planet Volumes on UnsplashLegal Department — 48 Hours LaterAfter escalating, you're sitting across from FinFlow
+Text[6] (contentId=6) → nextId:7 | Photo by Rochelle Lee on UnsplashSocial Media CrisisDespite your internal efforts, word has gotten out. A prominent FinF
+Text[8] (contentId=8) → nextId:9 | Photo by Bernd Dittrich on UnsplashBack in the Development PodData processing has been paused. The team is restless — th
+Text[10] (contentId=10) → nextId:11 | Photo by Nate Holland on UnsplashICO Correspondence — Day 1 of 30The Information Commissioner's Office has formally ackn
+Text[12] (contentId=12) → nextId:13 | Illustration from UnsplashInternal Investigation — The Full PictureAs part of your remediation planning, you commission 
+Text[14] (contentId=14) → nextId:15 | Photo from UnsplashData Protection Impact Assessment — CompleteAfter weeks of intensive work, the DPIA is finally comple
+Text[16] (contentId=16) → nextId:17 | Photo by Beatriz Cattel on UnsplashThe Executive BoardroomYou're standing at the head of the boardroom table. The full e

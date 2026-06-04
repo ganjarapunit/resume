@@ -1,0 +1,39 @@
+{
+  "embedTypes": [
+    "div"
+  ],
+  "language": "en",
+  "title": "AI Training Data Ethics: The FinFlow Dilemma",
+  "mainLibrary": "H5P.BranchingScenario",
+  "license": "CC BY-SA",
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.AdvancedText",
+      "majorVersion": 1,
+      "minorVersion": 1
+    },
+    {
+      "machineName": "H5P.BranchingQuestion",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    },
+    {
+      "machineName": "H5P.BranchingScenario",
+      "majorVersion": 1,
+      "minorVersion": 8
+    },
+    {
+      "machineName": "H5P.Image",
+      "majorVersion": 1,
+      "minorVersion": 1
+    }
+  ],
+  "defaultLanguage": "en",
+  "licenseVersion": "4.0",
+  "extraTitle": "AI Training Data Ethics: The FinFlow Dilemma"
+}

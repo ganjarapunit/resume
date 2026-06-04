@@ -1,0 +1,88 @@
+{
+  "type": {
+    "library": "H5P.BranchingQuestion 1.0",
+    "params": {
+      "branchingQuestion": {
+        "question": "<p>You're a Product Manager at <strong>FinFlow</strong>, a fintech app with 2M users. During a sprint review, the data science team proudly demos their new AI recommendation engine.</p><p><em>'We trained it on 3 years of real customer transaction data.'</em></p><p>What's your first reaction?</p>",
+        "alternatives": [
+          {
+            "text": "Challenge: 'Where did this data come from? Was there explicit consent?'",
+            "nextContentId": 3,
+            "feedback": {
+              "title": "",
+              "subtitle": "You prioritize transparency. Asking about consent is the first step to ethical data governance.",
+              "image": {
+                "path": "images/check-VsakUudm.svg",
+                "mime": "image/svg+xml",
+                "width": 64,
+                "height": 64,
+                "copyright": {
+                  "license": "U"
+                }
+              },
+              "endScreenScore": 10
+            },
+            "score": 9
+          },
+          {
+            "text": "Escalate: 'I'm pausing this. Legal needs to review immediately.'",
+            "nextContentId": 5,
+            "feedback": {
+              "title": "",
+              "subtitle": "You prioritize compliance over speed. Legal will give you a clearer picture of the risks.",
+              "image": {
+                "path": "images/warning-yLJrERMd.svg",
+                "mime": "image/svg+xml",
+                "width": 64,
+                "height": 64,
+                "copyright": {
+                  "license": "U"
+                }
+              },
+              "endScreenScore": 8
+            },
+            "score": 10
+          },
+          {
+            "text": "Approve: 'Great work! Let's plan the production launch.'",
+            "nextContentId": 7,
+            "feedback": {
+              "title": "",
+              "subtitle": "Approving without checking consent exposes the company to significant liability under GDPR.",
+              "image": {
+                "path": "images/cross-OjiO65gg.svg",
+                "mime": "image/svg+xml",
+                "width": 64,
+                "height": 64,
+                "copyright": {
+                  "license": "U"
+                }
+              },
+              "endScreenScore": 2
+            },
+            "score": 1
+          }
+        ],
+        "randomize": true
+      },
+      "proceedButtonText": "Proceed"
+    },
+    "subContentId": "e16efb50-ec26-41ec-8250-5e805bae477a",
+    "metadata": {
+      "contentType": "Branching Question",
+      "license": "U",
+      "title": "Untitled Branching Question",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "Untitled Branching Question"
+    }
+  },
+  "subContentId": "bq-discovery",
+  "showContentTitle": false,
+  "proceedButtonText": "Proceed",
+  "feedback": {},
+  "contentBehaviour": "useBehavioural",
+  "forceContentFinished": "useBehavioural",
+  "contentId": 1,
+  "nextContentId": -1
+}

@@ -1,0 +1,18 @@
+Text[0] -> nextContentId: 1
+Text[2] -> nextContentId: 3
+Text[4] -> nextContentId: 5
+Text[6] -> nextContentId: 7
+Text[8] -> nextContentId: 9
+Text[10] -> nextContentId: 11
+Text[12] -> nextContentId: 13
+Text[14] -> nextContentId: 15
+Text[16] -> nextContentId: 17
+BQ[1] -> alt targets: [3,5,7] | node.nextContentId: -1
+BQ[3] -> alt targets: [9,9,9] | node.nextContentId: -1
+BQ[5] -> alt targets: [11,11,11] | node.nextContentId: -1
+BQ[7] -> alt targets: [13,13,13] | node.nextContentId: -1
+BQ[9] -> alt targets: [15,15,15] | node.nextContentId: -1
+BQ[11] -> alt targets: [15,15,15] | node.nextContentId: -1
+BQ[13] -> alt targets: [15,15,15] | node.nextContentId: -1
+BQ[15] -> alt targets: [17,17,17] | node.nextContentId: -1
+BQ[17] -> alt targets: [-1,-2,-3] | node.nextContentId: -1

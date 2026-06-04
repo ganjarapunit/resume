@@ -1,0 +1,27 @@
+=== Text[0] (contentId=0) ===
+FinFlow HQ — Sprint Review Room The data science team beams with pride as they demo their new AI recommendation engine. The projection screen shows impressive metrics — 23% uplift in user engagement, 18% increase in transaction volume. Then the lead engineer drops a bombshell: "We trained it on three years of real customer transaction data." Your stomach drops. No one mentioned data consent in any of the sprint reviews. Two million users' financial data has been used without their knowledge. The room falls silent, waiting for your response.
+
+=== Text[2] (contentId=2) ===
+Photo by Beatriz Cattel on Unsplash Data Science Team Room You've called an urgent meeting with the data science team. The atmosphere is tense. They clearly thought they were doing something innovative, not something wrong. The lead engineer pushes back: "Everyone does this — it's just transactional data, not PII. We didn't think we needed consent. Look at what the big tech companies do." A few team members nod in agreement. Others look uncomfortable. The room is divided and they're all looking to you for direction.
+
+=== Text[4] (contentId=4) ===
+Photo by Planet Volumes on Unsplash Legal Department — 48 Hours Later After escalating, you're sitting across from FinFlow's General Counsel. The preliminary legal review is complete, and the verdict is stark. She slides a document across the table: "This is a clear violation of GDPR Article 6 and CCPA Section 1798.100. No consent was obtained, no Data Protection Impact Assessment was conducted. We have potential exposure to fines of up to 4% of global revenue." For FinFlow, that's over $10 million. And that's before any civil lawsuits from affected users.
+
+=== Text[6] (contentId=6) ===
+Photo by Rochelle Lee on Unsplash Social Media Crisis Despite your internal efforts, word has gotten out. A prominent FinFlow user — a privacy advocate with 50,000 followers — has posted a screenshot of the AI feature with a damning caption. Her tweet reads: '@FinFlow, how is my transaction data being used without my consent? I never agreed to this. Is this legal?' The post is gaining traction. Journalists are starting to ask questions. Your phone hasn't stopped buzzing for the last hour.
+
+=== Text[8] (contentId=8) ===
+Photo by Bernd Dittrich on Unsplash Back in the Development Pod Data processing has been paused. The team is restless — they've been told to halt all AI development until the consent issue is resolved. The lead engineer approaches you with a proposal: 'We could use synthetic data to keep development moving. Generated datasets that mirror real patterns without containing any actual customer information. We'd still need to sort out the legal framework for production, but at least we won't lose momentum.' Synthetic data is privacy-safe by design — no real user data involved. But it also means you're still proceeding without a proper data governance framework in place.
+
+=== Text[10] (contentId=10) ===
+Photo by Nate Holland on Unsplash ICO Correspondence — Day 1 of 30 The Information Commissioner's Office has formally acknowledged your self-report. The response is measured but firm. 'You are required to submit a full remediation plan within 30 calendar days. This must include: a Data Protection Impact Assessment, a user notification strategy, a data governance policy, and evidence of board-level oversight.' Your team is already stretched thin maintaining the existing platform. Finding the bandwidth to meet this deadline will be a real challenge.
+
+=== Text[12] (contentId=12) ===
+Illustration from Unsplash Internal Investigation — The Full Picture As part of your remediation planning, you commission a thorough audit of all data used in the AI training pipeline. What comes back is worse than you expected. The training dataset doesn't just include transaction records. It also contains support chat logs — years of customer service conversations with names, addresses, phone numbers, and account details. Someone on the engineering team thought more data would make the AI smarter. This escalates the severity from a compliance violation to a full data breach with PII exposure.
+
+=== Text[14] (contentId=14) ===
+Photo from Unsplash Data Protection Impact Assessment — Complete After weeks of intensive work, the DPIA is finally complete. The findings are nuanced: 'Moderate risk to data subjects. Technical and organisational controls are assessed as adequate for data security. However, the legal basis for processing is insufficient and must be remediated.' The DPIA team presents three remediation pathways. Each has different implications for user trust, regulatory risk, and business continuity. The board is waiting for your recommendation.
+
+=== Text[16] (contentId=16) ===
+Photo by Beatriz Cattel on Unsplash The Executive Boardroom You're standing at the head of the boardroom table. The full executive team is here — CEO, CFO, CTO, Chief Legal Officer, Head of Communications. The air is thick with tension. The CEO breaks the silence: 'This AI could add $5M to our annual recurring revenue. I need you to walk me through the cost-benefit analysis of our options — what's the business case for each path forward?' All eyes are on you. This is your moment to define FinFlow's ethical stance.
+
