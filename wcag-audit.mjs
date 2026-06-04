@@ -27,6 +27,7 @@ const PAGES = [
   ['/ielts-masterclass/portfolio_index.html', 'IELTS Portfolio Index', '#h5p-container'],
   ['/learning-analytics/index.html', 'Learning Analytics Dashboard', 'body'],
   ['/customer-service-mastery.html', 'Customer Service De-Escalation Mastery', '.h5p-wrap'],
+  ['/ai-ethics-training.html', 'AI Ethics Training', '.h5p-wrap'],
 ];
 
 // MIME types

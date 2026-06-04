@@ -1,8 +1,8 @@
 # WCAG Accessibility Audit Report
 
-**Date:** 2026-06-02
+**Date:** 2026-06-04
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
-**Pages Tested:** 10
+**Pages Tested:** 11
 
 ## Summary
 
@@ -18,29 +18,30 @@
 | IELTS Portfolio Index | 0 | 0 | ✅ Pass |
 | Learning Analytics Dashboard | 4 | 4 | ⚠️ Fail |
 | Customer Service De-Escalation Mastery | 0 | 0 | ✅ Pass |
+| AI Ethics Training | 0 | 0 | ✅ Pass |
 
-**Overall: 9 passed, 1 failed** (8 total violations)
+**Overall: 10 passed, 1 failed** (8 total violations)
 
 ## Critical & Serious Issues
 
 ### Learning Analytics Dashboard (light theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 67
+  - Affected elements: 69
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 111
+  - Affected elements: 115
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 9
+  - Affected elements: 10
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
   - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
@@ -56,21 +57,21 @@
 ### Learning Analytics Dashboard (dark theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 67
+  - Affected elements: 69
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 111
+  - Affected elements: 115
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#8b572a" fill-opacity="1" stroke="#fa`
 
 - **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
-  - Affected elements: 9
+  - Affected elements: 10
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
   - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
@@ -87,7 +88,7 @@
 
 ### Main Portfolio (index.html)
 - **URL:** /
-- **Tab-focusable elements:** 22
+- **Tab-focusable elements:** 24
 
 #### ☀️ Light Theme
 - Violations: 0
@@ -175,7 +176,7 @@
 
 ### Learning Analytics Dashboard
 - **URL:** /learning-analytics/index.html
-- **Tab-focusable elements:** 131
+- **Tab-focusable elements:** 133
 
 #### ☀️ Light Theme
 - Violations: 4
@@ -183,9 +184,9 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 67 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 111 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 69 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 115 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 10 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
 #### 🌙 Dark Theme
@@ -194,14 +195,25 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 67 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 111 |
-| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 9 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 69 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 115 |
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 10 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
 
 ### Customer Service De-Escalation Mastery
 - **URL:** /customer-service-mastery.html
+- **Tab-focusable elements:** 6
+
+#### ☀️ Light Theme
+- Violations: 0
+- Incomplete: 0
+#### 🌙 Dark Theme
+- Violations: 0
+- Incomplete: 0
+
+### AI Ethics Training
+- **URL:** /ai-ethics-training.html
 - **Tab-focusable elements:** 6
 
 #### ☀️ Light Theme

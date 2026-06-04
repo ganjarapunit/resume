@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ethics Training | Punit Ganjara</title>
+    <meta name="description" content="Interactive H5P activity: Explore the ethical implications of AI in the workplace through realistic scenarios and decision-making.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="images/h5p.svg">
+    <style>
+        :root {
+            --primary:       #20457c;
+            --primary-light: #3b6fb3;
+            --primary-dark:  #162f56;
+            --accent:        #10b981;
+            --text:          #0f172a;
+            --text-muted:    #566579;
+            --bg:            #f1f5f9;
+            --r-sm: 10px;
+            --r-lg: 24px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+        body::before, body::after {
+            content: ''; position: fixed; z-index: -1;
+            border-radius: 50%; filter: blur(90px); pointer-events: none;
+        }
+        body::before {
+            top: -120px; right: -80px; width: 560px; height: 560px;
+            background: radial-gradient(circle, rgba(32,69,124,.13) 0%, transparent 70%);
+        }
+        body::after {
+            bottom: -100px; left: -60px; width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(16,185,129,.10) 0%, transparent 70%);
+        }
+        .h5p-page {
+            min-height: 100vh;
+            padding: 24px 40px 40px;
+            display: flex; flex-direction: column;
+            align-items: center;
+        }
+        .h5p-wrap {
+            width: 100%; max-width: 1200px; flex: 1;
+            background: white; border-radius: var(--r-lg); overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,.09), 0 1px 0 rgba(255,255,255,.8) inset;
+            border: 1px solid rgba(255,255,255,.9);
+            animation: riseUp .7s cubic-bezier(.23,1,.32,1) both;
+            min-height: calc(100vh - 72px);
+        }
+        #h5p-container { width: 100%; min-height: inherit; }
+        .h5p-loading {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 480px; gap: 16px; color: var(--text-muted);
+        }
+        .h5p-loading svg { width: 40px; height: 40px; animation: spin 1.8s linear infinite; color: var(--primary); opacity: .5; }
+        .h5p-loading p { font-size: .9rem; font-weight: 500; }
+        .back-bar{display:flex;align-items:center;gap:6px;padding:8px 0 4px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .25s ease;align-self:flex-start;max-width:1200px;width:100%}
+        .back-bar:hover{color:var(--primary-light)}
+        .back-bar svg{width:16px;height:16px;transition:transform .2s ease}
+        .back-bar:hover svg{transform:translateX(-3px)}
+        @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+        @media (max-width: 1023px) {
+            .h5p-page { padding: 72px 20px 36px; }
+            .h5p-wrap { border-radius: 16px; min-height: calc(100svh - 120px); }
+        }
+        @media (max-width: 640px) {
+            .h5p-page { padding: 68px 14px 28px; }
+            .h5p-wrap { border-radius: 14px; }
+        }
+        [data-theme="dark"] {
+            --primary:       #3b82f6;
+            --primary-light: #60a5fa;
+            --primary-dark:  #1d4ed8;
+            --accent:        #34d399;
+            --text:          #e2e8f0;
+            --text-muted:    #94a3b8;
+            --bg:            #0b1120;
+        }
+        [data-theme="dark"] body::before {
+            background: radial-gradient(circle, rgba(59,130,246,.10) 0%, transparent 70%);
+        }
+        [data-theme="dark"] body::after {
+            background: radial-gradient(circle, rgba(52,211,153,.08) 0%, transparent 70%);
+        }
+        [data-theme="dark"] .h5p-wrap {
+            background: rgba(30,41,59,0.7);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+        }
+        /* ── H5P Library font fixes ── */
+        @font-face {
+            font-family: "bs";
+            src: local("Segoe UI Symbol"), local("Arial Unicode MS");
+            unicode-range: U+E900-E901;
+        }
+        @font-face {
+            font-family: "H5PRobotoLight";
+            src: local("Segoe UI"), local("Roboto"), local("sans-serif");
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: "H5PRobotoMedium";
+            src: local("Segoe UI"), local("Roboto"), local("sans-serif");
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: "H5PRobotoRegular";
+            src: local("Segoe UI"), local("Roboto"), local("sans-serif");
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: "H5PRobotoBold";
+            src: local("Segoe UI"), local("Roboto"), local("sans-serif");
+            font-weight: 700;
+        }
+        .theme-toggle {
+            position: fixed; top: 16px; right: 16px; z-index: 1100;
+            width: 44px; height: 44px; border-radius: 10px;
+            background: white; border: 1px solid rgba(255,255,255,0.45);
+            box-shadow: 0 4px 14px rgba(0,0,0,.08);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: #64748b; transition: all .25s ease;
+            backdrop-filter: blur(8px);
+        }
+        .theme-toggle svg { width: 20px; height: 20px; }
+        .theme-toggle:hover { background: #20457c; color: white; transform: scale(1.05); }
+        [data-theme="dark"] .theme-toggle {
+            background: rgba(30,41,59,0.8);
+            border-color: rgba(255,255,255,0.08);
+        }
+        [data-theme="dark"] .theme-toggle:hover { background: #3b82f6; color: white; }
+        /* ── Learner Name Entry ── */
+        .learner-banner {
+            font-size: .78rem; font-weight: 500; text-align: center;
+            padding: 6px 16px; background: #1e3a5f; color: #94a3b8;
+            display: none;
+        }
+        .learner-banner strong { color: #e2e8f0; }
+        .learner-banner button {
+            background: none; border: none; color: #60a5fa;
+            font: inherit; font-size: .75rem; text-decoration: underline;
+            cursor: pointer; margin-left: 8px;
+        }
+        .name-overlay {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 480px; padding: 40px 24px;
+            text-align: center;
+        }
+        .name-overlay.hidden { display: none; }
+        .name-overlay .icon-wrap {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(16,185,129,.12), rgba(32,69,124,.08));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 16px;
+        }
+        .name-overlay .icon-wrap svg { width: 26px; height: 26px; color: var(--primary); }
+        .name-overlay h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+        .name-overlay p { font-size: .88rem; color: var(--text-muted); max-width: 400px; line-height: 1.6; margin-bottom: 24px; }
+        .name-form-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .name-form-row input {
+            flex: 1; min-width: 200px; max-width: 300px;
+            padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: .9rem; outline: none;
+            transition: border-color .25s ease; background: #fff;
+        }
+        .name-form-row input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(32,69,124,.1); }
+        .name-form-row .btn-primary {
+            padding: 12px 28px; border: none; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: .9rem; font-weight: 600;
+            cursor: pointer; background: var(--primary); color: #fff;
+            transition: opacity .25s ease; white-space: nowrap;
+        }
+        .name-form-row .btn-primary:hover { opacity: .9; }
+        .name-form-row .btn-skip {
+            background: none; border: none; color: var(--text-muted);
+            font-family: 'Outfit', sans-serif; font-size: .82rem;
+            cursor: pointer; text-decoration: underline; padding: 10px 8px;
+        }
+        .start-btn-wrap {
+            display: none; margin-top: 20px;
+        }
+        .start-btn-wrap.visible { display: block; }
+        .start-btn-wrap button {
+            padding: 14px 48px; border: none; border-radius: var(--r-sm);
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff; box-shadow: 0 8px 24px rgba(32,69,124,.3);
+            transition: all .3s ease;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .start-btn-wrap button:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(32,69,124,.4); }
+        .start-btn-wrap button svg { width: 18px; height: 18px; }
+        [data-theme="dark"] .name-form-row input { background: rgba(15,23,42,.6); border-color: rgba(255,255,255,.1); color: var(--text); }
+        [data-theme="dark"] .name-form-row input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+        [data-theme="dark"] .name-form-row .btn-primary { background: var(--primary-dark); }
+        [data-theme="dark"] .start-btn-wrap button { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
+        @media (max-width: 640px) {
+            .name-overlay { min-height: 360px; padding: 24px 16px; }
+            .name-overlay h2 { font-size: 1.1rem; }
+            .name-form-row input { min-width: 160px; }
+        }
+        @media (max-width: 1023px) {
+            .theme-toggle { top: 16px; right: 16px; }
+        }
+        @media (max-width: 640px) {
+            .theme-toggle { width: 38px; height: 38px; top: 14px; right: 14px; }
+            .theme-toggle svg { width: 17px; height: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"
+            aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i data-lucide="moon" id="themeIcon"></i>
+    </button>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- ════ xAPI Configuration ════ -->
+    <script>
+        var LRS_ENDPOINT = 'https://portfolio-testing.lrs.io/xapi/statements';
+        var LRS_AUTH = 'Basic ZTY0Mzc3NzAtMzEzMC00NTE0LThiNDMtNTIyNDY0NzM3ZjI5OjRhYmVmYTc4LTE2M2UtNGI3Ni1iNzY3LWM0YWRhYWFhODgzZg==';
+        console.log('[xAPI] Endpoint:', LRS_ENDPOINT);
+        console.log('[xAPI] Auth present:', !!LRS_AUTH);
+
+        /* ── Learner Identity ── */
+        function generateId(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:r&3|8;return v.toString(16);}); }
+        function getVisitorId(){
+            var id = localStorage.getItem('xapi_visitor_id');
+            if(!id){ id = generateId(); localStorage.setItem('xapi_visitor_id', id); }
+            return id;
+        }
+        function getLearnerName(){ return sessionStorage.getItem('xapi_learner_name') || ''; }
+        function resolveActor(){
+            var name = getLearnerName();
+            var vid = getVisitorId();
+            if(name) return { account:{ homePage:'https://ganjarapunit.github.io/resume', name:vid }, name:name, objectType:'Agent' };
+            return { account:{ homePage:'https://ganjarapunit.github.io/resume', name:vid }, name:'Learner-'+vid.slice(0,8), objectType:'Agent' };
+        }
+
+        /* ── xAPI Sender ── */
+        const xAPI = (function(){
+            function send(stmt){
+                stmt.actor = resolveActor();
+                stmt.timestamp = new Date().toISOString();
+                stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+                console.log('[xAPI] Sending:', JSON.stringify(stmt));
+                if(LRS_ENDPOINT){
+                    var h = new Headers();
+                    h.append('Content-Type','application/json');
+                    h.append('X-Experience-API-Version','1.0.3');
+                    if(LRS_AUTH) h.append('Authorization',LRS_AUTH);
+                    fetch(LRS_ENDPOINT,{method:'POST',headers:h,body:JSON.stringify(stmt),mode:'cors'})
+                        .then(function(r){
+                            if(r.status === 204) { console.log('[xAPI] ✓ Statement stored'); }
+                            else if(r.status === 401) { console.error('[xAPI] ✗ INVALID LOGIN — API keys expired. Generate new ones in Veracity Dashboard → xAPI Access Keys'); }
+                            else { r.text().then(function(t){ console.warn('[xAPI] Unexpected response', r.status, t); }); }
+                        }).catch(function(err){ console.warn('[xAPI] Network error (CORS?):', err); });
+                }
+            }
+            return {
+                launched: function(){
+                    send({
+                        verb:{ id:'http://adlnet.gov/expapi/verbs/launched', display:{'en-US':'launched'} },
+                        object:{
+                            id:'http://apexdigital.com/ai-ethics-training',
+                            definition:{
+                                name:{'en-US':'AI Ethics Training'},
+                                description:{'en-US':'Interactive H5P activity: Explore the ethical implications of AI in the workplace through realistic scenarios and decision-making.'}
+                            }
+                        }
+                    });
+                },
+                sendStatement: function(stmt){
+                    send(stmt);
+                }
+            };
+        })();
+
+        /* ── H5P xAPI Bridge ── */
+        function initH5PXAPIBridge(){
+            if(window.H5P && H5P.externalDispatcher){
+                console.log('[xAPI] H5P externalDispatcher found — attaching bridge');
+                H5P.externalDispatcher.on('xAPI', function(event){
+                    try {
+                        var stmt = null;
+                        if(event.getStatement) {
+                            stmt = event.getStatement();
+                        } else if(event.data && event.data.getStatement) {
+                            stmt = event.data.getStatement();
+                        } else if(event.statement) {
+                            stmt = event.statement;
+                        } else if(event.data && event.data.statement) {
+                            stmt = event.data.statement;
+                        }
+                        if(stmt && stmt.verb){
+                            stmt.actor = resolveActor();
+                            if(!stmt.timestamp) stmt.timestamp = new Date().toISOString();
+                            if(!stmt.id) stmt.id = crypto.randomUUID ? crypto.randomUUID() : 'stmt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+                            if(!stmt.context) stmt.context = {};
+                            stmt.context.registration = getVisitorId();
+                            xAPI.sendStatement(stmt);
+                        }
+                    } catch(e){
+                        console.warn('[xAPI] Error processing H5P xAPI event:', e);
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
+
+        (function waitForH5P(){
+            if(!initH5PXAPIBridge()){
+                setTimeout(waitForH5P, 500);
+            }
+        })();
+
+        /* ── Launched fires from startScenario() after name entry ── */
+    </script>
+    <div id="learnerBanner" class="learner-banner"></div>
+    <div class="h5p-page">
+        <a href="./" class="back-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to Portfolio
+        </a>
+        <div class="h5p-wrap">
+            <!-- Name overlay shown before content starts -->
+            <div id="nameOverlay" class="name-overlay">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h2>AI Ethics Training</h2>
+                <p>Explore the ethical implications of AI in the workplace through realistic scenarios and decision-making. Your progress is tracked for personalised feedback.</p>
+                <div class="name-form-row">
+                    <input id="learnerName" type="text" placeholder="Your name (e.g. Jane Doe)" autocomplete="name" enterkeyhint="done">
+                    <button id="saveNameBtn" class="btn-primary" onclick="saveLearnerName()">Save Name</button>
+                    <button id="skipNameBtn" class="btn-skip" onclick="skipLearnerName()">Continue anonymously</button>
+                </div>
+                <div id="startBtnWrap" class="start-btn-wrap">
+                    <button onclick="startScenario()">
+                        Start Scenario
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <!-- H5P content loads here after start -->
+            <div id="h5pContainer" style="display:none;">
+                <div class="h5p-loading" id="h5p-loading">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
+                    <p>Loading scenario…</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.bundle.js"></script>
+    <script>
+        /* ── Learner Name Management ── */
+        function saveLearnerName(){
+            var name = document.getElementById('learnerName').value.trim();
+            if(!name) return;
+            sessionStorage.setItem('xapi_learner_name', name);
+            updateLearnerBanner();
+            showStartButton();
+        }
+        function skipLearnerName(){
+            sessionStorage.setItem('xapi_learner_skipped', '1');
+            showStartButton();
+        }
+        function updateLearnerBanner(){
+            var name = sessionStorage.getItem('xapi_learner_name');
+            var banner = document.getElementById('learnerBanner');
+            if(name && banner){
+                banner.style.display = 'block';
+                banner.innerHTML = '<span>Tracked as: <strong>' + name + '</strong></span>'
+                    + '<button onclick="showNameForm()">Not you?</button>';
+            }
+        }
+        function showNameForm(){
+            document.getElementById('nameOverlay').classList.remove('hidden');
+            document.getElementById('h5pContainer').style.display = 'none';
+            document.getElementById('startBtnWrap').classList.remove('visible');
+            document.getElementById('learnerName').focus();
+        }
+        function showStartButton(){
+            document.getElementById('startBtnWrap').classList.add('visible');
+        }
+
+        /* ── Start Scenario (delayed H5P init) ── */
+        var h5pInitialized = false;
+        function startScenario(){
+            if(h5pInitialized) return;
+            h5pInitialized = true;
+            document.getElementById('nameOverlay').classList.add('hidden');
+            var h5pContainer = document.getElementById('h5pContainer');
+            h5pContainer.style.display = 'block';
+            var loadingEl = document.getElementById('h5p-loading');
+            try {
+                new H5PStandalone.H5P(h5pContainer, {
+                    h5pJsonPath: './h5p-activities/ai-ethics-training',
+                    frameJs:     './frame.bundle.js',
+                    frameCss:    './styles/h5p.css'
+                });
+                var obs = new MutationObserver(function(){
+                    var iframes = h5pContainer.querySelectorAll('iframe');
+                    if (iframes.length > 0 || h5pContainer.querySelectorAll('.h5p-container').length > 0) {
+                        iframes.forEach(function(iframe) {
+                            if (!iframe.getAttribute('title')) {
+                                iframe.setAttribute('title', 'AI Ethics Training - Interactive H5P Activity');
+                            }
+                        });
+                        if(loadingEl) loadingEl.remove();
+                        obs.disconnect();
+                        setTimeout(function(){ xAPI.launched(); }, 500);
+                    }
+                });
+                obs.observe(h5pContainer, { childList: true, subtree: true });
+            } catch (e) {
+                console.error('H5P failed:', e);
+                if (loadingEl) {
+                    loadingEl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" style="width:40px;height:40px;opacity:.7"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:#ef4444;font-weight:600;">Scenario failed to load</p><p style="font-size:.8rem;color:#94a3b8;">Ensure h5p-activities/ai-ethics-training is present and the page is served from a local server.</p>';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            var input = document.getElementById('learnerName');
+            if(input){
+                input.addEventListener('keydown', function(e){
+                    if(e.key === 'Enter'){
+                        e.preventDefault();
+                        saveLearnerName();
+                    }
+                });
+            }
+        });
+
+        (function initNameFlow(){
+            var name = sessionStorage.getItem('xapi_learner_name');
+            var skipped = sessionStorage.getItem('xapi_learner_skipped');
+            if(name || skipped){
+                showStartButton();
+                updateLearnerBanner();
+            }
+        })();
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            updateThemeIcon();
+        }
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeIcon');
+            if (!icon) return;
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            lucide.createIcons();
+        }
+        (function initTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            updateThemeIcon();
+        })();
+    </script>
+</body>
+</html>
