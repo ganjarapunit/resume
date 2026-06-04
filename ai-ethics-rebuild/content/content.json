@@ -1,0 +1,24 @@
+{
+  "branchingScenario": {
+    "content": [
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<h2>Act 0: Choose Your Lens</h2><p>NovaTech AI has just acquired a promising startup with an AI-powered recruitment tool called <strong>TalentMatch</strong>.</p>",
+              "alternatives": [
+                { "text": "L&D", "correct": false, "score": 0, "nextContentId": 1, "feedback": { "title": "L&D Selected", "subtitle": "...", "image": { "path": "images/character-maya.svg", "mime": "image/svg+xml", "width": 64, "height": 64 } } },
+                { "text": "HR", "correct": false, "score": 0, "nextContentId": 1, "feedback": { "title": "HR Selected", "subtitle": "...", "image": { "path": "images/character-maya.svg", "mime": "image/svg+xml", "width": 64, "height": 64 } } }
+              ]
+            }
+          }
+        },
+        "subContentId": "role-selection", "showContentTitle": false, "proceedButtonText": "Choose"
+      }
+    ],
+    "endScreens": [
+      { "endScreenId": 0, "contentType": "screen", "title": "Complete", "subtitle": "<p>Done!</p>", "negativeScore": false }
+    ]
+  }
+}

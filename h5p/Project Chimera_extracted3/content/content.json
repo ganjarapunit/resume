@@ -1,0 +1,2582 @@
+{
+  "branchingScenario": {
+    "title": "Project Chimera",
+    "startScreen": {
+      "startScreenTitle": "Project Chimera",
+      "startScreenSubtitle": "Navigate the bio‑ethics crisis.",
+      "startScreenImage": null,
+      "startScreenAltText": ""
+    },
+    "endScreens": [
+      {
+        "endScreenTitle": "Success",
+        "endScreenSubtitle": "You resolved the crisis ethically.",
+        "endScreenImage": null,
+        "endScreenScore": 250,
+        "contentId": -1
+      },
+      {
+        "endScreenTitle": "Partial Success",
+        "endScreenSubtitle": "Good decisions, but some issues remain.",
+        "endScreenImage": null,
+        "endScreenScore": 150,
+        "contentId": -1
+      },
+      {
+        "endScreenTitle": "Failure",
+        "endScreenSubtitle": "The crisis escalated due to poor choices.",
+        "endScreenImage": null,
+        "endScreenScore": 0,
+        "contentId": -1
+      }
+    ],
+    "content": [
+      {
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Welcome to Project Chimera. Choose your first action.</p>",
+              "alternatives": [
+                {
+                  "text": "Begin analysis",
+                  "nextContentId": 1,
+                  "feedback": {
+                    "subtitle": "✔️",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 5
+                  }
+                },
+                {
+                  "text": "Consult stakeholders",
+                  "nextContentId": 1,
+                  "feedback": {
+                    "subtitle": "✔️",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 5
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 1,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 1. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 2,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 2,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 2,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 2. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 3,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 3,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 3,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 3. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 4,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 4,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 4,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 4. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 5,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 5,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 5,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 5. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 6,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 6,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 6,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 6. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 7,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 7,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 7,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 7. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 8,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 8,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 8,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 8. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 9,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 9,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 9,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 9. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 10,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 10,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 10,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 10. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 11,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 11,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 11,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 11. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 12,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 12,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 12,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 12. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 13,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 13,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 13,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 13. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 14,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 14,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 14,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 14. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 15,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 15,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 15,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 15. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 16,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 16,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 16,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 16. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 17,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 17,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 17,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 17. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 18,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 18,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 18,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 18. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 19,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 19,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 19,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 19. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 20,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 20,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 20,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 20. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 21,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 21,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 21,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 21. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 22,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 22,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 22,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 22. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 23,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 23,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 23,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 23. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 24,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 24,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 24,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 24. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 25,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 25,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 25,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 25. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 26,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 26,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 26,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 26. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 27,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 27,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 27,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 27. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 28,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 28,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 28,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 28. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 29,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 29,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 29,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 29. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 30,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 30,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 30,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 30. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 31,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 31,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 31,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 31. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 32,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 32,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 32,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 32. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 33,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 33,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 33,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 33. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 34,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 34,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 34,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 34. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 35,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 35,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 35,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 35. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 36,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 36,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 36,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 36. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 37,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 37,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 37,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 37. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 38,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 38,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 38,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 38. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 39,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 39,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 39,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 39. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 40,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 40,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 40,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 40. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 41,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 41,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 41,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 41. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 42,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 42,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 42,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 42. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 43,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 43,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 43,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 43. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 44,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 44,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 44,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 44. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 45,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 45,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 45,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 45. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 46,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 46,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 46,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 46. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 47,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 47,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 47,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 47. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 48,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 48,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 48,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 48. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 49,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 49,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 49,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 49. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 50,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 50,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 50,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 50. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 51,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 51,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 51,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 51. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 52,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 52,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 52,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 52. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 53,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 53,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 53,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 53. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 54,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 54,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 54,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 54. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 55,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 55,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 55,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 55. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 56,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 56,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 56,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 56. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 57,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 57,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 57,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 57. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 58,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 58,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 58,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 58. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 59,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 59,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 59,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 59. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 60,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 60,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 60,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 60. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 61,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 61,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 61,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 61. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 62,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 62,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 62,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 62. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 63,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 63,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 63,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 63. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 64,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 64,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 64,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 64. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 65,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 65,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 65,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 65. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 66,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 66,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 66,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 66. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 67,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 67,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 67,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 67. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 68,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 68,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 68,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Decision point 68. Choose wisely.</p>",
+              "alternatives": [
+                {
+                  "text": "Correct choice",
+                  "nextContentId": 69,
+                  "feedback": {
+                    "subtitle": "✔️ Correct",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 10
+                  }
+                },
+                {
+                  "text": "Incorrect choice",
+                  "nextContentId": 69,
+                  "feedback": {
+                    "subtitle": "❌ Wrong",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 2
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Proceed",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      },
+      {
+        "id": 69,
+        "type": {
+          "library": "H5P.BranchingQuestion 1.0",
+          "params": {
+            "branchingQuestion": {
+              "question": "<p>Final verdict: Should the project continue?</p>",
+              "alternatives": [
+                {
+                  "text": "Proceed with monitoring",
+                  "nextContentId": -1,
+                  "feedback": {
+                    "subtitle": "✔️ Success",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 250
+                  }
+                },
+                {
+                  "text": "Proceed with limits",
+                  "nextContentId": -1,
+                  "feedback": {
+                    "subtitle": "✔️ Partial",
+                    "image": "icons/check.svg",
+                    "endScreenScore": 150
+                  }
+                },
+                {
+                  "text": "Stop the project",
+                  "nextContentId": -1,
+                  "feedback": {
+                    "subtitle": "❌ Failure",
+                    "image": "icons/cross.svg",
+                    "endScreenScore": 0
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "showContentTitle": false,
+        "proceedButtonText": "Finish",
+        "nextContentId": -1,
+        "feedback": null,
+        "contentBehaviour": "useBehavioural"
+      }
+    ],
+    "scoringOptionGroup": {
+      "scoringOption": "dynamic-score",
+      "includeInteractionsScores": true
+    },
+    "behaviour": {
+      "enableBackwardsNavigation": false,
+      "forceContentFinished": false,
+      "randomizeBranchingQuestions": false
+    },
+    "l10n": {
+      "startScreenButtonText": "Start Scenario",
+      "endScreenButtonText": "Restart",
+      "backButtonText": "Back",
+      "disableProceedButtonText": "Select an answer to continue",
+      "replayButtonText": "Replay",
+      "scoreText": "Your score:",
+      "fullscreenAria": "Fullscreen"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "questionText": "<p>You receive a data breach alert. What is your first action?</p>",
+  "alternatives": [
+    {
+      "text": "Notify affected customers immediately",
+      "goto": "end-1",
+      "feedback": {
+        "title": "Transparent Approach",
+        "text": "You prioritize customer trust. This builds long-term loyalty but may cause short-term panic."
+      }
+    },
+    {
+      "text": "Investigate internally before notifying anyone",
+      "goto": "end-2",
+      "feedback": {
+        "title": "Cautious Approach",
+        "text": "You gather facts first. This is prudent but may violate breach notification laws."
+      }
+    },
+    {
+      "text": "Call legal and PR teams for a coordinated response",
+      "goto": "end-3",
+      "feedback": {
+        "title": "Coordinated Response",
+        "text": "You bring in experts. This is the most professional approach — balanced and legally sound."
+      }
+    }
+  ],
+  "proceedButtonText": "Continue",
+  "l10n": {
+    "proceedButtonText": "Continue",
+    "previousText": "Previous",
+    "nextText": "Next"
+  }
+}

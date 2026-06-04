@@ -1,0 +1,40 @@
+{
+  "panels": [
+    {
+      "title": "What is Climate Change?",
+      "content": {
+        "libraryId": "AdvancedText 1.1",
+        "params": {
+          "text": "<p>Climate change refers to long-term shifts in temperatures and weather patterns, primarily caused by human activities such as burning fossil fuels.</p>"
+        },
+        "subContentId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "metadata": { "contentType": "AdvancedText", "license": "U", "title": "Panel 1 Text" }
+      },
+      "keywords": "climate, global warming"
+    },
+    {
+      "title": "Key Causes",
+      "content": {
+        "libraryId": "AdvancedText 1.1",
+        "params": {
+          "text": "<ul><li><strong>Greenhouse Gas Emissions:</strong> CO₂, methane, and nitrous oxide from industry and agriculture</li><li><strong>Deforestation:</strong> Fewer trees means less CO₂ absorption</li><li><strong>Industrial Processes:</strong> Manufacturing releases heat-trapping gases</li></ul>"
+        },
+        "subContentId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "metadata": { "contentType": "AdvancedText", "license": "U", "title": "Panel 2 Text" }
+      },
+      "keywords": "causes, emissions, deforestation"
+    },
+    {
+      "title": "What Can We Do?",
+      "content": {
+        "libraryId": "AdvancedText 1.1",
+        "params": {
+          "text": "<ol><li>Switch to renewable energy sources (solar, wind)</li><li>Reduce, reuse, and recycle</li><li>Use public transportation or electric vehicles</li><li>Support climate-friendly policies</li></ol>"
+        },
+        "subContentId": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+        "metadata": { "contentType": "AdvancedText", "license": "U", "title": "Panel 3 Text" }
+      },
+      "keywords": "solutions, renewable, action"
+    }
+  ]
+}

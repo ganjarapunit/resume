@@ -1,0 +1,11 @@
+{
+  "title": "Sample Branching Question",
+  "language": "en",
+  "mainLibrary": "H5P.BranchingQuestion",
+  "embedTypes": ["div"],
+  "license": "CC BY-SA 4.0",
+  "preloadedDependencies": [
+    { "machineName": "H5P.BranchingQuestion", "majorVersion": 1, "minorVersion": 0 },
+    { "machineName": "FontAwesome", "majorVersion": 4, "minorVersion": 5 }
+  ]
+}

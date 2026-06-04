@@ -1,0 +1,10 @@
+{
+  "title": "Sample Rich Text",
+  "language": "en",
+  "mainLibrary": "H5P.AdvancedText",
+  "embedTypes": ["div"],
+  "license": "CC BY-SA 4.0",
+  "preloadedDependencies": [
+    { "machineName": "H5P.AdvancedText", "majorVersion": 1, "minorVersion": 1 }
+  ]
+}

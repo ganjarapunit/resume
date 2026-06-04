@@ -1,0 +1,12 @@
+{
+  "title": "Sample Accordion",
+  "language": "en",
+  "mainLibrary": "H5P.Accordion",
+  "embedTypes": ["div"],
+  "license": "CC BY-SA 4.0",
+  "preloadedDependencies": [
+    { "machineName": "H5P.Accordion", "majorVersion": 1, "minorVersion": 0 },
+    { "machineName": "H5P.AdvancedText", "majorVersion": 1, "minorVersion": 1 },
+    { "machineName": "FontAwesome", "majorVersion": 4, "minorVersion": 5 }
+  ]
+}
