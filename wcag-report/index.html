@@ -239,12 +239,12 @@
                 <span><i data-lucide="calendar"></i> June 2026</span>
                 <span><i data-lucide="search"></i> Automated Testing (Lighthouse)</span>
                 <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
-                <span><i data-lucide="monitor"></i> 12 pages tested</span>
+                <span><i data-lucide="monitor"></i> 13 pages tested</span>
             </div>
 
             <div class="summary-grid">
                 <div class="summary-card pass">
-                    <div class="count">11</div>
+                    <div class="count">12</div>
                     <div class="label">Pages Passed</div>
                 </div>
                 <div class="summary-card pass">
@@ -266,11 +266,11 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of all <strong>12 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                This report summarises an accessibility audit of all <strong>13 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>11 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after five fix rounds.</li>
+                <li><strong>12 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after six fix rounds.</li>
                 <li><strong>1 page</strong> (Learning Analytics Dashboard) is an external <strong>Veracity LRS</strong> redirect — cannot be audited, not a code issue.</li>
                 <li><strong>Fix rounds completed 6–7 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, and responsive About Me section fix.</li>
             </ul>
@@ -362,6 +362,12 @@
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
                     </tr>
                     <tr>
+                        <td class="page-name">Children Psychology — Interactive Video</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
                         <td class="page-name">Learning Analytics Dashboard</td>
                         <td style="text-align:center">84</td>
                         <td style="text-align:center">84</td>
@@ -379,7 +385,7 @@
             <p style="margin-bottom:12px;">
                 Most portfolio pages were missing a <code>&lt;main&gt;</code> landmark element — a foundational WCAG
                 requirement that lets screen reader users jump directly to the primary content area.
-                This issue has been fully resolved across all 12 portfolio pages.
+                This issue has been fully resolved across all 13 portfolio pages.
             </p>
             <p style="margin-bottom:12px;">
                 <strong>Fixed in this round (6 pages):</strong> index.html, h5p.html, customer-service-mastery.html,
@@ -462,7 +468,7 @@
                 giving-constructive-feedback/index.html, and this report page).
                 Fixed nested <code>&lt;main&gt;</code> in data-privacy-compliance/index.html. Added
                 <code>lang="en"</code> attributes to 3 pages. The <code>&lt;main&gt;</code> issue is now
-                <strong>fully resolved</strong> across all 12 portfolio pages.
+                <strong>fully resolved</strong> across all 13 portfolio pages.
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
@@ -485,7 +491,7 @@
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
                 <strong>Fix Round 4 — 7 June 2026:</strong>
-                Full Lighthouse sweep across all 12 portfolio pages. Fixed <strong>IELTS dark mode</strong>:
+                Full Lighthouse sweep across all 13 portfolio pages. Fixed <strong>IELTS dark mode</strong>:
                 replaced all blue text (h1, h2, exam-header-strip, transcript-btn, recorder-info, back-bar:hover)
                 with <code>#fbbf24</code> yellow (13.2:1 AA). Fixed <strong>Interactive Quiz</strong> heading order
                 (h1→h2→h3) — scored 98→100. Fixed <strong>design-samples</strong>: iframe titles,
@@ -503,8 +509,15 @@
 
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
+                <strong>Fix Round 6 — 7 June 2026:</strong>
+                Added <strong>Children Psychology — Interactive Video</strong> (interactive-video.html) — a new H5P Interactive Video
+                page restored from an H5P export. Lighthouse 100/100/100 in both themes. Design system tokens match all existing pages.
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
                 <strong>All pages now pass WCAG 2.0 AA + Lighthouse 100:</strong>
-                11 of 12 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
+                12 of 13 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
                 The sole exception is the <strong>Learning Analytics Dashboard</strong> (learning-analytics/index.html),
                 which is an external Veracity LRS redirect — Lighthouse cannot audit it.
             </div>
