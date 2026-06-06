@@ -48,6 +48,7 @@
 [data-theme="dark"] .hamburger:hover { background: var(--primary); border-color: var(--primary); }
 [data-theme="dark"] .nav-actions button:hover { background: var(--primary); border-color: var(--primary); }
 [data-theme="dark"] .nav-brand-mark { background: var(--primary); }
+[data-theme="dark"] .about-tag { color: #fbbf24 !important; border-color: rgba(251,191,36,0.3) !important; background: rgba(251,191,36,0.08) !important; }
 [data-theme="dark"] .mobile-drawer a.active { background: var(--primary); }
 [data-theme="dark"] .hero-label { color: #fbbf24; }
 [data-theme="dark"] .filter-tab.active .count { opacity: 1; color: white; }
@@ -250,11 +251,7 @@ body {
 .card-tags .tag-xapi { background: rgba(30,58,95,.08); color: var(--primary-light); border-color: transparent; }
 .card-tags .tag-external { background: rgba(100,100,100,.1); color: var(--text-muted); border-color: transparent; }
 .card-tags .tag-report { background: rgba(184,92,26,.08); color: var(--accent); border-color: transparent; }
-[data-theme="dark"] .card-tags .tag-h5p { background: rgba(90,146,219,.2); color: #b8d6f5; }
-[data-theme="dark"] .card-tags .tag-scorm { background: rgba(240,160,80,.2); color: #fcd9a8; }
-[data-theme="dark"] .card-tags .tag-xapi { background: rgba(90,146,219,.15); color: #9bc0f0; }
-[data-theme="dark"] .card-tags .tag-external { background: rgba(150,156,168,.15); color: #c8ccd4; }
-[data-theme="dark"] .card-tags .tag-report { background: rgba(240,160,80,.15); color: #fcd9a8; }
+[data-theme="dark"] .card-tags span { color: #fbbf24 !important; background: rgba(251,191,36,0.1) !important; border-color: rgba(251,191,36,0.25) !important; }
 
 .card.card-lg {
   grid-column: span 2;
@@ -539,12 +536,12 @@ body {
           drive measurable outcomes — always with <strong>WCAG 2.1 AA</strong> accessibility at the core.
         </p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">End-to-End Course Design</span>
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">SCORM 2004</span>
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">xAPI / cmi5</span>
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">H5P</span>
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">Instructional Design</span>
-          <span style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">ADDIE / Backward Design</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">End-to-End Course Design</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">SCORM 2004</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">xAPI / cmi5</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">H5P</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">Instructional Design</span>
+          <span class="about-tag" style="font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">ADDIE / Backward Design</span>
         </div>
       </div>
     </div>
