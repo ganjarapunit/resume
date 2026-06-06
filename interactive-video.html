@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Children Psychology | Interactive Video | Punit Ganjara</title>
     <meta name="description" content="Interactive video exploring children's psychology and the history of playground design — with quizzes, true/false questions, and reflection prompts embedded at key moments.">
+    <link rel="canonical" href="https://ganjarapunit.github.io/resume/interactive-video.html">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="images/h5p.svg">
     <style>
@@ -62,7 +63,7 @@
         .h5p-loading svg { width: 40px; height: 40px; animation: spin 1.8s linear infinite; color: var(--primary); opacity: .5; }
         .h5p-loading p { font-size: .9rem; font-weight: 500; }
         .back-bar{display:flex;align-items:center;gap:6px;padding:8px 0 4px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .25s ease;align-self:flex-start;max-width:1200px;width:100%}
-        .back-bar:hover{color:var(--primary-light)}
+        .page-title{font-size:1.6rem;font-weight:700;text-align:center;margin-bottom:4px;max-width:1200px;width:100%;color:var(--text)}[data-theme="dark"] .page-title{color:#e2e8f0}.back-bar:hover{color:var(--primary-light)}
         .back-bar svg{width:16px;height:16px;transition:transform .2s ease}
         .back-bar:hover svg{transform:translateX(-3px)}
         @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
@@ -223,7 +224,7 @@
 </head>
 <body>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"
-            aria-label="Toggle dark mode" title="Toggle dark mode">
+            tabindex="0" aria-label="Toggle dark mode" title="Toggle dark mode">
         <i data-lucide="moon" id="themeIcon"></i>
     </button>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -329,6 +330,7 @@
     </script>
     <div id="learnerBanner" class="learner-banner"></div>
     <main class="h5p-page">
+        <h1 class="page-title">Children Psychology — Interactive Video</h1>
         <a href="./" class="back-bar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back to Portfolio

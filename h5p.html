@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive H5P Activity | Punit Ganjara</title>
     <meta name="description" content="Interactive H5P timeline resume activity by Punit Ganjara — explore career milestones from 2010 to present as a Learning Experience Designer.">
+    <link rel="canonical" href="https://ganjarapunit.github.io/resume/h5p.html">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -67,7 +68,7 @@
         .h5p-loading p { font-size: .9rem; font-weight: 500; }
 
         .back-bar{display:flex;align-items:center;gap:6px;padding:8px 0 4px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .25s ease;align-self:flex-start;max-width:1200px;width:100%}
-        .back-bar:hover{color:var(--primary-light)}
+        .page-title{font-size:1.6rem;font-weight:700;text-align:center;margin-bottom:4px;max-width:1200px;width:100%;color:var(--text)}[data-theme="dark"] .page-title{color:#e2e8f0}.back-bar:hover{color:var(--primary-light)}
         .back-bar svg{width:16px;height:16px;transition:transform .2s ease}
         .back-bar:hover svg{transform:translateX(-3px)}
         @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
@@ -137,12 +138,13 @@
 
     <!-- Theme toggle -->
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"
-            aria-label="Toggle dark mode" title="Toggle dark mode">
+            tabindex="0" aria-label="Toggle dark mode" title="Toggle dark mode">
         <i data-lucide="moon" id="themeIcon"></i>
     </button>
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <main class="h5p-page">
+        <h1 class="page-title">Interactive H5P Activity</h1>
         <a href="./" class="back-bar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back to Portfolio
