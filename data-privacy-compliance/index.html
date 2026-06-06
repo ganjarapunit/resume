@@ -229,7 +229,7 @@ a{color:var(--primary-light);text-decoration:none}
     <i data-lucide="moon" id="themeIcon"></i>
   </button>
 </div>
-<div id="app">
+<main id="app">
   <header>
     <div class="header-inner">
       <div class="header-left">
@@ -242,7 +242,7 @@ a{color:var(--primary-light);text-decoration:none}
       <div id="progressBar" class="progress-bar"></div>
     </div>
   </header>
-  <main id="scene" class="scene"></main>
+  <div id="scene" class="scene"></div>
   <div id="nameFormBox" style="display:none;background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(32,69,124,.06));border:1px dashed var(--primary-light);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:16px;max-width:860px;margin-left:auto;margin-right:auto">
     <div style="font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:4px">👤 Who's taking this course?</div>
     <div style="font-size:.77rem;color:var(--text-muted);margin-bottom:10px">Your name will appear in xAPI tracking statements sent to the LRS.</div>
@@ -255,7 +255,7 @@ a{color:var(--primary-light);text-decoration:none}
   <button id="startBtn" style="display:none;width:100%;max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px;padding:14px;background:var(--primary);color:white;border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;font-size:15px;transition:all 0.2s ease">
     Start Scenario <i data-lucide="arrow-right" style="width:16px;height:16px;margin-left:8px"></i>
   </button>
-</div>
+</main>
 <script>
 /* ==============================
    Learner Identity Management

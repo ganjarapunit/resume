@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Concept 3 — Minimal Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ── WCAG AAA High-Contrast Tokens ── */
+:root {
+  --primary: #003b6f;
+  --primary-hover: #00284e;
+  --accent: #006b3e;
+  --accent-hover: #004d2d;
+  --text: #0a0a0a;
+  --text-secondary: #1a1a1a;
+  --text-muted: #404040;
+  --bg: #f4f5f7;
+  --bg-card: #ffffff;
+  --border: #b0b5be;
+  --focus-ring: #003b6f;
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  /* All ratios: ≥7:1 (AAA) */
+}
+
+[data-theme="dark"] {
+  --primary: #78b4f0;
+  --primary-hover: #96c6f5;
+  --accent: #5ad48a;
+  --accent-hover: #79dea0;
+  --text: #e8eaed;
+  --text-secondary: #c4c8cf;
+  --text-muted: #8e95a2;
+  --bg: #0d1117;
+  --bg-card: #161b22;
+  --border: #30363d;
+  --focus-ring: #78b4f0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT: Clean centered ── */
+.page-wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── HEADER ── */
+.header {
+  padding: 40px 0 32px;
+  border-bottom: 3px solid var(--border);
+  margin-bottom: 32px;
+}
+.header-row {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+}
+.header-info {
+  display: flex; align-items: center; gap: 20px;
+}
+.header-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--primary); display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 24px; flex-shrink: 0;
+}
+.header-title { font-size: 2rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+.header-subtitle { font-size: 1rem; color: var(--primary); font-weight: 600; margin-top: 2px; }
+.header-meta { font-size: .85rem; color: var(--text-muted); margin-top: 4px; display: flex; gap: 16px; }
+.header-meta span { display: flex; align-items: center; gap: 4px; }
+.header-meta svg { width: 14px; height: 14px; }
+.header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.header-actions button {
+  width: 40px; height: 40px; border-radius: var(--r-sm);
+  border: 2px solid var(--border); background: var(--bg-card);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all .2s;
+}
+.header-actions button:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.header-actions svg { width: 18px; height: 18px; }
+
+/* ── STATS BAR ── */
+.stats {
+  display: flex; gap: 24px; margin-bottom: 32px;
+  padding: 16px 0; border-bottom: 2px solid var(--border);
+}
+.stat-item { display: flex; align-items: center; gap: 8px; }
+.stat-value { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1; }
+.stat-label { font-size: .78rem; color: var(--text-muted); font-weight: 500; }
+
+/* ── CATEGORY TABS ── */
+.tabs {
+  display: flex; gap: 2px; margin-bottom: 28px;
+  background: var(--bg-card); border-radius: var(--r-sm);
+  border: 2px solid var(--border); overflow: hidden;
+}
+.tab {
+  flex: 1; padding: 12px 8px; text-align: center;
+  font-size: .82rem; font-weight: 600; color: var(--text-secondary);
+  background: transparent; border: none; cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab:hover { background: rgba(0,59,111,.05); }
+[data-theme="dark"] .tab:hover { background: rgba(120,180,240,.08); }
+.tab.active { background: var(--primary); color: white; }
+.tab svg { width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 6px; }
+.tab .count {
+  font-size: .72rem; opacity: .8; margin-left: 4px;
+}
+
+/* ── PROJECT LIST ── */
+.project-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 40px; }
+.project-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 2px solid transparent;
+  border-radius: var(--r-sm);
+  text-decoration: none; color: var(--text);
+  transition: all .2s;
+}
+.project-item:hover { border-color: var(--primary); background: var(--bg); }
+[data-theme="dark"] .project-item:hover { background: rgba(120,180,240,.04); }
+.project-icon {
+  width: 40px; height: 40px; border-radius: var(--r-sm);
+  background: rgba(0,59,111,.08); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .project-icon { background: rgba(120,180,240,.12); }
+.project-icon svg { width: 20px; height: 20px; color: var(--primary); }
+.project-info { flex: 1; min-width: 0; }
+.project-name { font-size: .92rem; font-weight: 700; }
+.project-desc { font-size: .8rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-meta { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+.project-meta .pill {
+  font-size: .62rem; font-weight: 600; padding: 3px 8px;
+  border-radius: 99px; background: var(--bg); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.project-meta .pill-primary { background: rgba(0,59,111,.1); color: var(--primary); border-color: transparent; }
+.project-meta .pill-accent { background: rgba(0,107,62,.1); color: var(--accent); border-color: transparent; }
+.project-meta .pill-new { background: var(--accent); color: white; border-color: transparent; }
+.project-arrow { color: var(--text-muted); transition: all .2s; }
+.project-arrow svg { width: 18px; height: 18px; }
+.project-item:hover .project-arrow { color: var(--primary); transform: translateX(3px); }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 32px 0 20px;
+  font-size: .78rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--text-muted);
+}
+.section-divider::after {
+  content: ''; flex: 1; height: 2px; background: var(--border);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .page-wrap { padding: 0 16px; }
+  .header-row { flex-direction: column; align-items: stretch; }
+  .header-actions { display: none; }
+  .header-title { font-size: 1.5rem; }
+  .stats { gap: 16px; flex-wrap: wrap; }
+  .tabs { flex-wrap: wrap; }
+  .tab { flex: none; width: 50%; }
+  .project-item { flex-wrap: wrap; padding: 14px 16px; }
+  .project-meta { width: 100%; margin-top: 8px; }
+  .project-arrow { display: none; }
+}
+@media (max-width: 400px) {
+  .tab { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-row">
+      <div class="header-info">
+        <div class="header-avatar">PG</div>
+        <div>
+          <h1 class="header-title">Punit Ganjara</h1>
+          <div class="header-subtitle">Learning Experience Designer</div>
+          <div class="header-meta">
+            <span><i data-lucide="map-pin"></i> Ho Chi Minh City</span>
+            <span><i data-lucide="mail"></i> ganjarapunit@gmail.com</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button onclick="toggleTheme()" aria-label="Toggle theme">
+          <i data-lucide="moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-item">
+      <span class="stat-value" id="totalCount">11</span>
+      <span class="stat-label">Projects</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">4</span>
+      <span class="stat-label">SCORM / xAPI</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">3</span>
+      <span class="stat-label">H5P Activities</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">6</span>
+      <span class="stat-label">LMS Formats</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" onclick="filterProjects(this, 'all')">
+      <i data-lucide="layers"></i> All <span class="count" id="allCount">(11)</span>
+    </button>
+    <button class="tab" role="tab" onclick="filterProjects(this, 'h5p')">
+      <i data-lucide="play-circle"></i> H5P <span class="count">(3)</span>
+    </button>
+    <button class="tab" role="tab" onclick="filterProjects(this, 'scorm')">
+      <i data-lucide="graduation-cap"></i> SCORM <span class="count">(4)</span>
+    </button>
+    <button class="tab" role="tab" onclick="filterProjects(this, 'xapi')">
+      <i data-lucide="activity"></i> xAPI/cmi5 <span class="count">(3)</span>
+    </button>
+    <button class="tab" role="tab" onclick="filterProjects(this, 'other')">
+      <i data-lucide="file-text"></i> Reports <span class="count">(1)</span>
+    </button>
+  </div>
+
+  <!-- Project List -->
+  <div class="project-list" id="projectList">
+
+    <!-- Featured first -->
+    <a href="#" class="project-item" data-category="scorm" style="border-color: var(--primary); background: rgba(0,59,111,.04);">
+      <div class="project-icon"><i data-lucide="graduation-cap"></i></div>
+      <div class="project-info">
+        <div class="project-name">IELTS Speaking Masterclass ⭐</div>
+        <div class="project-desc">SCORM 2004 4th Ed. — AI narration, voice recorder, glassmorphism UI, WCAG 2.1 AA</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-primary">SCORM 2004</span>
+        <span class="pill pill-accent">WCAG 2.1 AA</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="h5p">
+      <div class="project-icon"><i data-lucide="clock"></i></div>
+      <div class="project-info">
+        <div class="project-name">Interactive Timeline Resume</div>
+        <div class="project-desc">H5P career timeline — 2010–present with glassmorphism design</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-primary">H5P</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="h5p">
+      <div class="project-icon"><i data-lucide="message-circle"></i></div>
+      <div class="project-info">
+        <div class="project-name">Customer Service De-Escalation Mastery</div>
+        <div class="project-desc">H5P Branching Scenario — handling difficult customer interactions</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-primary">H5P</span>
+        <span class="pill pill-new">New</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="h5p">
+      <div class="project-icon"><i data-lucide="brain"></i></div>
+      <div class="project-info">
+        <div class="project-name">AI Ethics Training</div>
+        <div class="project-desc">H5P Branching Scenario — ethical dilemmas in AI deployment</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-primary">H5P</span>
+        <span class="pill pill-new">New</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <div class="section-divider">SCORM / xAPI / cmi5 Courses</div>
+
+    <a href="#" class="project-item" data-category="xapi">
+      <div class="project-icon"><i data-lucide="shield"></i></div>
+      <div class="project-info">
+        <div class="project-name">Data Privacy Compliance</div>
+        <div class="project-desc">xAPI-compliant branching scenario — GDPR, CCPA, data protection</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-accent">xAPI</span>
+        <span class="pill">Branching</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="xapi">
+      <div class="project-icon"><i data-lucide="brain"></i></div>
+      <div class="project-info">
+        <div class="project-name">AI Literacy for the Workplace</div>
+        <div class="project-desc">xAPI microlearning — AI fundamentals, prompt engineering, ethics</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-accent">xAPI</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="xapi">
+      <div class="project-icon"><i data-lucide="message-square"></i></div>
+      <div class="project-info">
+        <div class="project-name">Giving Constructive Feedback</div>
+        <div class="project-desc">cmi5 microlearning — launcher, practice, reflection with xAPI statements</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill pill-accent">cmi5</span>
+        <span class="pill pill-accent">xAPI</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <div class="section-divider">Analytics &amp; Reports</div>
+
+    <a href="#" class="project-item" data-category="other">
+      <div class="project-icon"><i data-lucide="bar-chart-3"></i></div>
+      <div class="project-info">
+        <div class="project-name">Learning Analytics Dashboard</div>
+        <div class="project-desc">Embedded Veracity LRS — real-time xAPI visualizations</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill">LRS</span>
+        <span class="pill">Analytics</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="other">
+      <div class="project-icon"><i data-lucide="eye"></i></div>
+      <div class="project-info">
+        <div class="project-name">WCAG Accessibility Report</div>
+        <div class="project-desc">Full audit — contrast ratios, ARIA, keyboard nav, screen reader support</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill">WCAG 2.1</span>
+        <span class="pill">Audit</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+
+    <a href="#" class="project-item" data-category="other">
+      <div class="project-icon"><i data-lucide="layers"></i></div>
+      <div class="project-info">
+        <div class="project-name">Interactive Quiz</div>
+        <div class="project-desc">Professional communication quiz — modern front-end build</div>
+      </div>
+      <div class="project-meta">
+        <span class="pill">Quiz</span>
+      </div>
+      <span class="project-arrow"><i data-lucide="arrow-right"></i></span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer style="padding: 20px 0 40px; border-top: 2px solid var(--border); font-size: .8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+    <span>&copy; 2026 Punit Ganjara</span>
+    <span>Built with Outfit · Lucide · WCAG AAA</span>
+  </footer>
+
+</div>
+
+<script>
+lucide.createIcons();
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+  lucide.createIcons();
+}
+
+function filterProjects(btn, category) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-item').forEach(item => {
+    if (category === 'all' || item.dataset.category === category) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

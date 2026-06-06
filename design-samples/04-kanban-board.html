@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Concept 4 — Kanban Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ── WCAG High-Contrast Tokens ── */
+:root {
+  --primary:#2a4365;
+  --primary-hover:#1a2f4a;
+  --primary-light:#3d6bb3;
+  --accent:#c05621;
+  --accent-hover:#9c4418;
+  --success:#1e7e4a;
+  --text:#0f172a;
+  --text-secondary:#1e293b;
+  --text-muted:#475569;
+  --bg:#f8fafc;
+  --bg-card:#ffffff;
+  --border:#cbd5e1;
+  --shadow:0 4px 24px rgba(0,0,0,.06);
+  --r-sm:8px;
+  --r-md:12px;
+  --r-lg:20px;
+}
+
+[data-theme="dark"] {
+  --primary:#7faee6;
+  --primary-hover:#9cc3f0;
+  --primary-light:#5d90d4;
+  --accent:#e8994a;
+  --accent-hover:#f0ae6a;
+  --success:#4ade80;
+  --text:#e2e8f0;
+  --text-secondary:#cbd5e1;
+  --text-muted:#94a3b8;
+  --bg:#0f172a;
+  --bg-card:#1e293b;
+  --border:#475569;
+  --shadow:0 4px 24px rgba(0,0,0,.3);
+}
+
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px; height:64px;
+  background:var(--bg-card); border-bottom:2px solid var(--border);
+  position:sticky; top:0; z-index:100;
+}
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.topbar-brand { font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:10px; }
+.topbar-brand-mark {
+  width:32px; height:32px; border-radius:8px;
+  background:var(--primary); color:white;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700;
+}
+.topbar-nav { display:flex; gap:2px; }
+.topbar-nav a {
+  padding:8px 14px; font-size:.82rem; font-weight:600;
+  text-decoration:none; color:var(--text-secondary); border-radius:var(--r-sm);
+  transition:all .15s;
+}
+.topbar-nav a:hover { background:var(--bg); color:var(--primary); }
+.topbar-nav a.active { background:var(--primary); color:white; }
+.topbar-right { display:flex; gap:8px; align-items:center; }
+.topbar-right button {
+  width:36px; height:36px; border-radius:var(--r-sm);
+  border:2px solid var(--border); background:transparent;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  color:var(--text-muted); transition:all .2s;
+}
+.topbar-right button:hover { background:var(--primary); color:white; border-color:var(--primary); }
+.topbar-right svg { width:17px; height:17px; }
+
+/* ── PAGE CONTENT ── */
+.page { padding:24px 32px 40px; max-width:1400px; margin:0 auto; }
+
+.page-header { margin-bottom:24px; }
+.page-title { font-size:1.6rem; font-weight:800; letter-spacing:-.3px; }
+.page-desc { font-size:.9rem; color:var(--text-muted); margin-top:4px; }
+
+/* ── KANBAN BOARD ── */
+.board {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:20px;
+  align-items:start;
+}
+.board-column {
+  background:var(--bg);
+  border:2px solid var(--border);
+  border-radius:var(--r-md);
+  overflow:hidden;
+}
+.col-header {
+  padding:14px 16px;
+  font-size:.78rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.6px;
+  border-bottom:2px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.col-header .count {
+  font-size:.7rem; padding:2px 10px; border-radius:99px;
+  background:var(--bg-card); color:var(--text-muted);
+}
+.col-body { padding:12px; display:flex; flex-direction:column; gap:10px; }
+
+/* cards */
+.board-card {
+  background:var(--bg-card);
+  border:2px solid var(--border);
+  border-radius:var(--r-sm);
+  padding:16px;
+  text-decoration:none; color:inherit;
+  transition:all .2s;
+  display:block;
+}
+.board-card:hover { border-color:var(--primary); transform:translateY(-2px); box-shadow:var(--shadow); }
+.board-card-top { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.board-card-icon {
+  width:32px; height:32px; border-radius:8px;
+  background:rgba(42,67,101,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+[data-theme="dark"] .board-card-icon { background:rgba(127,174,230,.15); }
+.board-card-icon svg { width:16px; height:16px; color:var(--primary); }
+.board-card-title { font-size:.85rem; font-weight:700; }
+.board-card-desc { font-size:.75rem; color:var(--text-muted); line-height:1.45; margin-bottom:10px; }
+.board-card-tags { display:flex; gap:4px; flex-wrap:wrap; }
+.board-card-tags span {
+  font-size:.58rem; font-weight:600; padding:2px 6px; border-radius:4px;
+  background:var(--bg); color:var(--text-muted); border:1px solid var(--border);
+}
+.board-card-tags .t-h5p { background:rgba(192,86,33,.1); color:var(--accent); border-color:transparent; }
+.board-card-tags .t-scorm { background:rgba(42,67,101,.1); color:var(--primary); border-color:transparent; }
+.board-card-tags .t-xapi { background:rgba(30,126,74,.1); color:var(--success); border-color:transparent; }
+.board-card-tags .t-new { background:var(--accent); color:white; border-color:transparent; }
+[data-theme="dark"] .board-card-tags .t-h5p { background:rgba(232,153,74,.2); color:var(--accent); }
+[data-theme="dark"] .board-card-tags .t-scorm { background:rgba(127,174,230,.2); color:var(--primary); }
+[data-theme="dark"] .board-card-tags .t-xapi { background:rgba(74,222,128,.2); color:var(--success); }
+
+/* FOOTER */
+.footer {
+  margin-top:32px; padding:16px 0 0;
+  border-top:2px solid var(--border);
+  font-size:.78rem; color:var(--text-muted);
+  display:flex; justify-content:space-between;
+}
+
+@media (max-width:1023px) {
+  .page { padding:20px; }
+  .topbar { padding:0 16px; }
+  .topbar-nav { display:none; }
+  .board { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .page { padding:16px 14px; }
+  .page-title { font-size:1.3rem; }
+  .board { gap:14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-brand">
+      <span class="topbar-brand-mark">PG</span>
+      Punit Ganjara
+    </div>
+    <div class="topbar-nav">
+      <a href="#" class="active">Portfolio</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button onclick="toggleTheme()" aria-label="Toggle theme"><i data-lucide="moon" id="themeIcon"></i></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="page-header">
+    <h1 class="page-title">Project Dashboard</h1>
+    <p class="page-desc">Learning Experience Design portfolio organized by modality and LMS format</p>
+  </div>
+
+  <!-- Kanban Board -->
+  <div class="board">
+
+    <!-- Column: H5P Interactive -->
+    <div class="board-column">
+      <div class="col-header" style="border-bottom-color:var(--accent);color:var(--accent);">
+        <span><i data-lucide="play-circle" style="width:15px;height:15px;vertical-align:-2px;margin-right:6px;"></i>H5P Interactive</span>
+        <span class="count">3</span>
+      </div>
+      <div class="col-body">
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="clock"></i></div>
+            <div class="board-card-title">Timeline Resume</div>
+          </div>
+          <div class="board-card-desc">H5P career timeline from 2010–present with glassmorphism design</div>
+          <div class="board-card-tags"><span class="t-h5p">H5P</span><span>Timeline</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="message-circle"></i></div>
+            <div class="board-card-title">Customer Service De-Escalation</div>
+          </div>
+          <div class="board-card-desc">Branching scenario for handling difficult customer interactions</div>
+          <div class="board-card-tags"><span class="t-h5p">H5P</span><span class="t-new">New</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="brain"></i></div>
+            <div class="board-card-title">AI Ethics Training</div>
+          </div>
+          <div class="board-card-desc">Branching scenario on AI deployment ethical dilemmas</div>
+          <div class="board-card-tags"><span class="t-h5p">H5P</span><span class="t-new">New</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Column: SCORM 2004 -->
+    <div class="board-column">
+      <div class="col-header" style="border-bottom-color:var(--primary);color:var(--primary);">
+        <span><i data-lucide="graduation-cap" style="width:15px;height:15px;vertical-align:-2px;margin-right:6px;"></i>SCORM 2004</span>
+        <span class="count">1</span>
+      </div>
+      <div class="col-body">
+        <a href="#" class="board-card" style="border-color:var(--primary);">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="graduation-cap"></i></div>
+            <div class="board-card-title">IELTS Speaking Masterclass ⭐</div>
+          </div>
+          <div class="board-card-desc">SCORM 2004 4th Ed. with AI narration, voice recorder, glassmorphism UI, WCAG 2.1 AA</div>
+          <div class="board-card-tags"><span class="t-scorm">SCORM 2004</span><span>AI</span><span>WCAG</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Column: xAPI / cmi5 -->
+    <div class="board-column">
+      <div class="col-header" style="border-bottom-color:var(--success);color:var(--success);">
+        <span><i data-lucide="activity" style="width:15px;height:15px;vertical-align:-2px;margin-right:6px;"></i>xAPI &amp; cmi5</span>
+        <span class="count">3</span>
+      </div>
+      <div class="col-body">
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="shield"></i></div>
+            <div class="board-card-title">Data Privacy Compliance</div>
+          </div>
+          <div class="board-card-desc">xAPI-compliant branching scenario — GDPR, CCPA, data protection</div>
+          <div class="board-card-tags"><span class="t-xapi">xAPI</span><span>Branching</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="brain"></i></div>
+            <div class="board-card-title">AI Literacy for the Workplace</div>
+          </div>
+          <div class="board-card-desc">xAPI microlearning — AI fundamentals, prompt engineering, ethics</div>
+          <div class="board-card-tags"><span class="t-xapi">xAPI</span><span>Microlearning</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="message-square"></i></div>
+            <div class="board-card-title">Giving Constructive Feedback</div>
+          </div>
+          <div class="board-card-desc">cmi5 launcher + practice + reflection with xAPI statements</div>
+          <div class="board-card-tags"><span class="t-xapi">cmi5</span><span class="t-xapi">xAPI</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Column: Tools & Reports -->
+    <div class="board-column">
+      <div class="col-header" style="border-bottom-color:var(--text-muted);color:var(--text-muted);">
+        <span><i data-lucide="tool" style="width:15px;height:15px;vertical-align:-2px;margin-right:6px;"></i>Tools &amp; Reports</span>
+        <span class="count">4</span>
+      </div>
+      <div class="col-body">
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="bar-chart-3"></i></div>
+            <div class="board-card-title">Analytics Dashboard</div>
+          </div>
+          <div class="board-card-desc">Veracity LRS dashboard with real-time xAPI statement visualizations</div>
+          <div class="board-card-tags"><span>LRS</span><span>Analytics</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="eye"></i></div>
+            <div class="board-card-title">WCAG Accessibility Report</div>
+          </div>
+          <div class="board-card-desc">Full audit — contrast ratios, ARIA, keyboard nav, screen reader</div>
+          <div class="board-card-tags"><span>WCAG 2.1</span><span>Audit</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="layers"></i></div>
+            <div class="board-card-title">Interactive Quiz</div>
+          </div>
+          <div class="board-card-desc">Professional communication quiz — modern front-end build</div>
+          <div class="board-card-tags"><span>Quiz</span></div>
+        </a>
+        <a href="#" class="board-card">
+          <div class="board-card-top">
+            <div class="board-card-icon"><i data-lucide="book-open"></i></div>
+            <div class="board-card-title">SlateBuilder Course</div>
+          </div>
+          <div class="board-card-desc">External SCORM course on SlateBuilder platform</div>
+          <div class="board-card-tags"><span>External</span></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <span>&copy; 2026 Punit Ganjara — Learning Experience Designer</span>
+    <span>WCAG AAA · Outfit · Lucide</span>
+  </footer>
+</div>
+
+<script>
+lucide.createIcons();
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+  lucide.createIcons();
+}
+</script>
+</body>
+</html>

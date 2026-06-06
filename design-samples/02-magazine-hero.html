@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Concept 2 — Magazine Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ── WCAG High-Contrast Tokens ── */
+:root {
+  --primary: #1e3a5f;
+  --primary-hover: #142b47;
+  --primary-light: #2c5691;
+  --accent: #b85c1a;
+  --accent-hover: #9a4a12;
+  --text: #131313;
+  --text-secondary: #2c2c2c;
+  --text-muted: #4d4d4d;
+  --bg: #ffffff;
+  --bg-alt: #f0f2f5;
+  --border: #c4c9d1;
+  --shadow: 0 4px 20px rgba(0,0,0,.07);
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 24px;
+  /* All ratios: text-on-bg ≥7:1 (AAA) */
+}
+
+[data-theme="dark"] {
+  --primary: #6fa3e8;
+  --primary-hover: #89b9f0;
+  --primary-light: #4d84d8;
+  --accent: #f0a050;
+  --accent-hover: #f5b66e;
+  --text: #ececec;
+  --text-secondary: #c8ccd4;
+  --text-muted: #969ca8;
+  --bg: #0d1321;
+  --bg-alt: #1a2333;
+  --border: #3a4559;
+  --shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP NAV ── */
+.top-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 72px;
+  border-bottom: 2px solid var(--border);
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: inherit;
+}
+.nav-brand-mark {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--primary); display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 18px;
+}
+.nav-brand-text { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  padding: 8px 16px; border-radius: var(--r-sm);
+  font-size: .85rem; font-weight: 600; color: var(--text-secondary);
+  text-decoration: none; transition: all .2s;
+}
+.nav-links a:hover { background: var(--bg-alt); color: var(--primary); }
+.nav-links a.active { background: var(--primary); color: white; }
+.nav-actions { display: flex; gap: 8px; align-items: center; }
+.nav-actions button {
+  width: 38px; height: 38px; border-radius: var(--r-sm);
+  border: 2px solid var(--border); background: var(--bg);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all .2s;
+}
+.nav-actions button:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.nav-actions svg { width: 18px; height: 18px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 60px 40px 40px;
+  max-width: 1280px; margin: 0 auto;
+  display: flex; gap: 48px; align-items: center;
+}
+.hero-content { flex: 1; }
+.hero-label {
+  font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--primary);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-size: 2.6rem; font-weight: 800;
+  line-height: 1.15; letter-spacing: -.8px;
+  margin-bottom: 16px;
+}
+.hero-title em { color: var(--accent); font-style: normal; }
+.hero-desc {
+  font-size: 1.05rem; color: var(--text-muted);
+  line-height: 1.65; max-width: 540px; margin-bottom: 28px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--r-sm);
+  font-weight: 700; font-size: .9rem; text-decoration: none;
+  transition: all .25s; border: none; cursor: pointer;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30,58,95,.3); }
+.btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+.btn svg { width: 18px; height: 18px; }
+
+.hero-visual {
+  width: 320px; height: 320px; flex-shrink: 0;
+  background: linear-gradient(145deg, var(--primary), var(--primary-hover));
+  border-radius: var(--r-lg);
+  display: flex; align-items: center; justify-content: center;
+  color: white; position: relative; overflow: hidden;
+}
+.hero-visual svg { width: 120px; height: 120px; opacity: .3; }
+.hero-visual-text {
+  position: absolute; bottom: 32px; left: 32px;
+}
+.hero-visual-text strong { display: block; font-size: 1.2rem; }
+.hero-visual-text span { font-size: .85rem; opacity: .85; }
+
+/* ── CATEGORY FILTER TABS ── */
+.filter-bar {
+  max-width: 1280px; margin: 0 auto; padding: 0 40px 20px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.filter-tab {
+  padding: 8px 20px; border-radius: 99px;
+  font-size: .82rem; font-weight: 600;
+  background: var(--bg-alt); color: var(--text-secondary);
+  border: 2px solid transparent; cursor: pointer;
+  transition: all .2s;
+}
+.filter-tab:hover { border-color: var(--border); }
+.filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+.filter-tab .count {
+  font-size: .7rem; opacity: .8; margin-left: 4px;
+}
+
+/* ── MASONRY / GRID ── */
+.content-grid {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 40px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  transition: all .25s;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+}
+.card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+[data-theme="dark"] .card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+.card-top {
+  height: 8px; background: var(--primary); flex-shrink: 0;
+}
+.card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.card-body .card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(30,58,95,.1); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+[data-theme="dark"] .card-body .card-icon { background: rgba(111,163,232,.15); }
+.card-body .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+.card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.card-desc { font-size: .85rem; color: var(--text-muted); line-height: 1.55; flex: 1; margin-bottom: 16px; }
+.card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.card-tags span {
+  font-size: .65rem; font-weight: 600; padding: 3px 10px;
+  border-radius: 99px; background: var(--bg-alt); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.card-tags .tag-h5p { background: rgba(30,58,95,.1); color: var(--primary); border-color: transparent; }
+.card-tags .tag-scorm { background: rgba(184,92,26,.1); color: var(--accent); border-color: transparent; }
+.card-tags .tag-xapi { background: rgba(30,58,95,.08); color: var(--primary-light); border-color: transparent; }
+[data-theme="dark"] .card-tags .tag-h5p { background: rgba(111,163,232,.2); color: var(--primary); }
+[data-theme="dark"] .card-tags .tag-scorm { background: rgba(240,160,80,.2); color: var(--accent); }
+
+.card.card-lg {
+  grid-column: span 2;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.card.card-lg .card-body { padding: 32px; }
+.card.card-lg .card-visual {
+  background: var(--bg-alt);
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+}
+.card.card-lg .card-visual svg { width: 80px; height: 80px; color: var(--primary); opacity: .4; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1023px) {
+  .top-nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { flex-direction: column; padding: 40px 20px; text-align: center; }
+  .hero-desc { max-width: 100%; }
+  .hero-actions { justify-content: center; }
+  .hero-visual { width: 240px; height: 240px; }
+  .hero-title { font-size: 2rem; }
+  .filter-bar { padding: 0 20px 16px; overflow-x: auto; flex-wrap: nowrap; }
+  .content-grid { padding: 0 20px 40px; grid-template-columns: 1fr; }
+  .card.card-lg { grid-column: span 1; grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .hero-title { font-size: 1.6rem; }
+  .hero { padding: 28px 14px; }
+  .hero-visual { width: 180px; height: 180px; }
+  .hero-visual svg { width: 60px; height: 60px; }
+  .content-grid { padding: 0 14px 32px; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="#" class="nav-brand">
+    <div class="nav-brand-mark">PG</div>
+    <span class="nav-brand-text">Punit Ganjara</span>
+  </a>
+  <div class="nav-links">
+    <a href="#" class="active">Portfolio</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button onclick="toggleTheme()" aria-label="Toggle theme">
+      <i data-lucide="moon" id="themeIcon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Learning Experience Designer</div>
+    <h1 class="hero-title">Crafting immersive <em>learning</em> experiences that bridge pedagogy &amp; technology</h1>
+    <p class="hero-desc">Based in Ho Chi Minh City, I design evidence-based digital learning — from SCORM 2004 courses to H5P branching scenarios, all with WCAG accessibility at the core.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">
+        <i data-lucide="external-link"></i> View Featured: IELTS Masterclass
+      </a>
+      <a href="#" class="btn btn-outline">
+        <i data-lucide="mail"></i> Get in Touch
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <div class="hero-visual-text">
+      <strong>12+ Projects</strong>
+      <span>SCORM · xAPI · cmi5 · H5P</span>
+    </div>
+  </div>
+</section>
+
+<!-- Filter Tabs -->
+<div class="filter-bar">
+  <button class="filter-tab active" onclick="filterCards(this, 'all')">All <span class="count">(12)</span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'h5p')">H5P Interactive</button>
+  <button class="filter-tab" onclick="filterCards(this, 'scorm')">SCORM 2004</button>
+  <button class="filter-tab" onclick="filterCards(this, 'xapi')">xAPI / cmi5</button>
+  <button class="filter-tab" onclick="filterCards(this, 'report')">Reports</button>
+</div>
+
+<!-- Content Grid -->
+<div class="content-grid" id="cardGrid">
+  <!-- Featured large card -->
+  <a href="#" class="card card-lg" data-category="scorm">
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+      <div class="card-title">IELTS Speaking Masterclass</div>
+      <div class="card-desc">Complete SCORM 2004 4th Ed. course with AI voice narration, in-browser voice recorder, glassmorphism UI, and WCAG 2.1 AA accessibility throughout.</div>
+      <div class="card-tags">
+        <span class="tag-scorm">SCORM 2004</span>
+        <span>AI Narration</span>
+        <span>WCAG 2.1 AA</span>
+      </div>
+    </div>
+    <div class="card-visual">
+      <i data-lucide="graduation-cap"></i>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="h5p">
+    <div class="card-top" style="background:#b85c1a;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="clock"></i></div>
+      <div class="card-title">Interactive Timeline Resume</div>
+      <div class="card-desc">H5P career timeline from 2010–present with glassmorphism and Lucide icons.</div>
+      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Timeline</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="h5p">
+    <div class="card-top" style="background:#b85c1a;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="message-circle"></i></div>
+      <div class="card-title">Customer Service De-Escalation</div>
+      <div class="card-desc">H5P Branching Scenario teaching de-escalation techniques for customer service professionals.</div>
+      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span><span class="tag-new">New</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="h5p">
+    <div class="card-top" style="background:#b85c1a;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="brain"></i></div>
+      <div class="card-title">AI Ethics Training</div>
+      <div class="card-desc">Branching scenario exploring consequences of AI decisions in the workplace.</div>
+      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span><span class="tag-new">New</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="xapi">
+    <div class="card-top" style="background:#1e3a5f;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="shield"></i></div>
+      <div class="card-title">Data Privacy Compliance</div>
+      <div class="card-desc">xAPI-compliant branching scenario covering GDPR, CCPA, and data protection best practices.</div>
+      <div class="card-tags"><span class="tag-xapi">xAPI</span><span>Branching</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="xapi">
+    <div class="card-top" style="background:#1e3a5f;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="brain"></i></div>
+      <div class="card-title">AI Literacy for the Workplace</div>
+      <div class="card-desc">xAPI-compliant microlearning covering AI fundamentals, prompt engineering, and ethical use.</div>
+      <div class="card-tags"><span class="tag-xapi">xAPI</span><span>Microlearning</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="xapi">
+    <div class="card-top" style="background:#1e3a5f;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="message-square"></i></div>
+      <div class="card-title">Giving Constructive Feedback</div>
+      <div class="card-desc">cmi5 microlearning course with xAPI statements — launcher, practice, and reflection.</div>
+      <div class="card-tags"><span class="tag-xapi">cmi5</span><span>xAPI</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="report">
+    <div class="card-top" style="background:#4d4d4d;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="eye"></i></div>
+      <div class="card-title">WCAG Accessibility Report</div>
+      <div class="card-desc">Full accessibility audit covering contrast ratios, ARIA labels, keyboard navigation, and screen reader support.</div>
+      <div class="card-tags"><span>WCAG 2.1</span><span>Audit</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="scorm">
+    <div class="card-top" style="background:#1e3a5f;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="bar-chart-3"></i></div>
+      <div class="card-title">Learning Analytics Dashboard</div>
+      <div class="card-desc">Embedded Veracity LRS dashboard with real-time xAPI statement visualizations.</div>
+      <div class="card-tags"><span>LRS</span><span>Analytics</span></div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-category="h5p">
+    <div class="card-top" style="background:#b85c1a;"></div>
+    <div class="card-body">
+      <div class="card-icon"><i data-lucide="layers"></i></div>
+      <div class="card-title">Interactive Quiz</div>
+      <div class="card-desc">Professional communication quiz built with modern front-end tooling.</div>
+      <div class="card-tags"><span>Quiz</span><span>Interactive</span></div>
+    </div>
+  </a>
+</div>
+
+<script>
+lucide.createIcons();
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+  lucide.createIcons();
+}
+
+function filterCards(btn, category) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

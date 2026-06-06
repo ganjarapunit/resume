@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Design Concepts — Punit Ganjara</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Outfit',sans-serif;
+  background:#f8fafc; color:#0f172a;
+  padding:40px 24px;
+  -webkit-font-smoothing:antialiased;
+}
+h1 { font-size:2rem; font-weight:800; margin-bottom:8px; letter-spacing:-.5px; }
+.sub { color:#64748b; font-size:1rem; margin-bottom:32px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(480px,1fr)); gap:24px; }
+.card {
+  background:white; border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
+  border:1px solid #e2e8f0;
+  transition:all .25s;
+}
+.card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.12); }
+.card-preview {
+  height:320px; overflow:hidden; border-bottom:1px solid #e2e8f0;
+  position:relative; background:#f1f5f9;
+}
+.card-preview iframe { width:100%; height:100%; border:none; }
+.card-body { padding:20px; }
+.card-number {
+  font-size:.7rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:1px; color:#3b6fb3; margin-bottom:4px;
+}
+.card-title { font-size:1.2rem; font-weight:700; margin-bottom:6px; }
+.card-desc { font-size:.85rem; color:#64748b; line-height:1.5; margin-bottom:12px; }
+.card-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.card-tags span {
+  font-size:.65rem; font-weight:600; padding:3px 10px; border-radius:99px;
+  background:#f1f5f9; color:#475569;
+}
+.card-actions { display:flex; gap:8px; margin-top:16px; }
+.card-actions a {
+  padding:8px 18px; border-radius:8px; font-size:.82rem; font-weight:600;
+  text-decoration:none; transition:all .2s;
+}
+.btn-view { background:#20457c; color:white; }
+.btn-view:hover { background:#162f56; }
+.btn-source { background:#f1f5f9; color:#20457c; }
+.btn-source:hover { background:#e2e8f0; }
+.features { margin-top:8px; font-size:.78rem; color:#64748b; }
+.features strong { color:#0f172a; }
+
+@media (max-width:540px) {
+  .grid { grid-template-columns:1fr; }
+  .card-preview { height:240px; }
+}
+</style>
+</head>
+<body>
+<h1>🎨 Portfolio Design Concepts</h1>
+<p class="sub">4 distinct visual directions for Punit Ganjara's Learning Experience Design portfolio — <strong>all WCAG AA/AAA compliant</strong> with high-contrast colors, dark mode, and responsive layouts.</p>
+<div class="grid">
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-preview"><iframe src="01-sidebar-dashboard.html" loading="lazy"></iframe></div>
+    <div class="card-body">
+      <div class="card-number">Concept 01</div>
+      <div class="card-title">Sidebar Dashboard</div>
+      <div class="card-desc">Fixed sidebar with expandable category groups (H5P, SCORM, xAPI, Reports) + project cards grid + featured spotlight banner. Clean, professional, navigation-heavy.</div>
+      <div class="card-tags"><span>Sidebar nav</span><span>Expandable sublinks</span><span>Card grid</span><span>Spotlight</span></div>
+      <div class="features"><strong>Best for:</strong> Lots of projects that need sub-categorization. Familiar LMS-like sidebar navigation.</div>
+      <div class="card-actions">
+        <a href="01-sidebar-dashboard.html" target="_blank" class="btn-view">Open Demo</a>
+      </div>
+    </div>
+  </div>
+  <!-- 2 -->
+  <div class="card">
+    <div class="card-preview"><iframe src="02-magazine-hero.html" loading="lazy"></iframe></div>
+    <div class="card-body">
+      <div class="card-number">Concept 02</div>
+      <div class="card-title">Magazine Hero</div>
+      <div class="card-desc">Sticky top nav, bold hero section with visual, filterable tab bar, and magazine-style card grid with featured "card-lg" spotlight layout. Category color-coded cards.</div>
+      <div class="card-tags"><span>Top nav</span><span>Hero section</span><span>Filter tabs</span><span>Masonry grid</span></div>
+      <div class="features"><strong>Best for:</strong> Visual impact. Showcasing featured work with a striking hero. Filterable content.</div>
+      <div class="card-actions">
+        <a href="02-magazine-hero.html" target="_blank" class="btn-view">Open Demo</a>
+      </div>
+    </div>
+  </div>
+  <!-- 3 -->
+  <div class="card">
+    <div class="card-preview"><iframe src="03-minimal-terminal.html" loading="lazy"></iframe></div>
+    <div class="card-body">
+      <div class="card-number">Concept 03</div>
+      <div class="card-title">Minimal Terminal</div>
+      <div class="card-desc">Centered single-column layout with stats bar, segmented tab controls, and a linear project list with section dividers. Ultra-clean, content-forward, fast-loading.</div>
+      <div class="card-tags"><span>Centered layout</span><span>Stats bar</span><span>Tab filters</span><span>Project list</span></div>
+      <div class="features"><strong>Best for:</strong> Quick scanning of all projects. Feels like a SaaS dashboard. Very accessible.</div>
+      <div class="card-actions">
+        <a href="03-minimal-terminal.html" target="_blank" class="btn-view">Open Demo</a>
+      </div>
+    </div>
+  </div>
+  <!-- 4 -->
+  <div class="card">
+    <div class="card-preview"><iframe src="04-kanban-board.html" loading="lazy"></iframe></div>
+    <div class="card-body">
+      <div class="card-number">Concept 04</div>
+      <div class="card-title">Kanban Board</div>
+      <div class="card-desc">Sticky top nav + kanban-style column layout grouping projects by format (H5P / SCORM / xAPI / Reports). Cards can be reordered visually. Modern, playful, unique.</div>
+      <div class="card-tags"><span>Kanban columns</span><span>Top nav</span><span>Visual grouping</span><span>Dashboard feel</span></div>
+      <div class="features"><strong>Best for:</strong> Showing breadth of LMS format expertise. Unconventional &amp; memorable layout.</div>
+      <div class="card-actions">
+        <a href="04-kanban-board.html" target="_blank" class="btn-view">Open Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

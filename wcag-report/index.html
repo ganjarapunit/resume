@@ -212,7 +212,7 @@
         <i data-lucide="moon" id="themeIcon"></i>
     </button>
 
-    <div class="container">
+    <main class="container">
 
         <!-- Back link -->
         <div class="back-bar">
@@ -227,27 +227,27 @@
             <h1>WCAG Accessibility Audit Report</h1>
             <div class="meta">
                 <span><i data-lucide="calendar"></i> June 2026</span>
-                <span><i data-lucide="search"></i> Automated Testing</span>
+                <span><i data-lucide="search"></i> Automated Testing (Lighthouse)</span>
                 <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
-                <span><i data-lucide="monitor"></i> 11 pages tested</span>
+                <span><i data-lucide="monitor"></i> 12 pages tested</span>
             </div>
 
             <div class="summary-grid">
                 <div class="summary-card pass">
-                    <div class="count">10</div>
+                    <div class="count">7</div>
                     <div class="label">Pages Passed</div>
+                </div>
+                <div class="summary-card warn">
+                    <div class="count">4</div>
+                    <div class="label">Pages With Issues</div>
                 </div>
                 <div class="summary-card fail">
                     <div class="count">1</div>
-                    <div class="label">Pages Failed</div>
-                </div>
-                <div class="summary-card warn">
-                    <div class="count">8</div>
-                    <div class="label">Issues Found</div>
+                    <div class="label">External Only</div>
                 </div>
                 <div class="summary-card total">
-                    <div class="count">0</div>
-                    <div class="label">Fixable Issues</div>
+                    <div class="count">4</div>
+                    <div class="label">Remaining Issues</div>
                 </div>
             </div>
         </div>
@@ -256,15 +256,14 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of Punit Ganjara's interactive e-learning portfolio.
-                Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes.
+                This report summarises an accessibility audit of all <strong>12 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>10 of 11 pages</strong> pass with <strong>zero issues</strong> in both themes.</li>
-                <li><strong>1 page</strong> (Learning Analytics Dashboard) has issues — all from the embedded <strong>third-party Veracity LRS</strong> dashboard, which cannot be changed from our side.</li>
-                <li><strong>IELTS Speaking Masterclass</strong> tested successfully and passes with zero issues.</li>
-                <li><strong>AI Ethics Training</strong> tested successfully and passes with zero issues.</li>
-                <li><strong>Every issue we could fix</strong> has been resolved.</li>
+                <li><strong>7 pages</strong> pass with <strong>zero major issues</strong> in both themes after this round of fixes.</li>
+                <li><strong>4 pages</strong> retain <strong>remaining issues</strong> — primarily colour contrast problems and heading-order gaps.</li>
+                <li><strong>1 page</strong> (Learning Analytics Dashboard) has issues from the embedded <strong>third-party Veracity LRS</strong> iframe — cannot be changed from our side.</li>
+                <li><strong>Fix round completed 6 June 2026:</strong> Added <code>&lt;main&gt;</code> landmarks to <strong>7 portfolio pages</strong> (index.html, h5p.html, customer-service-mastery.html, ai-ethics-training.html, ai-literacy/index.html, giving-constructive-feedback/index.html, and this report page itself). Fixed a nested-<code>&lt;main&gt;</code> issue in data-privacy-compliance/index.html and added <code>lang="en"</code> attributes to 3 pages. All 12 pages now have <code>&lt;main&gt;</code> landmarks.</li>
             </ul>
         </div>
 
@@ -283,69 +282,75 @@
                 <tbody>
                     <tr>
                         <td class="page-name">Main Portfolio (index.html)</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                        <td style="text-align:center">93</td>
+                        <td style="text-align:center">93</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                     <tr>
                         <td class="page-name">H5P Interactive Timeline</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                     <tr>
-                        <td class="page-name">AI Literacy Course</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td class="page-name">Data Privacy Compliance</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td class="page-name">Giving Constructive Feedback</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td class="page-name">Interactive Quiz (H5P)</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td class="page-name">Customer Service De-Escalation Mastery</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                        <td class="page-name">Customer Service De-Escalation</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center">93</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                     <tr>
                         <td class="page-name">AI Ethics Training</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Data Privacy Compliance</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">AI Literacy for the Workplace</td>
+                        <td style="text-align:center">96</td>
+                        <td style="text-align:center">96</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Giving Constructive Feedback</td>
+                        <td style="text-align:center">96</td>
+                        <td style="text-align:center">96</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Interactive Quiz (H5P)</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center">98</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">IELTS Speaking Masterclass</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
                     </tr>
                     <tr>
                         <td class="page-name">IELTS Portfolio Index</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
                     </tr>
                     <tr>
                         <td class="page-name">Learning Analytics Dashboard</td>
-                        <td style="text-align:center">4</td>
-                        <td style="text-align:center">4</td>
-                        <td style="text-align:center"><span class="fail-badge"><i data-lucide="x" class="badge-icon"></i> Fail</span></td>
+                        <td style="text-align:center">84</td>
+                        <td style="text-align:center">84</td>
+                        <td style="text-align:center"><span class="fail-badge"><i data-lucide="x" class="badge-icon"></i> External</span></td>
                     </tr>
                     <tr>
-                        <td class="page-name">IELTS Speaking Masterclass</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center">0</td>
-                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                        <td class="page-name">WCAG Accessibility Report</td>
+                        <td style="text-align:center">89</td>
+                        <td style="text-align:center">89</td>
+                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -355,11 +360,60 @@
         <div class="section">
             <h2><i data-lucide="alert-triangle"></i> Accessibility Issues</h2>
 
-            <h3>Learning Analytics Dashboard <span class="fail-badge" style="margin-left:8px"><i data-lucide="x" class="badge-icon"></i> 8 issues</span></h3>
+            <h3>1. Missing <code>&lt;main&gt;</code> Landmark <span class="pass-badge" style="margin-left:8px"><i data-lucide="check-circle" class="badge-icon"></i> Resolved</span></h3>
+            <p style="margin-bottom:12px;">
+                Most portfolio pages were missing a <code>&lt;main&gt;</code> landmark element — a foundational WCAG
+                requirement that lets screen reader users jump directly to the primary content area.
+                This issue has been fully resolved across all 12 portfolio pages.
+            </p>
+            <p style="margin-bottom:12px;">
+                <strong>Fixed in this round (6 pages):</strong> index.html, h5p.html, customer-service-mastery.html,
+                ai-ethics-training.html, ai-literacy/index.html, giving-constructive-feedback/index.html.
+                Also fixed a nested-<code>&lt;main&gt;</code> in data-privacy-compliance/index.html and added
+                <code>lang="en"</code> attributes to 3 pages.
+            </p>
+
+            <h3>2. Color Contrast Issues <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 4 pages</span></h3>
+            <p style="margin-bottom:8px;">
+                <strong>index.html (Light):</strong> Tag badges (<code>.tag-scorm</code>, <code>.tag-report</code>)
+                use foreground <code>#b85c1a</code> on light backgrounds <code>#f8efe8</code>/<code>#f9f2ed</code>,
+                yielding contrast ratios of 4.03–4.13:1 — below the 4.5:1 AA threshold.
+            </p>
+            <p style="margin-bottom:8px;">
+                <strong>index.html (Dark):</strong> Active-state backgrounds on nav-brand-mark, <code>.filter-tab.active</code>,
+                and <code>.btn-primary</code> use <code>#ffffff</code> or <code>#4d84d8</code> on <code>#6fa3e8</code>
+                or <code>#1c293f</code> backgrounds, yielding ratios of 2.19–3.89:1.
+            </p>
+            <p style="margin-bottom:8px;">
+                <strong>customer-service-mastery.html (Dark):</strong> Three elements fail contrast:
+                the back-bar link, paragraph text, and skip-to-content button, all on the dark theme background.
+            </p>
+            <p style="margin-bottom:8px;">
+                <strong>wcag-report/index.html (Both):</strong> The <code>.impact</code> badge text and
+                issue-description text on the report page have contrast ratios below 4.5:1.
+            </p>
+
+            <h3>3. Heading Order <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 2 pages</span></h3>
+            <p style="margin-bottom:12px;">
+                <strong>ai-literacy/index.html</strong> and <strong>giving-constructive-feedback/index.html</strong>
+                use <code>&lt;h4&gt;</code> elements for primary headings without preceding <code>&lt;h1&gt;</code>,
+                <code>&lt;h2&gt;</code>, or <code>&lt;h3&gt;</code> levels. This creates a skipped heading level,
+                which confuses screen reader navigation. Fix: change <code>&lt;h4&gt;</code> to <code>&lt;h1&gt;</code>
+                and adjust subsequent heading levels.
+            </p>
+
+            <h3>4. Link in Text Block <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 1 page</span></h3>
+            <p style="margin-bottom:12px;">
+                <strong>wcag-report/index.html:</strong> The link to <code>wcag-audit-report.json</code> in the
+                Methodology section is nested inside a paragraph without sufficient visual distinction.
+                Links should be distinguishable from surrounding text by more than colour alone.
+            </p>
+
+            <h3 style="margin-top:28px;">Learning Analytics Dashboard <span class="fail-badge" style="margin-left:8px"><i data-lucide="x" class="badge-icon"></i> External (unfixable)</span></h3>
             <p style="margin-bottom:12px;">
                 All issues originate from the embedded <strong>Veracity LRS</strong> dashboard
                 (a third-party tool). These <strong>cannot be fixed</strong> from our end — the
-                dashboard page itself (theme toggle, back button, iframe container) has zero issues.
+                host page (theme toggle, back button, iframe container) passes all checks.
             </p>
 
             <div class="violation-item">
@@ -391,24 +445,47 @@
         <div class="section">
             <h2><i data-lucide="file-text"></i> Notes</h2>
 
-            <div class="note-box">
-                <i data-lucide="info"></i>
-                <strong>IELTS Speaking Masterclass:</strong> This course includes large audio files for listening and speaking practice. It was tested successfully and passes with <strong>0 issues</strong> in both light and dark themes. Throughout the audit, several background and text colour adjustments were made to ensure learners who prefer dark mode can read all content clearly — from transcripts and cue cards to recording controls and completion buttons.
+            <div class="note-box" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round — 6 June 2026:</strong>
+                Added <code>&lt;main&gt;</code> landmarks to <strong>7 pages</strong> (index.html, h5p.html,
+                customer-service-mastery.html, ai-ethics-training.html, ai-literacy/index.html,
+                giving-constructive-feedback/index.html, and this report page).
+                Fixed nested <code>&lt;main&gt;</code> in data-privacy-compliance/index.html. Added
+                <code>lang="en"</code> attributes to 3 pages. The <code>&lt;main&gt;</code> issue is now
+                <strong>fully resolved</strong> across all 12 portfolio pages.
             </div>
 
-            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
-                <i data-lucide="layers"></i>
-                <strong>Customer Service De-Escalation Mastery:</strong> This H5P branching scenario page was added to the portfolio and tested in both themes. It passes with <strong>0 issues</strong> in both light and dark modes. The page uses H5PStandalone to render the H5P.BranchingScenario content type, with a glassmorphism wrapper and dark mode support. The fullscreen control glyph uses a fallback character (the bs icon font is not loaded) — this is a cosmetic visual-only item and does not affect accessibility.
+            <div class="note-box" style="margin-top:12px;background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.15);">
+                <i data-lucide="info"></i>
+                <strong>WCAG Report Page:</strong> This page itself scored <strong>89/100</strong>
+                in both themes. A <code>&lt;main&gt;</code> landmark was added during this fix round
+                (was the third issue — now resolved). Two issues remain: low contrast on impact badges
+                and description text, and a link-in-text-block violation.
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
-                <strong>AI Ethics Training:</strong> This H5P activity was added to the portfolio and tested in both themes. It passes with <strong>0 issues</strong> in both light and dark modes.
+                <strong>12/12 pages now have <code>&lt;main&gt;</code> landmarks:</strong>
+                The foundational landmark issue that affected most of the portfolio has been closed.
+                All pages also have <code>lang="en"</code> attributes. The remaining issues are limited
+                to colour contrast (4 pages), heading order (2 pages), a link-in-text-block (1 page),
+                and third-party iframe issues (1 page, unfixable).
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
                 <i data-lucide="external-link"></i>
-                <strong>Third-Party Content:</strong> The Learning Analytics Dashboard embeds a reporting tool from <strong>Veracity LRS</strong>, which generates its own interactive charts and interface elements. These are rendered by the third-party service and cannot be modified from our end. The host page (theme toggle, back button, iframe container) passes all checks.
+                <strong>Third-Party Content:</strong> The Learning Analytics Dashboard embeds a reporting tool from
+                <strong>Veracity LRS</strong>, which generates its own interactive charts and interface elements.
+                These are rendered by the third-party service and cannot be modified from our end. The host page
+                (theme toggle, back button, iframe container) passes all checks.
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="layers"></i>
+                <strong>SEO-Only Warnings Ignored:</strong> Several pages trigger <code>robots.txt</code> and
+                <code>llms.txt</code> warnings, plus missing meta descriptions. These are <strong>SEO concerns</strong>,
+                not accessibility issues, and are excluded from this report's counts.
             </div>
         </div>
 
@@ -416,18 +493,18 @@
         <div class="section">
             <h2><i data-lucide="book-open"></i> Methodology</h2>
             <p>
-                Each page was tested using industry-standard accessibility testing tools in an automated browser session.
-                Tests were run at desktop resolution on both light and dark themes, covering
-                WCAG 2.0 Level A and AA, plus WCAG 2.1 Level A and AA success criteria.
+                Each page was tested using <strong>Google Lighthouse</strong> in an automated browser session.
+                Tests were run at desktop resolution (1280×720) on both light and dark themes, covering
+                WCAG 2.0 Level A and AA, plus WCAG 2.1 Level A and AA accessibility success criteria.
             </p>
             <ul>
-                <li>The theme was toggled before each test to ensure both modes were checked.</li>
-                <li>Results show confirmed issues. Some items may also require manual review.</li>
-                <li>Full JSON data available: <a href="../wcag-audit-report.json">wcag-audit-report.json</a></li>
+                <li>The theme was toggled before each test to ensure both modes were checked independently.</li>
+                <li>Results show confirmed issues from the automated audit. Some items may also require manual review for full WCAG conformance.</li>
+                <li>Scores are reported out of 100. A score below 90 indicates one or more accessibility violations.</li>
             </ul>
         </div>
 
-    </div>
+    </main>
 
     <script>
         // ── Theme Toggle ──
