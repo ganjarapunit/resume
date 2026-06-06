@@ -403,6 +403,7 @@ audio {
 [data-theme="dark"] {
     --primary: #3b82f6;
     --primary-dark: #1d4ed8;
+    --primary-text: #fbbf24;
     --accent: #34d399;
     --text: #e2e8f0;
     --text-muted: #94a3b8;
@@ -418,7 +419,7 @@ audio {
     border-color: var(--glass-border);
 }
 [data-theme="dark"] h1,
-[data-theme="dark"] header p:first-child { color: var(--primary); }
+[data-theme="dark"] header p:first-child { color: var(--primary-text); }
 [data-theme="dark"] .section-card {
     background: var(--card-bg);
     border-color: var(--border);
@@ -458,13 +459,13 @@ audio {
 }
 [data-theme="dark"] .exam-header-strip {
     background: rgba(15, 23, 42, 0.5);
-    color: var(--primary);
+    color: var(--primary-text);
     border-color: var(--border);
 }
 [data-theme="dark"] .transcript-btn {
     background: rgba(30, 41, 59, 0.5);
     border-color: var(--border);
-    color: var(--primary);
+    color: var(--primary-text);
 }
 [data-theme="dark"] .transcript-btn:hover {
     background: var(--primary);
@@ -481,6 +482,9 @@ audio {
 [data-theme="dark"] .btn-record.recording {
     background: #dc2626;
 }
+[data-theme="dark"] h2 { color: var(--primary-text); }
+[data-theme="dark"] .recorder-info p:first-child { color: var(--primary-text); }
+[data-theme="dark"] .back-bar:hover { color: var(--primary-text); }
 
 /* ── Theme Toggle (in index.html) ── */
 .theme-toggle {
