@@ -34,7 +34,8 @@ html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);backgrou
 [data-theme="dark"] .slide,.stat-card,.flip-card,.sort-item,.sort-bucket,.prompt-builder,.practice-wrap{background:var(--glass-bg);border-color:var(--glass-border)}
 [data-theme="dark"] .course-header{background:linear-gradient(135deg,#1e40af,#3b82f6)}
 [data-theme="dark"] .back-bar{background:rgba(15,23,42,.9)}
-[data-theme="dark"] .back-btn{color:#fbbf24}
+[data-theme="dark"] .back-btn{background:#fbbf24;color:#1e293b!important;border-color:#d97706}
+[data-theme="dark"] .back-btn:hover{background:#f59e0b;border-color:#b45309}
 [data-theme="dark"] .slide-heading{color:#fbbf24}
 [data-theme="dark"] .objectives-box h3{color:#fbbf24}
 [data-theme="dark"] .stat-number{color:#fbbf24}
@@ -58,12 +59,8 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
   border-bottom:1px solid var(--glass-border);padding:10px 24px;
   display:flex;align-items:center;justify-content:space-between
 }
-.back-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--primary);text-decoration:none;font-size:.85rem;font-weight:600;
-  padding:8px 16px;border-radius:var(--r-sm);transition:all .25s ease
-}
-.back-btn:hover{background:rgba(32,69,124,.08);transform:translateX(-3px)}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:#fbbf24;color:#1e293b!important;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border-radius:var(--r-sm);border:2px solid #d97706;transition:all .25s ease}
+.back-btn:hover{background:#f59e0b;border-color:#b45309;transform:translateX(-3px)}
 .back-btn svg{width:16px;height:16px}
 .course-badge{
   font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
@@ -656,7 +653,7 @@ body::after{bottom:-100px;left:-60px;width:420px;height:420px;background:radial-
       <div style="text-align:center;margin-top:12px">
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">📖 Want to go deeper? Explore <a href="https://www.ccl.org/articles/leading-effectively-articles/situation-behavior-impact-the-key-to-meaningful-feedback/" target="_blank" style="color:var(--primary)">SBI Model resources from CCL</a></p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
-          <a href="../" class="btn btn-primary"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>
+          <a href="../" class="back-btn"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>
           <a href="https://portfolio-testing.lrs.io/" target="_blank" rel="noopener" class="btn btn-secondary"><i data-lucide="bar-chart-3" style="width:16px;height:16px"></i> View Tracking Data</a>
         </div>
       </div>

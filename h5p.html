@@ -67,10 +67,10 @@
         .h5p-loading svg { width: 40px; height: 40px; animation: spin 1.8s linear infinite; color: var(--primary); opacity: .5; }
         .h5p-loading p { font-size: .9rem; font-weight: 500; }
 
-        .back-bar{display:flex;align-items:center;gap:6px;padding:8px 0 4px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .25s ease;align-self:flex-start;max-width:1200px;width:100%}
-        .page-title{font-size:1.6rem;font-weight:700;text-align:center;margin-bottom:4px;max-width:1200px;width:100%;color:var(--text)}[data-theme="dark"] .page-title{color:#e2e8f0}.back-bar:hover{color:var(--primary-light)}
-        .back-bar svg{width:16px;height:16px;transition:transform .2s ease}
-        .back-bar:hover svg{transform:translateX(-3px)}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:#fbbf24;color:#1e293b!important;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border-radius:var(--r-sm);border:2px solid #d97706;transition:all .25s ease;align-self:flex-start}
+        .back-btn:hover{background:#f59e0b;border-color:#b45309;transform:translateX(-3px)}
+        .back-btn svg{width:16px;height:16px;transition:transform .2s ease}
+        .back-btn:hover svg{transform:translateX(-3px)}
         @keyframes riseUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
         @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 
@@ -100,7 +100,8 @@
         [data-theme="dark"] body::after {
             background: radial-gradient(circle, rgba(52,211,153,.08) 0%, transparent 70%);
         }
-        [data-theme="dark"] .back-bar{color:#fbbf24}
+        [data-theme="dark"] .back-btn{background:#fbbf24;color:#1e293b!important;border-color:#d97706}
+        [data-theme="dark"] .back-btn:hover{background:#f59e0b;border-color:#b45309}
         [data-theme="dark"] .h5p-wrap {
             background: rgba(30,41,59,0.7);
             border-color: rgba(255,255,255,0.08);
@@ -145,7 +146,7 @@
 
     <main class="h5p-page">
         <h1 class="page-title">Interactive H5P Activity</h1>
-        <a href="./" class="back-bar">
+        <a href="./" class="back-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back to Portfolio
         </a>

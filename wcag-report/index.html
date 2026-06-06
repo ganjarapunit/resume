@@ -54,7 +54,7 @@
         }
         a { color: var(--primary-light); text-decoration: underline; text-underline-offset: 2px; }
         a:hover { text-decoration: underline; }
-        .back-bar a { text-decoration: none; }
+        /* back-btn — see .back-btn rules below */
 
         /* Theme toggle */
         .theme-toggle {
@@ -73,15 +73,10 @@
             border-color: rgba(255,255,255,.12);
         }
 
-        /* Back link */
-        .back-bar {
-            display: flex; align-items: center; gap: 6px;
-            padding: 12px 0; margin-bottom: 8px;
-            font-size: .85rem; font-weight: 500;
-        }
-        .back-bar a { color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
-        .back-bar a:hover { color: var(--primary-light); text-decoration: none; }
-        .back-bar svg { width: 14px; height: 14px; }
+        /* Back link — high-contrast yellow button */
+        .back-btn{display:inline-flex;align-items:center;gap:8px;background:#fbbf24;color:#1e293b!important;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border-radius:var(--r-sm);border:2px solid #d97706;transition:all .25s ease;margin-bottom:12px}
+        .back-btn:hover{background:#f59e0b;border-color:#b45309;transform:translateX(-3px)}
+        .back-btn svg{width:14px;height:14px}
 
         .container {
             max-width: 960px; margin: 0 auto; padding: 40px 20px 80px;
@@ -100,8 +95,8 @@
         [data-theme="dark"] .report-header h1 { color: #fbbf24; }
         [data-theme="dark"] .section h3 { color: #fbbf24; }
         [data-theme="dark"] .summary-card.total .count { color: #fbbf24; }
-        [data-theme="dark"] .back-bar a { color: #fbbf24; }
-        [data-theme="dark"] .back-bar a:hover { color: #fbbf24; }
+        [data-theme="dark"] .back-btn{background:#fbbf24;color:#1e293b!important;border-color:#d97706}
+        [data-theme="dark"] .back-btn:hover{background:#f59e0b;border-color:#b45309}
         .report-header .meta {
             font-size: .85rem; color: var(--text-muted);
             display: flex; gap: 24px; flex-wrap: wrap;
@@ -226,12 +221,10 @@
     <main class="container">
 
         <!-- Back link -->
-        <div class="back-bar">
-            <a href="../">
-                <i data-lucide="arrow-left"></i>
-                <span>Back to Portfolio</span>
-            </a>
-        </div>
+        <a href="../" class="back-btn">
+            <i data-lucide="arrow-left"></i>
+            <span>Back to Portfolio</span>
+        </a>
 
         <!-- Header -->
         <div class="report-header">
@@ -403,7 +396,7 @@
                 (4.63:1 AA), hero-label and filter-count overrides added;
                 <strong>customer-service-mastery.html</strong> — theme toggle icon colour updated;
                 <strong>ielts-masterclass</strong> — all blue text elements changed to <code>#fbbf24</code> yellow in dark mode
-                (h1, h2, exam-header-strip, transcript-btn, recorder-info, back-bar);
+                (h1, h2, exam-header-strip, transcript-btn, recorder-info, back-btn);
                 <strong>wcag-report</strong> — <code>--fail</code> → <code>#b91c1c</code> (8.91:1),
                 <code>--pass</code> → <code>#047857</code> (7.64:1),
                 section h3 and report-header h1 dark mode overrides added.
@@ -493,7 +486,7 @@
                 <i data-lucide="check-circle"></i>
                 <strong>Fix Round 4 — 7 June 2026:</strong>
                 Full Lighthouse sweep across all 13 portfolio pages. Fixed <strong>IELTS dark mode</strong>:
-                replaced all blue text (h1, h2, exam-header-strip, transcript-btn, recorder-info, back-bar:hover)
+                replaced all blue text (h1, h2, exam-header-strip, transcript-btn, recorder-info, back-btn)
                 with <code>#fbbf24</code> yellow (13.2:1 AA). Fixed <strong>Interactive Quiz</strong> heading order
                 (h1→h2→h3) — scored 98→100. Fixed <strong>design-samples</strong>: iframe titles,
                 <code>&lt;main&gt;</code> landmark, and meta description (87→100).

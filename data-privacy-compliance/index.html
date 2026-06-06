@@ -141,12 +141,8 @@ a{color:var(--primary-light);text-decoration:none}
   border-bottom:1px solid rgba(255,255,255,0.45);padding:10px 24px;
   display:flex;align-items:center;justify-content:space-between
 }
-.back-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--primary);text-decoration:none;font-size:.85rem;font-weight:600;
-  padding:8px 16px;border-radius:var(--radius-sm);transition:all .25s ease
-}
-.back-btn:hover{background:rgba(32,69,124,.08);transform:translateX(-3px)}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:#fbbf24;color:#1e293b!important;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border-radius:var(--radius-sm);border:2px solid #d97706;transition:all .25s ease}
+.back-btn:hover{background:#f59e0b;border-color:#b45309;transform:translateX(-3px)}
 .back-btn svg{width:16px;height:16px}
 @media(max-width:640px){
   #app{padding:88px 12px 32px}
@@ -222,7 +218,8 @@ a{color:var(--primary-light);text-decoration:none}
 [data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,0.2)}
 [data-theme="dark"] .scene-heading{color:#fbbf24}
 [data-theme="dark"] .lessons-box h4{color:#fbbf24}
-[data-theme="dark"] .back-btn{color:#fbbf24}
+[data-theme="dark"] .back-btn{background:#fbbf24;color:#1e293b!important;border-color:#d97706}
+[data-theme="dark"] .back-btn:hover{background:#f59e0b;border-color:#b45309}
 </style>
 </head>
 <body>
@@ -893,7 +890,7 @@ function renderOutcome(node, container){
   html += '</ul></div>';
   html += '<button class="retry-btn" id="retryBtn">🔄 Retry Scenario</button>';
   html += '<div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid #e2e8f0">';
-  html += '<a href="../" class="btn btn-primary"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>';
+  html += '<a href="../" class="back-btn"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> Back to Portfolio</a>';
   html += '</div>';
   html += '</div>';
   container.innerHTML = html;
