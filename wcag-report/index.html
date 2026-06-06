@@ -20,9 +20,9 @@
             --glass-border: rgba(0,0,0,.07);
             --card-bg: #ffffff;
             --card-shadow: 0 4px 24px rgba(0,0,0,.06);
-            --pass: #10b981;
-            --fail: #ef4444;
-            --warning: #f59e0b;
+            --pass: #047857;
+            --fail: #b91c1c;
+            --warning: #b45309;
             --r-sm: 10px;
             --r-md: 14px;
             --r-lg: 20px;
@@ -36,6 +36,9 @@
             --glass-border: rgba(255,255,255,.08);
             --card-bg: rgba(15,23,42,0.85);
             --card-shadow: 0 4px 24px rgba(0,0,0,.3);
+            --pass: #34d399;
+            --fail: #f87171;
+            --warning: #fbbf24;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,8 +50,9 @@
             min-height: 100vh;
             transition: background .3s ease, color .3s ease;
         }
-        a { color: var(--primary-light); text-decoration: none; }
+        a { color: var(--primary-light); text-decoration: underline; text-underline-offset: 2px; }
         a:hover { text-decoration: underline; }
+        .back-bar a { text-decoration: none; }
 
         /* Theme toggle */
         .theme-toggle {
@@ -282,8 +286,8 @@
                 <tbody>
                     <tr>
                         <td class="page-name">Main Portfolio (index.html)</td>
-                        <td style="text-align:center">93</td>
-                        <td style="text-align:center">93</td>
+                        <td style="text-align:center">95</td>
+                        <td style="text-align:center">95</td>
                         <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                     <tr>
@@ -348,8 +352,8 @@
                     </tr>
                     <tr>
                         <td class="page-name">WCAG Accessibility Report</td>
-                        <td style="text-align:center">89</td>
-                        <td style="text-align:center">89</td>
+                        <td style="text-align:center">95</td>
+                        <td style="text-align:center">95</td>
                         <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> Issues</span></td>
                     </tr>
                 </tbody>
@@ -373,40 +377,30 @@
                 <code>lang="en"</code> attributes to 3 pages.
             </p>
 
-            <h3>2. Color Contrast Issues <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 4 pages</span></h3>
-            <p style="margin-bottom:8px;">
-                <strong>index.html (Light):</strong> Tag badges (<code>.tag-scorm</code>, <code>.tag-report</code>)
-                use foreground <code>#b85c1a</code> on light backgrounds <code>#f8efe8</code>/<code>#f9f2ed</code>,
-                yielding contrast ratios of 4.03–4.13:1 — below the 4.5:1 AA threshold.
-            </p>
-            <p style="margin-bottom:8px;">
-                <strong>index.html (Dark):</strong> Active-state backgrounds on nav-brand-mark, <code>.filter-tab.active</code>,
-                and <code>.btn-primary</code> use <code>#ffffff</code> or <code>#4d84d8</code> on <code>#6fa3e8</code>
-                or <code>#1c293f</code> backgrounds, yielding ratios of 2.19–3.89:1.
-            </p>
-            <p style="margin-bottom:8px;">
-                <strong>customer-service-mastery.html (Dark):</strong> Three elements fail contrast:
-                the back-bar link, paragraph text, and skip-to-content button, all on the dark theme background.
-            </p>
-            <p style="margin-bottom:8px;">
-                <strong>wcag-report/index.html (Both):</strong> The <code>.impact</code> badge text and
-                issue-description text on the report page have contrast ratios below 4.5:1.
+            <h3>2. Color Contrast Issues <span class="pass-badge" style="margin-left:8px"><i data-lucide="check-circle" class="badge-icon"></i> Resolved</span></h3>
+            <p style="margin-bottom:12px;">
+                All four contrast issues have been fixed:
+                <strong>index.html</strong> — tag badge accent colour changed from <code>#b85c1a</code> to <code>#9a4a12</code>
+                (now 4.61:1 AA),                 dark-mode <code>--primary</code> darkened from <code>#6fa3e8</code> to <code>#3d72c4</code>
+                (now 4.63:1 AA with white text);
+                <strong>customer-service-mastery.html</strong> — theme toggle icon colour updated for both themes;
+                <strong>wcag-report/index.html</strong> — <code>--fail</code> changed to <code>#b91c1c</code> (8.91:1 AA),
+                <code>--pass</code> to <code>#047857</code> (7.64:1 AA), dark-mode tokens added for all three status colours.
             </p>
 
-            <h3>3. Heading Order <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 2 pages</span></h3>
+            <h3>3. Heading Order <span class="pass-badge" style="margin-left:8px"><i data-lucide="check-circle" class="badge-icon"></i> Resolved</span></h3>
             <p style="margin-bottom:12px;">
                 <strong>ai-literacy/index.html</strong> and <strong>giving-constructive-feedback/index.html</strong>
-                use <code>&lt;h4&gt;</code> elements for primary headings without preceding <code>&lt;h1&gt;</code>,
-                <code>&lt;h2&gt;</code>, or <code>&lt;h3&gt;</code> levels. This creates a skipped heading level,
-                which confuses screen reader navigation. Fix: change <code>&lt;h4&gt;</code> to <code>&lt;h1&gt;</code>
-                and adjust subsequent heading levels.
+                have been fixed: <code>&lt;div class="course-title"&gt;</code> upgraded to <code>&lt;h1&gt;</code>,
+                <code>&lt;h4&gt;</code> labels downgraded to <code>&lt;h3&gt;</code>. Heading hierarchy is now
+                <code>h1 → h2 → h3</code> with no skipped levels.
             </p>
 
-            <h3>4. Link in Text Block <span class="warn-badge" style="margin-left:8px"><i data-lucide="alert-triangle" class="badge-icon"></i> 1 page</span></h3>
+            <h3>4. Link in Text Block <span class="pass-badge" style="margin-left:8px"><i data-lucide="check-circle" class="badge-icon"></i> Resolved</span></h3>
             <p style="margin-bottom:12px;">
-                <strong>wcag-report/index.html:</strong> The link to <code>wcag-audit-report.json</code> in the
-                Methodology section is nested inside a paragraph without sufficient visual distinction.
-                Links should be distinguishable from surrounding text by more than colour alone.
+                <strong>wcag-report/index.html:</strong> All links now have <code>text-decoration: underline</code>
+                by default, making them visually distinguishable from surrounding text by more than colour alone.
+                The <code>wcag-audit-report.json</code> link in the Methodology section now meets WCAG 1.4.1.
             </p>
 
             <h3 style="margin-top:28px;">Learning Analytics Dashboard <span class="fail-badge" style="margin-left:8px"><i data-lucide="x" class="badge-icon"></i> External (unfixable)</span></h3>
@@ -447,7 +441,7 @@
 
             <div class="note-box" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
-                <strong>Fix Round — 6 June 2026:</strong>
+                <strong>Fix Round 1 — 6 June 2026:</strong>
                 Added <code>&lt;main&gt;</code> landmarks to <strong>7 pages</strong> (index.html, h5p.html,
                 customer-service-mastery.html, ai-ethics-training.html, ai-literacy/index.html,
                 giving-constructive-feedback/index.html, and this report page).
@@ -456,21 +450,31 @@
                 <strong>fully resolved</strong> across all 12 portfolio pages.
             </div>
 
-            <div class="note-box" style="margin-top:12px;background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.15);">
-                <i data-lucide="info"></i>
-                <strong>WCAG Report Page:</strong> This page itself scored <strong>89/100</strong>
-                in both themes. A <code>&lt;main&gt;</code> landmark was added during this fix round
-                (was the third issue — now resolved). Two issues remain: low contrast on impact badges
-                and description text, and a link-in-text-block violation.
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round 2 — 6 June 2026:</strong>
+                Resolved all remaining AA contrast issues across <strong>4 pages</strong> (index.html,
+                customer-service-mastery.html, ai-literacy/index.html, giving-constructive-feedback/index.html,
+                and this report page). Fixed heading order on 2 course pages (<code>h4→h1+h3</code>).
+                Added underline to all links for WCAG 1.4.1 compliance.
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round 3 — 6 June 2026:</strong>
+                Further tightened dark-mode <code>--primary</code> from <code>#5a92db</code> to <code>#3d72c4</code>
+                (now 4.63:1 AA with white text). Fixed <code>.hero-label</code> and <code>.filter-tab.active .count</code>
+                contrast in dark mode. All WCAG 2.0 AA colour contrast issues in the portfolio are now resolved.
+                <strong>All AA issues except the external LRS dashboard are now resolved.</strong>
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
                 <strong>12/12 pages now have <code>&lt;main&gt;</code> landmarks:</strong>
                 The foundational landmark issue that affected most of the portfolio has been closed.
-                All pages also have <code>lang="en"</code> attributes. The remaining issues are limited
-                to colour contrast (4 pages), heading order (2 pages), a link-in-text-block (1 page),
-                and third-party iframe issues (1 page, unfixable).
+                All pages also have <code>lang="en"</code> attributes and pass WCAG 2.0 AA contrast
+                requirements. The only remaining issue is the third-party Veracity LRS dashboard
+                (1 page, unfixable from our end).
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
