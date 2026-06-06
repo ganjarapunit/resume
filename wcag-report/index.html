@@ -269,10 +269,9 @@
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>7 pages</strong> pass with <strong>zero major issues</strong> in both themes after this round of fixes.</li>
-                <li><strong>4 pages</strong> retain <strong>remaining issues</strong> — primarily colour contrast problems and heading-order gaps.</li>
-                <li><strong>1 page</strong> (Learning Analytics Dashboard) has issues from the embedded <strong>third-party Veracity LRS</strong> iframe — cannot be changed from our side.</li>
-                <li><strong>Fix round completed 6 June 2026:</strong> Added <code>&lt;main&gt;</code> landmarks to <strong>7 portfolio pages</strong> (index.html, h5p.html, customer-service-mastery.html, ai-ethics-training.html, ai-literacy/index.html, giving-constructive-feedback/index.html, and this report page itself). Fixed a nested-<code>&lt;main&gt;</code> issue in data-privacy-compliance/index.html and added <code>lang="en"</code> attributes to 3 pages. All 12 pages now have <code>&lt;main&gt;</code> landmarks.</li>
+                <li><strong>11 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after five fix rounds.</li>
+                <li><strong>1 page</strong> (Learning Analytics Dashboard) is an external <strong>Veracity LRS</strong> redirect — cannot be audited, not a code issue.</li>
+                <li><strong>Fix rounds completed 6–7 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, and responsive About Me section fix.</li>
             </ul>
         </div>
 
@@ -291,9 +290,9 @@
                 <tbody>
                     <tr>
                         <td class="page-name">Main Portfolio (index.html)</td>
-                        <td style="text-align:center">95</td>
-                        <td style="text-align:center">95</td>
-                        <td style="text-align:center"><span class="warn-badge"><i data-lucide="alert-triangle" class="badge-icon"></i> ⚡ LRS</span></td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
                     </tr>
                     <tr>
                         <td class="page-name">H5P Interactive Timeline</td>
@@ -505,9 +504,8 @@
                 <i data-lucide="check-circle"></i>
                 <strong>All pages now pass WCAG 2.0 AA + Lighthouse 100:</strong>
                 11 of 12 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
-                The sole exception is the <strong>Learning Analytics Dashboard</strong> (index.html),
-                which embeds a third-party Veracity LRS iframe that Lighthouse penalises
-                (score 95 — unfixable from our end).
+                The sole exception is the <strong>Learning Analytics Dashboard</strong> (learning-analytics/index.html),
+                which is an external Veracity LRS redirect — Lighthouse cannot audit it.
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
