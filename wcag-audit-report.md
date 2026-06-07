@@ -1,6 +1,6 @@
 # WCAG Accessibility Audit Report
 
-**Date:** 2026-06-04
+**Date:** 2026-06-07
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
 **Pages Tested:** 11
 
@@ -8,7 +8,7 @@
 
 | Page | Light Violations | Dark Violations | Pass/Fail |
 |------|:-:|:-:|:-:|
-| Main Portfolio (index.html) | 0 | 0 | ✅ Pass |
+| Main Portfolio (index.html) | 0 | 1 | ⚠️ Fail |
 | H5P Interactive Timeline | 0 | 0 | ✅ Pass |
 | AI Literacy Course | 0 | 0 | ✅ Pass |
 | Data Privacy Compliance | 0 | 0 | ✅ Pass |
@@ -20,21 +20,28 @@
 | Customer Service De-Escalation Mastery | 0 | 0 | ✅ Pass |
 | AI Ethics Training | 0 | 0 | ✅ Pass |
 
-**Overall: 10 passed, 1 failed** (8 total violations)
+**Overall: 9 passed, 2 failed** (9 total violations)
 
 ## Critical & Serious Issues
+
+### Main Portfolio (index.html) (dark theme)
+
+- **color-contrast** (serious): Elements must meet minimum color contrast ratio thresholds
+  - Affected elements: 1
+  - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
+  - `<a href="h5p.html" class="back-btn" style="margin:0;">interactive H5P timeline resume</a>`
 
 ### Learning Analytics Dashboard (light theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 69
+  - Affected elements: 50
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 115
+  - Affected elements: 127
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
@@ -44,8 +51,8 @@
   - Affected elements: 10
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 363 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 369 ms ago</div>`
 
 - **nested-interactive** (serious): Interactive controls must not be nested
   - Affected elements: 3
@@ -57,14 +64,14 @@
 ### Learning Analytics Dashboard (dark theme)
 
 - **aria-command-name** (serious): ARIA commands must have an accessible name
-  - Affected elements: 69
+  - Affected elements: 50
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=axeAPI
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#d4f3f3" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#b9ecec" fill-opacit`
-  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" stroke-width="0" fill="#ffffff" fill-opacit`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
+  - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#f5`
 
 - **aria-required-parent** (critical): Certain ARIA roles must be contained by particular parents
-  - Affected elements: 115
+  - Affected elements: 127
   - Reference: https://dequeuniversity.com/rules/axe/4.11/aria-required-parent?application=axeAPI
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#fa0707" fill-opacity="1" stroke="#fa`
   - `<g class="amcharts-Sprite-group amcharts-Container-group" stroke-opacity="1" fill="#f5a623" fill-opacity="1" stroke="#fa`
@@ -74,8 +81,8 @@
   - Affected elements: 10
   - Reference: https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI
   - `<div class="MuiAlert-message css-1xsto0d"> We use cookies only for the purpose of carrying out communication or which ar`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
-  - `<div class="MuiBox-root css-b9dlvo">As of 2 seconds ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 363 ms ago</div>`
+  - `<div class="MuiBox-root css-b9dlvo">As of 369 ms ago</div>`
 
 - **nested-interactive** (serious): Interactive controls must not be nested
   - Affected elements: 3
@@ -88,14 +95,19 @@
 
 ### Main Portfolio (index.html)
 - **URL:** /
-- **Tab-focusable elements:** 24
+- **Tab-focusable elements:** 29
 
 #### ☀️ Light Theme
 - Violations: 0
-- Incomplete: 1
+- Incomplete: 0
 #### 🌙 Dark Theme
-- Violations: 0
-- Incomplete: 1
+- Violations: 1
+- Incomplete: 0
+
+| ID | Impact | Help | Nodes |
+|----|--------|------|:----:|
+| color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 1 |
+
 
 ### H5P Interactive Timeline
 - **URL:** /h5p.html
@@ -103,10 +115,10 @@
 
 #### ☀️ Light Theme
 - Violations: 0
-- Incomplete: 1
+- Incomplete: 0
 #### 🌙 Dark Theme
 - Violations: 0
-- Incomplete: 1
+- Incomplete: 0
 
 ### AI Literacy Course
 - **URL:** /ai-literacy/index.html
@@ -176,7 +188,7 @@
 
 ### Learning Analytics Dashboard
 - **URL:** /learning-analytics/index.html
-- **Tab-focusable elements:** 133
+- **Tab-focusable elements:** 114
 
 #### ☀️ Light Theme
 - Violations: 4
@@ -184,8 +196,8 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 69 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 115 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 50 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 127 |
 | color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 10 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
@@ -195,8 +207,8 @@
 
 | ID | Impact | Help | Nodes |
 |----|--------|------|:----:|
-| aria-command-name | serious | ARIA commands must have an accessible name | 69 |
-| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 115 |
+| aria-command-name | serious | ARIA commands must have an accessible name | 50 |
+| aria-required-parent | critical | Certain ARIA roles must be contained by particular parents | 127 |
 | color-contrast | serious | Elements must meet minimum color contrast ratio thresholds | 10 |
 | nested-interactive | serious | Interactive controls must not be nested | 3 |
 
@@ -225,9 +237,9 @@
 
 ## Recommendations
 
+- **color-contrast**: Ensure text has sufficient contrast against background. In dark mode, use lighter text colors (e.g., #e2e8f0 on dark backgrounds). Minimum ratio: 4.5:1 for normal text, 3:1 for large text.
 - **aria-command-name**: Review axe-core documentation for remediation guidance.
 - **aria-required-parent**: Ensure elements have the required parent ARIA role.
-- **color-contrast**: Ensure text has sufficient contrast against background. In dark mode, use lighter text colors (e.g., #e2e8f0 on dark backgrounds). Minimum ratio: 4.5:1 for normal text, 3:1 for large text.
 - **nested-interactive**: Review axe-core documentation for remediation guidance.
 
 ### Theme Toggle Accessibility
