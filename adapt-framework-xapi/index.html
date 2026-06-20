@@ -61,6 +61,34 @@
 <script src="xapi-wrapper.js"></script>
 <script src="adapt/js/scriptLoader.js"></script>
 <style>
+/* ── THEME VARIABLES ── */
+:root {
+  --bg: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --primary: #20457c;
+  --primary-light: #3b6fb3;
+  --primary-dark: #162f56;
+  --accent: #10b981;
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #1d4ed8;
+  --accent: #10b981;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+}
+
 /* ── FLOATING BACK BUTTON ── */
 .floating-back-btn {
   position: fixed; bottom: 24px; left: 24px; z-index: 9999;
@@ -125,6 +153,22 @@
 }
 [data-theme="dark"] .adapt-component {
   background-color: rgba(255,255,255,0.05) !important;
+}
+
+/* ── BRUTE FORCE HIDE OLD BAR (For Cache/Residual Support) ── */
+.back-bar {
+  display: none !important;
+}
+
+/* ── CONTENT SPACING ── */
+#app { padding-top: 60px; }
+
+@media (max-width: 768px) {
+  #app { padding-top: 80px; }
+}
+
+html, body {
+  touch-action: manipulation;
 }
 </style>
 </head>
