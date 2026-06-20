@@ -15,10 +15,9 @@
 (function() {
   /* ── Theme init (runs before any rendering) ── */
   var saved = localStorage.getItem('theme');
-  if (saved) { document.documentElement.setAttribute('data-theme', saved); }
-  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.classList.add('theme-' + theme);
 
   /* ── Modal helpers (called by alert/confirm overrides, defined early) ── */
   window.showCustomModal = function(title, message, isError) {
@@ -29,10 +28,33 @@
     var cancelBtn = document.querySelector('.custom-modal-btn-secondary');
     if (cancelBtn) cancelBtn.style.display = isError ? 'none' : 'block';
     modal.classList.add('active');
+    document.addEventListener('keydown', modalKeyHandler);
+    var okBtn = document.getElementById('modalOkBtn');
+    if (okBtn) okBtn.focus();
   };
   window.closeModal = function() {
     var m = document.getElementById('customModal');
-    if (m) m.classList.remove('active');
+    if (m) {
+      m.classList.remove('active');
+      document.removeEventListener('keydown', modalKeyHandler);
+    }
+  };
+
+  /* ── Modal focus trap + Escape key ── */
+  var modalKeyHandler = function(e) {
+    if (e.key === 'Escape') { window.closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var modal = document.querySelector('#customModal .custom-modal');
+    if (!modal) return;
+    var focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   };
 
   /* ── Alert/Confirm override ── */
@@ -82,7 +104,7 @@
   --accent: #10b981;
 }
 
-[data-theme="dark"] {
+[data-theme="dark"], html.theme-dark {
   --bg: #0f172a;
   --text: #f8fafc;
   --text-muted: #94a3b8;
@@ -110,6 +132,7 @@ body {
   transition: all 0.25s ease;
 }
 .floating-back-btn:hover { background: #f59e0b; border-color: #d97706; transform: translateY(-2px); }
+.floating-back-btn:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
 .floating-back-btn svg { width: 16px; height: 16px; }
 
 /* ── CUSTOM MODAL ── */
@@ -128,15 +151,15 @@ body {
   border-radius: 16px; padding: 32px; max-width: 400px; width: 90%;
   text-align: center; position: relative;
 }
-[data-theme="dark"] .custom-modal {
+html.theme-dark .custom-modal {
   background: rgba(30, 41, 59, 0.85);
   border-color: rgba(255, 255, 255, 0.1);
   color: #f8fafc;
 }
 .custom-modal h3 { margin-top: 0; font-size: 1.25rem; font-weight: 700; color: #1e293b; }
-[data-theme="dark"] .custom-modal h3 { color: #f8fafc; }
+html.theme-dark .custom-modal h3 { color: #f8fafc; }
 .custom-modal p { font-size: 0.95rem; line-height: 1.6; color: #475569; margin: 16px 0 24px; }
-[data-theme="dark"] .custom-modal p { color: #cbd5e1; }
+html.theme-dark .custom-modal p { color: #cbd5e1; }
 .custom-modal-actions { display: flex; gap: 12px; justify-content: center; }
 .custom-modal-btn {
   padding: 10px 24px; border-radius: 8px; font-weight: 600;
@@ -145,37 +168,38 @@ body {
 .custom-modal-btn-primary { background: #fbbf24; color: #1e293b; }
 .custom-modal-btn-primary:hover { background: #f59e0b; }
 .custom-modal-btn-secondary { background: rgba(0,0,0,0.05); color: #475569; }
-[data-theme="dark"] .custom-modal-btn-secondary { background: rgba(255,255,255,0.1); color: #f1f5f9; }
+html.theme-dark .custom-modal-btn-secondary { background: rgba(255,255,255,0.1); color: #f1f5f9; }
 .custom-modal-btn-secondary:hover { background: rgba(0,0,0,0.1); }
+.custom-modal-btn:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
 
-/* ── ADAPT THEME OVERRIDES ── */
-[data-theme="dark"] #wrapper, 
-[data-theme="dark"] #app,
-[data-theme="dark"] .adapt-container {
+/* ── ADAPT THEME OVERRIDES (Adapt uses html.theme-dark / html.theme-light) ── */
+html.theme-dark #wrapper,
+html.theme-dark #app,
+html.theme-dark .adapt-container {
   background-color: #0f172a !important;
   color: #f8fafc !important;
 }
-[data-theme="dark"] .adapt-text,
-[data-theme="dark"] .adapt-title,
-[data-theme="dark"] .adapt-description,
-[data-theme="dark"] .adapt-content {
+html.theme-dark .adapt-text,
+html.theme-dark .adapt-title,
+html.theme-dark .adapt-description,
+html.theme-dark .adapt-content {
   color: #f8fafc !important;
 }
-[data-theme="dark"] .adapt-component {
+html.theme-dark .adapt-component {
   background-color: rgba(255,255,255,0.05) !important;
 }
 
 /* ── LIGHT THEME OVERRIDES (ensures readable titles) ── */
-[data-theme="light"] #wrapper,
-[data-theme="light"] #app,
-[data-theme="light"] .adapt-container {
+html.theme-light #wrapper,
+html.theme-light #app,
+html.theme-light .adapt-container {
   background-color: #f1f5f9 !important;
   color: #0f172a !important;
 }
-[data-theme="light"] .adapt-text,
-[data-theme="light"] .adapt-title,
-[data-theme="light"] .adapt-description,
-[data-theme="light"] .adapt-content {
+html.theme-light .adapt-text,
+html.theme-light .adapt-title,
+html.theme-light .adapt-description,
+html.theme-light .adapt-content {
   color: #0f172a !important;
 }
 
@@ -204,7 +228,7 @@ html, body {
 <div id="app">
   <div id="wrapper"></div>
 </div>
-<div id="customModal" class="custom-modal-overlay">
+<div id="customModal" class="custom-modal-overlay" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage" aria-modal="true">
   <div class="custom-modal">
     <h3 id="modalTitle">Notification</h3>
     <p id="modalMessage"></p>
