@@ -10,6 +10,63 @@
   window.ADAPT_BUILD_TYPE = 'production';
   window.ISCOOKIELMS = false;
 </script>
+<!-- CRITICAL: Alert interception + Theme init — must run BEFORE Adapt scripts -->
+<script>
+(function() {
+  /* ── Theme init (runs before any rendering) ── */
+  var saved = localStorage.getItem('theme');
+  if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  /* ── Modal helpers (called by alert/confirm overrides, defined early) ── */
+  window.showCustomModal = function(title, message, isError) {
+    var modal = document.getElementById('customModal');
+    if (!modal) { console.warn('[Modal not ready]', title, message); return; }
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    var cancelBtn = document.querySelector('.custom-modal-btn-secondary');
+    if (cancelBtn) cancelBtn.style.display = isError ? 'none' : 'block';
+    modal.classList.add('active');
+  };
+  window.closeModal = function() {
+    var m = document.getElementById('customModal');
+    if (m) m.classList.remove('active');
+  };
+
+  /* ── Alert/Confirm override ── */
+  var origAlert = window.alert;
+  var origConfirm = window.confirm;
+  window.alert = function(msg) {
+    if (typeof msg === 'string' && msg.indexOf('not connected to the Learning Management System') !== -1) {
+      console.warn('[LMS] Connection error suppressed (standalone mode)');
+      return;
+    }
+    window.showCustomModal('Notification', String(msg));
+  };
+  window.confirm = function(msg) {
+    if (typeof msg === 'string' && msg.indexOf('not connected') !== -1) {
+      console.warn('[LMS] Confirm suppressed (standalone mode)');
+      return true;
+    }
+    return true;
+  };
+
+  /* ── Theme toggle (needs to be global for onclick) ── */
+  window.toggleCourseTheme = function() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    var icon = document.getElementById('courseThemeIcon');
+    if (icon) {
+      icon.setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+  };
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <link href="adapt.css?timestamp=1781941097532" type="text/css" rel="stylesheet">
@@ -60,6 +117,59 @@
 [data-theme="dark"] .theme-toggle:hover { background: rgba(255,255,255,0.2); }
 [data-theme="dark"] .back-btn { background: #fbbf24; color: #1e293b !important; border-color: #d97706; }
 [data-theme="dark"] .back-btn:hover { background: #f59e0b; border-color: #b45309; }
+
+/* ── CUSTOM MODAL ── */
+.custom-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 10000; font-family: 'Outfit', sans-serif;
+}
+.custom-modal-overlay.active { display: flex; }
+.custom-modal {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 16px; padding: 32px; max-width: 400px; width: 90%;
+  text-align: center; position: relative;
+}
+[data-theme="dark"] .custom-modal {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+.custom-modal h3 { margin-top: 0; font-size: 1.25rem; font-weight: 700; color: #1e293b; }
+[data-theme="dark"] .custom-modal h3 { color: #f8fafc; }
+.custom-modal p { font-size: 0.95rem; line-height: 1.6; color: #475569; margin: 16px 0 24px; }
+[data-theme="dark"] .custom-modal p { color: #cbd5e1; }
+.custom-modal-actions { display: flex; gap: 12px; justify-content: center; }
+.custom-modal-btn {
+  padding: 10px 24px; border-radius: 8px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease; border: none; font-family: 'Outfit', sans-serif;
+}
+.custom-modal-btn-primary { background: #fbbf24; color: #1e293b; }
+.custom-modal-btn-primary:hover { background: #f59e0b; }
+.custom-modal-btn-secondary { background: rgba(0,0,0,0.05); color: #475569; }
+[data-theme="dark"] .custom-modal-btn-secondary { background: rgba(255,255,255,0.1); color: #f1f5f9; }
+.custom-modal-btn-secondary:hover { background: rgba(0,0,0,0.1); }
+
+/* ── ADAPT THEME OVERRIDES ── */
+[data-theme="dark"] #wrapper, 
+[data-theme="dark"] #app,
+[data-theme="dark"] .adapt-container {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .adapt-text,
+[data-theme="dark"] .adapt-title,
+[data-theme="dark"] .adapt-description,
+[data-theme="dark"] .adapt-content {
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .adapt-component {
+  background-color: rgba(255,255,255,0.05) !important;
+}
 </style>
 </head>
 <body>
@@ -76,26 +186,19 @@
 <div id="app">
   <div id="wrapper"></div>
 </div>
+<div id="customModal" class="custom-modal-overlay">
+  <div class="custom-modal">
+    <h3 id="modalTitle">Notification</h3>
+    <p id="modalMessage"></p>
+    <div class="custom-modal-actions">
+      <button class="custom-modal-btn custom-modal-btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="custom-modal-btn custom-modal-btn-primary" id="modalOkBtn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+</div>
+
 <script>
 lucide.createIcons();
-
-function toggleCourseTheme() {
-  var html = document.documentElement;
-  var isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  document.getElementById('courseThemeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
-  lucide.createIcons();
-}
-
-(function initCourseTheme() {
-  var saved = localStorage.getItem('theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
-})();
 </script>
 </body>
 </html>
