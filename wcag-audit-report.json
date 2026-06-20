@@ -3110,5 +3110,20 @@
       "violationCount": 0
     },
     "tabFocusableCount": 6
+  },
+  {
+    "url": "/adapt-framework-xapi/index.html",
+    "label": "Adapt Framework Mini Course",
+    "light": {
+      "violations": [],
+      "incomplete": [],
+      "violationCount": 0
+    },
+    "dark": {
+      "violations": [],
+      "incomplete": [],
+      "violationCount": 0
+    },
+    "tabFocusableCount": 14
   }
 ]

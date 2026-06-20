@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-07
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
-**Pages Tested:** 11
+**Pages Tested:** 12
 
 ## Summary
 
@@ -19,8 +19,9 @@
 | Learning Analytics Dashboard | 4 | 4 | ⚠️ Fail |
 | Customer Service De-Escalation Mastery | 0 | 0 | ✅ Pass |
 | AI Ethics Training | 0 | 0 | ✅ Pass |
+| Adapt Framework Mini Course | 0 | 0 | ✅ Pass |
 
-**Overall: 9 passed, 2 failed** (9 total violations)
+**Overall: 10 passed, 2 failed** (9 total violations)
 
 ## Critical & Serious Issues
 

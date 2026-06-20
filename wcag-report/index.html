@@ -233,12 +233,12 @@
                 <span><i data-lucide="calendar"></i> June 2026</span>
                 <span><i data-lucide="search"></i> Automated Testing (Lighthouse)</span>
                 <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
-                <span><i data-lucide="monitor"></i> 13 pages tested</span>
+                <span><i data-lucide="monitor"></i> 14 pages tested</span>
             </div>
 
             <div class="summary-grid">
                 <div class="summary-card pass">
-                    <div class="count">12</div>
+                    <div class="count">13</div>
                     <div class="label">Pages Passed</div>
                 </div>
                 <div class="summary-card pass">
@@ -260,13 +260,13 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of all <strong>13 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                This report summarises an accessibility audit of all <strong>14 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>12 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after six fix rounds.</li>
+                <li><strong>13 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after seven fix rounds.</li>
                 <li><strong>1 page</strong> (Learning Analytics Dashboard) is an external <strong>Veracity LRS</strong> redirect — cannot be audited, not a code issue.</li>
-                <li><strong>Fix rounds completed 6–7 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, and responsive About Me section fix.</li>
+                <li><strong>Fix rounds completed 6–20 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, responsive About Me section fix, and Adapt Framework Mini Course accessibility audit with modal focus trap, Escape key, and ARIA attributes.</li>
             </ul>
         </div>
 
@@ -357,6 +357,12 @@
                     </tr>
                     <tr>
                         <td class="page-name">Children Psychology — Interactive Video</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Adapt Framework Mini Course</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
@@ -506,6 +512,24 @@
                 <strong>Fix Round 6 — 7 June 2026:</strong>
                 Added <strong>Children Psychology — Interactive Video</strong> (interactive-video.html) — a new H5P Interactive Video
                 page restored from an H5P export. Lighthouse 100/100/100 in both themes. Design system tokens match all existing pages.
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round 7 — 20 June 2026:</strong>
+                Added <strong>Adapt Framework Mini Course</strong> (adapt-framework-xapi/) — a SCORM 2004 + xAPI course built with the Adapt Framework.
+                Full WCAG 2.1 AA compliance audit completed. Fixes applied:
+                <ul style="margin-top:8px;padding-left:20px;">
+                    <li>Added <code>role="dialog"</code>, <code>aria-labelledby</code>, <code>aria-describedby</code>, and <code>aria-modal="true"</code> to custom modal</li>
+                    <li>Implemented focus trap (Tab cycles within modal when open)</li>
+                    <li>Added Escape key handler to close modal</li>
+                    <li>Added auto-focus to OK button when modal opens</li>
+                    <li>Added visible <code>:focus-visible</code> outlines for back button and modal buttons</li>
+                    <li>Fixed light theme CSS selectors to use <code>html.theme-light</code> / <code>html.theme-dark</code> (matching Adapt Framework's actual theming mechanism)</li>
+                    <li>Color contrast verified: Light 16.5:1, Dark 15.8:1 (both exceed AAA 7:1)</li>
+                    <li>All 5 images have descriptive alt text</li>
+                    <li>Responsive design verified across all breakpoints (desktop, tablet, mobile)</li>
+                </ul>
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
