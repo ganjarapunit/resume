@@ -52,6 +52,16 @@
     }
     return true;
   };
+
+  /* ── Block SCORM Log window ── */
+  var origOpen = window.open;
+  window.open = function(url, name, features) {
+    if (url && url.indexOf('log_output.html') !== -1) {
+      console.warn('[SCORM] Log window blocked');
+      return null;
+    }
+    return origOpen.apply(this, arguments);
+  };
 })();
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -153,6 +163,20 @@ body {
 }
 [data-theme="dark"] .adapt-component {
   background-color: rgba(255,255,255,0.05) !important;
+}
+
+/* ── LIGHT THEME OVERRIDES (ensures readable titles) ── */
+[data-theme="light"] #wrapper,
+[data-theme="light"] #app,
+[data-theme="light"] .adapt-container {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .adapt-text,
+[data-theme="light"] .adapt-title,
+[data-theme="light"] .adapt-description,
+[data-theme="light"] .adapt-content {
+  color: #0f172a !important;
 }
 
 /* ── BRUTE FORCE HIDE OLD BAR (For Cache/Residual Support) ── */
