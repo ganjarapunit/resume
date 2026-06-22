@@ -446,21 +446,16 @@ html.theme-dark .summary-choice-label.is-success { color: #eab308; }
       <label for="learnerName">Your Name <span class="required">*</span></label>
       <input type="text" id="learnerName" placeholder="e.g. Sarah Chen" required aria-required="true" autocomplete="name">
     </div>
-    <div class="name-entry-field">
-      <label for="learnerEmail">Email <span class="optional">(optional)</span></label>
-      <input type="email" id="learnerEmail" placeholder="e.g. sarah@example.com" autocomplete="email">
-    </div>
     <div id="nameEntryError" class="name-entry-error"></div>
     <button id="startCourseBtn" class="name-entry-btn">Start Course →</button>
   </div>
 </div>
 <script>
 (function() {
-  var overlay = document.getElementById('nameEntryOverlay');
-  var nameInput = document.getElementById('learnerName');
-  var emailInput = document.getElementById('learnerEmail');
-  var startBtn = document.getElementById('startCourseBtn');
-  var errorEl = document.getElementById('nameEntryError');
+   var overlay = document.getElementById('nameEntryOverlay');
+   var nameInput = document.getElementById('learnerName');
+   var startBtn = document.getElementById('startCourseBtn');
+   var errorEl = document.getElementById('nameEntryError');
 
   function encodeHtml(str) {
     var d = document.createElement('div');
@@ -506,32 +501,25 @@ html.theme-dark .summary-choice-label.is-success { color: #eab308; }
     setTimeout(function() { overlay.style.display = 'none'; }, 400);
   }
 
-  startBtn.addEventListener('click', function() {
-    var name = nameInput.value.trim();
-    if (!name) {
-      showError('Please enter your name to continue.');
-      nameInput.focus();
-      return;
-    }
-    hideError();
-    startBtn.disabled = true;
-    startBtn.textContent = 'Starting...';
-    startBtn.classList.add('name-entry-btn-loading');
+   startBtn.addEventListener('click', function() {
+     var name = nameInput.value.trim();
+     if (!name) {
+       showError('Please enter your name to continue.');
+       nameInput.focus();
+       return;
+     }
+     hideError();
+     startBtn.disabled = true;
+     startBtn.textContent = 'Starting...';
+     startBtn.classList.add('name-entry-btn-loading');
 
-    localStorage.setItem('xapi_learner_name', name);
-    var email = emailInput.value.trim();
-    if (email) {
-      localStorage.setItem('xapi_learner_email', email);
-    }
-    dismissOverlay();
-  });
+     localStorage.setItem('xapi_learner_name', name);
+     dismissOverlay();
+   });
 
-  nameInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { hideError(); startBtn.click(); }
-  });
-  emailInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { hideError(); startBtn.click(); }
-  });
+   nameInput.addEventListener('keydown', function(e) {
+     if (e.key === 'Enter') { hideError(); startBtn.click(); }
+   });
 })();
 </script>
 

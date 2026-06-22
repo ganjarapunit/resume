@@ -15,6 +15,8 @@
  * SCORM_API_wrapper.js creates stub API objects even in standalone mode,
  * returning a default "Surname, Sam" name. The overlay-entered name
  * must take priority over these stubs.
+ *
+ * NOTE: Email field removed from overlay — only name is required.
  * 
  * Statements sent:
  *   - launched    — course started with learner identity
@@ -61,20 +63,8 @@
         var storedName = localStorage.getItem('xapi_learner_name');
         if (storedName) {
           name = storedName;
-          var storedEmail = localStorage.getItem('xapi_learner_email');
-          if (storedEmail) {
-            // Use mbox format for email — account.homePage cannot be 'mailto:'
-            var cleanEmail = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
-            _actor = {
-              objectType: 'Agent',
-              mbox: 'mailto:' + cleanEmail,
-              name: name
-            };
-            return _actor;
-          } else {
-            accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
-            // homePage stays as window.location.origin
-          }
+          accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
+          // homePage stays as window.location.origin
         }
       } catch(e) { /* ignore */ }
     }
