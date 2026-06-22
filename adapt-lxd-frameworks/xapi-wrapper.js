@@ -4,10 +4,17 @@
  * Sends comprehensive xAPI statements to Veracity LRS.
  * 
  * Actor resolution priority:
- *   1. SCORM 2004 API (cmi.learner_name) — when launched via LMS
- *   2. SCORM 1.2 API  (cmi.core.learner_name) — when launched via LMS
- *   3. pipwerks.SCORM wrapper (if framework loaded it)
- *   4. Fallback: generated learner ID
+ *   1. Learner-entered name from localStorage overlay
+ *   2. pipwerks.SCORM wrapper (real LMS connection)
+ *   3. SCORM 2004 API (cmi.learner_name)
+ *   4. SCORM 1.2 API  (cmi.core.learner_name)
+ *   5. Adapt internal data
+ *   6. Fallback: generated learner ID
+ *
+ * IMPORTANT: localStorage check comes BEFORE SCORM API calls because
+ * SCORM_API_wrapper.js creates stub API objects even in standalone mode,
+ * returning a default "Surname, Sam" name. The overlay-entered name
+ * must take priority over these stubs.
  * 
  * Statements sent:
  *   - launched    — course started with learner identity
@@ -46,7 +53,26 @@
     var accountName = null;
     var homePage = window.location.origin || 'https://ganjarapunit.github.io';
 
-    // ── Attempt 1: pipwerks SCORM wrapper (if available) ──
+    // ── Attempt 1: Learner-entered name from localStorage overlay ──
+    // MUST come before SCORM API attempts because SCORM_API_wrapper.js
+    // creates stub objects with a default "Surname, Sam" name in standalone mode.
+    if (!name) {
+      try {
+        var storedName = localStorage.getItem('xapi_learner_name');
+        if (storedName) {
+          name = storedName;
+          var storedEmail = localStorage.getItem('xapi_learner_email');
+          if (storedEmail) {
+            accountName = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
+            homePage = 'mailto:';
+          } else {
+            accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
+          }
+        }
+      } catch(e) { /* ignore */ }
+    }
+
+    // ── Attempt 2: pipwerks SCORM wrapper (real LMS connection) ──
     if (typeof pipwerks !== 'undefined' && pipwerks.SCORM && pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive) {
       try {
         var scormVer = pipwerks.SCORM.version;
@@ -100,23 +126,6 @@
         if (learnerData) {
           name = learnerData.name || learnerData.displayName || null;
           accountName = learnerData.id || null;
-        }
-      } catch(e) { /* ignore */ }
-    }
-
-    // ── Attempt 4: Learner-entered name from localStorage ──
-    if (!name) {
-      try {
-        var storedName = localStorage.getItem('xapi_learner_name');
-        if (storedName) {
-          name = storedName;
-          var storedEmail = localStorage.getItem('xapi_learner_email');
-          if (storedEmail) {
-            accountName = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
-            homePage = 'mailto:';
-          } else {
-            accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
-          }
         }
       } catch(e) { /* ignore */ }
     }
@@ -473,19 +482,23 @@
   }
 
   // ── Wait for learner name before starting xAPI session ──
-  // In LMS mode, SCORM provides the name immediately.
-  // In standalone mode, the name entry overlay sets xapi_learner_name.
+  // In LMS mode, pipwerks SCORM connection provides the name immediately.
+  // In standalone mode, the name entry overlay sets xapi_learner_name in localStorage.
+  //
+  // IMPORTANT: Do NOT check window.API_1484_11 / window.API here —
+  // SCORM_API_wrapper.js creates stub objects even without a real LMS,
+  // which would cause premature xAPI start with a default "Surname, Sam" name.
   onReady(function() {
     function tryStart() {
-      var nameAvailable = !!(
-        window.API_1484_11 || window.API ||
-        (typeof pipwerks !== 'undefined' && pipwerks.SCORM && pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive) ||
-        localStorage.getItem('xapi_learner_name')
+      var pipwerksConnected = (
+        typeof pipwerks !== 'undefined' && pipwerks.SCORM &&
+        pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive
       );
-      if (nameAvailable) {
+      var overlayNameSet = !!localStorage.getItem('xapi_learner_name');
+
+      if (pipwerksConnected || overlayNameSet) {
         startXAPISession();
       } else {
-        // Check again after the name entry overlay finishes
         setTimeout(tryStart, 300);
       }
     }
