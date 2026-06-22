@@ -514,6 +514,10 @@ html.theme-dark .summary-choice-label.is-success { color: #eab308; }
      startBtn.classList.add('name-entry-btn-loading');
 
      localStorage.setItem('xapi_learner_name', name);
+     // Notify xAPI wrapper that the real learner name is now available
+     if (window.XAPI && window.XAPI.sendLearnerIdentified) {
+       try { window.XAPI.sendLearnerIdentified(); } catch(e) {}
+     }
      dismissOverlay();
    });
 

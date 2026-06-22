@@ -41,16 +41,14 @@
   var ACTIVITY_NAME = 'LXD Design Frameworks & Evaluation Standards';
   var ACTIVITY_DESC = 'Interactive branching scenario exploring real-world LXD decisions: project scoping, framework selection, learner analysis, evaluation strategy, and ROI.';
 
-  /* ── Actor Cache (resolved once) ── */
-  var _actor = null;
-
   /**
    * Resolve the xAPI actor from SCORM API or fallback.
    * Tries multiple approaches in priority order.
+   * NOTE: No cache — resolves fresh each call so the overlay-entered
+   * name (saved to localStorage after the first brief "launched"
+   * statement) is picked up by subsequent statements.
    */
   function resolveActor() {
-    if (_actor) return _actor;
-
     var name = null;
     var accountName = null;
     var homePage = window.location.origin || 'https://ganjarapunit.github.io';
@@ -146,15 +144,15 @@
     }
 
     // ── Build actor object with mbox (most LRS displays recognize mbox format) ──
-    _actor = {
+    var actor = {
       objectType: 'Agent',
       mbox: 'mailto:' + accountName
     };
     if (name && name !== 'Learner') {
-      _actor.name = name;
+      actor.name = name;
     }
 
-    return _actor;
+    return actor;
   }
 
   /**
@@ -318,6 +316,22 @@
         'http://adlnet.gov/expapi/verbs/initialized',
         'initialized',
         { 'https://w3id.org/xapi/cmi5/context/extensions/platform': 'Adapt Framework' }
+      ));
+    },
+
+    /**
+     * Re-send initialized with the real learner name after overlay entry.
+     * Called by the overlay script after the user submits their name —
+     * ensures the LRS has at least one early statement with the correct identity.
+     */
+    sendLearnerIdentified: function() {
+      sendStatements(buildStatement(
+        'http://adlnet.gov/expapi/verbs/initialized',
+        'initialized',
+        {
+          'https://w3id.org/xapi/cmi5/context/extensions/platform': 'Adapt Framework',
+          'https://w3id.org/xapi/cmi5/context/extensions/learner-identity': 'overlay-confirmed'
+        }
       ));
     },
 
