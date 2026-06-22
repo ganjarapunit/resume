@@ -63,10 +63,17 @@
           name = storedName;
           var storedEmail = localStorage.getItem('xapi_learner_email');
           if (storedEmail) {
-            accountName = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
-            homePage = 'mailto:';
+            // Use mbox format for email — account.homePage cannot be 'mailto:'
+            var cleanEmail = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
+            _actor = {
+              objectType: 'Agent',
+              mbox: 'mailto:' + cleanEmail,
+              name: name
+            };
+            return _actor;
           } else {
             accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
+            // homePage stays as window.location.origin
           }
         }
       } catch(e) { /* ignore */ }
