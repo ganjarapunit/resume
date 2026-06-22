@@ -63,7 +63,7 @@
         var storedName = localStorage.getItem('xapi_learner_name');
         if (storedName) {
           name = storedName;
-          accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
+          accountName = name.replace(/\s+/g, '.').toLowerCase().replace(/\.{2,}/g, '.').replace(/^\.|\.$/g, '') + '@learner.local';
           // homePage stays as window.location.origin
         }
       } catch(e) { /* ignore */ }
