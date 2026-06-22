@@ -143,26 +143,13 @@
       }
     }
 
-    // ── Build actor object ──
+    // ── Build actor object with mbox (most LRS displays recognize mbox format) ──
     _actor = {
-      objectType: 'Agent'
+      objectType: 'Agent',
+      mbox: 'mailto:' + accountName
     };
-
-    if (accountName && homePage) {
-      // Prefer account (works offline, no email required)
-      _actor.account = {
-        homePage: homePage,
-        name: accountName
-      };
-      if (name && name !== 'Learner') {
-        _actor.name = name;
-      }
-    } else {
-      // Fallback: use mbox
-      _actor.mbox = 'mailto:' + (accountName || 'learner') .replace(/[^a-zA-Z0-9]/g, '_') + '@adapt.course';
-      if (name) {
-        _actor.name = name;
-      }
+    if (name && name !== 'Learner') {
+      _actor.name = name;
     }
 
     return _actor;
