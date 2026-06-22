@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LXD Design Frameworks & Evaluation Standards | Punit Ganjara</title>
+<meta name="description" content="Branching scenario on LXD design frameworks and evaluation standards, built with Adapt Framework.">
+<link rel="canonical" href="https://ganjarapunit.github.io/resume/adapt-framework-xapi/">
+<script>
+  window.ADAPT_BUILD_TYPE = 'production';
+  window.ISCOOKIELMS = false;
+</script>
+<!-- CRITICAL: Alert interception + Theme init — must run BEFORE Adapt scripts -->
+<script>
+(function() {
+  /* ── Theme init (runs before any rendering) ── */
+  var saved = localStorage.getItem('theme');
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.classList.add('theme-' + theme);
+
+  /* ── Modal helpers (called by alert/confirm overrides, defined early) ── */
+  window.showCustomModal = function(title, message, isError) {
+    var modal = document.getElementById('customModal');
+    if (!modal) { console.warn('[Modal not ready]', title, message); return; }
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    var cancelBtn = document.querySelector('.custom-modal-btn-secondary');
+    if (cancelBtn) cancelBtn.style.display = isError ? 'none' : 'block';
+    modal.classList.add('active');
+    document.addEventListener('keydown', modalKeyHandler);
+    var okBtn = document.getElementById('modalOkBtn');
+    if (okBtn) okBtn.focus();
+  };
+  window.closeModal = function() {
+    var m = document.getElementById('customModal');
+    if (m) {
+      m.classList.remove('active');
+      document.removeEventListener('keydown', modalKeyHandler);
+    }
+  };
+
+  /* ── Modal focus trap + Escape key ── */
+  var modalKeyHandler = function(e) {
+    if (e.key === 'Escape') { window.closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var modal = document.querySelector('#customModal .custom-modal');
+    if (!modal) return;
+    var focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+
+  /* ── Alert/Confirm override ── */
+  var origAlert = window.alert;
+  var origConfirm = window.confirm;
+  window.alert = function(msg) {
+    if (typeof msg === 'string' && msg.indexOf('not connected to the Learning Management System') !== -1) {
+      console.warn('[LMS] Connection error suppressed (standalone mode)');
+      return;
+    }
+    window.showCustomModal('Notification', String(msg));
+  };
+  window.confirm = function(msg) {
+    if (typeof msg === 'string' && msg.indexOf('not connected') !== -1) {
+      console.warn('[LMS] Confirm suppressed (standalone mode)');
+      return true;
+    }
+    return true;
+  };
+
+  /* ── Block SCORM Log window ── */
+  var origOpen = window.open;
+  window.open = function(url, name, features) {
+    if (url && url.indexOf('log_output.html') !== -1) {
+      console.warn('[SCORM] Log window blocked');
+      return null;
+    }
+    return origOpen.apply(this, arguments);
+  };
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="adapt.css?timestamp=1781941097532" type="text/css" rel="stylesheet">
+<script src="libraries/modernizr.js"></script>
+<script src="xapi-wrapper.js"></script>
+<script src="adapt/js/scriptLoader.js"></script>
+<style>
+/* ── THEME VARIABLES ── */
+:root {
+  --bg: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --primary: #20457c;
+  --primary-light: #3b6fb3;
+  --primary-dark: #162f56;
+  --accent: #10b981;
+  --success: #047857;
+  --error: #b91c1c;
+}
+
+[data-theme="dark"], html.theme-dark {
+  --bg: #0f172a;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #1d4ed8;
+  --accent: #10b981;
+  --success: #10b981;
+  --error: #ef4444;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* ── FLOATING BACK BUTTON ── */
+.floating-back-btn {
+  position: fixed; bottom: 24px; left: 24px; z-index: 9999;
+  background: #fbbf24; color: #1e293b !important; text-decoration: none;
+  font-size: .82rem; font-weight: 700; padding: 10px 18px;
+  border-radius: 12px; border: 2px solid #d97706;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Outfit', sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.25s ease;
+}
+.floating-back-btn:hover { background: #f59e0b; border-color: #d97706; transform: translateY(-2px); }
+.floating-back-btn:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+.floating-back-btn svg { width: 16px; height: 16px; }
+
+/* ── CUSTOM MODAL ── */
+.custom-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 10000; font-family: 'Outfit', sans-serif;
+}
+.custom-modal-overlay.active { display: flex; }
+.custom-modal {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 16px; padding: 32px; max-width: 400px; width: 90%;
+  text-align: center; position: relative;
+}
+html.theme-dark .custom-modal {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+.custom-modal h3 { margin-top: 0; font-size: 1.25rem; font-weight: 700; color: #1e293b; }
+html.theme-dark .custom-modal h3 { color: #f8fafc; }
+.custom-modal p { font-size: 0.95rem; line-height: 1.6; color: #475569; margin: 16px 0 24px; }
+html.theme-dark .custom-modal p { color: #cbd5e1; }
+.custom-modal-actions { display: flex; gap: 12px; justify-content: center; }
+.custom-modal-btn {
+  padding: 10px 24px; border-radius: 8px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease; border: none; font-family: 'Outfit', sans-serif;
+}
+.custom-modal-btn-primary { background: #fbbf24; color: #1e293b; }
+.custom-modal-btn-primary:hover { background: #f59e0b; }
+.custom-modal-btn-secondary { background: rgba(0,0,0,0.05); color: #475569; }
+html.theme-dark .custom-modal-btn-secondary { background: rgba(255,255,255,0.1); color: #f1f5f9; }
+.custom-modal-btn-secondary:hover { background: rgba(0,0,0,0.1); }
+.custom-modal-btn:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+
+/* ── ADAPT THEME OVERRIDES (Adapt uses html.theme-dark / html.theme-light) ── */
+html.theme-dark #wrapper,
+html.theme-dark #app,
+html.theme-dark .adapt-container {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+html.theme-dark .adapt-text,
+html.theme-dark .adapt-title,
+html.theme-dark .adapt-description,
+html.theme-dark .adapt-content {
+  color: #f8fafc !important;
+}
+html.theme-dark .adapt-component {
+  background-color: rgba(255,255,255,0.05) !important;
+}
+
+/* ── LIGHT THEME OVERRIDES (ensures readable titles) ── */
+html.theme-light #wrapper,
+html.theme-light #app,
+html.theme-light .adapt-container {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+html.theme-light .adapt-text,
+html.theme-light .adapt-title,
+html.theme-light .adapt-description,
+html.theme-light .adapt-content {
+  color: #0f172a !important;
+}
+
+/* ── BRUTE FORCE HIDE OLD BAR (For Cache/Residual Support) ── */
+.back-bar {
+  display: none !important;
+}
+
+/* ── CONTENT SPACING ── */
+#app { padding-top: 60px; }
+
+@media (max-width: 768px) {
+  #app { padding-top: 80px; }
+}
+
+html, body {
+  touch-action: manipulation;
+}
+
+/* ── BRANCHING: initially hide all blocks except the first ── */
+.block__container > .block:not(:first-child) {
+  display: none;
+}
+
+/* ── Prevent MCQ from duplicating block body text ── */
+.mcq__body { display: none !important; }
+
+/* ── b-017: is-checkbox shows circles instead of squares ── */
+.mcq-item__answer-icon.is-checkbox .icon::before { content: "\e96f" !important; }
+.mcq-item__label.is-selected .mcq-item__answer-icon.is-checkbox .icon::before { content: "\e96e" !important; }
+
+/* ── SUMMARY REPORT (b-007) ── */
+.summary-header {
+  background: var(--primary-dark);
+  color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.summary-header .summary-score {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+}
+.summary-header .summary-label {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+  margin-top: 4px;
+}
+html.theme-dark .summary-header {
+  background: #eab308;
+}
+html.theme-dark .summary-header .summary-score,
+html.theme-dark .summary-header .summary-label {
+  color: #1e293b;
+}
+.summary-row {
+  border: 2px solid transparent;
+  border-left: 6px solid;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: color-mix(in srgb, var(--text) 6%, var(--bg));
+  transition: border-color 0.2s;
+}
+.summary-row.is-correct {
+  border-color: var(--primary);
+  border-left-color: var(--primary);
+}
+.summary-row.is-incorrect {
+  border-color: var(--error);
+  border-left-color: var(--error);
+}
+.summary-row.is-partial {
+  border-color: #d97706;
+  border-left-color: #d97706;
+}
+html.theme-dark .summary-row.is-correct {
+  border-color: #eab308;
+  border-left-color: #eab308;
+}
+html.theme-dark .summary-row.is-partial {
+  border-color: #f59e0b;
+  border-left-color: #f59e0b;
+}
+.summary-step {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.summary-question {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.summary-choices {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.summary-choice {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.summary-choice.is-user {
+  background: color-mix(in srgb, var(--primary) 12%, var(--bg));
+}
+.summary-choice.is-user.is-incorrect-choice {
+  background: color-mix(in srgb, var(--error) 12%, var(--bg));
+}
+.summary-choice.is-best {
+  background: color-mix(in srgb, var(--primary) 8%, var(--bg));
+}
+html.theme-dark .summary-choice.is-user {
+  background: color-mix(in srgb, #eab308 15%, var(--bg));
+}
+html.theme-dark .summary-choice.is-user.is-incorrect-choice {
+  background: color-mix(in srgb, var(--error) 15%, var(--bg));
+}
+html.theme-dark .summary-choice.is-best {
+  background: color-mix(in srgb, #eab308 10%, var(--bg));
+}
+.summary-choice-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.summary-choice-label.is-success { color: var(--primary); }
+.summary-choice-label.is-error { color: var(--error); }
+html.theme-dark .summary-choice-label.is-success { color: #eab308; }
+.summary-choice-text {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.summary-feedback {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary);
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.summary-feedback strong {
+  color: var(--primary);
+}
+
+</style>
+</head>
+<body>
+<a href="../" class="floating-back-btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+  Back to Portfolio
+</a>
+<div id="app">
+  <div id="wrapper"></div>
+</div>
+<div id="customModal" class="custom-modal-overlay" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage" aria-modal="true">
+  <div class="custom-modal">
+    <h3 id="modalTitle">Notification</h3>
+    <p id="modalMessage"></p>
+    <div class="custom-modal-actions">
+      <button class="custom-modal-btn custom-modal-btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="custom-modal-btn custom-modal-btn-primary" id="modalOkBtn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<!-- ── BRANCHING SCENARIO ROUTER ── -->
+<script>
+(function() {
+  var ROUTES = {
+    'b-001': { correct: 'b-003', partly: 'b-004', incorrect: 'b-002' },
+    'b-002': { correct: 'b-003', partly: 'b-003', incorrect: 'b-003' },
+    'b-003': { correct: 'b-004', partly: 'b-004', incorrect: 'b-004' },
+    'b-004': { correct: 'b-005', partly: 'b-005', incorrect: 'b-005' },
+    'b-005': { correct: 'b-006', partly: 'b-006', incorrect: 'b-006' },
+    'b-006': { correct: 'b-008', partly: 'b-008', incorrect: 'b-008' },
+    'b-008': { correct: 'b-010', partly: 'b-009', incorrect: 'b-009' },
+    'b-009': { correct: 'b-010', partly: 'b-010', incorrect: 'b-010' },
+    'b-010': { correct: 'b-011', partly: 'b-011', incorrect: 'b-011' },
+    'b-011': { correct: 'b-012', partly: 'b-012', incorrect: 'b-012' },
+    'b-012': { correct: 'b-014', partly: 'b-013', incorrect: 'b-013' },
+    'b-013': { correct: 'b-014', partly: 'b-014', incorrect: 'b-014' },
+    'b-014': { correct: 'b-016', partly: 'b-015', incorrect: 'b-015' },
+    'b-015': { correct: 'b-016', partly: 'b-016', incorrect: 'b-016' },
+    'b-016': { correct: 'b-017', partly: 'b-017', incorrect: 'b-017' },
+    'b-017': { correct: 'b-007', partly: 'b-007', incorrect: 'b-007' }
+  };
+
+  var ANSWERS = {
+    'c-b-001': { question: 'How do you begin?', correct_idx: 0, items: [
+      {text: 'Evaluate which design framework fits this context — ADDIE, SAM, or Agile — before doing anything else', feedback: 'Starting with a framework evaluation is strategic — you chose based on context, not habit. This is what senior LXD practitioners do: diagnose before prescribing.'},
+      {text: 'Jump straight to evaluation standards — define how you\'ll measure success before you design anything', feedback: 'Jumping to evaluation too early skips a critical step. Without a framework, you have no process to evaluate against. Define your approach first, then your metrics.'},
+      {text: 'Skip the planning phase entirely and jump into building a quick prototype to show stakeholders', feedback: 'Prototyping without a plan is a common risk. In a 3-week project, this leads to scope creep. Always start with a framework decision.'}
+    ]},
+    'c-b-002': { question: 'Which framework?', correct_idx: 1, items: [
+      {text: 'ADDIE — Analyze, Design, Develop, Implement, Evaluate. The full waterfall approach.', feedback: 'ADDIE\'s linear waterfall is too rigid for a 3-week sprint. You would spend half the project in Analysis alone.'},
+      {text: 'SAM (Successive Approximation Model) — iterative prototyping with frequent stakeholder reviews.', feedback: 'SAM\'s \'savvy start\' lets you prototype rapidly and refine through stakeholder feedback. Ideal for tight deadlines where quality still matters.'},
+      {text: 'Dick & Carey Model — the systems-oriented approach with 10 sequential components.', feedback: 'Dick & Carey is thorough but over-engineered for a 3-week compliance course. Too much front-end analysis for the timeline.'},
+      {text: 'Agile / LLAMA — full iterative development with minimal up-front design.', feedback: 'Agile works well for software but can skip critical learner analysis in LXD. SAM offers a better balance for this context.'}
+    ]},
+    'c-b-003': { question: 'How do you handle the PM\'s request?', correct_idx: 0, items: [
+      {text: 'Push back respectfully — explain that without a learner analysis, you risk building a course that doesn\'t address the actual performance gaps across different departments', feedback: 'You advocated for the learner and the process — that\'s senior LXD leadership. A targeted 2-day analysis sprint addresses the PM\'s timeline while gathering critical data.'},
+      {text: 'Accept the PM\'s shortcut but plan a quick survey during development to gather learner data retroactively', feedback: 'A retroactive survey won\'t capture the performance gaps you need to design for. Push back with a lighter-weight analysis plan instead.'},
+      {text: 'Propose a full ADDIE analysis phase including stakeholder interviews, job observation, and performance analysis', feedback: 'A full ADDIE analysis is overkill for a 3-week timeline. Propose a targeted 2-day sprint: stakeholder interviews plus a quick learner survey.'}
+    ]},
+    'c-b-004': { question: 'Which evaluation level?', correct_idx: 2, items: [
+      {text: 'Level 1: Reaction — Did learners enjoy the course? Use smile sheets and satisfaction surveys.', feedback: 'Smile sheets show satisfaction, not behavior change. For proving workplace impact, you need Level 3 (Behavior) or higher.'},
+      {text: 'Level 2: Learning — Did learners acquire the knowledge? Use pre/post test scores.', feedback: 'Test scores prove learning occurred, not whether it transferred to the job. Behavior change requires Level 3.'},
+      {text: 'Level 3: Behavior — Are learners applying data privacy practices on the job? Use observation, manager reports, or audit data.', feedback: 'Level 3 is where you prove the training changed workplace practices — through audits, manager observations, or performance data.'}
+    ]},
+    'c-b-005': { question: 'What evaluation now?', correct_idx: 0, items: [
+      {text: 'Formative evaluation — analyze the pilot data, identify knowledge gaps, revise content, and re-test before full launch', feedback: 'Formative evaluation is exactly right. You are in development with data that needs action. Fix it now before 500+ employees see it.'},
+      {text: 'Summative evaluation — launch as planned and measure the final outcome at the end, treating 60% as your baseline', feedback: 'Launching with a 60% pass rate is premature. Formative evaluation lets you diagnose and fix gaps in the remaining 2 weeks.'},
+      {text: 'Phillips ROI evaluation — calculate the monetary return on investment based on projected improvement from the pilot data', feedback: 'Phillips ROI is premature here. You need to fix the learning intervention first before measuring its financial return.'}
+    ]},
+    'c-b-006': { question: 'How do you prove ROI?', correct_idx: 1, items: [
+      {text: 'Kirkpatrick Level 4: Results — report organizational impact metrics like reduced data breaches or improved audit scores', feedback: 'Level 4 shows organizational impact but doesn\'t produce the monetary ROI percentage the VP needs for the board.'},
+      {text: 'Phillips ROI Methodology — convert benefit data into monetary values, subtract program costs, and calculate the ROI percentage', feedback: 'Phillips ROI converts benefits to dollar values and calculates a clear percentage. This is exactly what the VP needs for the board presentation.'},
+      {text: 'CIPP Model — evaluate Context, Input, Process, and Product to give a holistic picture of program value', feedback: 'CIPP provides a holistic evaluation but doesn\'t produce the hard monetary ROI figure the VP is asking for.'}
+    ]},
+    'c-b-008': { question: 'Can you scale globally?', correct_idx: 1, items: [
+      {text: 'Translate the existing course exactly as-is into each language. Delivering on time is the priority — translations can be refined later.', feedback: 'Launching culturally insensitive content damages credibility. Learners in Tokyo or Berlin will disengage immediately. Always localize meaning, not just words.'},
+      {text: 'Redesign the course for each locale with local SMEs: adapt examples, replace US-specific case studies, and run cultural sensitivity reviews. This will push the timeline but ensures quality.', feedback: 'This is best practice. Localizing at the cultural level ensures every learner feels the content was designed for them. Delaying quality global content is always worth it.'},
+      {text: 'Replace all text with icons and visuals so it\'s \'culture-free.\' That way you don\'t need translation or localization.', feedback: 'There is no such thing as \'culture-free\' design. Visuals carry cultural meaning too — colors, symbols, gestures, and even layouts vary across cultures. Always involve local SMEs.'}
+    ]},
+    'c-b-009': { question: 'How do you recover?', correct_idx: 0, items: [
+      {text: 'Apologize for the oversight, take full ownership, and present a revised plan with local SME involvement in each region.', feedback: 'Owning the mistake and presenting a concrete fix demonstrates senior leadership. Stakeholders trust practitioners who are honest and solution-oriented.'},
+      {text: 'Explain that the \'original intent was good\' and ask the local teams to \'fix the language themselves\' to avoid delays.', feedback: 'Delegating your core responsibility to local teams undermines your role as an LXD professional. You own the learning experience globally.'},
+      {text: 'Defend the original approach, citing the tight timeline as justification for the missteps.', feedback: 'Defensiveness erodes trust. Stakeholders value honesty and ownership over excuses. Acknowledging the error builds credibility for future collaboration.'}
+    ]},
+    'c-b-010': { question: 'Microlearning vs deep dive?', correct_idx: 1, items: [
+      {text: 'Agree immediately — the CLO is the boss, and microlearning is a trend for a reason. Deliver 9 x 5-minute microlearning modules.', feedback: 'Blindly following trends without evidence undermines learning outcomes. Microlearning works for awareness-level content, not for complex topics requiring deep understanding.'},
+      {text: 'Push back with evidence: research shows complex compliance topics require deeper processing. Propose a blended approach — microlearning for awareness, scenario-based deep dives for application.', feedback: 'Evidence-based persuasion is a hallmark of senior LXD practice. You balanced stakeholder desire with learning science — the blended approach is the gold standard here.'},
+      {text: 'Propose a compromise: make the first 15 minutes microlearning-style and keep the remaining 30 minutes as a traditional e-learning module.', feedback: 'Compromising on structural integrity can create a disjointed experience. Better to design a coherent blend from the ground up rather than cut an existing course into pieces.'}
+    ]},
+    'c-b-011': { question: 'How accessible is your course?', correct_idx: 0, items: [
+      {text: 'Conduct a full WCAG 2.1 AA audit, fix all critical violations, and build an accessibility checklist for future projects.', feedback: 'WCAG 2.1 AA is the industry standard. Fixing violations and building process safeguards prevents recurrence. This is what ethical LXD practice looks like.'},
+      {text: 'Fix the alt-text and colour contrast issues now. Tackle the rest in a future update.', feedback: 'Partial fixes can still leave learners excluded. Keyboard traps and navigation issues are just as critical as alt-text. A comprehensive approach is the ethical minimum.'},
+      {text: 'Suggest the learner use a different screen reader and hope the compliance audit doesn\'t catch the remaining issues.', feedback: 'Passively shifting responsibility to the learner is unacceptable. Accessibility is not optional — it\'s a fundamental requirement of professional LXD practice.'}
+    ]},
+    'c-b-012': { question: 'Was your training effective?', correct_idx: 0, items: [
+      {text: 'Analyze the incident data: what knowledge gap did the breach expose? Use the findings to update the course with a targeted module on data handling protocols.', feedback: 'This is continuous improvement in action. Treating incidents as data points — not failures — is what separates exceptional LXDs from average ones.'},
+      {text: 'Point to the 92% completion rate and positive feedback as proof the training worked. The breach was an isolated incident.', feedback: 'Completion rates and satisfaction scores don\'t prove behaviour change. True evaluation asks: did learners transfer the learning to their jobs? Use this as a diagnostic opportunity.'},
+      {text: 'Blame Finance for not enforcing your recommended follow-up workshops. The training was fine — it\'s their fault for not mandating it.', feedback: 'Blame-shifting avoids accountability. A senior LXD practitioner owns the full learning ecosystem, including whether recommendations were implemented.'}
+    ]},
+    'c-b-013': { question: 'Find the real gap.', correct_idx: 0, items: [
+      {text: 'Conduct a performance analysis: interview the employee, observe the workflow, and identify environmental barriers (workflow, tools, culture) that prevented application.', feedback: 'Performance analysis isolates whether the gap is a training problem or a workplace problem. Often, learners know what to do but workplace pressures override their training.'},
+      {text: 'Add 5 more knowledge-check questions to the existing course to \'deepen understanding.\' If they pass these, the training worked.', feedback: 'More knowledge checks won\'t solve an application gap. The learner already passed the test — the issue is transfer to the job, not recall.'},
+      {text: 'Survey all 500+ employees asking \'did you apply what you learned?\' and use the self-report data to guide your next move.', feedback: 'Self-report surveys about application are unreliable. Learners overestimate their own application. Direct observation and workflow analysis are far more diagnostic.'}
+    ]},
+    'c-b-014': { question: 'Which tech strategy?', correct_idx: 0, items: [
+      {text: 'Implement xAPI for rich activity tracking, and use the data to build personalized learning pathways that adapt to each learner\'s knowledge gaps.', feedback: 'xAPI + adaptive pathways is the frontier of LXD. You\'ve connected data, personalisation, and scalability in one strategic move.'},
+      {text: 'Stick with SCORM 1.2 — it\'s reliable, every LMS supports it, and upgrading risks compatibility issues with your current system.', feedback: 'SCORM 1.2 is stable but limited. It can\'t track granular activities or support modern features like adaptive pathways. Upgrade to xAPI for richer data.'},
+      {text: 'Jump straight to VR training — immersive learning is the future, and this will position EdTech Corp as an industry innovator.', feedback: 'VR without a clear learning need is trend-chasing. The data breach gap requires better knowledge application, not immersion. Start with xAPI and adaptive design.'}
+    ]},
+    'c-b-015': { question: 'Pivot or push forward?', correct_idx: 0, items: [
+      {text: 'Run a 2-day discovery sprint: interview learners, map current workflows, identify tech pain points, and prototype 3 solution options with estimated impact and cost.', feedback: 'A discovery sprint is efficient and evidence-based. You\'ll have a data-backed recommendation ready within the VP\'s timeline.'},
+      {text: 'Research what competitors are using and recommend the most popular solution. If everyone is using it, it must be the right choice.', feedback: 'Copying competitors without understanding your own context leads to misaligned investments. Your learners\' needs, not competitors\' choices, should drive the decision.'},
+      {text: 'Recommend doing nothing for now — gather more data over the next 6 months before making any tech changes.', feedback: 'Analysis paralysis is just as risky as impulsive decisions. A focused 2-day sprint gives you enough data for a confident recommendation.'}
+    ]},
+    'c-b-016': { question: 'Present at a conference?', correct_idx: 0, items: [
+      {text: 'A transparent case study: show the ups, downs, data, failures, and lessons learned. Include the accessibility complaint, the breach incident, and how each challenge made the final product stronger.', feedback: 'Authentic case studies build real credibility. Sharing failures as well as successes positions you as a grounded, reflective practitioner — exactly what the industry needs more of.'},
+      {text: 'A polished highlight reel: focus on the 96% satisfaction, the 92% completion rate, and the global rollout success story.', feedback: 'A highlight reel gets polite applause but little lasting impact. The audience learns more from your failures than your successes. Include the struggles.'},
+      {text: 'Decline the opportunity — you\'re too busy building the next project. Suggest the VP present it instead.', feedback: 'Sharing your work at industry events builds your professional brand and elevates the LXD profession. It\'s not optional — it\'s part of being a senior practitioner.'}
+    ]},
+    'c-b-017': { question: 'What\'s your next move?', correct_idx: 0, items: [
+      {text: 'Accept the Director role. Build a team that reflects your LXD values: evidence-based, learner-centered, and impact-driven. Your influence multiplies through others.', feedback: 'Moving into leadership when you\'re ready is a service to the profession. Great LXDs become great leaders who create more great LXDs. This is how the field grows.'},
+      {text: 'Decline the Director role and stay hands-on. You love designing, and deep expertise matters as much as leadership.', feedback: 'Staying hands-on is a valid, powerful choice. Deep expertise drives innovation, and informal mentoring still elevates the field. Not everyone needs to manage people to lead.'},
+      {text: 'Accept the Director role but keep designing everything yourself. You trust your own work more than anyone else\'s.', feedback: 'Holding onto both roles leads to burnout and bottlenecks your team. Leadership means letting go of control and growing others. Delegate the design, lead the vision.'}
+    ]}
+  };
+
+  var visibleBlocks = ['b-001'];
+  var choices = [];
+  function getBlockId(block) {
+    var m = block.className.match(/\bb-\d+\b/);
+    return m ? m[0] : null;
+  }
+
+  function getCompId(block) {
+    var comp = block && block.querySelector('[data-adapt-id]');
+    return comp ? comp.getAttribute('data-adapt-id') : null;
+  }
+
+  function hide(blockId) {
+    var el = document.querySelector('.' + blockId);
+    if (el) { el.style.display = 'none'; }
+  }
+
+  function show(blockId) {
+    var el = document.querySelector('.' + blockId);
+    if (el) {
+      el.style.display = 'block';
+      if (visibleBlocks.indexOf(blockId) === -1) visibleBlocks.push(blockId);
+    }
+  }
+
+  function prune() {
+    var c = document.querySelector('.block__container');
+    if (!c) return;
+    for (var i = 0; i < c.children.length; i++) {
+      var child = c.children[i];
+      var id = getBlockId(child);
+      if (id && visibleBlocks.indexOf(id) === -1) {
+        child.style.display = 'none';
+      }
+    }
+  }
+
+  function storeChoice(block) {
+    var comp = block.querySelector('.component[data-adapt-id]');
+    if (!comp) return;
+    var compId = comp.getAttribute('data-adapt-id');
+    var ans = ANSWERS[compId];
+    if (!ans) return;
+    var widget = block.querySelector('.mcq__widget');
+    var items = block.querySelectorAll('.mcq-item');
+    var selectedIdx = -1;
+    items.forEach(function(item, i) {
+      if (item.querySelector('.is-selected')) selectedIdx = i;
+    });
+    if (selectedIdx === -1) return;
+    var isCorrect = selectedIdx === ans.correct_idx;
+    var isPartial = widget && widget.classList.contains('is-partial');
+    choices.push({
+      block: getBlockId(block),
+      question: ans.question,
+      selected_idx: selectedIdx,
+      selected_text: ans.items[selectedIdx].text,
+      correct_idx: ans.correct_idx,
+      correct_text: ans.items[ans.correct_idx].text,
+      is_correct: isCorrect,
+      is_partial: isPartial,
+      feedback: ans.items[selectedIdx].feedback
+    });
+  }
+
+  function renderSummary() {
+    var container = document.getElementById('summary-container');
+    if (!container || choices.length === 0) return;
+    var correct = choices.filter(function(c) { return c.is_correct; }).length;
+    var total = choices.length;
+    var html = '<div class="summary-report">';
+    html += '<div class="summary-header">';
+    html += '<div class="summary-score">' + correct + ' / ' + total + '</div>';
+    html += '<div class="summary-label">Decisions Correct</div>';
+    html += '</div>';
+    choices.forEach(function(c, i) {
+      var isRight = c.is_correct;
+      var cls = isRight ? 'is-correct' : (c.is_partial ? 'is-partial' : 'is-incorrect');
+      html += '<div class="summary-row ' + cls + '">';
+      html += '<div class="summary-step">Step ' + (i + 1) + '</div>';
+      html += '<div class="summary-question">' + c.question + '</div>';
+      html += '<div class="summary-choices">';
+      html += '<div class="summary-choice is-user' + (isRight ? '' : ' is-incorrect-choice') + '">';
+      html += '<div class="summary-choice-label ' + (isRight ? 'is-success' : 'is-error') + '">' + (isRight ? 'YOUR CHOICE' : 'YOUR CHOICE') + '</div>';
+      html += '<div class="summary-choice-text">' + c.selected_text + '</div>';
+      html += '</div>';
+      if (!isRight) {
+        html += '<div class="summary-choice is-best">';
+        html += '<div class="summary-choice-label is-success">BEST CHOICE</div>';
+        html += '<div class="summary-choice-text">' + c.correct_text + '</div>';
+        html += '</div>';
+      }
+      html += '</div>';
+      html += '<div class="summary-feedback"><strong>Why:</strong> ' + c.feedback + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function init() {
+    var c = document.querySelector('.block__container');
+    if (!c) { setTimeout(init, 200); return; }
+    for (var i = 0; i < c.children.length; i++) {
+      var id = getBlockId(c.children[i]);
+      if (id && visibleBlocks.indexOf(id) === -1) {
+        c.children[i].style.display = 'none';
+      }
+    }
+  }
+
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.js-btn-action');
+    if (!btn || btn.disabled) return;
+    var block = btn.closest('.block');
+    if (!block) return;
+    var id = getBlockId(block);
+    if (!id || !ROUTES[id]) return;
+    setTimeout(function() {
+      var widget = block.querySelector('.mcq__widget');
+      if (!widget || !widget.classList.contains('is-submitted')) return;
+      storeChoice(block);
+      var ok = widget.classList.contains('is-correct');
+      var partial = widget.classList.contains('is-partial');
+      var nid = ok ? ROUTES[id].correct : (partial ? ROUTES[id].partly : ROUTES[id].incorrect);
+      show(nid);
+      prune();
+      if (nid === 'b-007') {
+        setTimeout(renderSummary, 500);
+      }
+    }, 800);
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

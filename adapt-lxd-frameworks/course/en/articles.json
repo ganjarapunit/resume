@@ -1,0 +1,19 @@
+[
+  {
+    "_id": "a-01",
+    "_parentId": "co-01",
+    "_type": "article",
+    "title": "",
+    "displayTitle": "",
+    "body": "",
+    "instruction": "Follow the scenario path. Your decisions determine what you see next.",
+    "_classes": "",
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_branching": {
+      "_isEnabled": true,
+      "_start": "b-001"
+    }
+  }
+]

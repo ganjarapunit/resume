@@ -1,0 +1,326 @@
+[
+  {
+    "_id": "b-001",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 13,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-003",
+      "_partlyCorrect": "b-004",
+      "_incorrect": "b-002"
+    },
+    "body": "<p>You are a <strong>Learning Experience Designer</strong> at EdTech Corp. Your VP of Learning has just handed you a project: a <strong>3-week compliance training on data privacy</strong> for 500+ employees across 4 departments — Engineering, Sales, HR, and Finance.</p><p>The brief is vague: <em>\"Make it engaging and make sure they actually learn.\"</em></p><p>On your desk, you have three approaches to get started. Which one reflects the strongest LXD practice?</p>"
+  },
+  {
+    "_id": "b-002",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 14,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-003",
+      "_partlyCorrect": "b-003",
+      "_incorrect": "b-003"
+    },
+    "_hasAttemptBands": true,
+    "_attemptBands": [
+      {
+        "_score": 100,
+        "_band": 1,
+        "_correct": "b-003",
+        "_partlyCorrect": "b-003",
+        "_incorrect": "b-003"
+      },
+      {
+        "_score": 50,
+        "_band": 2,
+        "_correct": "b-003",
+        "_partlyCorrect": "b-003",
+        "_incorrect": "b-003"
+      },
+      {
+        "_score": 0,
+        "_band": 3,
+        "_correct": "b-003",
+        "_partlyCorrect": "b-003",
+        "_incorrect": "b-003"
+      }
+    ],
+    "body": "<p>With the project brief in hand, you need a <strong>design framework</strong> to guide your process. Each framework has strengths depending on the project's constraints, timeline, and flexibility.</p><p>Your team has experience with all three major frameworks. <strong>Which approach do you champion?</strong></p>"
+  },
+  {
+    "_id": "b-003",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 15,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-004",
+      "_partlyCorrect": "b-004",
+      "_incorrect": "b-004"
+    },
+    "body": "<p>Your PM suggests <strong>skipping the learner analysis phase</strong> to save time: <em>\"We know our people, just build it.\"</em></p><p>You know that skipping analysis risks building something that misses the mark. <strong>How do you handle the PM's request?</strong></p>"
+  },
+  {
+    "_id": "b-004",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 16,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-005",
+      "_partlyCorrect": "b-005",
+      "_incorrect": "b-005"
+    },
+    "body": "<p>The course is built and ready for pilot. The VP wants to measure its impact on workplace behaviour. <strong>Which evaluation framework do you apply?</strong></p>"
+  },
+  {
+    "_id": "b-005",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 17,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-006",
+      "_partlyCorrect": "b-006",
+      "_incorrect": "b-006"
+    },
+    "body": "<p>Your pilot data shows a <strong>60% pass rate</strong> on the knowledge check. Two weeks remain before full launch. The VP is pushing to launch on time. <strong>Do you push forward or pause?</strong></p>"
+  },
+  {
+    "_id": "b-006",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 18,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-008",
+      "_partlyCorrect": "b-008",
+      "_incorrect": "b-008"
+    },
+    "body": "<p>The course launched successfully with a <strong>92% completion rate</strong> and positive learner feedback. But the VP now asks: <em>\"What's the ROI? Can you put a dollar figure on this?\"</em></p><p><strong>How do you respond?</strong></p>"
+  },
+  {
+    "_id": "b-008",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 20,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-010",
+      "_partlyCorrect": "b-009",
+      "_incorrect": "b-009"
+    },
+    "body": "<p>The pilot was a success. Now the VP wants to roll this course out to <strong>3 international offices</strong> — APAC, EMEA, and LATAM — within 6 weeks.</p>"
+  },
+  {
+    "_id": "b-009",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 21,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-010",
+      "_partlyCorrect": "b-010",
+      "_incorrect": "b-010"
+    },
+    "body": "<p>Your shortcut approach backfired. The APAC team reports that several examples in the course don’t translate culturally. The VP is frustrated. <strong>How do you recover?</strong></p>"
+  },
+  {
+    "_id": "b-010",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 22,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-011",
+      "_partlyCorrect": "b-011",
+      "_incorrect": "b-011"
+    },
+    "body": "<p>The localised course is performing well. Engagement is back up to <strong>87%</strong>. Now the CLO asks: <em>\"Should we create microlearning modules or a deep-dive workshop?\"</em></p>"
+  },
+  {
+    "_id": "b-011",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 23,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-012",
+      "_partlyCorrect": "b-012",
+      "_incorrect": "b-012"
+    },
+    "body": "<p>The blended course launched and is performing well. But a learner with a visual impairment reports that the course is <strong>difficult to navigate with a screen reader</strong>. The VP wants to know what you'll do.</p>"
+  },
+  {
+    "_id": "b-012",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 24,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-014",
+      "_partlyCorrect": "b-013",
+      "_incorrect": "b-013"
+    },
+    "body": "<p>Six months later, a <strong>minor data breach</strong> occurs — an employee in Finance emailed a spreadsheet with unencrypted PII to the wrong recipient. No data was actually compromised, but the incident reveals a gap. The VP asks: <em>\"Was our training effective?\"</em></p>"
+  },
+  {
+    "_id": "b-013",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 25,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-014",
+      "_partlyCorrect": "b-014",
+      "_incorrect": "b-014"
+    },
+    "body": "<p>The VP agrees the course needs revision. But before you jump into fixes, you need to understand <strong>why</strong> the breach happened despite the training. <strong>What do you investigate first?</strong></p>"
+  },
+  {
+    "_id": "b-014",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 26,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-016",
+      "_partlyCorrect": "b-015",
+      "_incorrect": "b-015"
+    },
+    "body": "<p>The course revision is underway. Now the VP wants to <strong>modernize the learning tech stack</strong>. Options include an <strong>AI-powered adaptive platform</strong>, a <strong>social learning LMS</strong>, or an <strong>LXP with curated content</strong>.</p>"
+  },
+  {
+    "_id": "b-015",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 27,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-016",
+      "_partlyCorrect": "b-016",
+      "_incorrect": "b-016"
+    },
+    "body": "<p>Your tech recommendation needs more thought. The VP appreciates your caution but wants a <strong>strategic direction</strong> for the next fiscal year. <strong>What's your recommendation?</strong></p>"
+  },
+  {
+    "_id": "b-016",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 28,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-017",
+      "_partlyCorrect": "b-017",
+      "_incorrect": "b-017"
+    },
+    "body": "<p>The VP is thrilled with your work. The course now has <strong>96% satisfaction</strong> and measurable behaviour change. You've been invited to speak at the <strong>DevLearn conference</strong>. <strong>What's your session about?</strong></p>"
+  },
+  {
+    "_id": "b-017",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 29,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_branching": {
+      "_correct": "b-007",
+      "_partlyCorrect": "b-007",
+      "_incorrect": "b-007"
+    },
+    "body": "<p>Your conference talk was a hit. You've received 3 job offers, a promotion to Director of LXD, and an invitation to consult for a Fortune 500 company. <strong>What's your next move?</strong></p>"
+  },
+  {
+    "_id": "b-007",
+    "_parentId": "a-01",
+    "_type": "block",
+    "_trackingId": 19,
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    }
+  }
+]

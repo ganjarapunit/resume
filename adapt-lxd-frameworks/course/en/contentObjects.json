@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "co-01",
+    "_parentId": "course",
+    "_type": "page",
+    "title": "LXD Design Frameworks & Evaluation Standards",
+    "displayTitle": "LXD Design Frameworks & Evaluation Standards",
+    "body": "<p>Navigate real-world LXD decisions: project scoping, framework selection, learner analysis, evaluation strategy, and ROI.</p>",
+    "instruction": "Choose the option that best reflects the scenario. Your path adapts based on your decisions.",
+    "_classes": "branching-scenario-page",
+    "_isOptional": false,
+    "_isAvailable": true,
+    "_isHidden": false,
+    "linkText": "View Course"
+  }
+]

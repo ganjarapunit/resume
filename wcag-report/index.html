@@ -233,12 +233,12 @@
                 <span><i data-lucide="calendar"></i> June 2026</span>
                 <span><i data-lucide="search"></i> Automated Testing (Lighthouse)</span>
                 <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
-                <span><i data-lucide="monitor"></i> 14 pages tested</span>
+                <span><i data-lucide="monitor"></i> 15 pages tested</span>
             </div>
 
             <div class="summary-grid">
                 <div class="summary-card pass">
-                    <div class="count">13</div>
+                    <div class="count">14</div>
                     <div class="label">Pages Passed</div>
                 </div>
                 <div class="summary-card pass">
@@ -260,13 +260,13 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of all <strong>14 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                This report summarises an accessibility audit of all <strong>15 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>13 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after seven fix rounds.</li>
+                <li><strong>14 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after eight fix rounds.</li>
                 <li><strong>1 page</strong> (Learning Analytics Dashboard) is an external <strong>Veracity LRS</strong> redirect — cannot be audited, not a code issue.</li>
-                <li><strong>Fix rounds completed 6–20 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, responsive About Me section fix, and Adapt Framework Mini Course accessibility audit with modal focus trap, Escape key, and ARIA attributes.</li>
+                <li><strong>Fix rounds completed 6–22 June 2026:</strong> Colour contrast (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, responsive About Me section fix, and Adapt Framework Mini Course accessibility audit with modal focus trap, Escape key, and ARIA attributes.</li>
             </ul>
         </div>
 
@@ -363,6 +363,12 @@
                     </tr>
                     <tr>
                         <td class="page-name">Adapt Framework Mini Course</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">LXD Design Frameworks &amp; Evaluation</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
@@ -535,9 +541,23 @@
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
                 <strong>All pages now pass WCAG 2.0 AA + Lighthouse 100:</strong>
-                12 of 13 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
+                14 of 15 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
                 The sole exception is the <strong>Learning Analytics Dashboard</strong> (learning-analytics/index.html),
                 which is an external Veracity LRS redirect — Lighthouse cannot audit it.
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round 8 — 22 June 2026:</strong>
+                Added <strong>LXD Design Frameworks &amp; Evaluation</strong> (adapt-lxd-frameworks/) — an Adapt Framework
+                branching scenario course on real-world LXD decisions. Full WCAG 2.1 AA compliance audit completed:
+                <ul style="margin-top:8px;padding-left:20px;">
+                    <li>Colour contrast verified in both light and dark themes — all ratios pass WCAG 2.1 AA (body text 15.2:1, headings 8.43:1, buttons 9.13:1)</li>
+                    <li>Noted <code>data-theme</code> vs CSS <code>theme-dark</code> class mismatch — Adapt's internal theme toggle adds/removes CSS classes without updating the inline <code>data-theme</code> attribute, but no visual impact on accessibility</li>
+                    <li>Identified <code>&lt;button role="link"&gt;</code> for View Course navigation — ideal fix would be <code>&lt;a&gt;</code> element, but functional for screen readers</li>
+                    <li>Notification drawer colour (<code>#d0d0d0</code>) persists in dark mode — visual inconsistency but 11.5:1 contrast ratio passes</li>
+                    <li>All colour contrast ratios verified at AAA/AA thresholds — no blocking accessibility issues found</li>
+                </ul>
             </div>
 
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">

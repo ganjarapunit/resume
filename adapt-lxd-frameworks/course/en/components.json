@@ -1,0 +1,904 @@
+[
+  {
+    "_id": "c-b-001",
+    "_parentId": "b-001",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "The Project Brief",
+    "displayTitle": "How do you begin?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Evaluate which design framework fits this context \u2014 ADDIE, SAM, or Agile \u2014 before doing anything else",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Starting with a framework evaluation is strategic \u2014 you chose based on context, not habit. This is what senior LXD practitioners do: diagnose before prescribing."
+      },
+      {
+        "text": "Jump straight to evaluation standards \u2014 define how you'll measure success before you design anything",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Jumping to evaluation too early skips a critical step. Without a framework, you have no process to evaluate against. Define your approach first, then your metrics."
+      },
+      {
+        "text": "Skip the planning phase entirely and jump into building a quick prototype to show stakeholders",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Prototyping without a plan is a common risk. In a 3-week project, this leads to scope creep. Always start with a framework decision."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Strong choice. Evaluating frameworks first sets a strategic direction before diving into tactics.",
+      "_correct": "Strong choice. Evaluating frameworks first sets a strategic direction before diving into tactics.",
+      "_incorrect": {
+        "notFinal": "Defining success metrics early or prototyping is good practice, but starting with a design framework provides the structure needed to keep this 3-week project on track.",
+        "final": "In LXD, the framework guides every decision that follows. Starting without one leads to misalignment and rework."
+      }
+    },
+    "body": "You are a Learning Experience Designer at EdTech Corp..."
+  },
+  {
+    "_id": "c-b-002",
+    "_parentId": "b-002",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Choosing Your Design Framework",
+    "displayTitle": "Which framework?",
+    "instruction": "Choose the framework that best fits the timeline.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "ADDIE \u2014 Analyze, Design, Develop, Implement, Evaluate. The full waterfall approach.",
+        "_shouldBeSelected": false,
+        "_index": 1,
+        "_feedback": "ADDIE's linear waterfall is too rigid for a 3-week sprint. You would spend half the project in Analysis alone."
+      },
+      {
+        "text": "SAM (Successive Approximation Model) \u2014 iterative prototyping with frequent stakeholder reviews.",
+        "_shouldBeSelected": true,
+        "_index": 2,
+        "_feedback": "SAM's 'savvy start' lets you prototype rapidly and refine through stakeholder feedback. Ideal for tight deadlines where quality still matters."
+      },
+      {
+        "text": "Dick & Carey Model \u2014 the systems-oriented approach with 10 sequential components.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Dick & Carey is thorough but over-engineered for a 3-week compliance course. Too much front-end analysis for the timeline."
+      },
+      {
+        "text": "Agile / LLAMA \u2014 full iterative development with minimal up-front design.",
+        "_shouldBeSelected": false,
+        "_index": 4,
+        "_feedback": "Agile works well for software but can skip critical learner analysis in LXD. SAM offers a better balance for this context."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Strong choice! SAM's iterative 'savvy start' approach lets you prototype quickly and refine based on feedback \u2014 perfect for tight timelines without sacrificing quality.",
+      "_correct": "Strong choice! SAM's iterative 'savvy start' approach lets you prototype quickly and refine based on feedback \u2014 perfect for tight timelines without sacrificing quality.",
+      "_incorrect": {
+        "notFinal": "For a 3-week compliance project, SAM (Successive Approximation Model) typically provides the best balance of rigor and speed. ADDIE and Dick & Carey are too linear; Agile may skip needed analysis.",
+        "final": "For a 3-week compliance project, SAM (Successive Approximation Model) typically provides the best balance of rigor and speed."
+      }
+    }
+  },
+  {
+    "_id": "c-b-003",
+    "_parentId": "b-003",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "The Analysis Dilemma",
+    "displayTitle": "How do you handle the PM's request?",
+    "instruction": "Choose the response that demonstrates senior LXD practice.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Push back respectfully \u2014 explain that without a learner analysis, you risk building a course that doesn't address the actual performance gaps across different departments",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "You advocated for the learner and the process \u2014 that's senior LXD leadership. A targeted 2-day analysis sprint addresses the PM's timeline while gathering critical data."
+      },
+      {
+        "text": "Accept the PM's shortcut but plan a quick survey during development to gather learner data retroactively",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "A retroactive survey won't capture the performance gaps you need to design for. Push back with a lighter-weight analysis plan instead."
+      },
+      {
+        "text": "Propose a full ADDIE analysis phase including stakeholder interviews, job observation, and performance metrics review",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "A full ADDIE analysis is overkill for a 3-week timeline. Propose a targeted 2-day sprint: stakeholder interviews plus a quick learner survey."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Excellent. This is the mark of a senior LXD \u2014 advocating for the learner while demonstrating business acumen.",
+      "_correct": "Excellent. This is the mark of a senior LXD \u2014 advocating for the learner while demonstrating business acumen.",
+      "_incorrect": {
+        "notFinal": "Analysis must happen before design decisions. A targeted 2-day analysis sprint would satisfy both the PM and your quality standards.",
+        "final": "Skipping analysis is a common but costly shortcut. A targeted 2-day analysis sprint would satisfy both the PM and your quality standards."
+      }
+    }
+  },
+  {
+    "_id": "c-b-004",
+    "_parentId": "b-004",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Evaluation Strategy",
+    "displayTitle": "Which evaluation level?",
+    "instruction": "Choose the level that best demonstrates behavior change.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Level 1: Reaction \u2014 Did learners enjoy the course? Use smile sheets and satisfaction surveys.",
+        "_shouldBeSelected": false,
+        "_index": 1,
+        "_feedback": "Smile sheets show satisfaction, not behavior change. For proving workplace impact, you need Level 3 (Behavior) or higher."
+      },
+      {
+        "text": "Level 2: Learning \u2014 Did learners acquire the knowledge? Use pre/post test scores.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Test scores prove learning occurred, not whether it transferred to the job. Behavior change requires Level 3."
+      },
+      {
+        "text": "Level 3: Behavior \u2014 Are learners applying data privacy practices on the job? Use observation, manager reports, or audit data.",
+        "_shouldBeSelected": true,
+        "_index": 3,
+        "_feedback": "Level 3 is where you prove the training changed workplace practices \u2014 through audits, manager observations, or performance data."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Correct. Level 3 is where you demonstrate actual workplace behavior change \u2014 the gold standard for compliance training ROI.",
+      "_correct": "Correct. Level 3 is where you demonstrate actual workplace behavior change \u2014 the gold standard for compliance training ROI.",
+      "_incorrect": {
+        "notFinal": "For behavior change, you need Kirkpatrick Level 3 (Behavior) \u2014 observable application on the job through audits, manager observations, or performance data.",
+        "final": "For behavior change, you need Kirkpatrick Level 3 (Behavior) \u2014 observable application on the job through audits, manager observations, or performance data."
+      }
+    }
+  },
+  {
+    "_id": "c-b-005",
+    "_parentId": "b-005",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Formative vs Summative",
+    "displayTitle": "What evaluation now?",
+    "instruction": "Choose the evaluation type that fits this situation.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Formative evaluation \u2014 analyze the pilot data, identify knowledge gaps, revise content, and re-test before full launch",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Formative evaluation is exactly right. You are in development with data that needs action. Fix it now before 500+ employees see it."
+      },
+      {
+        "text": "Summative evaluation \u2014 launch as planned and measure the final outcome at the end, treating 60% as your baseline",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Launching with a 60% pass rate is premature. Formative evaluation lets you diagnose and fix gaps in the remaining 2 weeks."
+      },
+      {
+        "text": "Phillips ROI evaluation \u2014 calculate the monetary return on investment based on projected improvement from the pilot data",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Phillips ROI is premature here. You need to fix the learning intervention first before measuring its financial return."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Perfect. Formative evaluation during development lets you fix problems before they reach the full audience.",
+      "_correct": "Perfect. Formative evaluation during development lets you fix problems before they reach the full audience.",
+      "_incorrect": {
+        "notFinal": "Formative evaluation is the right call here. Use the remaining 2 weeks to analyze, revise, and re-pilot before going live.",
+        "final": "Formative evaluation is the right call here. Use the remaining 2 weeks to analyze, revise, and re-pilot before going live."
+      }
+    }
+  },
+  {
+    "_id": "c-b-006",
+    "_parentId": "b-006",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Proving Value",
+    "displayTitle": "How do you prove ROI?",
+    "instruction": "Choose the best evaluation approach for this request.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Kirkpatrick Level 4: Results \u2014 report organizational impact metrics like reduced data breaches or improved audit scores",
+        "_shouldBeSelected": false,
+        "_index": 1,
+        "_feedback": "Level 4 shows organizational impact but doesn't produce the monetary ROI percentage the VP needs for the board."
+      },
+      {
+        "text": "Phillips ROI Methodology \u2014 convert benefit data into monetary values, subtract program costs, and calculate the ROI percentage",
+        "_shouldBeSelected": true,
+        "_index": 2,
+        "_feedback": "Phillips ROI converts benefits to dollar values and calculates a clear percentage. This is exactly what the VP needs for the board presentation."
+      },
+      {
+        "text": "CIPP Model \u2014 evaluate Context, Input, Process, and Product to give a holistic picture of program value",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "CIPP provides a holistic evaluation but doesn't produce the hard monetary ROI figure the VP is asking for."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Perfect. Phillips ROI is specifically designed for the scenario where leadership needs a hard dollar figure.",
+      "_correct": "Perfect. Phillips ROI is specifically designed for the scenario where leadership needs a hard dollar figure.",
+      "_incorrect": {
+        "notFinal": "For a direct monetary ROI figure, Phillips ROI Methodology is the appropriate framework. It isolates the training's financial contribution and presents it as a clear percentage.",
+        "final": "For a direct monetary ROI figure, Phillips ROI Methodology is the appropriate framework. It isolates the training's financial contribution and presents it as a clear percentage."
+      }
+    }
+  },
+  {
+    "_id": "c-b-007",
+    "_parentId": "b-007",
+    "_type": "component",
+    "_component": "text",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Scenario Complete",
+    "displayTitle": "Scenario Complete",
+    "body": "<p>Congratulations! You have completed the <strong>LXD Design Frameworks &amp; Evaluation Standards</strong> branching scenario.</p><p>Below is a detailed breakdown of every decision you made, the correct choice, and why it matters.</p><div id=\"summary-container\"><p><em>Loading your decisions...</em></p></div>",
+    "instruction": "",
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    }
+  },
+  {
+    "_id": "c-b-008",
+    "_parentId": "b-008",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Global Rollout Challenges",
+    "displayTitle": "Can you scale globally?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Translate the existing course exactly as-is into each language. Delivering on time is the priority \u2014 we can fix cultural issues in v2.",
+        "_shouldBeSelected": false,
+        "_index": 1,
+        "_feedback": "Launching culturally insensitive content damages credibility. Learners in Tokyo or Berlin will disengage immediately. Always localize meaning, not just words."
+      },
+      {
+        "text": "Redesign the course for each locale with local SMEs: adapt examples, replace US-specific case studies, and run cultural sensitivity reviews. This will push the timeline but ensures quality.",
+        "_shouldBeSelected": true,
+        "_index": 2,
+        "_feedback": "This is best practice. Localizing at the cultural level ensures every learner feels the content was designed for them. Delaying quality global content is always worth it."
+      },
+      {
+        "text": "Replace all text with icons and visuals so it's 'culture-free.' That way you don't need translation at all.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "There is no such thing as 'culture-free' design. Visuals carry cultural meaning too \u2014 colors, symbols, gestures, and even layouts vary across cultures. Always involve local SMEs."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "You recognized that true localization means adapting meaning, not just language. Senior LXD practitioners design for cultural context, not just linguistic accuracy.",
+      "_correct": "You recognized that true localization means adapting meaning, not just language. Senior LXD practitioners design for cultural context, not just linguistic accuracy.",
+      "_incorrect": {
+        "notFinal": "Global rollout requires more than translation. Local SMEs help you adapt examples, case studies, and cultural references so the content resonates in each market.",
+        "final": "Global rollout requires more than translation. Local SMEs help you adapt examples, case studies, and cultural references so the content resonates in each market."
+      }
+    }
+  },
+  {
+    "_id": "c-b-009",
+    "_parentId": "b-009",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Recovering from a Misstep",
+    "displayTitle": "How do you recover?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Apologize for the oversight, take full ownership, and present a revised plan with local SME involvement in each region.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Owning the mistake and presenting a concrete fix demonstrates senior leadership. Stakeholders trust practitioners who are honest and solution-oriented."
+      },
+      {
+        "text": "Explain that the 'original intent was good' and ask the local teams to 'fix the language themselves since they know their culture best.'",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Delegating your core responsibility to local teams undermines your role as an LXD professional. You own the learning experience globally."
+      },
+      {
+        "text": "Defend the original approach, citing the tight timeline as justification for the missteps.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Defensiveness erodes trust. Stakeholders value honesty and ownership over excuses. Acknowledging the error builds credibility for future collaboration."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Ownership and transparency build long-term trust. Senior LXDs treat mistakes as data \u2014 they analyze, adjust, and communicate with honesty.",
+      "_correct": "Ownership and transparency build long-term trust. Senior LXDs treat mistakes as data \u2014 they analyze, adjust, and communicate with honesty.",
+      "_incorrect": {
+        "notFinal": "When a rollout goes wrong, the strongest response is ownership + a clear plan. Defensiveness or blame-shifting erodes your credibility as an LXD leader.",
+        "final": "When a rollout goes wrong, the strongest response is ownership + a clear plan. Defensiveness or blame-shifting erodes your credibility as an LXD leader."
+      }
+    }
+  },
+  {
+    "_id": "c-b-010",
+    "_parentId": "b-010",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Microlearning vs Deep Dive",
+    "displayTitle": "Microlearning vs deep dive?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Agree immediately \u2014 the CLO is the boss, and microlearning is a trend for a reason. Deliver 9 x 5-minute chunks.",
+        "_shouldBeSelected": false,
+        "_index": 1,
+        "_feedback": "Blindly following trends without evidence undermines learning outcomes. Microlearning works for awareness-level content, not for complex topics requiring deep understanding."
+      },
+      {
+        "text": "Push back with evidence: research shows complex compliance topics require deeper processing. Propose a blended approach \u2014 microlearning for awareness, scenario-based deep dives for application.",
+        "_shouldBeSelected": true,
+        "_index": 2,
+        "_feedback": "Evidence-based persuasion is a hallmark of senior LXD practice. You balanced stakeholder desire with learning science \u2014 the blended approach is the gold standard here."
+      },
+      {
+        "text": "Propose a compromise: make the first 15 minutes microlearning-style and keep the remaining 30 minutes as a deep dive. Split the difference.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Compromising on structural integrity can create a disjointed experience. Better to design a coherent blend from the ground up rather than cut an existing course into pieces."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Perfect. You used evidence to guide the stakeholder while offering a better solution. Senior LXDs are trusted advisors, not order-takers.",
+      "_correct": "Perfect. You used evidence to guide the stakeholder while offering a better solution. Senior LXDs are trusted advisors, not order-takers.",
+      "_incorrect": {
+        "notFinal": "Microlearning has its place \u2014 but not for complex compliance topics. A blended approach that layers awareness-level chunks with deeper application scenarios is the evidence-backed solution.",
+        "final": "Microlearning has its place \u2014 but not for complex compliance topics. A blended approach that layers awareness-level chunks with deeper application scenarios is the evidence-backed solution."
+      }
+    }
+  },
+  {
+    "_id": "c-b-011",
+    "_parentId": "b-011",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "The Accessibility Audit",
+    "displayTitle": "How accessible is your course?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Conduct a full WCAG 2.1 AA audit, fix all critical violations, and build an accessibility checklist for future projects.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "WCAG 2.1 AA is the industry standard. Fixing violations and building process safeguards prevents recurrence. This is what ethical LXD practice looks like."
+      },
+      {
+        "text": "Fix the alt-text and colour contrast issues now. Tackle the rest in a future update.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Partial fixes can still leave learners excluded. Keyboard traps and navigation issues are just as critical as alt-text. A comprehensive approach is the ethical minimum."
+      },
+      {
+        "text": "Suggest the learner use a different screen reader and hope the compliance audit doesn't catch the rest.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Passively shifting responsibility to the learner is unacceptable. Accessibility is not optional \u2014 it's a fundamental requirement of professional LXD practice."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Accessibility is non-negotiable in professional LXD. By fixing all violations and building safeguards, you ensure every learner can access the content with dignity.",
+      "_correct": "Accessibility is non-negotiable in professional LXD. By fixing all violations and building safeguards, you ensure every learner can access the content with dignity.",
+      "_incorrect": {
+        "notFinal": "WCAG 2.1 AA compliance should be built in from the start, not retrofitted. Prioritize a comprehensive fix \u2014 partial accessibility still excludes learners.",
+        "final": "WCAG 2.1 AA compliance should be built in from the start, not retrofitted. Prioritize a comprehensive fix \u2014 partial accessibility still excludes learners."
+      }
+    }
+  },
+  {
+    "_id": "c-b-012",
+    "_parentId": "b-012",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "The Data Breach Incident",
+    "displayTitle": "Was your training effective?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Analyze the incident data: what knowledge gap did the breach expose? Use the findings to update the course with a targeted module on data handling protocols.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "This is continuous improvement in action. Treating incidents as data points \u2014 not failures \u2014 is what separates exceptional LXDs from average ones."
+      },
+      {
+        "text": "Point to the 92% completion rate and positive feedback as proof the training worked. The breach was a human error, not a training failure.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Completion rates and satisfaction scores don't prove behaviour change. True evaluation asks: did learners transfer the learning to their jobs? Use this as a diagnostic opportunity."
+      },
+      {
+        "text": "Blame Finance for not enforcing your recommended follow-up workshops. The training was fine \u2014 it's the department that dropped the ball.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Blame-shifting avoids accountability. A senior LXD practitioner owns the full learning ecosystem, including whether recommendations were implemented."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Excellent. You used the incident as a learning opportunity to close the loop. This is the essence of continuous improvement in LXD \u2014 data-driven iteration.",
+      "_correct": "Excellent. You used the incident as a learning opportunity to close the loop. This is the essence of continuous improvement in LXD \u2014 data-driven iteration.",
+      "_incorrect": {
+        "notFinal": "A breach after training doesn't mean the training failed \u2014 it means the training needs iteration. Use incident data to identify specific gaps and update the course accordingly.",
+        "final": "A breach after training doesn't mean the training failed \u2014 it means the training needs iteration. Use incident data to identify specific gaps and update the course accordingly."
+      }
+    }
+  },
+  {
+    "_id": "c-b-013",
+    "_parentId": "b-013",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Root Cause Analysis",
+    "displayTitle": "Find the real gap.",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Conduct a performance analysis: interview the employee, observe the workflow, and identify environmental barriers (workflow, tools, culture) that prevented application.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Performance analysis isolates whether the gap is a training problem or a workplace problem. Often, learners know what to do but workplace pressures override their training."
+      },
+      {
+        "text": "Add 5 more knowledge-check questions to the existing course to 'deepen understanding.' If they pass again, the training is fine.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "More knowledge checks won't solve an application gap. The learner already passed the test \u2014 the issue is transfer to the job, not recall."
+      },
+      {
+        "text": "Survey all 500+ employees asking 'did you apply what you learned?' and use the self-report data to guide revisions.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Self-report surveys about application are unreliable. Learners overestimate their own application. Direct observation and workflow analysis are far more diagnostic."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Performance analysis reveals whether the gap is training or environment. This is advanced LXD practice \u2014 knowing that training alone rarely changes behaviour without workplace support.",
+      "_correct": "Performance analysis reveals whether the gap is training or environment. This is advanced LXD practice \u2014 knowing that training alone rarely changes behaviour without workplace support.",
+      "_incorrect": {
+        "notFinal": "Root cause analysis separates training gaps from environmental barriers. Interview, observe, and analyse the workflow before jumping to a training solution.",
+        "final": "Root cause analysis separates training gaps from environmental barriers. Interview, observe, and analyse the workflow before jumping to a training solution."
+      }
+    }
+  },
+  {
+    "_id": "c-b-014",
+    "_parentId": "b-014",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Modernizing the Approach",
+    "displayTitle": "Which tech strategy?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Implement xAPI for rich activity tracking, and use the data to build personalized learning pathways that adapt to each learner's knowledge gaps.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "xAPI + adaptive pathways is the frontier of LXD. You've connected data, personalisation, and scalability in one strategic move."
+      },
+      {
+        "text": "Stick with SCORM 1.2 \u2014 it's reliable, every LMS supports it, and upgrading risks compatibility issues.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "SCORM 1.2 is stable but limited. It can't track granular activities or support modern features like adaptive pathways. Upgrade to xAPI for richer data."
+      },
+      {
+        "text": "Jump straight to VR training \u2014 immersive learning is the future, and this will position EdTech Corp as an innovator.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "VR without a clear learning need is trend-chasing. The data breach gap requires better knowledge application, not immersion. Start with xAPI and adaptive design."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Strategic vision + practical implementation = senior LXD leadership. xAPI unlocks data-driven personalization without betting the farm on unproven tech.",
+      "_correct": "Strategic vision + practical implementation = senior LXD leadership. xAPI unlocks data-driven personalization without betting the farm on unproven tech.",
+      "_incorrect": {
+        "notFinal": "The right tech stack starts with the learning need, not the technology. xAPI provides the data layer needed for personalization while remaining practical and proven.",
+        "final": "The right tech stack starts with the learning need, not the technology. xAPI provides the data layer needed for personalization while remaining practical and proven."
+      }
+    }
+  },
+  {
+    "_id": "c-b-015",
+    "_parentId": "b-015",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Strategic Reset",
+    "displayTitle": "Pivot or push forward?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Run a 2-day discovery sprint: interview learners, map current workflows, identify tech pain points, and prototype 3 solution options with estimated impact and cost.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "A discovery sprint is efficient and evidence-based. You'll have a data-backed recommendation ready within the VP's timeline."
+      },
+      {
+        "text": "Research what competitors are using and recommend the most popular solution. If everyone is using it, it must be right.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "Copying competitors without understanding your own context leads to misaligned investments. Your learners' needs, not competitors' choices, should drive the decision."
+      },
+      {
+        "text": "Recommend doing nothing for now \u2014 gather more data over the next 6 months before making any tech changes.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Analysis paralysis is just as risky as impulsive decisions. A focused 2-day sprint gives you enough data for a confident recommendation."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "A discovery sprint is the fastest path to a data-backed recommendation. You balanced urgency with rigour \u2014 exactly what senior LXDs do.",
+      "_correct": "A discovery sprint is the fastest path to a data-backed recommendation. You balanced urgency with rigour \u2014 exactly what senior LXDs do.",
+      "_incorrect": {
+        "notFinal": "When the path forward is unclear, a structured discovery sprint (not analysis paralysis or copycat decisions) produces the most reliable roadmap.",
+        "final": "When the path forward is unclear, a structured discovery sprint (not analysis paralysis or copycat decisions) produces the most reliable roadmap."
+      }
+    }
+  },
+  {
+    "_id": "c-b-016",
+    "_parentId": "b-016",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "Building Your LXD Brand",
+    "displayTitle": "Present at a conference?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 1,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "A transparent case study: show the ups, downs, data, failures, and lessons learned. Include the accessibility complaint, the breach incident, and how each challenge made the final product stronger.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Authentic case studies build real credibility. Sharing failures as well as successes positions you as a grounded, reflective practitioner \u2014 exactly what the industry needs more of."
+      },
+      {
+        "text": "A polished highlight reel: focus on the 96% satisfaction, the 92% completion rate, and the global rollout success. Keep it positive and inspiring.",
+        "_shouldBeSelected": false,
+        "_index": 2,
+        "_feedback": "A highlight reel gets polite applause but little lasting impact. The audience learns more from your failures than your successes. Include the struggles."
+      },
+      {
+        "text": "Decline the opportunity \u2014 you're too busy building the next project. Suggest the VP present it instead.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Sharing your work at industry events builds your professional brand and elevates the LXD profession. It's not optional \u2014 it's part of being a senior practitioner."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Authenticity builds credibility. By sharing the full story \u2014 failures included \u2014 you model the reflective practice that defines senior LXD leadership.",
+      "_correct": "Authenticity builds credibility. By sharing the full story \u2014 failures included \u2014 you model the reflective practice that defines senior LXD leadership.",
+      "_incorrect": {
+        "notFinal": "Industry presentations are opportunities to elevate the profession. The most respected presenters share their failures openly \u2014 the audience learns more from those than from highlight reels.",
+        "final": "Industry presentations are opportunities to elevate the profession. The most respected presenters share their failures openly \u2014 the audience learns more from those than from highlight reels."
+      }
+    }
+  },
+  {
+    "_id": "c-b-017",
+    "_parentId": "b-017",
+    "_type": "component",
+    "_component": "mcq",
+    "_classes": "",
+    "_layout": "full",
+    "title": "The LXD Career Crossroads",
+    "displayTitle": "What's your next move?",
+    "instruction": "Choose the option that best reflects senior LXD judgement.",
+    "_attempts": 1,
+    "_shouldDisplayAttempts": false,
+    "_isRandom": false,
+    "_hasItemScoring": false,
+    "_questionWeight": 1,
+    "_selectable": 2,
+    "_canShowModelAnswer": true,
+    "_canShowCorrectness": true,
+    "_canShowFeedback": true,
+    "_canShowMarking": false,
+    "_recordInteraction": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    },
+    "_items": [
+      {
+        "text": "Accept the Director role. Build a team that reflects your LXD values: evidence-based, learner-centered, and impact-driven. Your influence multiplies through others.",
+        "_shouldBeSelected": true,
+        "_index": 1,
+        "_feedback": "Moving into leadership when you're ready is a service to the profession. Great LXDs become great leaders who create more great LXDs. This is how the field grows."
+      },
+      {
+        "text": "Decline the Director role and stay hands-on. You love designing, and deep expertise matters as much as breadth. You'll continue to hone your craft and mentor informally.",
+        "_shouldBeSelected": true,
+        "_index": 2,
+        "_feedback": "Staying hands-on is a valid, powerful choice. Deep expertise drives innovation, and informal mentoring still elevates the field. Not everyone needs to manage people to lead."
+      },
+      {
+        "text": "Accept the Director role but keep designing everything yourself. You trust your own work more than anyone else's.",
+        "_shouldBeSelected": false,
+        "_index": 3,
+        "_feedback": "Holding onto both roles leads to burnout and bottlenecks your team. Leadership means letting go of control and growing others. Delegate the design, lead the vision."
+      }
+    ],
+    "_feedback": {
+      "title": "Feedback",
+      "altTitle": "Feedback",
+      "correct": "Whichever authentic path you chose, you're thinking strategically about your career. Senior LXDs know that growing the profession \u2014 through leadership OR deep expertise \u2014 is part of the job.",
+      "_correct": "Whichever authentic path you chose, you're thinking strategically about your career. Senior LXDs know that growing the profession \u2014 through leadership OR deep expertise \u2014 is part of the job.",
+      "_incorrect": {
+        "notFinal": "Your career path should align with your strengths and values. Both hands-on expertise and leadership are vital to the LXD profession. The key is choosing consciously, not by default.",
+        "final": "Your career path should align with your strengths and values. Both hands-on expertise and leadership are vital to the LXD profession. The key is choosing consciously, not by default."
+      }
+    }
+  }
+]
