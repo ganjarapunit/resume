@@ -70,7 +70,9 @@
     }
 
     // ── Attempt 2: pipwerks SCORM wrapper (real LMS connection) ──
-    if (typeof pipwerks !== 'undefined' && pipwerks.SCORM && pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive) {
+    // IMPORTANT: Guard with if (!name) so that the overlay-entered name
+    // from Attempt 1 takes priority over SCORM stub defaults.
+    if (!name && typeof pipwerks !== 'undefined' && pipwerks.SCORM && pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive) {
       try {
         var scormVer = pipwerks.SCORM.version;
         if (scormVer === '2004') {
