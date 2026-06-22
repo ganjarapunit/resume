@@ -104,6 +104,23 @@
       } catch(e) { /* ignore */ }
     }
 
+    // ── Attempt 4: Learner-entered name from localStorage ──
+    if (!name) {
+      try {
+        var storedName = localStorage.getItem('xapi_learner_name');
+        if (storedName) {
+          name = storedName;
+          var storedEmail = localStorage.getItem('xapi_learner_email');
+          if (storedEmail) {
+            accountName = storedEmail.replace(/[^a-zA-Z0-9@._-]/g, '');
+            homePage = 'mailto:';
+          } else {
+            accountName = name.replace(/\s+/g, '.').toLowerCase() + '@learner.local';
+          }
+        }
+      } catch(e) { /* ignore */ }
+    }
+
     // ── Fallback: Use generated ID ──
     if (!name) {
       name = 'Learner';
@@ -427,8 +444,8 @@
     }
   }
 
-  onReady(function() {
-    // Send launched immediately
+  function startXAPISession() {
+    // Send launched
     try {
       window.XAPI.sendLaunched();
     } catch(e) {
@@ -453,6 +470,26 @@
         window.XAPI.sendTerminated();
       } catch(e) { /* ignore */ }
     });
+  }
+
+  // ── Wait for learner name before starting xAPI session ──
+  // In LMS mode, SCORM provides the name immediately.
+  // In standalone mode, the name entry overlay sets xapi_learner_name.
+  onReady(function() {
+    function tryStart() {
+      var nameAvailable = !!(
+        window.API_1484_11 || window.API ||
+        (typeof pipwerks !== 'undefined' && pipwerks.SCORM && pipwerks.SCORM.connection && pipwerks.SCORM.connection.isActive) ||
+        localStorage.getItem('xapi_learner_name')
+      );
+      if (nameAvailable) {
+        startXAPISession();
+      } else {
+        // Check again after the name entry overlay finishes
+        setTimeout(tryStart, 300);
+      }
+    }
+    setTimeout(tryStart, 500);
   });
 
   console.log('[xAPI] Wrapper loaded. LRS endpoint:', LRS_ENDPOINT);
