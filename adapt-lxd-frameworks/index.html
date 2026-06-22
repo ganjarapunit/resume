@@ -509,7 +509,7 @@ lucide.createIcons();
     var el = document.querySelector('.' + blockId);
     if (el) {
       el.style.display = 'block';
-      if (visibleBlocks.indexOf(blockId) === -1) visibleBlocks.push(blockId);
+      if (visibleBlocks.indexOf(blockId) === -1)     visibleBlocks.push(blockId);
     }
   }
 
@@ -540,7 +540,7 @@ lucide.createIcons();
     if (selectedIdx === -1) return;
     var isCorrect = selectedIdx === ans.correct_idx;
     var isPartial = widget && widget.classList.contains('is-partial');
-    choices.push({
+    var choice = {
       block: getBlockId(block),
       question: ans.question,
       selected_idx: selectedIdx,
@@ -550,7 +550,27 @@ lucide.createIcons();
       is_correct: isCorrect,
       is_partial: isPartial,
       feedback: ans.items[selectedIdx].feedback
-    });
+    };
+    choices.push(choice);
+
+    // ── Send xAPI answered statement ──
+    try {
+      if (window.XAPI) {
+        window.XAPI.sendAnswered(
+          choice.question,
+          choice.selected_idx,
+          choice.correct_idx,
+          choice.feedback,
+          choice.is_correct
+        );
+        // Also send progress update
+        var totalQ = Object.keys(ANSWERS).length;
+        var answered = choices.length;
+        window.XAPI.sendProgressed(answered / totalQ, choice.block);
+      }
+    } catch(e) {
+      console.warn('[xAPI] Failed to send answered statement:', e);
+    }
   }
 
   function renderSummary() {
@@ -558,6 +578,16 @@ lucide.createIcons();
     if (!container || choices.length === 0) return;
     var correct = choices.filter(function(c) { return c.is_correct; }).length;
     var total = choices.length;
+
+    // ── Send xAPI completion statements ──
+    try {
+      if (window.XAPI) {
+        window.XAPI.sendCompleted(correct, total);
+        window.XAPI.sendScored(correct, 0, total, total > 0 ? correct / total : 0);
+      }
+    } catch(e) {
+      console.warn('[xAPI] Failed to send completion:', e);
+    }
     var html = '<div class="summary-report">';
     html += '<div class="summary-header">';
     html += '<div class="summary-score">' + correct + ' / ' + total + '</div>';

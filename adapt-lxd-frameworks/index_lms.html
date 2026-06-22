@@ -5,9 +5,39 @@
       window.ADAPT_BUILD_TYPE = 'production';
       window.ISCOOKIELMS = null;
     </script>
+    <script>
+    /* ── Alert/Confirm overrides (must run BEFORE Adapt loads) ── */
+    (function() {
+      var origAlert = window.alert;
+      var origConfirm = window.confirm;
+      window.alert = function(msg) {
+        if (typeof msg === 'string' && msg.indexOf('not connected to the Learning Management System') !== -1) {
+          console.warn('[LMS] Connection error suppressed (standalone mode)');
+          return;
+        }
+        origAlert.call(window, msg);
+      };
+      window.confirm = function(msg) {
+        if (typeof msg === 'string' && msg.indexOf('not connected') !== -1) {
+          console.warn('[LMS] Confirm suppressed (standalone mode)');
+          return true;
+        }
+        return origConfirm.call(window, msg);
+      };
+      /* Block SCORM log window */
+      var origOpen = window.open;
+      window.open = function(url, name, features) {
+        if (url && url.indexOf('log_output.html') !== -1) {
+          console.warn('[SCORM] Log window blocked');
+          return null;
+        }
+        return origOpen.apply(this, arguments);
+      };
+    })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title></title>
+    <title>LXD Design Frameworks & Evaluation Standards</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="adapt.css?timestamp=1781941097508" type="text/css" rel="stylesheet">
     <script src="libraries/modernizr.js"></script>
