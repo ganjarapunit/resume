@@ -56,6 +56,36 @@
 [data-theme="dark"] .hero-title em { color: #fbbf24; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── SKIP TO CONTENT ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: #fff;
+  z-index: 200;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: .85rem;
+  text-decoration: none;
+  transition: top .2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ── FOCUS INDICATORS ── */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+a:focus-visible,
+button:focus-visible,
+.filter-tab:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg);
@@ -416,8 +446,11 @@ body {
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header>
 <!-- Top Navigation -->
-<nav class="top-nav">
+<nav class="top-nav" aria-label="Main navigation">
   <a href="#" class="nav-brand">
     <div class="nav-brand-mark">PG</div>
     <span class="nav-brand-text">Punit Ganjara</span>
@@ -445,7 +478,9 @@ body {
   <a href="https://linkedin.com/in/ganjarapunit" target="_blank" rel="noopener" onclick="closeMobileMenu()">LinkedIn</a>
 </div>
 
-<main>
+</header>
+
+<main id="main-content">
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
@@ -662,6 +697,11 @@ body {
         <span class="tag-xapi">xAPI</span>
         <span>cmi5</span>
       </div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn" style="background:#0f766e;color:#ffffff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+          View Course <span style="font-size:1.1em;">→</span>
+        </span>
+      </div>
     </div>
   </a>
 
@@ -696,6 +736,10 @@ body {
   </div>
 </div>
 </main>
+
+<footer style="border-top:2px solid var(--border);padding:24px 40px;text-align:center;font-size:.8rem;color:var(--text-muted);background:var(--bg);">
+  <p>&copy; 2026 Punit Ganjara &middot; Learning Experience Designer</p>
+</footer>
 
 <script>
 lucide.createIcons();
