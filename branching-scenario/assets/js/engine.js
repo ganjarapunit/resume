@@ -1,7 +1,7 @@
 const LRS_CONFIG = {
-  endpoint: localStorage.getItem('xapi_endpoint') || '',
-  username: localStorage.getItem('xapi_username') || '',
-  password: localStorage.getItem('xapi_password') || ''
+  endpoint: 'https://portfolio-testing.lrs.io/xapi/',
+  username: 'e6437770-3130-4514-8b43-522464737f29',
+  password: '4abefa78-163e-4b76-b767-c4adaaaa883f'
 };
 
 class XapiTracker {
@@ -13,10 +13,6 @@ class XapiTracker {
     this.activityDesc = 'A branching scenario for new EFL teachers — 27 authentic teaching moments exploring error correction strategies.';
     this.sentStatements = 0;
     this.totalStatements = 0;
-  }
-
-  get configured() {
-    return !!(LRS_CONFIG.endpoint && LRS_CONFIG.username && LRS_CONFIG.password);
   }
 
   statement(verb, object, opts = {}) {
@@ -44,14 +40,8 @@ class XapiTracker {
     this.totalStatements++;
     console.log('[xAPI] Statement #' + this.totalStatements + ':', JSON.stringify(stmt, null, 2));
 
-    if (this.configured) {
-      this.queue.push(stmt);
-      this.flush();
-    } else {
-      console.log('[xAPI] LRS not configured — statement logged to console only. Configure via the xAPI indicator in the nav bar.');
-    }
-
-    this.updateIndicator();
+    this.queue.push(stmt);
+    this.flush();
     return stmt;
   }
 
@@ -85,19 +75,6 @@ class XapiTracker {
       }
     }
     this.flushing = false;
-    this.updateIndicator();
-  }
-
-  updateIndicator() {
-    const el = document.getElementById('xapi-indicator');
-    if (!el) return;
-    if (this.configured) {
-      el.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> xAPI: ' + this.sentStatements + '/' + this.totalStatements + ' sent';
-      el.className = 'xapi-indicator xapi-on';
-    } else {
-      el.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> xAPI: ' + this.totalStatements + ' logged';
-      el.className = 'xapi-indicator xapi-off';
-    }
   }
 }
 
@@ -505,92 +482,12 @@ function sendLaunchStatement() {
   );
 }
 
-/* ── LRS Config Dialog ── */
-function toggleLrsConfig() {
-  const overlay = document.getElementById('lrs-overlay');
-  if (!overlay) return;
-  const isOpen = !overlay.classList.contains('hidden');
-  overlay.classList.toggle('hidden');
-  if (!isOpen) {
-    document.getElementById('lrs-endpoint').value = LRS_CONFIG.endpoint || '';
-    document.getElementById('lrs-username').value = LRS_CONFIG.username || '';
-    document.getElementById('lrs-password').value = LRS_CONFIG.password || '';
-    document.getElementById('lrs-endpoint').focus();
-  }
-}
 
-function initLrsConfig() {
-  const overlay = document.getElementById('lrs-overlay');
-  if (!overlay) return;
-
-  document.getElementById('lrs-save-btn').addEventListener('click', () => {
-    const endpoint = document.getElementById('lrs-endpoint').value.trim();
-    const username = document.getElementById('lrs-username').value.trim();
-    const password = document.getElementById('lrs-password').value.trim();
-    const status = document.getElementById('lrs-status');
-
-    if (!endpoint || !username || !password) {
-      status.textContent = 'All three fields are required.';
-      status.className = 'lrs-status err';
-      return;
-    }
-
-    LRS_CONFIG.endpoint = endpoint;
-    LRS_CONFIG.username = username;
-    LRS_CONFIG.password = password;
-    localStorage.setItem('xapi_endpoint', endpoint);
-    localStorage.setItem('xapi_username', username);
-    localStorage.setItem('xapi_password', password);
-
-    status.textContent = 'Credentials saved. Re-sending pending statements...';
-    status.className = 'lrs-status ok';
-    xapi.updateIndicator();
-    xapi.flush();
-
-    setTimeout(() => { overlay.classList.add('hidden'); status.textContent = ''; }, 1500);
-  });
-
-  document.getElementById('lrs-clear-btn').addEventListener('click', () => {
-    LRS_CONFIG.endpoint = '';
-    LRS_CONFIG.username = '';
-    LRS_CONFIG.password = '';
-    localStorage.removeItem('xapi_endpoint');
-    localStorage.removeItem('xapi_username');
-    localStorage.removeItem('xapi_password');
-    document.getElementById('lrs-endpoint').value = '';
-    document.getElementById('lrs-username').value = '';
-    document.getElementById('lrs-password').value = '';
-    document.getElementById('lrs-status').textContent = 'Disconnected from LRS.';
-    document.getElementById('lrs-status').className = 'lrs-status ok';
-    xapi.updateIndicator();
-  });
-
-  document.getElementById('lrs-close-btn').addEventListener('click', () => {
-    overlay.classList.add('hidden');
-    document.getElementById('lrs-status').textContent = '';
-  });
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      overlay.classList.add('hidden');
-      document.getElementById('lrs-status').textContent = '';
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-      overlay.classList.add('hidden');
-      document.getElementById('lrs-status').textContent = '';
-    }
-  });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initNameOverlay();
-  initLrsConfig();
   const toggle = document.getElementById('theme-toggle');
   if (toggle) toggle.addEventListener('click', toggleTheme);
-  xapi.updateIndicator();
   render('intro');
 });

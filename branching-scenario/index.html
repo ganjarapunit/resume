@@ -19,9 +19,6 @@
     <span class="nav-brand-sub">Error Correction Module</span>
   </a>
   <div class="nav-actions">
-    <span id="xapi-indicator" class="xapi-indicator xapi-off" role="status" aria-live="polite" title="Click to configure LRS" tabindex="0" onclick="toggleLrsConfig()" onkeydown="if(event.key==='Enter'||event.key===' ')event.preventDefault();toggleLrsConfig()">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> xAPI
-    </span>
     <button id="theme-toggle" aria-label="Switch between light and dark theme" type="button">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
@@ -49,26 +46,6 @@
   <div id="feedback-toast" class="hidden" role="status" aria-live="polite"></div>
 
   <div id="announcements" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
-
-  <!-- LRS config dialog -->
-  <div id="lrs-overlay" class="lrs-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="lrs-dialog-title">
-    <div class="lrs-dialog">
-      <h2 id="lrs-dialog-title">xAPI LRS Configuration</h2>
-      <p>Enter your Learning Record Store credentials to send xAPI statements live.</p>
-      <label for="lrs-endpoint">LRS Endpoint</label>
-      <input id="lrs-endpoint" type="url" placeholder="https://your-lrs.example.com/xapi/">
-      <label for="lrs-username">Username (Key)</label>
-      <input id="lrs-username" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
-      <label for="lrs-password">Password (Secret)</label>
-      <input id="lrs-password" type="password" placeholder="Enter your LRS secret key">
-      <div class="lrs-actions">
-        <button id="lrs-save-btn" class="name-submit" type="button">Save &amp; Connect</button>
-        <button id="lrs-clear-btn" type="button" class="lrs-clear">Clear &amp; Disconnect</button>
-        <button id="lrs-close-btn" type="button" class="lrs-close">Cancel</button>
-      </div>
-      <p id="lrs-status" class="lrs-status"></p>
-    </div>
-  </div>
 
   <!-- Name overlay -->
   <div id="name-overlay" class="name-overlay" role="dialog" aria-modal="true" aria-labelledby="name-dialog-title">
