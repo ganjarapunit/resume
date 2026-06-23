@@ -6,12 +6,14 @@
   var LRS_PASSWORD = '4abefa78-163e-4b76-b767-c4adaaaa883f';
   var BASIC_AUTH = 'Basic ' + btoa(LRS_USERNAME + ':' + LRS_PASSWORD);
   var ACTIVITY_ID = 'https://ganjarapunit.github.io/resume/adapt-course';
-  var ACTIVITY_NAME = 'Adapt Framework Mini Course';
+  var ACTIVITY_NAME = 'LXD Design Frameworks & Evaluation Standards';
 
 // Additional xAPI verbs for granular tracking
     var VERBS = {
       attempted:   'http://adlnet.gov/expapi/verbs/attempted',
       initialized: 'http://adlnet.gov/expapi/verbs/initialized',
+      initialised: 'http://adlnet.gov/expapi/verbs/initialized',
+      launched:    'http://adlnet.gov/expapi/verbs/launched',
       completed:   'http://adlnet.gov/expapi/verbs/completed',
       answered:    'http://adlnet.gov/expapi/verbs/answered',
       interacted:  'http://adlnet.gov/expapi/verbs/interacted',
