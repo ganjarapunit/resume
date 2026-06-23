@@ -52,11 +52,12 @@
   function verbUrl(key) { return VERBS[key] || key; }
 
   /** Public API – window.xapiTrack('answered', {result:{...}}, callback) */
-  window.xapiTrack = function(key, extensions, callback) {
+  function xapiTrack(key, extensions, callback) {
     var url = verbUrl(key);
     var display = key; // simple label; could be localized later
     queueOrSend(url, display, extensions, callback);
-  };
+  }
+  window.xapiTrack = xapiTrack;
 
 
   /* ── Learner name management ── */
@@ -168,30 +169,31 @@
   }
 
   onReady(function() {
+    /* ── Attempted statement on course load ── */
     xapiTrack('attempted', null, function(err) {
-    if (err) console.warn('xAPI: failed to send attempted statement', err);
-  });
-      if (err) console.warn('xAPI: failed to send attempted statement', err);
+      if (err) console.warn('[xAPI] Failed to send attempted statement:', err);
     });
 
+    /* ── Watch for course completion via Adapt notification ── */
     var observer = new MutationObserver(function() {
       var notify = document.querySelector('[data-adapt-notification]');
       if (notify) {
         var text = notify.textContent || '';
         if (text.toLowerCase().indexOf('complete') > -1 || text.toLowerCase().indexOf('congratulations') > -1) {
-      xapiTrack('completed', {
-        completion: true,
-        success: true,
-        score: { scaled: 1, min: 0, max: 1, raw: 1 }
-      });
+          xapiTrack('completed', {
+            completion: true,
+            success: true,
+            score: { scaled: 1, min: 0, max: 1, raw: 1 }
+          });
           observer.disconnect();
         }
       }
     });
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 
+    /* ── Suspended statement on page unload ── */
     window.addEventListener('beforeunload', function() {
-      sendStatement('http://adlnet.gov/expapi/verbs/suspended', 'suspended');
+      xapiTrack('suspended', null);
     });
   });
 
