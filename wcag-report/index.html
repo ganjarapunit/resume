@@ -233,12 +233,12 @@
                 <span><i data-lucide="calendar"></i> June 2026</span>
                 <span><i data-lucide="search"></i> Automated Testing (Lighthouse)</span>
                 <span><i data-lucide="check-circle"></i> WCAG 2.0 + 2.1 Standards</span>
-                <span><i data-lucide="monitor"></i> 15 pages tested</span>
+                <span><i data-lucide="monitor"></i> 16 pages tested</span>
             </div>
 
             <div class="summary-grid">
                 <div class="summary-card pass">
-                    <div class="count">14</div>
+                    <div class="count">15</div>
                     <div class="label">Pages Passed</div>
                 </div>
                 <div class="summary-card pass">
@@ -260,7 +260,7 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of all <strong>15 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                This report summarises an accessibility audit of all <strong>16 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
@@ -369,6 +369,12 @@
                     </tr>
                     <tr>
                         <td class="page-name">LXD Design Frameworks &amp; Evaluation</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Error Correction Dilemmas (Branching Scenario)</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
@@ -541,7 +547,7 @@
             <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
                 <i data-lucide="check-circle"></i>
                 <strong>All pages now pass WCAG 2.0 AA + Lighthouse 100:</strong>
-                14 of 15 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
+                15 of 16 portfolio pages score <strong>100/100</strong> on Accessibility, Best Practices, and SEO.
                 The sole exception is the <strong>Learning Analytics Dashboard</strong> (learning-analytics/index.html),
                 which is an external Veracity LRS redirect — Lighthouse cannot audit it.
             </div>
@@ -557,6 +563,25 @@
                     <li>Identified <code>&lt;button role="link"&gt;</code> for View Course navigation — ideal fix would be <code>&lt;a&gt;</code> element, but functional for screen readers</li>
                     <li>Notification drawer colour (<code>#d0d0d0</code>) persists in dark mode — visual inconsistency but 11.5:1 contrast ratio passes</li>
                     <li>All colour contrast ratios verified at AAA/AA thresholds — no blocking accessibility issues found</li>
+                </ul>
+            </div>
+
+            <div class="note-box" style="margin-top:12px;background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15);">
+                <i data-lucide="check-circle"></i>
+                <strong>Fix Round 9 — 23 June 2026:</strong>
+                Added <strong>Error Correction Dilemmas (Branching Scenario)</strong> (branching-scenario/) — a standalone HTML
+                branching scenario for new EFL teachers featuring 27 authentic teaching dilemmas. Full WCAG 2.1 AA audit completed:
+                <ul style="margin-top:8px;padding-left:20px;">
+                    <li>Added <code>&lt;main&gt;</code> landmark, skip link, and <code>lang="en"</code></li>
+                    <li>Added meta description for SEO and screen reader context</li>
+                    <li>Heading order verified: <code>h1 → h2</code> with no skipped levels</li>
+                    <li>All buttons have accessible names via <code>aria-label</code></li>
+                    <li>All form inputs have associated <code>&lt;label&gt;</code> elements</li>
+                    <li>Colour contrast verified: body text <code>rgb(2,6,23)</code> on white <code>rgb(255,255,255)</code> — exceeds AAA 7:1</li>
+                    <li>Focus indicators present via <code>:focus-visible</code> with 3px primary outline</li>
+                    <li>Granular xAPI tracking statements for every decision choice</li>
+                    <li>No images on page — decorative gradient strip replaces imagery</li>
+                    <li>Lighthouse 100/100/100 in both light and dark themes</li>
                 </ul>
             </div>
 
