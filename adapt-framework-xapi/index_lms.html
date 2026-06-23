@@ -7,16 +7,181 @@
     </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title></title>
+    <title>Adapt Framework xAPI Course</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="adapt.css?timestamp=1781941097508" type="text/css" rel="stylesheet">
     <script src="libraries/modernizr.js"></script>
     <script src="xapi-wrapper.js"></script>
     <script src="adapt/js/scriptLoader.js"></script>
+    <style>
+    /* ── Name Overlay (LMS) ── */
+    .name-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 20000; font-family: 'Outfit', sans-serif;
+      opacity: 1; transition: opacity 0.4s ease;
+    }
+    .name-overlay.hidden {
+      opacity: 0; pointer-events: none;
+    }
+    .name-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border-radius: 24px; padding: 48px 40px 40px;
+      max-width: 440px; width: 92%; text-align: center;
+      animation: nameCardIn 0.5s ease-out;
+    }
+    @keyframes nameCardIn {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .name-card h2 {
+      margin: 0 0 8px; font-size: 1.5rem; font-weight: 800;
+      color: #1e293b; letter-spacing: -0.02em;
+    }
+    .name-card p {
+      margin: 0 0 28px; font-size: 0.95rem; line-height: 1.6;
+      color: #64748b;
+    }
+    .name-input-group {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .name-input-group input {
+      width: 100%; padding: 14px 18px; border-radius: 12px;
+      border: 2px solid #e2e8f0; background: rgba(255,255,255,0.8);
+      font-family: 'Outfit', sans-serif; font-size: 1rem;
+      color: #0f172a; outline: none; transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .name-input-group input:focus {
+      border-color: #20457c; box-shadow: 0 0 0 3px rgba(32, 69, 124, 0.15);
+    }
+    .name-input-group input::placeholder { color: #94a3b8; }
+    .name-input-group button {
+      width: 100%; padding: 14px; border-radius: 12px;
+      background: #20457c; color: #fff; border: none;
+      font-family: 'Outfit', sans-serif; font-size: 1rem;
+      font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .name-input-group button:hover {
+      background: #3b6fb3; transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(32, 69, 124, 0.3);
+    }
+    .name-input-group button:focus-visible {
+      outline: 3px solid #3b82f6; outline-offset: 2px;
+    }
+    .name-input-group button:disabled {
+      opacity: 0.5; cursor: not-allowed; transform: none;
+    }
+    .greeting-banner {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 15000;
+      background: rgba(16, 185, 129, 0.12);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 10px 16px; display: flex; align-items: center;
+      justify-content: center; gap: 10px;
+      font-family: 'Outfit', sans-serif; font-size: 0.88rem;
+      color: #0f172a; transition: transform 0.4s ease;
+    }
+    .greeting-banner.hidden { transform: translateY(-100%); }
+    .greeting-banner .greeting-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #10b981; display: inline-block;
+    }
+    .greeting-banner strong { font-weight: 700; }
+    .greeting-banner .greeting-reset {
+      margin-left: 8px; color: #3b6fb3;
+      text-decoration: underline; cursor: pointer;
+      background: none; border: none; font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem; font-weight: 600;
+    }
+    .greeting-banner .greeting-reset:hover { color: #20457c; }
+    @media (max-width: 480px) {
+      .name-card { padding: 36px 24px 28px; }
+      .name-card h2 { font-size: 1.25rem; }
+    }
+    </style>
   </head>
   <body>
+    <!-- ── Name Overlay ── -->
+    <div id="nameOverlay" class="name-overlay" role="dialog" aria-labelledby="nameOverlayTitle" aria-modal="true">
+      <div class="name-card">
+        <h2 id="nameOverlayTitle">Welcome to the Course</h2>
+        <p>Enter your name to begin your learning journey.</p>
+        <div class="name-input-group">
+          <input type="text" id="learnerNameInput" placeholder="Your name..." maxlength="100" autocomplete="name" aria-label="Enter your full name" />
+          <button id="startCourseBtn" onclick="saveLearnerName()" disabled>Start Learning</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Greeting Banner ── -->
+    <div id="greetingBanner" class="greeting-banner hidden" role="status" aria-live="polite">
+      <span class="greeting-dot" aria-hidden="true"></span>
+      <span id="greetingText"></span>
+      <button class="greeting-reset" id="greetingResetBtn" onclick="resetLearnerName()">Not you?</button>
+    </div>
+
     <div id="app">
       <div id="wrapper"></div>
     </div>
+
+    <script>
+    /* ── Name overlay logic (LMS) ── */
+    (function() {
+      var nameOverlay = document.getElementById('nameOverlay');
+      var nameInput = document.getElementById('learnerNameInput');
+      var startBtn = document.getElementById('startCourseBtn');
+      var greetingBanner = document.getElementById('greetingBanner');
+      var greetingText = document.getElementById('greetingText');
+
+      function updateStartBtn() {
+        startBtn.disabled = nameInput.value.trim().length < 1;
+      }
+      nameInput.addEventListener('input', updateStartBtn);
+      nameInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !startBtn.disabled) saveLearnerName();
+      });
+      updateStartBtn();
+
+      var storedName = localStorage.getItem('learnerName');
+      if (storedName && storedName.trim()) {
+        nameOverlay.classList.add('hidden');
+        showGreeting(storedName.trim());
+      } else {
+        setTimeout(function() { nameInput.focus(); }, 400);
+      }
+    })();
+
+    function saveLearnerName() {
+      var input = document.getElementById('learnerNameInput');
+      var name = input.value.trim();
+      if (!name) return;
+      localStorage.setItem('learnerName', name);
+      document.getElementById('nameOverlay').classList.add('hidden');
+      showGreeting(name);
+      if (window.onLearnerNameSet) window.onLearnerNameSet(name);
+    }
+
+    function showGreeting(name) {
+      var text = document.getElementById('greetingText');
+      text.innerHTML = '<strong>' + name.replace(/</g,'&lt;') + '</strong> enrolled';
+      document.getElementById('greetingBanner').classList.remove('hidden');
+    }
+
+    function resetLearnerName() {
+      localStorage.removeItem('learnerName');
+      document.getElementById('nameOverlay').classList.remove('hidden');
+      document.getElementById('learnerNameInput').value = '';
+      document.getElementById('startCourseBtn').disabled = true;
+      document.getElementById('greetingBanner').classList.add('hidden');
+      setTimeout(function() { document.getElementById('learnerNameInput').focus(); }, 300);
+    }
+    </script>
   </body>
 </html>

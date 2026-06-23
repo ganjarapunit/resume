@@ -8,15 +8,54 @@
   var ACTIVITY_ID = 'https://ganjarapunit.github.io/resume/adapt-course';
   var ACTIVITY_NAME = 'Adapt Framework Mini Course';
 
+  /* ── Learner name management ── */
+  function getLearnerName() {
+    var name = localStorage.getItem('learnerName');
+    return name && name.trim() ? name.trim() : null;
+  }
+
+  /* ── Statement queue: defer statements until learner name is provided ── */
+  var pendingStatements = [];
+  var nameReady = !!getLearnerName();
+
+  function flushPending() {
+    while (pendingStatements.length) {
+      var item = pendingStatements.shift();
+      sendStatement(item.verb, item.verbDisplay, item.extensions, item.callback);
+    }
+  }
+
+  /* Expose callback so the name overlay can notify us */
+  window.onLearnerNameSet = function(name) {
+    console.log('[xAPI] Learner identified as: ' + name);
+    nameReady = true;
+    flushPending();
+  };
+
+  function buildActor() {
+    var actor = {
+      objectType: 'Agent'
+    };
+    var learnerName = getLearnerName();
+    if (learnerName) {
+      /* Prefer named identifier when learner name is available */
+      actor.account = {
+        homePage: window.location.origin,
+        name: learnerName
+      };
+      actor.name = learnerName;
+    } else {
+      actor.account = {
+        homePage: window.location.origin,
+        name: LRS_USERNAME
+      };
+    }
+    return actor;
+  }
+
   function sendStatement(verb, verbDisplay, objectExtensions, callback) {
     var statement = {
-      actor: {
-        objectType: 'Agent',
-        account: {
-          homePage: window.location.origin,
-          name: LRS_USERNAME
-        }
-      },
+      actor: buildActor(),
       verb: {
         id: verb,
         display: { 'en-US': verbDisplay }
@@ -69,8 +108,16 @@
     }
   }
 
+  function queueOrSend(v, vd, ext, cb) {
+    if (nameReady) {
+      sendStatement(v, vd, ext, cb);
+    } else {
+      pendingStatements.push({ verb: v, verbDisplay: vd, extensions: ext, callback: cb });
+    }
+  }
+
   onReady(function() {
-    sendStatement('http://adlnet.gov/expapi/verbs/attempted', 'attempted', null, function(err) {
+    queueOrSend('http://adlnet.gov/expapi/verbs/attempted', 'attempted', null, function(err) {
       if (err) console.warn('xAPI: failed to send attempted statement', err);
     });
 
