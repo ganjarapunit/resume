@@ -479,6 +479,64 @@ html, body {
 /* Theme toggle specific */
 [data-theme="dark"] .nav-actions button:hover { background: var(--primary); }
 
+/* ── xAPI Indicator ── */
+.xapi-indicator {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 99px;
+  font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; user-select: none;
+  transition: all .2s; white-space: nowrap;
+  border: 1px solid var(--glass-border);
+}
+.xapi-indicator svg { flex-shrink: 0; }
+.xapi-off { background: rgba(100,100,100,.08); color: var(--text-muted); }
+.xapi-off:hover { border-color: var(--accent); color: var(--text); }
+.xapi-on { background: rgba(16,185,129,.1); color: var(--accent); border-color: rgba(16,185,129,.2); }
+.xapi-on:hover { background: rgba(16,185,129,.15); }
+[data-theme="dark"] .xapi-off { background: rgba(255,255,255,.06); }
+[data-theme="dark"] .xapi-off:hover { border-color: var(--accent); color: #fff; }
+[data-theme="dark"] .xapi-on { background: rgba(52,211,153,.12); color: #34d399; }
+[data-theme="dark"] .xapi-on:hover { background: rgba(52,211,153,.18); }
+
+/* ── LRS Config Dialog ── */
+.lrs-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
+}
+.lrs-overlay.hidden { display: none; }
+.lrs-dialog {
+  background: var(--card-bg, #fff); color: var(--text);
+  border-radius: var(--r-md); padding: 32px 36px;
+  max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  border: 1px solid var(--glass-border);
+}
+.lrs-dialog h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.lrs-dialog p { font-size: .82rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+.lrs-dialog label { display: block; font-size: .75rem; font-weight: 600; margin: 12px 0 4px; color: var(--text); }
+.lrs-dialog input[type="url"],
+.lrs-dialog input[type="text"],
+.lrs-dialog input[type="password"] {
+  width: 100%; padding: 10px 14px; border-radius: var(--r-sm);
+  border: 2px solid var(--glass-border); background: var(--bg);
+  color: var(--text); font-size: .85rem; font-family: 'Outfit', sans-serif;
+  transition: border-color .2s;
+}
+.lrs-dialog input:focus { outline: none; border-color: var(--primary); }
+.lrs-actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.lrs-actions button { padding: 10px 20px; border-radius: var(--r-sm); font-weight: 600; font-size: .82rem; cursor: pointer; border: none; transition: all .2s; }
+.lrs-actions .name-submit { background: var(--primary); color: #fff; }
+.lrs-actions .name-submit:hover { background: var(--primary-hover); }
+.lrs-clear { background: transparent; color: var(--fail, #b91c1c); border: 1px solid var(--fail, #b91c1c) !important; }
+.lrs-clear:hover { background: rgba(185,28,28,.08); }
+.lrs-close { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border) !important; }
+.lrs-close:hover { background: var(--bg-alt, #f0f2f5); }
+.lrs-status { font-size: .78rem; margin-top: 12px; }
+.lrs-status.ok { color: var(--pass, #047857); }
+.lrs-status.err { color: var(--fail, #b91c1c); }
+[data-theme="dark"] .lrs-dialog { --card-bg: rgba(15,23,42,0.95); }
+[data-theme="dark"] .lrs-dialog input { --bg: #0d1321; }
+
 
 /* Responsive */
 @media (max-width: 600px) {
