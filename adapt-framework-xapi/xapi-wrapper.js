@@ -168,94 +168,176 @@
     }
   }
 
-  /* ── Track whether completed has been sent (avoid duplicates) ── */
+  /* ── Track which questions have been reported (avoid duplicates) ── */
+  var _reportedQuestions = {};
+
+  /* ── Track whether completed has been sent ── */
   var _completedSent = false;
 
-  /* ── Adapt event hooks for granular interaction tracking ── */
-  function initAdaptHooks() {
-    var retries = 0;
-    var MAX_RETRIES = 75; // ~15 seconds total
+  /* ── Track whether page viewed has been sent ── */
+  var _pageViewed = false;
 
-    function check() {
-      if (window.Adapt && typeof window.Adapt.on === 'function') {
-        _hookAdaptEvents();
-        return;
+  /* ── Question widget selectors for DOM-based tracking ── */
+  var QUESTION_SELECTORS = '.mcq__widget.is-complete.is-submitted, ' +
+    '.gmcq__widget.is-complete.is-submitted, ' +
+    '.slider__widget.is-complete.is-submitted, ' +
+    '.matching__widget.is-complete.is-submitted';
+
+  /* ── DOM-based tracking (replaces Adapt event hooks which are inaccessible) ── */
+  function setupDOMTracking() {
+    /* Initial check for elements already in the DOM */
+    _checkPageViewed();
+    _checkQuestionSubmissions();
+    _checkCourseCompletion();
+
+    /* Set up MutationObserver for ongoing changes */
+    var observer = new MutationObserver(function(mutations) {
+      var hasClassChanges = false;
+      var hasChildChanges = false;
+
+      for (var i = 0; i < mutations.length; i++) {
+        var mutation = mutations[i];
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          hasClassChanges = true;
+        }
+        if (mutation.type === 'childList') {
+          hasChildChanges = true;
+        }
       }
-      retries++;
-      if (retries < MAX_RETRIES) {
-        setTimeout(check, 200);
-      } else {
-        console.warn('[xAPI] Adapt framework not found after ' + (MAX_RETRIES * 200 / 1000) + 's — event tracking unavailable');
+
+      if (hasChildChanges) {
+        _checkPageViewed();
       }
-    }
 
-    // Start checking after a short delay to let Adapt initialize
-    setTimeout(check, 500);
-  }
-
-  function _hookAdaptEvents() {
-    var Adapt = window.Adapt;
-    var questionTypes = ['mcq', 'gmcq', 'matching', 'slider', 'textinput', 'confidenceSlider', 'rating', 'likert'];
-
-    /* ── Course completed ── */
-    Adapt.on('contentObjectView:complete', function(view) {
-      var model = view.model;
-      if (model.get('_type') === 'course' && !_completedSent) {
-        _completedSent = true;
-        xapiTrack('completed', {
-          completion: true,
-          success: true,
-          score: { scaled: 1, min: 0, max: 1, raw: 1 }
-        });
-        console.log('[xAPI] Course completed');
+      if (hasClassChanges || hasChildChanges) {
+        _checkQuestionSubmissions();
+        _checkCourseCompletion();
       }
     });
 
-    /* ── Question interactions → answered / passed / failed ── */
-    Adapt.on('questionView:recordInteraction', function(view) {
-      var model = view.model;
-      var response     = model.get('_response') || '';
-      var isCorrect    = model.get('_isCorrect');
-      var score        = model.get('_score') || 0;
-      var maxScore     = model.get('_maxScore') || 1;
-      var componentId  = model.get('_id');
-      var title        = model.get('_title') || componentId;
-      var scaled       = maxScore > 0 ? score / maxScore : 0;
+    var target = document.getElementById('wrapper') || document.getElementById('app') || document.body;
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  /* ── Check if page content has loaded → send 'viewed' ── */
+  function _checkPageViewed() {
+    if (_pageViewed) return;
+    var pageContent = document.querySelector('.page__inner, .menu__inner');
+    if (pageContent) {
+      _pageViewed = true;
+      xapiTrack('viewed', { completion: true });
+      console.log('[xAPI] Page viewed');
+    }
+  }
+
+  /* ── Check for newly submitted questions → send 'answered' + 'passed'/'failed' ── */
+  function _checkQuestionSubmissions() {
+    var widgets = document.querySelectorAll(QUESTION_SELECTORS);
+    for (var w = 0; w < widgets.length; w++) {
+      var widget = widgets[w];
+      var compId = _getComponentId(widget);
+      if (!compId) continue;
+      if (_reportedQuestions[compId]) continue;
+      _reportedQuestions[compId] = true;
+
+      var isCorrect = widget.classList.contains('is-correct');
 
       xapiTrack('answered', {
-        response: String(response),
+        response: 'submitted',
         success: !!isCorrect,
-        score: { scaled: scaled, min: 0, max: maxScore, raw: score },
+        score: {
+          scaled: isCorrect ? 1 : 0,
+          min: 0,
+          max: 1,
+          raw: isCorrect ? 1 : 0
+        },
         completion: true
       });
 
-      if (isCorrect) {
-        xapiTrack('passed', { completion: true, success: true });
-      } else {
-        xapiTrack('failed', { completion: true, success: false });
+      xapiTrack(isCorrect ? 'passed' : 'failed', {
+        completion: true,
+        success: !!isCorrect
+      });
+
+      console.log('[xAPI] Question ' + compId + ' ' + (isCorrect ? '\u2713 passed' : '\u2717 failed'));
+    }
+  }
+
+  /* ── Check if the course is complete → send 'completed' ── */
+  function _checkCourseCompletion() {
+    if (_completedSent) return;
+
+    /* Method 1: Assessment results widget is complete */
+    var results = document.querySelector('.assessmentResults__widget.is-complete');
+    if (results) {
+      _reportCompleted();
+      return;
+    }
+
+    /* Method 2: All question widgets have been submitted */
+    var allQs = document.querySelectorAll('.mcq__widget, .gmcq__widget, .slider__widget, .matching__widget');
+    if (allQs.length > 0) {
+      var allDone = true;
+      for (var i = 0; i < allQs.length; i++) {
+        if (!allQs[i].classList.contains('is-complete') || !allQs[i].classList.contains('is-submitted')) {
+          allDone = false;
+          break;
+        }
       }
-
-      console.log('[xAPI] Answered: ' + componentId + ' (' + title + ') ' + (isCorrect ? '✓' : '✗'));
-    });
-
-    /* ── Page viewed ── */
-    Adapt.on('pageView:ready', function(view) {
-      xapiTrack('viewed', { completion: true });
-      console.log('[xAPI] Page viewed');
-    });
-
-    /* ── Display components completed → interacted ── */
-    Adapt.on('componentView:complete', function(view) {
-      var model = view.model;
-      var componentType = model.get('_component');
-
-      if (questionTypes.indexOf(componentType) === -1) {
-        xapiTrack('interacted', { completion: true });
-        console.log('[xAPI] Component interaction: ' + model.get('_id') + ' (' + componentType + ')');
+      if (allDone) {
+        _reportCompleted();
+        return;
       }
-    });
+    }
 
-    console.log('[xAPI] Adapt event hooks registered successfully');
+    /* Method 3: Notification popup with congratulations/complete text */
+    var notifyPopup = document.querySelector('.notify__popup, .notify');
+    if (notifyPopup) {
+      var text = notifyPopup.textContent || '';
+      if (/complete|congratulations|passed|finished|score/i.test(text)) {
+        _reportCompleted();
+      }
+    }
+  }
+
+  function _reportCompleted() {
+    _completedSent = true;
+    xapiTrack('completed', {
+      completion: true,
+      success: true,
+      score: { scaled: 1, min: 0, max: 1, raw: 1 }
+    });
+    console.log('[xAPI] Course completed');
+  }
+
+  /* ── Extract component ID from a widget element ── */
+  function _getComponentId(widget) {
+    /* Try data-adapt-id on the component container */
+    var comp = widget.closest('[data-adapt-id]');
+    if (comp) return comp.getAttribute('data-adapt-id');
+
+    /* Try id on the inner container */
+    var inner = widget.closest('.component__inner');
+    if (inner && inner.id) return inner.id;
+
+    /* Try id on the widget itself */
+    if (widget.id) return widget.id;
+
+    /* Fallback: generate a key from the widget's class list */
+    var classKey = '';
+    var classes = widget.className.split(/\s+/);
+    for (var i = 0; i < classes.length; i++) {
+      if (classes[i].indexOf('__widget') > -1) {
+        classKey = classes[i];
+        break;
+      }
+    }
+    return classKey || 'unknown-' + Math.random().toString(36).slice(2, 8);
   }
 
   onReady(function() {
@@ -264,27 +346,8 @@
       if (err) console.warn('[xAPI] Failed to send attempted statement:', err);
     });
 
-    /* ── Hook into Adapt events (retries until Adapt is available) ── */
-    initAdaptHooks();
-
-    /* ── Fallback: watch for course completion via DOM notification ── */
-    var observer = new MutationObserver(function() {
-      if (_completedSent) { observer.disconnect(); return; }
-      var notify = document.querySelector('[data-adapt-notification]');
-      if (notify) {
-        var text = notify.textContent || '';
-        if (text.toLowerCase().indexOf('complete') > -1 || text.toLowerCase().indexOf('congratulations') > -1) {
-          _completedSent = true;
-          xapiTrack('completed', {
-            completion: true,
-            success: true,
-            score: { scaled: 1, min: 0, max: 1, raw: 1 }
-          });
-          observer.disconnect();
-        }
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    /* ── Start DOM-based tracking after Adapt has rendered content ── */
+    setTimeout(setupDOMTracking, 1500);
 
     /* ── Suspended statement on page unload ── */
     window.addEventListener('beforeunload', function() {
