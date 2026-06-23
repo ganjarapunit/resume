@@ -309,7 +309,7 @@ html.theme-dark .name-input-group input:focus {
 /* ── GREETING BANNER ── */
 .greeting-banner {
   position: fixed; top: 0; left: 0; right: 0; z-index: 15000;
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.15); /* increased opacity */
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(16, 185, 129, 0.2);
   padding: 10px 16px; display: flex; align-items: center;
@@ -318,6 +318,9 @@ html.theme-dark .name-input-group input:focus {
   color: var(--text); transition: transform 0.4s ease;
 }
 .greeting-banner.hidden { transform: translateY(-100%); }
+
+/* When the greeting banner is visible, push page content down */
+body.banner-visible { padding-top: 44px; }
 .greeting-banner .greeting-dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: #10b981; display: inline-block;
@@ -442,6 +445,7 @@ function showGreeting(name) {
   var text = document.getElementById('greetingText');
   text.innerHTML = '<strong>' + escapeHtml(name) + '</strong> enrolled &mdash; xAPI tracking is active';
   banner.classList.remove('hidden');
+  document.body.classList.add('banner-visible');
 }
 
 function resetLearnerName() {
@@ -453,6 +457,8 @@ function resetLearnerName() {
   input.value = '';
   document.getElementById('startCourseBtn').disabled = true;
   banner.classList.add('hidden');
+  // Remove the top padding that was added when the banner was shown
+  document.body.classList.remove('banner-visible');
   setTimeout(function() { input.focus(); }, 300);
 }
 
