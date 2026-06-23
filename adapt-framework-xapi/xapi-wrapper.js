@@ -8,6 +8,55 @@
   var ACTIVITY_ID = 'https://ganjarapunit.github.io/resume/adapt-course';
   var ACTIVITY_NAME = 'Adapt Framework Mini Course';
 
+// Additional xAPI verbs for granular tracking
+    var VERBS = {
+      attempted:   'http://adlnet.gov/expapi/verbs/attempted',
+      initialized: 'http://adlnet.gov/expapi/verbs/initialized',
+      completed:   'http://adlnet.gov/expapi/verbs/completed',
+      answered:    'http://adlnet.gov/expapi/verbs/answered',
+      interacted:  'http://adlnet.gov/expapi/verbs/interacted',
+      progressed:  'http://adlnet.gov/expapi/verbs/progressed',
+      terminated:  'http://adlnet.gov/expapi/verbs/terminated',
+      passed:      'http://adlnet.gov/expapi/verbs/passed',
+      failed:      'http://adlnet.gov/expapi/verbs/failed',
+      suspended:   'http://adlnet.gov/expapi/verbs/suspended',
+      viewed:      'http://adlnet.gov/expapi/verbs/viewed',
+      watched:     'http://adlnet.gov/expapi/verbs/watched',
+      experienced: 'http://adlnet.gov/expapi/verbs/experienced',
+      skipped:    'http://adlnet.gov/expapi/verbs/skipped',
+      unlocked:   'http://adlnet.gov/expapi/verbs/unlocked',
+      rated:      'http://adlnet.gov/expapi/verbs/rated',
+      shared:     'http://adlnet.gov/expapi/verbs/shared',
+      loggedin:    'http://adlnet.gov/expapi/verbs/loggedin',
+      loggedout:   'http://adlnet.gov/expapi/verbs/loggedout',
+      registered:  'http://adlnet.gov/expapi/verbs/registered',
+      joined:      'http://adlnet.gov/expapi/verbs/joined',
+      submitted:   'http://adlnet.gov/expapi/verbs/submitted',
+      downloaded:  'http://adlnet.gov/expapi/verbs/downloaded',
+      uploaded:    'http://adlnet.gov/expapi/verbs/uploaded',
+      created:     'http://adlnet.gov/expapi/verbs/created',
+      deleted:     'http://adlnet.gov/expapi/verbs/deleted',
+      assigned:    'http://adlnet.gov/expapi/verbs/assigned',
+      accessed:    'http://adlnet.gov/expapi/verbs/accessed',
+      exited:      'http://adlnet.gov/expapi/verbs/exited',
+      mastered:    'http://adlnet.gov/expapi/verbs/mastered',
+      satisfied:   'http://adlnet.gov/expapi/verbs/satisfied',
+      scored:      'http://adlnet.gov/expapi/verbs/scored',
+      imported:    'http://adlnet.gov/expapi/verbs/imported',
+      preferred:   'http://adlnet.gov/expapi/verbs/preferred'
+    };
+
+  // Helper to resolve a verb key to its IRI
+  function verbUrl(key) { return VERBS[key] || key; }
+
+  /** Public API – window.xapiTrack('answered', {result:{...}}, callback) */
+  window.xapiTrack = function(key, extensions, callback) {
+    var url = verbUrl(key);
+    var display = key; // simple label; could be localized later
+    queueOrSend(url, display, extensions, callback);
+  };
+
+
   /* ── Learner name management ── */
   function getLearnerName() {
     var name = localStorage.getItem('learnerName');
@@ -117,7 +166,9 @@
   }
 
   onReady(function() {
-    queueOrSend('http://adlnet.gov/expapi/verbs/attempted', 'attempted', null, function(err) {
+    xapiTrack('attempted', null, function(err) {
+    if (err) console.warn('xAPI: failed to send attempted statement', err);
+  });
       if (err) console.warn('xAPI: failed to send attempted statement', err);
     });
 
@@ -126,11 +177,11 @@
       if (notify) {
         var text = notify.textContent || '';
         if (text.toLowerCase().indexOf('complete') > -1 || text.toLowerCase().indexOf('congratulations') > -1) {
-          sendStatement('http://adlnet.gov/expapi/verbs/completed', 'completed', {
-            completion: true,
-            success: true,
-            score: { scaled: 1, min: 0, max: 1, raw: 1 }
-          });
+      xapiTrack('completed', {
+        completion: true,
+        success: true,
+        score: { scaled: 1, min: 0, max: 1, raw: 1 }
+      });
           observer.disconnect();
         }
       }
