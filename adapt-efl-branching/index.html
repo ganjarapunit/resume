@@ -1,0 +1,52 @@
+<!doctype html>
+<html id="adapt" class="html no-js" lang="en" dir="ltr">
+  <head>
+    <script>
+      window.ADAPT_BUILD_TYPE = 'production';
+      window.ISCOOKIELMS = false;
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="adapt.css?timestamp=1782747947436" type="text/css" rel="stylesheet">
+    <script src="libraries/modernizr.js"></script>
+    <script src="adapt/js/scriptLoader.js"></script>
+    <script defer src="xapi-tracker.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div id="wrapper">
+        <!-- Adapt menu / page render here -->
+      </div>
+    </div>
+    <script>
+      (function() {
+        var saved = localStorage.getItem('adapt-theme');
+        var html = document.documentElement;
+        if (saved === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+        } else if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('adapt-theme', 'dark');
+        }
+        document.addEventListener('click', function(e) {
+          var btn = e.target.closest('.js-theme-toggle-btn');
+          if (!btn) return;
+          var current = html.getAttribute('data-theme') || 'light';
+          var next = current === 'light' ? 'dark' : 'light';
+          if (next === 'light') {
+            html.removeAttribute('data-theme');
+          } else {
+            html.setAttribute('data-theme', 'dark');
+          }
+          localStorage.setItem('adapt-theme', next);
+          var icon = btn.querySelector('.theme-toggle-icon');
+          if (icon) icon.textContent = next === 'light' ? '\uD83C\uDF19' : '\uD83C\uDF1E';
+        });
+      })();
+    </script>
+  </body>
+
+</html>
