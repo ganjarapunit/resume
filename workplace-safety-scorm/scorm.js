@@ -1513,6 +1513,13 @@
     renderContent();
     updateProgress();
     startTimer();
+    // Sync toggle-wrap position with sidebar state
+    const sidebar = document.getElementById('sidebar');
+    const toggleWrap = document.getElementById('sidebar-toggle-wrap');
+    if (sidebar && toggleWrap) {
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      toggleWrap.style.left = isCollapsed ? '0px' : '280px';
+    }
   }
 
   function loadSuspendData() {
@@ -2768,9 +2775,11 @@
   window.toggleSidebar = function() {
     const sidebar = document.getElementById('sidebar');
     const toggle = document.getElementById('sidebar-toggle');
+    const toggleWrap = document.getElementById('sidebar-toggle-wrap');
     sidebar.classList.toggle('collapsed');
     const isCollapsed = sidebar.classList.contains('collapsed');
     toggle.textContent = isCollapsed ? '☰' : '✕';
+    toggleWrap.style.left = isCollapsed ? '0px' : '280px';
   };
 
   // Statement block (Agree/Disagree)

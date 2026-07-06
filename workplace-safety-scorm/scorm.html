@@ -133,33 +133,77 @@
             transition: transform 0.2s;
         }
 
-        /* Sidebar Toggle — floating button, always visible */
-        .sidebar-toggle {
+        /* Back to Portfolio button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fbbf24;
+            color: #1e237e !important;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 2px solid #d97706;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .back-btn:hover {
+            background: #f59e0b;
+            border-color: #b45309;
+            transform: translateX(-3px);
+        }
+        .back-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+        .back-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Sidebar Toggle — anchored to sidebar edge, always visible */
+        .sidebar-toggle-wrap {
             position: fixed;
-            top: 12px;
-            right: 12px;
+            top: 0;
+            left: 280px;
             z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar-toggle {
+            width: 28px;
+            height: 36px;
             background: #1a237e;
             color: white;
             border: 2px solid rgba(255,255,255,0.3);
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 14px;
             transition: background 0.2s, transform 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            margin-top: 12px;
         }
         .sidebar-toggle:hover {
             background: #283593;
             transform: scale(1.05);
         }
-
-        .sidebar-toggle:hover {
-            background: #283593;
+        .sidebar-toggle-bar {
+            width: 3px;
+            height: 100vh;
+            background: #1a237e;
+            opacity: 0.25;
+        }
+        .sidebar.collapsed ~ .main-content .sidebar-toggle-wrap,
+        .sidebar-toggle-wrap.collapsed {
+            left: 0;
         }
 
 
@@ -2591,6 +2635,7 @@
         /* ─── Responsive Reflow (3-breakpoint) ─── */
         @media (max-width: 1023px) and (min-width: 768px) {
             .sidebar { display: none; }
+            .sidebar-toggle-wrap { left: 0; }
             .two-column { grid-template-columns: 1fr 1fr; }
             .process-steps { flex-wrap: wrap; }
             .process-step { min-width: 45%; }
@@ -2601,6 +2646,7 @@
         }
         @media (max-width: 767px) {
             .sidebar { display: none; }
+            .sidebar-toggle-wrap { left: 0; }
             .two-column { grid-template-columns: 1fr; }
             .process-steps { flex-direction: column; }
             .process-step { min-width: 100%; }
@@ -2622,7 +2668,10 @@
 <body>
     <a href="#content" class="skip-link" id="skip-link">Skip to main content</a>
     <div class="course-container">
-        <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar navigation" aria-expanded="true">✕</button>
+        <div class="sidebar-toggle-wrap" id="sidebar-toggle-wrap">
+            <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar navigation" aria-expanded="true">✕</button>
+            <div class="sidebar-toggle-bar"></div>
+        </div>
         <nav class="sidebar" id="sidebar" role="navigation" aria-label="Course navigation" tabindex="0">
             <div class="sidebar-header">
                 <h2 id="course-title">Workplace Safety Compliance Training</h2>
@@ -2640,6 +2689,10 @@
 
         <main class="main-content" id="main-content" role="main" aria-label="Course content">
             <header class="content-header" style="display: flex; align-items: center;">
+                <a href="../" class="back-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    Back to Portfolio
+                </a>
                 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
                     <span class="breadcrumb-item">Course Home</span>
                 </nav>
