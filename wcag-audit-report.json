@@ -3125,5 +3125,20 @@
       "violationCount": 0
     },
     "tabFocusableCount": 14
+  },
+  {
+    "url": "/workplace-safety-scorm/scorm.html",
+    "label": "Workplace Safety Compliance Training",
+    "light": {
+      "violations": [],
+      "incomplete": [],
+      "violationCount": 0
+    },
+    "dark": {
+      "violations": [],
+      "incomplete": [],
+      "violationCount": 0
+    },
+    "tabFocusableCount": 42
   }
 ]

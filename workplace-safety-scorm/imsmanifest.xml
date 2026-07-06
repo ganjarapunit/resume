@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="WorkplaceSafetyCourse"
+    version="1.0"
+    xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+    xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+    xmlns:imsss="http://www.adlnet.org/xsd/imsss_rootv1p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2
+        imscp_rootv1p1p2.xsd
+        http://www.adlnet.org/xsd/adlcp_rootv1p2
+        adlcp_rootv1p2.xsd
+        http://www.adlnet.org/xsd/adlseq_rootv1p2
+        adlseq_rootv1p2.xsd
+        http://www.adlnet.org/xsd/adlnav_rootv1p2
+        adlnav_rootv1p2.xsd
+        http://www.adlnet.org/xsd/imsss_rootv1p1
+        imsss_rootv1p1.xsd">
+
+    <metadata>
+        <schema>ADL SCORM</schema>
+        <schemaversion>2004 4th Edition</schemaversion>
+    </metadata>
+
+    <organizations default="WorkplaceSafetyOrg">
+        <organization identifier="WorkplaceSafetyOrg">
+            <title>Workplace Safety Compliance Training</title>
+
+            <item identifier="intro" identifierref="resource_intro">
+                <title>Introduction</title>
+                <item identifier="intro_cover" identifierref="resource_intro">
+                    <title>Welcome</title>
+                </item>
+                <item identifier="intro_objectives" identifierref="resource_intro">
+                    <title>Learning Objectives</title>
+                </item>
+            </item>
+
+            <item identifier="osha" identifierref="resource_osha">
+                <title>OSHA Fundamentals</title>
+                <item identifier="osha_rights" identifierref="resource_osha">
+                    <title>Employee Rights &amp; Responsibilities</title>
+                </item>
+                <item identifier="osha_check" identifierref="resource_osha">
+                    <title>Knowledge Check</title>
+                </item>
+            </item>
+
+            <item identifier="hazards" identifierref="resource_hazards">
+                <title>Hazard Identification</title>
+                <item identifier="hazards_chemical" identifierref="resource_hazards">
+                    <title>Chemical Hazards</title>
+                </item>
+                <item identifier="hazards_physical" identifierref="resource_hazards">
+                    <title>Physical Hazards</title>
+                </item>
+                <item identifier="hazards_sorting" identifierref="resource_hazards">
+                    <title>Hazard Sorting Activity</title>
+                </item>
+            </item>
+
+            <item identifier="ppe" identifierref="resource_ppe">
+                <title>Personal Protective Equipment</title>
+                <item identifier="ppe_selection" identifierref="resource_ppe">
+                    <title>PPE Selection Guide</title>
+                </item>
+                <item identifier="ppe_process" identifierref="resource_ppe">
+                    <title>Donning &amp; Doffing</title>
+                </item>
+                <item identifier="ppe_matching" identifierref="resource_ppe">
+                    <title>PPE Matching Exercise</title>
+                </item>
+            </item>
+
+            <item identifier="emergency" identifierref="resource_emergency">
+                <title>Emergency Procedures</title>
+                <item identifier="emergency_fire" identifierref="resource_emergency">
+                    <title>Fire Emergency</title>
+                </item>
+                <item identifier="emergency_spill" identifierref="resource_emergency">
+                    <title>Chemical Spill Response</title>
+                </item>
+                <item identifier="emergency_check" identifierref="resource_emergency">
+                    <title>Emergency Scenarios Quiz</title>
+                </item>
+            </item>
+
+            <item identifier="ergonomics" identifierref="resource_ergonomics">
+                <title>Ergonomics</title>
+                <item identifier="ergonomics_setup" identifierref="resource_ergonomics">
+                    <title>Workstation Setup</title>
+                </item>
+                <item identifier="ergonomics_stretch" identifierref="resource_ergonomics">
+                    <title>Stretching Exercises</title>
+                </item>
+            </item>
+
+            <item identifier="reporting" identifierref="resource_reporting">
+                <title>Incident Reporting</title>
+                <item identifier="reporting_why" identifierref="resource_reporting">
+                    <title>Why Report?</title>
+                </item>
+                <item identifier="reporting_how" identifierref="resource_reporting">
+                    <title>How to Report</title>
+                </item>
+            </item>
+
+            <item identifier="assessment" identifierref="resource_assessment">
+                <title>Final Assessment</title>
+            </item>
+
+            <sequencing>
+                <imsss:sequencing>
+                    <imsss:controlMode choice="true" flow="true" forwardOnly="true"/>
+                    <imsss:rules>
+                        <imsss:pre-condition-rule>
+                            <imsss:ruleConditions>
+                                <imsss:ruleCondition condition="satisfied" operator="not"/>
+                            </imsss:ruleConditions>
+                            <imsss:ruleAction action="disabled"/>
+                        </imsss:pre-condition-rule>
+                    </imsss:rules>
+                </imsss:sequencing>
+            </sequencing>
+        </organization>
+    </organizations>
+
+    <resources>
+        <resource identifier="resource_intro" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_osha" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_hazards" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_ppe" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_emergency" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_ergonomics" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_reporting" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+        <resource identifier="resource_assessment" type="webcontent" adlcp:scormType="sco" href="scorm.html">
+            <file href="scorm.html"/>
+            <file href="scorm.js"/>
+            <file href="scormwrapper.js"/>
+        </resource>
+    </resources>
+
+</manifest>
