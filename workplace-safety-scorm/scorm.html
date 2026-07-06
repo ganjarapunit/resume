@@ -2624,9 +2624,11 @@
         /* ─── Responsive Reflow (3-breakpoint) ─── */
         /* Tablet */
         @media (max-width: 1023px) and (min-width: 768px) {
-            .sidebar { display: none; }
+            .sidebar.collapsed { width: 0; }
+            .sidebar:not(.collapsed) { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 2000; box-shadow: 4px 0 20px rgba(0,0,0,0.4); }
             .sidebar-toggle-wrap { left: 0; }
             .sidebar-toggle-bar { display: none; }
+            .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; cursor: pointer; }
             .content-header { padding: 12px 50px 12px 16px; }
             .content-body, .content { padding: 24px; }
             .back-btn { font-size: .78rem; padding: 6px 12px; }
@@ -2649,9 +2651,11 @@
         /* Mobile */
         @media (max-width: 767px) {
             /* Layout */
-            .sidebar { display: none; }
+            .sidebar.collapsed { width: 0; }
+            .sidebar:not(.collapsed) { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; z-index: 2000; box-shadow: 4px 0 20px rgba(0,0,0,0.4); }
             .sidebar-toggle-wrap { left: 0; }
             .sidebar-toggle-bar { display: none; }
+            .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; cursor: pointer; }
             .two-column { grid-template-columns: 1fr; }
             .content-body, .content { padding: 16px; }
             .content-header { padding: 10px 44px 10px 12px; gap: 8px; flex-wrap: wrap; }

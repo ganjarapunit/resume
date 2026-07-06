@@ -1513,9 +1513,12 @@
     renderContent();
     updateProgress();
     startTimer();
-    // Sync toggle-wrap position with sidebar state
+    // Collapse sidebar on mobile/tablet by default
     const sidebar = document.getElementById('sidebar');
     const toggleWrap = document.getElementById('sidebar-toggle-wrap');
+    if (sidebar && window.innerWidth <= 1023) {
+      sidebar.classList.add('collapsed');
+    }
     if (sidebar && toggleWrap) {
       const isCollapsed = sidebar.classList.contains('collapsed');
       toggleWrap.style.left = isCollapsed ? '0px' : '280px';
@@ -2700,6 +2703,13 @@
     si = parseInt(si, 10);
     li = parseInt(li, 10);
     if (isNaN(si) || isNaN(li) || si < 0 || li < 0) return;
+    // Auto-close sidebar on mobile
+    if (window.innerWidth <= 1023) {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && !sidebar.classList.contains('collapsed')) {
+        window.toggleSidebar();
+      }
+    }
     if (!isLessonAccessible(si, li)) {
       // Show locked overlay for the section the user tried to access
       state.currentSection = si;
@@ -2776,10 +2786,30 @@
     const sidebar = document.getElementById('sidebar');
     const toggle = document.getElementById('sidebar-toggle');
     const toggleWrap = document.getElementById('sidebar-toggle-wrap');
+    const isMobile = window.innerWidth <= 1023;
     sidebar.classList.toggle('collapsed');
     const isCollapsed = sidebar.classList.contains('collapsed');
     toggle.textContent = isCollapsed ? '☰' : '✕';
-    toggleWrap.style.left = isCollapsed ? '0px' : '280px';
+    if (isMobile) {
+      toggleWrap.style.left = isCollapsed ? '0px' : '260px';
+      if (!isCollapsed) {
+        // Open: add backdrop
+        let bd = document.getElementById('sidebar-backdrop');
+        if (!bd) {
+          bd = document.createElement('div');
+          bd.id = 'sidebar-backdrop';
+          bd.className = 'sidebar-backdrop';
+          bd.addEventListener('click', function() { window.toggleSidebar(); });
+          document.body.appendChild(bd);
+        }
+      } else {
+        // Closed: remove backdrop
+        const bd = document.getElementById('sidebar-backdrop');
+        if (bd) bd.remove();
+      }
+    } else {
+      toggleWrap.style.left = isCollapsed ? '0px' : '280px';
+    }
   };
 
   // Statement block (Agree/Disagree)
@@ -2826,4 +2856,30 @@
   } else {
     init();
   }
+
+  // Handle resize: collapse/expand sidebar at breakpoint
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', function() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleWrap = document.getElementById('sidebar-toggle-wrap');
+    if (!sidebar || !toggleWrap) return;
+    const now = window.innerWidth;
+    const crossed = (lastWidth <= 1023 && now > 1023) || (lastWidth > 1023 && now <= 1023);
+    if (crossed) {
+      if (now <= 1023) {
+        // Entering mobile: collapse sidebar, remove backdrop
+        sidebar.classList.add('collapsed');
+        const bd = document.getElementById('sidebar-backdrop');
+        if (bd) bd.remove();
+        toggleWrap.style.left = '0px';
+      } else {
+        // Entering desktop: expand sidebar, remove backdrop
+        sidebar.classList.remove('collapsed');
+        const bd = document.getElementById('sidebar-backdrop');
+        if (bd) bd.remove();
+        toggleWrap.style.left = '280px';
+      }
+    }
+    lastWidth = now;
+  });
 })();
