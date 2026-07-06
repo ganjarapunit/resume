@@ -610,6 +610,12 @@
                 Added <strong>EFL Teaching Dilemmas (Adapt Framework)</strong> (adapt-efl-branching/) — a SCORM 2004 branching scenario built with Adapt Framework featuring 20 authentic EFL classroom dilemmas with dark theme toggle and custom xAPI tracking. Full WCAG 2.1 AA compliance verified: colour contrast passes in both themes, all interactive elements have accessible labels, focus indicators present, and heading hierarchy follows h1→h2→h3 pattern.
             </div>
 
+            <div class="note-box" style="margin-top:12px;background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.15);">
+                <i data-lucide="wrench"></i>
+                <strong>Fix Round 11 — 6 July 2026:</strong>
+                Fixed 3 SCORM course accessibility violations: <strong>color-contrast</strong> (<code>.section-card-meta</code> from <code>#999</code> to <code>#595959</code> for 7:1 ratio in both <code>index.html</code> and <code>scorm.html</code>), <strong>scrollable-region-focusable</strong> (added <code>tabindex="0"</code> to <code>&lt;nav id="sidebar"&gt;</code> in both HTML files), and <strong>aria-prohibited-attr</strong> (added <code>role="img"</code> to <code>.checkmark-animated</code> span in <code>scorm.js</code>). Also fixed static server in <code>wcag-audit.mjs</code> that failed to serve directory <code>index.html</code> files via <code>statSync</code> directory check.
+            </div>
+
             <div class="note-box" style="margin-top:12px;background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);">
                 <i data-lucide="external-link"></i>
                 <strong>Third-Party Content:</strong> The Learning Analytics Dashboard embeds a reporting tool from

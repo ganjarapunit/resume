@@ -7,7 +7,7 @@
 
 import puppeteer from 'puppeteer';
 import { createServer } from 'http';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, statSync } from 'fs';
 import { join, extname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -28,6 +28,7 @@ const PAGES = [
   ['/learning-analytics/index.html', 'Learning Analytics Dashboard', 'body'],
   ['/customer-service-mastery.html', 'Customer Service De-Escalation Mastery', '.h5p-wrap'],
   ['/ai-ethics-training.html', 'AI Ethics Training', '.h5p-wrap'],
+  ['/workplace-safety-scorm/', 'Workplace Safety SCORM Course', '.course-container'],
 ];
 
 // MIME types
@@ -52,8 +53,8 @@ function startServer() {
   return new Promise((resolve) => {
     const server = createServer((req, res) => {
       let filePath = join(__dirname, req.url === '/' ? 'index.html' : req.url);
-      // Handle redirect fallback for clean URLs
-      if (!existsSync(filePath)) {
+      // Handle directory paths and redirect fallback for clean URLs
+      if (!existsSync(filePath) || statSync(filePath).isDirectory()) {
         // Try with /index.html appended
         const indexPath = join(filePath, 'index.html');
         if (existsSync(indexPath)) {

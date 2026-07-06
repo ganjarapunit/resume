@@ -1680,7 +1680,7 @@
           (state.completedLessons.has(`${si}-${li}`) ? ' completed' : '') +
           (!accessible ? ' locked' : '');
 
-        const icon = state.completedLessons.has(`${si}-${li}`) ? '<span class="checkmark-animated" aria-label="Completed"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="25"/><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></span>' : (!accessible ? '<span class="lock-indicator">🔒</span>' : '');
+        const icon = state.completedLessons.has(`${si}-${li}`) ? '<span class="checkmark-animated" role="img" aria-label="Completed"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="25"/><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></span>' : (!accessible ? '<span class="lock-indicator">🔒</span>' : '');
         lessonEl.innerHTML = `<span>${icon}</span><span>${lesson.title}</span>`;
         if (accessible) lessonEl.onclick = () => navigateTo(si, li);
         lessons.appendChild(lessonEl);
