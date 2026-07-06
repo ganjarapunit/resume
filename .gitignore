@@ -1,0 +1,7 @@
+node_modules/
+.opencode/
+*.zip
+cover-overlap-after.png
+cover-overlap-before.png
+art360-comprehensive-analysis.md
+art360-comprehensive-analysis.xlsx
