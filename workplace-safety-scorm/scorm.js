@@ -573,31 +573,31 @@
                       <p>PPE Equipment Display</p>
                     </div>
                   </div>
-                  <div class="hotspot" style="position: absolute; top: 20%; left: 30%;" aria-label="Hard Hat hotspot" aria-expanded="false">
+                  <div class="hotspot" style="position: absolute; top: 40%; left: 45%;" aria-label="Hard Hat hotspot" aria-expanded="false">
                     <div class="hotspot-dot">1</div>
                     <div class="hotspot-tooltip" style="display:none;">
                       <strong>Hard Hat</strong><br>Protects against falling objects, electrical hazards. Must meet ANSI Z89.1 standards. Inspect daily for cracks.
                     </div>
                   </div>
-                  <div class="hotspot" style="position: absolute; top: 25%; left: 60%;" aria-label="Safety Glasses hotspot" aria-expanded="false">
+                  <div class="hotspot" style="position: absolute; top: 40%; left: 54%;" aria-label="Safety Glasses hotspot" aria-expanded="false">
                     <div class="hotspot-dot">2</div>
                     <div class="hotspot-tooltip" style="display:none;">
                       <strong>Safety Glasses</strong><br>Protect eyes from flying debris, chemical splashes. Must meet ANSI Z87.1. Side shields required.
                     </div>
                   </div>
-                  <div class="hotspot" style="position: absolute; top: 50%; left: 25%;" aria-label="Gloves hotspot" aria-expanded="false">
+                  <div class="hotspot" style="position: absolute; top: 40%; left: 62%;" aria-label="Gloves hotspot" aria-expanded="false">
                     <div class="hotspot-dot">3</div>
                     <div class="hotspot-tooltip" style="display:none;">
                       <strong>Gloves</strong><br>Protect hands from cuts, chemicals, burns. Match glove type to hazard. Inspect for tears before each use.
                     </div>
                   </div>
-                  <div class="hotspot" style="position: absolute; top: 75%; left: 35%;" aria-label="Safety Boots hotspot" aria-expanded="false">
+                  <div class="hotspot" style="position: absolute; top: 40%; left: 70%;" aria-label="Safety Boots hotspot" aria-expanded="false">
                     <div class="hotspot-dot">4</div>
                     <div class="hotspot-tooltip" style="display:none;">
                       <strong>Safety Boots</strong><br>Steel-toe boots protect from crushing. Slip-resistant soles prevent falls. Must meet ASTM F2413.
                     </div>
                   </div>
-                  <div class="hotspot" style="position: absolute; top: 15%; left: 75%;" aria-label="High-Vis Vest hotspot" aria-expanded="false">
+                  <div class="hotspot" style="position: absolute; top: 40%; left: 37%;" aria-label="High-Vis Vest hotspot" aria-expanded="false">
                     <div class="hotspot-dot">5</div>
                     <div class="hotspot-tooltip" style="display:none;">
                       <strong>High-Visibility Vest</strong><br>Makes workers visible to vehicle operators. Required in construction zones. ANSI/ISEA 107 Class 2 minimum.
