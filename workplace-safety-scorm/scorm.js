@@ -31,9 +31,8 @@
           duration: '2 min',
           content: () => `
             <div class="cover-section">
-              <div class="cover-icon"></div>
               <h1>Workplace Safety</h1>
-              <p class="cover-subtitle">Compliance Training 2026</p>
+              <p class="subtitle">Compliance Training 2026</p>
               <p style="margin-top: 16px; opacity: 0.9; position: relative; z-index: 1;">Comprehensive safety training covering OSHA fundamentals, hazard identification, PPE, emergency procedures, ergonomics, and incident reporting.</p>
               <div style="margin-top: 24px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; position: relative; z-index: 1;">
                 <strong>Duration:</strong> ~50 minutes<br>
