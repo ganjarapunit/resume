@@ -2636,9 +2636,10 @@
             .sidebar-toggle-wrap { left: 0; }
             .sidebar-toggle-bar { display: none; }
             .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; cursor: pointer; }
-            .content-header { padding: 12px 50px 12px 16px; }
+            .content-header { padding: 12px 16px 12px 56px; min-height: 48px; flex-wrap: wrap; gap: 8px 12px; }
             .content-body, .content { padding: 24px; }
             .back-btn { font-size: .78rem; padding: 6px 12px; }
+            .content-header > div:last-child { flex: 1 1 100%; flex-basis: 100%; justify-content: center; flex-wrap: wrap; }
             .nav-buttons { padding: 14px 24px; }
             .cover-section { padding: 48px 32px 40px; }
             .cover-section h1 { font-size: 30px; }
@@ -2666,11 +2667,16 @@
             .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; cursor: pointer; }
             .two-column { grid-template-columns: 1fr; }
             .content-body, .content { padding: 16px; }
-            /* Header bar: toggle on left, back-btn fills rest */
-            .content-header { display: flex; align-items: center; padding: 0 12px 0 56px; min-height: 48px; gap: 8px; flex-wrap: wrap; }
+            /* Header: two-row layout on mobile to avoid overlap */
+            .content-header { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px 12px 8px 56px; min-height: 48px; gap: 8px 12px; }
             .breadcrumb { display: none; }
-            .back-btn { display: flex; flex: 1; min-width: 0; justify-content: center; align-items: center; font-size: .85rem; padding: 10px 12px; border-radius: 8px; background: #fbbf24; border: 2px solid #d97706; color: #1e237e; font-weight: 700; text-decoration: none; white-space: nowrap; }
+            /* Row 1: Back to Portfolio fills the full width, clears the fixed toggle */
+            .back-btn { display: flex; flex: 1 1 100%; min-width: 0; justify-content: center; align-items: center; font-size: .85rem; padding: 10px 12px; border-radius: 8px; background: #fbbf24; border: 2px solid #d97706; color: #1e237e; font-weight: 700; text-decoration: none; white-space: nowrap; }
             .back-btn .back-label { display: inline; }
+            /* Row 2: lesson title + duration on their own line */
+            .content-header > div:last-child { flex: 1 1 100%; flex-basis: 100%; justify-content: center; flex-wrap: wrap; font-size: .9rem; }
+            .content-header > div:last-child #lesson-title { font-size: 1rem; text-align: center; }
+            .content-header > div:last-child #lesson-duration { text-align: center; }
             .nav-buttons { padding: 12px 16px; flex-wrap: wrap; gap: 8px; justify-content: center; }
             .nav-btn { padding: 10px 20px; font-size: 13px; }
 
