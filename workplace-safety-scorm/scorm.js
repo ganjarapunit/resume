@@ -1097,23 +1097,23 @@
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                 <div style="background:#1a2332;border-radius:8px;padding:16px;text-align:center;">
                   <svg width="120" height="100" viewBox="0 0 120 100" style="margin:0 auto 8px;"><rect x="20" y="10" width="80" height="50" rx="4" fill="#2d3a4e" stroke="#667eea" stroke-width="2"/><rect x="45" y="60" width="30" height="8" rx="2" fill="#4a5568"/><circle cx="60" cy="75" r="4" fill="#667eea"/><line x1="35" y1="82" x2="85" y2="82" stroke="#4a5568" stroke-width="3"/><circle cx="42" cy="35" r="3" fill="#4caf50" opacity="0.8"/><circle cx="60" cy="35" r="3" fill="#4caf50" opacity="0.8"/><circle cx="78" cy="35" r="3" fill="#4caf50" opacity="0.8"/></svg>
-                  <div style="font-weight:600;font-size:14px;">Monitor Position</div>
-                  <div style="font-size:12px;color:#8892a4;margin-top:4px;">Top of screen at eye level, arm's length away</div>
+                  <div style="font-weight:600;font-size:14px;color:#ffffff;">Monitor Position</div>
+                  <div style="font-size:12px;color:#c8d6e5;margin-top:4px;">Top of screen at eye level, arm's length away</div>
                 </div>
                 <div style="background:#1a2332;border-radius:8px;padding:16px;text-align:center;">
                   <svg width="120" height="100" viewBox="0 0 120 100" style="margin:0 auto 8px;"><rect x="30" y="15" width="60" height="55" rx="6" fill="#2d3a4e" stroke="#667eea" stroke-width="2"/><path d="M30 40 L60 55 L90 40" fill="none" stroke="#4caf50" stroke-width="2"/><rect x="45" y="70" width="30" height="6" rx="2" fill="#4a5568"/><circle cx="60" cy="82" r="4" fill="#667eea"/><line x1="35" y1="90" x2="85" y2="90" stroke="#4a5568" stroke-width="3"/></svg>
-                  <div style="font-weight:600;font-size:14px;">Chair Adjustment</div>
-                  <div style="font-size:12px;color:#8892a4;margin-top:4px;">Lumbar support, feet flat, thighs parallel</div>
+                  <div style="font-weight:600;font-size:14px;color:#ffffff;">Chair Adjustment</div>
+                  <div style="font-size:12px;color:#c8d6e5;margin-top:4px;">Lumbar support, feet flat, thighs parallel</div>
                 </div>
                 <div style="background:#1a2332;border-radius:8px;padding:16px;text-align:center;">
                   <svg width="120" height="100" viewBox="0 0 120 100" style="margin:0 auto 8px;"><rect x="15" y="50" width="90" height="12" rx="3" fill="#2d3a4e" stroke="#667eea" stroke-width="2"/><rect x="25" y="40" width="15" height="10" rx="2" fill="#4caf50"/><rect x="45" y="40" width="15" height="10" rx="2" fill="#4caf50"/><rect x="65" y="40" width="15" height="10" rx="2" fill="#4caf50"/><rect x="85" y="40" width="15" height="10" rx="2" fill="#4caf50"/><ellipse cx="105" cy="56" rx="8" ry="5" fill="#4a5568"/></svg>
-                  <div style="font-weight:600;font-size:14px;">Keyboard & Mouse</div>
-                  <div style="font-size:12px;color:#8892a4;margin-top:4px;">Elbows at 90°, wrists neutral</div>
+                  <div style="font-weight:600;font-size:14px;color:#ffffff;">Keyboard & Mouse</div>
+                  <div style="font-size:12px;color:#c8d6e5;margin-top:4px;">Elbows at 90°, wrists neutral</div>
                 </div>
                 <div style="background:#1a2332;border-radius:8px;padding:16px;text-align:center;">
                   <svg width="120" height="100" viewBox="0 0 120 100" style="margin:0 auto 8px;"><circle cx="60" cy="50" r="35" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="4 4"/><circle cx="60" cy="50" r="20" fill="#2d3a4e" stroke="#4caf50" stroke-width="2"/><line x1="60" y1="15" x2="60" y2="30" stroke="#f44336" stroke-width="2"/><line x1="60" y1="70" x2="60" y2="85" stroke="#4caf50" stroke-width="2"/><line x1="25" y1="50" x2="40" y2="50" stroke="#4caf50" stroke-width="2"/><line x1="80" y1="50" x2="95" y2="50" stroke="#4caf50" stroke-width="2"/></svg>
-                  <div style="font-weight:600;font-size:14px;">Posture Zones</div>
-                  <div style="font-size:12px;color:#8892a4;margin-top:4px;">Green = good, Red = avoid slouching</div>
+                  <div style="font-weight:600;font-size:14px;color:#ffffff;">Posture Zones</div>
+                  <div style="font-size:12px;color:#c8d6e5;margin-top:4px;">Green = good, Red = avoid slouching</div>
                 </div>
                  </div>
               </div>
