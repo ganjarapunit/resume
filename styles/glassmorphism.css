@@ -1,0 +1,748 @@
+/* ============================================
+   GLASSMORPHISM THEME — FRAMER OVERRIDE
+   Targets Framer's data-framer-name selectors
+   ============================================ */
+
+/* ── Design Tokens ── */
+:root {
+  --g-bg-dark: #0a0f1a;
+  --g-bg-dark-card: rgba(15, 23, 42, 0.6);
+  --g-bg-dark-card-hover: rgba(30, 41, 59, 0.7);
+  --g-bg-light: #f8f5ec;
+  --g-bg-light-card: rgba(255, 255, 255, 0.55);
+  --g-bg-light-card-hover: rgba(255, 255, 255, 0.7);
+  --g-accent: #3b82f6;
+  --g-accent-2: #8b5cf6;
+  --g-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --g-text-dark: #0f172a;
+  --g-text-light: #e2e8f0;
+  --g-text-muted-dark: #64748b;
+  --g-text-muted-light: #94a3b8;
+  --g-border-dark: rgba(148, 163, 184, 0.12);
+  --g-border-light: rgba(15, 23, 42, 0.08);
+  --g-glass-blur: 20px;
+  --g-radius-card: 20px;
+  --g-radius-pill: 999px;
+  --g-shadow-card: 0 8px 32px rgba(0,0,0,0.12);
+  --g-shadow-card-hover: 0 16px 48px rgba(0,0,0,0.2);
+  --g-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Font Override ── */
+[data-framer-name] {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+p, span, a, li, td, th, label, input, textarea, button, div[class*="text"] {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* ============================================
+   DARK MODE (default / body without data-framer-theme="light")
+   ============================================ */
+
+/* ── Main Desktop Container ── */
+[data-framer-name="Desktop"],
+[data-framer-name="Tablet"],
+[data-framer-name="Phone"] {
+  background: var(--g-bg-dark) !important;
+  color: var(--g-text-light) !important;
+}
+
+/* ── Opening / Hero Section ── */
+[data-framer-name="Opening"] {
+  background: transparent !important;
+}
+
+[data-framer-name="Name Mark"],
+[data-framer-name="Name Mark *"] {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Section Links"] a,
+[data-framer-name="Section Links"] span,
+[data-framer-name="Work Link"],
+[data-framer-name="Practice Link"],
+[data-framer-name="Contact Link"] {
+  color: var(--g-text-muted-light) !important;
+  transition: var(--g-transition);
+}
+
+[data-framer-name="Work Link"]:hover,
+[data-framer-name="Practice Link"]:hover,
+[data-framer-name="Contact Link"]:hover {
+  color: var(--g-accent) !important;
+}
+
+[data-framer-name="Availability Note"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+  border-radius: var(--g-radius-pill) !important;
+  backdrop-filter: blur(10px);
+}
+
+[data-framer-name="Headline"] {
+  color: var(--g-text-light) !important;
+  font-weight: 700 !important;
+}
+
+[data-framer-name="Introduction Paragraph"],
+[data-framer-name="Introduction Copy"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+/* ── CTA Buttons ── */
+[data-framer-name="View Work Button"],
+[data-framer-name="Contact Button"] {
+  border-radius: 12px !important;
+  transition: var(--g-transition) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+}
+
+[data-framer-name="View Work Button"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+[data-framer-name="View Work Button"]:hover {
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+[data-framer-name="Contact Button"] {
+  background: var(--g-bg-dark-card) !important;
+  color: var(--g-text-light) !important;
+  border: 1px solid var(--g-border-dark) !important;
+}
+
+[data-framer-name="Contact Button"]:hover {
+  background: var(--g-bg-dark-card-hover) !important;
+  border-color: var(--g-accent) !important;
+}
+
+/* ── Editorial Note ── */
+[data-framer-name="Editorial Note"] {
+  background: var(--g-bg-dark-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: var(--g-radius-card) !important;
+  color: var(--g-text-muted-light) !important;
+}
+
+/* ── Section Headings ── */
+[data-framer-name="Work Title Stack"],
+[data-framer-name="Work Side Note"],
+[data-framer-name="Practice Title"],
+[data-framer-name="Practice Kicker"],
+[data-framer-name="Working Style Title"],
+[data-framer-name="Contact Title"],
+[data-framer-name="Contact Kicker"] {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Work Side Note"],
+[data-framer-name="Practice Kicker"],
+[data-framer-name="Contact Kicker"] {
+  color: var(--g-accent) !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 600 !important;
+}
+
+/* ── Work Cards (glassmorphism) ── */
+[data-framer-name="Work Card — Onboarding"],
+[data-framer-name="Work Card — Facilitation"],
+[data-framer-name="Work Card — Measurement"],
+[data-framer-name="Work Card"] {
+  background: var(--g-bg-dark-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: var(--g-radius-card) !important;
+  transition: var(--g-transition) !important;
+  box-shadow: var(--g-shadow-card) !important;
+}
+
+[data-framer-name="Work Card — Onboarding"]:hover,
+[data-framer-name="Work Card — Facilitation"]:hover,
+[data-framer-name="Work Card — Measurement"]:hover,
+[data-framer-name="Work Card"]:hover {
+  box-shadow: var(--g-shadow-card-hover) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  transform: translateY(-4px) !important;
+}
+
+[data-framer-name="Work Card — Onboarding"] h3,
+[data-framer-name="Work Card — Onboarding"] h2,
+[data-framer-name="Work Card — Facilitation"] h3,
+[data-framer-name="Work Card — Facilitation"] h2,
+[data-framer-name="Work Card — Measurement"] h3,
+[data-framer-name="Work Card — Measurement"] h2,
+[data-framer-name="Work Card"] h3,
+[data-framer-name="Work Card"] h2 {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Work Card — Onboarding"] p,
+[data-framer-name="Work Card — Facilitation"] p,
+[data-framer-name="Work Card — Measurement"] p,
+[data-framer-name="Work Card"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+/* ── Project Index ── */
+[data-framer-name="Project Index"],
+[data-framer-name="Project Index Header"] {
+  background: var(--g-bg-dark-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: var(--g-radius-card) !important;
+}
+
+[data-framer-name="Project Index Header"],
+[data-framer-name="Project Index Header"] h2,
+[data-framer-name="Project Index Header"] span,
+[data-framer-name="Title"],
+[data-framer-name="Count"] {
+  color: var(--g-text-light) !important;
+}
+
+/* ── Project List Items ── */
+[data-framer-name="Project List Item"],
+[data-framer-name="Projects CMS List"] > div,
+[data-framer-name="Projects CMS List"] > a,
+[data-framer-name="Projects CMS List"] li {
+  background: var(--g-bg-dark-card) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: 14px !important;
+  transition: var(--g-transition) !important;
+  margin-bottom: 4px !important;
+}
+
+[data-framer-name="Project List Item"]:hover,
+[data-framer-name="Projects CMS List"] > div:hover,
+[data-framer-name="Projects CMS List"] > a:hover,
+[data-framer-name="Projects CMS List"] li:hover {
+  background: var(--g-bg-dark-card-hover) !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Project list item text */
+[data-framer-name="Projects CMS List"] h3,
+[data-framer-name="Projects CMS List"] h2,
+[data-framer-name="Projects CMS List"] p,
+[data-framer-name="Projects CMS List"] span,
+[data-framer-name="Projects CMS List"] a {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Projects CMS List"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+/* ── Practice Areas ── */
+[data-framer-name="Practice Areas"] {
+  background: var(--g-bg-dark-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: 34px !important;
+}
+
+[data-framer-name="Practice Card — Strategy"],
+[data-framer-name="Practice Card — Curriculum"],
+[data-framer-name="Practice Card — Facilitation"],
+[data-framer-name="Practice Card — Evaluation"],
+[data-framer-name="Practice Card"] {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: 18px !important;
+  transition: var(--g-transition) !important;
+}
+
+[data-framer-name="Practice Card — Strategy"]:hover,
+[data-framer-name="Practice Card — Curriculum"]:hover,
+[data-framer-name="Practice Card — Facilitation"]:hover,
+[data-framer-name="Practice Card — Evaluation"]:hover,
+[data-framer-name="Practice Card"]:hover {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-framer-name="Practice Card — Strategy"] h3,
+[data-framer-name="Practice Card — Strategy"] h2,
+[data-framer-name="Practice Card — Curriculum"] h3,
+[data-framer-name="Practice Card — Curriculum"] h2,
+[data-framer-name="Practice Card — Facilitation"] h3,
+[data-framer-name="Practice Card — Facilitation"] h2,
+[data-framer-name="Practice Card — Evaluation"] h3,
+[data-framer-name="Practice Card — Evaluation"] h2,
+[data-framer-name="Practice Card"] h3,
+[data-framer-name="Practice Card"] h2 {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Practice Card — Strategy"] p,
+[data-framer-name="Practice Card — Curriculum"] p,
+[data-framer-name="Practice Card — Facilitation"] p,
+[data-framer-name="Practice Card — Evaluation"] p,
+[data-framer-name="Practice Card"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+/* Evaluation card accent */
+[data-framer-name="Practice Card — Evaluation"] {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* ── Working Style / Principles ── */
+[data-framer-name="Working Style"] {
+  background: transparent !important;
+}
+
+[data-framer-name="Principle One"],
+[data-framer-name="Principle Two"],
+[data-framer-name="Principle Three"] {
+  background: var(--g-bg-dark-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-dark) !important;
+  border-radius: var(--g-radius-card) !important;
+  transition: var(--g-transition) !important;
+}
+
+[data-framer-name="Principle One"]:hover,
+[data-framer-name="Principle Two"]:hover,
+[data-framer-name="Principle Three"]:hover {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+[data-framer-name="Principle One"] h3,
+[data-framer-name="Principle One"] h2,
+[data-framer-name="Principle Two"] h3,
+[data-framer-name="Principle Two"] h2,
+[data-framer-name="Principle Three"] h3,
+[data-framer-name="Principle Three"] h2 {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Principle One"] p,
+[data-framer-name="Principle Two"] p,
+[data-framer-name="Principle Three"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+/* ── Contact Section ── */
+[data-framer-name="Contact"] {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border-top: 1px solid var(--g-border-dark) !important;
+  border-radius: 34px 34px 0 0 !important;
+}
+
+[data-framer-name="Contact"] h2,
+[data-framer-name="Contact"] h1 {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name="Contact"] p {
+  color: var(--g-text-muted-light) !important;
+}
+
+[data-framer-name="Contact Links"] a {
+  color: var(--g-text-muted-light) !important;
+  transition: var(--g-transition);
+}
+
+[data-framer-name="Contact Links"] a:hover {
+  color: var(--g-accent) !important;
+}
+
+[data-framer-name="Email Button"] a,
+[data-framer-name="Email Button"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  border: none !important;
+  transition: var(--g-transition) !important;
+}
+
+[data-framer-name="Email Button"]:hover {
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+/* ── Footer ── */
+[data-framer-name="Footer Bottom"] {
+  border-top: 1px solid var(--g-border-dark) !important;
+}
+
+[data-framer-name="Footer Bottom"] p,
+[data-framer-name="Copyright"] {
+  color: var(--g-text-muted-light) !important;
+}
+
+[data-framer-name="Footer Links"] a {
+  color: var(--g-text-muted-light) !important;
+  transition: var(--g-transition);
+}
+
+[data-framer-name="Footer Links"] a:hover {
+  color: var(--g-accent) !important;
+}
+
+/* ── Global Text Colors for Dark Mode ── */
+[data-framer-name] h1,
+[data-framer-name] h2,
+[data-framer-name] h3 {
+  color: var(--g-text-light) !important;
+}
+
+[data-framer-name] p,
+[data-framer-name] span {
+  color: var(--g-text-muted-light) !important;
+}
+
+[data-framer-name] a {
+  color: var(--g-accent) !important;
+  text-decoration: none !important;
+  transition: var(--g-transition);
+}
+
+[data-framer-name] a:hover {
+  color: var(--g-accent-2) !important;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--g-bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* ============================================
+   LIGHT MODE (body[data-framer-theme="light"])
+   ============================================ */
+
+body[data-framer-theme="light"] [data-framer-name="Desktop"],
+body[data-framer-theme="light"] [data-framer-name="Tablet"],
+body[data-framer-theme="light"] [data-framer-name="Phone"] {
+  background: var(--g-bg-light) !important;
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Name Mark"],
+body[data-framer-theme="light"] [data-framer-name="Name Mark *"] {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Section Links"] a,
+body[data-framer-theme="light"] [data-framer-name="Work Link"],
+body[data-framer-theme="light"] [data-framer-name="Practice Link"],
+body[data-framer-theme="light"] [data-framer-name="Contact Link"] {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Link"]:hover,
+body[data-framer-theme="light"] [data-framer-name="Practice Link"]:hover,
+body[data-framer-theme="light"] [data-framer-name="Contact Link"]:hover {
+  color: var(--g-accent) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Availability Note"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Headline"] {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Introduction Paragraph"],
+body[data-framer-theme="light"] [data-framer-name="Introduction Copy"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="View Work Button"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Contact Button"] {
+  background: var(--g-bg-light-card) !important;
+  color: var(--g-text-dark) !important;
+  border: 1px solid var(--g-border-light) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Editorial Note"] {
+  background: var(--g-bg-light-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-light) !important;
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Title Stack"],
+body[data-framer-theme="light"] [data-framer-name="Work Side Note"],
+body[data-framer-theme="light"] [data-framer-name="Practice Title"],
+body[data-framer-theme="light"] [data-framer-name="Practice Kicker"],
+body[data-framer-theme="light"] [data-framer-name="Working Style Title"],
+body[data-framer-theme="light"] [data-framer-name="Contact Title"],
+body[data-framer-theme="light"] [data-framer-name="Contact Kicker"] {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Side Note"],
+body[data-framer-theme="light"] [data-framer-name="Practice Kicker"],
+body[data-framer-theme="light"] [data-framer-name="Contact Kicker"] {
+  color: var(--g-accent) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Card — Onboarding"],
+body[data-framer-theme="light"] [data-framer-name="Work Card — Facilitation"],
+body[data-framer-theme="light"] [data-framer-name="Work Card — Measurement"],
+body[data-framer-theme="light"] [data-framer-name="Work Card"] {
+  background: var(--g-bg-light-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-light) !important;
+  box-shadow: var(--g-shadow-card) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Card — Onboarding"]:hover,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Facilitation"]:hover,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Measurement"]:hover,
+body[data-framer-theme="light"] [data-framer-name="Work Card"]:hover {
+  box-shadow: var(--g-shadow-card-hover) !important;
+  transform: translateY(-4px) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Card — Onboarding"] h3,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Onboarding"] h2,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Facilitation"] h3,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Facilitation"] h2,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Measurement"] h3,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Measurement"] h2,
+body[data-framer-theme="light"] [data-framer-name="Work Card"] h3,
+body[data-framer-theme="light"] [data-framer-name="Work Card"] h2 {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Work Card — Onboarding"] p,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Facilitation"] p,
+body[data-framer-theme="light"] [data-framer-name="Work Card — Measurement"] p,
+body[data-framer-theme="light"] [data-framer-name="Work Card"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Project Index"],
+body[data-framer-theme="light"] [data-framer-name="Project Index Header"] {
+  background: var(--g-bg-light-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Project Index Header"],
+body[data-framer-theme="light"] [data-framer-name="Project Index Header"] h2,
+body[data-framer-theme="light"] [data-framer-name="Project Index Header"] span,
+body[data-framer-theme="light"] [data-framer-name="Title"],
+body[data-framer-theme="light"] [data-framer-name="Count"] {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Project List Item"],
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] > div,
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] > a,
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] li {
+  background: var(--g-bg-light-card) !important;
+  border: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] h3,
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] h2,
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] span,
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] a {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Projects CMS List"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Practice Areas"] {
+  background: var(--g-bg-light-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Strategy"],
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Curriculum"],
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Facilitation"],
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Evaluation"],
+body[data-framer-theme="light"] [data-framer-name="Practice Card"] {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Evaluation"] {
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Strategy"] h3,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Strategy"] h2,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Curriculum"] h3,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Curriculum"] h2,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Facilitation"] h3,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Facilitation"] h2,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Evaluation"] h3,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Evaluation"] h2,
+body[data-framer-theme="light"] [data-framer-name="Practice Card"] h3,
+body[data-framer-theme="light"] [data-framer-name="Practice Card"] h2 {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Strategy"] p,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Curriculum"] p,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Facilitation"] p,
+body[data-framer-theme="light"] [data-framer-name="Practice Card — Evaluation"] p,
+body[data-framer-theme="light"] [data-framer-name="Practice Card"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Principle One"],
+body[data-framer-theme="light"] [data-framer-name="Principle Two"],
+body[data-framer-theme="light"] [data-framer-name="Principle Three"] {
+  background: var(--g-bg-light-card) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Principle One"] h3,
+body[data-framer-theme="light"] [data-framer-name="Principle One"] h2,
+body[data-framer-theme="light"] [data-framer-name="Principle Two"] h3,
+body[data-framer-theme="light"] [data-framer-name="Principle Two"] h2,
+body[data-framer-theme="light"] [data-framer-name="Principle Three"] h3,
+body[data-framer-theme="light"] [data-framer-name="Principle Three"] h2 {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Principle One"] p,
+body[data-framer-theme="light"] [data-framer-name="Principle Two"] p,
+body[data-framer-theme="light"] [data-framer-name="Principle Three"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Contact"] {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(var(--g-glass-blur)) !important;
+  border-top: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Contact"] h2,
+body[data-framer-theme="light"] [data-framer-name="Contact"] h1 {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Contact"] p {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Contact Links"] a {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Email Button"] a,
+body[data-framer-theme="light"] [data-framer-name="Email Button"] {
+  background: var(--g-gradient) !important;
+  color: #fff !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Footer Bottom"] {
+  border-top: 1px solid var(--g-border-light) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Footer Bottom"] p,
+body[data-framer-theme="light"] [data-framer-name="Copyright"] {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name="Footer Links"] a {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name] h1,
+body[data-framer-theme="light"] [data-framer-name] h2,
+body[data-framer-theme="light"] [data-framer-name] h3 {
+  color: var(--g-text-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name] p,
+body[data-framer-theme="light"] [data-framer-name] span {
+  color: var(--g-text-muted-dark) !important;
+}
+
+body[data-framer-theme="light"] [data-framer-name] a {
+  color: var(--g-accent) !important;
+}
+
+/* Light mode scrollbar */
+body[data-framer-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--g-bg-light);
+}
+body[data-framer-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+[data-framer-name="View Work Button"]:hover,
+body[data-framer-theme="light"] [data-framer-name="View Work Button"]:hover {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Gradient text shimmer on availability note */
+[data-framer-name="Availability Note"] {
+  background-size: 200% auto !important;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  [data-framer-name="Work Cards"],
+  [data-framer-name="Practice Cards"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  [data-framer-name="Headline"] {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-framer-name="Headline"] {
+    font-size: 1.5rem !important;
+  }
+}
