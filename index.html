@@ -465,6 +465,27 @@ body {
   background: linear-gradient(135deg, #1e40af 0%, #0d9488 100%);
 }
 
+/* ── VIEW COURSE BUTTON ── */
+.btn-view-course {
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-view-course:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1023px) {
   .top-nav { padding: 0 20px; }
@@ -550,7 +571,6 @@ body {
   </a>
   <div class="nav-links">
     <a href="#" class="active">Portfolio</a>
-    <a href="adapt-efl-branching/" target="_blank" rel="noopener">Compass</a>
     <a href="#about-scroll">About</a>
     <a href="mailto:ganjarapunit@gmail.com">Contact</a>
   </div>
@@ -567,7 +587,6 @@ body {
 <!-- Mobile drawer -->
 <div class="mobile-drawer" id="mobileDrawer">
   <a href="#" class="active" onclick="closeMobileMenu()">Portfolio</a>
-  <a href="adapt-efl-branching/" target="_blank" rel="noopener" onclick="closeMobileMenu()">Compass</a>
   <a href="#about-scroll" onclick="closeMobileMenu()">About</a>
   <a href="mailto:ganjarapunit@gmail.com" onclick="closeMobileMenu()">Contact</a>
   <a href="https://linkedin.com/in/ganjarapunit" target="_blank" rel="noopener" onclick="closeMobileMenu()">LinkedIn</a>
@@ -580,8 +599,8 @@ body {
 <section class="hero">
   <div class="hero-content">
     <div class="hero-label">Learning Experience Designer</div>
-    <h1 class="hero-title">Crafting immersive <em>learning</em> experiences that bridge pedagogy &amp; technology</h1>
-    <p class="hero-desc">Based in <strong>Ho Chi Minh City</strong>, I design evidence-based digital learning — from SCORM 2004 courses and cmi5 packages to H5P branching scenarios and xAPI analytics, all with WCAG accessibility at the core.</p>
+    <h1 class="hero-title">Designing <em>learning</em> experiences that bridge pedagogy &amp; technology</h1>
+    <p class="hero-desc">I'm <strong>Punit Ganjara</strong> — an Instructional &amp; Learning Experience Designer based in <strong>Ho Chi Minh City</strong>. I craft evidence-based eLearning courses, curriculum, and interactive learning objects spanning SCORM 2004, xAPI, cmi5, H5P, and Adapt Framework — always with WCAG accessibility at the core.</p>
     <div class="hero-actions">
       <a href="ielts-masterclass/" class="btn btn-primary" target="_blank" rel="noopener">
         <i data-lucide="graduation-cap"></i> Featured: IELTS Masterclass
@@ -666,11 +685,12 @@ body {
 <!-- Filter Tabs -->
 <div class="filter-bar">
   <button class="filter-tab active" onclick="filterCards(this, 'all')">All <span class="count" id="countAll"></span></button>
-  <button class="filter-tab" onclick="filterCards(this, 'h5p')">H5P Interactive <span class="count" id="countH5p"></span></button>
-  <button class="filter-tab" onclick="filterCards(this, 'scorm')">SCORM 2004 <span class="count" id="countScorm"></span></button>
-  <button class="filter-tab" onclick="filterCards(this, 'articulate')">Articulate Style <span class="count" id="countArticulate"></span></button>
-  <button class="filter-tab" onclick="filterCards(this, 'framework')">Framework <span class="count" id="countFramework"></span></button>
-  <button class="filter-tab" onclick="filterCards(this, 'html')">HTML <span class="count" id="countHtml"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'h5p')">H5P Courses <span class="count" id="countH5p"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'scorm')">SCORM Courses <span class="count" id="countScorm"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'articulate')">Articulate Style Courses <span class="count" id="countArticulate"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'framework')">Adapt Framework Courses <span class="count" id="countFramework"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'xapi')">xAPI Integrated Courses <span class="count" id="countXapi"></span></button>
+  <button class="filter-tab" onclick="filterCards(this, 'html')">HTML Courses <span class="count" id="countHtml"></span></button>
   <button class="filter-tab" onclick="filterCards(this, 'report')">Reports <span class="count" id="countReport"></span></button>
 </div>
 
@@ -685,7 +705,10 @@ body {
       <div class="card-icon"><i data-lucide="message-circle"></i></div>
       <div class="card-title">Customer Service De-Escalation</div>
       <div class="card-desc">H5P Branching Scenario teaching de-escalation techniques for customer service professionals across realistic workplace scenarios.</div>
-      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span><span class="tag-new">New</span></div>
+      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -695,37 +718,49 @@ body {
       <div class="card-icon"><i data-lucide="brain"></i></div>
       <div class="card-title">AI Ethics Training</div>
       <div class="card-desc">Branching scenario exploring consequences of AI decisions in the workplace — from bias detection to ethical frameworks.</div>
-      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span><span class="tag-new">New</span></div>
+      <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
-  <a href="data-privacy-compliance/" class="card" data-category="h5p" target="_blank" rel="noopener">
+  <a href="data-privacy-compliance/" class="card" data-category="xapi" target="_blank" rel="noopener">
     <div class="card-top" style="background:var(--accent);"></div>
     <div class="card-body">
       <div class="card-icon"><i data-lucide="shield"></i></div>
       <div class="card-title">Data Privacy Compliance</div>
       <div class="card-desc">xAPI-compliant branching scenario covering GDPR, CCPA, and data protection best practices for enterprise compliance training.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>Branching</span><span class="tag-xapi">xAPI</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
-  <a href="ai-literacy/" class="card" data-category="h5p" target="_blank" rel="noopener">
+  <a href="ai-literacy/" class="card" data-category="xapi" target="_blank" rel="noopener">
     <div class="card-top" style="background:var(--accent);"></div>
     <div class="card-body">
       <div class="card-icon"><i data-lucide="bot"></i></div>
       <div class="card-title">AI Literacy for the Workplace</div>
       <div class="card-desc">xAPI-compliant microlearning covering AI fundamentals, prompt engineering, and ethical use of generative AI tools.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>Microlearning</span><span class="tag-xapi">xAPI</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
-  <a href="giving-constructive-feedback/" class="card" data-category="h5p" target="_blank" rel="noopener">
+  <a href="giving-constructive-feedback/" class="card" data-category="xapi" target="_blank" rel="noopener">
     <div class="card-top" style="background:var(--accent);"></div>
     <div class="card-body">
       <div class="card-icon"><i data-lucide="message-square"></i></div>
       <div class="card-title">Giving Constructive Feedback</div>
       <div class="card-desc">cmi5 microlearning course with xAPI statements — launcher, practice, and reflection for effective feedback delivery.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>cmi5</span><span class="tag-xapi">xAPI</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -736,6 +771,9 @@ body {
       <div class="card-title">Interactive Timeline Resume</div>
       <div class="card-desc">H5P career timeline from 2010–present with glassmorphism design, Lucide icons, and responsive layout.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>Timeline</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -746,6 +784,9 @@ body {
       <div class="card-title">Interactive Quiz</div>
       <div class="card-desc">Professional communication quiz built with modern front-end tooling and interactive feedback system.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>Quiz</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -756,6 +797,9 @@ body {
       <div class="card-title">Children Psychology</div>
       <div class="card-desc">Interactive H5P video exploring children's psychology and playground design history with embedded quizzes and reflection prompts.</div>
       <div class="card-tags"><span class="tag-h5p">H5P</span><span>Interactive Video</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -768,6 +812,9 @@ body {
       <div class="card-title">Error Correction Dilemmas</div>
       <div class="card-desc">Standalone HTML branching scenario for new EFL teachers — 27 authentic teaching dilemmas with granular xAPI tracking included. WCAG 2.1 AA accessible, gradient-themed UI, and full learner profile generation.</div>
       <div class="card-tags"><span class="tag-xapi">xAPI</span><span>Branching</span><span>EFL</span><span>WCAG AA</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -797,6 +844,9 @@ body {
       <div class="card-title">SlateBuilder SCORM Course</div>
       <div class="card-desc">External SCORM course authored on the SlateBuilder platform, demonstrating cloud-based eLearning authoring and publishing.</div>
       <div class="card-tags"><span class="tag-scorm">SCORM</span><span class="tag-external">External</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -827,6 +877,9 @@ body {
       <div class="card-title">WCAG Accessibility Report</div>
       <div class="card-desc">Full accessibility audit covering contrast ratios (AAA target), ARIA labels, keyboard navigation, screen reader support, and responsive design testing.</div>
       <div class="card-tags"><span class="tag-report">WCAG 2.1</span><span>Audit</span><span>AAA</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Report <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -837,6 +890,9 @@ body {
       <div class="card-title">Learning Analytics Dashboard</div>
       <div class="card-desc">Embedded Veracity LRS dashboard with real-time xAPI statement visualizations — track completions, scores, and learner progress.</div>
       <div class="card-tags"><span class="tag-report">LRS</span><span>Analytics</span><span>xAPI</span></div>
+      <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <span class="btn btn-view-course">View Dashboard <span style="font-size:1.1em;">→</span></span>
+      </div>
     </div>
   </a>
 
@@ -855,9 +911,7 @@ body {
         <span>cmi5</span>
       </div>
       <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-        <span class="btn" style="background:#0f766e;color:#ffffff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          View Course <span style="font-size:1.1em;">→</span>
-        </span>
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
       </div>
     </div>
   </a>
@@ -876,9 +930,7 @@ body {
         <span>WCAG AA</span>
       </div>
       <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-        <span class="btn" style="background:#0f766e;color:#ffffff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          View Course <span style="font-size:1.1em;">→</span>
-        </span>
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
       </div>
     </div>
   </a>
@@ -897,9 +949,7 @@ body {
         <span>EFL</span>
       </div>
       <div class="card-footer" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-        <span class="btn" style="background:#0f766e;color:#ffffff;font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          View Course <span style="font-size:1.1em;">→</span>
-        </span>
+        <span class="btn btn-view-course">View Course <span style="font-size:1.1em;">→</span></span>
       </div>
     </div>
   </a>
@@ -993,7 +1043,7 @@ window.addEventListener('resize', () => {
 /* ── Auto-count cards per category ── */
 (function countCards() {
   const cards = document.querySelectorAll('.card');
-  const counts = { all: cards.length, h5p: 0, scorm: 0, report: 0, framework: 0, html: 0, articulate: 0 };
+  const counts = { all: cards.length, h5p: 0, scorm: 0, report: 0, framework: 0, html: 0, articulate: 0, xapi: 0 };
   cards.forEach(c => {
     const cat = c.dataset.category;
     if (cat && counts.hasOwnProperty(cat)) counts[cat]++;
@@ -1005,6 +1055,7 @@ window.addEventListener('resize', () => {
   document.getElementById('countFramework').textContent = `(${counts.framework})`;
   document.getElementById('countHtml').textContent = `(${counts.html})`;
   document.getElementById('countArticulate').textContent = `(${counts.articulate})`;
+  document.getElementById('countXapi').textContent = `(${counts.xapi})`;
 })();
 </script>
 </body>
