@@ -1250,14 +1250,19 @@ body {
   }
   
   .courses-dropdown-menu {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
+    position: static;
     width: 100%;
     border-radius: 0;
-    max-height: calc(100vh - 72px);
-    overflow-y: auto;
+    max-height: none;
+    overflow-y: visible;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    margin-top: 0;
+    opacity: 1;
+    transform: none;
   }
 }
 
