@@ -226,11 +226,21 @@ body {
 }
 
 .hero-photo {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards 0.5s;
+}
+
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.1) 100%);
+  z-index: 1;
 }
 
 .hero-photo img {
@@ -242,14 +252,18 @@ body {
 }
 
 .hero-portfolio-heading {
-  grid-column: 1 / -1;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
   font-family: 'Outfit', sans-serif;
   font-size: 2.8rem;
   font-weight: 800;
-  color: var(--primary);
+  color: #fff;
   text-align: center;
-  margin-bottom: 24px;
-  letter-spacing: -1px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  white-space: nowrap;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards 0.1s;
 }
@@ -1092,7 +1106,7 @@ body {
   }
   
   .hero-portfolio-heading {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .hero-title {
@@ -1275,9 +1289,9 @@ body {
 
 <!-- HERO -->
 <section class="hero">
-  <h2 class="hero-portfolio-heading">Punit's Portfolio</h2>
   <div class="hero-photo">
     <img src="images/punit-portrait.jpg" alt="Punit Ganjara — Learning Experience Designer" loading="eager">
+    <h2 class="hero-portfolio-heading">Punit's Portfolio</h2>
   </div>
   <div class="hero-content">
     <span class="hero-label">Learning Experience Designer</span>
