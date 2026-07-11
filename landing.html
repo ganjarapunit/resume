@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punit Ganjara | Learning Experience Designer</title>
+<meta name="description" content="Portfolio of Punit Ganjara — Learning Experience Designer crafting immersive, evidence-based digital learning experiences.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://ganjarapunit.github.io/resume/">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ── THEME TOKENS ── */
+:root {
+  --primary: #1e3a5f;
+  --primary-hover: #142b47;
+  --accent: #f59e0b;
+  --text: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --border: #e2e8f0;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 24px rgba(0,0,0,.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1);
+}
+
+[data-theme="dark"] {
+  --primary: #60a5fa;
+  --primary-hover: #93c5fd;
+  --accent: #fbbf24;
+  --text: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --border: #334155;
+  --card-bg: #1e293b;
+  --shadow: 0 4px 24px rgba(0,0,0,.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.8);
+}
+
+[data-theme="dark"] .nav {
+  background: rgba(15,23,42,0.85);
+}
+
+.nav-brand {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+/* ── COURSES DROPDOWN ── */
+.courses-dropdown {
+  position: relative;
+}
+
+.courses-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s;
+}
+
+.courses-dropdown-trigger:hover {
+  color: var(--text);
+  border-color: var(--primary);
+  background: var(--bg-alt);
+}
+
+.courses-dropdown-trigger svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+.courses-dropdown.open .courses-dropdown-trigger svg {
+  transform: rotate(180deg);
+}
+
+.courses-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  width: 320px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.25s ease;
+  z-index: 200;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.courses-dropdown.open .courses-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-category {
+  padding: 16px 20px 8px;
+}
+
+.dropdown-category-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+.dropdown-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.dropdown-item-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 20px;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  padding: 160px 40px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.5s;
+}
+
+.hero-photo img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  object-fit: cover;
+}
+
+.hero-photo-label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.hero-photo {
+  position: relative;
+}
+
+.hero-photo-mobile {
+  display: none;
+}
+
+.hero-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 32px;
+  max-width: 900px;
+}
+
+.hero-title .line {
+  display: block;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero-title .line:nth-child(1) { animation-delay: 0.3s; }
+.hero-title .line:nth-child(2) { animation-delay: 0.45s; }
+.hero-title .line:nth-child(3) { animation-delay: 0.6s; }
+
+.hero-title .highlight {
+  color: var(--accent);
+  position: relative;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.75s;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.9s;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.2);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.btn-outline:hover {
+  border-color: var(--text);
+  transform: translateY(-3px);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── MARQUEE ── */
+.marquee-section {
+  padding: 60px 0;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.marquee-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.marquee-track {
+  display: flex;
+  animation: marquee 25s linear infinite;
+  width: max-content;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+
+.marquee-item .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── SERVICES ── */
+.services {
+  padding: 120px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 64px;
+  max-width: 600px;
+  line-height: 1.15;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.service-card {
+  background: var(--card-bg);
+  padding: 48px 40px;
+  transition: all 0.4s;
+  cursor: default;
+}
+
+.service-card:hover {
+  background: var(--bg-alt);
+}
+
+.service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--primary);
+  transition: all 0.3s;
+}
+
+.service-card:hover .service-icon {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.service-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.service-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.service-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── FEATURED PROJECTS ── */
+.projects {
+  padding: 120px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+}
+
+.projects-header .section-title {
+  margin-bottom: 0;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.project-visual {
+  height: 240px;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--bg-alt);
+  transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-visual img {
+  transform: scale(1.05);
+}
+
+.project-visual .gradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  transition: opacity 0.4s;
+}
+
+.project-card:hover .project-visual .gradient {
+  opacity: 0.25;
+}
+
+.project-visual svg {
+  width: 64px;
+  height: 64px;
+  color: var(--primary);
+  opacity: 0.4;
+  position: relative;
+  z-index: 1;
+}
+
+.project-body {
+  padding: 32px;
+}
+
+.project-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.project-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.project-arrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  transition: gap 0.3s;
+}
+
+.project-card:hover .project-arrow {
+  gap: 16px;
+}
+
+.project-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── ANIMATED SVG ILLUSTRATIONS ── */
+.illustration {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+/* H5P - Interactive Bubbles */
+.illust-h5p .bubble {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  animation: bubbleFloat 3s ease-in-out infinite;
+}
+.illust-h5p .bubble:nth-child(1) { width: 40px; height: 40px; top: 10px; left: 15px; animation-delay: 0s; }
+.illust-h5p .bubble:nth-child(2) { width: 28px; height: 28px; top: 55px; left: 60px; animation-delay: 0.5s; }
+.illust-h5p .bubble:nth-child(3) { width: 20px; height: 20px; top: 80px; left: 20px; animation-delay: 1s; }
+.illust-h5p .bubble:nth-child(4) { width: 32px; height: 32px; top: 30px; left: 80px; animation-delay: 1.5s; }
+@keyframes bubbleFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-12px) scale(1.1); opacity: 1; }
+}
+
+/* SCORM - Microphone Waves */
+.illust-scorm .mic {
+  position: absolute;
+  width: 16px; height: 32px;
+  background: var(--primary);
+  border-radius: 8px 8px 4px 4px;
+  top: 30px; left: 52px;
+}
+.illust-scorm .mic::after {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: 50%;
+  transform: translateX(-50%);
+  width: 24px; height: 14px;
+  border: 3px solid var(--primary);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+}
+.illust-scorm .wave {
+  position: absolute;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: wavePulse 2s ease-out infinite;
+}
+.illust-scorm .wave:nth-child(2) { width: 50px; height: 50px; top: 25px; left: 35px; animation-delay: 0s; }
+.illust-scorm .wave:nth-child(3) { width: 70px; height: 70px; top: 15px; left: 25px; animation-delay: 0.4s; }
+.illust-scorm .wave:nth-child(4) { width: 90px; height: 90px; top: 5px; left: 15px; animation-delay: 0.8s; }
+@keyframes wavePulse {
+  0% { opacity: 0.8; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+
+/* Articulate - Shield Pulse */
+.illust-articulate .shield {
+  position: absolute;
+  width: 40px; height: 48px;
+  top: 24px; left: 40px;
+}
+.illust-articulate .shield::before {
+  content: '';
+  position: absolute;
+  width: 100%; height: 100%;
+  background: var(--primary);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 65%, 50% 100%, 0% 65%, 0% 25%);
+}
+.illust-articulate .shield::after {
+  content: '✓';
+  position: absolute;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 20px; font-weight: 900;
+}
+.illust-articulate .ring {
+  position: absolute;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: shieldPulse 2.5s ease-out infinite;
+}
+.illust-articulate .ring:nth-child(2) { width: 60px; height: 60px; top: 18px; left: 30px; animation-delay: 0s; }
+.illust-articulate .ring:nth-child(3) { width: 80px; height: 80px; top: 8px; left: 20px; animation-delay: 0.6s; }
+@keyframes shieldPulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+/* Adapt - Connected Nodes */
+.illust-adapt .node {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: nodeGlow 2s ease-in-out infinite;
+}
+.illust-adapt .node:nth-child(1) { top: 10px; left: 50px; animation-delay: 0s; }
+.illust-adapt .node:nth-child(2) { top: 40px; left: 20px; animation-delay: 0.3s; }
+.illust-adapt .node:nth-child(3) { top: 40px; left: 85px; animation-delay: 0.6s; }
+.illust-adapt .node:nth-child(4) { top: 75px; left: 50px; animation-delay: 0.9s; }
+.illust-adapt .line {
+  position: absolute;
+  height: 2px;
+  background: var(--primary);
+  opacity: 0.3;
+  transform-origin: left center;
+}
+.illust-adapt .line:nth-child(5) { width: 40px; top: 18px; left: 50px; transform: rotate(40deg); }
+.illust-adapt .line:nth-child(6) { width: 40px; top: 18px; left: 50px; transform: rotate(-40deg); transform-origin: right center; left: 70px; }
+@keyframes nodeGlow {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(30,58,95,0.3); }
+  50% { transform: scale(1.3); box-shadow: 0 0 12px 4px rgba(30,58,95,0.2); }
+}
+
+/* xAPI - Data Streams */
+.illust-xapi .stream {
+  position: absolute;
+  display: flex;
+  gap: 6px;
+}
+.illust-xapi .stream:nth-child(1) { top: 25px; left: 15px; }
+.illust-xapi .stream:nth-child(2) { top: 50px; left: 15px; }
+.illust-xapi .stream:nth-child(3) { top: 75px; left: 15px; }
+.illust-xapi .bit {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  background: var(--primary);
+  animation: dataFlow 1.5s ease-in-out infinite;
+}
+.illust-xapi .bit:nth-child(1) { animation-delay: 0s; }
+.illust-xapi .bit:nth-child(2) { animation-delay: 0.15s; }
+.illust-xapi .bit:nth-child(3) { animation-delay: 0.3s; }
+.illust-xapi .bit:nth-child(4) { animation-delay: 0.45s; }
+.illust-xapi .bit:nth-child(5) { animation-delay: 0.6s; }
+.illust-xapi .arrow-r {
+  position: absolute;
+  right: 15px; top: 45px;
+  width: 0; height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 20px solid var(--accent);
+  animation: arrowPulse 1.5s ease-in-out infinite;
+}
+@keyframes dataFlow {
+  0%, 100% { opacity: 0.3; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(6px); }
+}
+@keyframes arrowPulse {
+  0%, 100% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(5px); }
+}
+
+/* HTML5 - Branching Tree */
+.illust-html .trunk {
+  position: absolute;
+  width: 4px; height: 60px;
+  background: var(--primary);
+  bottom: 15px; left: 58px;
+}
+.illust-html .branch {
+  position: absolute;
+  height: 3px;
+  background: var(--primary);
+  opacity: 0.6;
+  animation: branchGrow 2s ease-in-out infinite;
+}
+.illust-html .branch:nth-child(2) { width: 30px; top: 30px; left: 58px; transform: rotate(-30deg); animation-delay: 0s; }
+.illust-html .branch:nth-child(3) { width: 30px; top: 30px; left: 62px; transform: rotate(30deg); animation-delay: 0.3s; }
+.illust-html .leaf {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: leafBounce 2s ease-in-out infinite;
+}
+.illust-html .leaf:nth-child(4) { top: 18px; left: 28px; animation-delay: 0s; }
+.illust-html .leaf:nth-child(5) { top: 18px; right: 28px; animation-delay: 0.4s; }
+.illust-html .leaf:nth-child(6) { top: 10px; left: 55px; animation-delay: 0.8s; }
+@keyframes branchGrow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+@keyframes leafBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Analytics - Bar Chart */
+.illust-analytics .bar {
+  position: absolute;
+  bottom: 15px;
+  width: 14px;
+  background: var(--primary);
+  border-radius: 4px 4px 0 0;
+  animation: barGrow 2s ease-in-out infinite;
+}
+.illust-analytics .bar:nth-child(1) { left: 18px; height: 30px; animation-delay: 0s; }
+.illust-analytics .bar:nth-child(2) { left: 38px; height: 50px; animation-delay: 0.2s; }
+.illust-analytics .bar:nth-child(3) { left: 58px; height: 40px; animation-delay: 0.4s; }
+.illust-analytics .bar:nth-child(4) { left: 78px; height: 65px; animation-delay: 0.6s; }
+.illust-analytics .line-chart {
+  position: absolute;
+  top: 20px; left: 15px;
+  width: 80px; height: 50px;
+}
+.illust-analytics .line-chart svg {
+  width: 100%; height: 100%;
+}
+.illust-analytics .dot-pulse {
+  position: absolute;
+  top: 10px; right: 15px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+@keyframes barGrow {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.15); }
+}
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* ── ABOUT ── */
+.about {
+  padding: 120px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-content .section-label {
+  margin-bottom: 16px;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.stat {
+  text-align: left;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 10px 20px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.about-link:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.about-link i {
+  width: 18px;
+  height: 18px;
+}
+
+.about-image {
+  aspect-ratio: 4/5;
+  border-radius: 24px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-image .gradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+}
+
+.about-image svg {
+  width: 120px;
+  height: 120px;
+  color: var(--primary);
+  opacity: 0.2;
+  position: relative;
+  z-index: 1;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+}
+
+/* ── CTA ── */
+.cta {
+  padding: 120px 40px;
+  text-align: center;
+}
+
+.cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.cta-desc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.cta .btn-primary {
+  padding: 20px 48px;
+  font-size: 1rem;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .about {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .about-image {
+    order: -1;
+    aspect-ratio: 16/9;
+  }
+  
+  .projects-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 24px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 120px 24px 60px;
+    text-align: center;
+  }
+  
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-actions {
+    justify-content: center;
+  }
+  
+  .hero-photo {
+    order: -1;
+    margin-bottom: 20px;
+  }
+  
+  .hero-photo img {
+    max-width: 280px;
+    border-radius: 50%;
+  }
+  
+  .hero-title {
+    letter-spacing: -1px;
+  }
+  
+  .services {
+    padding: 80px 24px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .projects {
+    padding: 80px 24px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about {
+    padding: 80px 24px;
+  }
+  
+  .about-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .cta {
+    padding: 80px 24px;
+  }
+  
+  .footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .marquee-item {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+  
+  .courses-dropdown-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Punit Ganjara</a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <div class="courses-dropdown" id="coursesDropdown">
+      <button class="courses-dropdown-trigger" onclick="toggleCoursesDropdown()" aria-expanded="false" aria-haspopup="true">
+        View Courses
+        <i data-lucide="chevron-down"></i>
+      </button>
+      <div class="courses-dropdown-menu">
+        <!-- H5P Interactive -->
+        <div class="dropdown-category">
+          <div class="dropdown-category-label">H5P Interactive</div>
+        </div>
+        <a href="customer-service-mastery.html" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="message-square"></i></div>
+          Customer Service De-Escalation
+        </a>
+        <a href="ai-ethics-training.html" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="brain"></i></div>
+          AI Ethics Training
+        </a>
+        <a href="h5p.html" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="layers"></i></div>
+          Interactive Timeline Resume
+        </a>
+        <a href="interactive-quiz/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="help-circle"></i></div>
+          Professional Communication Quiz
+        </a>
+        <a href="interactive-video.html" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="play-circle"></i></div>
+          Interactive Video
+        </a>
+        
+        <div class="dropdown-divider"></div>
+        
+        <!-- SCORM 2004 -->
+        <div class="dropdown-category">
+          <div class="dropdown-category-label">SCORM 2004</div>
+        </div>
+        <a href="ielts-masterclass/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="mic"></i></div>
+          IELTS Speaking Masterclass
+        </a>
+        
+        <div class="dropdown-divider"></div>
+        
+        <!-- Articulate 360 -->
+        <div class="dropdown-category">
+          <div class="dropdown-category-label">Articulate 360</div>
+        </div>
+        <a href="workplace-safety-scorm/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="shield"></i></div>
+          Workplace Safety Training
+        </a>
+        
+        <div class="dropdown-divider"></div>
+        
+        <!-- Adapt Framework -->
+        <div class="dropdown-category">
+          <div class="dropdown-category-label">Adapt Framework</div>
+        </div>
+        <a href="adapt-framework-xapi/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="git-branch"></i></div>
+          Adapt Framework xAPI
+        </a>
+        <a href="adapt-lxd-frameworks/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="compass"></i></div>
+          LXD Frameworks &amp; Evaluation
+        </a>
+        <a href="adapt-efl-branching/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="split"></i></div>
+          EFL Branching Scenario
+        </a>
+        
+        <div class="dropdown-divider"></div>
+        
+        <!-- Reports & Analytics -->
+        <div class="dropdown-category">
+          <div class="dropdown-category-label">Reports &amp; Analytics</div>
+        </div>
+        <a href="learning-analytics/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="bar-chart-3"></i></div>
+          Learning Analytics Dashboard
+        </a>
+        <a href="wcag-report/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="shield-check"></i></div>
+          WCAG Accessibility Report
+        </a>
+      </div>
+    </div>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <i data-lucide="sun" class="sun-icon"></i>
+    <i data-lucide="moon" class="moon-icon" style="display:none"></i>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photo">
+    <img src="images/punit-portrait.jpg" alt="Punit Ganjara — Learning Experience Designer" loading="eager">
+    <div class="hero-photo-label">Punit's Portfolio</div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-label">Learning Experience Designer</span>
+    <h1 class="hero-title">
+      <span class="line">I create</span>
+      <span class="line"><span class="highlight">learning experiences</span></span>
+      <span class="line">that inspire growth.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Crafting immersive, evidence-based digital learning — from SCORM courses to interactive simulations — that helps people and organizations thrive.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">
+        View My Work
+        <i data-lucide="arrow-down"></i>
+      </a>
+      <a href="#contact" class="btn btn-outline">
+        Get In Touch
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="marquee-section">
+  <div class="marquee-label">What I Do</div>
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="dot"></span>Instructional Design</div>
+    <div class="marquee-item"><span class="dot"></span>eLearning Development</div>
+    <div class="marquee-item"><span class="dot"></span>SCORM Packaging</div>
+    <div class="marquee-item"><span class="dot"></span>Interactive Simulations</div>
+    <div class="marquee-item"><span class="dot"></span>AI-Powered Learning</div>
+    <div class="marquee-item"><span class="dot"></span>WCAG Accessibility</div>
+    <div class="marquee-item"><span class="dot"></span>Learning Analytics</div>
+    <div class="marquee-item"><span class="dot"></span>Voice Narration</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item"><span class="dot"></span>Instructional Design</div>
+    <div class="marquee-item"><span class="dot"></span>eLearning Development</div>
+    <div class="marquee-item"><span class="dot"></span>SCORM Packaging</div>
+    <div class="marquee-item"><span class="dot"></span>Interactive Simulations</div>
+    <div class="marquee-item"><span class="dot"></span>AI-Powered Learning</div>
+    <div class="marquee-item"><span class="dot"></span>WCAG Accessibility</div>
+    <div class="marquee-item"><span class="dot"></span>Learning Analytics</div>
+    <div class="marquee-item"><span class="dot"></span>Voice Narration</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <div class="section-label">Services</div>
+    <h2 class="section-title">What I will do for you</h2>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">
+        <i data-lucide="book-open"></i>
+      </div>
+      <h3 class="service-title">Course Design</h3>
+      <p class="service-desc">End-to-end instructional design using evidence-based frameworks — from analysis to assessment.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <i data-lucide="monitor"></i>
+      </div>
+      <h3 class="service-title">eLearning Development</h3>
+      <p class="service-desc">Interactive, SCORM-compliant courses built with Articulate, Adapt, and custom HTML5 solutions.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <i data-lucide="brain"></i>
+      </div>
+      <h3 class="service-title">AI Integration</h3>
+      <p class="service-desc">Smart learning paths, adaptive assessments, and AI-powered voice narration for immersive experiences.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="work">
+  <div class="projects-header reveal">
+    <div>
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title">Featured projects</h2>
+    </div>
+
+  </div>
+  <div class="projects-grid">
+
+    <!-- 1. H5P -->
+    <a href="customer-service-mastery.html" class="project-card reveal">
+      <div class="project-visual">
+        <img src="images/storyset/customer-service.svg" alt="Customer service training illustration" loading="lazy">
+      </div>
+      <div class="project-body">
+        <div class="project-category">H5P Interactive</div>
+        <h3 class="project-title">Customer Service De-Escalation</h3>
+        <p class="project-desc">Branching scenario simulation with adaptive feedback for frontline service skills.</p>
+        <div class="project-arrow">
+          View Project <i data-lucide="arrow-right"></i>
+        </div>
+      </div>
+    </a>
+
+    <!-- 2. SCORM -->
+    <a href="ielts-masterclass/" class="project-card reveal">
+      <div class="project-visual">
+        <img src="images/storyset/online-learning.svg" alt="Online learning illustration" loading="lazy">
+      </div>
+      <div class="project-body">
+        <div class="project-category">SCORM 2004 Course</div>
+        <h3 class="project-title">IELTS Speaking Masterclass</h3>
+        <p class="project-desc">AI-narrated speaking course with voice recording, glassmorphism UI, and real-time feedback.</p>
+        <div class="project-arrow">
+          View Project <i data-lucide="arrow-right"></i>
+        </div>
+      </div>
+    </a>
+
+    <!-- 3. Articulate -->
+    <a href="workplace-safety-scorm/" class="project-card reveal">
+      <div class="project-visual">
+        <img src="images/storyset/construction.svg" alt="Workplace safety illustration" loading="lazy">
+      </div>
+      <div class="project-body">
+        <div class="project-category">Articulate 360</div>
+        <h3 class="project-title">Workplace Safety Training</h3>
+        <p class="project-desc">SCORM 1.2 compliant course with Storyline interactions, assessments, and certificate generation.</p>
+        <div class="project-arrow">
+          View Project <i data-lucide="arrow-right"></i>
+        </div>
+      </div>
+    </a>
+
+    <!-- 4. Adapt -->
+    <a href="adapt-framework-xapi/" class="project-card reveal">
+      <div class="project-visual">
+        <img src="images/storyset/programming.svg" alt="Adapt framework illustration" loading="lazy">
+      </div>
+      <div class="project-body">
+        <div class="project-category">Adapt Framework</div>
+        <h3 class="project-title">Adapt Framework xAPI</h3>
+        <p class="project-desc">Adaptive learning paths with branching scenarios, xAPI tracking, and cmi5 packaging.</p>
+        <div class="project-arrow">
+          View Project <i data-lucide="arrow-right"></i>
+        </div>
+      </div>
+    </a>
+
+    <!-- 5. Reports -->
+    <a href="learning-analytics/" class="project-card reveal">
+      <div class="project-visual">
+        <img src="images/storyset/data-analysis.svg" alt="Learning analytics illustration" loading="lazy">
+      </div>
+      <div class="project-body">
+        <div class="project-category">Reports &amp; Analytics</div>
+        <h3 class="project-title">Learning Analytics Dashboard</h3>
+        <p class="project-desc">Real-time learner performance visualization with Veracity LRS and xAPI statement analysis.</p>
+        <div class="project-arrow">
+          View Project <i data-lucide="arrow-right"></i>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-content reveal">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Creating traction for your talent</h2>
+    <p class="about-text">
+      I bring learning programs to life through effective communication strategies and proven design methodologies. Based in Ho Chi Minh City, I craft digital experiences that help people and organizations thrive.
+    </p>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">7+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">12+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">1k+</div>
+        <div class="stat-label">Learners Reached</div>
+      </div>
+    </div>
+    <a href="h5p.html" class="about-link" target="_blank">
+      <i data-lucide="clock"></i>
+      View Interactive Timeline Resume
+      <i data-lucide="external-link"></i>
+    </a>
+  </div>
+  <div class="about-image reveal">
+    <img src="images/storyset/recruitment.svg" alt="Talent recruitment illustration">
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title">Let's create something remarkable together.</h2>
+    <p class="cta-desc">
+      Ready to elevate your learning experiences? I'd love to hear about your next project.
+    </p>
+    <a href="mailto:ganjarapunit@gmail.com" class="btn btn-primary">
+      Start a Conversation
+      <i data-lucide="arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-text">© 2026 Punit Ganjara</span>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/ganjarapunit" target="_blank">LinkedIn</a>
+    <a href="mailto:ganjarapunit@gmail.com">Email</a>
+  </div>
+  <span class="footer-text" style="font-size:0.7rem;opacity:0.5;margin-top:8px;">Illustrations by <a href="https://storyset.com" target="_blank" style="color:inherit;text-decoration:underline;">Storyset</a></span>
+</footer>
+
+<script>
+// Theme Toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+  const sun = document.querySelector('.sun-icon');
+  const moon = document.querySelector('.moon-icon');
+  if (theme === 'dark') {
+    sun.style.display = 'none';
+    moon.style.display = 'block';
+  } else {
+    sun.style.display = 'block';
+    moon.style.display = 'none';
+  }
+}
+
+// Courses Dropdown
+function toggleCoursesDropdown() {
+  const dropdown = document.getElementById('coursesDropdown');
+  const trigger = dropdown.querySelector('.courses-dropdown-trigger');
+  const isOpen = dropdown.classList.contains('open');
+  
+  dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', !isOpen);
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const dropdown = document.getElementById('coursesDropdown');
+  if (!dropdown.contains(e.target)) {
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Close dropdown on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const dropdown = document.getElementById('coursesDropdown');
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Initialize theme
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeIcon(savedTheme);
+
+// Scroll Reveal with staggered delays
+document.addEventListener('DOMContentLoaded', () => {
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.15) + 's';
+  });
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+  
+  // Fallback: ensure all reveals become visible after a short delay
+  setTimeout(() => {
+    reveals.forEach(el => el.classList.add('visible'));
+  }, 2000);
+  
+  // Initialize Lucide icons
+  lucide.createIcons();
+});
+</script>
+
+</body>
+</html>

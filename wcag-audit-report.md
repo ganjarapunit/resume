@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-06
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
-**Pages Tested:** 12
+**Pages Tested:** 9
 
 ## Summary
 
@@ -10,9 +10,6 @@
 |------|:-:|:-:|:-:|
 | Main Portfolio (index.html) | 0 | 0 | ✅ Pass |
 | H5P Interactive Timeline | 0 | 0 | ✅ Pass |
-| AI Literacy Course | 0 | 0 | ✅ Pass |
-| Data Privacy Compliance | 0 | 0 | ✅ Pass |
-| Giving Constructive Feedback | 0 | 0 | ✅ Pass |
 | Interactive Quiz (H5P) | 0 | 0 | ✅ Pass |
 | IELTS Speaking Masterclass | 0 | 0 | ✅ Pass |
 | IELTS Portfolio Index | 0 | 0 | ✅ Pass |
@@ -21,7 +18,7 @@
 | AI Ethics Training | 0 | 0 | ✅ Pass |
 | Workplace Safety SCORM Course | 0 | 0 | ✅ Pass |
 
-**Overall: 11 passed, 1 failed** (8 total violations)
+**Overall: 8 passed, 1 failed** (8 total violations)
 
 ## Critical & Serious Issues
 
@@ -108,39 +105,6 @@
 #### 🌙 Dark Theme
 - Violations: 0
 - Incomplete: 0
-
-### AI Literacy Course
-- **URL:** /ai-literacy/index.html
-- **Tab-focusable elements:** 27
-
-#### ☀️ Light Theme
-- Violations: 0
-- Incomplete: 1
-#### 🌙 Dark Theme
-- Violations: 0
-- Incomplete: 1
-
-### Data Privacy Compliance
-- **URL:** /data-privacy-compliance/index.html
-- **Tab-focusable elements:** 8
-
-#### ☀️ Light Theme
-- Violations: 0
-- Incomplete: 1
-#### 🌙 Dark Theme
-- Violations: 0
-- Incomplete: 1
-
-### Giving Constructive Feedback
-- **URL:** /giving-constructive-feedback/index.html
-- **Tab-focusable elements:** 19
-
-#### ☀️ Light Theme
-- Violations: 0
-- Incomplete: 1
-#### 🌙 Dark Theme
-- Violations: 0
-- Incomplete: 1
 
 ### Interactive Quiz (H5P)
 - **URL:** /interactive-quiz/index.html
