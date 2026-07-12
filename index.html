@@ -247,7 +247,7 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: stretch;
   gap: 60px;
   padding: 160px 40px 80px;
   max-width: 1400px;
@@ -257,7 +257,14 @@ body {
 .hero-left {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 24px;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-photo {
