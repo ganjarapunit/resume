@@ -1294,6 +1294,139 @@ body {
     justify-content: center;
   }
 }
+
+/* ── CORE STRENGTHS (Flashcards) ── */
+.strengths {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.strengths-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.strength-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.strength-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.strength-card:hover,
+.strength-card:focus-visible {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+  outline: none;
+}
+
+.strength-card:hover::before,
+.strength-card:focus-visible::before {
+  opacity: 1;
+}
+
+.strength-icon-wrap {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(30, 58, 95, 0.08), rgba(245, 158, 11, 0.08));
+  border: 1px solid rgba(30, 58, 95, 0.15);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+[data-theme="dark"] .strength-icon-wrap {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.12), rgba(251, 191, 36, 0.08));
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.strength-card:hover .strength-icon-wrap {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, rgba(30, 58, 95, 0.14), rgba(245, 158, 11, 0.12));
+}
+
+[data-theme="dark"] .strength-card:hover .strength-icon-wrap {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(251, 191, 36, 0.14));
+}
+
+.strength-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.strength-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.strength-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.strength-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  background: rgba(30, 58, 95, 0.06);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(30, 58, 95, 0.12);
+}
+
+[data-theme="dark"] .strength-badge {
+  color: var(--accent);
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.15);
+}
+
+@media (max-width: 768px) {
+  .strengths {
+    padding: 60px 24px;
+  }
+  
+  .strengths-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1306,6 +1439,7 @@ body {
   </button>
   <div class="nav-links" id="navLinks">
     <a href="#services">Services</a>
+    <a href="#strengths">Strengths</a>
     <a href="#work">Work</a>
     <div class="courses-dropdown" id="coursesDropdown">
       <button class="courses-dropdown-trigger" onclick="toggleCoursesDropdown()" aria-expanded="false" aria-haspopup="true">
@@ -1548,6 +1682,53 @@ body {
       <h3 class="service-title">Moodle LMS</h3>
       <p class="service-desc">Custom course development, theme configuration, plugin integration, and admin support for Moodle-powered learning environments.</p>
     </div>
+  </div>
+</section>
+
+<!-- CORE STRENGTHS -->
+<section class="strengths" id="strengths">
+  <div class="reveal">
+    <div class="section-label">Core Strengths</div>
+    <h2 class="section-title">What sets me apart</h2>
+  </div>
+  <div class="strengths-grid">
+
+    <article class="strength-card" tabindex="0" role="group" aria-label="Enterprise Pedagogy strength">
+      <div class="strength-icon-wrap">
+        <svg class="strength-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3 class="strength-title">Enterprise Pedagogy</h3>
+      <p class="strength-desc">Leveraging multi-year instructional rigor from British Council, EF, and AI EdTech to deliver flawless compliance, communication, and adult learning architectures.</p>
+      <span class="strength-badge">High-Stakes Ready</span>
+    </article>
+
+    <article class="strength-card" tabindex="0" role="group" aria-label="Performance Metrics strength">
+      <div class="strength-icon-wrap">
+        <svg class="strength-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <h3 class="strength-title">Data-Driven Metrics</h3>
+      <p class="strength-desc">Translating diagnostic evaluation, continuous formative assessment, and rigorous rubric design into verifiable competency gains and reduced performance errors.</p>
+      <span class="strength-badge">Measurable Impact</span>
+    </article>
+
+    <article class="strength-card" tabindex="0" role="group" aria-label="Technical Fluency strength">
+      <div class="strength-icon-wrap">
+        <svg class="strength-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <h3 class="strength-title">Standards Fluency</h3>
+      <p class="strength-desc">Mastering hand-built SCORM 1.2/2004, xAPI, cmi5, H5P, and Adapt Learning for robust LMS data tracking beyond standard authoring tool limitations.</p>
+      <span class="strength-badge">Full-Stack SCORM/xAPI</span>
+    </article>
+
+    <article class="strength-card" tabindex="0" role="group" aria-label="Learning Architecture strength">
+      <div class="strength-icon-wrap">
+        <svg class="strength-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <h3 class="strength-title">End-to-End Architecture</h3>
+      <p class="strength-desc">Owning the complete lifecycle from SME collaboration, instructional strategy, and media production to flawless LMS deployment, QA, and documentation.</p>
+      <span class="strength-badge">Full Lifecycle Ownership</span>
+    </article>
+
   </div>
 </section>
 
