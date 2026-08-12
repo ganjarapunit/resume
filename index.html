@@ -1517,16 +1517,61 @@ body {
   border-color: rgba(251, 191, 36, 0.15);
 }
 
-@media (max-width: 768px) {
-  .strengths {
-    padding: 60px 24px;
+  @media (max-width: 768px) {
+    .strengths {
+      padding: 60px 24px;
+    }
+    
+    .strengths-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
   }
-  
-  .strengths-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+
+  /* ── WORDGAME FEATURE ── */
+  .wordgame-feature { padding: 90px 40px; max-width: 1200px; margin: 0 auto; }
+  .wordgame-feature-inner {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: center;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
+    padding: 44px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-}
+  .wordgame-feature-inner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 88% 12%, rgba(245,158,11,.10), transparent 55%);
+    pointer-events: none;
+  }
+  .wordgame-badge {
+    display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .12em; color: var(--primary); background: rgba(30,58,95,.06);
+    padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(30,58,95,.12);
+  }
+  [data-theme="dark"] .wordgame-badge { color: var(--accent); background: rgba(251,191,36,.08); border-color: rgba(251,191,36,.15); }
+  .wordgame-title { font-size: 2rem; font-weight: 800; color: var(--text); margin: 14px 0 16px; letter-spacing: -.02em; line-height: 1.15; }
+  .wordgame-desc { color: var(--text-muted); line-height: 1.7; margin-bottom: 26px; }
+  .wordgame-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .wordgame-demo { display: flex; align-items: center; justify-content: center; perspective: 620px; min-height: 280px; }
+  .mini-plane {
+    width: 240px; height: 240px; transform-style: preserve-3d;
+    transform: rotateX(58deg) rotateZ(0deg); animation: miniSpin 20s linear infinite;
+    background:
+      repeating-linear-gradient(0deg, rgba(30,58,95,.18) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(30,58,95,.18) 0 1px, transparent 1px 40px),
+      linear-gradient(rgba(30,58,95,.06), rgba(245,158,11,.10));
+    border: 2px solid var(--primary); border-radius: 10px;
+    display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); padding: 5px;
+  }
+  [data-theme="dark"] .mini-plane {
+    background:
+      repeating-linear-gradient(0deg, rgba(96,165,250,.20) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(96,165,250,.20) 0 1px, transparent 1px 40px),
+      linear-gradient(rgba(96,165,250,.07), rgba(251,191,36,.12));
+  }
+  .mini-cell { display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  @keyframes miniSpin { from { transform: rotateX(58deg) rotateZ(0deg); } to { transform: rotateX(58deg) rotateZ(360deg); } }
+  @media (max-width: 860px) {
+    .wordgame-feature { padding: 60px 24px; }
+    .wordgame-feature-inner { grid-template-columns: 1fr; padding: 28px; }
+  }
 </style>
 </head>
 <body>
@@ -1629,6 +1674,7 @@ body {
         </a>
       </div>
     </div>
+    <a href="wordgame/text_plane_3d.html" target="_blank" rel="noopener noreferrer" class="external-link" aria-label="Wordgame (opens in new tab)">Wordgame <i data-lucide="external-link" class="external-icon"></i></a>
     <a href="https://youtu.be/Xq64asizi0k?si=KryGVzCWRmd3EgSM" target="_blank" rel="noopener noreferrer" class="external-link" aria-label="Sample Video (opens in new tab)">Sample Video <i data-lucide="external-link" class="external-icon"></i></a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -1690,6 +1736,31 @@ body {
     <div class="marquee-item"><span class="dot"></span>WCAG Accessibility</div>
     <div class="marquee-item"><span class="dot"></span>Learning Analytics</div>
     <div class="marquee-item"><span class="dot"></span>Voice Narration</div>
+  </div>
+</section>
+
+<!-- WORDGAME FEATURE -->
+<section class="wordgame-feature" id="wordgame">
+  <div class="wordgame-feature-inner">
+    <div class="wordgame-copy">
+      <span class="wordgame-badge">New Build · xAPI</span>
+      <h2 class="wordgame-title">Lexiplane &mdash; 3D Word Hunt</h2>
+      <p class="wordgame-desc">A word game played on a slowly rotating 3D letter plane. Trace connected tiles to spell any English word, use hints when stuck, and every answer streams to a Learning Record Store via xAPI. Built with vanilla JS and a 370k-word dictionary, fully theme-aware.</p>
+      <div class="wordgame-actions">
+        <a href="wordgame/text_plane_3d.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Play Wordgame <i data-lucide="gamepad-2"></i></a>
+        <a href="wordgame/text_plane_3d.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open in new tab</a>
+      </div>
+    </div>
+    <div class="wordgame-demo">
+      <div class="mini-plane">
+        <div class="mini-cell">G</div><div class="mini-cell">A</div><div class="mini-cell">M</div><div class="mini-cell">E</div><div class="mini-cell">X</div><div class="mini-cell">Y</div>
+        <div class="mini-cell">P</div><div class="mini-cell">L</div><div class="mini-cell">A</div><div class="mini-cell">Y</div><div class="mini-cell">Q</div><div class="mini-cell">W</div>
+        <div class="mini-cell">O</div><div class="mini-cell">R</div><div class="mini-cell">A</div><div class="mini-cell">C</div><div class="mini-cell">L</div><div class="mini-cell">E</div>
+        <div class="mini-cell">B</div><div class="mini-cell">O</div><div class="mini-cell">O</div><div class="mini-cell">K</div><div class="mini-cell">Z</div><div class="mini-cell">K</div>
+        <div class="mini-cell">T</div><div class="mini-cell">I</div><div class="mini-cell">M</div><div class="mini-cell">E</div><div class="mini-cell">R</div><div class="mini-cell">F</div>
+        <div class="mini-cell">S</div><div class="mini-cell">U</div><div class="mini-cell">N</div><div class="mini-cell">H</div><div class="mini-cell">I</div><div class="mini-cell">T</div>
+      </div>
+    </div>
   </div>
 </section>
 
