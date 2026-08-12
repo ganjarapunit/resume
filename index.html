@@ -1572,6 +1572,9 @@ body {
     .wordgame-feature { padding: 60px 24px; }
     .wordgame-feature-inner { grid-template-columns: 1fr; padding: 28px; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .mini-plane { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -1746,11 +1749,11 @@ body {
       <span class="wordgame-badge">New Build · xAPI</span>
       <h2 class="wordgame-title">Lexiplane &mdash; 3D Word Hunt</h2>
       <div class="wordgame-actions">
-        <a href="wordgame/text_plane_3d.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Play Wordgame <i data-lucide="gamepad-2"></i></a>
+        <a href="wordgame/text_plane_3d.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="Play Wordgame (opens in new tab)">Play Wordgame <i data-lucide="gamepad-2"></i></a>
       </div>
     </div>
-    <div class="wordgame-demo">
-      <div class="mini-plane">
+      <div class="wordgame-demo">
+        <div class="mini-plane" aria-hidden="true">
         <div class="mini-cell">G</div><div class="mini-cell">A</div><div class="mini-cell">M</div><div class="mini-cell">E</div><div class="mini-cell">X</div><div class="mini-cell">Y</div>
         <div class="mini-cell">P</div><div class="mini-cell">L</div><div class="mini-cell">A</div><div class="mini-cell">Y</div><div class="mini-cell">Q</div><div class="mini-cell">W</div>
         <div class="mini-cell">O</div><div class="mini-cell">R</div><div class="mini-cell">A</div><div class="mini-cell">C</div><div class="mini-cell">L</div><div class="mini-cell">E</div>

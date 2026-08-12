@@ -260,12 +260,13 @@
         <div class="section">
             <h2><i data-lucide="clipboard-list"></i> Executive Summary</h2>
             <p>
-                This report summarises an accessibility audit of all <strong>15 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
+                This report summarises an accessibility audit of all <strong>16 pages</strong> across Punit Ganjara's interactive e-learning portfolio.
                 Each page was tested in both <strong>light</strong> and <strong>dark</strong> theme modes using Google Lighthouse.
             </p>
             <ul>
-                <li><strong>14 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after eleven fix rounds.</li>
+                <li><strong>15 pages</strong> pass with <strong>Lighthouse 100/100/100</strong> in both themes after eleven fix rounds.</li>
                 <li><strong>1 page</strong> (Learning Analytics Dashboard) is an external <strong>Veracity LRS</strong> redirect — cannot be audited, not a code issue.</li>
+                <li><strong>New — Lexiplane 3D Word Hunt</strong> (wordgame/text_plane_3d.html) added 13 Aug 2026: passes both themes. Fixes applied during integration — name input bound to an accessible label, overlay marked <code>role="dialog" aria-modal="true"</code>, decorative demo plane set <code>aria-hidden</code> with <code>prefers-reduced-motion</code> support, and new-tab links carry <code>(opens in new tab)</code> accessible names. Note: the gameplay grid is pointer-driven and not yet fully keyboard-operable (tracked as a known limitation).</li>
                 <li><strong>Fix rounds completed 6–29 June 2026:</strong> Colour contrast fixes (tag badges, dark mode nav, IELTS blue→yellow), heading-order corrections on 4 pages, meta descriptions on 6 pages, high-contrast yellow (#fbbf24) dark-mode treatment across all pages, responsive About Me section fix, Adapt Framework Mini Course accessibility audit with modal focus trap, Escape key, and ARIA attributes, plus SCORM course accessibility fixes.</li>
             </ul>
         </div>
@@ -285,6 +286,12 @@
                 <tbody>
                     <tr>
                         <td class="page-name">Main Portfolio (index.html)</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center">100</td>
+                        <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td class="page-name">Lexiplane 3D Word Hunt (wordgame)</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center">100</td>
                         <td style="text-align:center"><span class="pass-badge"><i data-lucide="check" class="badge-icon"></i> Pass</span></td>

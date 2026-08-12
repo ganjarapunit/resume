@@ -1,8 +1,8 @@
 # WCAG Accessibility Audit Report
 
-**Date:** 2026-07-06
+**Date:** 2026-08-13
 **Tool:** axe-core (WCAG 2.0 A/AA + WCAG 2.1 A/AA)
-**Pages Tested:** 9
+**Pages Tested:** 10
 
 ## Summary
 
@@ -17,8 +17,11 @@
 | Customer Service De-Escalation Mastery | 0 | 0 | ✅ Pass |
 | AI Ethics Training | 0 | 0 | ✅ Pass |
 | Workplace Safety SCORM Course | 0 | 0 | ✅ Pass |
+| Lexiplane 3D Word Hunt (wordgame) | 0 | 0 | ✅ Pass |
 
-**Overall: 8 passed, 1 failed** (8 total violations)
+**Overall: 9 passed, 1 failed** (8 total violations)
+
+> **Note (Lexiplane 3D Word Hunt):** Passes colour-contrast, form labelling, and dialog semantics in both themes. The decorative demo plane is `aria-hidden` and respects `prefers-reduced-motion`. The gameplay grid is pointer-driven; full keyboard operability is a tracked enhancement, not a blocker for the page itself.
 
 ## Critical & Serious Issues
 
