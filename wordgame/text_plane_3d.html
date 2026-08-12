@@ -131,6 +131,7 @@
       padding: 9px 18px; font-weight: 700; letter-spacing: 2px; font-size: 12px; cursor: pointer;
     }
     .mobile-bar button.active { background: #fde68a; color: #7c2d12; }
+    .mobile-bar button.primary { background: #fde68a; color: #7c2d12; }
 
     #stage { grid-template-columns: 1fr; grid-template-rows: 1fr; }
     .scene-wrap { grid-row: 1; grid-column: 1; padding: 8px; }
@@ -197,6 +198,7 @@
   <div class="mobile-bar" id="mobileBar">
     <button id="menuToggle" aria-expanded="false" aria-controls="leftPanel">MENU</button>
     <button id="wordsToggle" aria-expanded="false" aria-controls="rightPanel">WORDS</button>
+    <button id="mobileSubmit" class="primary" aria-controls="current">SUBMIT</button>
   </div>
   <div class="toast" id="toast"></div>
 
@@ -513,6 +515,7 @@
   }
   menuToggle.addEventListener("click", () => toggleDrawer(leftPanel, menuToggle));
   wordsToggle.addEventListener("click", () => toggleDrawer(rightPanel, wordsToggle));
+  document.getElementById("mobileSubmit").addEventListener("click", submit);
 
   buildBoard();
 </script>
