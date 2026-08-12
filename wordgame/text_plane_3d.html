@@ -16,7 +16,7 @@
   #stage {
     position: fixed; inset: 0;
     display: grid;
-    grid-template-columns: 280px 1fr 280px;
+    grid-template-columns: minmax(180px, 280px) 1fr minmax(180px, 280px);
     align-items: stretch;
     perspective: 720px;
     perspective-origin: 50% 18%;
@@ -63,7 +63,7 @@
   .words li .pts { opacity: 0.85; font-size: 13px; color: #b45309; font-weight: 700; }
   .hint { font-size: 11px; font-weight: 600; line-height: 1.7; letter-spacing: 1px; color: #0b3a5c; }
   .scene-wrap { display: flex; align-items: center; justify-content: center; height: 100%; }
-  .scene { position: relative; width: 620px; height: 620px; transform-style: preserve-3d; cursor: grab; }
+  .scene { position: relative; width: min(620px, 86vmin); height: min(620px, 86vmin); max-width: 100%; max-height: 100%; transform-style: preserve-3d; cursor: grab; touch-action: none; }
   .scene.dragging { cursor: grabbing; }
   .plane {
     position: absolute; inset: 0;
@@ -80,7 +80,7 @@
   }
   .cell {
     display: flex; align-items: center; justify-content: center;
-    color: #a7f3d0; font-size: 22px; font-weight: 700;
+    color: #a7f3d0; font-size: clamp(13px, 2.4vmin, 22px); font-weight: 700;
     text-shadow: 0 0 8px rgba(94,234,212,0.8);
     user-select: none; cursor: pointer;
   }
@@ -103,7 +103,7 @@
     padding: 34px 40px; border-radius: 14px;
     border: 3px solid #0e7490;
     display: flex; flex-direction: column; gap: 18px; align-items: center;
-    min-width: 320px; box-shadow: none;
+    min-width: min(320px, 90vw); box-shadow: none;
   }
   .modal h2 { font-size: 26px; letter-spacing: 4px; color: #9d174d; }
   .modal .sub { color: #0b3a5c; }
@@ -114,6 +114,30 @@
   }
   .nameInput:focus { outline: none; border-color: #155e75; }
   .modal button { width: 100%; }
+
+  @media (max-width: 820px) {
+    #stage {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      overflow-y: auto;
+    }
+    .panel {
+      border-right: none;
+      border-bottom: 3px solid #0e7490;
+      padding: 14px 16px;
+      max-height: 38vh;
+    }
+    .panel.right {
+      border-left: none;
+      border-top: 3px solid #0e7490;
+      border-bottom: none;
+      max-height: 24vh;
+    }
+    .scene-wrap { padding: 8px; }
+    h1 { font-size: 18px; letter-spacing: 3px; }
+    .current { font-size: 20px; letter-spacing: 4px; }
+    .hint { font-size: 10px; }
+  }
 
 </style>
 </head>
