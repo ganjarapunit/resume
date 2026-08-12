@@ -36,8 +36,9 @@
   .score { font-size: 40px; color: #0e7490; font-weight: 700; }
   .current {
     font-size: 24px; letter-spacing: 6px; min-height: 30px;
-    color: #7c2d12; padding: 6px 8px;
+    color: #7c2d12; padding: 6px 8px; max-width: 100%;
     border: 2px solid #b45309; border-radius: 6px; background: #fff7ed;
+    overflow-wrap: anywhere; word-break: break-word;
   }
   .row { display: flex; gap: 10px; flex-wrap: wrap; }
   button {
@@ -52,13 +53,15 @@
   .hintbox {
     font-size: 16px; letter-spacing: 5px; color: #7c2d12;
     padding: 8px 10px; border: 2px dashed #b45309; border-radius: 6px;
-    background: #fff7ed; min-height: 20px; word-break: break-all;
+    background: #fff7ed; min-height: 20px; max-width: 100%;
+    word-break: break-word; overflow-wrap: anywhere;
   }
   .words { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .words li {
     font-size: 16px; letter-spacing: 4px; padding: 6px 10px;
     border: 1px solid #0e7490; border-radius: 5px; color: #06243f;
-    background: #ffffff; display: flex; justify-content: space-between;
+    background: #ffffff; display: flex; justify-content: space-between; gap: 10px;
+    flex-wrap: wrap; overflow-wrap: anywhere;
   }
   .words li .pts { opacity: 0.85; font-size: 13px; color: #b45309; font-weight: 700; }
   .hint { font-size: 11px; font-weight: 600; line-height: 1.7; letter-spacing: 1px; color: #0b3a5c; }
@@ -134,8 +137,11 @@
       max-height: 24vh;
     }
     .scene-wrap { padding: 8px; }
+    .panel { overflow-x: hidden; }
     h1 { font-size: 18px; letter-spacing: 3px; }
-    .current { font-size: 20px; letter-spacing: 4px; }
+    .current { font-size: 20px; letter-spacing: 2px; }
+    .hintbox { letter-spacing: 2px; font-size: 15px; }
+    .words li { letter-spacing: 2px; font-size: 14px; }
     .hint { font-size: 10px; }
   }
 
