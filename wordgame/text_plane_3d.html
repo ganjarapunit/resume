@@ -118,26 +118,40 @@
   .nameInput:focus { outline: none; border-color: #155e75; }
   .modal button { width: 100%; }
 
+  .mobile-bar { display: none; }
+
   @media (max-width: 820px) {
-    #stage {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      overflow-y: auto;
+    .mobile-bar.show {
+      display: flex; gap: 10px; justify-content: center; align-items: center;
+      position: fixed; top: 0; left: 0; right: 0; height: 48px; z-index: 60;
+      background: #0e7490;
     }
+    .mobile-bar button {
+      background: #eaf6ff; color: #0e7490; border: none; border-radius: 20px;
+      padding: 9px 18px; font-weight: 700; letter-spacing: 2px; font-size: 12px; cursor: pointer;
+    }
+    .mobile-bar button.active { background: #fde68a; color: #7c2d12; }
+
+    #stage { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    .scene-wrap { grid-row: 1; grid-column: 1; padding: 8px; }
+
     .panel {
-      border-right: none;
-      border-bottom: 3px solid #0e7490;
-      padding: 14px 16px;
-      max-height: 38vh;
+      position: fixed; left: 0; right: 0; z-index: 40;
+      max-height: calc(100vh - 56px); overflow-y: auto; overflow-x: hidden;
+      padding: 16px; background: #eef4ff;
+      transition: transform .25s ease; box-shadow: 0 0 40px rgba(0,0,0,.35);
+    }
+    .panel.left {
+      bottom: 0; transform: translateY(100%);
+      border-top: 3px solid #0e7490;
     }
     .panel.right {
-      border-left: none;
-      border-top: 3px solid #0e7490;
-      border-bottom: none;
-      max-height: 24vh;
+      top: 48px; transform: translateY(-120%);
+      border-bottom: 3px solid #0e7490;
     }
-    .scene-wrap { padding: 8px; }
-    .panel { overflow-x: hidden; }
+    .panel.left.open { transform: translateY(0); }
+    .panel.right.open { transform: translateY(0); }
+
     h1 { font-size: 18px; letter-spacing: 3px; }
     .current { font-size: 20px; letter-spacing: 2px; }
     .hintbox { letter-spacing: 2px; font-size: 15px; }
@@ -149,7 +163,7 @@
 </head>
 <body>
   <div id="stage">
-    <div class="panel left">
+    <div class="panel left" id="leftPanel">
       <h1>LEXIPLANE</h1>
       <div class="sub">3D WORD HUNT</div>
       <div class="sub">PLAYER: <span id="playerName">—</span></div>
@@ -175,10 +189,14 @@
       </div>
     </div>
 
-    <div class="panel right">
+    <div class="panel right" id="rightPanel">
       <div class="sub">WORDS YOU FOUND</div>
       <ul class="words" id="wordList"><li class="sub" style="border:none;background:none">none yet</li></ul>
     </div>
+  </div>
+  <div class="mobile-bar" id="mobileBar">
+    <button id="menuToggle" aria-expanded="false" aria-controls="leftPanel">MENU</button>
+    <button id="wordsToggle" aria-expanded="false" aria-controls="rightPanel">WORDS</button>
   </div>
   <div class="toast" id="toast"></div>
 
@@ -468,6 +486,7 @@
   startBtn.onclick = () => {
     setPlayer(nameInput.value);
     overlayEl.style.display = "none";
+    mobileBar.classList.add("show");
     sendStatement({
       actor: actor(),
       verb: verb("https://adlnet.gov/xapi/verbs/initialized", "initialized"),
@@ -480,6 +499,20 @@
     if (saved) nameInput.value = saved;
   } catch(e){}
   nameInput.focus();
+
+  // ---------- mobile drawer toggles ----------
+  const mobileBar = document.getElementById("mobileBar");
+  const leftPanel = document.getElementById("leftPanel");
+  const rightPanel = document.getElementById("rightPanel");
+  const menuToggle = document.getElementById("menuToggle");
+  const wordsToggle = document.getElementById("wordsToggle");
+  function toggleDrawer(panel, btn){
+    const open = panel.classList.toggle("open");
+    btn.classList.toggle("active", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  menuToggle.addEventListener("click", () => toggleDrawer(leftPanel, menuToggle));
+  wordsToggle.addEventListener("click", () => toggleDrawer(rightPanel, wordsToggle));
 
   buildBoard();
 </script>
