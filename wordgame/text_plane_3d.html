@@ -89,6 +89,14 @@
   }
   .cell.sel { color: #fde68a; text-shadow: 0 0 14px rgba(253,230,138,0.9); background: rgba(253,230,138,0.14); }
   .cell.locked { color: #f0abfc; text-shadow: 0 0 14px rgba(240,171,252,0.9); }
+  @keyframes demopulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(56,189,248,0.5); }
+    50% { box-shadow: 0 0 20px rgba(56,189,248,0.95); }
+  }
+  .cell.demo {
+    color: #bae6fd; background: rgba(56,189,248,0.20);
+    border-radius: 6px; animation: demopulse 1.1s ease-in-out infinite;
+  }
 
   .toast {
     position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
@@ -132,10 +140,11 @@
     }
     .mobile-bar button.active { background: #fde68a; color: #7c2d12; }
     .mobile-bar button.primary { background: #fde68a; color: #7c2d12; }
+    .mobile-bar.bottom.show { top: auto; bottom: 0; }
     .toast { top: 56px; z-index: 70; max-width: 90vw; }
 
     #stage { grid-template-columns: 1fr; grid-template-rows: 1fr; }
-    .scene-wrap { grid-row: 1; grid-column: 1; padding: 8px; }
+    .scene-wrap { grid-row: 1; grid-column: 1; padding: 56px 8px; }
 
     .panel {
       position: fixed; left: 0; right: 0; z-index: 40;
@@ -159,6 +168,28 @@
     .hintbox { letter-spacing: 2px; font-size: 15px; }
     .words li { letter-spacing: 2px; font-size: 14px; }
     .hint { font-size: 10px; }
+  }
+
+  .demoBanner {
+    display: none;
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: 18px; z-index: 65;
+    width: min(520px, 92vw);
+    background: rgba(8,15,35,0.92);
+    border: 2px solid #38bdf8; border-radius: 12px;
+    padding: 14px 16px; color: #e6fffb;
+    font-size: 14px; line-height: 1.5; letter-spacing: 0.5px; text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,.45);
+  }
+  .demoBanner.show { display: block; }
+  .demoBanner b { color: #7dd3fc; }
+  .demoBanner .demoClose {
+    margin-top: 10px;
+    background: #38bdf8; color: #06243f; border: none; border-radius: 18px;
+    padding: 7px 18px; font-weight: 700; letter-spacing: 2px; font-size: 12px; cursor: pointer;
+  }
+  @media (max-width: 820px) {
+    .demoBanner { bottom: 62px; font-size: 13px; }
   }
 
 </style>
@@ -201,6 +232,13 @@
     <button id="wordsToggle" aria-expanded="false" aria-controls="rightPanel">WORDS</button>
     <button id="mobileSubmit" class="primary" aria-controls="current">SUBMIT</button>
   </div>
+  <div class="mobile-bar bottom" id="mobileBottomBar">
+    <button id="mobileHint" class="primary">HINT</button>
+  </div>
+  <div class="demoBanner" id="demoBanner" role="status" aria-live="polite">
+    <div>Make a <b>5-letter word</b>! Trace letters in <b>ANY direction</b> (up, down, sideways or diagonal), as long as each letter touches the last. Try the glowing tiles.</div>
+    <button class="demoClose" id="demoClose">GOT IT</button>
+  </div>
   <div class="toast" id="toast"></div>
 
   <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
@@ -218,6 +256,7 @@
   // ---------- offline fallback word list (used only if words.js is missing) ----------
   const RAW = `the and for are but not you all any can had her was one our out day get has him his how man new now old see two way who boy did its let put say she too use cat dog sun run fun bat rat hat mat sat fat pat tap top tip ten pen pin pan pot pig big dig fig kit lit bit fit sit cot cut cub cue cap cop cup car bar ear eat tea sea set red bed beg bet bad bag bug mug rug tug web wet win won yes yet zip zap zen oak ore ace age ago aid aim air ale ant ape arc arm art ash ask ate awe axe aye bee bow box bra bud bug bun bus buy bye cab cam can cap car cat caw cob cod cog con cop cot cow coy cry cub cue cup cur cut dab dad dam day den dew did die dig dim din dip doe dog don dot dry dub dug dye ear eat ebb eel egg ego elf elk elm end eon era eve ewe eye fad fan far fat fax fed fee fen few fib fig fin fir fit fix fly foe fog for fox fry fun fur gag gal gap gas gel gem get gig gin gnu god got gum gun gut guy gym had hag ham has hat hay hem hen her hew hex hid him hip his hit hoe hog hop hot how hub hue hug hum hut ice icy ill imp ink inn ion ire irk its ivy jab jam jar jaw jay jet jig job jog joy jug jut keg key kid kin kit lab lad lag lap law lay led leg let lid lie lip lit lob log lot low lug lye mad man map mar mat may men met mid mix mob mom mop mud mug mum nab nag nap nay net new nib nil nip nit nod nor not now nub nun nut oak oar oat odd ode off oil old one orb ore our out owe owl own pad pal pan pap par pat paw pay pea peg pen pep pet pew pie pig pin pit ply pod pop pot pro pry pub pug pun pup pus put rag ram ran rap rat raw ray red ref rib rid rig rim rip rob rod roe rot row rub rue rug rum run rut rye sac sad sag sap sat saw say sea see set sew she shy sin sip sir sit six ski sky sly sob sod son sop sow soy spa spy sty sub sue sum sun sup tab tad tag tan tap tar tax tea ten the tie tin tip toe ton too top tot tow toy try tub tug tun tux two ugh urn use van vat vet via vie vow wad wag war was wax way web wed wee wet who why wig win wit woe wok won woo wow wry yak yam yap yaw yea yen yes yet yew yip you zap zip zoo`;
   const DICT_SET = new Set(RAW.toUpperCase().split(/\s+/).filter(Boolean));
+  const FIVE = [...DICT_SET].filter(w => w.length === 5);
   const PREFIX = new Set();
   for (const w of DICT_SET) for (let i=1;i<=w.length;i++) PREFIX.add(w.slice(0,i));
 
@@ -279,8 +318,8 @@
     str = str.toLowerCase(); for (const ch of str){ node = node[ch]; if (!node) return false; }
     return true;
   }
-  function hasWord(w){ return trieReady ? trieHas(w) : DICT_SET.has(w); }
-  function hasPref(w){ return trieReady ? triePrefix(w) : PREFIX.has(w); }
+  function hasWord(w){ return (trieReady && trieHas(w)) || DICT_SET.has(w); }
+  function hasPref(w){ return (trieReady && triePrefix(w)) || PREFIX.has(w); }
 
   const dictStatusEl = document.getElementById("dictStatus");
   function buildTrie(words){ for (const w of words){ const t = w.trim().toLowerCase(); if (t) trieAdd(t); } }
@@ -311,8 +350,23 @@
   const toastEl = document.getElementById("toast");
 
   let grid = [], cells = [], path = [], found = {}, score = 0, formable = [];
+  let demoActive = false, demoCells = [];
 
   function rand(n){ return Math.floor(Math.random()*n); }
+
+  function seedWord(){
+    if (!FIVE.length) return;
+    const word = FIVE[rand(FIVE.length)];
+    const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+    for (let attempt=0; attempt<60; attempt++){
+      const [dr,dc] = dirs[rand(8)];
+      const r0 = rand(N), c0 = rand(N);
+      const r1 = r0 + dr*4, c1 = c0 + dc*4;
+      if (r1<0||r1>=N||c1<0||c1>=N) continue;
+      for (let i=0;i<5;i++) grid[r0+dr*i][c0+dc*i] = word[i];
+      return;
+    }
+  }
 
   function buildBoard(){
     grid = [];
@@ -323,6 +377,7 @@
       }
       grid.push(row);
     }
+    seedWord();
     render();
     computeFormable();
   }
@@ -346,6 +401,9 @@
     currentEl.textContent = "";
     hintEl.textContent = "press HINT";
     wordListEl.innerHTML = '<li class="sub" style="border:none;background:none">none yet</li>';
+    demoActive = false;
+    const db = document.getElementById("demoBanner");
+    if (db) db.classList.remove("show");
     updateSelection();
   }
 
@@ -360,6 +418,7 @@
   }
 
   function pick(r,c){
+    if (demoActive) clearDemo();
     const last = path[path.length-1];
     if (path.some(p => p[0]===r && p[1]===c)) return;
     if (path.length && !adjacent(last,[r,c])) path = [];
@@ -414,6 +473,39 @@
     }
     for (let r=0;r<N;r++) for (let c=0;c<N;c++) dfs(r,c,"");
     formable = [...formable].filter(w => !found[w]);
+  }
+
+  function findDemoPath(){
+    const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+    const hits = [];
+    for (let r=0;r<N;r++) for (let c=0;c<N;c++){
+      for (const [dr,dc] of dirs){
+        const r1=r+dr*4, c1=c+dc*4;
+        if (r1<0||r1>=N||c1<0||c1>=N) continue;
+        let w=""; const cellsPath=[];
+        for (let i=0;i<5;i++){ const rr=r+dr*i, cc=c+dc*i; w+=grid[rr][cc]; cellsPath.push([rr,cc]); }
+        if (hasWord(w)) hits.push(cellsPath);
+      }
+    }
+    return hits.length ? hits[rand(hits.length)] : null;
+  }
+
+  function showDemo(){
+    const p = findDemoPath();
+    if (!p) return;
+    demoCells = p;
+    p.forEach(([r,c]) => cells[r][c].classList.add("demo"));
+    const db = document.getElementById("demoBanner");
+    if (db) db.classList.add("show");
+    demoActive = true;
+  }
+
+  function clearDemo(){
+    if (!demoActive) return;
+    demoActive = false;
+    demoCells.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo"); });
+    const db = document.getElementById("demoBanner");
+    if (db) db.classList.remove("show");
   }
 
   function hint(){
@@ -490,6 +582,8 @@
     setPlayer(nameInput.value);
     overlayEl.style.display = "none";
     mobileBar.classList.add("show");
+    mobileBottomBar.classList.add("show");
+    showDemo();
     sendStatement({
       actor: actor(),
       verb: verb("https://adlnet.gov/xapi/verbs/initialized", "initialized"),
@@ -505,10 +599,13 @@
 
   // ---------- mobile drawer toggles ----------
   const mobileBar = document.getElementById("mobileBar");
+  const mobileBottomBar = document.getElementById("mobileBottomBar");
   const leftPanel = document.getElementById("leftPanel");
   const rightPanel = document.getElementById("rightPanel");
   const menuToggle = document.getElementById("menuToggle");
   const wordsToggle = document.getElementById("wordsToggle");
+  const demoBanner = document.getElementById("demoBanner");
+  const demoClose = document.getElementById("demoClose");
   function toggleDrawer(panel, btn){
     const open = panel.classList.toggle("open");
     btn.classList.toggle("active", open);
@@ -517,6 +614,8 @@
   menuToggle.addEventListener("click", () => toggleDrawer(leftPanel, menuToggle));
   wordsToggle.addEventListener("click", () => toggleDrawer(rightPanel, wordsToggle));
   document.getElementById("mobileSubmit").addEventListener("click", submit);
+  document.getElementById("mobileHint").addEventListener("click", hint);
+  if (demoClose) demoClose.addEventListener("click", clearDemo);
 
   buildBoard();
 </script>
