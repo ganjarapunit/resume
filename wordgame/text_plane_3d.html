@@ -364,6 +364,7 @@
 
   let grid = [], cells = [], path = [], found = {}, score = 0, formable = [];
   let demoActive = false, demoCells = [];
+  let demoStep = 0, demoPath = [];
   let demoTimer = null;
   let foundPaths = {}, wordColorOf = {}, colorCursor = 0;
   const WORD_COLORS = ["#f0abfc","#86efac","#fde68a","#7dd3fc","#fca5a5","#c4b5fd","#fdba74","#a7f3d0"];
@@ -454,8 +455,13 @@
   }
 
   function updateSelection(){
-    cells.flat().forEach(c => c.classList.remove("sel"));
-    path.forEach(([r,c]) => cells[r][c].classList.add("sel"));
+    cells.flat().forEach(c => { c.classList.remove("sel"); c.style.outline = ""; c.style.outlineOffset = ""; });
+    path.forEach(([r,c]) => {
+      const el = cells[r][c];
+      el.classList.add("sel");
+      el.style.outline = "3px solid #fde68a";
+      el.style.outlineOffset = "2px";
+    });
     currentEl.textContent = path.map(([r,c]) => grid[r][c]).join("");
   }
 
@@ -464,12 +470,42 @@
   }
 
   function pick(r,c){
-    if (demoActive) clearDemo();
+    if (demoActive){ demoPick(r,c); return; }
     const last = path[path.length-1];
     if (path.some(p => p[0]===r && p[1]===c)) return;
     if (path.length && !adjacent(last,[r,c])) path = [];
     path.push([r,c]);
     updateSelection();
+  }
+
+  function demoPick(r,c){
+    const target = demoPath[demoStep];
+    if (r !== target[0] || c !== target[1]){
+      const stepEl = document.getElementById("demoStep");
+      if (stepEl) stepEl.textContent = `Tap the glowing letter (step ${demoStep+1} of ${demoPath.length}).`;
+      return;
+    }
+    path.push([r,c]);
+    updateSelection();
+    demoStep++;
+    cells[r][c].classList.add("demo");
+    cells[r][c].classList.remove("demo-now");
+    const stepEl = document.getElementById("demoStep");
+    if (demoStep < demoPath.length){
+      const [nr,nc] = demoPath[demoStep];
+      cells[nr][nc].classList.add("demo-now");
+      if (stepEl) stepEl.textContent = `Step ${demoStep+1} of ${demoPath.length} - tap the glowing letter.`;
+    } else {
+      finishDemo();
+    }
+  }
+
+  function finishDemo(){
+    demoActive = false;
+    demoPath.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo"); });
+    const w = path.map(([r,c]) => grid[r][c]).join('');
+    const stepEl = document.getElementById("demoStep");
+    if (stepEl) stepEl.textContent = `You made ${w}! Now press SUBMIT to score it.`;
   }
 
   function submit(){
@@ -584,35 +620,18 @@
     const p = findDemoPath();
     if (!p) return;
     demoCells = p;
+    demoPath = p;
+    demoStep = 0;
     demoActive = true;
     const db = document.getElementById("demoBanner");
     if (db) db.classList.add("show");
     const stepEl = document.getElementById("demoStep");
-    let i = 0;
-    function step(){
-      if (!demoActive) return;
-      p.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo-now"); });
-      if (i >= p.length){
-        if (stepEl) stepEl.textContent = "Now trace it yourself! Tap any letter to begin.";
-        return;
-      }
-      const [r,c] = p[i];
-      cells[r][c].classList.add("demo");
-      cells[r][c].classList.add("demo-now");
-      if (stepEl) stepEl.textContent = `Step ${i+1} of ${p.length} - tap the glowing letter.`;
-      i++;
-      if (i < p.length){
-        demoTimer = setTimeout(step, 750);
-      } else {
-        p.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo-now"); });
-        if (stepEl) stepEl.textContent = "Now trace it yourself! Tap any letter to begin.";
-      }
-    }
-    demoTimer = setTimeout(step, 500);
+    if (stepEl) stepEl.textContent = `Step 1 of ${p.length} - tap the glowing letter.`;
+    p.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo-now"); });
+    cells[p[0][0]][p[0][1]].classList.add("demo-now");
   }
 
   function clearDemo(){
-    if (!demoActive) return;
     demoActive = false;
     if (demoTimer) clearTimeout(demoTimer);
     demoCells.forEach(([r,c]) => {
