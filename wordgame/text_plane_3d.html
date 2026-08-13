@@ -97,6 +97,13 @@
     color: #bae6fd; background: rgba(56,189,248,0.20);
     border-radius: 6px; animation: demopulse 1.1s ease-in-out infinite;
   }
+  .cell.demo-now {
+    color: #06243f; background: #38bdf8;
+    border-radius: 6px; box-shadow: 0 0 22px rgba(56,189,248,1); text-shadow: none;
+    animation: none;
+  }
+  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+  .demoStep { margin-top: 8px; font-size: 12px; letter-spacing: 1px; color: #bae6fd; }
 
   .toast {
     position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
@@ -237,6 +244,7 @@
   </div>
   <div class="demoBanner" id="demoBanner" role="status" aria-live="polite">
     <div>Make a <b>5-letter word</b>! Letters must only touch the last one, in <b>ANY direction</b> and you can <b>turn corners</b>. The glowing tiles show one path, it bends. Try tracing them.</div>
+    <div id="demoStep" class="demoStep"></div>
     <button class="demoClose" id="demoClose">GOT IT</button>
   </div>
   <div class="toast" id="toast"></div>
@@ -356,6 +364,9 @@
 
   let grid = [], cells = [], path = [], found = {}, score = 0, formable = [];
   let demoActive = false, demoCells = [];
+  let demoTimer = null;
+  let foundPaths = {}, wordColorOf = {}, colorCursor = 0;
+  const WORD_COLORS = ["#f0abfc","#86efac","#fde68a","#7dd3fc","#fca5a5","#c4b5fd","#fdba74","#a7f3d0"];
 
   function rand(n){ return Math.floor(Math.random()*n); }
 
@@ -428,13 +439,17 @@
       }
     }
     path = []; found = {}; score = 0;
+    foundPaths = {}; wordColorOf = {}; colorCursor = 0;
     scoreEl.textContent = "0";
     currentEl.textContent = "";
     hintEl.textContent = "press HINT";
     wordListEl.innerHTML = '<li class="sub" style="border:none;background:none">none yet</li>';
     demoActive = false;
+    if (demoTimer) clearTimeout(demoTimer);
     const db = document.getElementById("demoBanner");
     if (db) db.classList.remove("show");
+    const ds = document.getElementById("demoStep");
+    if (ds) ds.textContent = "";
     updateSelection();
   }
 
@@ -464,8 +479,11 @@
     if (hasWord(word)){
       const pts = word.length * 10;
       found[word] = pts; score += pts; scoreEl.textContent = score;
-      path.forEach(([r,c]) => cells[r][c].classList.add("locked"));
-      addFound(word, pts);
+      const color = chooseWordColor(path);
+      wordColorOf[word] = color;
+      foundPaths[word] = path.slice();
+      colorTiles(path, color);
+      addFound(word, pts, color);
       toast(`+${pts}  ${word}`);
       sendStatement({
         actor: actor(),
@@ -479,11 +497,42 @@
     path = []; updateSelection();
   }
 
-  function addFound(word, pts){
+  function sharesTile(a, b){
+    return a.some(([r,c]) => b.some(([r2,c2]) => r===r2 && c===c2));
+  }
+
+  function chooseWordColor(newPath){
+    const overlap = new Set();
+    for (const w in foundPaths){
+      if (sharesTile(foundPaths[w], newPath)) overlap.add(wordColorOf[w]);
+    }
+    for (let k=0;k<WORD_COLORS.length;k++){
+      const cand = WORD_COLORS[(colorCursor + k) % WORD_COLORS.length];
+      if (!overlap.has(cand)){ colorCursor = (colorCursor + k + 1) % WORD_COLORS.length; return cand; }
+    }
+    colorCursor = (colorCursor + 1) % WORD_COLORS.length;
+    return WORD_COLORS[colorCursor];
+  }
+
+  function colorTiles(p, color){
+    p.forEach(([r,c]) => {
+      const el = cells[r] && cells[r][c];
+      if (!el) return;
+      el.classList.remove("locked","demo","demo-now","sel");
+      el.style.background = color;
+      el.style.color = "#08203a";
+      el.style.borderRadius = "6px";
+      el.style.textShadow = "none";
+      el.style.boxShadow = "none";
+    });
+  }
+
+  function addFound(word, pts, color){
     const empty = wordListEl.querySelector(".sub");
     if (empty) empty.remove();
     const li = document.createElement("li");
-    li.innerHTML = `<span>${word}</span><span class="pts">+${pts}</span>`;
+    const sw = color ? `<span class="sw" style="background:${color}"></span>` : "";
+    li.innerHTML = `${sw}<span>${word}</span><span class="pts">+${pts}</span>`;
     wordListEl.prepend(li);
   }
 
@@ -535,18 +584,47 @@
     const p = findDemoPath();
     if (!p) return;
     demoCells = p;
-    p.forEach(([r,c]) => cells[r][c].classList.add("demo"));
+    demoActive = true;
     const db = document.getElementById("demoBanner");
     if (db) db.classList.add("show");
-    demoActive = true;
+    const stepEl = document.getElementById("demoStep");
+    let i = 0;
+    function step(){
+      if (!demoActive) return;
+      p.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo-now"); });
+      if (i >= p.length){
+        if (stepEl) stepEl.textContent = "Now trace it yourself! Tap any letter to begin.";
+        return;
+      }
+      const [r,c] = p[i];
+      cells[r][c].classList.add("demo");
+      cells[r][c].classList.add("demo-now");
+      if (stepEl) stepEl.textContent = `Step ${i+1} of ${p.length} - tap the glowing letter.`;
+      i++;
+      if (i < p.length){
+        demoTimer = setTimeout(step, 750);
+      } else {
+        p.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo-now"); });
+        if (stepEl) stepEl.textContent = "Now trace it yourself! Tap any letter to begin.";
+      }
+    }
+    demoTimer = setTimeout(step, 500);
   }
 
   function clearDemo(){
     if (!demoActive) return;
     demoActive = false;
-    demoCells.forEach(([r,c]) => { if (cells[r] && cells[r][c]) cells[r][c].classList.remove("demo"); });
+    if (demoTimer) clearTimeout(demoTimer);
+    demoCells.forEach(([r,c]) => {
+      if (cells[r] && cells[r][c]){
+        cells[r][c].classList.remove("demo");
+        cells[r][c].classList.remove("demo-now");
+      }
+    });
     const db = document.getElementById("demoBanner");
     if (db) db.classList.remove("show");
+    const ds = document.getElementById("demoStep");
+    if (ds) ds.textContent = "";
   }
 
   function hint(){
