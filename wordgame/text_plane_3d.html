@@ -256,7 +256,10 @@
   // ---------- offline fallback word list (used only if words.js is missing) ----------
   const RAW = `the and for are but not you all any can had her was one our out day get has him his how man new now old see two way who boy did its let put say she too use cat dog sun run fun bat rat hat mat sat fat pat tap top tip ten pen pin pan pot pig big dig fig kit lit bit fit sit cot cut cub cue cap cop cup car bar ear eat tea sea set red bed beg bet bad bag bug mug rug tug web wet win won yes yet zip zap zen oak ore ace age ago aid aim air ale ant ape arc arm art ash ask ate awe axe aye bee bow box bra bud bug bun bus buy bye cab cam can cap car cat caw cob cod cog con cop cot cow coy cry cub cue cup cur cut dab dad dam day den dew did die dig dim din dip doe dog don dot dry dub dug dye ear eat ebb eel egg ego elf elk elm end eon era eve ewe eye fad fan far fat fax fed fee fen few fib fig fin fir fit fix fly foe fog for fox fry fun fur gag gal gap gas gel gem get gig gin gnu god got gum gun gut guy gym had hag ham has hat hay hem hen her hew hex hid him hip his hit hoe hog hop hot how hub hue hug hum hut ice icy ill imp ink inn ion ire irk its ivy jab jam jar jaw jay jet jig job jog joy jug jut keg key kid kin kit lab lad lag lap law lay led leg let lid lie lip lit lob log lot low lug lye mad man map mar mat may men met mid mix mob mom mop mud mug mum nab nag nap nay net new nib nil nip nit nod nor not now nub nun nut oak oar oat odd ode off oil old one orb ore our out owe owl own pad pal pan pap par pat paw pay pea peg pen pep pet pew pie pig pin pit ply pod pop pot pro pry pub pug pun pup pus put rag ram ran rap rat raw ray red ref rib rid rig rim rip rob rod roe rot row rub rue rug rum run rut rye sac sad sag sap sat saw say sea see set sew she shy sin sip sir sit six ski sky sly sob sod son sop sow soy spa spy sty sub sue sum sun sup tab tad tag tan tap tar tax tea ten the tie tin tip toe ton too top tot tow toy try tub tug tun tux two ugh urn use van vat vet via vie vow wad wag war was wax way web wed wee wet who why wig win wit woe wok won woo wow wry yak yam yap yaw yea yen yes yet yew yip you zap zip zoo`;
   const DICT_SET = new Set(RAW.toUpperCase().split(/\s+/).filter(Boolean));
-  const FIVE = [...DICT_SET].filter(w => w.length === 5);
+  const DEMO_FIVE = ["ABOUT","ABOVE","ACTOR","APPLE","BEACH","BRAIN","BREAD","BRING","CHAIR","DANCE","DREAM","EAGLE","EARTH","FIELD","FLAME","FRAME","GHOST","GRAPE","HEART","HOUSE","LEMON","LIGHT","MAGIC","MONEY","NIGHT","OCEAN","PAINT","PEACE","PLANT","RIVER","SMILE","SOUND","SPACE","STONE","SUGAR","TABLE","TIGER","TRAIN","WATER","WHEAT","WORLD","YOUTH"];
+  const FIVE = DEMO_FIVE;
+  for (const w of DEMO_FIVE) DICT_SET.add(w);
+  const FIVE_SET = new Set(DEMO_FIVE);
   const PREFIX = new Set();
   for (const w of DICT_SET) for (let i=1;i<=w.length;i++) PREFIX.add(w.slice(0,i));
 
@@ -484,7 +487,7 @@
         if (r1<0||r1>=N||c1<0||c1>=N) continue;
         let w=""; const cellsPath=[];
         for (let i=0;i<5;i++){ const rr=r+dr*i, cc=c+dc*i; w+=grid[rr][cc]; cellsPath.push([rr,cc]); }
-        if (hasWord(w)) hits.push(cellsPath);
+        if (FIVE_SET.has(w)) hits.push(cellsPath);
       }
     }
     return hits.length ? hits[rand(hits.length)] : null;
