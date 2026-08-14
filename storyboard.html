@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Applied AI Security &amp; Leadership — Curriculum Storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#060912;
+    --bg-1:#0a1020;
+    --bg-2:#0e1730;
+    --surface:rgba(255,255,255,.045);
+    --surface-2:rgba(255,255,255,.07);
+    --border:rgba(255,255,255,.10);
+    --border-strong:rgba(255,255,255,.18);
+    --ink:#eaf0fb;
+    --ink-soft:#aab6cf;
+    --ink-mute:#75839e;
+    --gold:#e9c46a;
+    --gold-2:#f4d58d;
+    --indigo:#818cf8;
+    --violet:#c084fc;
+    --teal:#2dd4bf;
+    --amber:#fbbf24;
+    --rose:#fb7185;
+    --green:#4ade80;
+    --shadow:0 24px 60px -20px rgba(0,0,0,.65);
+    --radius:18px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 700px at 80% -5%, rgba(129,140,248,.16), transparent 60%),
+      radial-gradient(900px 600px at 5% 10%, rgba(233,196,106,.10), transparent 55%),
+      linear-gradient(180deg,var(--bg-0),var(--bg-1) 40%,var(--bg-2));
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(233,196,106,.3);color:#fff}
+  a{color:var(--gold-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* progress + nav */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
+    background:linear-gradient(90deg,var(--gold),var(--indigo),var(--teal));box-shadow:0 0 14px rgba(233,196,106,.6)}
+  .sidenav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:14px}
+  .sidenav a{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--border-strong);background:transparent;position:relative;transition:.25s}
+  .sidenav a:hover{transform:scale(1.25);border-color:var(--gold)}
+  .sidenav a.active{background:var(--gold);border-color:var(--gold);box-shadow:0 0 12px var(--gold)}
+  .sidenav a span{position:absolute;right:24px;top:50%;transform:translateY(-50%);white-space:nowrap;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-soft);
+    background:var(--bg-2);border:1px solid var(--border);padding:4px 9px;border-radius:8px;opacity:0;pointer-events:none;transition:.2s}
+  .sidenav a:hover span{opacity:1}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  section{padding:88px 0;position:relative}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);
+    display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 60px;position:relative}
+  .slate{font-family:'JetBrains Mono',monospace;letter-spacing:.4em;font-size:13px;color:var(--ink-mute);
+    border:1px solid var(--border);padding:9px 18px;border-radius:999px;background:var(--surface);margin-bottom:30px}
+  .slate b{color:var(--gold)}
+  .hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,7vw,84px);line-height:1.02;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#fff,#bcd0f0 70%,#7e90b8);-webkit-background-clip:text;background-clip:text;color:transparent;max-width:14ch}
+  .hero .sub{margin-top:22px;font-size:clamp(16px,2vw,21px);color:var(--ink-soft);max-width:60ch;font-weight:300}
+  .chips{margin-top:38px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--ink-soft);
+    background:var(--surface);border:1px solid var(--border);padding:9px 15px;border-radius:999px}
+  .chip b{color:var(--gold-2)}
+  .filmstrip{position:absolute;left:0;right:0;bottom:0;height:54px;display:flex;gap:14px;padding:0 18px;align-items:center;
+    background:repeating-linear-gradient(90deg,transparent 0 18px,rgba(255,255,255,.04) 18px 36px);border-top:1px solid var(--border);overflow:hidden;opacity:.6}
+  .filmstrip i{width:34px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid var(--border);flex:none}
+  .scrollcue{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--ink-mute);animation:bob 2.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ACT HEADER */
+  .act-head{display:flex;align-items:flex-end;gap:26px;margin-bottom:46px;flex-wrap:wrap}
+  .act-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(60px,12vw,140px);line-height:.8;
+    background:linear-gradient(180deg,rgba(233,196,106,.9),rgba(129,140,248,.25));-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.9}
+  .act-title h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);letter-spacing:-.01em;line-height:1.05}
+  .act-title p{color:var(--ink-soft);max-width:54ch;margin-top:10px;font-weight:300}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+  .panel h3{font-family:'Space Grotesk',sans-serif;font-size:20px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+  .panel h3 .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--bg-0);background:var(--gold);padding:3px 8px;border-radius:6px;font-weight:700}
+  .panel .lead{color:var(--ink-soft);font-weight:300;margin-bottom:18px;font-size:15px}
+
+  /* CLO grid */
+  .grid{display:grid;gap:18px}
+  .clo-grid{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+  .clo{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 20px 20px 22px;overflow:hidden;transition:.25s}
+  .clo:hover{transform:translateY(-3px);border-color:var(--border-strong);background:var(--surface-2)}
+  .clo::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+  .clo .id{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--c);font-weight:700}
+  .clo .tx{margin-top:9px;font-size:15.5px;color:var(--ink);font-weight:300}
+  .clo .th{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink-mute);text-transform:uppercase}
+
+  /* storyboard grid (weeks) */
+  .sb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px;margin-top:8px}
+  .cell{position:relative;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--border);border-radius:13px;padding:16px 16px 18px;min-height:148px;display:flex;flex-direction:column;transition:.25s}
+  .cell:hover{transform:translateY(-4px);border-color:var(--indigo);box-shadow:0 18px 40px -22px rgba(129,140,248,.7)}
+  .cell .wk{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--ink-mute)}
+  .cell .wk b{color:var(--gold-2);font-size:13px}
+  .cell .mt{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-top:8px;line-height:1.15}
+  .cell .mf{font-size:12.5px;color:var(--ink-soft);font-weight:300;margin-top:7px;flex:1}
+  .cell .clos{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .clos .c{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;color:var(--bg-0)}
+  .cell.feature{border-color:var(--gold);background:linear-gradient(160deg,rgba(233,196,106,.16),rgba(233,196,106,.04));box-shadow:0 0 0 1px rgba(233,196,106,.4) inset}
+  .cell.feature .badge{position:absolute;top:-10px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;background:var(--gold);color:var(--bg-0);padding:3px 8px;border-radius:6px;font-weight:700}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2);
+    padding:12px 14px;border-bottom:1px solid var(--border-strong);font-weight:700}
+  .tbl td{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--ink-soft);vertical-align:top;font-weight:300}
+  .tbl tr:hover td{background:rgba(255,255,255,.03)}
+  .tbl td b,.tbl td strong{color:var(--ink);font-weight:500}
+  .tbl .k{color:var(--ink);font-weight:500}
+  .mini{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute)}
+
+  /* module scene */
+  .scene{background:linear-gradient(160deg,rgba(129,140,248,.10),var(--surface));border:1px solid var(--border);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .scene .corner{position:absolute;top:18px;right:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute);letter-spacing:.1em}
+  .scene h3{font-family:'Space Grotesk',sans-serif;font-size:24px;margin-bottom:4px}
+  .beats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:26px}
+  .beat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .beat .bt{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+  .beat .bx{margin-top:8px;font-size:14px;color:var(--ink-soft);font-weight:300}
+  .beat .bx b{color:var(--ink);font-weight:500;display:block;font-size:15px;margin-bottom:4px;font-family:'Space Grotesk',sans-serif}
+
+  /* arc */
+  .arc{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 8px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+  .arc .ph{padding:18px 16px;position:relative}
+  .arc .ph:not(:last-child){border-right:1px solid var(--border)}
+  .arc .ph .pa{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-mute);letter-spacing:.1em}
+  .arc .ph .pn{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin:6px 0 4px}
+  .arc .ph .phr{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold-2);font-weight:700}
+  .arc .ph .pd{font-size:12.5px;color:var(--ink-soft);font-weight:300;margin-top:6px}
+  .arc .ph.c1{background:rgba(45,212,191,.08)} .arc .ph.c2{background:rgba(129,140,248,.08)}
+  .arc .ph.c3{background:rgba(192,132,252,.08)} .arc .ph.c4{background:rgba(233,196,106,.10)}
+
+  /* resources */
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .res-col h4{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .res-col h4::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--gold)}
+  .rlink{display:block;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:13px 15px;margin-bottom:10px;transition:.2s}
+  .rlink:hover{border-color:var(--indigo);background:var(--surface-2);transform:translateX(3px);text-decoration:none}
+  .rlink .rt{color:var(--ink);font-weight:500;font-size:14.5px}
+  .rlink .ru{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute);word-break:break-all;margin-top:3px;display:block}
+  .rlink .rd{font-size:12.5px;color:var(--ink-soft);font-weight:300;margin-top:5px}
+
+  /* scenario */
+  .scn{background:linear-gradient(160deg,rgba(251,113,133,.10),var(--surface));border:1px solid var(--border);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow)}
+  .scn h3{font-family:'Space Grotesk',sans-serif;font-size:22px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+  .scn h3 .tag{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--rose);color:var(--bg-0);padding:3px 8px;border-radius:6px;font-weight:700;letter-spacing:.08em}
+  .steplist{counter-reset:s;list-style:none;margin-top:14px;display:grid;gap:10px}
+  .steplist li{counter-increment:s;position:relative;padding:12px 14px 12px 50px;background:var(--surface);border:1px solid var(--border);border-radius:11px;font-size:14.5px;color:var(--ink-soft);font-weight:300}
+  .steplist li::before{content:counter(s,decimal-leading-zero);position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--bg-0);background:var(--gold);width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+  .steplist.plain{counter-reset:none;gap:8px}
+  .steplist.plain li{padding:12px 15px;font-size:14px}
+  .steplist.plain li::before{display:none}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:860px){.two{grid-template-columns:1fr}.arc{grid-template-columns:1fr 1fr}.arc .ph:nth-child(2){border-right:none}.arc .ph:nth-child(1),.arc .ph:nth-child(2){border-bottom:1px solid var(--border)}}
+
+  .note{font-size:13px;color:var(--ink-mute);font-weight:300;margin-top:16px;font-style:italic}
+  .quote{font-size:14.5px;color:var(--ink-soft);font-weight:300;border-left:3px solid var(--gold);padding-left:16px;margin-top:14px}
+
+  footer{padding:60px 24px 80px;text-align:center;border-top:1px solid var(--border);color:var(--ink-mute);font-size:13px}
+  footer .f-mark{font-family:'Space Grotesk',sans-serif;font-size:18px;color:var(--ink-soft);letter-spacing:.02em;margin-bottom:8px}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scrollcue{animation:none}}
+  @media print{
+    @page{size:A4;margin:10mm}
+    html,body{background:#060912!important;color:var(--ink)!important}
+    #progress,.sidenav,.filmstrip,.scrollcue{display:none!important}
+    .reveal{opacity:1!important;transform:none!important}
+    section{padding:34px 0!important}
+    .panel,.cell,.scene,.scn,.clo,.beat,.chip,.rlink,.act-head,.arc,.two{break-inside:avoid}
+    .tbl tr{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<nav class="sidenav">
+  <a href="#act1" data-t="ACT I · Course Design"><span>ACT I · Course Design</span></a>
+  <a href="#act2" data-t="ACT II · Module Design"><span>ACT II · Module Design</span></a>
+  <a href="#act3" data-t="ACT III · MLOs"><span>ACT III · Module Outcomes</span></a>
+  <a href="#act4" data-t="ACT IV · Experience"><span>ACT IV · Learning Experience</span></a>
+  <a href="#basis" data-t="Design Basis"><span>Instructional Design Basis</span></a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="slate">CURRICULUM <b>STORYBOARD</b> · EC-COUNCIL UNIVERSITY</div>
+  <h1>Applied AI Security &amp; Leadership</h1>
+  <p class="sub">A board-by-board visual of a 10-week, portfolio-driven professional course, designed from Course Outcome to Learning Experience.</p>
+  <div class="chips">
+    <div class="chip"><b>4</b> Acts</div>
+    <div class="chip"><b>10</b> Modules</div>
+    <div class="chip"><b>13.5</b> h / week</div>
+    <div class="chip"><b>6</b> CLOs → <b>4</b> MLOs</div>
+    <div class="chip">Portfolio-Driven</div>
+    <div class="chip">Online · Async + Live</div>
+  </div>
+  <div class="filmstrip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="scrollcue">SCROLL ↓</div>
+</header>
+
+<!-- ACT I -->
+<section id="act1">
+  <div class="wrap">
+    <div class="act-head reveal">
+      <div class="act-num">I</div>
+      <div class="act-title">
+        <div class="eyebrow">Act One</div>
+        <h2>Course-Level Design</h2>
+        <p>We open on the whole course: six measurable Course Learning Outcomes and the refined 10-week architecture that carries the learner from AI literacy to enterprise leadership.</p>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-bottom:30px">
+      <h3><span class="tag">SC.01</span> Develop 6 Course Learning Outcomes</h3>
+      <p class="lead">Each CLO begins with a measurable verb and reflects workplace capability, not knowledge recall. Collectively they span foundations, risk, governance, compliance, assurance, and readiness.</p>
+      <div class="grid clo-grid" id="clogrid"></div>
+    </div>
+
+    <div class="panel reveal">
+      <h3><span class="tag">SC.02</span> Refined Course Architecture — 10 Weeks</h3>
+      <p class="lead">The original 12 suggested nodes were consolidated into 10 modules with the capstone embedded in Week 10, producing a cleaner instructional progression: the learner first understands the AI system, then manages its risk, governs and complies with it, assures and responds to incidents, and finally leads the workforce. This follows a cognitively sound path from comprehension to application to leadership (Bloom's higher-order; Fink's integration).</p>
+      <div class="sb-grid" id="weekgrid"></div>
+      <p class="note">Module 6 is developed in full depth in Acts II–IV. The capstone integrates the portfolio and workforce-readiness outcomes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACT II -->
+<section id="act2">
+  <div class="wrap">
+    <div class="act-head reveal">
+      <div class="act-num">II</div>
+      <div class="act-title">
+        <div class="eyebrow">Act Two</div>
+        <h2>Detailed Module Design</h2>
+        <p>The camera moves in on a single module, developed completely: a role-based scenario where the learner becomes the AI Risk Manager at Meridian Regional Bank.</p>
+      </div>
+    </div>
+
+    <div class="scene reveal">
+      <div class="corner">MODULE 06 / 10</div>
+      <div class="eyebrow">Selected Module</div>
+      <h3>AI Risk Management: Building the Enterprise AI Risk Register</h3>
+      <div class="beats">
+        <div class="beat"><div class="bt">Role</div><div class="bx"><b>AI Risk Manager</b>You are the newly appointed AI Risk Manager at Meridian Regional Bank, a mid-size institution that has accelerated AI adoption.</div></div>
+        <div class="beat"><div class="bt">Problem</div><div class="bx"><b>No consolidated risk view</b>A biased credit-decline pattern and a chatbot that leaked non-public info exposed real gaps. Leadership cannot answer: what are our AI risks, how severe, and what are we doing?</div></div>
+        <div class="beat"><div class="bt">What you do</div><div class="bx"><b>Run the framework</b>Apply NIST AI RMF (Govern, Map, Measure, Manage) with MITRE ATLAS to a live scenario, score risks, and build a treatment plan.</div></div>
+        <div class="beat"><div class="bt">Capability</div><div class="bx"><b>Audit-ready artifact</b>Leave able to facilitate an AI risk assessment and produce the scored, owned, actionable register an audit committee expects.</div></div>
+        <div class="beat"><div class="bt">Portfolio</div><div class="bx"><b>Centerpiece artifact</b>Your completed register evidences CLO2 (evaluate AI risk) and CLO6 (integrated AI-readiness portfolio).</div></div>
+        <div class="beat"><div class="bt">Employer value</div><div class="bx"><b>Scarce, hireable skill</b>Regulators (OCC, EBA, EU AI Act) expect documented AI risk management; boards are hiring specifically for this.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACT III -->
+<section id="act3">
+  <div class="wrap">
+    <div class="act-head reveal">
+      <div class="act-num">III</div>
+      <div class="act-title">
+        <div class="eyebrow">Act Three</div>
+        <h2>Module Learning Outcomes</h2>
+        <p>Four measurable MLOs for Module 6, each aligned directly to the Course Learning Outcomes above. The alignment chain is the spine of the design.</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <h3><span class="tag">SC.03</span> 3–5 Module Learning Outcomes &amp; CLO Alignment</h3>
+      <p class="lead">Every MLO maps to a CLO, ensuring the module contributes measurably to course-level capability.</p>
+      <table class="tbl" id="mlotable"></table>
+      <p class="note">Portfolio alignment: MLO3 &amp; MLO4 → CLO2, CLO3, CLO6.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACT IV -->
+<section id="act4">
+  <div class="wrap">
+    <div class="act-head reveal">
+      <div class="act-num">IV</div>
+      <div class="act-title">
+        <div class="eyebrow">Act Four</div>
+        <h2>Learning Experience Design</h2>
+        <p>The full 13.5-hour week, built for a working professional and sequenced as a story arc: Acquire → Explore → Practice → Apply / Demonstrate.</p>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-bottom:26px">
+      <h3><span class="tag">SC.04</span> 13.5-Hour Weekly Schedule</h3>
+      <p class="lead">Time is deliberately non-uniform, justified by content complexity and application effort rather than equal allocation.</p>
+      <div class="arc">
+        <div class="ph c1"><div class="pa">PHASE 01</div><div class="pn">Acquire</div><div class="phr">4.0 h</div><div class="pd">Reading &amp; reference + video lectures</div></div>
+        <div class="ph c2"><div class="pa">PHASE 02</div><div class="pn">Explore</div><div class="phr">1.0 h</div><div class="pd">Rise interactions: accordion, process, flashcards, tabs, scenario</div></div>
+        <div class="ph c3"><div class="pa">PHASE 03</div><div class="pn">Practice</div><div class="phr">4.0 h</div><div class="pd">Decision lab + formative knowledge check</div></div>
+        <div class="ph c4"><div class="pa">PHASE 04</div><div class="pn">Apply / Demonstrate</div><div class="phr">4.5 h</div><div class="pd">Portfolio register &amp; brief + 1-hour live session</div></div>
+      </div>
+      <table class="tbl" id="schedtable" style="margin-top:18px"></table>
+      <p class="quote">"Acquisition is capped because mid-career learners are time-poor and learn by doing; Cognitive Load Theory argues against overloading the working professional with passive content. The heaviest investment is Practice/Apply/Demonstrate (8.5h), reflecting the workforce-ready, portfolio-driven intent and SDT's competence/autonomy needs."</p>
+    </div>
+
+    <div class="panel reveal" style="margin-bottom:26px">
+      <h3><span class="tag">SC.05</span> Learning Resources</h3>
+      <p class="lead">All resources are openly accessible and WCAG 2.1 AA-compliant where hosted; instructor media carry captions and transcripts.</p>
+      <div class="res-grid" id="resgrid"></div>
+    </div>
+
+    <div class="scn reveal" style="margin-bottom:26px">
+      <h3><span class="tag">LAB</span> Applied Scenario / Decision Lab</h3>
+      <p style="color:var(--ink-soft);font-weight:300;font-size:15px"><b style="color:var(--ink)">Meridian Regional Bank: AI Risk Decision Lab.</b> You are the AI Risk Manager at Meridian Regional Bank. Two production systems are in scope: (a) an automated credit-decisioning model and (b) a generative-AI customer-service assistant. A recent regulatory inquiry asks the bank to evidence its AI risk process within 30 days.</p>
+      <ul class="steplist">
+        <li>Map each system: document its purpose, data inputs, users, and deployment context.</li>
+        <li>Identify 6–8 candidate risks using the NIST AI RMF and MITRE ATLAS (biased credit declines, prompt-injection leakage, drift, adversarial input).</li>
+        <li>Score each risk on a 5×5 likelihood×impact matrix and compute a priority rating.</li>
+        <li>Choose a treatment for each risk (mitigate, transfer, accept, avoid) with a rationale.</li>
+        <li>Assign a risk owner and a review date; record everything in the register template.</li>
+        <li>Write a one-paragraph reflection on residual risk and business trade-offs.</li>
+      </ul>
+      <p class="quote" style="border-color:var(--rose)">Expected output: a draft AI risk register (min. 6 scored, treated, owned risks) plus a reflective paragraph. This output feeds directly into the portfolio assignment and evidences MLO1–MLO3. Document: <span class="mini">AI_Risk_Decision_Lab_Worksheet</span>.</p>
+    </div>
+
+    <div class="two reveal" style="margin-bottom:26px">
+      <div class="panel">
+        <h3><span class="tag">SC.06</span> Knowledge Check</h3>
+        <p class="lead">Formative, scenario-based, with immediate feedback. Eight MCQs + one decision task; sample items below.</p>
+        <table class="tbl" id="kctable"></table>
+      </div>
+      <div class="panel">
+        <h3><span class="tag">SC.07</span> Live Session Plan (1 hour)</h3>
+        <p class="lead">Facilitated synchronously; recorded with captions and offered as an async alternative (UDL).</p>
+        <table class="tbl" id="livetable"></table>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-bottom:26px">
+      <h3><span class="tag">SC.08</span> Portfolio Assignment &amp; Rubric</h3>
+      <p class="lead">Summative: <b style="color:var(--ink)">Enterprise AI Risk Register &amp; Treatment Brief.</b> Learners finalize the decision-lab draft into a submission-grade artifact: a scored register of at least 8 risks (owned, treated, residual-rated) plus a 1-page treatment brief. Alignment: MLO3 &amp; MLO4 → CLO2, CLO3, CLO6.</p>
+      <table class="tbl" id="rubtable"></table>
+    </div>
+  </div>
+</section>
+
+<!-- BASIS -->
+<section id="basis">
+  <div class="wrap">
+    <div class="act-head reveal">
+      <div class="act-num" style="background:linear-gradient(180deg,rgba(45,212,191,.8),rgba(45,212,191,.15));-webkit-background-clip:text;background-clip:text;color:transparent">+</div>
+      <div class="act-title">
+        <div class="eyebrow">Encore</div>
+        <h2>Instructional Design Basis &amp; QA</h2>
+        <p>The frameworks that justify the design decisions across Acts I–IV, demonstrating the instructional judgment expected of an independent curriculum designer.</p>
+      </div>
+    </div>
+    <div class="two reveal">
+      <div class="panel">
+        <h3><span class="tag">MODEL</span> Evaluation Framework</h3>
+        <p class="lead">CIPP model frames the design and its evaluation plan.</p>
+        <p class="quote"><b style="color:var(--ink)">Context</b> — mid-career, online, workforce-ready audience with limited weekly time.<br><b style="color:var(--ink)">Input</b> — 13.5h/week budget, NIST/MITRE/ISO frameworks, Rise + live delivery.<br><b style="color:var(--ink)">Process</b> — iterative Rapid Prototyping of the module before full-course rollout.<br><b style="color:var(--ink)">Product</b> — portfolio artifact graded by a transparent rubric.</p>
+        <p class="note">Formative: expert review → one-to-one learner test → small-group pilot → field trial, each informing revision. Confirmative: post-launch check that graduates apply the portfolio artifact in their workplace roles.</p>
+      </div>
+      <div class="panel">
+        <h3><span class="tag">STD</span> Quality &amp; Inclusion Standards</h3>
+        <ul class="steplist plain">
+          <li><b style="color:var(--ink)">QM / OLCQR</b> — measurable outcomes, assessment-aligned design, transparent rubric, accessible media.</li>
+          <li><b style="color:var(--ink)">UDL</b> — Engagement (scenario choice, live session); Representation (readings + video + Rise); Action/Expression (flexible register format).</li>
+          <li><b style="color:var(--ink)">WCAG 2.1 AA</b> — captions/transcripts on video, colour contrast, keyboard navigation.</li>
+          <li><b style="color:var(--ink)">Microsoft Inclusive Design</b> — the Meridian Bank persona-spectrum scenario is fixed for one and extended to many.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel reveal" style="margin-top:26px">
+      <h3><span class="tag">MAP</span> UKPSFHE Mapping (Designer Practice)</h3>
+      <table class="tbl" id="uktable"></table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-mark">Applied AI Security &amp; Leadership</div>
+  <div>Curriculum Storyboard · EC-Council University professional course design package</div>
+  <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px">CLO → MLO → Content → Practice → Assessment → Portfolio Artifact</div>
+</footer>
+
+<script>
+/* ---------- DATA ---------- */
+const CLO = [
+  {id:'CLO1',c:'var(--teal)',th:'AI Foundations & Enterprise Systems',tx:'Analyze enterprise AI system architectures and lifecycle stages to identify where governance, risk, and security controls must be applied.'},
+  {id:'CLO2',c:'var(--indigo)',th:'AI Risk & Security',tx:'Evaluate AI security threats and risk exposures using MITRE ATLAS and the NIST AI RMF to produce a prioritized, scored AI risk register.'},
+  {id:'CLO3',c:'var(--violet)',th:'AI Governance',tx:'Design an AI governance operating model (accountability structures, roles, and policies) that aligns with organizational strategy and stakeholder expectations.'},
+  {id:'CLO4',c:'var(--amber)',th:'Compliance & Responsible AI',tx:'Apply AI regulatory and responsible-AI requirements (EU AI Act, ISO/IEC 42001) to assess compliance gaps and recommend remediation actions.'},
+  {id:'CLO5',c:'var(--rose)',th:'AI Assurance & Incident Response',tx:'Develop an AI assurance and incident-response plan defining testing, continuous monitoring, audit, and containment procedures for deployed systems.'},
+  {id:'CLO6',c:'var(--green)',th:'Workforce & Organizational Readiness',tx:'Construct an integrated AI-readiness portfolio (risk register + governance policy + compliance gap analysis) that demonstrates applied capability to lead enterprise AI security and governance initiatives.'},
+];
+const WEEKS = [
+  {w:1,m:'AI Foundations & Enterprise AI Systems',f:'System/lifecycle literacy; where controls apply',c:['CLO1'],col:'var(--teal)'},
+  {w:2,m:'Responsible & Trustworthy AI',f:'Ethical & affective grounding',c:['CLO4','CLO6'],col:'var(--amber)'},
+  {w:3,m:'AI Strategy & Organizational Readiness',f:'Linking AI to business strategy',c:['CLO3','CLO6'],col:'var(--violet)'},
+  {w:4,m:'AI Governance & Accountability',f:'Operating model, roles, policy',c:['CLO3'],col:'var(--violet)'},
+  {w:5,m:'AI Compliance & Regulatory Frameworks',f:'EU AI Act, ISO/IEC 42001 mapping',c:['CLO4'],col:'var(--amber)'},
+  {w:6,m:'AI Risk Management (NIST AI RMF)',f:'Risk identification, scoring, register',c:['CLO2'],col:'var(--indigo)',feat:true},
+  {w:7,m:'AI Security & Threats (MITRE ATLAS)',f:'Threat modelling & defence',c:['CLO2'],col:'var(--indigo)'},
+  {w:8,m:'Privacy, Data & Trust',f:'Data governance & trust engineering',c:['CLO4'],col:'var(--amber)'},
+  {w:9,m:'AI Assurance, Audit & Incident Response',f:'Monitoring, audit, containment',c:['CLO5'],col:'var(--rose)'},
+  {w:10,m:'Workforce Readiness & Capstone',f:'Integrate portfolio; lead readiness',c:['CLO5','CLO6'],col:'var(--green)'},
+];
+const MLO = [
+  {id:'MLO1',tx:'Identify and categorize AI-specific risks across the model lifecycle of a deployed system using the NIST AI RMF (Map/Measure) and a structured risk taxonomy.',align:['CLO2']},
+  {id:'MLO2',tx:'Evaluate AI threat scenarios for a given enterprise use case using the MITRE ATLAS catalogue, judging likelihood, impact, and current control coverage.',align:['CLO2']},
+  {id:'MLO3',tx:'Construct a prioritized, scored AI risk register that records risk owner, treatment option, and residual-risk rating for each identified risk.',align:['CLO2','CLO6']},
+  {id:'MLO4',tx:'Recommend risk-treatment and accountability measures that balance control effectiveness with business enablement, and present them to a governance audience.',align:['CLO2','CLO3','CLO6']},
+];
+const SCHED = [
+  ['Reading / Reference','Six curated readings (NIST AI RMF; MITRE ATLAS; EU AI Act; OECD AI Principles; ISO/IEC 42001; AI Incident Database) + a 5-item pre-module AI-risk literacy self-audit.','2.5 h'],
+  ['Video Resources','Four verified videos (NIST AI RMF explainer; MITRE Secure-AI webinar; EU AI Act; OECD.AI) + instructor “Map/Measure/Manage” microlectures.','1.5 h'],
+  ['Interactive / Explainers','Five Rise interactions: Accordion (RMF functions); Process (risk lifecycle); Flashcards (taxonomy); Tabs (ATLAS tactics); Scenario (incident triage).','1.0 h'],
+  ['Learning Exercise','Meridian Bank AI Risk Decision Lab: map systems, identify 6–8 risks via ATLAS+RMF, score on a 5×5 matrix, choose treatments, assign owners; draft register.','3.0 h'],
+  ['Knowledge Check','Formative check: 8 scenario MCQs + 1 decision task with immediate feedback.','1.0 h'],
+  ['Portfolio Assignment','Build & submit the Enterprise AI Risk Register + 1-page Treatment Brief (template provided); peer-review one peer draft.','3.5 h'],
+  ['Live Session','Instructor-led 1h: expert-modeled assessment, breakout peer review, Q&A (recorded with captions; async alternative provided).','1.0 h'],
+  ['Total','Acquire · Explore · Practice · Apply/Demonstrate (diagnostic folded into Reading/Reference).','~13.5 h'],
+];
+const RES = [
+  {g:'Readings / Reference',items:[
+    {t:'NIST AI Risk Management Framework (AI 100-1)',u:'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf',d:'Full document PDF — the four functions of the RMF.'},
+    {t:'MITRE ATLAS',u:'https://github.com/mitre-atlas/atlas-data',d:'Official tactics/techniques/case-study data repository.'},
+    {t:'EU AI Act',u:'https://artificialintelligenceact.eu/the-act/',d:'Annotated full text — articles, risk tiers and obligations.'},
+    {t:'OECD AI Principles',u:'https://oecd.ai/en/ai-principles',d:'The official responsible-AI principles.'},
+    {t:'ISO/IEC 42001:2023',u:'https://www.iso.org/standard/81230.html',d:'AI Management System standard page.'},
+    {t:'AI Incident Database',u:'https://incidentdatabase.ai/apps/incidents/',d:'Real-world case studies for the scenario.'},
+  ]},
+  {g:'Video Resources',items:[
+    {t:'NIST AI RMF 1.0 Explainer',u:'https://www.nist.gov/video/introduction-nist-ai-risk-management-framework-ai-rmf-10-explainer-video',d:'Official NIST explainer video.'},
+    {t:'Secure AI Webinar — MITRE',u:'https://ctid.mitre.org/videos/secure-ai-webinar/',d:'Threat-informed defense (ATLAS lead).'},
+    {t:'Introduction to the EU AI Act',u:'https://digital-skills-jobs.europa.eu/en/inspiration/resources/introduction-ai-act-ai4gov-video-resource',d:'EU video resource.'},
+    {t:'OECD.AI Videos',u:'https://oecd.ai/en/videos',d:'Responsible-AI governance library.'},
+    {t:"'Anatomy of an AI Attack: MITRE ATLAS'",u:'https://www.youtube.com/watch?v=QhoG74PDFyc',d:'Supplementary video.'},
+  ]},
+  {g:'Interactive / Explainers (Rise 360)',items:[
+    {t:'Accordion — NIST AI RMF Functions',u:'#',d:'Govern/Map/Measure/Manage with expandable detail.'},
+    {t:'Process Block — AI Risk Lifecycle',u:'#',d:'Identify → Score → Treat → Monitor.'},
+    {t:'Flashcards — Risk Taxonomy',u:'#',d:'Likelihood, impact, residual risk, treatment.'},
+    {t:'Tabs — MITRE ATLAS Tactic Categories',u:'#',d:'Organizes threats by type.'},
+    {t:'Scenario Block — Triage an AI Incident',u:'#',d:'Branching practice before the lab.'},
+  ]},
+];
+const KC = [
+  ['1','Which NIST AI RMF function establishes policy, accountability, and culture?','C – Govern. Feedback: Govern sets organizational context, policy, and accountability before other functions.'],
+  ['2','MITRE ATLAS is best described as:','B – an adversarial threat catalogue for AI. Feedback: It catalogs real-world AI attack tactics, not a law or scoring matrix.'],
+  ['3','A credit model shows disparate impact across protected groups. Best first treatment?','B – Mitigate via fairness testing & retraining. Feedback: Mitigate addresses the harm while preserving business value.'],
+  ['4','Residual risk is:','B – risk remaining after treatment. Feedback: It reflects what persists post-control and drives monitoring priorities.'],
+];
+const LIVE = [
+  ['0:00–0:10','Warm-up & poll','Live poll on pre-work; surface misconceptions.','Social Learning; SDT (relatedness)'],
+  ['0:10–0:25','Expert modeling','Facilitator models a live risk assessment of a sample system.','Bandura (modeling)'],
+  ['0:25–0:45','Breakout peer review','Small groups review draft registers; each presents one risk.','Constructivism; SDT (competence)'],
+  ['0:45–0:55','Q&A / myth-busting','Address common AI-risk myths with corrective examples.','Behaviourism (correction)'],
+  ['0:55–1:00','Wrap & next steps','Portfolio reminders; reflection prompt.','SDT (autonomy)'],
+];
+const RUB = [
+  ['Risk Identification','20%','Completeness, relevance, and taxonomy accuracy of identified risks.'],
+  ['Scoring Rigor','25%','Defensible likelihood/impact ratings and priority computation.'],
+  ['Treatment Quality','25%','Appropriate treatment choice with clear rationale and ownership.'],
+  ['Governance Alignment','15%','Connects to accountability, policy, and regulatory expectations.'],
+  ['Communication','15%','Clarity and executive-readiness of the treatment brief.'],
+];
+const UK = [
+  ['A1 Design / plan learning','Authored CLOs, MLOs, and the 13.5h schedule (Parts 1–3).'],
+  ['A2 Teach / facilitate','Structured 1-hour live session with modeling and peer review.'],
+  ['A4 Develop & evaluate','Portfolio rubric and formative/confirmative evaluation plan.'],
+  ['V1 Inclusive practice','UDL, WCAG, and persona-spectrum scenario design.'],
+  ['V2 Reflective practice','This rationale appendix documenting design decisions.'],
+  ['V4 Collaboration','Peer review of drafts in live session and portfolio.'],
+  ['K2 Subject knowledge','AI risk/security domain (NIST AI RMF, MITRE ATLAS, EU AI Act, ISO 42001).'],
+  ['K4 Pedagogic knowledge','Bloom/Fink, Constructivism, CLT, SDT applied throughout.'],
+];
+
+/* ---------- RENDER ---------- */
+const cloColors = {CLO1:'var(--teal)',CLO2:'var(--indigo)',CLO3:'var(--violet)',CLO4:'var(--amber)',CLO5:'var(--rose)',CLO6:'var(--green)'};
+const el = (h)=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstChild;};
+
+document.getElementById('clogrid').append(...CLO.map(c=>el(`
+  <div class="clo" style="--c:${c.c}">
+    <div class="id">${c.id}</div>
+    <div class="tx">${c.tx}</div>
+    <div class="th">${c.th}</div>
+  </div>`)));
+
+document.getElementById('weekgrid').append(...WEEKS.map(w=>el(`
+  <div class="cell ${w.feat?'feature':''}" style="--c:${w.col}">
+    ${w.feat?'<div class="badge">DESIGNED IN DEPTH</div>':''}
+    <div class="wk">WEEK <b>${String(w.w).padStart(2,'0')}</b></div>
+    <div class="mt">${w.m}</div>
+    <div class="mf">${w.f}</div>
+    <div class="clos">${w.c.map(x=>`<span class="c" style="background:${cloColors[x]}">${x}</span>`).join('')}</div>
+  </div>`)));
+
+const mloT=document.getElementById('mlotable');
+mloT.innerHTML='<tr><th>Module Learning Outcome</th><th>Aligned CLO(s)</th></tr>'+MLO.map(m=>
+  `<tr><td><span class="k">${m.id}</span> — ${m.tx}</td><td>${m.align.map(x=>`<span class="mini" style="color:${cloColors[x]};font-weight:700">${x}</span>`).join(' &nbsp;')}</td></tr>`).join('');
+
+const sT=document.getElementById('schedtable');
+sT.innerHTML='<tr><th>Learning Component</th><th>Activity</th><th>Est. Time</th></tr>'+SCHED.map(r=>
+  `<tr><td class="k">${r[0]}</td><td>${r[1]}</td><td><span class="mini" style="color:var(--gold-2);font-weight:700">${r[2]}</span></td></tr>`).join('');
+
+const rg=document.getElementById('resgrid');
+rg.append(...RES.map(col=>{
+  const items=col.items.map(it=>{
+    const href = it.u==='#'?'#':it.u;
+    return `<a class="rlink" href="${href}" ${it.u!=='#'?'target="_blank" rel="noopener"':''}>
+      <span class="rt">${it.t}</span>
+      ${it.u!=='#'?`<span class="ru">${it.u}</span>`:''}
+      <span class="rd">${it.d}</span></a>`;
+  }).join('');
+  return el(`<div class="res-col"><h4>${col.g}</h4>${items}</div>`);
+}));
+
+const kcT=document.getElementById('kctable');
+kcT.innerHTML='<tr><th>#</th><th>Question</th><th>Correct Answer &amp; Feedback</th></tr>'+KC.map(r=>
+  `<tr><td class="mini" style="color:var(--gold-2);font-weight:700">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+const lvT=document.getElementById('livetable');
+lvT.innerHTML='<tr><th>Time</th><th>Segment</th><th>Activity</th><th>Theory Basis</th></tr>'+LIVE.map(r=>
+  `<tr><td class="mini" style="color:var(--gold-2);font-weight:700">${r[0]}</td><td class="k">${r[1]}</td><td>${r[2]}</td><td class="mini">${r[3]}</td></tr>`).join('');
+
+const rbT=document.getElementById('rubtable');
+rbT.innerHTML='<tr><th>Criterion</th><th>Weight</th><th>Indicators</th></tr>'+RUB.map(r=>
+  `<tr><td class="k">${r[0]}</td><td><span class="mini" style="color:var(--gold-2);font-weight:700">${r[1]}</span></td><td>${r[2]}</td></tr>`).join('');
+
+const ukT=document.getElementById('uktable');
+ukT.innerHTML='<tr><th>Dimension</th><th>How Reflected in This Package</th></tr>'+UK.map(r=>
+  `<tr><td class="k">${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+
+/* ---------- SCROLL FX ---------- */
+const prog=document.getElementById('progress');
+const navLinks=[...document.querySelectorAll('.sidenav a')];
+const secs=navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+function onScroll(){
+  const h=document.documentElement;
+  const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  prog.style.width=(sc*100)+'%';
+  let idx=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<=window.innerHeight*0.4)idx=i;});
+  navLinks.forEach((a,i)=>a.classList.toggle('active',i===idx));
+}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+</script>
+</body>
+</html>

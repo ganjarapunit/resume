@@ -30,6 +30,7 @@ const PAGES = [
   ['/ai-ethics-training.html', 'AI Ethics Training', '.h5p-wrap'],
   ['/workplace-safety-scorm/', 'Workplace Safety SCORM Course', '.course-container'],
   ['/wordgame/text_plane_3d.html', 'Lexiplane 3D Word Hunt', '#plane'],
+  ['/storyboard.html', 'Storyboarding Sample', 'body'],
 ];
 
 // MIME types
