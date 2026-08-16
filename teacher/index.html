@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punit Ganjara | ESL Teacher, Trainer &amp; Instructional Designer</title>
+<meta name="description" content="Punit Ganjara — ESL teacher and trainer with 7+ years experience (British Council, Apollo, EF). Online via Google Meet; face-to-face in Ho Chi Minh City. Also an instructional designer building SCORM, xAPI and H5P learning.">
+<meta name="author" content="Punit Ganjara">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Punit Ganjara | ESL Teacher, Trainer &amp; Instructional Designer">
+<meta property="og:description" content="ESL teacher and trainer (British Council, Apollo, EF). Online via Google Meet; face-to-face in Ho Chi Minh City. Instructional designer for SCORM, xAPI and H5P.">
+<meta name="theme-color" content="#0b1f3a">
+<link rel="canonical" href="https://ganjarapunit.github.io/resume/teacher/">
+
+<style>
+  /* ── DESIGN TOKENS ── */
+  :root {
+    /* Light theme: near-black text on white = very high contrast (>= 14:1) */
+    --bg: #ffffff;
+    --surface: #f4f6fb;
+    --surface-2: #eaf0fb;
+    --border: #c9d4e6;
+    --text: #0b1f3a;          /* primary text */
+    --text-strong: #07142b;   /* headings */
+    --text-muted: #3a4a63;    /* secondary, still >= 7:1 on white */
+    --primary: #0b3d91;       /* deep blue, >= 8:1 on white */
+    --primary-ink: #ffffff;
+    --accent: #8a4b00;        /* dark amber for text, >= 4.5:1 on white */
+    --focus: #0a66ff;
+    --maxw: 1080px;
+  }
+
+  [data-theme="dark"] {
+    --bg: #0a1426;
+    --surface: #12203a;
+    --surface-2: #1a2d4d;
+    --border: #2c4063;
+    --text: #f4f7fc;          /* >= 14:1 on dark bg */
+    --text-strong: #ffffff;
+    --text-muted: #c3d0e3;    /* >= 7:1 on dark bg */
+    --primary: #7fb0ff;
+    --primary-ink: #07142b;
+    --accent: #ffc266;
+    --focus: #66a3ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 1.0625rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── ACCESSIBILITY HELPERS ── */
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    background: var(--primary);
+    color: var(--primary-ink);
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    z-index: 1000;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 12px; }
+
+  a:focus-visible,
+  button:focus-visible,
+  .card:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 68px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text-strong);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .brand span { color: var(--primary); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { color: var(--text-strong); }
+
+  .theme-btn {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .theme-btn:hover { border-color: var(--primary); }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block; width: 22px; height: 2px;
+    background: var(--text); margin: 4px 0; border-radius: 2px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    padding: 56px 0 64px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 1.1;
+    color: var(--text-strong);
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+  h1 .secondary {
+    display: block;
+    white-space: nowrap;
+    font-size: clamp(0.95rem, 1.9vw, 1.2rem);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0;
+    margin-top: 10px;
+  }
+  .hero p.lead {
+    color: var(--text-muted);
+    max-width: 52ch;
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin-bottom: 28px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .pill svg { width: 18px; height: 18px; color: var(--primary); flex-shrink: 0; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid transparent;
+    font-size: 0.98rem;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-primary { background: var(--primary); color: var(--primary-ink); }
+  .btn-primary:hover { filter: brightness(1.12); }
+  .btn-outline { background: transparent; color: var(--text-strong); border-color: var(--primary); }
+  .btn-outline:hover { background: var(--surface-2); }
+
+  .portrait {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
+    border: 3px solid var(--border);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-weight: 700;
+    text-align: center;
+    overflow: hidden;
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .portrait figcaption { padding: 12px; font-size: 0.9rem; color: var(--text-muted); }
+
+  /* ── SECTIONS ── */
+  section.block { padding: 64px 0; border-bottom: 2px solid var(--border); }
+  .section-head { margin-bottom: 36px; }
+  .section-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+    color: var(--text-strong);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+  h3 { color: var(--text-strong); font-size: 1.25rem; margin-bottom: 8px; }
+
+  .prose { color: var(--text-muted); max-width: 70ch; }
+  .prose strong { color: var(--text); }
+
+  /* ── COMPETENCY GRID ── */
+  .grid { display: grid; gap: 18px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .card h3 { display: flex; align-items: center; gap: 10px; }
+  .card h3 svg { width: 22px; height: 22px; color: var(--primary); flex-shrink: 0; }
+  .tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .tag-list li {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── FRAMEWORKS ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .chip small { display: block; font-weight: 500; font-size: 0.72rem; color: var(--text-muted); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; margin-top: 12px; }
+  .job {
+    border-left: 4px solid var(--primary);
+    padding: 0 0 36px 26px;
+    position: relative;
+  }
+  .job:last-child { padding-bottom: 0; }
+  .job::before {
+    content: "";
+    position: absolute;
+    left: -11px; top: 6px;
+    width: 18px; height: 18px;
+    background: var(--primary);
+    border: 3px solid var(--bg);
+    border-radius: 50%;
+  }
+  .job .role { font-size: 1.2rem; color: var(--text-strong); font-weight: 800; }
+  .job .org { font-weight: 700; color: var(--primary); }
+  .job .dates { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+  .job ul { margin: 10px 0 0; padding-left: 20px; color: var(--text-muted); }
+  .job ul li { margin-bottom: 6px; }
+
+  /* ── MODALITY CALL-OUT ── */
+  .modalities { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .modality {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    background: var(--surface);
+  }
+  .modality.online { border-color: var(--primary); }
+  .modality h3 { display: flex; align-items: center; gap: 10px; }
+  .modality h3 svg { width: 24px; height: 24px; color: var(--primary); }
+  .modality p { color: var(--text-muted); margin-top: 6px; }
+  .modality .note { margin-top: 10px; font-weight: 700; color: var(--text); }
+
+  /* ── REVIEWS ── */
+  .reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .review {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .stars { color: var(--accent); font-size: 1.1rem; letter-spacing: 2px; font-weight: 800; }
+  .review p { color: var(--text); margin-top: 8px; font-style: italic; }
+
+  /* ── PORTFOLIO / ID ── */
+  .id-list { list-style: none; display: grid; gap: 12px; }
+  .id-list li {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .id-list strong { color: var(--text-strong); }
+  .id-list a { color: var(--primary); font-weight: 700; }
+
+  /* ── EDUCATION / CERTS ── */
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .fact { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 18px; }
+  .fact .k { font-weight: 800; color: var(--text-strong); }
+  .fact .v { color: var(--text-muted); }
+  .certs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .cert {
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 700;
+    color: var(--text);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .cert svg { width: 18px; height: 18px; color: var(--primary); }
+
+  /* ── CONTACT / FOOTER ── */
+  .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 8px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+  }
+  .contact-item svg { width: 22px; height: 22px; color: var(--primary); flex-shrink: 0; }
+  .contact-item a { color: var(--text); font-weight: 700; text-decoration: none; word-break: break-word; }
+  .contact-item a:hover { color: var(--primary); text-decoration: underline; }
+
+  footer.site {
+    padding: 32px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* ── REVEAL ANIMATION (respects reduced motion) ── */
+  .reveal { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .portrait { max-width: 320px; margin: 0 auto; }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .modalities, .reviews, .facts, .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links {
+      position: fixed;
+      inset: 68px 0 auto 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+      padding: 8px 24px 18px;
+      display: none;
+    }
+    .nav-links.open { display: flex; flex-direction: column; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .menu-toggle { display: block; }
+    .grid-2, .grid-4 { grid-template-columns: 1fr; }
+    .hero h1 .secondary { font-size: 0.82rem; }
+  }
+  @media (max-width: 380px) {
+    .hero h1 .secondary { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top">Punit <span>Ganjara</span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" id="menuBtn" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#competencies">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#teaching">How I Teach</a></li>
+      <li><a href="#design">Instructional Design</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li>
+        <button class="theme-btn" id="themeBtn" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <span id="top"></span>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">ESL Teacher &amp; Trainer</span>
+        <h1 id="hero-name">
+          Punit Ganjara
+          <span class="secondary">Teacher &amp; Trainer, with Instructional Design built in</span>
+        </h1>
+        <p class="lead">
+          I teach English to learners aged 4 to 25, both online and in person. I also design the
+          curriculum and digital learning behind my lessons, so my students get teaching and
+          materials that fit them.
+        </p>
+        <div class="hero-meta">
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
+            Ho Chi Minh City, Vietnam
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+            ganjarapunit@gmail.com
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            +84 822 523 395
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            +91 90961 05012
+          </span>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Get in touch
+          </a>
+          <a class="btn btn-outline" href="#teaching">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+            How I teach
+          </a>
+        </div>
+      </div>
+      <figure class="portrait">
+        <img src="punit-portrait.jpg" alt="Punit Ganjara, ESL teacher, trainer and instructional designer, based in Ho Chi Minh City">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block" id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Professional Summary</div>
+        <h2 id="about-h">A classroom teacher who also builds the learning</h2>
+      </div>
+      <p class="prose reveal">
+        Dynamic and adaptable ESL educator with <strong>7+ years</strong> of experience teaching English to
+        young learners and adolescents across Vietnam's top language institutions, including the
+        <strong>British Council</strong>, <strong>Apollo English</strong>, and <strong>EF Teach Online</strong>. I have taught
+        <strong>500+ students</strong> aged 4 to 25, in groups from 1-to-1 up to 25 learners. I completed
+        <strong>11+ formal lesson observations</strong> at the British Council with consistently positive ratings,
+        and used that feedback to sharpen classroom management, questioning, and pacing.
+      </p>
+      <p class="prose reveal" style="margin-top:16px">
+        I combine a strong classroom presence with real expertise in <strong>instructional design</strong> and
+        <strong>digital learning</strong>, creating interactive courses with H5P, SCORM, and xAPI. I hold a
+        <strong>CELTA</strong> (Cambridge), <strong>TYLEC</strong> (Trinity), a valid <strong>TRC until 2029</strong>, and am fully
+        eligible for a Vietnam work permit.
+      </p>
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section class="block" id="competencies" aria-labelledby="comp-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Core Competencies</div>
+        <h2 id="comp-h">What I bring to every lesson</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9h6M9 13h6M9 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Classroom Teaching &amp; Management
+          </h3>
+          <ul class="tag-list">
+            <li>Classroom Management (8-25)</li>
+            <li>Young Learners &amp; Adolescents</li>
+            <li>Communicative Language Teaching</li>
+            <li>Blended &amp; Online Teaching</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Assessment &amp; Differentiation
+          </h3>
+          <ul class="tag-list">
+            <li>CEFR-Aligned Assessment</li>
+            <li>Formative Assessment</li>
+            <li>Differentiated Instruction</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v6h6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            Curriculum &amp; Instructional Design
+          </h3>
+          <ul class="tag-list">
+            <li>Curriculum &amp; Lesson Planning</li>
+            <li>Instructional Design (H5P, SCORM, xAPI)</li>
+            <li>Project-Based Learning</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Technology &amp; Digital Learning
+          </h3>
+          <ul class="tag-list">
+            <li>Technology-Enhanced Learning</li>
+            <li>LMS Admin (Learning Hub, Efekta Hyperclass)</li>
+            <li>AI in Language Education</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORKS -->
+  <section class="block" id="frameworks" aria-labelledby="fw-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Lesson Frameworks &amp; Methodologies</div>
+        <h2 id="fw-h">How I structure learning</h2>
+      </div>
+      <div class="chips reveal" role="list">
+        <span class="chip" role="listitem">PPP<small>Presentation, Practice, Production</small></span>
+        <span class="chip" role="listitem">TTT<small>Test, Teach, Test</small></span>
+        <span class="chip" role="listitem">TBL<small>Task-Based Learning</small></span>
+        <span class="chip" role="listitem">CLT<small>Communicative Language Teaching</small></span>
+        <span class="chip" role="listitem">ESA<small>Engage, Study, Activate</small></span>
+        <span class="chip" role="listitem">PBL<small>Project-Based Learning</small></span>
+        <span class="chip" role="listitem">UDL<small>Universal Design for Learning</small></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="block" id="experience" aria-labelledby="exp-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Professional Experience</div>
+        <h2 id="exp-h">Where I have taught</h2>
+      </div>
+      <div class="timeline">
+        <article class="job reveal">
+          <div class="role">Online ESL Teacher</div>
+          <div class="org">EF Teach Online</div>
+          <div class="dates">Jan 2026 &ndash; Present &middot; Remote (HCMC-based)</div>
+          <ul>
+            <li>Deliver engaging 1-to-1 online English lessons to adult and young adult learners across time zones, with a perfect <strong>5.00/5.00</strong> satisfaction score.</li>
+            <li>Adapt pacing and materials to individual levels using the CEFR framework (A1-C2).</li>
+            <li>Use digital whiteboards, screen sharing, and interactive resources for virtual engagement.</li>
+            <li>Deliver lessons and manage scheduling via the <strong>Efekta Hyperclass</strong> platform.</li>
+          </ul>
+        </article>
+        <article class="job reveal">
+          <div class="role">AI Trainer &amp; Language Specialist</div>
+          <div class="org">micro1</div>
+          <div class="dates">Feb 2026 &ndash; Present &middot; Remote</div>
+          <ul>
+            <li>Evaluate and train AI language models on pronunciation, grammar correction, and conversational fluency for ESL.</li>
+            <li>Provide linguistic analysis for NLP quality assurance across multiple language pairs.</li>
+            <li>Contribute to ESL-specific dataset curation for cultural and linguistic appropriateness.</li>
+          </ul>
+        </article>
+        <article class="job reveal">
+          <div class="role">ESL Teacher &amp; Learning Designer</div>
+          <div class="org">British Council</div>
+          <div class="dates">Feb 2023 &ndash; Feb 2026 &middot; Ho Chi Minh City</div>
+          <ul>
+            <li>Taught communicative English to young learners (ages 5-15) in groups of 12-18 across CEFR levels.</li>
+            <li>Completed <strong>11+ formal lesson observations</strong> rated Good and Outstanding, refining management, questioning, and pacing.</li>
+            <li>Applied formative assessment (think-pair-share, exit tickets, peer and self-assessment rubrics).</li>
+            <li>Designed and facilitated project-based learning (PBL) units on real-world themes.</li>
+            <li>Managed the British Council <strong>Learning Hub (LMS)</strong> for materials, grades, and analytics.</li>
+          </ul>
+        </article>
+        <article class="job reveal">
+          <div class="role">ESL Teacher &amp; Instructional Designer</div>
+          <div class="org">Apollo English Junior</div>
+          <div class="dates">Aug 2019 &ndash; Jan 2023 &middot; Ho Chi Minh City</div>
+          <ul>
+            <li>Delivered dynamic lessons to young learners (ages 4-16) across HCMC centres, classes of 10-25.</li>
+            <li>Designed original course materials, flashcards, and interactive activities aligned to CEFR.</li>
+            <li>Implemented classroom management for mixed-ability groups with high retention.</li>
+            <li>Ran assessments, progress reports, and parent communication with measurable gains.</li>
+            <li>Led STEM and project-based summer camps combining English with cultural exchange.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW I TEACH -->
+  <section class="block" id="teaching" aria-labelledby="teach-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">How I Teach</div>
+        <h2 id="teach-h">Online and in person, on your terms</h2>
+      </div>
+      <div class="modalities">
+        <div class="modality online reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+            Online lessons
+          </h3>
+          <p>I teach my own students online using <strong>Google Meet</strong>, with screen sharing, a digital whiteboard, and interactive materials.</p>
+          <p class="note">Flexible 1-to-1 or small groups, across time zones.</p>
+        </div>
+        <div class="modality reveal">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
+            Face-to-face
+          </h3>
+          <p>I am happy to meet students in person, but <strong>only in Ho Chi Minh City, Vietnam</strong>, where I am based for now.</p>
+          <p class="note">In-person classes available across HCMC.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="block" id="reviews" aria-labelledby="rev-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Student Reviews</div>
+        <h2 id="rev-h">What students say</h2>
+      </div>
+      <div class="reviews">
+        <div class="review reveal"><div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"My first private class and it was really fun."</p></div>
+        <div class="review reveal"><div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"I really like the teacher's clear explanations and instructions."</p></div>
+        <div class="review reveal"><div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"I really like the teacher's interactive teaching."</p></div>
+        <div class="review reveal"><div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"I really like the teacher's patient teaching style."</p></div>
+      </div>
+      <p class="prose reveal" style="margin-top:18px"><strong>Perfect 5.00/5.00</strong> student satisfaction across all online teaching engagements (EF Teach Online, PL &amp; GL exit scores).</p>
+    </div>
+  </section>
+
+  <!-- INSTRUCTIONAL DESIGN -->
+  <section class="block" id="design" aria-labelledby="des-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Instructional Design &amp; Portfolio</div>
+        <h2 id="des-h">The design side of my work</h2>
+      </div>
+      <p class="prose reveal">
+        As a <strong>Learning Experience Designer</strong>, I bring a dual perspective: hands-on classroom teaching
+        plus the ability to design the digital learning behind it. This is why curriculum and materials are
+        built into how I teach, not bolted on afterwards.
+      </p>
+      <ul class="id-list reveal" style="margin-top:18px">
+        <li><strong>SCORM 2004 &amp; cmi5 authoring:</strong> interactive packages with xAPI tracking, quiz engines, and completion logic for LMS deployment.</li>
+        <li><strong>H5P interactive content:</strong> branching scenarios, drag-and-drop activities, and interactive video for language learning.</li>
+        <li><strong>IELTS Speaking Masterclass:</strong> a complete SCORM 2004 course with AI narration, voice recording, and WCAG 2.1 AA accessibility.</li>
+        <li><strong>Curriculum mapping &amp; assessment design:</strong> CEFR-aligned rubrics, formative assessments, and learning-outcome frameworks.</li>
+        <li><strong>Research Curriculum Design:</strong> an inquiry-based curriculum outline (Canva) to build research skills.</li>
+        <li><strong>Professional Communication Course:</strong> a comprehensive 5-week syllabus (Canva) for professional communication.</li>
+        <li><strong>AI &amp; EdTech integration:</strong> training AI language models, digital literacy materials, and evaluating emerging educational tools.</li>
+        <li>Full portfolio: <a href="https://punitganjara.com" rel="noopener">punitganjara.com</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION & CERTS -->
+  <section class="block" id="education" aria-labelledby="edu-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Education &amp; Credentials</div>
+        <h2 id="edu-h">Qualified and certified</h2>
+      </div>
+      <div class="facts">
+        <div class="fact reveal"><div class="k">MBA: Human Resource Management</div><div class="v">North Maharashtra University, India &middot; 2010</div></div>
+        <div class="fact reveal"><div class="k">BSc: Biotechnology</div><br><div class="v">NMU, India &middot; 2008</div></div>
+      </div>
+      <div class="certs reveal">
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>CELTA (Cambridge, 2019)</span>
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>TYLEC (Trinity, 2025)</span>
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>LXD Certificate (Michigan, 2026)</span>
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>TRC valid until 2029</span>
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Work Permit Eligible</span>
+        <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Clean Criminal Record</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block" id="contact" aria-labelledby="con-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-kicker">Contact</div>
+        <h2 id="con-h">Let's talk about lessons or learning design</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+          <a href="mailto:ganjarapunit@gmail.com">ganjarapunit@gmail.com</a>
+        </div>
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+          <a href="mailto:punit@punitganjara.com">punit@punitganjara.com</a>
+        </div>
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="tel:+84822523395">+84 822 523 395</a>
+        </div>
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="tel:+919096105012">+91 90961 05012</a>
+        </div>
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v3a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a4 4 0 0 0-4-4v1a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2h3a6 6 0 0 1 3 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <a href="https://linkedin.com/in/ganjarapunit" rel="noopener">linkedin.com/in/ganjarapunit</a>
+        </div>
+        <div class="contact-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2"/></svg>
+          <a href="https://punitganjara.com" rel="noopener">punitganjara.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>&copy; <span id="year"></span> Punit Ganjara. ESL Teacher, Trainer &amp; Instructional Designer. Ho Chi Minh City, Vietnam.</p>
+  </div>
+</footer>
+
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Theme toggle (persisted, respects no preference)
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeBtn');
+    var label = document.getElementById('themeLabel');
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      root.setAttribute('data-theme', 'dark');
+      label.textContent = 'Light';
+      btn.setAttribute('aria-pressed', 'true');
+    }
+    btn.addEventListener('click', function () {
+      var isDark = root.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        root.removeAttribute('data-theme');
+        label.textContent = 'Dark';
+        btn.setAttribute('aria-pressed', 'false');
+        try { localStorage.setItem('theme', 'light'); } catch (e) {}
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        label.textContent = 'Light';
+        btn.setAttribute('aria-pressed', 'true');
+        try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+      }
+    });
+  })();
+
+  // Mobile menu
+  (function () {
+    var btn = document.getElementById('menuBtn');
+    var links = document.getElementById('navlinks');
+    btn.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+
+  // Reveal on scroll (no-op if reduced motion)
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
