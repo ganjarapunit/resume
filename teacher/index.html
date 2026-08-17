@@ -312,8 +312,14 @@
     padding: 10px 16px;
     font-weight: 700;
     font-size: 0.95rem;
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
   }
   .chip small { display: block; font-weight: 500; font-size: 0.72rem; color: var(--text-muted); }
+
+  /* Safety: never let media/images overflow the viewport */
+  img { max-width: 100%; height: auto; }
 
   /* ── TIMELINE ── */
   .timeline { position: relative; margin-top: 12px; }
@@ -375,10 +381,19 @@
   .id-list a { color: var(--primary); font-weight: 700; }
 
   /* ── EDUCATION / CERTS ── */
-  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-  .fact { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 18px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .fact {
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    color: var(--text);
+  }
   .fact .k { font-weight: 800; color: var(--text-strong); }
-  .fact .v { color: var(--text-muted); }
+  .fact .v { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
   .certs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
   .cert {
     background: var(--surface-2);
@@ -439,10 +454,20 @@
     .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); }
     .menu-toggle { display: block; }
     .grid-2, .grid-4 { grid-template-columns: 1fr; }
-    .hero h1 .secondary { font-size: 0.82rem; }
+    .hero h1 .secondary { font-size: 0.82rem; white-space: normal; }
   }
   @media (max-width: 380px) {
     .hero h1 .secondary { font-size: 0.72rem; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px; }
+    section.block { padding: 48px 0; }
+    .hero { padding: 40px 0 48px; }
+    .section-head { margin-bottom: 28px; }
+    .card { padding: 18px; }
+    .contact-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .fact, .cert, .chip { font-size: 0.9rem; }
+    .modality, .review { padding: 18px; }
   }
 </style>
 </head>
@@ -459,6 +484,7 @@
     <ul class="nav-links" id="navlinks">
       <li><a href="#about">About</a></li>
       <li><a href="#competencies">Skills</a></li>
+      <li><a href="#exams">Exams</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#teaching">How I Teach</a></li>
       <li><a href="#design">Instructional Design</a></li>
@@ -625,6 +651,22 @@
     </div>
   </section>
 
+  <!-- EXAM EXPERTISE -->
+  <section class="block" id="exams" aria-labelledby="exam-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="exam-h">English Exam Expertise</h2>
+      </div>
+      <div class="chips reveal" role="list" style="margin-top:18px">
+        <span class="chip" role="listitem">IELTS</span>
+        <span class="chip" role="listitem">TOEIC</span>
+        <span class="chip" role="listitem">TOEFL</span>
+        <span class="chip" role="listitem">Cambridge English (KET · PET · FCE · CAE · CPE)</span>
+        <span class="chip" role="listitem">APTIS</span>
+      </div>
+    </div>
+  </section>
+
   <!-- EXPERIENCE -->
   <section class="block" id="experience" aria-labelledby="exp-h">
     <div class="wrap">
@@ -760,8 +802,8 @@
         <h2 id="edu-h">Qualified and certified</h2>
       </div>
       <div class="facts">
-        <div class="fact reveal"><div class="k">MBA: Human Resource Management</div><div class="v">North Maharashtra University, India &middot; 2010</div></div>
-        <div class="fact reveal"><div class="k">BSc: Biotechnology</div><br><div class="v">NMU, India &middot; 2008</div></div>
+        <div class="fact reveal"><div class="k">MBA: Human Resource Management</div><div class="v">North Maharashtra University, India · 2010</div></div>
+        <div class="fact reveal"><div class="k">BSc: Biotechnology</div><div class="v">NMU, India · 2008</div></div>
       </div>
       <div class="certs reveal">
         <span class="cert"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>CELTA (Cambridge, 2019)</span>
