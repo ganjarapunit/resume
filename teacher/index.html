@@ -143,6 +143,7 @@
     gap: 8px;
   }
   .theme-btn:hover { border-color: var(--primary); }
+  .theme-btn svg { width: 20px; height: 20px; }
 
   .menu-toggle {
     display: none;
@@ -490,9 +491,9 @@
       <li><a href="#design">Instructional Design</a></li>
       <li><a href="#contact">Contact</a></li>
       <li>
-        <button class="theme-btn" id="themeBtn" aria-pressed="false">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="themeLabel">Dark</span>
+        <button class="theme-btn" id="themeBtn" aria-pressed="false" aria-label="Toggle theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon" style="display:none"></i>
         </button>
       </li>
     </ul>
@@ -859,34 +860,42 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/lucide@latest"></script>
 <script>
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Theme toggle (persisted, respects no preference)
+  function updateThemeIcon(theme) {
+    var btn = document.getElementById('themeBtn');
+    var sun = btn.querySelector('.sun-icon');
+    var moon = btn.querySelector('.moon-icon');
+    if (theme === 'dark') { sun.style.display = 'none'; moon.style.display = 'block'; }
+    else { sun.style.display = 'block'; moon.style.display = 'none'; }
+  }
   (function () {
     var root = document.documentElement;
     var btn = document.getElementById('themeBtn');
-    var label = document.getElementById('themeLabel');
     var saved = null;
     try { saved = localStorage.getItem('theme'); } catch (e) {}
-    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (isDark) {
       root.setAttribute('data-theme', 'dark');
-      label.textContent = 'Light';
       btn.setAttribute('aria-pressed', 'true');
     }
+    updateThemeIcon(isDark ? 'dark' : 'light');
     btn.addEventListener('click', function () {
-      var isDark = root.getAttribute('data-theme') === 'dark';
-      if (isDark) {
+      var nowDark = root.getAttribute('data-theme') === 'dark';
+      if (nowDark) {
         root.removeAttribute('data-theme');
-        label.textContent = 'Dark';
         btn.setAttribute('aria-pressed', 'false');
         try { localStorage.setItem('theme', 'light'); } catch (e) {}
+        updateThemeIcon('light');
       } else {
         root.setAttribute('data-theme', 'dark');
-        label.textContent = 'Light';
         btn.setAttribute('aria-pressed', 'true');
         try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+        updateThemeIcon('dark');
       }
     });
   })();
@@ -922,6 +931,8 @@
     }, { threshold: 0.12 });
     els.forEach(function (el) { io.observe(el); });
   })();
+
+  lucide.createIcons();
 </script>
 </body>
 </html>
