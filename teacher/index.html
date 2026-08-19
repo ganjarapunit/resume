@@ -664,9 +664,9 @@
   }
   .modal-close svg { width: 20px; height: 20px; display: block; }
   .modal-close:hover { border-color: var(--primary); }
-  .rf-input { position: relative; display: flex; align-items: center; }
-  .rf-input > svg.rf-ic { position: absolute; left: 12px; width: 18px; height: 18px; color: var(--icon); pointer-events: none; }
-  .rf-field .rf-input > input { width: 100%; padding-left: 40px; }
+  .rf-input { display: flex; align-items: center; gap: 10px; }
+  .rf-input > svg.rf-ic { flex: none; width: 18px; height: 18px; color: var(--icon); }
+  .rf-field .rf-input > input { width: auto; flex: 1 1 auto; min-width: 0; }
   .modal .rf-field { margin-bottom: 16px; }
   .booking-status { margin-top: 12px; font-weight: 700; }
   .booking-status.ok { color: var(--success); }
