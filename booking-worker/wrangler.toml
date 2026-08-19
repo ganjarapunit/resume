@@ -1,0 +1,19 @@
+name = "booking-worker"
+main = "booking-worker.js"
+compatibility_date = "2024-09-23"
+
+# Serves the booking form at https://punitganjara.com/api/booking
+# (more specific than the site's existing /* worker route, so it takes precedence)
+routes = [
+  { pattern = "punitganjara.com/api/*", custom_domain = true }
+]
+
+# Set the Brevo API key as a secret (never commit it):
+#   wrangler secret put BREVO_API_KEY
+#
+# Deploy:
+#   wrangler deploy
+#
+# If you prefer a *.workers.dev URL instead of a route on your domain,
+# remove the [routes] block above and run `wrangler deploy`, then update
+# BOOKING_ENDPOINT in teacher/index.html to the deployed workers.dev URL.

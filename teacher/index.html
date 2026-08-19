@@ -515,6 +515,8 @@
   .req { color: var(--danger); }
   .rf-field input[type="text"],
   .rf-field input[type="email"],
+  .rf-field input[type="date"],
+  .rf-field input[type="time"],
   .rf-field textarea {
     width: 100%;
     font: inherit;
@@ -619,6 +621,47 @@
     text-align: center;
   }
 
+  /* ── BOOKING MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 20, 43, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 500;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 480px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  }
+  .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .modal-head h3 { margin-bottom: 0; }
+  .modal-close {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    width: 40px; height: 40px;
+    font-size: 1.4rem; line-height: 1;
+    cursor: pointer; flex: none;
+  }
+  .modal-close:hover { border-color: var(--primary); }
+  .modal .rf-field { margin-bottom: 16px; }
+  .booking-status { margin-top: 12px; font-weight: 700; }
+  .booking-status.ok { color: var(--success); }
+  .booking-status.err { color: var(--danger); }
+  body.modal-open { overflow: hidden; }
+
   /* ── REVEAL ANIMATION (respects reduced motion) ── */
   .reveal { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: no-preference) {
@@ -690,6 +733,7 @@
     .fact, .cert, .chip { font-size: 0.9rem; }
     .modality, .review { padding: 18px; }
     .review-form-card { padding: 20px; }
+    .modal { padding: 20px; }
     .nav-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
   }
 </style>
@@ -811,7 +855,11 @@
           </span>
         </div>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#contact">
+          <button type="button" class="btn btn-primary" id="bookTrialBtn" aria-haspopup="dialog" aria-controls="bookingModal">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 13v4M10 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Book a trial lesson
+          </button>
+          <a class="btn btn-outline" href="#contact">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Get in touch
           </a>
@@ -1177,6 +1225,41 @@
   </div>
 </footer>
 
+<!-- BOOK A TRIAL LESSON MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h3 id="bookingTitle">Book a trial lesson</h3>
+      <button type="button" class="modal-close" id="bookingClose" aria-label="Close booking dialog">&times;</button>
+    </div>
+    <p class="prose" style="margin-bottom:18px">Share your details and your preferred slot. I will confirm the trial by email.</p>
+    <form id="bookingForm" novalidate>
+      <div class="rf-field">
+        <label for="bkName">Your name <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="bkName" name="name" autocomplete="name" placeholder="e.g. Mai">
+        <p class="rf-error" id="bkNameErr" hidden>Please enter your name.</p>
+      </div>
+      <div class="rf-field">
+        <label for="bkEmail">Your email <span class="req" aria-hidden="true">*</span></label>
+        <input type="email" id="bkEmail" name="email" autocomplete="email" placeholder="you@example.com">
+        <p class="rf-error" id="bkEmailErr" hidden>Please enter a valid email.</p>
+      </div>
+      <div class="rf-field">
+        <label for="bkDate">Preferred date <span class="req" aria-hidden="true">*</span></label>
+        <input type="date" id="bkDate" name="date">
+        <p class="rf-error" id="bkDateErr" hidden>Please choose a date.</p>
+      </div>
+      <div class="rf-field">
+        <label for="bkTime">Preferred time <span class="req" aria-hidden="true">*</span></label>
+        <input type="time" id="bkTime" name="time">
+        <p class="rf-error" id="bkTimeErr" hidden>Please choose a time.</p>
+      </div>
+      <button type="submit" class="btn btn-primary">Request trial lesson</button>
+      <p class="booking-status" id="bookingStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
   // Footer year
@@ -1374,6 +1457,103 @@
     });
 
     load();
+  })();
+
+  // Book a trial lesson: modal + submission
+  (function () {
+    var btn = document.getElementById('bookTrialBtn');
+    var overlay = document.getElementById('bookingModal');
+    var closeBtn = document.getElementById('bookingClose');
+    var form = document.getElementById('bookingForm');
+    var statusEl = document.getElementById('bookingStatus');
+    var dateInput = document.getElementById('bkDate');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var lastFocused = null;
+
+    // Cloudflare Worker endpoint (deployed from /booking-worker). It emails
+    // punit@punitganjara.com via Brevo on each submission.
+    var BOOKING_ENDPOINT = 'https://punitganjara.com/api/booking';
+
+    function openModal() {
+      lastFocused = document.activeElement;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      btn.setAttribute('aria-expanded', 'true');
+      try { dateInput.min = new Date().toISOString().split('T')[0]; } catch (e) {}
+      var f = document.getElementById('bkName');
+      if (f) f.focus();
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      btn.setAttribute('aria-expanded', 'false');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    btn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    function setErr(id, show) { document.getElementById(id).hidden = !show; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.className = 'booking-status';
+      setErr('bkNameErr', false); setErr('bkEmailErr', false);
+      setErr('bkDateErr', false); setErr('bkTimeErr', false);
+
+      var name = document.getElementById('bkName').value.trim();
+      var email = document.getElementById('bkEmail').value.trim();
+      var date = document.getElementById('bkDate').value;
+      var time = document.getElementById('bkTime').value;
+      var ok = true;
+      if (!name) { setErr('bkNameErr', true); ok = false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('bkEmailErr', true); ok = false; }
+      if (!date) { setErr('bkDateErr', true); ok = false; }
+      if (!time) { setErr('bkTimeErr', true); ok = false; }
+      if (!ok) return;
+
+      if (!BOOKING_ENDPOINT) {
+        statusEl.textContent = 'Booking is not connected yet. Please email me directly at punit@punitganjara.com.';
+        statusEl.className = 'booking-status err';
+        return;
+      }
+
+      var payload = {
+        name: name, email: email, date: date, time: time,
+        _subject: 'New trial lesson request from ' + name
+      };
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      fetch(BOOKING_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        statusEl.textContent = 'Thanks! I will confirm your trial lesson by email soon.';
+        statusEl.className = 'booking-status ok';
+        form.reset();
+      }).catch(function () {
+        statusEl.textContent = 'Something went wrong. Please try again or email me directly.';
+        statusEl.className = 'booking-status err';
+      }).finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request trial lesson';
+      });
+    });
   })();
 
   lucide.createIcons();
