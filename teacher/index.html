@@ -149,7 +149,7 @@
     gap: 8px;
   }
   .theme-btn:hover { border-color: var(--primary); }
-  .theme-btn svg { width: 20px; height: 20px; }
+  .theme-btn svg { width: 20px; height: 20px; color: var(--primary); }
 
   .menu-toggle {
     display: none;
@@ -161,7 +161,7 @@
   }
   .menu-toggle span {
     display: block; width: 22px; height: 2px;
-    background: var(--text); margin: 4px 0; border-radius: 2px;
+    background: var(--text-strong); margin: 4px 0; border-radius: 2px;
   }
 
   /* ── EFL ACTIVITIES MEGA MENU ── */
@@ -184,8 +184,8 @@
   .nav-trigger::after {
     content: "";
     width: 7px; height: 7px;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
+    border-right: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
     transform: rotate(45deg);
     margin-top: -3px;
     opacity: .6;
@@ -810,10 +810,10 @@
         </div>
       </li>
       <li>
-        <button class="theme-btn" id="themeBtn" aria-pressed="false" aria-label="Toggle theme">
-          <i data-lucide="sun" class="sun-icon"></i>
-          <i data-lucide="moon" class="moon-icon" style="display:none"></i>
-        </button>
+          <button class="theme-btn" id="themeBtn" aria-pressed="false" aria-label="Toggle theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+          </button>
       </li>
     </ul>
   </div>
@@ -1260,7 +1260,6 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
 <script>
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1556,7 +1555,6 @@
     });
   })();
 
-  lucide.createIcons();
 </script>
 </body>
 </html>
