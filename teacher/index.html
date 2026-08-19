@@ -665,8 +665,19 @@
   .modal-close svg { width: 20px; height: 20px; display: block; }
   .modal-close:hover { border-color: var(--primary); }
   .rf-input { display: flex; align-items: center; gap: 10px; }
-  .rf-input > svg.rf-ic { flex: none; width: 18px; height: 18px; color: var(--icon); }
+  .rf-input > .rf-ic { flex: none; color: var(--icon); }
+  .rf-input > svg.rf-ic { width: 18px; height: 18px; }
   .rf-field .rf-input > input { width: auto; flex: 1 1 auto; min-width: 0; }
+  /* The native date/time picker indicator is dark by default and invisible on dark backgrounds.
+     Hide it and let the high-contrast field icon (white in dark) act as the picker trigger. */
+  .rf-field input[type="date"]::-webkit-calendar-picker-indicator,
+  .rf-field input[type="time"]::-webkit-calendar-picker-indicator,
+  .rf-field input[type="date"]::-moz-calendar-picker-indicator,
+  .rf-field input[type="time"]::-moz-calendar-picker-indicator { display: none; }
+  .rf-pick { border: 0; background: transparent; padding: 4px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 0; }
+  .rf-pick svg { width: 18px; height: 18px; display: block; }
+  .rf-pick:hover { background: var(--surface-2); }
+  .rf-pick:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
   .modal .rf-field { margin-bottom: 16px; }
   .booking-status { margin-top: 12px; font-weight: 700; }
   .booking-status.ok { color: var(--success); }
@@ -1264,7 +1275,7 @@
       <div class="rf-field">
         <label for="bkDate">Preferred date <span class="req" aria-hidden="true">*</span></label>
         <span class="rf-input">
-          <svg class="rf-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="16" y1="2" x2="16" y2="5"/></svg>
+          <button type="button" class="rf-ic rf-pick" data-target="bkDate" aria-label="Open date picker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="16" y1="2" x2="16" y2="5"/></svg></button>
           <input type="date" id="bkDate" name="date">
         </span>
         <p class="rf-error" id="bkDateErr" hidden>Please choose a date.</p>
@@ -1272,7 +1283,7 @@
       <div class="rf-field">
         <label for="bkTime">Preferred time <span class="req" aria-hidden="true">*</span></label>
         <span class="rf-input">
-          <svg class="rf-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <button type="button" class="rf-ic rf-pick" data-target="bkTime" aria-label="Open time picker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
           <input type="time" id="bkTime" name="time">
         </span>
         <p class="rf-error" id="bkTimeErr" hidden>Please choose a time.</p>
@@ -1514,6 +1525,17 @@
 
     btn.addEventListener('click', openModal);
     closeBtn.addEventListener('click', closeModal);
+    // Field icons double as the date/time picker triggers (native indicator is hidden for contrast)
+    document.querySelectorAll('.rf-pick').forEach(function (pick) {
+      pick.addEventListener('click', function () {
+        var target = document.getElementById(pick.dataset.target);
+        if (target && typeof target.showPicker === 'function') {
+          try { target.showPicker(); } catch (e) {}
+        } else if (target) {
+          target.focus();
+        }
+      });
+    });
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
