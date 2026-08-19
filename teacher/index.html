@@ -1404,6 +1404,7 @@
     var nameInput = document.getElementById('reviewerName');
     var emailInput = document.getElementById('reviewerEmail');
     var STORE = 'teacher_reviews_v1';
+    var REVIEW_ENDPOINT = 'https://punitganjara.com/api/review';
 
     function starsMarkup(n) {
       var on = '★'.repeat(n);
@@ -1483,6 +1484,14 @@
       };
 
       saveReview(r);
+      try {
+        fetch(REVIEW_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rating: r.rating, text: r.text, name: r.name, email: r.email, anonymous: r.anonymous })
+        }).then(function (res) { if (!res.ok) console.warn('Review notification failed'); })
+          .catch(function () { console.warn('Review notification error'); });
+      } catch (e) {}
       grid.insertBefore(makeCard(r), grid.firstChild);
       form.reset();
       anon.checked = false;

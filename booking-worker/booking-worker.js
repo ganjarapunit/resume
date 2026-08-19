@@ -22,6 +22,11 @@ export default {
         { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
+    const url = new URL(request.url);
+    if (url.pathname.endsWith('/review')) {
+      return handleReview(request, env, corsHeaders);
+    }
+
     let data;
     try {
       data = await request.json();
@@ -114,6 +119,66 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
   });
+}
+
+async function handleReview(request, env, corsHeaders) {
+  let data;
+  try {
+    data = await request.json();
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'Invalid JSON' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  const rating = parseInt(data.rating, 10);
+  const text = String(data.text || '').trim();
+  const name = String(data.name || '').trim();
+  const email = String(data.email || '').trim();
+  const anonymous = !!data.anonymous;
+  const emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (!(rating >= 1 && rating <= 5) || !text || !emailOk) {
+    return new Response(JSON.stringify({ ok: false, error: 'Missing or invalid fields' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+  const who = anonymous ? 'Anonymous' : (name || 'A guest');
+
+  const body = 'New review\n\n'
+    + 'Rating: ' + rating + '/5 ' + stars + '\n'
+    + (anonymous ? '(Submitted anonymously)\n' : '')
+    + 'Name: ' + who + (email ? '\nEmail: ' + email : '') + '\n\n'
+    + 'Review:\n' + text;
+
+  const html = '<h2>New review</h2>'
+    + '<p><strong>Rating:</strong> ' + rating + '/5 ' + stars + '</p>'
+    + (anonymous ? '<p><em>Submitted anonymously</em></p>' : '')
+    + '<p><strong>Name:</strong> ' + escapeHtml(who)
+    + (email ? '<br><strong>Email:</strong> ' + escapeHtml(email) : '') + '</p>'
+    + '<p>' + escapeHtml(text) + '</p>';
+
+  try {
+    const res = await sendBrevo(env, {
+      sender: { name: 'Site Review', email: 'punit@punitganjara.com' },
+      to: [{ email: 'punit@punitganjara.com' }],
+      replyTo: email ? { email: email, name: name || 'Reviewer' } : { email: 'punit@punitganjara.com' },
+      subject: 'New ' + rating + '-star review from ' + who,
+      textContent: body,
+      htmlContent: html
+    });
+    if (!res.ok) {
+      const detail = await res.text();
+      return new Response(JSON.stringify({ ok: false, error: 'Email send failed', detail }),
+        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'Email send error' }),
+      { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  return new Response(JSON.stringify({ ok: true }),
+    { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 }
 
 function sendBrevo(env, payload) {
