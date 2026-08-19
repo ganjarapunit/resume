@@ -5,7 +5,7 @@ compatibility_date = "2024-09-23"
 # Serves the booking form at https://punitganjara.com/api/booking
 # (more specific than the site's existing /* worker route, so it takes precedence)
 routes = [
-  { pattern = "punitganjara.com/api/*", custom_domain = true }
+  { pattern = "punitganjara.com/api/*" }
 ]
 
 # Set the Brevo API key as a secret (never commit it):
