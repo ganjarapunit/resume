@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workplace Tenses Review, B1, Interactive Lesson</title>
+<style>
+  :root {
+    --bg: #07101f;
+    --surface: #0f1b2e;
+    --surface-2: #13233b;
+    --ink: #f5f9ff;
+    --muted: #b9c6d8;
+    --accent: #ffd400;
+    --accent-2: #38e0c8;
+    --good: #38e0c8;
+    --bad: #ff8a8a;
+    --border: #2a3d57;
+    --focus: #ffd400;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #14253f 0%, var(--bg) 60%) fixed,
+      var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", Verdana, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  a.skip {
+    position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+  }
+  a.skip:focus {
+    left: 0; top: 0; width: auto; height: auto; background: var(--accent); color: #000;
+    padding: .6rem 1rem; z-index: 60; border: 3px solid #fff; font-weight: bold;
+  }
+  .hud {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(7,16,31,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--border);
+    padding: .6rem 1rem;
+  }
+  .hud-inner {
+    max-width: 980px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: .8rem; align-items: center;
+  }
+  .stat {
+    display: flex; align-items: center; gap: .4rem; font-weight: 700; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px;
+    padding: .3rem .8rem; font-size: .95rem;
+  }
+  .stat svg { width: 18px; height: 18px; }
+  .progress-wrap { flex: 1 1 220px; min-width: 200px; }
+  .progress-label { font-size: .85rem; color: var(--muted); margin-bottom: .2rem; }
+  .progress-track {
+    height: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width .5s ease;
+  }
+  header.hero {
+    max-width: 980px; margin: 0 auto; padding: 2rem 1rem 1rem; text-align: center;
+  }
+  header.hero h1 {
+    font-size: clamp(1.7rem, 4vw, 2.6rem); margin: 0 0 .4rem; color: #fff;
+    text-shadow: 0 0 24px rgba(56,224,200,0.25);
+  }
+  header.hero p { color: var(--muted); margin: .2rem auto; max-width: 640px; }
+  .pill {
+    display: inline-block; background: var(--surface-2); border: 1px solid var(--border);
+    color: var(--accent); border-radius: 999px; padding: .25rem .8rem; font-size: .85rem; font-weight: 700;
+    margin: .2rem;
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 1rem; }
+  .intro {
+    background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent);
+    border-radius: 12px; padding: 1rem 1.2rem; margin: 1rem 0 1.5rem;
+  }
+  .intro h2 { margin-top: 0; color: var(--accent); font-size: 1.2rem; }
+  .intro ul { margin: .4rem 0; padding-left: 1.2rem; }
+  .intro li { margin: .2rem 0; }
+  .activity {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 1.1rem 1.2rem; margin: 1.2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .act-head { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .4rem; }
+  .badge {
+    width: 42px; height: 42px; flex: none; border-radius: 12px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06121f; font-weight: 800; font-size: 1.2rem;
+  }
+  .act-head h2 { margin: 0; font-size: 1.25rem; color: #fff; flex: 1 1 auto; }
+  .tag {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--accent-2);
+    border-radius: 999px; padding: .2rem .7rem; font-size: .8rem; font-weight: 700;
+  }
+  .goal { color: var(--muted); margin: .3rem 0 .8rem; }
+  .exercise { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: .9rem 1rem; }
+  .q { font-weight: 700; margin: .2rem 0 .6rem; color: #fff; }
+  .fill { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: .5rem 0; }
+  .fill .lead, .fill .tail { color: var(--ink); }
+  input.answer {
+    background: #06121f; color: #fff; border: 2px solid var(--border); border-radius: 8px;
+    padding: .35rem .55rem; font-size: 1rem; min-width: 140px; font-family: inherit;
+  }
+  input.answer:focus-visible, textarea:focus-visible, button:focus-visible, input[type=radio]:focus-visible {
+    outline: 3px solid var(--focus); outline-offset: 2px;
+  }
+  input.answer.correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(56,224,200,0.4); }
+  input.answer.wrong { border-color: var(--bad); }
+  .mark { font-size: .8rem; font-weight: 700; margin-left: .3rem; }
+  .mark.ok { color: var(--good); }
+  .mark.no { color: var(--bad); }
+  .mcq { margin: .7rem 0; }
+  .mcq .stem { font-weight: 700; color: #fff; margin-bottom: .3rem; }
+  .mcq label {
+    display: block; background: #06121f; border: 2px solid var(--border); border-radius: 8px;
+    padding: .45rem .7rem; margin: .3rem 0; cursor: pointer;
+  }
+  .mcq label.correct { border-color: var(--good); }
+  .mcq label.wrong { border-color: var(--bad); }
+  .mcq input { accent-color: var(--accent-2); width: 18px; height: 18px; vertical-align: middle; margin-right: .5rem; }
+  textarea {
+    width: 100%; min-height: 90px; background: #06121f; color: #fff; border: 2px solid var(--border);
+    border-radius: 8px; padding: .55rem; font-size: 1rem; font-family: inherit; resize: vertical;
+  }
+  button.btn {
+    background: linear-gradient(135deg, var(--accent), #ffe34d); color: #06121f; border: 2px solid #fff;
+    font-weight: 800; font-size: 1rem; padding: .55rem 1.1rem; border-radius: 10px; cursor: pointer; margin-top: .7rem;
+    font-family: inherit;
+  }
+  button.btn:hover { filter: brightness(1.05); }
+  button.btn.ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--border); }
+  button.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .feedback {
+    margin-top: .7rem; padding: .7rem .9rem; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--surface-2); font-size: .98rem;
+  }
+  .feedback.good { border-color: var(--good); }
+  .feedback.bad { border-color: var(--bad); }
+  .speak { margin-top: .9rem; padding: .8rem 1rem; border-left: 4px solid var(--accent-2); background: var(--surface-2); border-radius: 0 10px 10px 0; }
+  .speak h3 { margin: 0 0 .3rem; color: var(--accent-2); font-size: 1.05rem; }
+  .model { margin-top: .5rem; padding: .6rem .8rem; background: #06121f; border: 1px dashed var(--border); border-radius: 8px; color: var(--ink); }
+  .model[hidden] { display: none; }
+  .done-flag {
+    display: inline-block; margin-left: .5rem; color: var(--good); font-weight: 800; opacity: 0; transition: opacity .3s;
+  }
+  .activity.complete .done-flag { opacity: 1; }
+  .results {
+    margin: 2rem 0; background: linear-gradient(135deg, var(--surface), var(--surface-2));
+    border: 2px solid var(--accent); border-radius: 18px; padding: 1.4rem; text-align: center;
+  }
+  .results[hidden] { display: none; }
+  .results h2 { color: var(--accent); margin-top: 0; }
+  .score-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1rem 0; }
+  .score-box { background: #06121f; border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1.2rem; min-width: 130px; }
+  .score-box .n { font-size: 1.8rem; font-weight: 800; color: var(--accent-2); }
+  .score-box .l { color: var(--muted); font-size: .85rem; }
+  .cert {
+    margin: 1.2rem auto; max-width: 560px; background: #06121f; border: 2px solid var(--accent);
+    border-radius: 14px; padding: 1.4rem; text-align: center; box-shadow: 0 0 30px rgba(255,212,0,0.15);
+  }
+  .cert h3 { color: var(--accent); margin: 0 0 .3rem; letter-spacing: 2px; }
+  .cert .who { font-size: 1.5rem; font-weight: 800; color: #fff; margin: .4rem 0; }
+  .cert .sub { color: var(--muted); }
+  .cert .badge-line { color: var(--accent-2); font-weight: 800; margin-top: .5rem; }
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 80; }
+  footer { text-align: center; padding: 2rem 1rem; color: var(--muted); border-top: 1px solid var(--border); font-size: .9rem; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+  @media (max-width: 560px) {
+    .hud-inner { font-size: .85rem; }
+    input.answer { min-width: 120px; }
+  }
+  #login {
+    position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+    background: rgba(4,9,18,0.96); padding: 1rem;
+  }
+  #login[hidden] { display: none; }
+  .login-card {
+    background: var(--surface); border: 2px solid var(--accent); border-radius: 16px;
+    padding: 1.6rem; max-width: 430px; width: 100%; text-align: center;
+    box-shadow: 0 0 40px rgba(255,212,0,0.15);
+  }
+  .login-card h2 { color: var(--accent); margin-top: 0; }
+  .login-card p { color: var(--muted); }
+  .login-card input {
+    width: 100%; background: #06121f; color: #fff; border: 2px solid var(--border);
+    border-radius: 8px; padding: .6rem; font-size: 1rem; margin: .6rem 0; font-family: inherit;
+  }
+  .login-card input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+  <div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="login-card">
+      <h2 id="loginTitle">Welcome</h2>
+      <p>Enter your name so your progress is recorded to the learning record store.</p>
+      <label for="loginName" style="font-weight:700;">Your name</label>
+      <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Shirley" aria-label="Your name">
+      <button class="btn" id="loginStart">Start lesson</button>
+    </div>
+  </div>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+      <span id="points">0 XP</span>
+    </div>
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg>
+      <span id="streak">Streak 0</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progText">0 / 10 complete</span></div>
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Workplace Tenses Review</h1>
+  <p>An interactive B1 English lesson. Practice all the tenses through real work situations, earn points, and build a streak.</p>
+  <span class="pill">Level: B1</span>
+  <span class="pill">10 activities</span>
+  <span class="pill">Self study</span>
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="How to use this lesson">
+    <h2>How to use this lesson</h2>
+    <ul>
+      <li>Type your answer in each blank, then press <strong>Check my answers</strong>.</li>
+      <li>You get instant feedback and points for correct answers. Keep your streak alive.</li>
+      <li>Use the <strong>Speak it aloud</strong> box to practise speaking, then reveal a model answer.</li>
+      <li>Press <strong>Mark activity complete</strong> when you finish. The progress bar fills as you go.</li>
+      <li>Finish all 10 to unlock your certificate.</li>
+    </ul>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">1</span>
+      <h2>Routines vs Right Now</h2>
+      <span class="tag">Present Simple &amp; Continuous</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use the Present Simple for habits and the Present Continuous for what is happening now.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I usually</span> <input class="answer" data-accept="start" data-model="start" aria-label="verb: I usually blank work at 9 a.m."> <span class="tail">work at 9 a.m.</span></div>
+      <div class="fill"><span class="lead">Right now I</span> <input class="answer" data-accept="am attending|'m attending" data-model="am attending" aria-label="verb: Right now I blank a team meeting"> <span class="tail">a team meeting.</span></div>
+      <div class="fill"><span class="lead">She</span> <input class="answer" data-accept="answers" data-model="answers" aria-label="verb: She blank emails every morning"> <span class="tail">emails every morning.</span></div>
+      <div class="fill"><span class="lead">Today she</span> <input class="answer" data-accept="is training|'s training" data-model="is training" aria-label="verb: Today she blank a new colleague"> <span class="tail">a new colleague.</span></div>
+    </div>
+    <button class="btn" data-check="act1">Check my answers</button>
+    <div class="feedback" id="fb-act1" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Tell your screen: one thing you <strong>do</strong> every day at work, and one thing you <strong>are doing</strong> today.</p>
+      <label class="sr-only" for="sp1" style="position:absolute;left:-9999px;">Your spoken answer (type it)</label>
+      <textarea id="sp1" placeholder="Type your sentence here if it helps you prepare."></textarea>
+      <button class="btn ghost" data-reveal="model1" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model1" hidden>I check my email at 8 a.m. Today I am writing a report for my boss.</div>
+    </div>
+    <button class="btn ghost" data-complete="act1">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">2</span>
+      <h2>The Meeting That Went Wrong</h2>
+      <span class="tag">Past Simple &amp; Continuous</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use the Past Simple for finished actions and the Past Continuous for an action in progress.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">Yesterday I</span> <input class="answer" data-accept="missed" data-model="missed" aria-label="verb: Yesterday I blank the bus"> <span class="tail">the bus.</span></div>
+      <div class="fill"><span class="lead">At 8 a.m. I</span> <input class="answer" data-accept="was waiting" data-model="was waiting" aria-label="verb: At 8 a.m. I blank at the wrong stop"> <span class="tail">at the wrong stop.</span></div>
+      <div class="fill"><span class="lead">While I</span> <input class="answer" data-accept="was calling" data-model="was calling" aria-label="verb: While I blank my boss"> <span class="tail">my boss, the train arrived.</span></div>
+      <div class="fill"><span class="lead">We</span> <input class="answer" data-accept="fixed" data-model="fixed" aria-label="verb: We blank the problem"> <span class="tail">the problem last night.</span></div>
+    </div>
+    <button class="btn" data-check="act2">Check my answers</button>
+    <div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Tell a short work story. Use a Past Continuous sentence for the background, like: "I was sending an email when the system crashed."</p>
+      <textarea id="sp2" placeholder="Plan your story here."></textarea>
+      <button class="btn ghost" data-reveal="model2" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model2" hidden>I was presenting online when my internet dropped. I fixed it after five minutes.</div>
+    </div>
+    <button class="btn ghost" data-complete="act2">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="activity" id="act3" data-act="3">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">3</span>
+      <h2>My Career So Far</h2>
+      <span class="tag">Present Perfect</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use the Present Perfect for experience, with no finished time.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I</span> <input class="answer" data-accept="have never led|have not led|haven't led" data-model="have never led" aria-label="verb: I blank a big project"> <span class="tail">a big project.</span></div>
+      <div class="fill"><span class="lead">She</span> <input class="answer" data-accept="has worked" data-model="has worked" aria-label="verb: She blank here since 2021"> <span class="tail">here since 2021.</span></div>
+      <div class="fill"><span class="lead">We</span> <input class="answer" data-accept="have just finished" data-model="have just finished" aria-label="verb: We blank the report"> <span class="tail">the report.</span></div>
+      <div class="fill"><span class="lead"></span> <input class="answer" data-accept="have you ever presented" data-model="have you ever presented" aria-label="question: blank to clients"> <span class="tail">to clients?</span></div>
+    </div>
+    <button class="btn" data-check="act3">Check my answers</button>
+    <div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Say two things you <strong>have done</strong> in your job, and one thing you <strong>have never done</strong>.</p>
+      <textarea id="sp3" placeholder="Plan your sentences here."></textarea>
+      <button class="btn ghost" data-reveal="model3" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model3" hidden>I have trained three interns and I have presented to clients. I have never managed a whole team.</div>
+    </div>
+    <button class="btn ghost" data-complete="act3">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 4 -->
+  <section class="activity" id="act4" data-act="4">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">4</span>
+      <h2>How Long Have You Been</h2>
+      <span class="tag">Present Perfect Continuous</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use the Present Perfect Continuous for an action from the past until now.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I</span> <input class="answer" data-accept="have been working" data-model="have been working" aria-label="verb: I blank on this file"> <span class="tail">on this file for two hours.</span></div>
+      <div class="fill"><span class="lead">She</span> <input class="answer" data-accept="has been learning" data-model="has been learning" aria-label="verb: She blank Spanish since March"> <span class="tail">Spanish since March.</span></div>
+      <div class="fill"><span class="lead">They</span> <input class="answer" data-accept="have been waiting" data-model="have been waiting" aria-label="verb: They blank for the client"> <span class="tail">for the client all morning.</span></div>
+    </div>
+    <button class="btn" data-check="act4">Check my answers</button>
+    <div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Answer: "How long have you been doing your current job?" and "What have you been working on today?"</p>
+      <textarea id="sp4" placeholder="Plan your answers here."></textarea>
+      <button class="btn ghost" data-reveal="model4" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model4" hidden>I have been doing this job for two years. Today I have been replying to customer emails.</div>
+    </div>
+    <button class="btn ghost" data-complete="act4">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 5 -->
+  <section class="activity" id="act5" data-act="5">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">5</span>
+      <h2>Before I Started</h2>
+      <span class="tag">Past Perfect</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use the Past Perfect for the earlier of two past events.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I</span> <input class="answer" data-accept="had finished" data-model="had finished" aria-label="verb: I blank the report before the meeting"> <span class="tail">the report before the meeting began.</span></div>
+      <div class="fill"><span class="lead">She</span> <input class="answer" data-accept="had already sent" data-model="had already sent" aria-label="verb: She blank the email when I called"> <span class="tail">the email when I called.</span></div>
+      <div class="fill"><span class="lead">They</span> <input class="answer" data-accept="had left" data-model="had left" aria-label="verb: They blank before we arrived"> <span class="tail">before we arrived.</span></div>
+    </div>
+    <button class="btn" data-check="act5">Check my answers</button>
+    <div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Say one thing you <strong>had done</strong> before you started your current job (study, travel, or another role).</p>
+      <textarea id="sp5" placeholder="Plan your sentence here."></textarea>
+      <button class="btn ghost" data-reveal="model5" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model5" hidden>I had finished university before I started working here.</div>
+    </div>
+    <button class="btn ghost" data-complete="act5">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 6 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">6</span>
+      <h2>Plans vs Decisions</h2>
+      <span class="tag">Going to &amp; Will</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use "going to" for plans and "will" for a sudden decision.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I</span> <input class="answer" data-accept="am going to apply|'m going to apply" data-model="am going to apply" aria-label="verb: I blank for the manager role"> <span class="tail">for the manager role. (plan)</span></div>
+      <div class="fill"><span class="lead">"The printer is broken!" "OK, I</span> <input class="answer" data-accept="will help" data-model="will help" aria-label="verb: I blank you"> <span class="tail">you." (now)</span></div>
+      <div class="fill"><span class="lead">We</span> <input class="answer" data-accept="are going to launch|'re going to launch" data-model="are going to launch" aria-label="verb: We blank the new site"> <span class="tail">the new site next month. (plan)</span></div>
+    </div>
+    <button class="btn" data-check="act6">Check my answers</button>
+    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Say one work plan you <strong>have</strong> (going to) and one thing you <strong>will</strong> do if a problem happens today.</p>
+      <textarea id="sp6" placeholder="Plan your sentences here."></textarea>
+      <button class="btn ghost" data-reveal="model6" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model6" hidden>I am going to email the client this afternoon. If the call drops, I will call them back.</div>
+    </div>
+    <button class="btn ghost" data-complete="act6">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">7</span>
+      <h2>This Time Next Year</h2>
+      <span class="tag">Future Continuous &amp; Perfect</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Use Future Continuous for action in progress later, and Future Perfect for finished by a time.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">This time tomorrow I</span> <input class="answer" data-accept="will be flying" data-model="will be flying" aria-label="verb: I blank to Berlin"> <span class="tail">to Berlin.</span></div>
+      <div class="fill"><span class="lead">By December I</span> <input class="answer" data-accept="will have completed" data-model="will have completed" aria-label="verb: I blank the training"> <span class="tail">the training.</span></div>
+      <div class="fill"><span class="lead">This time next week she</span> <input class="answer" data-accept="will be leading" data-model="will be leading" aria-label="verb: she blank the workshop"> <span class="tail">the workshop.</span></div>
+    </div>
+    <button class="btn" data-check="act7">Check my answers</button>
+    <div class="feedback" id="fb-act7" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Predict: "This time next year, I will be (verb ing)..." and "By 2027 I will have (past participle)..."</p>
+      <textarea id="sp7" placeholder="Plan your predictions here."></textarea>
+      <button class="btn ghost" data-reveal="model7" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model7" hidden>This time next year I will be managing a team. By 2027 I will have learned French.</div>
+    </div>
+    <button class="btn ghost" data-complete="act7">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">8</span>
+      <h2>A Day in the Life</h2>
+      <span class="tag">Mixed Tenses</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Mix past, present, and future tenses in one work story.</p>
+    <div class="exercise">
+      <p class="q">Complete the verb in each sentence.</p>
+      <div class="fill"><span class="lead">I always</span> <input class="answer" data-accept="drink" data-model="drink" aria-label="verb: I always blank coffee at 8"> <span class="tail">coffee at 8. (habit)</span></div>
+      <div class="fill"><span class="lead">Yesterday at 9 I</span> <input class="answer" data-accept="joined" data-model="joined" aria-label="verb: I blank the stand up"> <span class="tail">the stand up. (past)</span></div>
+      <div class="fill"><span class="lead">Right now I</span> <input class="answer" data-accept="am writing|'m writing" data-model="am writing" aria-label="verb: I blank a proposal"> <span class="tail">a proposal. (now)</span></div>
+      <div class="fill"><span class="lead">I</span> <input class="answer" data-accept="have already sent|have sent" data-model="have already sent" aria-label="verb: I blank two emails"> <span class="tail">two emails. (result now)</span></div>
+      <div class="fill"><span class="lead">At 5 I</span> <input class="answer" data-accept="will review" data-model="will review" aria-label="verb: I blank the budget"> <span class="tail">the budget. (future)</span></div>
+    </div>
+    <button class="btn" data-check="act8">Check my answers</button>
+    <div class="feedback" id="fb-act8" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Build a five sentence "day in the life" using past, present, and future tenses.</p>
+      <textarea id="sp8" placeholder="Plan your story here."></textarea>
+      <button class="btn ghost" data-reveal="model8" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model8" hidden>I drink coffee at 8. Yesterday I joined the meeting. Now I am writing a proposal. I have sent two emails. At 5 I will review the budget.</div>
+    </div>
+    <button class="btn ghost" data-complete="act8">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">9</span>
+      <h2>Tense Switch</h2>
+      <span class="tag">Transform Sentences</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Change a sentence from one tense to another. Type the new sentence.</p>
+    <div class="exercise">
+      <p class="q">Change each sentence to the tense named.</p>
+      <div class="fill"><span class="lead">"I send the report." -> PAST:</span> <input class="answer" data-accept="sent the report" data-model="I sent the report." aria-label="Past form of I send the report"></div>
+      <div class="fill"><span class="lead">"She is training Sam." -> PRESENT PERFECT:</span> <input class="answer" data-accept="has trained sam" data-model="She has trained Sam." aria-label="Present perfect of She is training Sam"></div>
+      <div class="fill"><span class="lead">"We will launch in May." -> PAST:</span> <input class="answer" data-accept="launched in may" data-model="We launched in May." aria-label="Past form of We will launch in May"></div>
+      <div class="fill"><span class="lead">"They finished the task." -> PRESENT PERFECT:</span> <input class="answer" data-accept="have finished the task" data-model="They have finished the task." aria-label="Present perfect of They finished the task"></div>
+      <div class="fill"><span class="lead">"He is calling the client." -> PAST:</span> <input class="answer" data-accept="was calling the client" data-model="He was calling the client." aria-label="Past form of He is calling the client"></div>
+    </div>
+    <button class="btn" data-check="act9">Check my answers</button>
+    <div class="feedback" id="fb-act9" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Say each changed sentence out loud before you type it. This trains your ear and mouth together.</p>
+      <textarea id="sp9" placeholder="Notes here."></textarea>
+      <button class="btn ghost" data-reveal="model9" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model9" hidden>I sent the report. / She has trained Sam. / We launched in May. / They have finished the task. / He was calling the client.</div>
+    </div>
+    <button class="btn ghost" data-complete="act9">Mark activity complete</button>
+  </section>
+
+  <!-- ACTIVITY 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">10</span>
+      <h2>Tense Detective</h2>
+      <span class="tag">Identify &amp; Produce</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Goal: Name the tense in real messages, then write your own in that tense.</p>
+    <div class="exercise">
+      <p class="q">Choose the tense of each workplace message.</p>
+      <div class="mcq" data-group="1">
+        <div class="stem">1. "I am writing to confirm the meeting."</div>
+        <label><input type="radio" class="choice" name="q1" data-correct="true"> Present Continuous</label>
+        <label><input type="radio" class="choice" name="q1"> Present Perfect</label>
+        <label><input type="radio" class="choice" name="q1"> Past Simple</label>
+        <label><input type="radio" class="choice" name="q1"> Future with will</label>
+      </div>
+      <div class="mcq" data-group="2">
+        <div class="stem">2. "I have completed the slides."</div>
+        <label><input type="radio" class="choice" name="q2"> Present Continuous</label>
+        <label><input type="radio" class="choice" name="q2" data-correct="true"> Present Perfect</label>
+        <label><input type="radio" class="choice" name="q2"> Past Simple</label>
+        <label><input type="radio" class="choice" name="q2"> Future with will</label>
+      </div>
+      <div class="mcq" data-group="3">
+        <div class="stem">3. "We launched the site yesterday."</div>
+        <label><input type="radio" class="choice" name="q3"> Present Continuous</label>
+        <label><input type="radio" class="choice" name="q3"> Present Perfect</label>
+        <label><input type="radio" class="choice" name="q3" data-correct="true"> Past Simple</label>
+        <label><input type="radio" class="choice" name="q3"> Future with will</label>
+      </div>
+      <div class="mcq" data-group="4">
+        <div class="stem">4. "I will call you at 3."</div>
+        <label><input type="radio" class="choice" name="q4"> Present Continuous</label>
+        <label><input type="radio" class="choice" name="q4"> Present Perfect</label>
+        <label><input type="radio" class="choice" name="q4"> Past Simple</label>
+        <label><input type="radio" class="choice" name="q4" data-correct="true"> Future with will</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act10">Check my answers</button>
+    <div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Speak it aloud</h3>
+      <p>Reply to message 2 with your own sentence in the <strong>same tense</strong> (Present Perfect).</p>
+      <textarea id="sp10" placeholder="Write your Present Perfect sentence, e.g. I have finished the report."></textarea>
+      <button class="btn ghost" data-reveal="model10" aria-expanded="false">Show a model answer</button>
+      <div class="model" id="model10" hidden>I have finished the report. / I have spoken to the client this morning.</div>
+    </div>
+    <button class="btn ghost" data-complete="act10">Mark activity complete</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results" hidden aria-label="Lesson results">
+    <h2>Lesson Complete</h2>
+    <p>Excellent work. You reviewed all twelve tenses in workplace contexts.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">Total XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+    </div>
+    <div class="cert" id="cert">
+      <h3>CERTIFICATE OF COMPLETION</h3>
+      <div class="sub">Workplace Tenses Review, B1 Level</div>
+      <div class="who" id="certName">Motivated Learner</div>
+      <div class="sub">completed all 10 activities and mastered the English tenses at work.</div>
+      <div class="badge-line" id="certBadge">Badge: Tense Champion</div>
+      <div class="sub" id="certDate"></div>
+    </div>
+    <p>
+      <label for="learnerName" style="font-weight:700;">Enter your name for the certificate:</label><br>
+      <input class="answer" id="learnerName" style="min-width:220px;margin-top:.4rem;" aria-label="Your name for the certificate">
+    </p>
+    <button class="btn" id="printBtn">Print or save as PDF</button>
+  </section>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Workplace Tenses Review, B1, interactive self study lesson. Built to be accessible and fun.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var TOTAL_ACTS = 10;
+  var state = { points: 0, streak: 0, best: 0, correct: 0, total: 0, done: 0 };
+
+  // Count graded items for accuracy.
+  document.querySelectorAll(".answer").forEach(function () { state.total++; });
+  document.querySelectorAll(".mcq").forEach(function () { state.total++; });
+
+  function norm(s) {
+    return (s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[.?!]+$/, "");
+  }
+  function $(id) { return document.getElementById(id); }
+
+  function updateHUD() {
+    $("points").textContent = state.points + " XP";
+    $("streak").textContent = "Streak " + state.streak;
+    $("progText").textContent = state.done + " / " + TOTAL_ACTS + " complete";
+    $("bar").style.width = (state.done / TOTAL_ACTS * 100) + "%";
+  }
+
+  function markInput(inp, ok) {
+    inp.classList.toggle("correct", ok);
+    inp.classList.toggle("wrong", !ok);
+    inp.setAttribute("aria-invalid", ok ? "false" : "true");
+    var m = inp.parentNode.querySelector(".mark");
+    if (!m) {
+      m = document.createElement("span");
+      m.className = "mark";
+      inp.parentNode.appendChild(m);
+    }
+    m.textContent = ok ? "Correct" : "Try again";
+    m.className = "mark " + (ok ? "ok" : "no");
+  }
+
+  function handleCheck(secId) {
+    var sec = $(secId);
+    var fb = $("fb-" + secId);
+    var earnedNow = 0, okCount = 0, wrongList = "";
+    var anyWrong = false, anyEmpty = false;
+
+    sec.querySelectorAll(".answer").forEach(function (inp, i) {
+      var val = norm(inp.value);
+      if (!val) { anyEmpty = true; return; }
+      var accepts = inp.dataset.accept.split("|").map(norm);
+      var ok = accepts.some(function (a) { return val.indexOf(a) !== -1; });
+      markInput(inp, ok);
+      if (ok) {
+        okCount++;
+        if (!inp.dataset.done) { inp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; }
+        if (state.streak > state.best) state.best = state.streak;
+      } else {
+        anyWrong = true;
+        state.streak = 0;
+        wrongList += "<li>Item " + (i + 1) + ": try <b>" + inp.dataset.model + "</b></li>";
+      }
+    });
+
+    sec.querySelectorAll(".mcq").forEach(function (grp, gi) {
+      var chosen = grp.querySelector("input.choice:checked");
+      if (!chosen) { anyEmpty = true; return; }
+      var ok = chosen.dataset.correct === "true";
+      grp.querySelectorAll("label").forEach(function (l) { l.classList.remove("correct", "wrong"); });
+      if (ok) {
+        chosen.closest("label").classList.add("correct");
+        okCount++;
+        if (!grp.dataset.done) { grp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; }
+        if (state.streak > state.best) state.best = state.streak;
+      } else {
+        anyWrong = true;
+        state.streak = 0;
+        chosen.closest("label").classList.add("wrong");
+        grp.querySelector("input.choice[data-correct=true]").closest("label").classList.add("correct");
+        wrongList += "<li>Question " + (gi + 1) + ": the correct tense is highlighted.</li>";
+      }
+    });
+
+    if (anyEmpty && earnedNow === 0 && okCount === 0) {
+      fb.className = "feedback bad";
+      fb.innerHTML = "Please answer the questions first, then press Check.";
+      updateHUD();
+      return;
+    }
+
+    if (anyWrong) {
+      fb.className = "feedback bad";
+      fb.innerHTML = "You earned <b>" + earnedNow + " XP</b> this round. Review these:" +
+        (wrongList ? "<ul>" + wrongList + "</ul>" : "") +
+        " Press Check again after you fix them.";
+    } else {
+      fb.className = "feedback good";
+      fb.innerHTML = "All correct. +" + earnedNow + " XP. Keep that streak going!";
+    }
+    updateHUD();
+  }
+
+  document.querySelectorAll("[data-check]").forEach(function (btn) {
+    btn.addEventListener("click", function () { handleCheck(btn.dataset.check); });
+  });
+
+  document.querySelectorAll("[data-reveal]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var el = $(btn.dataset.reveal);
+      var hidden = el.hasAttribute("hidden");
+      if (hidden) { el.removeAttribute("hidden"); btn.setAttribute("aria-expanded", "true"); btn.textContent = "Hide model answer"; }
+      else { el.setAttribute("hidden", ""); btn.setAttribute("aria-expanded", "false"); btn.textContent = "Show a model answer"; }
+    });
+  });
+
+  document.querySelectorAll("[data-complete]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var sec = $(btn.dataset.complete);
+      if (sec.classList.contains("complete")) return;
+      sec.classList.add("complete");
+      state.done++;
+      updateHUD();
+      sec.scrollIntoView({ block: "start", behavior: "smooth" });
+      if (state.done >= TOTAL_ACTS) showResults();
+    });
+  });
+
+  function showResults() {
+    var acc = state.total ? Math.round(state.correct / state.total * 100) : 0;
+    $("rPoints").textContent = state.points;
+    $("rAcc").textContent = acc + "%";
+    $("rStreak").textContent = state.best;
+    $("certDate").textContent = new Date().toLocaleDateString();
+    $("results").removeAttribute("hidden");
+    $("results").scrollIntoView({ block: "start", behavior: "smooth" });
+    launchConfetti();
+  }
+
+  $("learnerName").addEventListener("input", function () {
+    var n = this.value.trim();
+    $("certName").textContent = n || "Motivated Learner";
+  });
+  $("printBtn").addEventListener("click", function () { window.print(); });
+
+  // Lightweight confetti, disabled for reduced motion.
+  function launchConfetti() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c = $("confetti"), ctx = c.getContext("2d");
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    var colors = ["#ffd400", "#38e0c8", "#ffffff", "#ff8a8a", "#9ad0ff"];
+    var parts = [];
+    for (var i = 0; i < 140; i++) {
+      parts.push({
+        x: Math.random() * c.width, y: -20 - Math.random() * c.height * 0.4,
+        vx: (Math.random() - 0.5) * 3, vy: 2 + Math.random() * 3,
+        s: 4 + Math.random() * 6, col: colors[i % colors.length]
+      });
+    }
+    var t0 = Date.now();
+    function frame() {
+      ctx.clearRect(0, 0, c.width, c.height);
+      parts.forEach(function (p) {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.03;
+        ctx.fillStyle = p.col;
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      });
+      if (Date.now() - t0 < 2600) requestAnimationFrame(frame);
+      else ctx.clearRect(0, 0, c.width, c.height);
+    }
+    frame();
+  }
+
+  updateHUD();
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var LRS = {
+    endpoint: "https://game.lrs.io/xapi/",
+    username: "15c3b9ec-a224-4400-a4b6-8d5689141737",
+    password: "14e0c46b-ee82-4f7a-af05-4ee330e68aae"
+  };
+  var LESSON_ID = "https://ef-teach.example/lessons/" + (location.pathname.split("/").pop() || "lesson");
+  var LEARNER = "";
+  var VERBS = {
+    launched: ["http://adlnet.gov/expapi/verbs/launched", "launched"],
+    answered: ["http://adlnet.gov/expapi/verbs/answered", "answered"],
+    marked: ["https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete", "marked as complete"],
+    experienced: ["http://id.tincanapi.com/verb/experienced", "experienced"]
+  };
+  var sentChecks = {};
+  var completed = {};
+
+  function send(verbKey, objectId, objectName) {
+    if (!LRS.endpoint || LRS.endpoint.indexOf("YOUR_LRS") !== -1) return;
+    var v = VERBS[verbKey];
+    var stmt = {
+      actor: {
+        objectType: "Agent",
+        name: LEARNER || "Anonymous Learner",
+        account: { homePage: "https://ef-teach.example", name: LEARNER || "anonymous-learner" }
+      },
+      verb: { id: v[0], display: { "en-US": v[1] } },
+      object: { id: objectId, definition: { name: { "en-US": objectName } } },
+      timestamp: new Date().toISOString(),
+      context: { contextActivities: { parent: [ { id: LESSON_ID } ] } }
+    };
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", LRS.endpoint + "statements", true);
+      xhr.setRequestHeader("Authorization", "Basic " + btoa(LRS.username + ":" + LRS.password));
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("X-Experience-API-Version", "1.0.3");
+      xhr.send(JSON.stringify(stmt));
+    } catch (e) {}
+  }
+
+  var login = document.getElementById("login");
+  var loginInput = document.getElementById("loginName");
+  var loginStart = document.getElementById("loginStart");
+  if (loginInput) loginInput.focus();
+  function startLesson() {
+    LEARNER = (loginInput.value || "").trim() || "Anonymous Learner";
+    if (login) login.setAttribute("hidden", "");
+    var cn = document.getElementById("learnerName");
+    if (cn) { cn.value = LEARNER; cn.dispatchEvent(new Event("input")); }
+    send("launched", LESSON_ID, document.title);
+  }
+  if (loginStart) loginStart.addEventListener("click", startLesson);
+  if (loginInput) loginInput.addEventListener("keydown", function (e) { if (e.key === "Enter") startLesson(); });
+
+  var OPEN_ACTS = { act1: 1, act7: 1, act8: 1, act9: 1, act10: 1 };
+  document.querySelectorAll("[data-check]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var secId = btn.getAttribute("data-check");
+      if (OPEN_ACTS[secId]) return;
+      if (sentChecks[secId]) return;
+      sentChecks[secId] = true;
+      var sec = document.getElementById(secId);
+      var n = 0;
+      sec.querySelectorAll(".answer, .mcq").forEach(function (item) {
+        n++;
+        var name = "Item " + n;
+        var stem = item.querySelector ? item.querySelector(".stem") : null;
+        if (stem) name = stem.textContent;
+        else if (item.getAttribute("aria-label")) name = item.getAttribute("aria-label");
+        send("answered", LESSON_ID + "/" + secId + "/item-" + n, secId + ": " + name);
+      });
+    });
+  });
+
+  document.querySelectorAll("[data-complete]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var secId = btn.getAttribute("data-complete");
+      var sec = document.getElementById(secId);
+      if (sec.classList.contains("complete")) return;
+      if (OPEN_ACTS[secId]) send("marked", LESSON_ID + "/" + secId, secId + " open answers");
+      completed[secId] = true;
+      if (Object.keys(completed).length >= 10) send("experienced", LESSON_ID, document.title);
+    });
+  });
+})();
+</script>
+</body>
+</html>

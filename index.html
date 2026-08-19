@@ -1599,7 +1599,22 @@ body {
     <a href="#services">Services</a>
     <a href="#strengths">Strengths</a>
     <a href="#work">Work</a>
-    <a href="teacher/">Teaching &amp; Training</a>
+    <div class="courses-dropdown" id="teachingDropdown">
+      <button class="courses-dropdown-trigger" onclick="toggleTeachingDropdown()" aria-expanded="false" aria-haspopup="true">
+        Teaching &amp; Training
+        <i data-lucide="chevron-down"></i>
+      </button>
+      <div class="courses-dropdown-menu">
+        <a href="teacher/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="graduation-cap"></i></div>
+          Teaching &amp; Training Overview
+        </a>
+        <a href="teacher/efl-activities/" class="dropdown-item">
+          <div class="dropdown-item-icon"><i data-lucide="book-open"></i></div>
+          EFL Activities
+        </a>
+      </div>
+    </div>
     <div class="courses-dropdown" id="coursesDropdown">
       <button class="courses-dropdown-trigger" onclick="toggleCoursesDropdown()" aria-expanded="false" aria-haspopup="true">
         View Courses
@@ -2163,6 +2178,16 @@ function toggleCoursesDropdown() {
   trigger.setAttribute('aria-expanded', !isOpen);
 }
 
+// Teaching & Training Dropdown
+function toggleTeachingDropdown() {
+  const dropdown = document.getElementById('teachingDropdown');
+  const trigger = dropdown.querySelector('.courses-dropdown-trigger');
+  const isOpen = dropdown.classList.contains('open');
+
+  dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', !isOpen);
+}
+
 // Close mobile menu when clicking a link
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
@@ -2173,21 +2198,25 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  const dropdown = document.getElementById('coursesDropdown');
-  if (!dropdown.contains(e.target)) {
-    dropdown.classList.remove('open');
-    dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
-  }
+// Close dropdowns when clicking outside
+['coursesDropdown', 'teachingDropdown'].forEach((id) => {
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById(id);
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
+    }
+  });
 });
 
-// Close dropdown on Escape key
+// Close dropdowns on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    const dropdown = document.getElementById('coursesDropdown');
-    dropdown.classList.remove('open');
-    dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
+    ['coursesDropdown', 'teachingDropdown'].forEach((id) => {
+      const dropdown = document.getElementById(id);
+      dropdown.classList.remove('open');
+      dropdown.querySelector('.courses-dropdown-trigger').setAttribute('aria-expanded', 'false');
+    });
   }
 });
 
