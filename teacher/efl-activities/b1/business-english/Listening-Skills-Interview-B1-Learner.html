@@ -206,15 +206,7 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson content</a>
-  <div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-    <div class="login-card">
-      <h2 id="loginTitle">Welcome</h2>
-      <p>Enter your name so your progress is recorded to the learning record store.</p>
-      <label for="loginName" style="font-weight:700;">Your name</label>
-      <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Shirley" aria-label="Your name">
-      <button class="btn" id="loginStart">Start lesson</button>
-    </div>
-  </div>
+
 
 <div class="hud" role="region" aria-label="Your progress">
   <div class="hud-inner">
@@ -763,9 +755,7 @@
 (function () {
   "use strict";
   var LRS = {
-    endpoint: "https://game.lrs.io/xapi/",
-    username: "15c3b9ec-a224-4400-a4b6-8d5689141737",
-    password: "14e0c46b-ee82-4f7a-af05-4ee330e68aae"
+    endpoint: "https://punitganjara.com/xapi/"
   };
   var LESSON_ID = "https://ef-teach.example/lessons/" + (location.pathname.split("/").pop() || "lesson");
   var LEARNER = "";
@@ -802,19 +792,7 @@
     } catch (e) {}
   }
 
-  var login = document.getElementById("login");
-  var loginInput = document.getElementById("loginName");
-  var loginStart = document.getElementById("loginStart");
-  if (loginInput) loginInput.focus();
-  function startLesson() {
-    LEARNER = (loginInput.value || "").trim() || "Anonymous Learner";
-    if (login) login.setAttribute("hidden", "");
-    var cn = document.getElementById("learnerName");
-    if (cn) { cn.value = LEARNER; cn.dispatchEvent(new Event("input")); }
-    send("launched", LESSON_ID, document.title);
-  }
-  if (loginStart) loginStart.addEventListener("click", startLesson);
-  if (loginInput) loginInput.addEventListener("keydown", function (e) { if (e.key === "Enter") startLesson(); });
+
 
   var OPEN_ACTS = { act1: 1, act7: 1, act8: 1, act9: 1, act10: 1 };
   document.querySelectorAll("[data-check]").forEach(function (btn) {
