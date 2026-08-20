@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workplace Conditionals - Practice Activities</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(56,224,200,.12), transparent 60%),
+    radial-gradient(1000px 500px at -10% 10%, rgba(255,212,0,.10), transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  min-height:100vh;
+  padding-bottom:4rem;
+}
+a.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:.6rem 1rem;border-radius:0 0 8px 0;font-weight:700;z-index:200}
+a.skip:focus{left:0}
+
+/* ---------- HUD ---------- */
+.hud{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:.75rem 1.1rem;
+  background:linear-gradient(180deg, rgba(10,10,10,.96), rgba(15,27,46,.92));
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(8px);
+}
+.hud .brand{font-weight:800;letter-spacing:.02em;color:var(--accent);font-size:.95rem;white-space:nowrap}
+.hud .stat{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--surface-2);border:1px solid var(--border);
+  padding:.35rem .7rem;border-radius:999px;font-size:.85rem;font-weight:700;
+}
+.hud .stat .k{color:var(--muted);font-weight:600}
+.hud .stat.xp{color:var(--accent)}
+.hud .stat.streak{color:var(--accent-2)}
+.hud .grow{flex:1 1 160px;min-width:140px}
+.progress{height:10px;border-radius:999px;background:#0b1626;border:1px solid var(--border);overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent-2),var(--accent));transition:width .5s ease}
+.pct{font-size:.78rem;color:var(--muted);min-width:38px;text-align:right}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:920px;margin:0 auto;padding:1.5rem 1rem 0}
+header.hero{
+  background:linear-gradient(135deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:16px;
+  padding:2rem;margin-bottom:1.5rem;position:relative;overflow:hidden;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+header.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+  background:radial-gradient(circle, rgba(255,212,0,.18), transparent 70%);}
+header.hero h1{font-size:2rem;color:var(--accent);margin-bottom:.5rem;line-height:1.15}
+header.hero p{color:var(--muted);max-width:62ch}
+.badges{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.badge{background:rgba(56,224,200,.10);border:1px solid var(--border);color:var(--accent-2);
+  padding:.3rem .7rem;border-radius:6px;font-size:.8rem;font-weight:700}
+
+.card{
+  background:linear-gradient(180deg,var(--surface),#0c1726);
+  border:1px solid var(--border);border-radius:16px;
+  padding:1.6rem;margin-bottom:1.6rem;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+.card.is-done{border-color:var(--accent-2);box-shadow:0 0 0 1px rgba(56,224,200,.35),0 12px 30px rgba(0,0,0,.35)}
+.card .head{display:flex;align-items:center;gap:.8rem;margin-bottom:.3rem}
+.card .num{
+  background:var(--accent);color:#000;font-weight:800;font-size:.85rem;
+  padding:.25rem .65rem;border-radius:999px;white-space:nowrap
+}
+.card h2{font-size:1.25rem;color:var(--ink);line-height:1.25}
+.card .tag{font-size:.78rem;color:var(--accent-2);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:.6rem 0 .2rem}
+p.lead{color:var(--muted);margin:.4rem 0 1rem}
+fieldset{border:1px dashed var(--border);border-radius:12px;padding:1rem 1.1rem;margin:.6rem 0}
+legend{color:var(--accent);font-weight:700;padding:0 .4rem;font-size:.9rem}
+.sentence{margin:.5rem 0;color:var(--ink)}
+.sentence .blank{
+  background:transparent;border:none;border-bottom:2px solid var(--accent-2);
+  color:var(--ink);font:inherit;width:8.5rem;padding:.15rem .35rem;margin:0 .15rem;text-align:center;
+}
+.sentence .blank:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.sentence .blank.correct{border-bottom-color:var(--good)}
+.sentence .blank.wrong{border-bottom-color:var(--bad)}
+.mark{font-size:.8rem;font-weight:700;margin-left:.4rem}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--bad)}
+
+.mcq{border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;margin:.6rem 0;background:var(--surface-2)}
+.mcq .q{font-weight:700;margin-bottom:.5rem;color:var(--ink)}
+.mcq label{display:flex;align-items:center;gap:.55rem;padding:.45rem .6rem;border-radius:8px;cursor:pointer;color:var(--ink)}
+.mcq label:hover{background:rgba(56,224,200,.08)}
+.mcq label.chosen{outline:2px solid var(--accent)}
+.mcq label.right{background:rgba(56,224,200,.16);outline:2px solid var(--good)}
+.mcq input{accent-color:var(--accent)}
+.mcq input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+textarea{
+  width:100%;min-height:90px;background:#0b1626;color:var(--ink);
+  border:1px solid var(--border);border-radius:10px;padding:.7rem;font:inherit;resize:vertical
+}
+textarea:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+.feedback{margin-top:.8rem;color:var(--ink);font-weight:600;min-height:1.4em}
+.feedback[aria-live]{color:var(--accent-2)}
+
+.row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1rem}
+.btn{
+  background:linear-gradient(180deg,var(--accent),#e6be00);color:#000;border:none;
+  font-weight:800;padding:.6rem 1.2rem;border-radius:10px;cursor:pointer;font-size:.95rem;
+  transition:transform .08s ease, filter .2s ease;
+}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:disabled{opacity:.4;cursor:not-allowed;border-color:var(--border);color:var(--muted)}
+.btn.reveal{background:transparent;color:var(--accent-2);border:1px solid var(--accent-2);font-size:.85rem;padding:.45rem 1rem}
+
+.model{margin-top:.9rem;border-left:4px solid var(--accent-2);background:rgba(56,224,200,.07);
+  padding:.9rem 1rem;border-radius:0 10px 10px 0;color:var(--ink)}
+.model[hidden]{display:none}
+.model h4{color:var(--accent-2);margin-bottom:.4rem;font-size:.95rem}
+.model p{color:var(--muted);margin:.3rem 0}
+.model strong{color:var(--ink)}
+
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:2rem 1rem 0;border-top:1px solid var(--border);margin-top:2rem}
+
+/* ---------- Login overlay ---------- */
+.overlay{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
+  background:rgba(4,8,16,.86);backdrop-filter:blur(6px);padding:1.2rem}
+.overlay .panel{background:linear-gradient(135deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:18px;padding:2rem;max-width:440px;width:100%;
+  box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.overlay h2{color:var(--accent);font-size:1.5rem;margin-bottom:.4rem}
+.overlay p{color:var(--muted);margin-bottom:1.2rem}
+.overlay label{display:block;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.overlay input{width:100%;background:#0b1626;color:var(--ink);border:1px solid var(--border);
+  border-radius:10px;padding:.7rem;font:inherit;margin-bottom:1rem}
+.overlay input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.overlay .fine{font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---------- Certificate ---------- */
+.cert-wrap{margin-top:2rem}
+.cert{
+  background:linear-gradient(135deg,#10243c,#0c1726);
+  border:2px solid var(--accent);border-radius:18px;padding:2rem;position:relative;overflow:hidden;
+  box-shadow:0 0 40px rgba(255,212,0,.15)
+}
+.cert::before{content:"";position:absolute;inset:8px;border:1px solid rgba(56,224,200,.4);border-radius:12px;pointer-events:none}
+.cert h3{color:var(--accent);text-align:center;font-size:1.6rem;letter-spacing:.04em}
+.cert .sub{text-align:center;color:var(--muted);margin:.3rem 0 1.4rem}
+.cert .name{text-align:center;font-size:2rem;font-weight:800;color:var(--ink);margin:.4rem 0}
+.cert .meta{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;color:var(--accent-2);font-weight:700;margin-top:1.2rem}
+.cert .sign{text-align:center;color:var(--muted);font-size:.8rem;margin-top:1.4rem}
+
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:250}
+
+@media print{
+  body{background:#fff;color:#000}
+  .hud,.overlay,canvas#confetti,.btn,.row,.model,.feedback{display:none!important}
+  .card{border:1px solid #999;box-shadow:none;break-inside:avoid}
+  .cert{border:2px solid #000;box-shadow:none;color:#000}
+  .cert h3,.cert .name{color:#000}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+
+.design-panel{background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:12px;padding:0;margin:1.2rem 0}
+.design-panel>summary{cursor:pointer;padding:1rem 1.2rem;font-weight:800;color:var(--accent);font-size:1.05rem}
+.design-panel .design-body{padding:0 1.2rem 1.2rem}
+.design-panel ul{margin:.4rem 0 0 1.2rem}
+.design-panel li{margin:.5rem 0;color:var(--muted)}
+.design-panel strong{color:var(--ink)}
+.theory-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.1rem 0 .9rem}
+.chip{font-size:.72rem;font-weight:700;padding:.2rem .55rem;border-radius:999px;border:1px solid var(--border);background:var(--surface-2)}
+.chip.bloom{color:var(--accent)}
+.chip.udl{color:var(--accent-2)}
+.chip.assess{color:var(--good)}
+.chip.lens{color:#ffb86b}
+.check{display:flex;flex-direction:column;gap:.35rem;margin:.3rem 0 .2rem;color:var(--muted)}
+.check label{display:flex;gap:.5rem;align-items:center;font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="wrap">
+<header class="hero">
+  <h1>Workplace Conditionals Practice</h1>
+  <p class="subtitle">B1 level. Sixty short activities to build confidence with Zero, First, Second, Third and Mixed Conditionals.</p>
+  <div class="meta-badges">
+    <span class="badge">Level: B1</span>
+    <span class="badge">60 Activities</span>
+    <span class="badge">No login needed</span>
+  </div>
+</header>
+
+<section class="design-panel" style="margin:1.2rem 0">
+  <div class="design-body">
+    <h2 style="color:var(--accent);font-size:1.1rem;margin-bottom:.4rem">How to use this page</h2>
+    <ul>
+      <li>Work through the activities in any order.</li>
+      <li>For gap-fill and choice tasks, type or select your answer, then click <strong>Check my answers</strong> to see which are right.</li>
+      <li>For speaking and writing tasks, write your response, then click <strong>Show answer</strong> to compare with a model.</li>
+      <li>Model answers stay hidden until you ask to see them.</li>
+    </ul>
+  </div>
+</section>
+
+<main id="main">
+<article class="card" id="act1" data-type="graded">
+    <div class="head"><span class="num">01</span><h2>Zero Conditional - Office Rules and Policies</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Use the present simple in both clauses. If something is always true, the zero conditional is your tool.</p>
+    <fieldset>
+      <legend>Complete these company rules</legend>
+      <p class="sentence">1. If employees <input class="answer" name="a1q1" aria-label="verb for employees"> late to the morning meeting, the manager <input class="answer" name="a1q2" aria-label="verb for manager"> without them.</p>
+      <p class="sentence">2. If our software server <input class="answer" name="a1q3" aria-label="verb for server">, the IT department <input class="answer" name="a1q4" aria-label="verb for IT"> an automatic alert.</p>
+      <p class="sentence">3. If you <input class="answer" name="a1q5" aria-label="verb for you"> expenses after Friday, accounting <input class="answer" name="a1q6" aria-label="verb for accounting"> your reimbursement.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act1">Check my answers</button>
+      <button class="btn reveal" data-reveal="model1">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act1" aria-live="polite"></div>
+    <div class="model" id="model1" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If a deadline is missed, we hold an emergency review meeting the next morning."</p>
+      <p>Use present simple in both halves. Example answers: arrive / starts, crashes / receives, submit / delays.</p>
+    </div>
+  </article>
+<article class="card" id="act2" data-type="graded">
+    <div class="head"><span class="num">02</span><h2>First Conditional - Plans and Deadlines</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">For real future possibilities: If + present simple, will + base verb.</p>
+    <fieldset>
+      <legend>Build these workplace sentences</legend>
+      <p class="sentence">1. If we <input class="answer" name="a2q1" aria-label="verb we"> the quarterly report by Tuesday, the director <input class="answer" name="a2q2" aria-label="verb director"> it before the board meeting.</p>
+      <p class="sentence">2. If Sarah <input class="answer" name="a2q3" aria-label="verb Sarah"> the client pitch, we <input class="answer" name="a2q4" aria-label="verb we"> the negotiation advantage.</p>
+      <p class="sentence">3. If the supplier <input class="answer" name="a2q5" aria-label="verb supplier"> the materials on time, production <input class="answer" name="a2q6" aria-label="verb production"> on Wednesday.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act2">Check my answers</button>
+      <button class="btn reveal" data-reveal="model2">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="model" id="model2" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If my manager gives me an urgent task before I finish, I will write a quick plan and finish the easy parts first."</p>
+      <p>Accepted: finish / will review (or reviews), doesn't attend / will lose, delivers / will start.</p>
+    </div>
+  </article>
+<article class="card" id="act3" data-type="graded">
+    <div class="head"><span class="num">03</span><h2>Second Conditional - Hypothetical Scenarios</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">For unreal or imaginary situations: If + past simple, would + base verb.</p>
+    <fieldset>
+      <legend>Complete these professional hypotheticals</legend>
+      <p class="sentence">1. If I <input class="answer" name="a3q1" aria-label="verb I"> the CEO, I <input class="answer" name="a3q2" aria-label="verb I would"> employees to work remotely four days a week.</p>
+      <p class="sentence">2. If our team <input class="answer" name="a3q3" aria-label="verb team"> a bigger marketing budget, we <input class="answer" name="a3q4" aria-label="verb we would"> a global campaign.</p>
+      <p class="sentence">3. If you <input class="answer" name="a3q5" aria-label="verb you had"> to choose another department, which one <input class="answer" name="a3q6" aria-label="verb would"> you <input class="answer" name="a3q7" aria-label="verb join">?</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act3">Check my answers</button>
+      <button class="btn reveal" data-reveal="model3">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="model" id="model3" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If I received a million dollar investment, the first thing I would change is our onboarding process."</p>
+      <p>Note: "were" is the standard form after "I" in hypothetical clauses. Accepted: were / would allow, had / would launch, had / would / join.</p>
+    </div>
+  </article>
+<article class="card" id="act4" data-type="graded">
+    <div class="head"><span class="num">04</span><h2>Third Conditional - Past Reflections</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">For things that did not happen: If + past perfect, would have + past participle.</p>
+    <fieldset>
+      <legend>Complete these project reviews</legend>
+      <p class="sentence">1. If we <input class="answer" name="a4q1" aria-label="verb we had"> the prototype more, we <input class="answer" name="a4q2" aria-label="verb we would"> that major bug.</p>
+      <p class="sentence">2. If Mark <input class="answer" name="a4q3" aria-label="verb Mark had"> his files, he <input class="answer" name="a4q4" aria-label="verb he would"> when his laptop crashed.</p>
+      <p class="sentence">3. If the team <input class="answer" name="a4q5" aria-label="verb team had"> a better counteroffer, the client <input class="answer" name="a4q6" aria-label="verb client would"> yesterday.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act4">Check my answers</button>
+      <button class="btn reveal" data-reveal="model4">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="model" id="model4" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If I had prepared better for that exam, I would have felt more confident on the day."</p>
+      <p>Accepted: had tested / wouldn't have experienced, had backed up / wouldn't have panicked, had prepared / would have signed.</p>
+    </div>
+  </article>
+<article class="card" id="act5" data-type="graded">
+    <div class="head"><span class="num">05</span><h2>Mixed Conditional 1 - Past Action, Present Result</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Past cause, present result: If + past perfect, would + base verb.</p>
+    <fieldset>
+      <legend>Complete these career sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a5q1" aria-label="verb I had"> that job five years ago, I <input class="answer" name="a5q2" aria-label="verb I would"> in the US right now.</p>
+      <p class="sentence">2. If our company <input class="answer" name="a5q3" aria-label="verb company had"> in AI last year, we <input class="answer" name="a5q4" aria-label="verb we would"> more competitive today.</p>
+      <p class="sentence">3. If you <input class="answer" name="a5q5" aria-label="verb you had"> project management, you <input class="answer" name="a5q6" aria-label="verb you would"> this department now.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act5">Check my answers</button>
+      <button class="btn reveal" data-reveal="model5">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <div class="model" id="model5" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If I had taken that traineeship, I would be leading a team today." Keep the past time marker (last year, five years ago) separate from the present result marker (now, today).</p>
+    </div>
+  </article>
+<article class="card" id="act6" data-type="graded">
+    <div class="head"><span class="num">06</span><h2>Mixed Conditional 2 - Present State, Past Result</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Present trait, past outcome: If + past simple, would have + past participle.</p>
+    <fieldset>
+      <legend>Complete these workplace scenarios</legend>
+      <p class="sentence">1. If Anna <input class="answer" name="a6q1" aria-label="verb Anna were"> more detail-oriented, she <input class="answer" name="a6q2" aria-label="verb she would"> those errors.</p>
+      <p class="sentence">2. If we <input class="answer" name="a6q3" aria-label="verb we spoke"> fluent Japanese, we <input class="answer" name="a6q4" aria-label="verb we could"> the Tokyo contract last quarter.</p>
+      <p class="sentence">3. If you <input class="answer" name="a6q5" aria-label="verb you were"> more comfortable with public speaking, you <input class="answer" name="a6q6" aria-label="verb you would"> to lead the keynote.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act6">Check my answers</button>
+      <button class="btn reveal" data-reveal="model6">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <div class="model" id="model6" hidden>
+      <h4>Speaking model</h4>
+      <p><strong>Discussion:</strong> "If I were more organised, I would have met every deadline last month." Contrast the present reality (If I were) with the past consequence (would have made).</p>
+    </div>
+  </article>
+<article class="card" id="act7" data-type="graded">
+    <div class="head"><span class="num">07</span><h2>Conditional Clash - First vs Second</h2></div>
+    <div class="tag">Choose the conditional</div>
+    <p class="lead">Pick First (real possibility) or Second (hypothetical) for each client situation.</p>
+    <div class="mcq" data-group="g1">
+      <div class="q">1. The client is very interested and visiting tomorrow.</div>
+      <label><input class="choice" type="radio" name="g1" value="first"> First conditional (realistic visit)</label>
+      <label><input class="choice" type="radio" name="g1" value="second"> Second conditional (hypothetical)</label>
+    </div>
+    <div class="mcq" data-group="g2">
+      <div class="q">2. The client is a huge multinational that has never answered our emails.</div>
+      <label><input class="choice" type="radio" name="g2" value="first"> First conditional (realistic)</label>
+      <label><input class="choice" type="radio" name="g2" value="second"> Second conditional (highly unlikely)</label>
+    </div>
+    <div class="mcq" data-group="g3">
+      <div class="q">3. We are unsure if management will approve the discount.</div>
+      <label><input class="choice" type="radio" name="g3" value="first"> First conditional (real possibility)</label>
+      <label><input class="choice" type="radio" name="g3" value="second"> Second conditional (hypothetical)</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act7">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act7" aria-live="polite"></div>
+  </article>
+<article class="card" id="act8" data-type="open">
+    <div class="head"><span class="num">08</span><h2>Project Post-Mortem - Third and Mixed</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Last week's product launch failed. Use the problems below to write one Third Conditional sentence and one Mixed Conditional sentence for each.</p>
+    <fieldset>
+      <legend>Your analysis</legend>
+      <p class="sentence"><strong>Problem A:</strong> We didn't market the product on social media.</p>
+      <label class="k" for="a8a">Third conditional (past launch):</label>
+      <textarea id="a8a" aria-label="Third conditional for problem A" placeholder="e.g. If we had marketed on social media, the launch would have succeeded."></textarea>
+      <label class="k" for="a8b" style="display:block;margin-top:.6rem;font-weight:700;color:var(--ink)">Mixed conditional (today's position):</label>
+      <textarea id="a8b" aria-label="Mixed conditional for problem A" placeholder="e.g. If we had marketed on social media last month, we wouldn't be struggling for sales today."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model8">Show model answers</button>
+    </div>
+    <div class="feedback" id="fb-act8" aria-live="polite"></div>
+    <div class="model" id="model8" hidden>
+      <h4>Model responses</h4>
+      <p><strong>Problem B (technical team):</strong> Third: "If our team had been experienced with cloud architecture, the servers wouldn't have crashed." Mixed: "If our team were experienced with cloud architecture, we wouldn't have lost three major clients last month."</p>
+      <p><strong>Problem C (testing time):</strong> Third: "If we had allocated enough testing time, we would have found the bugs." Mixed: "If we had allocated more testing time last month, our reputation wouldn't be damaged today."</p>
+    </div>
+  </article>
+<article class="card" id="act9" data-type="open">
+    <div class="head"><span class="num">09</span><h2>Career Negotiation Roleplay</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">You are the employee. Negotiate a promotion and a flexible remote policy. Use at least one Zero, one First, one Second, and one Mixed conditional in your turns.</p>
+    <fieldset>
+      <legend>Your negotiation (type a few lines)</legend>
+      <textarea id="a9a" aria-label="Your negotiation script" placeholder="Write your negotiation turns here. Use at least one Zero, First, Second and Mixed conditional."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model9">Show prompt ideas</button>
+    </div>
+    <div class="feedback" id="fb-act9" aria-live="polite"></div>
+    <div class="model" id="model9" hidden>
+      <h4>Starter prompts</h4>
+      <p>Zero: "If employees take on senior responsibilities, company policy usually..."</p>
+      <p>First: "If you approve this promotion today, I will lead..."</p>
+      <p>Second: "If I worked remotely two days a week, I would be..."</p>
+      <p>Mixed: "If I hadn't successfully managed the Q3 project last year, I wouldn't be asking for..."</p>
+    </div>
+  </article>
+<article class="card" id="act10" data-type="open">
+    <div class="head"><span class="num">10</span><h2>Rapid Conditional Challenge</h2></div>
+    <div class="tag">Speaking sprint</div>
+    <p class="lead">Respond to each prompt using the named conditional. Type a sentence, then reveal a model.</p>
+    <fieldset>
+      <legend>Five quick prompts</legend>
+      <label class="k" for="a10a" style="display:block;font-weight:700;color:var(--ink)">1. Zero: What happens every time you press the power button?</label>
+      <textarea id="a10a" aria-label="Zero conditional response" style="min-height:60px" placeholder="If I press the power button, the screen turns on."></textarea>
+      <label class="k" for="a10b" style="display:block;margin-top:.6rem;font-weight:700;color:var(--ink)">2. First: What will you do right after this lesson?</label>
+      <textarea id="a10b" aria-label="First conditional response" style="min-height:60px" placeholder="If this lesson finishes, I will check my emails."></textarea>
+      <label class="k" for="a10c" style="display:block;margin-top:.6rem;font-weight:700;color:var(--ink)">3. Second: If you could travel anywhere for business, where would you go?</label>
+      <textarea id="a10c" aria-label="Second conditional response" style="min-height:60px" placeholder="If I could travel anywhere, I would go to Tokyo."></textarea>
+      <label class="k" for="a10d" style="display:block;margin-top:.6rem;font-weight:700;color:var(--ink)">4. Third: A mistake last week you wish you hadn't made?</label>
+      <textarea id="a10d" aria-label="Third conditional response" style="min-height:60px" placeholder="If I had checked my calendar earlier, I wouldn't have missed the meeting."></textarea>
+      <label class="k" for="a10e" style="display:block;margin-top:.6rem;font-weight:700;color:var(--ink)">5. Mixed: Something you learned as a child that still helps you?</label>
+      <textarea id="a10e" aria-label="Mixed conditional response" style="min-height:60px" placeholder="If I hadn't studied computers when I was young, I wouldn't be a developer today."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model10">Show model answers</button>
+    </div>
+    <div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <div class="model" id="model10" hidden>
+      <h4>Model answers</h4>
+      <p>1. "If I press the power button, the screen turns on."</p>
+      <p>2. "If this lesson finishes, I will check my emails."</p>
+      <p>3. "If I could travel anywhere, I would go to Tokyo."</p>
+      <p>4. "If I had checked my calendar earlier, I wouldn't have missed the meeting."</p>
+      <p>5. "If I hadn't studied computers when I was young, I wouldn't be a software developer today."</p>
+    </div>
+  </article>
+<article class="card" id="act11" data-type="graded">
+    <div class="head"><span class="num">11</span><h2>Zero Conditional - Daily Routines</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">General truths with the present simple in both clauses.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If you <input class="answer" name="a11q1" aria-label="verb you"> water to 100 degrees, it <input class="answer" name="a11q2" aria-label="verb it"> into steam.</p>
+      <p class="sentence">2. If the sun <input class="answer" name="a11q3" aria-label="verb sun">, plants <input class="answer" name="a11q4" aria-label="verb plants">.</p>
+      <p class="sentence">3. If I <input class="answer" name="a11q5" aria-label="verb I drink"> enough water, I <input class="answer" name="a11q6" aria-label="verb I get"> thirsty.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act11">Check my answers</button>
+      <button class="btn reveal" data-reveal="model11">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act11" aria-live="polite"></div>
+    <div class="model" id="model11" hidden>
+      <h4>Answer key</h4>
+      <p>1. boils / turns  2. shines / grow  3. do not drink (or don't drink) / get</p>
+    </div>
+  </article>
+<article class="card" id="act12" data-type="graded">
+    <div class="head"><span class="num">12</span><h2>Zero Conditional - Office Systems</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Automatic results in the workplace.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If our server <input class="answer" name="a12q1" aria-label="verb server"> down, the website <input class="answer" name="a12q2" aria-label="verb website"> working.</p>
+      <p class="sentence">2. If staff <input class="answer" name="a12q3" aria-label="verb staff"> on time, the meeting <input class="answer" name="a12q4" aria-label="verb meeting"> promptly.</p>
+      <p class="sentence">3. If you <input class="answer" name="a12q5" aria-label="verb you"> the link, the file <input class="answer" name="a12q6" aria-label="verb file">.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act12">Check my answers</button>
+      <button class="btn reveal" data-reveal="model12">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act12" aria-live="polite"></div>
+    <div class="model" id="model12" hidden>
+      <h4>Answer key</h4>
+      <p>1. goes / stops  2. arrive / starts  3. click / opens</p>
+    </div>
+  </article>
+<article class="card" id="act13" data-type="graded">
+    <div class="head"><span class="num">13</span><h2>First Conditional - Travel Plans</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Real future possibilities: If + present, will + base.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If we <input class="answer" name="a13q1" aria-label="verb we"> the train, we <input class="answer" name="a13q2" aria-label="verb we take"> a taxi.</p>
+      <p class="sentence">2. If it <input class="answer" name="a13q3" aria-label="verb it"> tomorrow, I <input class="answer" name="a13q4" aria-label="verb I bring"> an umbrella.</p>
+      <p class="sentence">3. If you <input class="answer" name="a13q5" aria-label="verb you"> early, you <input class="answer" name="a13q6" aria-label="verb you save"> money.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act13">Check my answers</button>
+      <button class="btn reveal" data-reveal="model13">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act13" aria-live="polite"></div>
+    <div class="model" id="model13" hidden>
+      <h4>Answer key</h4>
+      <p>1. miss / will take  2. rains / will bring  3. book / will save</p>
+    </div>
+  </article>
+<article class="card" id="act14" data-type="graded">
+    <div class="head"><span class="num">14</span><h2>First Conditional - Health Advice</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Give advice about real future results.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If you <input class="answer" name="a14q1" aria-label="verb you"> too much sugar, you <input class="answer" name="a14q2" aria-label="verb you feel"> tired.</p>
+      <p class="sentence">2. If she <input class="answer" name="a14q3" aria-label="verb she"> daily, she <input class="answer" name="a14q4" aria-label="verb she have"> more energy.</p>
+      <p class="sentence">3. If they <input class="answer" name="a14q5" aria-label="verb they sleep"> enough, they <input class="answer" name="a14q6" aria-label="verb they be"> ill.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act14">Check my answers</button>
+      <button class="btn reveal" data-reveal="model14">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act14" aria-live="polite"></div>
+    <div class="model" id="model14" hidden>
+      <h4>Answer key</h4>
+      <p>1. eat / will feel  2. exercises / will have  3. do not sleep (or don't sleep) / will be</p>
+    </div>
+  </article>
+<article class="card" id="act15" data-type="graded">
+    <div class="head"><span class="num">15</span><h2>Second Conditional - Dream Job</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Unreal situations: If + past, would + base.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a15q1" aria-label="verb I"> a pilot, I <input class="answer" name="a15q2" aria-label="verb I travel"> the world.</p>
+      <p class="sentence">2. If he <input class="answer" name="a15q3" aria-label="verb he"> the lottery, he <input class="answer" name="a15q4" aria-label="verb he buy"> an island.</p>
+      <p class="sentence">3. If we <input class="answer" name="a15q5" aria-label="verb we"> abroad, we <input class="answer" name="a15q6" aria-label="verb we learn"> a new language.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act15">Check my answers</button>
+      <button class="btn reveal" data-reveal="model15">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act15" aria-live="polite"></div>
+    <div class="model" id="model15" hidden>
+      <h4>Answer key</h4>
+      <p>1. were / would travel  2. won / would buy  3. lived / would learn</p>
+    </div>
+  </article>
+<article class="card" id="act16" data-type="graded">
+    <div class="head"><span class="num">16</span><h2>Second Conditional - Imaginary Inventions</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Imagine impossible or unlikely inventions.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a16q1" aria-label="verb I"> a flying car, traffic <input class="answer" name="a16q2" aria-label="verb traffic">.</p>
+      <p class="sentence">2. If cities <input class="answer" name="a16q3" aria-label="verb cities"> clean air, people <input class="answer" name="a16q4" aria-label="verb people"> easily.</p>
+      <p class="sentence">3. If schools <input class="answer" name="a16q5" aria-label="verb schools"> virtual reality, lessons <input class="answer" name="a16q6" aria-label="verb lessons"> fun.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act16">Check my answers</button>
+      <button class="btn reveal" data-reveal="model16">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act16" aria-live="polite"></div>
+    <div class="model" id="model16" hidden>
+      <h4>Answer key</h4>
+      <p>1. invented / would disappear  2. had / would breathe  3. used / would be</p>
+    </div>
+  </article>
+<article class="card" id="act17" data-type="graded">
+    <div class="head"><span class="num">17</span><h2>Third Conditional - Regrets</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Past hypotheticals: If + past perfect, would have + participle.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a17q1" aria-label="verb I"> harder, I <input class="answer" name="a17q2" aria-label="verb I pass"> the exam.</p>
+      <p class="sentence">2. If we <input class="answer" name="a17q3" aria-label="verb we"> earlier, we <input class="answer" name="a17q4" aria-label="verb we miss"> the flight.</p>
+      <p class="sentence">3. If she <input class="answer" name="a17q5" aria-label="verb she">, she <input class="answer" name="a17q6" aria-label="verb she get"> the job.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act17">Check my answers</button>
+      <button class="btn reveal" data-reveal="model17">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act17" aria-live="polite"></div>
+    <div class="model" id="model17" hidden>
+      <h4>Answer key</h4>
+      <p>1. had studied / would have passed  2. had left / would not have missed  3. had applied / would have got (or gotten)</p>
+    </div>
+  </article>
+<article class="card" id="act18" data-type="graded">
+    <div class="head"><span class="num">18</span><h2>Third Conditional - Historical What If</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Look back at history with conditionals.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If Edison <input class="answer" name="a18q1" aria-label="verb Edison"> the light bulb, nights <input class="answer" name="a18q2" aria-label="verb nights"> dark.</p>
+      <p class="sentence">2. If the Romans <input class="answer" name="a18q3" aria-label="verb Romans"> roads, trade <input class="answer" name="a18q4" aria-label="verb trade">.</p>
+      <p class="sentence">3. If we <input class="answer" name="a18q5" aria-label="verb we">, we <input class="answer" name="a18q6" aria-label="verb we be"> friends.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act18">Check my answers</button>
+      <button class="btn reveal" data-reveal="model18">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act18" aria-live="polite"></div>
+    <div class="model" id="model18" hidden>
+      <h4>Answer key</h4>
+      <p>1. had not invented (or hadn't invented) / would have been  2. had built / would have improved  3. had not met / would not have been</p>
+    </div>
+  </article>
+<article class="card" id="act19" data-type="graded">
+    <div class="head"><span class="num">19</span><h2>Mixed Conditional 1 - Past Cause, Present Result</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">A past action with a present result.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a19q1" aria-label="verb I"> coding at school, I <input class="answer" name="a19q2" aria-label="verb I work"> in tech now.</p>
+      <p class="sentence">2. If she <input class="answer" name="a19q3" aria-label="verb she"> to the city, she <input class="answer" name="a19q4" aria-label="verb she have"> a shorter commute today.</p>
+      <p class="sentence">3. If they <input class="answer" name="a19q5" aria-label="verb they"> him, he <input class="answer" name="a19q6" aria-label="verb he lead"> the team now.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act19">Check my answers</button>
+      <button class="btn reveal" data-reveal="model19">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act19" aria-live="polite"></div>
+    <div class="model" id="model19" hidden>
+      <h4>Answer key</h4>
+      <p>1. had learned / would be working (or would work)  2. had moved / would have  3. had hired / would be leading (or would lead)</p>
+    </div>
+  </article>
+<article class="card" id="act20" data-type="graded">
+    <div class="head"><span class="num">20</span><h2>Mixed Conditional 2 - Present Trait, Past Result</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">A present state explaining a past outcome.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a20q1" aria-label="verb I"> more patient, I <input class="answer" name="a20q2" aria-label="verb I snap"> at him yesterday.</p>
+      <p class="sentence">2. If he <input class="answer" name="a20q3" aria-label="verb he"> French, he <input class="answer" name="a20q4" aria-label="verb he translate"> the email last week.</p>
+      <p class="sentence">3. If we <input class="answer" name="a20q5" aria-label="verb we"> organised, we <input class="answer" name="a20q6" aria-label="verb we finish"> on time.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act20">Check my answers</button>
+      <button class="btn reveal" data-reveal="model20">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act20" aria-live="polite"></div>
+    <div class="model" id="model20" hidden>
+      <h4>Answer key</h4>
+      <p>1. were / would not have snapped  2. spoke / would have translated  3. were / would have finished</p>
+    </div>
+  </article>
+<article class="card" id="act21" data-type="graded">
+    <div class="head"><span class="num">21</span><h2>Error Hunt - Zero Conditional</h2></div>
+    <div class="tag">Fix the verb</div>
+    <p class="lead">Each sentence has one wrong verb. Type the correct form.</p>
+    <fieldset>
+      <legend>Correct the verb</legend>
+      <p class="sentence">1. If it rain, the grass grows. Fix: <input class="answer" name="a21q1" aria-label="correct verb"></p>
+      <p class="sentence">2. If you heat ice, it melt. Fix: <input class="answer" name="a21q2" aria-label="correct verb"></p>
+      <p class="sentence">3. If children eat well, they is healthy. Fix: <input class="answer" name="a21q3" aria-label="correct verb"></p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act21">Check my answers</button>
+      <button class="btn reveal" data-reveal="model21">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act21" aria-live="polite"></div>
+    <div class="model" id="model21" hidden>
+      <h4>Answer key</h4>
+      <p>1. rains  2. melts  3. are</p>
+    </div>
+  </article>
+<article class="card" id="act22" data-type="graded">
+    <div class="head"><span class="num">22</span><h2>Error Hunt - First Conditional</h2></div>
+    <div class="tag">Fix the verb</div>
+    <p class="lead">Each sentence has one wrong verb. Type the correct form.</p>
+    <fieldset>
+      <legend>Correct the verb</legend>
+      <p class="sentence">1. If we will miss the bus, we walk. Fix: <input class="answer" name="a22q1" aria-label="correct verb"></p>
+      <p class="sentence">2. If she study, she will pass. Fix: <input class="answer" name="a22q2" aria-label="correct verb"></p>
+      <p class="sentence">3. If it rains, he will stays home. Fix: <input class="answer" name="a22q3" aria-label="correct verb"></p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act22">Check my answers</button>
+      <button class="btn reveal" data-reveal="model22">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act22" aria-live="polite"></div>
+    <div class="model" id="model22" hidden>
+      <h4>Answer key</h4>
+      <p>1. miss  2. studies  3. stay</p>
+    </div>
+  </article>
+<article class="card" id="act23" data-type="graded">
+    <div class="head"><span class="num">23</span><h2>Error Hunt - Second Conditional</h2></div>
+    <div class="tag">Fix the verb</div>
+    <p class="lead">Each sentence has one wrong verb. Type the correct form.</p>
+    <fieldset>
+      <legend>Correct the verb</legend>
+      <p class="sentence">1. If I was rich, I buy a castle. Fix: <input class="answer" name="a23q1" aria-label="correct verb"></p>
+      <p class="sentence">2. If he went, he will be happy. Fix: <input class="answer" name="a23q2" aria-label="correct verb"></p>
+      <p class="sentence">3. If they have time, they will help. Fix: <input class="answer" name="a23q3" aria-label="correct verb"></p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act23">Check my answers</button>
+      <button class="btn reveal" data-reveal="model23">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act23" aria-live="polite"></div>
+    <div class="model" id="model23" hidden>
+      <h4>Answer key</h4>
+      <p>1. were  2. would be  3. had</p>
+    </div>
+  </article>
+<article class="card" id="act24" data-type="graded">
+    <div class="head"><span class="num">24</span><h2>Error Hunt - Third Conditional</h2></div>
+    <div class="tag">Fix the verb</div>
+    <p class="lead">Each sentence has one wrong verb. Type the correct form.</p>
+    <fieldset>
+      <legend>Correct the verb</legend>
+      <p class="sentence">1. If I had known, I tell you the truth. Fix: <input class="answer" name="a24q1" aria-label="correct verb"></p>
+      <p class="sentence">2. If she had tried, she will succeed. Fix: <input class="answer" name="a24q2" aria-label="correct verb"></p>
+      <p class="sentence">3. If they left earlier, they will arrive. Fix: <input class="answer" name="a24q3" aria-label="correct verb"></p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act24">Check my answers</button>
+      <button class="btn reveal" data-reveal="model24">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act24" aria-live="polite"></div>
+    <div class="model" id="model24" hidden>
+      <h4>Answer key</h4>
+      <p>1. would have told  2. would have succeeded  3. would have arrived</p>
+    </div>
+  </article>
+<article class="card" id="act25" data-type="graded">
+    <div class="head"><span class="num">25</span><h2>Error Hunt - Mixed Conditional</h2></div>
+    <div class="tag">Fix the verb</div>
+    <p class="lead">Each sentence has one wrong verb. Type the correct form.</p>
+    <fieldset>
+      <legend>Correct the verb</legend>
+      <p class="sentence">1. If I studied medicine, I am a doctor now. Fix: <input class="answer" name="a25q1" aria-label="correct verb"></p>
+      <p class="sentence">2. If he was careful, he would not crash yesterday. Fix: <input class="answer" name="a25q2" aria-label="correct verb"></p>
+      <p class="sentence">3. If we had practised, we will win. Fix: <input class="answer" name="a25q3" aria-label="correct verb"></p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act25">Check my answers</button>
+      <button class="btn reveal" data-reveal="model25">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act25" aria-live="polite"></div>
+    <div class="model" id="model25" hidden>
+      <h4>Answer key</h4>
+      <p>1. would be  2. were  3. would have won</p>
+    </div>
+  </article>
+<article class="card" id="act26" data-type="graded">
+    <div class="head"><span class="num">26</span><h2>First Conditional - Technology</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Real future results with devices.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If the app <input class="answer" name="a26q1" aria-label="verb app">, we <input class="answer" name="a26q2" aria-label="verb we lose"> the data.</p>
+      <p class="sentence">2. If you <input class="answer" name="a26q3" aria-label="verb you"> the software, it <input class="answer" name="a26q4" aria-label="verb it run"> faster.</p>
+      <p class="sentence">3. If the battery <input class="answer" name="a26q5" aria-label="verb battery">, the phone <input class="answer" name="a26q6" aria-label="verb phone"> off.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act26">Check my answers</button>
+      <button class="btn reveal" data-reveal="model26">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act26" aria-live="polite"></div>
+    <div class="model" id="model26" hidden>
+      <h4>Answer key</h4>
+      <p>1. crashes / will lose  2. update / will run  3. dies / will turn</p>
+    </div>
+  </article>
+<article class="card" id="act27" data-type="graded">
+    <div class="head"><span class="num">27</span><h2>Zero Conditional - Cooking</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Facts in the kitchen.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If you <input class="answer" name="a27q1" aria-label="verb you"> salt, the soup <input class="answer" name="a27q2" aria-label="verb soup"> better.</p>
+      <p class="sentence">2. If water <input class="answer" name="a27q3" aria-label="verb water"> boiling point, it <input class="answer" name="a27q4" aria-label="verb it">.</p>
+      <p class="sentence">3. If bread <input class="answer" name="a27q5" aria-label="verb bread">, it <input class="answer" name="a27q6" aria-label="verb it taste"> bitter.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act27">Check my answers</button>
+      <button class="btn reveal" data-reveal="model27">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act27" aria-live="polite"></div>
+    <div class="model" id="model27" hidden>
+      <h4>Answer key</h4>
+      <p>1. add / tastes  2. reaches / bubbles  3. burns / tastes</p>
+    </div>
+  </article>
+<article class="card" id="act28" data-type="graded">
+    <div class="head"><span class="num">28</span><h2>Second Conditional - Environment</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Hypothetical green changes.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If governments <input class="answer" name="a28q1" aria-label="verb governments"> plastic, oceans <input class="answer" name="a28q2" aria-label="verb oceans">.</p>
+      <p class="sentence">2. If everyone <input class="answer" name="a28q3" aria-label="verb everyone"> a tree, cities <input class="answer" name="a28q4" aria-label="verb cities"> greener.</p>
+      <p class="sentence">3. If we <input class="answer" name="a28q5" aria-label="verb we"> solar power, bills <input class="answer" name="a28q6" aria-label="verb bills">.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act28">Check my answers</button>
+      <button class="btn reveal" data-reveal="model28">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act28" aria-live="polite"></div>
+    <div class="model" id="model28" hidden>
+      <h4>Answer key</h4>
+      <p>1. banned / would recover  2. planted / would be  3. used / would drop</p>
+    </div>
+  </article>
+<article class="card" id="act29" data-type="graded">
+    <div class="head"><span class="num">29</span><h2>Third Conditional - Exam Regrets</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">Past exam hypotheticals.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a29q1" aria-label="verb I"> more, I <input class="answer" name="a29q2" aria-label="verb I score"> higher.</p>
+      <p class="sentence">2. If we <input class="answer" name="a29q3" aria-label="verb we"> speaking, we <input class="answer" name="a29q4" aria-label="verb we be"> confident.</p>
+      <p class="sentence">3. If he <input class="answer" name="a29q5" aria-label="verb he"> the question, he <input class="answer" name="a29q6" aria-label="verb he fail">.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act29">Check my answers</button>
+      <button class="btn reveal" data-reveal="model29">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act29" aria-live="polite"></div>
+    <div class="model" id="model29" hidden>
+      <h4>Answer key</h4>
+      <p>1. had revised / would have scored  2. had practised / would have been  3. had read / would not have failed</p>
+    </div>
+  </article>
+<article class="card" id="act30" data-type="graded">
+    <div class="head"><span class="num">30</span><h2>Mixed Conditional 1 - Language Learning</h2></div>
+    <div class="tag">Fill the gaps</div>
+    <p class="lead">A past choice with a present skill.</p>
+    <fieldset>
+      <legend>Complete the sentences</legend>
+      <p class="sentence">1. If I <input class="answer" name="a30q1" aria-label="verb I"> Spanish at school, I <input class="answer" name="a30q2" aria-label="verb I speak"> it fluently now.</p>
+      <p class="sentence">2. If she <input class="answer" name="a30q3" aria-label="verb she"> abroad, she <input class="answer" name="a30q4" aria-label="verb she have"> an accent today.</p>
+      <p class="sentence">3. If they <input class="answer" name="a30q5" aria-label="verb they"> online, they <input class="answer" name="a30q6" aria-label="verb they be"> married now.</p>
+    </fieldset>
+    <div class="row">
+      <button class="btn" data-check="act30">Check my answers</button>
+      <button class="btn reveal" data-reveal="model30">Show answer</button>
+    </div>
+    <div class="feedback" id="fb-act30" aria-live="polite"></div>
+    <div class="model" id="model30" hidden>
+      <h4>Answer key</h4>
+      <p>1. had started / would speak (or would be speaking)  2. had lived / would have  3. had met / would be</p>
+    </div>
+  </article>
+<article class="card" id="act31" data-type="graded">
+    <div class="head"><span class="num">31</span><h2>Identify the Conditional - Set 1</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose the type of conditional in each sentence.</p>
+    <div class="mcq" data-group="g31a">
+      <div class="q">1. If I won the lottery, I would travel the world.</div>
+      <label><input class="choice" type="radio" name="g31a" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g31a" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g31a" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g31a" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g31a" value="mixed"> Mixed</label>
+    </div>
+    <div class="mcq" data-group="g31b">
+      <div class="q">2. If she has finished, we will leave.</div>
+      <label><input class="choice" type="radio" name="g31b" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g31b" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g31b" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g31b" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g31b" value="mixed"> Mixed</label>
+    </div>
+    <div class="mcq" data-group="g31c">
+      <div class="q">3. If they had called, we would have answered.</div>
+      <label><input class="choice" type="radio" name="g31c" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g31c" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g31c" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g31c" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g31c" value="mixed"> Mixed</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act31">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act31" aria-live="polite"></div>
+  </article>
+<article class="card" id="act32" data-type="graded">
+    <div class="head"><span class="num">32</span><h2>Identify the Conditional - Set 2</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose the type of conditional in each sentence.</p>
+    <div class="mcq" data-group="g32a">
+      <div class="q">1. If water reaches 100C, it boils.</div>
+      <label><input class="choice" type="radio" name="g32a" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g32a" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g32a" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g32a" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g32a" value="mixed"> Mixed</label>
+    </div>
+    <div class="mcq" data-group="g32b">
+      <div class="q">2. If I were you, I would apologise.</div>
+      <label><input class="choice" type="radio" name="g32b" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g32b" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g32b" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g32b" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g32b" value="mixed"> Mixed</label>
+    </div>
+    <div class="mcq" data-group="g32c">
+      <div class="q">3. If we had left earlier, we would have caught the train.</div>
+      <label><input class="choice" type="radio" name="g32c" value="zero"> Zero</label>
+      <label><input class="choice" type="radio" name="g32c" value="first"> First</label>
+      <label><input class="choice" type="radio" name="g32c" value="second"> Second</label>
+      <label><input class="choice" type="radio" name="g32c" value="third"> Third</label>
+      <label><input class="choice" type="radio" name="g32c" value="mixed"> Mixed</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act32">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act32" aria-live="polite"></div>
+  </article>
+<article class="card" id="act33" data-type="graded">
+    <div class="head"><span class="num">33</span><h2>Choose the Correct Form - Set 1</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Pick the right verb form for each blank.</p>
+    <div class="mcq" data-group="g33a">
+      <div class="q">1. If it ___ tomorrow, we will cancel the picnic.</div>
+      <label><input class="choice" type="radio" name="g33a" value="a"> a) rain</label>
+      <label><input class="choice" type="radio" name="g33a" value="b"> b) rains</label>
+      <label><input class="choice" type="radio" name="g33a" value="c"> c) rained</label>
+    </div>
+    <div class="mcq" data-group="g33b">
+      <div class="q">2. If I ___ rich, I would help others.</div>
+      <label><input class="choice" type="radio" name="g33b" value="a"> a) am</label>
+      <label><input class="choice" type="radio" name="g33b" value="b"> b) was</label>
+      <label><input class="choice" type="radio" name="g33b" value="c"> c) were</label>
+    </div>
+    <div class="mcq" data-group="g33c">
+      <div class="q">3. If they ___ now, they will be late.</div>
+      <label><input class="choice" type="radio" name="g33c" value="a"> a) leave</label>
+      <label><input class="choice" type="radio" name="g33c" value="b"> b) leaves</label>
+      <label><input class="choice" type="radio" name="g33c" value="c"> c) left</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act33">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act33" aria-live="polite"></div>
+  </article>
+<article class="card" id="act34" data-type="graded">
+    <div class="head"><span class="num">34</span><h2>Choose the Correct Form - Set 2</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Pick the right verb form for each blank.</p>
+    <div class="mcq" data-group="g34a">
+      <div class="q">1. If you ___ hard, you will succeed.</div>
+      <label><input class="choice" type="radio" name="g34a" value="a"> a) work</label>
+      <label><input class="choice" type="radio" name="g34a" value="b"> b) works</label>
+      <label><input class="choice" type="radio" name="g34a" value="c"> c) worked</label>
+    </div>
+    <div class="mcq" data-group="g34b">
+      <div class="q">2. If I ___ a bird, I would fly.</div>
+      <label><input class="choice" type="radio" name="g34b" value="a"> a) am</label>
+      <label><input class="choice" type="radio" name="g34b" value="b"> b) was</label>
+      <label><input class="choice" type="radio" name="g34b" value="c"> c) were</label>
+    </div>
+    <div class="mcq" data-group="g34c">
+      <div class="q">3. If they ___ now, they will miss it.</div>
+      <label><input class="choice" type="radio" name="g34c" value="a"> a) leave</label>
+      <label><input class="choice" type="radio" name="g34c" value="b"> b) leaves</label>
+      <label><input class="choice" type="radio" name="g34c" value="c"> c) left</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act34">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act34" aria-live="polite"></div>
+  </article>
+<article class="card" id="act35" data-type="graded">
+    <div class="head"><span class="num">35</span><h2>Third vs Mixed</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose the form that fits the time frame.</p>
+    <div class="mcq" data-group="g35a">
+      <div class="q">1. If I had seen him, I ___ him.</div>
+      <label><input class="choice" type="radio" name="g35a" value="a"> a) would tell</label>
+      <label><input class="choice" type="radio" name="g35a" value="b"> b) would have told</label>
+      <label><input class="choice" type="radio" name="g35a" value="c"> c) will tell</label>
+    </div>
+    <div class="mcq" data-group="g35b">
+      <div class="q">2. If I had seen him, I ___ him now.</div>
+      <label><input class="choice" type="radio" name="g35b" value="a"> a) would tell</label>
+      <label><input class="choice" type="radio" name="g35b" value="b"> b) would have told</label>
+      <label><input class="choice" type="radio" name="g35b" value="c"> c) tell</label>
+    </div>
+    <div class="mcq" data-group="g35c">
+      <div class="q">3. If we had practised, we ___ the match.</div>
+      <label><input class="choice" type="radio" name="g35c" value="a"> a) would win</label>
+      <label><input class="choice" type="radio" name="g35c" value="b"> b) would have won</label>
+      <label><input class="choice" type="radio" name="g35c" value="c"> c) will win</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act35">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act35" aria-live="polite"></div>
+  </article>
+<article class="card" id="act36" data-type="graded">
+    <div class="head"><span class="num">36</span><h2>Find the Mistake</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose which part of the sentence is wrong.</p>
+    <div class="mcq" data-group="g36a">
+      <div class="q">1. If it will rain, we stay home.</div>
+      <label><input class="choice" type="radio" name="g36a" value="a"> a) "will rain"</label>
+      <label><input class="choice" type="radio" name="g36a" value="b"> b) "stay"</label>
+      <label><input class="choice" type="radio" name="g36a" value="c"> c) nothing is wrong</label>
+    </div>
+    <div class="mcq" data-group="g36b">
+      <div class="q">2. If I was you, I would go.</div>
+      <label><input class="choice" type="radio" name="g36b" value="a"> a) "was"</label>
+      <label><input class="choice" type="radio" name="g36b" value="b"> b) "would go"</label>
+      <label><input class="choice" type="radio" name="g36b" value="c"> c) nothing is wrong</label>
+    </div>
+    <div class="mcq" data-group="g36c">
+      <div class="q">3. If she had came, we were happy.</div>
+      <label><input class="choice" type="radio" name="g36c" value="a"> a) "had came"</label>
+      <label><input class="choice" type="radio" name="g36c" value="b"> b) "were"</label>
+      <label><input class="choice" type="radio" name="g36c" value="c"> c) nothing is wrong</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act36">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act36" aria-live="polite"></div>
+  </article>
+<article class="card" id="act37" data-type="graded">
+    <div class="head"><span class="num">37</span><h2>Zero vs First</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Decide if the sentence needs a zero or first pattern by picking the verb.</p>
+    <div class="mcq" data-group="g37a">
+      <div class="q">1. If you ___ the bell, the door opens.</div>
+      <label><input class="choice" type="radio" name="g37a" value="a"> a) ring</label>
+      <label><input class="choice" type="radio" name="g37a" value="b"> b) will ring</label>
+      <label><input class="choice" type="radio" name="g37a" value="c"> c) rang</label>
+    </div>
+    <div class="mcq" data-group="g37b">
+      <div class="q">2. If you ___ the bell, I will open it.</div>
+      <label><input class="choice" type="radio" name="g37b" value="a"> a) ring</label>
+      <label><input class="choice" type="radio" name="g37b" value="b"> b) rang</label>
+      <label><input class="choice" type="radio" name="g37b" value="c"> c) will ring</label>
+    </div>
+    <div class="mcq" data-group="g37c">
+      <div class="q">3. If it ___ , we cancel the game.</div>
+      <label><input class="choice" type="radio" name="g37c" value="a"> a) snows</label>
+      <label><input class="choice" type="radio" name="g37c" value="b"> b) will snow</label>
+      <label><input class="choice" type="radio" name="g37c" value="c"> c) snowed</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act37">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act37" aria-live="polite"></div>
+  </article>
+<article class="card" id="act38" data-type="graded">
+    <div class="head"><span class="num">38</span><h2>Second Conditional</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Pick the past-form verb or would-form result.</p>
+    <div class="mcq" data-group="g38a">
+      <div class="q">1. If I ___ invisible, I would sneak in.</div>
+      <label><input class="choice" type="radio" name="g38a" value="a"> a) am</label>
+      <label><input class="choice" type="radio" name="g38a" value="b"> b) were</label>
+      <label><input class="choice" type="radio" name="g38a" value="c"> c) will be</label>
+    </div>
+    <div class="mcq" data-group="g38b">
+      <div class="q">2. If he ___ more, he would be healthier.</div>
+      <label><input class="choice" type="radio" name="g38b" value="a"> a) exercised</label>
+      <label><input class="choice" type="radio" name="g38b" value="b"> b) exercises</label>
+      <label><input class="choice" type="radio" name="g38b" value="c"> c) will exercise</label>
+    </div>
+    <div class="mcq" data-group="g38c">
+      <div class="q">3. If we ___ on a desert island, we would build a hut.</div>
+      <label><input class="choice" type="radio" name="g38c" value="a"> a) are</label>
+      <label><input class="choice" type="radio" name="g38c" value="b"> b) were</label>
+      <label><input class="choice" type="radio" name="g38c" value="c"> c) will be</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act38">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act38" aria-live="polite"></div>
+  </article>
+<article class="card" id="act39" data-type="graded">
+    <div class="head"><span class="num">39</span><h2>Third Conditional</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Pick the past perfect form.</p>
+    <div class="mcq" data-group="g39a">
+      <div class="q">1. If I ___ your number, I would have called.</div>
+      <label><input class="choice" type="radio" name="g39a" value="a"> a) know</label>
+      <label><input class="choice" type="radio" name="g39a" value="b"> b) knew</label>
+      <label><input class="choice" type="radio" name="g39a" value="c"> c) had known</label>
+    </div>
+    <div class="mcq" data-group="g39b">
+      <div class="q">2. If we ___ the map, we would not have got lost.</div>
+      <label><input class="choice" type="radio" name="g39b" value="a"> a) had taken</label>
+      <label><input class="choice" type="radio" name="g39b" value="b"> b) took</label>
+      <label><input class="choice" type="radio" name="g39b" value="c"> c) take</label>
+    </div>
+    <div class="mcq" data-group="g39c">
+      <div class="q">3. If she ___ earlier, she would have caught it.</div>
+      <label><input class="choice" type="radio" name="g39c" value="a"> a) left</label>
+      <label><input class="choice" type="radio" name="g39c" value="b"> b) had left</label>
+      <label><input class="choice" type="radio" name="g39c" value="c"> c) leaves</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act39">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act39" aria-live="polite"></div>
+  </article>
+<article class="card" id="act40" data-type="graded">
+    <div class="head"><span class="num">40</span><h2>Mixed 1 - Past to Present</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose the present result of a past condition.</p>
+    <div class="mcq" data-group="g40a">
+      <div class="q">1. If I had studied law, I ___ a lawyer now.</div>
+      <label><input class="choice" type="radio" name="g40a" value="a"> a) would be</label>
+      <label><input class="choice" type="radio" name="g40a" value="b"> b) would have been</label>
+      <label><input class="choice" type="radio" name="g40a" value="c"> c) will be</label>
+    </div>
+    <div class="mcq" data-group="g40b">
+      <div class="q">2. If she had saved money, she ___ rich today.</div>
+      <label><input class="choice" type="radio" name="g40b" value="a"> a) would be</label>
+      <label><input class="choice" type="radio" name="g40b" value="b"> b) would have been</label>
+      <label><input class="choice" type="radio" name="g40b" value="c"> c) will be</label>
+    </div>
+    <div class="mcq" data-group="g40c">
+      <div class="q">3. If they had trained, they ___ fit now.</div>
+      <label><input class="choice" type="radio" name="g40c" value="a"> a) would be</label>
+      <label><input class="choice" type="radio" name="g40c" value="b"> b) would have been</label>
+      <label><input class="choice" type="radio" name="g40c" value="c"> c) will be</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act40">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act40" aria-live="polite"></div>
+  </article>
+<article class="card" id="act41" data-type="graded">
+    <div class="head"><span class="num">41</span><h2>Mixed 2 - Present to Past</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Choose the present condition for a past result.</p>
+    <div class="mcq" data-group="g41a">
+      <div class="q">1. If I ___ taller, I would have reached it.</div>
+      <label><input class="choice" type="radio" name="g41a" value="a"> a) am</label>
+      <label><input class="choice" type="radio" name="g41a" value="b"> b) were</label>
+      <label><input class="choice" type="radio" name="g41a" value="c"> c) will be</label>
+    </div>
+    <div class="mcq" data-group="g41b">
+      <div class="q">2. If he ___ French, he would have translated it.</div>
+      <label><input class="choice" type="radio" name="g41b" value="a"> a) speaks</label>
+      <label><input class="choice" type="radio" name="g41b" value="b"> b) spoke</label>
+      <label><input class="choice" type="radio" name="g41b" value="c"> c) will speak</label>
+    </div>
+    <div class="mcq" data-group="g41c">
+      <div class="q">3. If we ___ careful, we would not have crashed.</div>
+      <label><input class="choice" type="radio" name="g41c" value="a"> a) am</label>
+      <label><input class="choice" type="radio" name="g41c" value="b"> b) were</label>
+      <label><input class="choice" type="radio" name="g41c" value="c"> c) will be</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act41">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act41" aria-live="polite"></div>
+  </article>
+<article class="card" id="act42" data-type="graded">
+    <div class="head"><span class="num">42</span><h2>Mixed Bag - Identify</h2></div>
+    <div class="tag">undefined</div>
+    <p class="lead">Name the conditional type.</p>
+    <div class="mcq" data-group="g42a">
+      <div class="q">1. If I had a million dollars, I would donate it.</div>
+      <label><input class="choice" type="radio" name="g42a" value="a"> a) Second</label>
+      <label><input class="choice" type="radio" name="g42a" value="b"> b) Third</label>
+      <label><input class="choice" type="radio" name="g42a" value="c"> c) Mixed</label>
+    </div>
+    <div class="mcq" data-group="g42b">
+      <div class="q">2. If I had taken the job, I would live abroad now.</div>
+      <label><input class="choice" type="radio" name="g42b" value="a"> a) Second</label>
+      <label><input class="choice" type="radio" name="g42b" value="b"> b) Third</label>
+      <label><input class="choice" type="radio" name="g42b" value="c"> c) Mixed</label>
+    </div>
+    <div class="mcq" data-group="g42c">
+      <div class="q">3. If it had snowed, we would have built a snowman.</div>
+      <label><input class="choice" type="radio" name="g42c" value="a"> a) Zero</label>
+      <label><input class="choice" type="radio" name="g42c" value="b"> b) Third</label>
+      <label><input class="choice" type="radio" name="g42c" value="c"> c) Mixed</label>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="act42">Check my answers</button>
+    </div>
+    <div class="feedback" id="fb-act42" aria-live="polite"></div>
+  </article>
+<article class="card" id="act43" data-type="open">
+    <div class="head"><span class="num">43</span><h2>Transform to Zero Conditional</h2></div>
+    <div class="tag">Transformation</div>
+    <p class="lead">Rewrite each pair as a zero conditional sentence.</p>
+    <fieldset>
+      <legend>Rewrite the sentences</legend>
+      <label class="k" for="a43a" style="display:block;font-weight:700;color:var(--ink)">1. "When the temperature drops below zero, water freezes."</label>
+      <textarea id="a43a" aria-label="1. "When the temperature drops below zero, water freezes."" style="min-height:70px" placeholder="If the temperature drops below zero, water freezes."></textarea>
+      <label class="k" for="a43b" style="display:block;font-weight:700;color:var(--ink)">2. "The lights go on automatically when you enter the room."</label>
+      <textarea id="a43b" aria-label="2. "The lights go on automatically when you enter the room."" style="min-height:70px" placeholder="If you enter the room, the lights go on."></textarea>
+      <label class="k" for="a43c" style="display:block;font-weight:700;color:var(--ink)">3. "The alarm sounds when the door opens."</label>
+      <textarea id="a43c" aria-label="3. "The alarm sounds when the door opens."" style="min-height:70px" placeholder="If the door opens, the alarm sounds."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model43">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act43" aria-live="polite"></div>
+    <div class="model" id="model43" hidden>
+      <h4>Model</h4>
+      <p>1. If the temperature drops below zero, water freezes.  2. If you enter the room, the lights go on.  3. If the door opens, the alarm sounds.</p>
+    </div>
+  </article>
+<article class="card" id="act44" data-type="open">
+    <div class="head"><span class="num">44</span><h2>Transform to First Conditional</h2></div>
+    <div class="tag">Transformation</div>
+    <p class="lead">Rewrite each pair as a first conditional sentence.</p>
+    <fieldset>
+      <legend>Rewrite the sentences</legend>
+      <label class="k" for="a44a" style="display:block;font-weight:700;color:var(--ink)">1. "We will celebrate. We win the contract."</label>
+      <textarea id="a44a" aria-label="1. "We will celebrate. We win the contract."" style="min-height:70px" placeholder="If we win the contract, we will celebrate."></textarea>
+      <label class="k" for="a44b" style="display:block;font-weight:700;color:var(--ink)">2. "She will be happy. He proposes."</label>
+      <textarea id="a44b" aria-label="2. "She will be happy. He proposes."" style="min-height:70px" placeholder="If he proposes, she will be happy."></textarea>
+      <label class="k" for="a44c" style="display:block;font-weight:700;color:var(--ink)">3. "They will refund you. You return the item."</label>
+      <textarea id="a44c" aria-label="3. "They will refund you. You return the item."" style="min-height:70px" placeholder="If you return the item, they will refund you."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model44">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act44" aria-live="polite"></div>
+    <div class="model" id="model44" hidden>
+      <h4>Model</h4>
+      <p>1. If we win the contract, we will celebrate.  2. If he proposes, she will be happy.  3. If you return the item, they will refund you.</p>
+    </div>
+  </article>
+<article class="card" id="act45" data-type="open">
+    <div class="head"><span class="num">45</span><h2>Transform to Second Conditional</h2></div>
+    <div class="tag">Transformation</div>
+    <p class="lead">Rewrite each pair as a second conditional sentence.</p>
+    <fieldset>
+      <legend>Rewrite the sentences</legend>
+      <label class="k" for="a45a" style="display:block;font-weight:700;color:var(--ink)">1. "I do not have wings, so I cannot fly."</label>
+      <textarea id="a45a" aria-label="1. "I do not have wings, so I cannot fly."" style="min-height:70px" placeholder="If I had wings, I would fly."></textarea>
+      <label class="k" for="a45b" style="display:block;font-weight:700;color:var(--ink)">2. "He is not the boss, so he cannot change the rule."</label>
+      <textarea id="a45b" aria-label="2. "He is not the boss, so he cannot change the rule."" style="min-height:70px" placeholder="If he were the boss, he would change the rule."></textarea>
+      <label class="k" for="a45c" style="display:block;font-weight:700;color:var(--ink)">3. "We do not live by the sea, so we cannot swim daily."</label>
+      <textarea id="a45c" aria-label="3. "We do not live by the sea, so we cannot swim daily."" style="min-height:70px" placeholder="If we lived by the sea, we would swim daily."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model45">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act45" aria-live="polite"></div>
+    <div class="model" id="model45" hidden>
+      <h4>Model</h4>
+      <p>1. If I had wings, I would fly.  2. If he were the boss, he would change the rule.  3. If we lived by the sea, we would swim daily.</p>
+    </div>
+  </article>
+<article class="card" id="act46" data-type="open">
+    <div class="head"><span class="num">46</span><h2>Transform to Third Conditional</h2></div>
+    <div class="tag">Transformation</div>
+    <p class="lead">Rewrite each pair as a third conditional sentence.</p>
+    <fieldset>
+      <legend>Rewrite the sentences</legend>
+      <label class="k" for="a46a" style="display:block;font-weight:700;color:var(--ink)">1. "I did not know, so I did not call."</label>
+      <textarea id="a46a" aria-label="1. "I did not know, so I did not call."" style="min-height:70px" placeholder="If I had known, I would have called."></textarea>
+      <label class="k" for="a46b" style="display:block;font-weight:700;color:var(--ink)">2. "She missed the bus, so she was late."</label>
+      <textarea id="a46b" aria-label="2. "She missed the bus, so she was late."" style="min-height:70px" placeholder="If she had not missed the bus, she would not have been late."></textarea>
+      <label class="k" for="a46c" style="display:block;font-weight:700;color:var(--ink)">3. "They did not save, so they cannot retire."</label>
+      <textarea id="a46c" aria-label="3. "They did not save, so they cannot retire."" style="min-height:70px" placeholder="If they had saved, they could have retired."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model46">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act46" aria-live="polite"></div>
+    <div class="model" id="model46" hidden>
+      <h4>Model</h4>
+      <p>1. If I had known, I would have called.  2. If she had not missed the bus, she would not have been late.  3. If they had saved, they could have retired.</p>
+    </div>
+  </article>
+<article class="card" id="act47" data-type="open">
+    <div class="head"><span class="num">47</span><h2>Transform to Mixed Conditional</h2></div>
+    <div class="tag">Transformation</div>
+    <p class="lead">Rewrite each pair as a mixed conditional sentence.</p>
+    <fieldset>
+      <legend>Rewrite the sentences</legend>
+      <label class="k" for="a47a" style="display:block;font-weight:700;color:var(--ink)">1. "I did not learn to cook, and I cannot cook now."</label>
+      <textarea id="a47a" aria-label="1. "I did not learn to cook, and I cannot cook now."" style="min-height:70px" placeholder="If I had learned to cook, I would be able to cook now."></textarea>
+      <label class="k" for="a47b" style="display:block;font-weight:700;color:var(--ink)">2. "He is not confident, so he failed the interview."</label>
+      <textarea id="a47b" aria-label="2. "He is not confident, so he failed the interview."" style="min-height:70px" placeholder="If he were confident, he would not have failed the interview."></textarea>
+      <label class="k" for="a47c" style="display:block;font-weight:700;color:var(--ink)">3. "We did not practise, so we are not ready now."</label>
+      <textarea id="a47c" aria-label="3. "We did not practise, so we are not ready now."" style="min-height:70px" placeholder="If we had practised, we would be ready now."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model47">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act47" aria-live="polite"></div>
+    <div class="model" id="model47" hidden>
+      <h4>Model</h4>
+      <p>1. If I had learned to cook, I would be able to cook now.  2. If he were confident, he would not have failed the interview.  3. If we had practised, we would be ready now.</p>
+    </div>
+  </article>
+<article class="card" id="act48" data-type="open">
+    <div class="head"><span class="num">48</span><h2>Speaking - A Company Rule</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Describe one real rule in your workplace using the zero conditional.</p>
+    <fieldset>
+      <legend>Your sentence</legend>
+      <label class="k" for="a48a" style="display:block;font-weight:700;color:var(--ink)">Write your sentence</label>
+      <textarea id="a48a" aria-label="Write your sentence" style="min-height:70px" placeholder="If employees arrive late, the manager starts without them."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model48">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act48" aria-live="polite"></div>
+    <div class="model" id="model48" hidden>
+      <h4>Model</h4>
+      <p>Example: If employees arrive late, the manager starts the meeting without them. Use present simple in both clauses.</p>
+    </div>
+  </article>
+<article class="card" id="act49" data-type="open">
+    <div class="head"><span class="num">49</span><h2>Speaking - Health Advice</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Give a friend one piece of health advice using a first conditional.</p>
+    <fieldset>
+      <legend>Your advice</legend>
+      <label class="k" for="a49a" style="display:block;font-weight:700;color:var(--ink)">Write your advice</label>
+      <textarea id="a49a" aria-label="Write your advice" style="min-height:70px" placeholder="If you drink more water, you will feel more energetic."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model49">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act49" aria-live="polite"></div>
+    <div class="model" id="model49" hidden>
+      <h4>Model</h4>
+      <p>Example: If you drink more water, you will feel more energetic. Use If + present, will + base.</p>
+    </div>
+  </article>
+<article class="card" id="act50" data-type="open">
+    <div class="head"><span class="num">50</span><h2>Speaking - Dream Invention</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Describe an invention you would create if you could.</p>
+    <fieldset>
+      <legend>Your idea</legend>
+      <label class="k" for="a50a" style="display:block;font-weight:700;color:var(--ink)">Write your sentence</label>
+      <textarea id="a50a" aria-label="Write your sentence" style="min-height:70px" placeholder="If I invented a translation earpiece, travellers would understand anyone."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model50">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act50" aria-live="polite"></div>
+    <div class="model" id="model50" hidden>
+      <h4>Model</h4>
+      <p>Example: If I invented a translation earpiece, travellers would understand anyone. Use If + past, would + base.</p>
+    </div>
+  </article>
+<article class="card" id="act51" data-type="open">
+    <div class="head"><span class="num">51</span><h2>Speaking - A Regret</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Share one thing you wish you had done differently last year.</p>
+    <fieldset>
+      <legend>Your regret</legend>
+      <label class="k" for="a51a" style="display:block;font-weight:700;color:var(--ink)">Write your sentence</label>
+      <textarea id="a51a" aria-label="Write your sentence" style="min-height:70px" placeholder="If I had taken that course, I would have learned a lot."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model51">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act51" aria-live="polite"></div>
+    <div class="model" id="model51" hidden>
+      <h4>Model</h4>
+      <p>Example: If I had taken that course, I would have learned a lot. Use If + past perfect, would have + participle.</p>
+    </div>
+  </article>
+<article class="card" id="act52" data-type="open">
+    <div class="head"><span class="num">52</span><h2>Speaking - Past Influence</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Explain how one past decision still affects your life today.</p>
+    <fieldset>
+      <legend>Your explanation</legend>
+      <label class="k" for="a52a" style="display:block;font-weight:700;color:var(--ink)">Write your sentence</label>
+      <textarea id="a52a" aria-label="Write your sentence" style="min-height:70px" placeholder="If I had not moved cities, I would not be working here now."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model52">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act52" aria-live="polite"></div>
+    <div class="model" id="model52" hidden>
+      <h4>Model</h4>
+      <p>Example: If I had not moved cities, I would not be working here now. Use a mixed conditional.</p>
+    </div>
+  </article>
+<article class="card" id="act53" data-type="open">
+    <div class="head"><span class="num">53</span><h2>Roleplay - Customer Complaint</h2></div>
+    <div class="tag">Roleplay</div>
+    <p class="lead">You are a customer whose order arrived broken. Use conditionals to explain the problem and make a request.</p>
+    <fieldset>
+      <legend>Your response</legend>
+      <label class="k" for="a53a" style="display:block;font-weight:700;color:var(--ink)">Write your response</label>
+      <textarea id="a53a" aria-label="Write your response" style="min-height:70px" placeholder="If the package had been packed better, it would not have broken. If you send a replacement, I will be happy."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model53">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act53" aria-live="polite"></div>
+    <div class="model" id="model53" hidden>
+      <h4>Model</h4>
+      <p>Example: If the package had been packed better, it would not have broken. If you send a replacement, I will be happy.</p>
+    </div>
+  </article>
+<article class="card" id="act54" data-type="open">
+    <div class="head"><span class="num">54</span><h2>Roleplay - Job Interview</h2></div>
+    <div class="tag">Roleplay</div>
+    <p class="lead">Answer the interviewer using different conditionals (what you would do, what you did).</p>
+    <fieldset>
+      <legend>Your answer</legend>
+      <label class="k" for="a54a" style="display:block;font-weight:700;color:var(--ink)">Write your answer</label>
+      <textarea id="a54a" aria-label="Write your answer" style="min-height:70px" placeholder="If I were offered the role, I would start immediately. If I had more experience, I would lead the team."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model54">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act54" aria-live="polite"></div>
+    <div class="model" id="model54" hidden>
+      <h4>Model</h4>
+      <p>Example: If I were offered the role, I would start immediately. If I had more experience, I would lead the team.</p>
+    </div>
+  </article>
+<article class="card" id="act55" data-type="open">
+    <div class="head"><span class="num">55</span><h2>Imagine a Listening Clip</h2></div>
+    <div class="tag">Listening style</div>
+    <p class="lead">Imagine you hear a colleague say a conditional sentence about a project delay. Write what you think they said.</p>
+    <fieldset>
+      <legend>Your sentence</legend>
+      <label class="k" for="a55a" style="display:block;font-weight:700;color:var(--ink)">Write the sentence</label>
+      <textarea id="a55a" aria-label="Write the sentence" style="min-height:70px" placeholder="If the supplier had delivered on time, we would have finished the project."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model55">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act55" aria-live="polite"></div>
+    <div class="model" id="model55" hidden>
+      <h4>Model</h4>
+      <p>Example: If the supplier had delivered on time, we would have finished the project.</p>
+    </div>
+  </article>
+<article class="card" id="act56" data-type="open">
+    <div class="head"><span class="num">56</span><h2>Explain the Error</h2></div>
+    <div class="tag">Analysis</div>
+    <p class="lead">Explain in your own words why this sentence is wrong: "If I will see him, I will tell him."</p>
+    <fieldset>
+      <legend>Your explanation</legend>
+      <label class="k" for="a56a" style="display:block;font-weight:700;color:var(--ink)">Write your explanation</label>
+      <textarea id="a56a" aria-label="Write your explanation" style="min-height:70px" placeholder="We do not use "will" after "if" for future conditionals."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model56">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act56" aria-live="polite"></div>
+    <div class="model" id="model56" hidden>
+      <h4>Model</h4>
+      <p>Example: We do not use "will" after "if" for future conditionals. It should be "If I see him, I will tell him."</p>
+    </div>
+  </article>
+<article class="card" id="act57" data-type="open">
+    <div class="head"><span class="num">57</span><h2>Rapid Challenge - Mixed</h2></div>
+    <div class="tag">Speaking sprint</div>
+    <p class="lead">Respond to each prompt using the named conditional.</p>
+    <fieldset>
+      <legend>Your responses</legend>
+      <label class="k" for="a57a" style="display:block;font-weight:700;color:var(--ink)">1. Zero: What happens if you touch fire?</label>
+      <textarea id="a57a" aria-label="1. Zero: What happens if you touch fire?" style="min-height:70px" placeholder="If you touch fire, it burns."></textarea>
+      <label class="k" for="a57b" style="display:block;font-weight:700;color:var(--ink)">2. First: What will you do if it snows?</label>
+      <textarea id="a57b" aria-label="2. First: What will you do if it snows?" style="min-height:70px" placeholder="If it snows, I will stay home."></textarea>
+      <label class="k" for="a57c" style="display:block;font-weight:700;color:var(--ink)">3. Second: If you could be any animal, which would you be?</label>
+      <textarea id="a57c" aria-label="3. Second: If you could be any animal, which would you be?" style="min-height:70px" placeholder="If I could be a dolphin, I would swim freely."></textarea>
+      <label class="k" for="a57d" style="display:block;font-weight:700;color:var(--ink)">4. Third: A mistake you made last month?</label>
+      <textarea id="a57d" aria-label="4. Third: A mistake you made last month?" style="min-height:70px" placeholder="If I had woken earlier, I would not have been late."></textarea>
+      <label class="k" for="a57e" style="display:block;font-weight:700;color:var(--ink)">5. Mixed: A past habit that helps you now?</label>
+      <textarea id="a57e" aria-label="5. Mixed: A past habit that helps you now?" style="min-height:70px" placeholder="If I had not learned to type, I would not write fast now."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model57">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act57" aria-live="polite"></div>
+    <div class="model" id="model57" hidden>
+      <h4>Model</h4>
+      <p>1. If you touch fire, it burns.  2. If it snows, I will stay home.  3. If I could be a dolphin, I would swim freely.  4. If I had woken earlier, I would not have been late.  5. If I had not learned to type, I would not write fast now.</p>
+    </div>
+  </article>
+<article class="card" id="act58" data-type="open">
+    <div class="head"><span class="num">58</span><h2>One Sentence per Conditional</h2></div>
+    <div class="tag">Consolidation</div>
+    <p class="lead">Write one sentence for each of the five conditionals.</p>
+    <fieldset>
+      <legend>Your sentences</legend>
+      <label class="k" for="a58a" style="display:block;font-weight:700;color:var(--ink)">Zero</label>
+      <textarea id="a58a" aria-label="Zero" style="min-height:70px" placeholder="If it rains, the grass grows."></textarea>
+      <label class="k" for="a58b" style="display:block;font-weight:700;color:var(--ink)">First</label>
+      <textarea id="a58b" aria-label="First" style="min-height:70px" placeholder="If I study, I will pass."></textarea>
+      <label class="k" for="a58c" style="display:block;font-weight:700;color:var(--ink)">Second</label>
+      <textarea id="a58c" aria-label="Second" style="min-height:70px" placeholder="If I were rich, I would travel."></textarea>
+      <label class="k" for="a58d" style="display:block;font-weight:700;color:var(--ink)">Third</label>
+      <textarea id="a58d" aria-label="Third" style="min-height:70px" placeholder="If I had known, I would have called."></textarea>
+      <label class="k" for="a58e" style="display:block;font-weight:700;color:var(--ink)">Mixed</label>
+      <textarea id="a58e" aria-label="Mixed" style="min-height:70px" placeholder="If I had practised, I would be confident now."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model58">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act58" aria-live="polite"></div>
+    <div class="model" id="model58" hidden>
+      <h4>Model</h4>
+      <p>Zero: If it rains, the grass grows.  First: If I study, I will pass.  Second: If I were rich, I would travel.  Third: If I had known, I would have called.  Mixed: If I had practised, I would be confident now.</p>
+    </div>
+  </article>
+<article class="card" id="act59" data-type="open">
+    <div class="head"><span class="num">59</span><h2>Debate a Policy</h2></div>
+    <div class="tag">Speaking task</div>
+    <p class="lead">Argue for or against a four-day work week using the second conditional.</p>
+    <fieldset>
+      <legend>Your argument</legend>
+      <label class="k" for="a59a" style="display:block;font-weight:700;color:var(--ink)">Write your argument</label>
+      <textarea id="a59a" aria-label="Write your argument" style="min-height:70px" placeholder="If companies adopted a four-day week, employees would be happier and more productive."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model59">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act59" aria-live="polite"></div>
+    <div class="model" id="model59" hidden>
+      <h4>Model</h4>
+      <p>Example: If companies adopted a four-day week, employees would be happier and more productive.</p>
+    </div>
+  </article>
+<article class="card" id="act60" data-type="open">
+    <div class="head"><span class="num">60</span><h2>Final Reflection</h2></div>
+    <div class="tag">Reflection</div>
+    <p class="lead">Which conditional do you find hardest, and why? Write three or four sentences.</p>
+    <fieldset>
+      <legend>Your reflection</legend>
+      <label class="k" for="a60a" style="display:block;font-weight:700;color:var(--ink)">Write your reflection</label>
+      <textarea id="a60a" aria-label="Write your reflection" style="min-height:70px" placeholder="I find mixed conditionals hardest because they mix two time frames."></textarea>
+    </fieldset>
+    <div class="row">
+      
+      <button class="btn reveal" data-reveal="model60">Show model answer</button>
+    </div>
+    <div class="feedback" id="fb-act60" aria-live="polite"></div>
+    <div class="model" id="model60" hidden>
+      <h4>Model</h4>
+      <p>Example: I find mixed conditionals hardest because they mix two time frames. I often confuse past and present. More practice will help me.</p>
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <p>Workplace Conditionals Practice | B1 Professional English | Self-study activities.</p>
+</footer>
+</div>
+
+<script>
+var MODELS = {"a11q1":"boils","a11q2":"turns","a11q3":"shines","a11q4":"grow","a11q5":"do not drink|don't drink","a11q6":"get","a12q1":"goes","a12q2":"stops","a12q3":"arrive","a12q4":"starts","a12q5":"click","a12q6":"opens","a13q1":"miss","a13q2":"will take","a13q3":"rains","a13q4":"will bring","a13q5":"book","a13q6":"will save","a14q1":"eat","a14q2":"will feel","a14q3":"exercises","a14q4":"will have","a14q5":"do not sleep|don't sleep","a14q6":"will be","a15q1":"were","a15q2":"would travel","a15q3":"won","a15q4":"would buy","a15q5":"lived","a15q6":"would learn","a16q1":"invented","a16q2":"would disappear","a16q3":"had","a16q4":"would breathe","a16q5":"used","a16q6":"would be","a17q1":"had studied","a17q2":"would have passed","a17q3":"had left","a17q4":"would not have missed|wouldn't have missed","a17q5":"had applied","a17q6":"would have got|would have gotten","a18q1":"had not invented|hadn't invented","a18q2":"would have been","a18q3":"had built","a18q4":"would have improved","a18q5":"had not met|hadn't met","a18q6":"would not have been|wouldn't have been","a19q1":"had learned","a19q2":"would be working|would work","a19q3":"had moved","a19q4":"would have","a19q5":"had hired","a19q6":"would be leading|would lead","a20q1":"were","a20q2":"would not have snapped|wouldn't have snapped","a20q3":"spoke","a20q4":"would have translated","a20q5":"were","a20q6":"would have finished","a21q1":"rains","a21q2":"melts","a21q3":"are","a22q1":"miss","a22q2":"studies","a22q3":"stay","a23q1":"were","a23q2":"would be","a23q3":"had","a24q1":"would have told","a24q2":"would have succeeded","a24q3":"would have arrived","a25q1":"would be","a25q2":"were","a25q3":"would have won","a26q1":"crashes","a26q2":"will lose","a26q3":"update","a26q4":"will run","a26q5":"dies","a26q6":"will turn","a27q1":"add","a27q2":"tastes","a27q3":"reaches","a27q4":"bubbles","a27q5":"burns","a27q6":"tastes","a28q1":"banned","a28q2":"would recover","a28q3":"planted","a28q4":"would be","a28q5":"used","a28q6":"would drop","a29q1":"had revised","a29q2":"would have scored","a29q3":"had practised","a29q4":"would have been","a29q5":"had read","a29q6":"would not have failed|wouldn't have failed","a30q1":"had started","a30q2":"would speak|would be speaking","a30q3":"had lived","a30q4":"would have","a30q5":"had met","a30q6":"would be"};
+var MCQ_CORRECT = {"gd1":"second","gd2":"first","gd3":"third","g31a":"second","g31b":"first","g31c":"third","g32a":"zero","g32b":"second","g32c":"third","g33a":"b","g33b":"c","g33c":"a","g34a":"a","g34b":"c","g34c":"a","g35a":"b","g35b":"a","g35c":"b","g36a":"a","g36b":"a","g36c":"a","g37a":"a","g37b":"a","g37c":"a","g38a":"b","g38b":"a","g38c":"b","g39a":"c","g39b":"a","g39c":"b","g40a":"a","g40b":"a","g40c":"a","g41a":"b","g41b":"b","g41c":"b","g42a":"a","g42b":"c","g42c":"b"};
+
+function normalize(s){ return (s||"").toLowerCase().trim().replace(/[.!?,;:]+$/g,'').replace(/\s+/g,' '); }
+function modelText(name){ return (MODELS[name]||'').replace(/\|/g,' / '); }
+function checkItem(inp){
+  var v = normalize(inp.value);
+  var acc = (MODELS[inp.name]||'').split('|').map(normalize).filter(Boolean);
+  if(!v) return false;
+  if(!acc.length) return true;
+  return acc.some(function(a){ return v===a; });
+}
+
+function grade(actId){
+  var act = document.getElementById(actId);
+  var inputs = Array.prototype.slice.call(act.querySelectorAll('input.answer'));
+  var mcqs = Array.prototype.slice.call(act.querySelectorAll('.mcq'));
+  var allCorrect = true;
+
+  inputs.forEach(function(inp){
+    var ok = checkItem(inp);
+    var old = inp.parentNode.querySelector('.mark');
+    if(old) old.remove();
+    var mark = document.createElement('span');
+    mark.className = 'mark ' + (ok ? 'ok' : 'no');
+    mark.textContent = ok ? 'Correct' : 'Try again. Model: ' + modelText(inp.name);
+    inp.classList.toggle('correct', ok);
+    inp.classList.toggle('wrong', !ok);
+    inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    inp.insertAdjacentElement('afterend', mark);
+    if(!ok) allCorrect = false;
+  });
+
+  mcqs.forEach(function(mcq){
+    var group = mcq.dataset.group;
+    var chosen = mcq.querySelector('input.choice:checked');
+    var correctVal = MCQ_CORRECT[group];
+    mcq.querySelectorAll('label').forEach(function(l){ l.classList.remove('chosen','right'); });
+    var correctLabel = mcq.querySelector('input.choice[value="'+correctVal+'"]');
+    if(correctLabel) correctLabel.closest('label').classList.add('right');
+    if(!chosen){ allCorrect = false; return; }
+    chosen.closest('label').classList.add('chosen');
+    if(chosen.value !== correctVal) allCorrect = false;
+  });
+
+  var fb = act.querySelector('.feedback');
+  if(fb){ fb.textContent = allCorrect ? 'Well done. Every answer matches the model.' : 'Some answers differ from the model. Check the marks above.'; }
+}
+
+document.querySelectorAll('[data-check]').forEach(function(b){
+  b.addEventListener('click', function(){ grade(b.getAttribute('data-check')); });
+});
+document.querySelectorAll('[data-reveal]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var el = document.getElementById(btn.getAttribute('data-reveal'));
+    if(el){ el.hidden = !el.hidden; btn.textContent = el.hidden ? 'Show answer' : 'Hide answer'; }
+  });
+});
+</script>
+</body>
+</html>
