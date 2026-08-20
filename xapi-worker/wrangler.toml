@@ -1,0 +1,16 @@
+name = "xapi-worker"
+main = "xapi-worker.js"
+compatibility_date = "2024-09-23"
+
+# Forwards xAPI statements to the game.lrs.io LRS with the secret added
+# server-side, so the key/secret never ship in the browser page.
+routes = [
+  { pattern = "punitganjara.com/xapi/*", zone_name = "punitganjara.com" }
+]
+
+# Set the LRS credentials as secrets (never commit them):
+#   wrangler secret put LRS_KEY
+#   wrangler secret put LRS_SECRET
+#
+# Deploy:
+#   wrangler deploy
