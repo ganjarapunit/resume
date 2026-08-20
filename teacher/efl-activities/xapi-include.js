@@ -1,4 +1,5 @@
 // Shared xAPI include for lesson pages.
+// - Neutralises the built-in EF Teach name overlay (we use our own gate instead).
 // - Shows a name/email gate so the teacher knows which learner accessed the lesson.
 // - Sends xAPI statements to the proxy worker (which adds the LRS secret server-side),
 //   so no LRS credentials live in this file or the page.
@@ -25,12 +26,48 @@
     return { objectType: 'Agent', name: l ? l.name : 'Guest', account: { homePage: HOME, name: anonId() } };
   }
 
-  function activity() {
-    return { objectType: 'Activity', id: location.href.split('#')[0] };
-  }
   function verb(uri, display) {
     return { id: uri, display: { 'en-US': display } };
   }
+  var VERBS = {
+    launched: verb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    experienced: verb('http://adlnet.gov/expapi/verbs/experienced', 'experienced'),
+    answered: verb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    completed: verb('http://adlnet.gov/expapi/verbs/completed', 'completed'),
+    terminated: verb('http://adlnet.gov/expapi/verbs/terminated', 'terminated'),
+    accessed: verb(HOME + '/expapi/verbs/accessed', 'accessed'),
+    listened: verb(HOME + '/expapi/verbs/listened', 'listened to'),
+    reviewed: verb(HOME + '/expapi/verbs/reviewed', 'reviewed'),
+    practised: verb(HOME + '/expapi/verbs/practised', 'practised')
+  };
+
+  function lessonActivityId() { return HOME + location.pathname.split('#')[0]; }
+
+  function lessonInfo() {
+    var parts = location.pathname.split('/').filter(Boolean);
+    var i = parts.indexOf('efl-activities');
+    var level = (parts[i + 1] || '').toUpperCase();
+    var category = parts[i + 2] || '';
+    var moduleId = (parts[i + 1] || '') + '-' + category.replace(/-english$/, '');
+    var catLabel = category.endsWith('-english')
+      ? category.slice(0, -8).replace(/^\w/, function (c) { return c.toUpperCase(); }) + ' English'
+      : category;
+    var moduleName = level + ' ' + catLabel;
+    return {
+      moduleId: moduleId,
+      moduleActivity: HOME + '/teacher/efl-activities/#' + moduleId,
+      moduleName: moduleName
+    };
+  }
+
+  function specificVerb() {
+    var f = location.pathname.toLowerCase();
+    if (/listening/.test(f)) return VERBS.listened;
+    if (/tenses|review/.test(f)) return VERBS.reviewed;
+    if (/conditional/.test(f)) return VERBS.practised;
+    return VERBS.experienced;
+  }
+
   function send(statement) {
     statement.actor = actor();
     statement.timestamp = new Date().toISOString();
@@ -43,22 +80,31 @@
       body: JSON.stringify([statement])
     }).catch(function () {});
   }
-
-  var VERBS = {
-    launched: verb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
-    experienced: verb('http://adlnet.gov/expapi/verbs/experienced', 'experienced'),
-    answered: verb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
-    completed: verb('http://adlnet.gov/expapi/verbs/completed', 'completed'),
-    terminated: verb('http://adlnet.gov/expapi/verbs/terminated', 'terminated')
-  };
+  function emit(v, act) { send({ verb: v, object: act }); }
 
   window.LRS = {
     send: send,
-    launched: function () { send({ verb: VERBS.launched, object: activity() }); },
-    experienced: function () { send({ verb: VERBS.experienced, object: activity() }); },
-    answered: function (extra) { send(Object.assign({ verb: VERBS.answered, object: activity() }, extra || {})); },
-    completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: activity() }, extra || {})); }
+    launched: function () { emit(VERBS.launched, { objectType: 'Activity', id: lessonActivityId() }); },
+    experienced: function () { emit(VERBS.experienced, { objectType: 'Activity', id: lessonActivityId() }); },
+    answered: function (extra) { send(Object.assign({ verb: VERBS.answered, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
+    completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); }
   };
+
+  // ---- Neutralise the built-in EF Teach name overlay (we use our own gate) ----
+  function neutralizeBuiltin() {
+    var bl = document.getElementById('login');
+    if (bl && bl.parentNode) bl.parentNode.removeChild(bl);
+    var cn = document.getElementById('learnerName');
+    if (cn) {
+      try {
+        var l = JSON.parse(localStorage.getItem(LS_LEARNER) || 'null');
+        if (l && l.name) cn.value = l.name;
+      } catch (e) {}
+      cn.style.display = 'none';
+      var lbl = document.querySelector('label[for="learnerName"]');
+      if (lbl) lbl.style.display = 'none';
+    }
+  }
 
   // ---- Name/email gate ----
   function injectStyle() {
@@ -113,7 +159,7 @@
       var name = nameEl.value.trim();
       var email = emailEl.value.trim();
       if (!name) { errEl.hidden = false; nameEl.focus(); return; }
-      try { localStorage.setItem(LS_LEARNER, JSON.stringify({ name: name, email: email })); } catch (e) {}
+      try { localStorage.setItem(LS_LEARNER, JSON.stringify({ name: name, email: email })); } catch (e2) {}
       gate.parentNode.removeChild(gate);
       document.body.style.overflow = '';
       onDone();
@@ -121,15 +167,27 @@
   }
 
   function startTracking() {
-    window.LRS.launched();
-    window.LRS.experienced();
+    var info = lessonInfo();
+    var lessonAct = { objectType: 'Activity', id: lessonActivityId() };
+    var moduleAct = {
+      objectType: 'Activity',
+      id: info.moduleActivity,
+      definition: { name: { 'en-US': info.moduleName }, type: 'http://adlnet.gov/expapi/activities/module' }
+    };
+    // Launched + the activity-specific verb for this lesson
+    emit(VERBS.launched, lessonAct);
+    emit(specificVerb(), lessonAct);
+    // Module / course access
+    emit(VERBS.accessed, moduleAct);
+
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
-    var terminate = function () { send({ verb: VERBS.terminated, object: activity() }); };
+    var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
     window.addEventListener('pagehide', terminate);
     window.addEventListener('beforeunload', terminate);
   }
 
   function init() {
+    neutralizeBuiltin();
     var l = learner();
     if (l && l.name) { startTracking(); }
     else { showGate(startTracking); }
