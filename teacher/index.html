@@ -683,6 +683,27 @@
   .booking-status { margin-top: 12px; font-weight: 700; }
   .booking-status.ok { color: var(--success); }
   .booking-status.err { color: var(--danger); }
+  /* ── NEEDS ANALYSIS MODAL ── */
+  .modal--wide { max-width: 640px; }
+  .na-intro { color: var(--text-muted); margin-bottom: 18px; line-height: 1.6; }
+  .na-part { border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 18px; background: var(--surface); }
+  .na-part legend { font-weight: 800; color: var(--text-strong); padding: 0 6px; }
+  .na-part h4 { font-size: 0.95rem; font-weight: 800; color: var(--text-strong); margin: 14px 0 8px; }
+  .na-part h4:first-of-type { margin-top: 4px; }
+  .na-field { margin-bottom: 14px; }
+  .na-field label { font-weight: 600; display: block; margin-bottom: 6px; }
+  .na-field input[type="text"], .na-field input[type="email"], .na-field input[type="tel"] { width: 100%; padding: 10px 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; }
+  .na-field input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--primary); }
+  .na-options { display: grid; gap: 8px; }
+  .na-option { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .na-option:hover { border-color: var(--primary); background: var(--surface-2); }
+  .na-option input { margin-top: 3px; flex: none; }
+  .na-option span { line-height: 1.4; }
+  .na-scale { display: flex; gap: 6px; flex-wrap: wrap; }
+  .na-scale label { flex: 1; min-width: 40px; text-align: center; padding: 8px 4px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 700; }
+  .na-scale input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .na-scale label:has(input:checked) { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .na-scale label:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
   body.modal-open { overflow: hidden; }
 
   /* ── REVEAL ANIMATION (respects reduced motion) ── */
@@ -879,6 +900,10 @@
           <button type="button" class="btn btn-primary" id="bookTrialBtn" aria-haspopup="dialog" aria-controls="bookingModal">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="16" y1="2" x2="16" y2="5"/><line x1="12" y1="13" x2="12" y2="17"/><line x1="10" y1="15" x2="14" y2="15"/></svg>
             Book a free trial lesson
+          </button>
+          <button type="button" class="btn btn-outline" id="needsAnalysisBtn" aria-haspopup="dialog" aria-controls="needsAnalysisModal">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14h6"/><path d="M9 18h6"/></svg>
+            Needs Analysis
           </button>
           <a class="btn btn-outline" href="#contact">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
@@ -1294,6 +1319,183 @@
   </div>
 </div>
 
+<!-- NEEDS ANALYSIS MODAL -->
+<div class="modal-overlay" id="needsAnalysisModal">
+  <div class="modal modal--wide" role="document">
+    <div class="modal-head">
+      <h3 id="needsAnalysisTitle">English Learning Needs Analysis &amp; Persona Questionnaire</h3>
+      <button type="button" class="modal-close" id="needsAnalysisClose" aria-label="Close needs analysis dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+    </div>
+    <p class="na-intro">Help me understand your goals, level and preferences so I can design a curriculum that fits you. This takes about 3 minutes.</p>
+    <form id="needsAnalysisForm" novalidate>
+      <fieldset class="na-part">
+        <legend>Part 1: About You</legend>
+        <div class="na-field">
+          <label for="naName">1. What is your name? <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="naName" name="name" autocomplete="name" placeholder="e.g. Linh">
+          <p class="rf-error" id="naNameErr" hidden>Please enter your name.</p>
+        </div>
+        <div class="na-field">
+          <label for="naNativeLang">2. What is your native language? <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="naNativeLang" name="nativeLanguage" placeholder="e.g. Vietnamese">
+          <p class="rf-error" id="naNativeLangErr" hidden>Please enter your native language.</p>
+        </div>
+        <h4>3. Where do you use English right now? (Check all that apply)</h4>
+        <div class="na-options" id="naUseEnglishGroup">
+          <label class="na-option"><input type="checkbox" name="useEnglish" value="Nowhere yet"> <span>Nowhere yet</span></label>
+          <label class="na-option"><input type="checkbox" name="useEnglish" value="At work"> <span>At work</span></label>
+          <label class="na-option"><input type="checkbox" name="useEnglish" value="Traveling / Holidays"> <span>Traveling / Holidays</span></label>
+          <label class="na-option"><input type="checkbox" name="useEnglish" value="Online (social media, games, movies)"> <span>Online (social media, games, movies)</span></label>
+          <label class="na-option"><input type="checkbox" name="useEnglish" value="School / University"> <span>School / University</span></label>
+        </div>
+        <p class="rf-error" id="naUseEnglishErr" hidden>Please select at least one.</p>
+      </fieldset>
+
+      <fieldset class="na-part">
+        <legend>Part 2: Your Goals (Why are you learning?)</legend>
+        <h4>4. What is your main goal in English? (Choose your #1 priority) <span class="req" aria-hidden="true">*</span></h4>
+        <div class="na-options">
+          <label class="na-option"><input type="radio" name="mainGoal" value="Speak more fluently and naturally"> <span>Speak more fluently and naturally</span></label>
+          <label class="na-option"><input type="radio" name="mainGoal" value="Feel more confident at work (meetings, emails, presentations)"> <span>Feel more confident at work (meetings, emails, presentations)</span></label>
+          <label class="na-option"><input type="radio" name="mainGoal" value="Travel easily (order food, ask for directions, chat)"> <span>Travel easily (order food, ask for directions, chat)</span></label>
+          <label class="na-option"><input type="radio" name="mainGoal" value="Pass an exam (IELTS, TOEFL, Cambridge)"> <span>Pass an exam (IELTS, TOEFL, Cambridge)</span></label>
+          <label class="na-option"><input type="radio" name="mainGoal" value="Understand movies, music, and podcasts without subtitles"> <span>Understand movies, music, and podcasts without subtitles</span></label>
+        </div>
+        <p class="rf-error" id="naMainGoalErr" hidden>Please choose one.</p>
+        <h4>5. When do you need to reach this goal? <span class="req" aria-hidden="true">*</span></h4>
+        <div class="na-options">
+          <label class="na-option"><input type="radio" name="timeline" value="Right away / Very soon (1-3 months)"> <span>Right away / Very soon (1-3 months)</span></label>
+          <label class="na-option"><input type="radio" name="timeline" value="In the next 6 months"> <span>In the next 6 months</span></label>
+          <label class="na-option"><input type="radio" name="timeline" value="No rush / Long-term learning"> <span>No rush / Long-term learning</span></label>
+        </div>
+        <p class="rf-error" id="naTimelineErr" hidden>Please choose one.</p>
+      </fieldset>
+
+      <fieldset class="na-part">
+        <legend>Part 3: Your Skills (What do you want to practice?)</legend>
+        <h4>6. Rate your English skills from 1 (Needs a lot of work) to 5 (Very good):</h4>
+        <div class="na-field">
+          <label>Speaking</label>
+          <div class="na-scale">
+            <label><input type="radio" name="rateSpeaking" value="1"> 1</label>
+            <label><input type="radio" name="rateSpeaking" value="2"> 2</label>
+            <label><input type="radio" name="rateSpeaking" value="3"> 3</label>
+            <label><input type="radio" name="rateSpeaking" value="4"> 4</label>
+            <label><input type="radio" name="rateSpeaking" value="5"> 5</label>
+          </div>
+        </div>
+        <div class="na-field">
+          <label>Listening</label>
+          <div class="na-scale">
+            <label><input type="radio" name="rateListening" value="1"> 1</label>
+            <label><input type="radio" name="rateListening" value="2"> 2</label>
+            <label><input type="radio" name="rateListening" value="3"> 3</label>
+            <label><input type="radio" name="rateListening" value="4"> 4</label>
+            <label><input type="radio" name="rateListening" value="5"> 5</label>
+          </div>
+        </div>
+        <div class="na-field">
+          <label>Reading</label>
+          <div class="na-scale">
+            <label><input type="radio" name="rateReading" value="1"> 1</label>
+            <label><input type="radio" name="rateReading" value="2"> 2</label>
+            <label><input type="radio" name="rateReading" value="3"> 3</label>
+            <label><input type="radio" name="rateReading" value="4"> 4</label>
+            <label><input type="radio" name="rateReading" value="5"> 5</label>
+          </div>
+        </div>
+        <div class="na-field">
+          <label>Writing</label>
+          <div class="na-scale">
+            <label><input type="radio" name="rateWriting" value="1"> 1</label>
+            <label><input type="radio" name="rateWriting" value="2"> 2</label>
+            <label><input type="radio" name="rateWriting" value="3"> 3</label>
+            <label><input type="radio" name="rateWriting" value="4"> 4</label>
+            <label><input type="radio" name="rateWriting" value="5"> 5</label>
+          </div>
+        </div>
+        <div class="na-field">
+          <label>Grammar &amp; Vocabulary</label>
+          <div class="na-scale">
+            <label><input type="radio" name="rateGrammar" value="1"> 1</label>
+            <label><input type="radio" name="rateGrammar" value="2"> 2</label>
+            <label><input type="radio" name="rateGrammar" value="3"> 3</label>
+            <label><input type="radio" name="rateGrammar" value="4"> 4</label>
+            <label><input type="radio" name="rateGrammar" value="5"> 5</label>
+          </div>
+        </div>
+        <h4>7. What is your biggest fear or challenge in English? <span class="req" aria-hidden="true">*</span></h4>
+        <div class="na-options">
+          <label class="na-option"><input type="radio" name="fear" value="Forgetting words when I speak"> <span>Forgetting words when I speak</span></label>
+          <label class="na-option"><input type="radio" name="fear" value="Making grammar mistakes"> <span>Making grammar mistakes</span></label>
+          <label class="na-option"><input type="radio" name="fear" value="People speaking too fast"> <span>People speaking too fast</span></label>
+          <label class="na-option"><input type="radio" name="fear" value="Pronunciation and accent"> <span>Pronunciation and accent</span></label>
+          <label class="na-option"><input type="radio" name="fear" value="Feeling nervous or shy"> <span>Feeling nervous or shy</span></label>
+        </div>
+        <p class="rf-error" id="naFearErr" hidden>Please choose one.</p>
+      </fieldset>
+
+      <fieldset class="na-part">
+        <legend>Part 4: How Do You Learn Best? (Preferences)</legend>
+        <h4>8. How do you like to study during our lessons? (Choose up to 3)</h4>
+        <div class="na-options" id="naStudyGroup">
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Free conversation and speaking practice"> <span>Free conversation and speaking practice</span></label>
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Role-play (real-life situations like ordering in a restaurant, job interviews)"> <span>Role-play (real-life situations like ordering in a restaurant, job interviews)</span></label>
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Reading articles, stories, or news"> <span>Reading articles, stories, or news</span></label>
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Listening to audio and discussing it"> <span>Listening to audio and discussing it</span></label>
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Grammar rules and exercises"> <span>Grammar rules and exercises</span></label>
+          <label class="na-option"><input type="checkbox" name="studyPref" value="Watching short videos or TED talks"> <span>Watching short videos or TED talks</span></label>
+        </div>
+        <p class="rf-error" id="naStudyErr" hidden>Choose up to 3.</p>
+        <h4>9. How do you like to receive feedback on your mistakes? <span class="req" aria-hidden="true">*</span></h4>
+        <div class="na-options">
+          <label class="na-option"><input type="radio" name="feedback" value="Correct me immediately every time I make a mistake"> <span>Correct me immediately every time I make a mistake.</span></label>
+          <label class="na-option"><input type="radio" name="feedback" value="Write down my mistakes and tell me at the end of the activity"> <span>Write down my mistakes and tell me at the end of the activity.</span></label>
+          <label class="na-option"><input type="radio" name="feedback" value="Only correct big mistakes that stop communication"> <span>Only correct big mistakes that stop communication.</span></label>
+        </div>
+        <p class="rf-error" id="naFeedbackErr" hidden>Please choose one.</p>
+      </fieldset>
+
+      <fieldset class="na-part">
+        <legend>Part 5: Topics &amp; Interests</legend>
+        <h4>10. What topics do you love talking about? (Choose your favorites)</h4>
+        <div class="na-options">
+          <label class="na-option"><input type="checkbox" name="topics" value="Travel and culture"> <span>Travel and culture</span></label>
+          <label class="na-option"><input type="checkbox" name="topics" value="Business, work, and technology"> <span>Business, work, and technology</span></label>
+          <label class="na-option"><input type="checkbox" name="topics" value="Movies, music, and books"> <span>Movies, music, and books</span></label>
+          <label class="na-option"><input type="checkbox" name="topics" value="Food, health, and lifestyle"> <span>Food, health, and lifestyle</span></label>
+          <label class="na-option"><input type="checkbox" name="topics" value="Daily life, family, and hobbies"> <span>Daily life, family, and hobbies</span></label>
+          <label class="na-option"><input type="checkbox" name="topics" value="Science, news, and current events"> <span>Science, news, and current events</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="na-part">
+        <legend>Contact Details (so I can send your personalised curriculum)</legend>
+        <div class="na-field">
+          <label for="naEmail">Your email <span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="naEmail" name="contactEmail" autocomplete="email" placeholder="you@example.com">
+          <p class="rf-error" id="naEmailErr" hidden>Please enter a valid email.</p>
+        </div>
+        <div class="na-field">
+          <label for="naPhone">Phone / WhatsApp <span class="opt">(optional)</span></label>
+          <input type="tel" id="naPhone" name="phone" autocomplete="tel" placeholder="+84 ...">
+        </div>
+        <div class="na-field">
+          <label>Preferred contact</label>
+          <div class="na-options">
+            <label class="na-option"><input type="radio" name="contactPref" value="Email" checked> <span>Email</span></label>
+            <label class="na-option"><input type="radio" name="contactPref" value="WhatsApp"> <span>WhatsApp</span></label>
+            <label class="na-option"><input type="radio" name="contactPref" value="Either"> <span>Either is fine</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary" id="naSubmitBtn">Submit needs analysis</button>
+      <p class="booking-status" id="naStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
 <script>
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1605,6 +1807,151 @@
       }).finally(function () {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Request trial lesson';
+      });
+    });
+  })();
+
+  // Needs Analysis: modal + submission
+  (function () {
+    var btn = document.getElementById('needsAnalysisBtn');
+    var overlay = document.getElementById('needsAnalysisModal');
+    var closeBtn = document.getElementById('needsAnalysisClose');
+    var form = document.getElementById('needsAnalysisForm');
+    var statusEl = document.getElementById('naStatus');
+    var submitBtn = document.getElementById('naSubmitBtn');
+    if (!btn || !overlay || !form) return;
+    var lastFocused = null;
+    var ENDPOINT = 'https://punitganjara.com/api/needs-analysis';
+
+    function openModal() {
+      lastFocused = document.activeElement;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      btn.setAttribute('aria-expanded', 'true');
+      var f = document.getElementById('naName');
+      if (f) f.focus();
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      btn.setAttribute('aria-expanded', 'false');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    btn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    // Enforce up to 3 for study preferences
+    var studyGroup = document.getElementById('naStudyGroup');
+    if (studyGroup) {
+      studyGroup.addEventListener('change', function () {
+        var checked = studyGroup.querySelectorAll('input:checked');
+        var err = document.getElementById('naStudyErr');
+        if (checked.length > 3) {
+          err.hidden = false;
+          err.textContent = 'Please choose up to 3 only.';
+        } else {
+          err.hidden = true;
+        }
+      });
+    }
+
+    function getChecked(name) {
+      return Array.prototype.slice.call(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (el) { return el.value; });
+    }
+    function getRadio(name) {
+      var el = document.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+    function setErr(id, show, msg) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = !show;
+      if (msg) el.textContent = msg;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.className = 'booking-status';
+      setErr('naNameErr', false); setErr('naNativeLangErr', false); setErr('naUseEnglishErr', false);
+      setErr('naMainGoalErr', false); setErr('naTimelineErr', false); setErr('naFearErr', false);
+      setErr('naFeedbackErr', false); setErr('naEmailErr', false); setErr('naStudyErr', false);
+
+      var name = document.getElementById('naName').value.trim();
+      var nativeLanguage = document.getElementById('naNativeLang').value.trim();
+      var useEnglish = getChecked('useEnglish');
+      var mainGoal = getRadio('mainGoal');
+      var timeline = getRadio('timeline');
+      var fear = getRadio('fear');
+      var feedback = getRadio('feedback');
+      var studyPref = getChecked('studyPref');
+      var topics = getChecked('topics');
+      var contactEmail = document.getElementById('naEmail').value.trim();
+      var phone = document.getElementById('naPhone').value.trim();
+      var contactPref = getRadio('contactPref');
+      var ratings = {
+        speaking: getRadio('rateSpeaking'),
+        listening: getRadio('rateListening'),
+        reading: getRadio('rateReading'),
+        writing: getRadio('rateWriting'),
+        grammar: getRadio('rateGrammar')
+      };
+      var ok = true;
+      if (!name) { setErr('naNameErr', true); ok = false; }
+      if (!nativeLanguage) { setErr('naNativeLangErr', true); ok = false; }
+      if (!useEnglish.length) { setErr('naUseEnglishErr', true); ok = false; }
+      if (!mainGoal) { setErr('naMainGoalErr', true); ok = false; }
+      if (!timeline) { setErr('naTimelineErr', true); ok = false; }
+      if (!fear) { setErr('naFearErr', true); ok = false; }
+      if (!feedback) { setErr('naFeedbackErr', true); ok = false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) { setErr('naEmailErr', true); ok = false; }
+      if (studyPref.length > 3) { setErr('naStudyErr', true, 'Please choose up to 3 only.'); ok = false; }
+      if (!ok) { statusEl.textContent = 'Please complete the required fields.'; statusEl.className = 'booking-status err'; return; }
+
+      var payload = {
+        name: name,
+        nativeLanguage: nativeLanguage,
+        useEnglish: useEnglish,
+        mainGoal: mainGoal,
+        timeline: timeline,
+        ratings: ratings,
+        fear: fear,
+        studyPref: studyPref,
+        feedback: feedback,
+        topics: topics,
+        contactEmail: contactEmail,
+        phone: phone,
+        contactPref: contactPref,
+        submittedAt: new Date().toISOString()
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        statusEl.textContent = 'Thank you! Your needs analysis has been sent. I will reply with your personalised curriculum soon.';
+        statusEl.className = 'booking-status ok';
+        form.reset();
+      }).catch(function () {
+        statusEl.textContent = 'Something went wrong. Please try again or email me at punit@punitganjara.com.';
+        statusEl.className = 'booking-status err';
+      }).finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit needs analysis';
       });
     });
   })();

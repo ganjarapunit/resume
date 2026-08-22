@@ -26,6 +26,9 @@ export default {
     if (url.pathname.endsWith('/review')) {
       return handleReview(request, env, corsHeaders);
     }
+    if (url.pathname.endsWith('/needs-analysis')) {
+      return handleNeedsAnalysis(request, env, corsHeaders);
+    }
 
     let data;
     try {
@@ -119,6 +122,110 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
   });
+}
+
+async function handleNeedsAnalysis(request, env, corsHeaders) {
+  let data;
+  try {
+    data = await request.json();
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'Invalid JSON' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  const name = String(data.name || '').trim();
+  const nativeLanguage = String(data.nativeLanguage || '').trim();
+  const useEnglish = Array.isArray(data.useEnglish) ? data.useEnglish.map(String) : [];
+  const mainGoal = String(data.mainGoal || '').trim();
+  const timeline = String(data.timeline || '').trim();
+  const ratings = data.ratings && typeof data.ratings === 'object' ? data.ratings : {};
+  const fear = String(data.fear || '').trim();
+  const studyPref = Array.isArray(data.studyPref) ? data.studyPref.map(String) : [];
+  const feedback = String(data.feedback || '').trim();
+  const topics = Array.isArray(data.topics) ? data.topics.map(String) : [];
+  const contactEmail = String(data.contactEmail || '').trim();
+  const phone = String(data.phone || '').trim();
+  const contactPref = String(data.contactPref || '').trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail);
+
+  if (!name || !nativeLanguage || !useEnglish.length || !mainGoal || !timeline || !fear || !feedback || !emailOk) {
+    return new Response(JSON.stringify({ ok: false, error: 'Missing or invalid fields' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+  if (studyPref.length > 3) {
+    return new Response(JSON.stringify({ ok: false, error: 'Too many study preferences' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  const fmt = (arr) => arr.length ? arr.join(', ') : '—';
+  const rateStr = 'Speaking: ' + (ratings.speaking || '—') + ', Listening: ' + (ratings.listening || '—') + ', Reading: ' + (ratings.reading || '—') + ', Writing: ' + (ratings.writing || '—') + ', Grammar: ' + (ratings.grammar || '—');
+
+  const text = 'New Needs Analysis submission\n\n'
+    + 'Name: ' + name + '\n'
+    + 'Native language: ' + nativeLanguage + '\n'
+    + 'Where use English: ' + fmt(useEnglish) + '\n'
+    + 'Main goal: ' + mainGoal + '\n'
+    + 'Timeline: ' + timeline + '\n'
+    + 'Ratings: ' + rateStr + '\n'
+    + 'Biggest fear: ' + fear + '\n'
+    + 'Study preferences: ' + fmt(studyPref) + '\n'
+    + 'Feedback pref: ' + feedback + '\n'
+    + 'Topics: ' + fmt(topics) + '\n'
+    + 'Contact email: ' + contactEmail + '\n'
+    + 'Phone: ' + (phone || '—') + '\n'
+    + 'Contact pref: ' + (contactPref || '—') + '\n'
+    + 'Submitted: ' + String(data.submittedAt || '');
+
+  const html = '<h2>New Needs Analysis</h2>'
+    + '<p><strong>Name:</strong> ' + escapeHtml(name) + '<br>'
+    + '<strong>Native language:</strong> ' + escapeHtml(nativeLanguage) + '<br>'
+    + '<strong>Where use English:</strong> ' + escapeHtml(fmt(useEnglish)) + '<br>'
+    + '<strong>Main goal:</strong> ' + escapeHtml(mainGoal) + '<br>'
+    + '<strong>Timeline:</strong> ' + escapeHtml(timeline) + '<br>'
+    + '<strong>Ratings:</strong> ' + escapeHtml(rateStr) + '<br>'
+    + '<strong>Biggest fear:</strong> ' + escapeHtml(fear) + '<br>'
+    + '<strong>Study preferences:</strong> ' + escapeHtml(fmt(studyPref)) + '<br>'
+    + '<strong>Feedback:</strong> ' + escapeHtml(feedback) + '<br>'
+    + '<strong>Topics:</strong> ' + escapeHtml(fmt(topics)) + '<br>'
+    + '<strong>Contact email:</strong> ' + escapeHtml(contactEmail) + '<br>'
+    + '<strong>Phone:</strong> ' + escapeHtml(phone || '—') + '<br>'
+    + '<strong>Contact pref:</strong> ' + escapeHtml(contactPref || '—') + '</p>';
+
+  try {
+    const res = await sendBrevo(env, {
+      sender: { name: 'Needs Analysis', email: 'punit@punitganjara.com' },
+      to: [{ email: 'punit@punitganjara.com' }],
+      replyTo: { email: contactEmail, name: name },
+      subject: 'New Needs Analysis from ' + name,
+      textContent: text,
+      htmlContent: html
+    });
+    if (!res.ok) {
+      const detail = await res.text();
+      return new Response(JSON.stringify({ ok: false, error: 'Email send failed', detail }),
+        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'Email send error' }),
+      { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  // Forward to Google Sheet webhook if configured (Apps Script Web App)
+  if (env.GOOGLE_SHEET_WEBHOOK_URL) {
+    try {
+      await fetch(env.GOOGLE_SHEET_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (e) {
+      // Sheet failure should not block the main response; logged for debugging
+      console.error('Sheet webhook failed', e);
+    }
+  }
+
+  return new Response(JSON.stringify({ ok: true }),
+    { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 }
 
 async function handleReview(request, env, corsHeaders) {
