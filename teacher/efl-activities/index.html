@@ -45,13 +45,13 @@
   .lesson{display:block;padding:11px 13px;border:2px solid var(--border);border-radius:10px;
     margin-top:9px;color:var(--text-strong);font-weight:600}
   .lesson:hover{text-decoration:none;border-color:var(--primary);background:var(--bg)}
-  /* High-contrast activity titles in the available Business English cards */
-  #b1-business .lesson, #b2-business .lesson{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-top:10px;
+  /* High-contrast activity titles in the available cards */
+  #b1-business .lesson, #b2-business .lesson, #c1-exam .lesson{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-top:10px;
     border:2px solid var(--text-strong);border-radius:10px;background:var(--bg);
     color:var(--text-strong);font-weight:700;font-size:1rem;letter-spacing:.2px}
-  #b1-business .lesson::before, #b2-business .lesson::before{content:"";flex:none;width:9px;height:9px;border-radius:2px;
+  #b1-business .lesson::before, #b2-business .lesson::before, #c1-exam .lesson::before{content:"";flex:none;width:9px;height:9px;border-radius:2px;
     background:var(--primary)}
-  #b1-business .lesson:hover, #b2-business .lesson:hover{text-decoration:none;border-color:var(--primary);
+  #b1-business .lesson:hover, #b2-business .lesson:hover, #c1-exam .lesson:hover{text-decoration:none;border-color:var(--primary);
     background:var(--primary);color:#fff}
   .soon{font-size:.9rem;color:var(--text-muted);font-style:italic}
   footer{border-top:2px solid var(--border);padding:24px 0;color:var(--text-muted);font-size:.9rem}
@@ -126,7 +126,11 @@
     <div class="grid">
       <div class="card" id="c1-communicative"><span class="tag">Communicative</span><h3>Communicative English</h3><p class="soon">Lessons coming soon.</p></div>
       <div class="card" id="c1-business"><span class="tag">Business</span><h3>Business English</h3><p class="soon">Lessons coming soon.</p></div>
-      <div class="card" id="c1-exam"><span class="tag">Exam</span><h3>Exam-oriented English</h3><p class="soon">Lessons coming soon.</p></div>
+      <div class="card" id="c1-exam">
+        <span class="tag">Exam</span><span class="tag avail">Available</span><h3>Exam-oriented English</h3>
+        <p>Listening and reading practice through PPP at C1 level.</p>
+        <a class="lesson" href="c1/exam-english/Listening-Reading-PPP-Learner-C1.html">Listening–Reading PPP (C1)</a>
+      </div>
     </div>
   </section>
 
