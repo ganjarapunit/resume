@@ -80,14 +80,22 @@
       body: JSON.stringify([statement])
     }).catch(function () {});
   }
-  function emit(v, act) { send({ verb: v, object: act }); }
+  function emit(v, act, extra) {
+    const obj = Object.assign({ objectType: 'Activity', id: act.id || '' }, extra || {});
+    if (extra && extra.definition && !obj.definition) obj.definition = extra.definition;
+    else if (extra && extra.definition && obj.definition) obj.definition = Object.assign(obj.definition || {}, extra.definition);
+    if (extra && extra.name && !obj.definition) obj.definition = { name: { 'en-US': extra.name } };
+    if (extra && extra.name && obj.definition && !obj.definition.name) obj.definition.name = { 'en-US': extra.name };
+    send({ verb: v, object: obj });
+  }
 
   window.LRS = {
     send: send,
-    launched: function () { emit(VERBS.launched, { objectType: 'Activity', id: lessonActivityId() }); },
-    experienced: function () { emit(VERBS.experienced, { objectType: 'Activity', id: lessonActivityId() }); },
+    launched: function (extra) { emit(VERBS.launched, { objectType: 'Activity', id: lessonActivityId() }, extra || {}); },
+    experienced: function (extra) { emit(VERBS.experienced, { objectType: 'Activity', id: lessonActivityId() }, extra || {}); },
     answered: function (extra) { send(Object.assign({ verb: VERBS.answered, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
-    completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); }
+    completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
+    itemAccessed: function (itemName, itemType) { emit(VERBS.accessed, { objectType: 'Activity', id: HOME + '/teacher/efl-activities/items/' + (itemName || '').replace(/\s+/g, '-').toLowerCase() }, { name: itemName, definition: { type: 'http://adlnet.gov/expapi/activities/item', description: { 'en-US': itemName } } }); }
   };
 
   // ---- Neutralise the built-in EF Teach name overlay (we use our own gate) ----
@@ -177,7 +185,7 @@
     // Launched + the activity-specific verb for this lesson
     emit(VERBS.launched, lessonAct);
     emit(specificVerb(), lessonAct);
-    // Module / course access
+    // Module / course access with strategic assignment by module (so you know which module/course was accessed)
     emit(VERBS.accessed, moduleAct);
 
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
