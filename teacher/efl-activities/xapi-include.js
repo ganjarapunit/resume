@@ -81,11 +81,15 @@
     }).catch(function () {});
   }
   function emit(v, act, extra) {
-    const obj = Object.assign({ objectType: 'Activity', id: act.id || '' }, extra || {});
-    if (extra && extra.definition && !obj.definition) obj.definition = extra.definition;
-    else if (extra && extra.definition && obj.definition) obj.definition = Object.assign(obj.definition || {}, extra.definition);
-    if (extra && extra.name && !obj.definition) obj.definition = { name: { 'en-US': extra.name } };
-    if (extra && extra.name && obj.definition && !obj.definition.name) obj.definition.name = { 'en-US': extra.name };
+    const obj = { objectType: 'Activity', id: (act && act.id) || '' };
+    if (extra && extra.definition) obj.definition = extra.definition;
+    if (extra && extra.name && (!obj.definition || !obj.definition.name)) {
+      obj.definition = obj.definition || {};
+      obj.definition.name = { 'en-US': extra.name };
+    }
+    if (extra && extra.name && obj.definition && obj.definition.name && obj.definition.name['en-US']) {
+      // already set above
+    }
     send({ verb: v, object: obj });
   }
 
@@ -187,6 +191,50 @@
     emit(specificVerb(), lessonAct);
     // Module / course access with strategic assignment by module (so you know which module/course was accessed)
     emit(VERBS.accessed, moduleAct);
+
+    // Granular item-level tracking for specific questions / texts / vocabulary / predictions / reflections
+    document.querySelectorAll('[data-check]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var sec = document.getElementById(btn.dataset.check);
+        var heading = sec ? (sec.querySelector('.act-head h2') || sec.querySelector('h2')) : null;
+        var itemName = heading ? heading.textContent.trim() : btn.dataset.check;
+        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'item');
+      });
+    });
+    document.querySelectorAll('[data-complete]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var sec = document.getElementById(btn.dataset.complete);
+        if(!sec) return;
+        var heading = sec.querySelector('.act-head h2') || sec.querySelector('h2');
+        var itemName = heading ? heading.textContent.trim() : btn.dataset.complete;
+        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'item');
+      });
+    });
+    document.querySelectorAll('[data-reveal]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        setTimeout(function(){
+          var sec = document.getElementById(btn.dataset.reveal);
+          if(sec){
+            var heading = sec.querySelector('h3');
+            var itemName = heading ? heading.textContent.replace(/Show|Hide|model answer/, '').trim() : btn.dataset.reveal;
+            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Model answer: ' + itemName, 'model');
+          }
+        }, 200);
+      });
+    });
+    // Vocabulary items (act2): derive the vocabulary word from the stem of the first MCQ when check is pressed
+    var vocabBtn = document.querySelector('[data-check="act2"]');
+    if(vocabBtn){
+      vocabBtn.addEventListener('click', function(){
+        setTimeout(function(){
+          var stemEl = document.querySelector('.mcq[data-group="g1"] .stem');
+          if(stemEl){
+            var word = stemEl.textContent.trim().replace(/^\d+\.\s*/, '');
+            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Vocabulary: ' + word, 'vocabulary');
+          }
+        }, 200);
+      });
+    }
 
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
     var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
