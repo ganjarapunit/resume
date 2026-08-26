@@ -99,7 +99,11 @@
     experienced: function (extra) { emit(VERBS.experienced, { objectType: 'Activity', id: lessonActivityId() }, extra || {}); },
     answered: function (extra) { send(Object.assign({ verb: VERBS.answered, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
     completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
-    itemAccessed: function (itemName, itemType) { emit(VERBS.accessed, { objectType: 'Activity', id: HOME + '/teacher/efl-activities/items/' + (itemName || '').replace(/\s+/g, '-').toLowerCase() }, { name: itemName, definition: { type: 'http://adlnet.gov/expapi/activities/item', description: { 'en-US': itemName } } }); }
+    itemAccessed: function (itemName, itemType) {
+      var slug = (itemName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 60) || 'item';
+      var id = lessonActivityId() + '#' + slug;
+      emit(VERBS.accessed, { objectType: 'Activity', id: id }, { name: itemName, definition: { type: 'http://adlnet.gov/expapi/activities/' + (itemType || 'item'), description: { 'en-US': itemName } } });
+    }
   };
 
   // ---- Neutralise the built-in EF Teach name overlay (we use our own gate) ----
@@ -196,9 +200,9 @@
     document.querySelectorAll('[data-check]').forEach(function(btn){
       btn.addEventListener('click', function(){
         var sec = document.getElementById(btn.dataset.check);
-        var heading = sec ? (sec.querySelector('.act-head h2') || sec.querySelector('h2')) : null;
+        var heading = sec ? (sec.querySelector('.act-head h2') || sec.querySelector('h2') || sec.querySelector('h3')) : null;
         var itemName = heading ? heading.textContent.trim() : btn.dataset.check;
-        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'item');
+        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'activity');
       });
     });
     document.querySelectorAll('[data-complete]').forEach(function(btn){
@@ -207,7 +211,7 @@
         if(!sec) return;
         var heading = sec.querySelector('.act-head h2') || sec.querySelector('h2');
         var itemName = heading ? heading.textContent.trim() : btn.dataset.complete;
-        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'item');
+        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'activity');
       });
     });
     document.querySelectorAll('[data-reveal]').forEach(function(btn){
@@ -218,11 +222,30 @@
             var heading = sec.querySelector('h3');
             var itemName = heading ? heading.textContent.replace(/Show|Hide|model answer/, '').trim() : btn.dataset.reveal;
             if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Model answer: ' + itemName, 'model');
+          } else {
+            // For script accordions (script1/2/3) the reveal target is the hidden div itself
+            var txt = btn.textContent.trim();
+            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(txt, 'script');
           }
         }, 200);
       });
     });
-    // Vocabulary items (act2): derive the vocabulary word from the stem of the first MCQ when check is pressed
+    // Per-question granular tracking for every MCQ (vocabulary, listening extracts, etc.)
+    document.querySelectorAll('.mcq').forEach(function(mcq){
+      var stemEl = mcq.querySelector('.stem');
+      if(!stemEl) return;
+      var qName = stemEl.textContent.trim().replace(/\s+/g, ' ').substring(0, 100);
+      var group = mcq.dataset.group || '';
+      mcq.querySelectorAll('input[type=radio]').forEach(function(radio){
+        radio.addEventListener('change', function(){
+          if(this.checked && window.LRS && window.LRS.itemAccessed){
+            // Use the full stem as the item name so you know exactly which question was answered
+            window.LRS.itemAccessed(qName, 'question');
+          }
+        });
+      });
+    });
+    // Vocabulary section as a whole (act2) - also track when Check is pressed
     var vocabBtn = document.querySelector('[data-check="act2"]');
     if(vocabBtn){
       vocabBtn.addEventListener('click', function(){
