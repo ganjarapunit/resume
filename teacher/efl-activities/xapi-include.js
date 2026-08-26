@@ -259,6 +259,29 @@
       });
     }
 
+    // Generic granular tracking for DELTA-style activities (selects, textareas) and any .activity
+    document.querySelectorAll('.activity').forEach(function(act){
+      var headingEl = act.querySelector('h2');
+      var actName = headingEl ? headingEl.textContent.trim().substring(0, 80) : act.id;
+      act.querySelectorAll('select').forEach(function(sel){
+        sel.addEventListener('change', function(){
+          var label = act.querySelector('label[for="'+sel.id+'"]');
+          var itemText = label ? label.textContent.trim().replace(/^\d+\.\s*/, '').substring(0,60) : sel.id;
+          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName + ' - ' + itemText, 'vocabulary');
+        });
+      });
+      act.querySelectorAll('textarea').forEach(function(ta){
+        var handler = function(){
+          if(!ta.value.trim()) return;
+          var label = act.querySelector('label[for="'+ta.id+'"]');
+          var itemText = label ? label.textContent.trim().substring(0,60) : ta.id;
+          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName + ' - ' + itemText, 'writing');
+        };
+        ta.addEventListener('change', handler);
+        ta.addEventListener('blur', handler);
+      });
+    });
+
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
     var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
     window.addEventListener('pagehide', terminate);
