@@ -265,9 +265,22 @@
       });
     });
     // Generic granular tracking for DELTA-style activities (selects, textareas) and any .activity
+    // For sections where learners just click "Mark done" / "Mark complete" / "Check", track the activity title
     document.querySelectorAll('.activity').forEach(function(act){
       var headingEl = act.querySelector('h2');
       var actName = headingEl ? headingEl.textContent.trim().substring(0, 80) : act.id;
+      // Any button that marks complete/check/done inside the activity should send the activity title
+      act.querySelectorAll('button').forEach(function(btn){
+        var t = (btn.textContent || '').trim().toLowerCase();
+        if(t.includes('mark') || t.includes('check') || t.includes('done') || t.includes('complete')){
+          btn.addEventListener('click', function(){
+            // Small delay to ensure the activity's own handler runs first
+            setTimeout(function(){
+              if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName, 'activity');
+            }, 150);
+          });
+        }
+      });
       act.querySelectorAll('select').forEach(function(sel){
         sel.addEventListener('change', function(){
           var label = act.querySelector('label[for="'+sel.id+'"]');
