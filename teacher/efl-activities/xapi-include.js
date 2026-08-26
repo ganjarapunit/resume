@@ -53,10 +53,12 @@
       ? category.slice(0, -8).replace(/^\w/, function (c) { return c.toUpperCase(); }) + ' English'
       : category;
     var moduleName = level + ' ' + catLabel;
+    var isIndex = location.pathname.endsWith('/efl-activities/') || location.pathname.endsWith('/efl-activities/index.html') || moduleId === '-index.html' || !level;
     return {
       moduleId: moduleId,
       moduleActivity: HOME + '/teacher/efl-activities/#' + moduleId,
-      moduleName: moduleName
+      moduleName: moduleName,
+      isIndex: isIndex
     };
   }
 
@@ -87,9 +89,6 @@
       obj.definition = obj.definition || {};
       obj.definition.name = { 'en-US': extra.name };
     }
-    if (extra && extra.name && obj.definition && obj.definition.name && obj.definition.name['en-US']) {
-      // already set above
-    }
     send({ verb: v, object: obj });
   }
 
@@ -100,8 +99,12 @@
     answered: function (extra) { send(Object.assign({ verb: VERBS.answered, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
     completed: function (extra) { send(Object.assign({ verb: VERBS.completed, object: { objectType: 'Activity', id: lessonActivityId() } }, extra || {})); },
     itemAccessed: function (itemName, itemType) {
-      var slug = (itemName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 60) || 'item';
-      var id = lessonActivityId() + '#' + slug;
+      // Use a simple, readable id like "act5: B) high stakes" to mirror the successful lesson's LRS display
+      // For hierarchical clarity, also include the lesson prefix when on a lesson page
+      var isQuestion = itemType === 'question' || itemType === 'vocabulary';
+      var id = isQuestion ? itemName : (lessonActivityId() + '#' + (itemName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 60) || 'item');
+      // For questions, use the full stem + choice as both id and name so the LRS Object column is instantly clear
+      if (isQuestion) id = itemName;
       emit(VERBS.accessed, { objectType: 'Activity', id: id }, { name: itemName, definition: { type: 'http://adlnet.gov/expapi/activities/' + (itemType || 'item'), description: { 'en-US': itemName } } });
     }
   };
@@ -184,7 +187,19 @@
 
   function startTracking() {
     var info = lessonInfo();
-    var lessonAct = { objectType: 'Activity', id: lessonActivityId() };
+    // On the index page, just track course access, not lesson launch
+    if (info.isIndex) {
+      emit(VERBS.accessed, { objectType: 'Activity', id: HOME + '/teacher/efl-activities', definition: { name: { 'en-US': 'EFL Activities' }, type: 'http://adlnet.gov/expapi/activities/course' } });
+      // Track clicks on any lesson link or module card on the index
+      document.querySelectorAll('a.lesson, .card a, .efl-group a').forEach(function(a){
+        a.addEventListener('click', function(){
+          var name = a.textContent.trim().replace(/\s+/g, ' ').substring(0, 80) || a.getAttribute('href');
+          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(name, 'lesson-link');
+        });
+      });
+      return;
+    }
+    var lessonAct = { objectType: 'Activity', id: lessonActivityId(), definition: { name: { 'en-US': document.title }, type: 'http://adlnet.gov/expapi/activities/lesson' } };
     var moduleAct = {
       objectType: 'Activity',
       id: info.moduleActivity,
@@ -223,26 +238,56 @@
             var itemName = heading ? heading.textContent.replace(/Show|Hide|model answer/, '').trim() : btn.dataset.reveal;
             if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Model answer: ' + itemName, 'model');
           } else {
-            // For script accordions (script1/2/3) the reveal target is the hidden div itself
             var txt = btn.textContent.trim();
             if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(txt, 'script');
           }
         }, 200);
       });
     });
-    // Per-question granular tracking for every MCQ (vocabulary, listening extracts, etc.)
+    // Per-question granular tracking for every MCQ (vocabulary, listening extracts, etc.) - mirrors the successful lesson's style like "act5: B) high stakes"
     document.querySelectorAll('.mcq').forEach(function(mcq){
       var stemEl = mcq.querySelector('.stem');
       if(!stemEl) return;
       var qName = stemEl.textContent.trim().replace(/\s+/g, ' ').substring(0, 100);
       var group = mcq.dataset.group || '';
+      var act = mcq.closest('.activity');
+      var actId = act ? act.id : group;
       mcq.querySelectorAll('input[type=radio]').forEach(function(radio){
         radio.addEventListener('change', function(){
-          if(this.checked && window.LRS && window.LRS.itemAccessed){
-            // Use the full stem as the item name so you know exactly which question was answered
-            window.LRS.itemAccessed(qName, 'question');
+          if(this.checked){
+            var label = this.closest('label');
+            var choiceText = label ? label.textContent.trim().replace(/\s+/g, ' ').substring(0, 60) : this.value;
+            var fullName = actId + ': ' + choiceText;
+            // Also include the question stem for full context in the description, but keep the id short like the successful example
+            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(fullName, 'question');
           }
         });
+      });
+    });
+    // Generic granular tracking for DELTA-style activities (selects, textareas) and any .activity
+    document.querySelectorAll('.activity').forEach(function(act){
+      var headingEl = act.querySelector('h2');
+      var actName = headingEl ? headingEl.textContent.trim().substring(0, 80) : act.id;
+      act.querySelectorAll('select').forEach(function(sel){
+        sel.addEventListener('change', function(){
+          var label = act.querySelector('label[for="'+sel.id+'"]');
+          var itemText = label ? label.textContent.trim().replace(/^\d+\.\s*/, '').substring(0,40) : sel.id;
+          var chosen = sel.options[sel.selectedIndex];
+          var choiceText = chosen ? chosen.textContent.trim() : sel.value;
+          if(choiceText && choiceText !== '— choose —' && window.LRS && window.LRS.itemAccessed){
+            window.LRS.itemAccessed(act.id + ': ' + itemText + ' -> ' + choiceText, 'vocabulary');
+          }
+        });
+      });
+      act.querySelectorAll('textarea').forEach(function(ta){
+        var handler = function(){
+          if(!ta.value.trim()) return;
+          var label = act.querySelector('label[for="'+ta.id+'"]');
+          var itemText = label ? label.textContent.trim().substring(0,60) : ta.id;
+          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(act.id + ': ' + itemText, 'writing');
+        };
+        ta.addEventListener('change', handler);
+        ta.addEventListener('blur', handler);
       });
     });
     // Vocabulary section as a whole (act2) - also track when Check is pressed
@@ -258,29 +303,6 @@
         }, 200);
       });
     }
-
-    // Generic granular tracking for DELTA-style activities (selects, textareas) and any .activity
-    document.querySelectorAll('.activity').forEach(function(act){
-      var headingEl = act.querySelector('h2');
-      var actName = headingEl ? headingEl.textContent.trim().substring(0, 80) : act.id;
-      act.querySelectorAll('select').forEach(function(sel){
-        sel.addEventListener('change', function(){
-          var label = act.querySelector('label[for="'+sel.id+'"]');
-          var itemText = label ? label.textContent.trim().replace(/^\d+\.\s*/, '').substring(0,60) : sel.id;
-          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName + ' - ' + itemText, 'vocabulary');
-        });
-      });
-      act.querySelectorAll('textarea').forEach(function(ta){
-        var handler = function(){
-          if(!ta.value.trim()) return;
-          var label = act.querySelector('label[for="'+ta.id+'"]');
-          var itemText = label ? label.textContent.trim().substring(0,60) : ta.id;
-          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName + ' - ' + itemText, 'writing');
-        };
-        ta.addEventListener('change', handler);
-        ta.addEventListener('blur', handler);
-      });
-    });
 
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
     var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
