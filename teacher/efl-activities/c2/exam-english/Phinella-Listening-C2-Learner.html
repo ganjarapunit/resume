@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EF Lesson — Listening: Phinella (Part 1 Only)</title>
+<style>
+:root{--bg:#0B0F14;--surface:#111821;--surface2:#162032;--text:#F2F4F8;--muted:#9AA4B2;--faint:#6B7686;--accent:#FFD23A;--accent2:#E8B84A;--border:#243041;--border2:#1A2535;--ok:#2EB67D;--bad:#E5534B;--focus:#FFD23A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:17px;line-height:1.6}
+.container{max-width:860px;margin:0 auto;padding:28px 20px 64px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.hero{border:1px solid var(--border);border-radius:16px;padding:28px 24px;background:linear-gradient(180deg,var(--surface),#0F1825);margin-bottom:24px}
+.hero h1{font-size:1.9rem;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:6px}
+.hero p{color:var(--muted);font-size:0.92rem}
+.badge{display:inline-block;background:var(--accent);color:#0B0F14;font-weight:800;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+.audio-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:28px}
+.audio-wrap h2{font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+audio{width:100%;height:40px}
+.activity{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 20px;margin-bottom:18px}
+.act-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.num{min-width:36px;height:36px;border-radius:9px;background:var(--accent);color:#0B0F14;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.95rem;flex-shrink:0}
+.act-title{font-weight:700;font-size:1.05rem;line-height:1.25}
+.act-meta{font-size:0.78rem;color:var(--faint);letter-spacing:0.04em;text-transform:uppercase;margin-top:2px}
+.instr{color:var(--muted);font-size:0.92rem;margin:0 0 12px 48px}
+.instr strong{color:var(--text)}
+.task{margin-left:48px}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choice{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid transparent;background:var(--surface2);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s}
+.choice:hover{border-color:var(--border);background:#1B2A41}
+.choice input{margin-top:3px;accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}
+.choice span{font-size:0.95rem}
+.actions{margin:14px 0 0 48px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid var(--border);background:var(--surface2);color:var(--text);padding:9px 16px;border-radius:9px;font-weight:700;font-size:0.88rem;cursor:pointer;min-height:44px}
+.btn-primary{background:var(--accent);color:#0B0F14;border-color:var(--accent)}
+.btn-primary:hover{filter:brightness(0.96)}
+.feedback{font-weight:700;font-size:0.88rem;min-height:1.2em}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)} .feedback.neutral{color:var(--faint)}
+.details{margin:12px 0 0 48px;border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:#0E1623}
+.details summary{padding:12px 14px;cursor:pointer;font-weight:700;font-size:0.88rem;color:var(--accent);list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+.details summary::-webkit-details-marker{display:none}
+.details summary::before{content:"";width:8px;height:8px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);transition:transform .2s;display:inline-block}
+.details[open] summary::before{transform:rotate(-135deg)}
+.details-body{padding:14px;border-top:1px solid var(--border2)}
+.key{border-left:3px solid var(--accent);background:#162032;padding:12px 14px;border-radius:8px;margin-bottom:10px}
+.key h4{font-size:0.78rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.key p{font-size:0.9rem;color:var(--muted)}
+.key strong{color:var(--text)}
+.transcript{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:0.82rem;line-height:1.55;color:var(--muted);background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:12px;max-height:240px;overflow:auto}
+.hint{border-color:#2A3A52}.hint summary{color:var(--muted)}.hint summary::before{border-color:var(--muted)}
+.footer{text-align:center;color:var(--faint);font-size:0.82rem;margin-top:28px;padding-top:18px;border-top:1px solid var(--border2)}
+@media(max-width:640px){.instr,.task,.actions,.details{margin-left:0}.hero h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="hero">
+
+<h1>Listening: Phinella — Chapter I <span style="font-weight:400;color:var(--muted)">(Part 1)</span></h1>
+<p>Single audio • 10 focused tasks • Graded instructions • Answer key + transcript under each task</p>
+</header>
+
+<section class="audio-wrap" aria-label="Audio player">
+<h2>Audio — Part 1 (4:15)</h2>
+<audio controls preload="metadata" src="audio/part_01.mp3"></audio>
+<p style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a href="audio/part_01.mp3" download class="btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download audio</a><span style="color:var(--muted);font-size:0.82rem">MP3, 4:15 — use if playback fails</span></p>
+</section>
+
+<main>
+
+<!-- 1 -->
+<section class="activity" id="act1" aria-labelledby="act1-title">
+<div class="act-head"><div class="num">1</div><div><div class="act-title" id="act1-title">Vocabulary: <em>stray</em></div><div class="act-meta">Part 1 • word meaning</div></div></div>
+<p class="instr"><strong>Listen.</strong> Choose the meaning of <em>stray</em> as used in the recording.</p>
+<div class="task">
+<div class="choices" role="radiogroup" aria-label="Vocabulary stray">
+<label class="choice"><input type="radio" name="q1" value="A"><span><strong>A.</strong> The private garden of a hotel</span></label>
+<label class="choice"><input type="radio" name="q1" value="B"><span><strong>B.</strong> A large public open space belonging to the town</span></label>
+<label class="choice"><input type="radio" name="q1" value="C"><span><strong>C.</strong> A marked cricket pitch</span></label>
+<label class="choice"><input type="radio" name="q1" value="D"><span><strong>D.</strong> A paved parade ground for military use</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q1" data-answer="B" data-feedback="fb1">Check</button><span id="fb1" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (0:00–0:45)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>B.</strong> In Harrogate the Stray is 200 acres of public open land. The recording says “looking across the hotel gardens to the picturesque stray beyond, upon which a unique game of cricket was going forward” — a separate open space, not the hotel garden or the pitch itself.</p></div><div class="transcript">“She stood on the top steps of the Prospect Hotel, Harrogate, … looking across the hotel gardens to the picturesque stray beyond, upon which a unique game of cricket was just then going forward…”</div></div></details>
+</section>
+
+<!-- 2 -->
+<section class="activity" id="act2" aria-labelledby="act2-title">
+<div class="act-head"><div class="num">2</div><div><div class="act-title" id="act2-title">Gist</div><div class="act-meta">Part 1 • overall idea</div></div></div>
+<p class="instr"><strong>Listen once.</strong> Which sentence best describes the scene?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q2" value="A"><span><strong>A.</strong> A young woman waits for a coach while observing an improvised cricket game on public land near a spa hotel.</span></label>
+<label class="choice"><input type="radio" name="q2" value="B"><span><strong>B.</strong> A hotel manager organises a formal cricket tournament to entertain guests.</span></label>
+<label class="choice"><input type="radio" name="q2" value="C"><span><strong>C.</strong> Two boys argue about rules during a school cricket lesson.</span></label>
+<label class="choice"><input type="radio" name="q2" value="D"><span><strong>D.</strong> A crowd gathers to watch a professional team practise before a match.</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q2" data-answer="A" data-feedback="fb2">Check</button><span id="fb2" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (0:00–4:15)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> The narrator frames Phinella waiting for the coach; the cricket is “on their own hook” (improvised) with casuals joining, on the Stray near the hotel gardens. B/C/D invent organisation or professionalism not present.</p></div><div class="transcript">“Two little boys had evidently started it on their own hook, and a variety of casuals had dropped in to bear a hand, the most distinguished … batting with a prowess that kept the whole field in action.”</div></div></details>
+</section>
+
+<!-- 3 -->
+<section class="activity" id="act3" aria-labelledby="act3-title">
+<div class="act-head"><div class="num">3</div><div><div class="act-title" id="act3-title">Detail: appearance</div><div class="act-meta">Part 1 • specific information</div></div></div>
+<p class="instr"><strong>Listen.</strong> What is emphasised about Phinella’s colours?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q3" value="A"><span><strong>A.</strong> Her hair, gloves and shoes share the same tawny tan, which matches her eyes.</span></label>
+<label class="choice"><input type="radio" name="q3" value="B"><span><strong>B.</strong> Her bright red dress contrasts sharply with her pale complexion.</span></label>
+<label class="choice"><input type="radio" name="q3" value="C"><span><strong>C.</strong> She wears entirely white with a single black accessory.</span></label>
+<label class="choice"><input type="radio" name="q3" value="D"><span><strong>D.</strong> Her clothing is chosen for warmth in northern weather.</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q3" data-answer="A" data-feedback="fb3">Check</button><span id="fb3" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (1:00–1:30)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> “Her hair, gloves and shoes were tan colour, and closely allied … was the tawny … tint of her hazel eyes.” The other options misstate colour or purpose.</p></div><div class="transcript">“Her hair, gloves and shoes were tan colour, and closely allied … was the tawny, true tiger tint of her hazel eyes. For the rest, she was entirely white, save for her dark lashes and brows…”</div></div></details>
+</section>
+
+<!-- 4 -->
+<section class="activity" id="act4" aria-labelledby="act4-title">
+<div class="act-head"><div class="num">4</div><div><div class="act-title" id="act4-title">Detail: the perch</div><div class="act-meta">Part 1 • specific information</div></div></div>
+<p class="instr"><strong>Listen.</strong> What does the “perch” refer to?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q4" value="A"><span><strong>A.</strong> A high exterior seat on the coach</span></label>
+<label class="choice"><input type="radio" name="q4" value="B"><span><strong>B.</strong> A balcony on the hotel</span></label>
+<label class="choice"><input type="radio" name="q4" value="C"><span><strong>C.</strong> A bench in the hotel gardens</span></label>
+<label class="choice"><input type="radio" name="q4" value="D"><span><strong>D.</strong> A low wall around the cricket field</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q4" data-answer="A" data-feedback="fb4">Check</button><span id="fb4" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (2:30–3:10)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> “She swung lightly up to the perch that was indeed wide enough to accommodate three persons, though the privilege … lay entirely within George’s jurisdiction.” The context is the coach box seat.</p></div><div class="transcript">“She swung lightly up to the perch that was indeed wide enough to accommodate three persons…”</div></div></details>
+</section>
+
+<!-- 5 -->
+<section class="activity" id="act5" aria-labelledby="act5-title">
+<div class="act-head"><div class="num">5</div><div><div class="act-title" id="act5-title">Language: monopolise</div><div class="act-meta">Part 1 • vocabulary in context</div></div></div>
+<p class="instr"><strong>Listen.</strong> The spiteful voice says Phinella “monopolises the best seat.” What does it mean here?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q5" value="A"><span><strong>A.</strong> To take exclusive and repeated use of something others also want</span></label>
+<label class="choice"><input type="radio" name="q5" value="B"><span><strong>B.</strong> To reserve a seat by paying extra</span></label>
+<label class="choice"><input type="radio" name="q5" value="C"><span><strong>C.</strong> To clean and maintain the seat</span></label>
+<label class="choice"><input type="radio" name="q5" value="D"><span><strong>D.</strong> To give up a seat for someone else</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q5" data-answer="A" data-feedback="fb5">Check</button><span id="fb5" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (2:50–3:00)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> The complaint is that she “is allowed to monopolise the best seat as she does day after day” — repeated exclusive use, implying social favouritism.</p></div><div class="transcript">“Box seat again!” snapped a spiteful female voice … “I wonder she is allowed to monopolise the best seat as she does day after day.”</div></div></details>
+</section>
+
+<!-- 6 -->
+<section class="activity" id="act6" aria-labelledby="act6-title">
+<div class="act-head"><div class="num">6</div><div><div class="act-title" id="act6-title">Inference: the voice</div><div class="act-meta">Part 1 • speaker attitude</div></div></div>
+<p class="instr"><strong>Listen.</strong> What can be inferred about the spiteful woman’s attitude?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q6" value="A"><span><strong>A.</strong> She is envious of Phinella’s favoured position and implies unfair treatment.</span></label>
+<label class="choice"><input type="radio" name="q6" value="B"><span><strong>B.</strong> She is concerned for Phinella’s safety on the high perch.</span></label>
+<label class="choice"><input type="radio" name="q6" value="C"><span><strong>C.</strong> She admires Phinella’s elegance and wishes to copy it.</span></label>
+<label class="choice"><input type="radio" name="q6" value="D"><span><strong>D.</strong> She is confused about the seating arrangements.</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q6" data-answer="A" data-feedback="fb6">Check</button><span id="fb6" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (2:50–3:10)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> Tone (“snapped”), content (“I wonder she is allowed…”), and “as she does day after day” signal envy and an accusation of favouritism, not concern or admiration.</p></div><div class="transcript">“Box seat again!” snapped a spiteful female voice behind her. “I wonder she is allowed to monopolise the best seat as she does day after day.”</div></div></details>
+</section>
+
+<!-- 7 -->
+<section class="activity" id="act7" aria-labelledby="act7-title">
+<div class="act-head"><div class="num">7</div><div><div class="act-title" id="act7-title">Sequence</div><div class="act-meta">Part 1 • ordering</div></div></div>
+<p class="instr"><strong>Listen.</strong> Put the events in the order you hear them.</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q7" value="A"><span><strong>A.</strong> Phinella greets George → the four grays arrive → the spiteful comment → Phinella climbs to the perch</span></label>
+<label class="choice"><input type="radio" name="q7" value="B"><span><strong>B.</strong> Cricket on the Stray → the four grays arrive → Phinella greets George → spiteful comment → Phinella climbs to the perch</span></label>
+<label class="choice"><input type="radio" name="q7" value="C"><span><strong>C.</strong> Phinella climbs to the perch → cricket on the Stray → spiteful comment → the four grays arrive</span></label>
+<label class="choice"><input type="radio" name="q7" value="D"><span><strong>D.</strong> The four grays arrive → cricket on the Stray → Phinella climbs to the perch → spiteful comment</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q7" data-answer="B" data-feedback="fb7">Check</button><span id="fb7" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (0:00–4:15)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>B.</strong> The extract opens with the cricket on the Stray, then “as the four grays drew up,” then “Good morning, George,” then the spiteful voice, then “she swung lightly up to the perch.”</p></div><div class="transcript">“…a unique game of cricket was just then going forward… as the four grays drew up with a flourish… ‘Good morning, George,’ … ‘Box seat again!’ snapped a spiteful female voice … she swung lightly up to the perch…”</div></div></details>
+</section>
+
+<!-- 8 -->
+<section class="activity" id="act8" aria-labelledby="act8-title">
+<div class="act-head"><div class="num">8</div><div><div class="act-title" id="act8-title">Sentence ordering</div><div class="act-meta">Part 1 • sentence structure</div></div></div>
+<p class="instr"><strong>Listen.</strong> Which is the correct order of this sentence as heard?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q8" value="A"><span><strong>A.</strong> “She stood on the top steps of the Prospect Hotel, Harrogate, waiting for the coach to come round.”</span></label>
+<label class="choice"><input type="radio" name="q8" value="B"><span><strong>B.</strong> “She stood waiting for the coach to come round on the top steps of the Prospect Hotel, Harrogate.”</span></label>
+<label class="choice"><input type="radio" name="q8" value="C"><span><strong>C.</strong> “Waiting for the coach, she stood on the top steps of the Harrogate Prospect Hotel.”</span></label>
+<label class="choice"><input type="radio" name="q8" value="D"><span><strong>D.</strong> “On the top steps she stood of the Prospect Hotel, Harrogate, waiting for the coach.”</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q8" data-answer="A" data-feedback="fb8">Check</button><span id="fb8" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (0:45–1:10)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> This is the exact order heard. The other options change word order or omit “to come round.”</p></div><div class="transcript">“She stood on the top steps of the Prospect Hotel, Harrogate, waiting for the coach to come round…”</div></div></details>
+</section>
+
+<!-- 9 -->
+<section class="activity" id="act9" aria-labelledby="act9-title">
+<div class="act-head"><div class="num">9</div><div><div class="act-title" id="act9-title">Dialogue ordering</div><div class="act-meta">Part 1 • conversation flow</div></div></div>
+<p class="instr"><strong>Listen.</strong> Order these turns as heard.</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q9" value="A"><span><strong>A.</strong> “Good morning, George” → “Box seat again!” → Phinella laughs and climbs to the perch</span></label>
+<label class="choice"><input type="radio" name="q9" value="B"><span><strong>B.</strong> “Box seat again!” → “Good morning, George” → Phinella climbs to the perch</span></label>
+<label class="choice"><input type="radio" name="q9" value="C"><span><strong>C.</strong> Phinella climbs to the perch → “Good morning, George” → “Box seat again!”</span></label>
+<label class="choice"><input type="radio" name="q9" value="D"><span><strong>D.</strong> “Good morning, George” → Phinella climbs to the perch → “Box seat again!”</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q9" data-answer="A" data-feedback="fb9">Check</button><span id="fb9" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (2:40–3:30)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> Phinella first greets George, then the spiteful voice interrupts, then Phinella’s reaction (laugh, climb) follows.</p></div><div class="transcript">“Good morning, George,” and she nodded brightly … “Box seat again!” snapped a spiteful female voice … The girl laughed … she swung lightly up to the perch…”</div></div></details>
+</section>
+
+<!-- 10 -->
+<section class="activity" id="act10" aria-labelledby="act10-title">
+<div class="act-head"><div class="num">10</div><div><div class="act-title" id="act10-title">Inference: character</div><div class="act-meta">Part 1 • implied meaning</div></div></div>
+<p class="instr"><strong>Listen.</strong> What is implied by Phinella’s reaction — “The girl laughed … she swung lightly up to the perch”?</p>
+<div class="task">
+<div class="choices" role="radiogroup">
+<label class="choice"><input type="radio" name="q10" value="A"><span><strong>A.</strong> She is confident and socially at ease, unaffected by the criticism.</span></label>
+<label class="choice"><input type="radio" name="q10" value="B"><span><strong>B.</strong> She is embarrassed and hesitates before sitting.</span></label>
+<label class="choice"><input type="radio" name="q10" value="C"><span><strong>C.</strong> She is angry and argues with the other woman.</span></label>
+<label class="choice"><input type="radio" name="q10" value="D"><span><strong>D.</strong> She is confused and asks the driver for help.</span></label>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" data-check="q10" data-answer="A" data-feedback="fb10">Check</button><span id="fb10" class="feedback neutral" aria-live="polite"></span></div>
+<details class="details hint"><summary>Hint</summary><div class="details-body"><p style="font-size:0.88rem;color:var(--muted)">Listen to Part 1 (3:00–3:30)</p></div></details>
+<details class="details"><summary>Answer key + transcript</summary><div class="details-body"><div class="key"><h4>Answer</h4><p><strong>A.</strong> “Laughed” and “swung lightly” (with “a brief glimpse of … silken hose,” suggesting ease rather than hesitation) imply confidence and ease. No argument, hesitation or request for help is described.</p></div><div class="transcript">“The girl laughed, as giving a brief glimpse of … she swung lightly up to the perch that was indeed wide enough to accommodate three persons…”</div></div></details>
+</section>
+
+</main>
+
+<footer class="footer">
+<p>EF Lesson • Part 1 only (4:15) • 10 focused tasks • DELTA • Quick-Activities • High contrast • WCAG AA</p>
+</footer>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('audio').forEach(function(a){ a.volume = 1.0; });
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var group = btn.getAttribute('data-check');
+      var correct = btn.getAttribute('data-answer');
+      var fbId = btn.getAttribute('data-feedback');
+      var sel = document.querySelector('input[name="'+group+'"]:checked');
+      var fb = document.getElementById(fbId);
+      if(!sel){ fb.textContent='Choose an answer first.'; fb.className='feedback bad'; return; }
+      var ok = sel.value === correct;
+      fb.textContent = ok ? 'Correct.' : 'Not quite — check the answer key.';
+      fb.className = 'feedback ' + (ok ? 'ok' : 'bad');
+      document.querySelectorAll('input[name="'+group+'"]').forEach(function(r){
+        var label = r.closest('.choice');
+        if(label){ label.style.borderColor = (r.checked ? (ok ? '#2EB67D' : '#E5534B') : 'transparent'); }
+      });
+    });
+  });
+});
+</script>
+<script src="../../xapi-include.js" defer></script>
+</body>
+</html>
