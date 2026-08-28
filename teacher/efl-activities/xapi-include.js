@@ -38,7 +38,15 @@
     accessed: verb(HOME + '/expapi/verbs/accessed', 'accessed'),
     listened: verb(HOME + '/expapi/verbs/listened', 'listened to'),
     reviewed: verb(HOME + '/expapi/verbs/reviewed', 'reviewed'),
-    practised: verb(HOME + '/expapi/verbs/practised', 'practised')
+    practised: verb(HOME + '/expapi/verbs/practised', 'practised'),
+    matched: verb(HOME + '/expapi/verbs/matched', 'matched'),
+    predicted: verb(HOME + '/expapi/verbs/predicted', 'predicted'),
+    reflected: verb(HOME + '/expapi/verbs/reflected', 'reflected'),
+    viewed: verb('http://id.tincanapi.com/verb/viewed', 'viewed'),
+    wrote: verb(HOME + '/expapi/verbs/wrote', 'wrote'),
+    checked: verb(HOME + '/expapi/verbs/checked', 'checked'),
+    recorded: verb(HOME + '/expapi/verbs/recorded', 'recorded'),
+    read: verb(HOME + '/expapi/verbs/read', 'read')
   };
 
   function lessonActivityId() { return HOME + location.pathname.split('#')[0]; }
@@ -211,13 +219,19 @@
     // Module / course access with strategic assignment by module (so you know which module/course was accessed)
     emit(VERBS.accessed, moduleAct);
 
-    // Granular item-level tracking for specific questions / texts / vocabulary / predictions / reflections
+    // Variety of verbs specific to the activity for precise tracking
+    function sendItem(verb, name, type){
+      var slug = (name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 60) || 'item';
+      var id = lessonActivityId() + '#' + slug;
+      emit(verb, { objectType: 'Activity', id: id }, { name: name, definition: { type: 'http://adlnet.gov/expapi/activities/' + (type || 'item'), description: { 'en-US': name } } });
+    }
+    // Check answers -> checked, Mark done/complete -> completed, View script/model -> viewed
     document.querySelectorAll('[data-check]').forEach(function(btn){
       btn.addEventListener('click', function(){
         var sec = document.getElementById(btn.dataset.check);
         var heading = sec ? (sec.querySelector('.act-head h2') || sec.querySelector('h2') || sec.querySelector('h3')) : null;
         var itemName = heading ? heading.textContent.trim() : btn.dataset.check;
-        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'activity');
+        sendItem(VERBS.checked, itemName, 'assessment');
       });
     });
     document.querySelectorAll('[data-complete]').forEach(function(btn){
@@ -226,7 +240,7 @@
         if(!sec) return;
         var heading = sec.querySelector('.act-head h2') || sec.querySelector('h2');
         var itemName = heading ? heading.textContent.trim() : btn.dataset.complete;
-        if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(itemName, 'activity');
+        sendItem(VERBS.completed, itemName, 'activity');
       });
     });
     document.querySelectorAll('[data-reveal]').forEach(function(btn){
@@ -236,15 +250,15 @@
           if(sec){
             var heading = sec.querySelector('h3');
             var itemName = heading ? heading.textContent.replace(/Show|Hide|model answer/, '').trim() : btn.dataset.reveal;
-            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Model answer: ' + itemName, 'model');
+            sendItem(VERBS.viewed, 'Model answer: ' + itemName, 'model');
           } else {
             var txt = btn.textContent.trim();
-            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(txt, 'script');
+            sendItem(VERBS.viewed, txt, 'script');
           }
         }, 200);
       });
     });
-    // Per-question granular tracking for every MCQ (vocabulary, listening extracts, etc.) - mirrors the successful lesson's style like "act5: B) high stakes"
+    // Per-question: vocabulary matched, listening/reading answered, with specific verbs
     document.querySelectorAll('.mcq').forEach(function(mcq){
       var stemEl = mcq.querySelector('.stem');
       if(!stemEl) return;
@@ -257,28 +271,26 @@
           if(this.checked){
             var label = this.closest('label');
             var choiceText = label ? label.textContent.trim().replace(/\s+/g, ' ').substring(0, 60) : this.value;
-            var fullName = actId + ': ' + choiceText;
-            // Also include the question stem for full context in the description, but keep the id short like the successful example
-            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(fullName, 'question');
+            var fullName = actId + ': ' + choiceText + ' (' + qName.substring(0,40) + ')';
+            // Use answered for general, matched for vocabulary (act2)
+            var v = (actId === 'act2' || actId === 'a2') ? VERBS.matched : VERBS.answered;
+            sendItem(v, fullName, 'question');
           }
         });
       });
     });
-    // Generic granular tracking for DELTA-style activities (selects, textareas) and any .activity
-    // For sections where learners just click "Mark done" / "Mark complete" / "Check", track the activity title
+    // DELTA-style and generic activities: selects = matched, textareas = predicted/reflected/wrote, audio play = listened, record = recorded
     document.querySelectorAll('.activity').forEach(function(act){
       var headingEl = act.querySelector('h2');
       var actName = headingEl ? headingEl.textContent.trim().substring(0, 80) : act.id;
-      // Any button that marks complete/check/done inside the activity should send the activity title
       act.querySelectorAll('button').forEach(function(btn){
         var t = (btn.textContent || '').trim().toLowerCase();
-        if(t.includes('mark') || t.includes('check') || t.includes('done') || t.includes('complete')){
+        if(t.includes('mark') || t.includes('done') || t.includes('complete')){
           btn.addEventListener('click', function(){
-            // Small delay to ensure the activity's own handler runs first
-            setTimeout(function(){
-              if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(actName, 'activity');
-            }, 150);
+            setTimeout(function(){ sendItem(VERBS.completed, actName, 'activity'); }, 150);
           });
+        } else if(t.includes('check')){
+          // already handled by [data-check] above, avoid double
         }
       });
       act.querySelectorAll('select').forEach(function(sel){
@@ -287,35 +299,35 @@
           var itemText = label ? label.textContent.trim().replace(/^\d+\.\s*/, '').substring(0,40) : sel.id;
           var chosen = sel.options[sel.selectedIndex];
           var choiceText = chosen ? chosen.textContent.trim() : sel.value;
-          if(choiceText && choiceText !== '— choose —' && window.LRS && window.LRS.itemAccessed){
-            window.LRS.itemAccessed(act.id + ': ' + itemText + ' -> ' + choiceText, 'vocabulary');
+          if(choiceText && choiceText !== '— choose —'){
+            sendItem(VERBS.matched, act.id + ': ' + itemText + ' -> ' + choiceText, 'vocabulary');
           }
         });
       });
       act.querySelectorAll('textarea').forEach(function(ta){
+        var isPredict = /predict/i.test(actName);
+        var isReflect = /reflect/i.test(actName);
+        var v = isPredict ? VERBS.predicted : (isReflect ? VERBS.reflected : VERBS.wrote);
         var handler = function(){
           if(!ta.value.trim()) return;
           var label = act.querySelector('label[for="'+ta.id+'"]');
           var itemText = label ? label.textContent.trim().substring(0,60) : ta.id;
-          if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed(act.id + ': ' + itemText, 'writing');
+          sendItem(v, act.id + ': ' + itemText, isPredict ? 'prediction' : (isReflect ? 'reflection' : 'writing'));
         };
         ta.addEventListener('change', handler);
         ta.addEventListener('blur', handler);
       });
-    });
-    // Vocabulary section as a whole (act2) - also track when Check is pressed
-    var vocabBtn = document.querySelector('[data-check="act2"]');
-    if(vocabBtn){
-      vocabBtn.addEventListener('click', function(){
-        setTimeout(function(){
-          var stemEl = document.querySelector('.mcq[data-group="g1"] .stem');
-          if(stemEl){
-            var word = stemEl.textContent.trim().replace(/^\d+\.\s*/, '');
-            if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('Vocabulary: ' + word, 'vocabulary');
-          }
-        }, 200);
+      act.querySelectorAll('audio').forEach(function(aud){
+        aud.addEventListener('play', function(){
+          sendItem(VERBS.listened, actName + ' - audio', 'audio');
+        });
       });
-    }
+      act.querySelectorAll('[data-record]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          sendItem(VERBS.recorded, actName + ' - recording', 'audio');
+        });
+      });
+    });
 
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
     var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
