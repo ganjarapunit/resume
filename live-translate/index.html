@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Translation — Punit Ganjara | Gemini 3.5 Live Translate</title>
+<meta name="description" content="Real-time speech-to-speech translation for online lessons. 60+ minutes continuous with Gemini 3.5 Live Translate. Free preview.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --primary:#1e3a5f;--accent:#f59e0b;--text:#0f172a;--muted:#64748b;--bg:#ffffff;--card:#ffffff;--border:#e2e8f0;--alt:#f8fafc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav a{font-weight:700;text-decoration:none;color:var(--text)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);background:rgba(30,58,95,.08);border:1px solid rgba(30,58,95,.12);padding:6px 12px;border-radius:999px}
+.hero{max-width:1100px;margin:0 auto;padding:48px 24px 24px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em}
+.hero h1 span{color:var(--accent)}
+.hero p{max-width:680px;margin:16px auto 0;color:var(--muted)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.card h2{font-size:1.1rem;margin-bottom:12px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.select, .input{flex:1;min-width:180px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;border:0;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--text);color:#fff}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline{background:#fff;border:1px solid var(--border)}
+.transcript{min-height:320px;background:var(--alt);border:1px solid var(--border);border-radius:16px;padding:16px;overflow:auto}
+.bubble{margin:10px 0;padding:10px 14px;border-radius:14px;max-width:90%;font-size:.95rem}
+.bubble.you{background:#1e3a5f;color:#fff;align-self:flex-start}
+.bubble.them{background:#fff;border:1px solid var(--border)}
+.muted{color:var(--muted);font-size:.85rem}
+.status{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:#94a3b8}
+.dot.live{background:#22c55e;box-shadow:0 0 0 6px rgba(34,197,94,.15);animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 6px rgba(34,197,94,.15)}50%{box-shadow:0 0 0 10px rgba(34,197,94,.05)}100%{box-shadow:0 0 0 6px rgba(34,197,94,.15)}}
+.kbd{font-size:.75rem;background:var(--alt);border:1px solid var(--border);padding:2px 6px;border-radius:6px}
+.note{font-size:.8rem;color:var(--muted);margin-top:10px}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:600}
+code{font-size:.8rem;background:var(--alt);padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="../">Punit Ganjara</a>
+  <a href="../teacher/">Teaching</a>
+</nav>
+
+<section class="hero">
+  <span class="badge"><i data-lucide="languages" style="width:14px;height:14px"></i> Gemini 3.5 Live Translate • Free preview</span>
+  <h1>Live translation for <span>60 minute</span> online lessons</h1>
+  <p>Speech to speech translation on your website. Runs unlimited duration with session resumption and context window compression. Audio in, translated audio out, plus live transcripts.</p>
+  <p class="muted" style="margin-top:8px">Works on any modern browser over HTTPS. No Meet extension needed.</p>
+</section>
+
+<div class="wrap">
+  <div class="card">
+    <h2>Controls</h2>
+    <div class="row" style="margin-bottom:12px">
+      <select id="targetLang" class="select" aria-label="Target language">
+        <option value="en">Translate to English (en)</option>
+        <option value="es">Spanish (es)</option>
+        <option value="fr">French (fr)</option>
+        <option value="de">German (de)</option>
+        <option value="ja">Japanese (ja)</option>
+        <option value="ko">Korean (ko)</option>
+        <option value="hi">Hindi (hi)</option>
+        <option value="vi">Vietnamese (vi)</option>
+        <option value="th">Thai (th)</option>
+        <option value="pl">Polish (pl)</option>
+      </select>
+      <label style="display:flex;align-items:center;gap:6px;font-size:.85rem"><input type="checkbox" id="echo"> Echo target language</label>
+    </div>
+    <div class="row" style="margin-bottom:12px">
+      <input id="apiKey" class="input" type="password" placeholder="Paste Gemini API key (free from AI Studio) — or use ephemeral token server">
+      <input id="tokenServer" class="input" type="text" placeholder="Optional token server URL e.g. /api/live-token">
+    </div>
+    <div class="row">
+      <button id="startBtn" class="btn btn-primary"><i data-lucide="mic"></i> Start 60 min session</button>
+      <button id="stopBtn" class="btn btn-outline" disabled><i data-lucide="square"></i> Stop</button>
+      <span id="status" class="status"><span class="dot" id="dot"></span><span id="statusText">Idle</span></span>
+    </div>
+    <p class="note">Free tier: input and output $0 during preview. Session auto extends beyond 15 min via <span class="kbd">contextWindowCompression</span> and survives 10 min WebSocket resets via <span class="kbd">sessionResumption</span>. See console for SessionResumptionUpdate and GoAway handling.</p>
+    <details>
+      <summary>How 60 minutes works without interruption</summary>
+      <p class="muted" style="margin-top:8px">Audio tokens accumulate at 25 tokens/sec. Without compression a session caps at 15 min. We enable <code>slidingWindow</code> compression so old history is evicted and the session runs unlimited. The WebSocket itself lives ~10 min, so we store the <code>newHandle</code> from <code>SessionResumptionUpdate</code> and reconnect with <code>sessionResumption: { handle }</code> when we get <code>GoAway</code> or a close. Handles stay valid 2 hours.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Live transcripts</h2>
+    <div id="transcript" class="transcript" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button id="clearBtn" class="btn btn-outline">Clear</button>
+      <button id="downloadBtn" class="btn btn-outline">Download .txt</button>
+      <label style="display:flex;align-items:center;gap:6px;font-size:.85rem"><input type="checkbox" id="playAudio" checked> Play translated voice</label>
+    </div>
+    <p class="muted" style="margin-top:8px">Tip: Use headphones to avoid feedback. For others in a Meet to hear the translation, route translated audio to a virtual mic (VB-Cable / Loopback) and select it as your mic in Meet.</p>
+  </div>
+</div>
+
+<div class="wrap" style="grid-template-columns:1fr">
+  <div class="card">
+    <h2>Embed on any page</h2>
+    <p class="muted">Add this floating widget to any page of your site (teacher portal, lesson page, etc.):</p>
+    <pre style="margin-top:12px;background:var(--alt);padding:12px;border-radius:12px;overflow:auto;font-size:.8rem"><code>&lt;script src=&quot;/live-translate/live-translate-widget.js&quot; data-target-lang=&quot;vi&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;live-translate-root&quot;&gt;&lt;/div&gt;</code></pre>
+    <p class="note">Widget reuses the same 60 min logic. Provide an ephemeral token endpoint for production so you do not ship your API key.</p>
+  </div>
+</div>
+
+<script>lucide.createIcons()</script>
+<script type="module" src="./live-translate.js?v=3"></script>
+</body>
+</html>
