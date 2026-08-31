@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wh-Clauses for Daily Life - which what who where how - B1-B2 Interactive - Shirley - 31-08-2026</title>
+<style>
+  :root {
+    --bg: #07101f;
+    --surface: #0f1b2e;
+    --surface-2: #13233b;
+    --ink: #f5f9ff;
+    --muted: #b9c6d8;
+    --accent: #ffd400;
+    --accent-2: #38e0c8;
+    --good: #38e0c8;
+    --bad: #ff8a8a;
+    --border: #2a3d57;
+    --focus: #ffd400;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+  body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, #14253f 0%, var(--bg) 60%) fixed, var(--bg); color: var(--ink); font-family: "Segoe UI", Verdana, Arial, sans-serif; line-height: 1.6; }
+  a.skip { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  a.skip:focus { left: 0; top: 0; width: auto; height: auto; background: var(--accent); color: #000; padding: .6rem 1rem; z-index: 60; border: 3px solid #fff; font-weight: bold; }
+  .hud { position: sticky; top: 0; z-index: 40; background: rgba(7,16,31,0.92); backdrop-filter: blur(6px); border-bottom: 2px solid var(--border); padding: .55rem 1rem; }
+  .hud-inner { max-width: 980px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+  .stat { display: flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--ink); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: .3rem .75rem; font-size: .92rem; }
+  .stat svg { width: 16px; height: 16px; }
+  .progress-wrap { flex: 1 1 220px; min-width: 200px; }
+  .progress-label { font-size: .82rem; color: var(--muted); margin-bottom: .18rem; }
+  .progress-track { height: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .45s ease; }
+  header.hero { max-width: 980px; margin: 0 auto; padding: 1.6rem 1rem .8rem; text-align: center; }
+  header.hero h1 { font-size: clamp(1.65rem, 4vw, 2.5rem); margin: 0 0 .3rem; color: #fff; text-shadow: 0 0 24px rgba(56,224,200,0.22); line-height: 1.2; }
+  header.hero p { color: var(--muted); margin: .25rem auto; max-width: 680px; font-size: .96rem; }
+  .pill { display: inline-block; background: var(--surface-2); border: 1px solid var(--border); color: var(--accent); border-radius: 999px; padding: .2rem .7rem; font-size: .82rem; font-weight: 700; margin: .18rem; }
+  .pill.alt { color: var(--accent-2); }
+  main { max-width: 980px; margin: 0 auto; padding: 1rem; }
+  .intro { background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 12px; padding: .9rem 1rem; margin: 1rem 0; }
+  .intro h2 { margin: 0 0 .3rem; color: var(--accent); font-size: 1.08rem; }
+  .steps { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 0; }
+  .step { flex: 1 1 160px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: .5rem .6rem; text-align: center; font-size: .88rem; }
+  .step strong { color: #fff; display: block; font-size: .9rem; }
+  .step span { color: var(--muted); }
+  .grammar-box { background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent-2); border-radius: 12px; padding: .9rem 1rem; margin: 1rem 0; }
+  .grammar-box h2 { margin: 0 0 .3rem; color: var(--accent-2); font-size: 1.08rem; }
+  .grammar-grid { display: grid; gap: .45rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: .5rem; }
+  .grammar-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: .55rem .65rem; text-align: center; }
+  .grammar-card strong { color: var(--accent); font-size: 1rem; }
+  .grammar-card div { color: var(--muted); font-size: .86rem; margin-top: .15rem; }
+  .activity { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; margin: 1.2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.32); }
+  .act-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .3rem; }
+  .badge { width: 38px; height: 38px; flex: none; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06121f; font-weight: 800; font-size: 1.1rem; }
+  .act-head h2 { margin: 0; font-size: 1.15rem; color: #fff; flex: 1 1 auto; line-height: 1.25; }
+  .tag { background: var(--surface-2); border: 1px solid var(--border); color: var(--accent-2); border-radius: 999px; padding: .15rem .6rem; font-size: .75rem; font-weight: 700; }
+  .goal { color: var(--muted); margin: .15rem 0 .6rem; font-size: .88rem; }
+  .exercise { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: .8rem .9rem; }
+  .q { font-weight: 700; margin: 0 0 .45rem; color: #fff; font-size: .95rem; }
+  .hint { color: var(--muted); font-size: .82rem; margin: .25rem 0 0; }
+  .fill { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: .45rem 0; font-size: .95rem; }
+  .fill .lead, .fill .tail { color: var(--ink); }
+  input.answer { background: #06121f; color: #fff; border: 2px solid var(--border); border-radius: 8px; padding: .32rem .5rem; font-size: .96rem; min-width: 120px; font-family: inherit; }
+  input.answer.small { min-width: 80px; max-width: 130px; }
+  input.answer.wide { min-width: 200px; flex: 1 1 250px; }
+  input.answer:focus-visible, textarea:focus-visible, button:focus-visible, input[type=radio]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  input.answer.correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(56,224,200,0.35); }
+  input.answer.wrong { border-color: var(--bad); }
+  .mark { font-size: .78rem; font-weight: 700; margin-left: .25rem; }
+  .mark.ok { color: var(--good); }
+  .mark.no { color: var(--bad); }
+  .mcq { margin: .6rem 0; }
+  .mcq .stem { font-weight: 700; color: #fff; margin-bottom: .3rem; font-size: .95rem; }
+  .mcq label { display: block; background: #06121f; border: 2px solid var(--border); border-radius: 8px; padding: .4rem .65rem; margin: .3rem 0; cursor: pointer; font-size: .95rem; }
+  .mcq label.correct { border-color: var(--good); }
+  .mcq label.wrong { border-color: var(--bad); }
+  .mcq input { accent-color: var(--accent-2); width: 17px; height: 17px; vertical-align: middle; margin-right: .45rem; }
+  .sentence-list { list-style: none; padding: 0; margin: .3rem 0; }
+  .sentence-list li { background: #06121f; border: 1px solid var(--border); border-radius: 8px; padding: .4rem .6rem; margin: .3rem 0; font-size: .95rem; }
+  .sentence-list .label { display: inline-block; background: var(--surface-2); border: 1px solid var(--border); color: var(--accent); font-weight: 800; border-radius: 6px; padding: .08rem .35rem; margin-right: .35rem; font-size: .8rem; }
+  textarea { width: 100%; min-height: 76px; background: #06121f; color: #fff; border: 2px solid var(--border); border-radius: 8px; padding: .5rem; font-size: .95rem; font-family: inherit; resize: vertical; }
+  textarea.small { min-height: 56px; }
+  button.btn { background: linear-gradient(135deg, var(--accent), #ffe34d); color: #06121f; border: 2px solid #fff; font-weight: 800; font-size: .95rem; padding: .48rem 1rem; border-radius: 10px; cursor: pointer; margin-top: .6rem; font-family: inherit; }
+  button.btn:hover { filter: brightness(1.05); }
+  button.btn.ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--border); }
+  button.btn.ghost:hover { background: #1a2c4a; }
+  button.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .feedback { margin-top: .55rem; padding: .6rem .8rem; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); font-size: .92rem; }
+  .feedback.good { border-color: var(--good); }
+  .feedback.bad { border-color: var(--bad); }
+  .feedback:empty { display: none; }
+  .speak { margin-top: .75rem; padding: .6rem .85rem; border-left: 4px solid var(--accent-2); background: var(--surface-2); border-radius: 0 10px 10px 0; }
+  .speak h3 { margin: 0 0 .2rem; color: var(--accent-2); font-size: .96rem; }
+  .speak p { margin: .15rem 0; font-size: .92rem; }
+  .model { margin-top: .4rem; padding: .5rem .7rem; background: #06121f; border: 1px dashed var(--border); border-radius: 8px; color: var(--ink); font-size: .92rem; }
+  .model[hidden] { display: none; }
+  .done-flag { display: inline-block; margin-left: .4rem; color: var(--good); font-weight: 800; opacity: 0; transition: opacity .3s; font-size: .9rem; }
+  .activity.complete .done-flag { opacity: 1; }
+  .activity.complete { border-color: var(--good); }
+  .results { margin: 1.8rem 0; background: linear-gradient(135deg, var(--surface), var(--surface-2)); border: 2px solid var(--accent); border-radius: 18px; padding: 1.2rem; text-align: center; }
+  .results[hidden] { display: none; }
+  .results h2 { color: var(--accent); margin-top: 0; }
+  .score-grid { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; margin: .8rem 0; }
+  .score-box { background: #06121f; border: 1px solid var(--border); border-radius: 12px; padding: .65rem 1rem; min-width: 120px; }
+  .score-box .n { font-size: 1.6rem; font-weight: 800; color: var(--accent-2); }
+  .score-box .l { color: var(--muted); font-size: .82rem; }
+  .cert { margin: 1rem auto; max-width: 540px; background: #06121f; border: 2px solid var(--accent); border-radius: 14px; padding: 1.2rem; text-align: center; box-shadow: 0 0 30px rgba(255,212,0,0.15); }
+  .cert h3 { color: var(--accent); margin: 0 0 .25rem; letter-spacing: 2px; font-size: 1rem; }
+  .cert .who { font-size: 1.4rem; font-weight: 800; color: #fff; margin: .35rem 0; }
+  .cert .sub { color: var(--muted); font-size: .88rem; }
+  .cert .badge-line { color: var(--accent-2); font-weight: 800; margin-top: .4rem; font-size: .92rem; }
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 80; }
+  footer { text-align: center; padding: 1.6rem 1rem; color: var(--muted); border-top: 1px solid var(--border); font-size: .85rem; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  @media (max-width: 560px) { input.answer { min-width: 100px; } input.answer.wide { min-width: 130px; } }
+  @media print { .hud, button.btn { display: none; } .activity { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg><span id="points">0 XP</span></div>
+    <div class="stat" aria-live="polite"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg><span id="streak">Streak 0</span></div>
+    <div class="progress-wrap"><div class="progress-label"><span id="progText">0 / 15 complete</span></div><div class="progress-track"><div class="progress-fill" id="bar"></div></div></div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Wh-Clauses for Daily Life</h1>
+  <p>which - what - who - where - how. Link ideas smoothly in real life.</p>
+  <p><strong>Shirley, B1-B2</strong> - 15 tiny steps, one idea at a time.</p>
+  <span class="pill">15 activities</span><span class="pill alt">Speak every step</span><span class="pill">XP + certificate</span>
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="How to use">
+    <h2>How to use</h2>
+    <div class="steps">
+      <div class="step"><strong>Type - Check</strong><span>10 XP per correct</span></div>
+      <div class="step"><strong>Say it aloud</strong><span>then reveal model</span></div>
+      <div class="step"><strong>Complete</strong><span>bar fills to certificate</span></div>
+    </div>
+    <p class="hint" style="margin-top:.5rem;">Think of your real kitchen, street, morning. Real life makes each wh-clause stick.</p>
+  </section>
+
+  <section class="grammar-box" aria-label="Pattern">
+    <h2>Pattern - 15 seconds</h2>
+    <p style="margin:0; font-size:.92rem;"><strong>Main idea + wh + subject + verb</strong> - no flip inside. <span style="color:var(--muted);">Say <em>where he is</em> not where is he.</span></p>
+    <div class="grammar-grid">
+      <div class="grammar-card"><strong>where</strong><div>place - where fruit is fresh</div></div>
+      <div class="grammar-card"><strong>what</strong><div>thing - what you want</div></div>
+      <div class="grammar-card"><strong>who</strong><div>person - who can help</div></div>
+      <div class="grammar-card"><strong>how</strong><div>way - how you make coffee</div></div>
+      <div class="grammar-card"><strong>which</strong><div>choice - which bus is faster</div></div>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head"><span class="badge">1</span><h2>Your day</h2><span class="tag">warm up</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Your true morning, shop, home. One sentence each.</p>
+    <div class="exercise">
+      <p>1. <strong>Which</strong> morning do you like - quiet or busy?</p>
+      <p>2. <strong>What</strong> do you eat or drink first?</p>
+      <p>3. <strong>Who</strong> helps you at home?</p>
+      <p>4. <strong>Where</strong> do you shop or relax?</p>
+      <p>5. <strong>How</strong> do you unwind?</p>
+      <label for="a1-note" style="font-weight:700; color:#fff; font-size:.92rem;">Type 1 or 2 answers to prepare speaking</label>
+      <textarea id="a1-note" class="small" placeholder="I like a quiet morning with coffee. My sister helps when I am busy."></textarea>
+    </div>
+    <div class="speak"><h3>Say it aloud</h3><p>Say two answers out loud.</p><button class="btn ghost" data-reveal="model1" aria-expanded="false">Show model</button><div class="model" id="model1" hidden>I like a quiet morning where it is calm. I have toast and what is quick. My sister helps, I ask who is free. I shop where fruit is fresh. I unwind how I like, with music.</div></div>
+    <button class="btn ghost" data-complete="act1">Mark complete</button>
+  </section>
+
+  <!-- 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head"><span class="badge">2</span><h2>Spot the wh</h2><span class="tag">notice</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Find the wh word that links the detail.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g2-1"><div class="stem">1. I shop ___ fruit is fresh.</div><label><input type="radio" class="choice" name="g2-1" data-correct="true"> where</label><label><input type="radio" class="choice" name="g2-1"> what</label><label><input type="radio" class="choice" name="g2-1"> who</label><label><input type="radio" class="choice" name="g2-1"> how</label></div>
+      <div class="mcq" data-group="g2-2"><div class="stem">2. Tell me ___ you want for dinner.</div><label><input type="radio" class="choice" name="g2-2"> where</label><label><input type="radio" class="choice" name="g2-2" data-correct="true"> what</label><label><input type="radio" class="choice" name="g2-2"> which</label><label><input type="radio" class="choice" name="g2-2"> who</label></div>
+      <div class="mcq" data-group="g2-3"><div class="stem">3. Ask ___ can help with bags.</div><label><input type="radio" class="choice" name="g2-3"> where</label><label><input type="radio" class="choice" name="g2-3"> what</label><label><input type="radio" class="choice" name="g2-3" data-correct="true"> who</label><label><input type="radio" class="choice" name="g2-3"> which</label></div>
+      <div class="mcq" data-group="g2-4"><div class="stem">4. Show me ___ you make coffee.</div><label><input type="radio" class="choice" name="g2-4"> where</label><label><input type="radio" class="choice" name="g2-4"> what</label><label><input type="radio" class="choice" name="g2-4"> who</label><label><input type="radio" class="choice" name="g2-4" data-correct="true"> how</label></div>
+      <div class="mcq" data-group="g2-5"><div class="stem">5. Choose ___ bus is fastest.</div><label><input type="radio" class="choice" name="g2-5"> what</label><label><input type="radio" class="choice" name="g2-5" data-correct="true"> which</label><label><input type="radio" class="choice" name="g2-5"> where</label><label><input type="radio" class="choice" name="g2-5"> who</label></div>
+      <div class="mcq" data-group="g2-6"><div class="stem">6. I will meet you ___ we met yesterday.</div><label><input type="radio" class="choice" name="g2-6" data-correct="true"> where</label><label><input type="radio" class="choice" name="g2-6"> when</label><label><input type="radio" class="choice" name="g2-6"> how</label><label><input type="radio" class="choice" name="g2-6"> which</label></div>
+    </div>
+    <button class="btn" data-check="act2">Check</button><div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Read 2 and 4 smoothly, no pause between wh and next word.</p><button class="btn ghost" data-reveal="model2" aria-expanded="false">Show tip</button><div class="model" id="model2" hidden><em>I shop</em> + <em>where fruit is fresh</em>. No flip.</div></div>
+    <button class="btn ghost" data-complete="act2">Mark complete</button>
+  </section>
+
+  <!-- 3 -->
+  <section class="activity" id="act3" data-act="3">
+    <div class="act-head"><span class="badge">3</span><h2>What each means</h2><span class="tag">meaning</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Place, thing, person, way, choice.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g3-1"><div class="stem">WHERE in where fruit is fresh</div><label><input type="radio" class="choice" name="g3-1" data-correct="true"> place</label><label><input type="radio" class="choice" name="g3-1"> thing</label><label><input type="radio" class="choice" name="g3-1"> person</label><label><input type="radio" class="choice" name="g3-1"> way</label></div>
+      <div class="mcq" data-group="g3-2"><div class="stem">WHAT in what you want</div><label><input type="radio" class="choice" name="g3-2"> place</label><label><input type="radio" class="choice" name="g3-2" data-correct="true"> thing</label><label><input type="radio" class="choice" name="g3-2"> person</label><label><input type="radio" class="choice" name="g3-2"> choice</label></div>
+      <div class="mcq" data-group="g3-3"><div class="stem">WHO in who can help</div><label><input type="radio" class="choice" name="g3-3"> place</label><label><input type="radio" class="choice" name="g3-3"> thing</label><label><input type="radio" class="choice" name="g3-3" data-correct="true"> person</label><label><input type="radio" class="choice" name="g3-3"> way</label></div>
+      <div class="mcq" data-group="g3-4"><div class="stem">HOW in how you make coffee</div><label><input type="radio" class="choice" name="g3-4"> place</label><label><input type="radio" class="choice" name="g3-4"> choice</label><label><input type="radio" class="choice" name="g3-4" data-correct="true"> way</label><label><input type="radio" class="choice" name="g3-4"> thing</label></div>
+      <div class="mcq" data-group="g3-5"><div class="stem">WHICH in which bus is faster</div><label><input type="radio" class="choice" name="g3-5"> way</label><label><input type="radio" class="choice" name="g3-5"> thing</label><label><input type="radio" class="choice" name="g3-5" data-correct="true"> choice</label><label><input type="radio" class="choice" name="g3-5"> place</label></div>
+    </div>
+    <button class="btn" data-check="act3">Check</button><div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say: WHERE means place.</p><button class="btn ghost" data-reveal="model3" aria-expanded="false">Show</button><div class="model" id="model3" hidden>WHERE place, WHAT thing, WHO person, HOW way, WHICH choice. WHICH needs options you can see.</div></div>
+    <button class="btn ghost" data-complete="act3">Mark complete</button>
+  </section>
+
+  <!-- 4 -->
+  <section class="activity" id="act4" data-act="4">
+    <div class="act-head"><span class="badge">4</span><h2>Choose the wh</h2><span class="tag">gap fill</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Type where what who how which.</p>
+    <div class="exercise">
+      <div class="fill"><span class="lead">1. Meet you</span> <input class="answer" data-accept="where" data-model="where" aria-label="1"> <span class="tail">we met yesterday.</span></div>
+      <div class="fill"><span class="lead">2. Tell me</span> <input class="answer" data-accept="what" data-model="what" aria-label="2"> <span class="tail">you need from shop.</span></div>
+      <div class="fill"><span class="lead">3. Ask</span> <input class="answer" data-accept="who" data-model="who" aria-label="3"> <span class="tail">knows the machine.</span></div>
+      <div class="fill"><span class="lead">4. Show me</span> <input class="answer" data-accept="how" data-model="how" aria-label="4"> <span class="tail">you fold laundry.</span></div>
+      <div class="fill"><span class="lead">5. Choose</span> <input class="answer" data-accept="which" data-model="which" aria-label="5"> <span class="tail">jacket, blue or black?</span></div>
+      <div class="fill"><span class="lead">6. I love</span> <input class="answer" data-accept="how" data-model="how" aria-label="6"> <span class="tail">you organised the kitchen.</span></div>
+    </div>
+    <button class="btn" data-check="act4">Check</button><div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say 2 and 4 aloud.</p><button class="btn ghost" data-reveal="model4" aria-expanded="false">Show tip</button><div class="model" id="model4" hidden>what you need, not what do you need. Statement order inside.</div></div>
+    <button class="btn ghost" data-complete="act4">Mark complete</button>
+  </section>
+
+  <!-- 5 -->
+  <section class="activity" id="act5" data-act="5">
+    <div class="act-head"><span class="badge">5</span><h2>Which or what</h2><span class="tag">choice vs open</span><span class="done-flag">DONE</span></div>
+    <p class="goal">WHICH for seen options. WHAT for open.</p>
+    <div class="exercise">
+      <div class="fill"><span class="lead">1. Tell me</span> <input class="answer small" data-accept="what" data-model="what" aria-label="1"> <span class="tail">you want, anything.</span></div>
+      <div class="fill"><span class="lead">2. Tell me</span> <input class="answer small" data-accept="which" data-model="which" aria-label="2"> <span class="tail">sandwich, tuna or chicken?</span></div>
+      <div class="fill"><span class="lead">3. I cannot decide</span> <input class="answer small" data-accept="what|which" data-model="what" aria-label="3"> <span class="tail">to cook.</span></div>
+      <div class="fill"><span class="lead">4. Choose</span> <input class="answer small" data-accept="which" data-model="which" aria-label="4"> <span class="tail">route, fast or scenic?</span></div>
+      <div class="fill"><span class="lead">5. Ask her</span> <input class="answer small" data-accept="what" data-model="what" aria-label="5"> <span class="tail">she thinks.</span></div>
+      <div class="fill"><span class="lead">6. Do you know</span> <input class="answer small" data-accept="which" data-model="which" aria-label="6"> <span class="tail">bus, 12 or 24?</span></div>
+      <p class="hint">See <em>or</em> or <em>choose</em> - often WHICH.</p>
+    </div>
+    <button class="btn" data-check="act5">Check</button><div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say 1 and 2 back to back.</p><button class="btn ghost" data-reveal="model5" aria-expanded="false">Show</button><div class="model" id="model5" hidden>WHAT open, WHICH limited. Sentence 3 both ok, context decides.</div></div>
+    <button class="btn ghost" data-complete="act5">Mark complete</button>
+  </section>
+
+  <!-- 6 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head"><span class="badge">6</span><h2>Fix it</h2><span class="tag">word order</span><span class="done-flag">DONE</span></div>
+    <p class="goal">No flip inside. wh + subject + verb.</p>
+    <div class="exercise">
+      <p class="q">Type the wh part only.</p>
+      <div class="fill"><span class="lead">1. I know where is the bakery.</span> <input class="answer wide" data-accept="where the best bakery is|where the bakery is" data-model="where the best bakery is" aria-label="1"></div>
+      <div class="fill"><span class="lead">2. Tell me what do you want.</span> <input class="answer wide" data-accept="what you want" data-model="what you want" aria-label="2"></div>
+      <div class="fill"><span class="lead">3. Show me how do you make coffee.</span> <input class="answer wide" data-accept="how you make" data-model="how you make" aria-label="3"></div>
+      <div class="fill"><span class="lead">4. I will go where do you go.</span> <input class="answer wide" data-accept="where you go" data-model="where you go" aria-label="4"></div>
+      <div class="fill"><span class="lead">5. Do you know who is he?</span> <input class="answer wide" data-accept="who he is" data-model="who he is" aria-label="5"></div>
+    </div>
+    <button class="btn" data-check="act6">Check</button><div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say: I know where the best bakery is.</p><button class="btn ghost" data-reveal="model6" aria-expanded="false">Show fixes</button><div class="model" id="model6" hidden>1 where the best bakery is<br>2 what you want<br>3 how you make<br>4 where you go<br>5 who he is</div></div>
+    <button class="btn ghost" data-complete="act6">Mark complete</button>
+  </section>
+
+  <!-- 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head"><span class="badge">7</span><h2>Unjumble</h2><span class="tag">build order</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Put words in natural order.</p>
+    <div class="exercise">
+      <div class="fill"><span class="lead">1. me / tell / what / need / you / from shop</span></div><input class="answer wide" data-accept="tell me what you need from the shop" data-model="Tell me what you need from the shop." aria-label="1">
+      <div class="fill"><span class="lead">2. show / me / how / you / cook / rice / so well</span></div><input class="answer wide" data-accept="show me how you cook rice so well" data-model="Show me how you cook rice so well." aria-label="2">
+      <div class="fill"><span class="lead">3. I / remember / what / you / said / about market</span></div><input class="answer wide" data-accept="i remember what you said about the market" data-model="I remember what you said about the market." aria-label="3">
+      <div class="fill"><span class="lead">4. ask / who / can / water / plants</span></div><input class="answer wide" data-accept="ask who can water the plants" data-model="Ask who can water the plants." aria-label="4">
+      <div class="fill"><span class="lead">5. choose / which / route / is / quieter</span></div><input class="answer wide" data-accept="choose which route is quieter" data-model="Choose which route is quieter." aria-label="5">
+    </div>
+    <button class="btn" data-check="act7">Check</button><div class="feedback" id="fb-act7" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say 2 and 5 aloud.</p><button class="btn ghost" data-reveal="model7" aria-expanded="false">Show</button><div class="model" id="model7" hidden>1 Tell me what you need from the shop.<br>2 Show me how you cook rice so well.<br>3 I remember what you said about the market.<br>4 Ask who can water the plants.<br>5 Choose which route is quieter.</div></div>
+    <button class="btn ghost" data-complete="act7">Mark complete</button>
+  </section>
+
+  <!-- 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head"><span class="badge">8</span><h2>Finish it</h2><span class="tag">your life</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Finish 3 with your true idea.</p>
+    <div class="exercise">
+      <label for="a8-1" style="font-weight:700; color:#fff;">1. I shop where ...</label><textarea id="a8-1" class="small" placeholder="where fruit is fresh"></textarea>
+      <label for="a8-2" style="font-weight:700; color:#fff;">2. Tell me what ...</label><textarea id="a8-2" class="small" placeholder="what you want for dinner"></textarea>
+      <label for="a8-3" style="font-weight:700; color:#fff;">3. I need someone who ...</label><textarea id="a8-3" class="small" placeholder="who can help on busy mornings"></textarea>
+      <label for="a8-4" style="font-weight:700; color:#fff;">4. Show me how ...</label><textarea id="a8-4" class="small" placeholder="how you keep flat tidy"></textarea>
+      <label for="a8-5" style="font-weight:700; color:#fff;">5. I cannot decide which ...</label><textarea id="a8-5" class="small" placeholder="which bag to take"></textarea>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Say your three favourites as full sentences.</p><button class="btn ghost" data-reveal="model8" aria-expanded="false">Show examples</button><div class="model" id="model8" hidden>I shop where bread is fresh. Tell me what you had for lunch. I need someone who can help. Show me how you keep flat tidy. I cannot decide which bag to take.</div></div>
+    <button class="btn ghost" data-complete="act8">Mark complete</button>
+  </section>
+
+  <!-- 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head"><span class="badge">9</span><h2>Dilemmas</h2><span class="tag">match</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Match problem to wh advice.</p>
+    <div class="exercise">
+      <ul class="sentence-list"><li><span class="label">A</span> I lost my keys.</li><li><span class="label">B</span> Cannot choose gift.</li><li><span class="label">C</span> Kitchen messy.</li><li><span class="label">D</span> Need quiet cafe.</li><li><span class="label">E</span> Want new recipe.</li></ul>
+      <div class="mcq" data-group="g9-1"><div class="stem">A. Lost keys?</div><label><input type="radio" class="choice" name="g9-1" data-correct="true"> Ask who has a spare.</label><label><input type="radio" class="choice" name="g9-1"> Choose which gift will love.</label><label><input type="radio" class="choice" name="g9-1"> I know where you can work.</label></div>
+      <div class="mcq" data-group="g9-2"><div class="stem">B. Choose gift?</div><label><input type="radio" class="choice" name="g9-2"> Show me how you keep tidy.</label><label><input type="radio" class="choice" name="g9-2" data-correct="true"> Choose which gift will love most.</label><label><input type="radio" class="choice" name="g9-2"> Ask who has spare.</label></div>
+      <div class="mcq" data-group="g9-3"><div class="stem">C. Kitchen messy?</div><label><input type="radio" class="choice" name="g9-3"> Tell me what you like to eat.</label><label><input type="radio" class="choice" name="g9-3"> I know where you can work.</label><label><input type="radio" class="choice" name="g9-3" data-correct="true"> Show me how you keep yours tidy.</label></div>
+      <div class="mcq" data-group="g9-4"><div class="stem">D. Need quiet cafe?</div><label><input type="radio" class="choice" name="g9-4"> Ask who has spare.</label><label><input type="radio" class="choice" name="g9-4" data-correct="true"> I know where you can work.</label><label><input type="radio" class="choice" name="g9-4"> Tell me what you like to eat.</label></div>
+      <div class="mcq" data-group="g9-5"><div class="stem">E. Want new recipe?</div><label><input type="radio" class="choice" name="g9-5" data-correct="true"> Tell me what you like to eat.</label><label><input type="radio" class="choice" name="g9-5"> Ask who has spare.</label><label><input type="radio" class="choice" name="g9-5"> Choose which gift will love.</label></div>
+    </div>
+    <button class="btn" data-check="act9">Check</button><div class="feedback" id="fb-act9" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say one advice as warm help.</p><button class="btn ghost" data-reveal="model9" aria-expanded="false">Show</button><div class="model" id="model9" hidden>A who, B which, C how, D where, E what. Each wh makes advice precise.</div></div>
+    <button class="btn ghost" data-complete="act9">Mark complete</button>
+  </section>
+
+  <!-- 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head"><span class="badge">10</span><h2>Cafe dialogue</h2><span class="tag">order</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Put the morning cafe in warm order.</p>
+    <div class="exercise">
+      <ul class="sentence-list"><li><span class="label">A</span> Tell me <strong>what</strong> you would like.</li><li><span class="label">B</span> I will sit <strong>where</strong> it is quiet.</li><li><span class="label">C</span> Choose <strong>which</strong> cake - carrot or lemon?</li><li><span class="label">D</span> I love <strong>how</strong> you say hello.</li><li><span class="label">E</span> Ask <strong>who</strong> is next.</li><li><span class="label">F</span> Tell me <strong>where</strong> you found this market.</li></ul>
+      <div class="fill"><span class="lead">Order:</span> <input class="answer wide" data-accept="A B C D E F|A,B,C,D,E,F" data-model="A B C D E F" aria-label="order"></div>
+    </div>
+    <button class="btn" data-check="act10">Check</button><div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Read A and C smoothly.</p><button class="btn ghost" data-reveal="model10" aria-expanded="false">Show order</button><div class="model" id="model10" hidden>A B C D E F. Start with what you would like, end with where you found this market.</div></div>
+    <button class="btn ghost" data-complete="act10">Mark complete</button>
+  </section>
+
+  <!-- 11 -->
+  <section class="activity" id="act11" data-act="11">
+    <div class="act-head"><span class="badge">11</span><h2>Smooth</h2><span class="tag">pause</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Tiny pause before the wh detail.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g11-1"><div class="stem">1. Tell me what you want.</div><label><input type="radio" class="choice" name="g11-1" data-correct="true"> Tell me / what you want</label><label><input type="radio" class="choice" name="g11-1"> Tell / me what you want</label><label><input type="radio" class="choice" name="g11-1"> Tell me what / you want</label></div>
+      <div class="mcq" data-group="g11-2"><div class="stem">2. I shop where fruit is fresh.</div><label><input type="radio" class="choice" name="g11-2"> I always / shop where fruit is fresh</label><label><input type="radio" class="choice" name="g11-2" data-correct="true"> I shop / where fruit is fresh</label><label><input type="radio" class="choice" name="g11-2"> I shop where / fruit is fresh</label></div>
+      <div class="mcq" data-group="g11-3"><div class="stem">3. Show me how you make coffee.</div><label><input type="radio" class="choice" name="g11-3" data-correct="true"> Show me / how you make coffee</label><label><input type="radio" class="choice" name="g11-3"> Show / me how you make coffee</label><label><input type="radio" class="choice" name="g11-3"> Show me how you / make coffee</label></div>
+      <div class="mcq" data-group="g11-4"><div class="stem">4. Ask who can help.</div><label><input type="radio" class="choice" name="g11-4"> Ask who / can help</label><label><input type="radio" class="choice" name="g11-4" data-correct="true"> Ask / who can help</label><label><input type="radio" class="choice" name="g11-4"> Ask who can help / with bags</label></div>
+    </div>
+    <button class="btn" data-check="act11">Check</button><div class="feedback" id="fb-act11" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say 1 with and without pause. Both ok, pause is clearer.</p><button class="btn ghost" data-reveal="model11" aria-expanded="false">Show</button><div class="model" id="model11" hidden>Pause before wh. Light stress on WH, softer after.</div></div>
+    <button class="btn ghost" data-complete="act11">Mark complete</button>
+  </section>
+
+  <!-- 12 -->
+  <section class="activity" id="act12" data-act="12">
+    <div class="act-head"><span class="badge">12</span><h2>Evening at home</h2><span class="tag">order</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Same wh words, new flat scene.</p>
+    <div class="exercise">
+      <ul class="sentence-list"><li><span class="label">A</span> I cannot decide <strong>which</strong> film to watch.</li><li><span class="label">B</span> Tell me <strong>what</strong> you watched.</li><li><span class="label">C</span> I will sit <strong>where</strong> light is better.</li><li><span class="label">D</span> Show me <strong>how</strong> you fixed shelf.</li><li><span class="label">E</span> Ask <strong>who</strong> can take rubbish out.</li><li><span class="label">F</span> I love <strong>where</strong> we live.</li></ul>
+      <div class="fill"><span class="lead">Order:</span> <input class="answer wide" data-accept="A B D C E F|A,B,D,C,E,F|A B C D E F" data-model="A B D C E F" aria-label="order2"></div>
+    </div>
+    <button class="btn" data-check="act12">Check</button><div class="feedback" id="fb-act12" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Read D: Show me how you fixed shelf.</p><button class="btn ghost" data-reveal="model12" aria-expanded="false">Show</button><div class="model" id="model12" hidden>A B D C E F. Film first, then flat, then cozy close.</div></div>
+    <button class="btn ghost" data-complete="act12">Mark complete</button>
+  </section>
+
+  <!-- 13 -->
+  <section class="activity" id="act13" data-act="13">
+    <div class="act-head"><span class="badge">13</span><h2>Plan the weekend</h2><span class="tag">choose the line</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Pick the natural wh line for each moment.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g13-1"><div class="stem">Ask about Saturday wish?</div><label><input type="radio" class="choice" name="g13-1" data-correct="true"> Tell me what you want to do.</label><label><input type="radio" class="choice" name="g13-1"> Tell me what do you want to do.</label><label><input type="radio" class="choice" name="g13-1"> Tell me where do you want to do.</label></div>
+      <div class="mcq" data-group="g13-2"><div class="stem">Two markets in front of you?</div><label><input type="radio" class="choice" name="g13-2"> Tell me what market to go.</label><label><input type="radio" class="choice" name="g13-2" data-correct="true"> Choose which market to go to.</label><label><input type="radio" class="choice" name="g13-2"> Tell me where market to go.</label></div>
+      <div class="mcq" data-group="g13-3"><div class="stem">Ask for recipe way?</div><label><input type="radio" class="choice" name="g13-3" data-correct="true"> Show me how you make that dish.</label><label><input type="radio" class="choice" name="g13-3"> Show me how do you make dish.</label><label><input type="radio" class="choice" name="g13-3"> Show me what you make dish.</label></div>
+      <div class="mcq" data-group="g13-4"><div class="stem">Talk about neighbourhood warmly?</div><label><input type="radio" class="choice" name="g13-4"> I love what we live.</label><label><input type="radio" class="choice" name="g13-4" data-correct="true"> I love where we live.</label><label><input type="radio" class="choice" name="g13-4"> I love who we live.</label></div>
+    </div>
+    <button class="btn" data-check="act13">Check</button><div class="feedback" id="fb-act13" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say: Tell me what you want to do. Choose which market to go to.</p><textarea id="a13-speak" class="small" placeholder="Type your mini plan then say it."></textarea><button class="btn ghost" data-reveal="model13" aria-expanded="false">Show model plan</button><div class="model" id="model13" hidden>Tell me what you want to do. Choose which market to go to, where fruit is fresh. I will meet you where we always meet. Ask who can join.</div></div>
+    <button class="btn ghost" data-complete="act13">Mark complete</button>
+  </section>
+
+  <!-- 14 -->
+  <section class="activity" id="act14" data-act="14">
+    <div class="act-head"><span class="badge">14</span><h2>Story chain</h2><span class="tag">build together</span><span class="done-flag">DONE</span></div>
+    <p class="goal">One day, one wh word at a time.</p>
+    <div class="exercise">
+      <p>1. I wake up where sun comes in.</p>
+      <p>2. Tell me what you do first?</p>
+      <label for="a14-3" style="font-weight:700; color:#fff;">3. You: I ...</label><textarea id="a14-3" placeholder="I make coffee how my mum taught me."></textarea>
+      <label for="a14-4" style="font-weight:700; color:#fff;">4. Then ...</label><textarea id="a14-4" class="small" placeholder="Then I choose which clothes to wear."></textarea>
+      <label for="a14-5" style="font-weight:700; color:#fff;">5. In evening ...</label><textarea id="a14-5" class="small" placeholder="In evening I relax where it is quiet."></textarea>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Read your chain 1 to 5 as one story.</p><button class="btn ghost" data-reveal="model14" aria-expanded="false">Show example</button><div class="model" id="model14" hidden>1 where sun comes in<br>2 what you do first<br>3 how my mum taught me<br>4 which clothes to wear<br>5 where it is quiet</div></div>
+    <button class="btn ghost" data-complete="act14">Mark complete</button>
+  </section>
+
+  <!-- 15 -->
+  <section class="activity" id="act15" data-act="15">
+    <div class="act-head"><span class="badge">15</span><h2>Your 60 seconds</h2><span class="tag">grand finale</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Speak 60 seconds with 5 wh words.</p>
+    <div class="exercise">
+      <p style="font-size:.9rem; color:var(--muted);">Include where, what, who, how, which.</p>
+      <p>1 Morning: I wake up where ... I choose which ...<br>2 Day: I ask who ... Tell me what ...<br>3 Evening: I love where ... Show me how ...</p>
+      <label for="a15-draft" style="font-weight:700; color:#fff;">Draft then speak 60 seconds</label><textarea id="a15-draft" placeholder="I wake up where light is soft. I choose which clothes to wear. I ask who can help. I love how flat feels calm. I shop where bread is fresh."></textarea>
+    </div>
+    <div class="speak"><h3>After you speak - compare</h3><button class="btn ghost" data-reveal="model15" aria-expanded="false">Show model</button><div class="model" id="model15" hidden>I wake up where light is soft. I choose which clothes to wear. I ask who can help with lunch. I love how flat feels calm. I shop where bread is fresh. Tell me what you do after work.</div></div>
+    <button class="btn ghost" data-complete="act15">Mark complete - unlock certificate</button>
+  </section>
+
+  <section class="results" id="results" hidden aria-label="Results">
+    <h2>Done, Shirley!</h2>
+    <p>You linked ideas smoothly with which, what, who, where, how.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+      <div class="score-box"><div class="n" id="rDone">0 / 15</div><div class="l">Activities</div></div>
+    </div>
+    <div class="cert" id="cert">
+      <h3>CERTIFICATE</h3>
+      <div class="sub">Wh-Clauses for Daily Life - B1-B2</div>
+      <div class="who" id="certName">Shirley</div>
+      <div class="sub">15 activities - which what who where how</div>
+      <div class="badge-line">Badge: Daily Life Connector</div>
+      <div class="sub" id="certDate"></div>
+    </div>
+    <p><label for="certLearnerName" style="font-weight:700;">Name for certificate:</label><br><input class="answer" id="certLearnerName" style="min-width:220px; margin-top:.4rem; text-align:center;" aria-label="Name for certificate" placeholder="Shirley"></p>
+    <button class="btn" id="printBtn">Print or save as PDF</button>
+  </section>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Wh-Clauses which what who where how - B1-B2 - Shirley - 31-08-2026 - 15 activities</p>
+  <p>Minimal instructions - high signal - low load - WCAG 2.1 AA</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var TOTAL_ACTS = 15;
+  var state = { points: 0, streak: 0, best: 0, correct: 0, total: 0, done: 0 };
+  document.querySelectorAll(".answer[data-accept]").forEach(function () { state.total++; });
+  document.querySelectorAll(".mcq").forEach(function () { state.total++; });
+  function norm(s) { return (s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[.?!]+$/, ""); }
+  function $(id) { return document.getElementById(id); }
+  function updateHUD() { $("points").textContent = state.points + " XP"; $("streak").textContent = "Streak " + state.streak; $("progText").textContent = state.done + " / " + TOTAL_ACTS + " complete"; $("bar").style.width = (state.done / TOTAL_ACTS * 100) + "%"; if ($("rDone")) $("rDone").textContent = state.done + " / " + TOTAL_ACTS; }
+  function markInput(inp, ok) {
+    inp.classList.toggle("correct", ok); inp.classList.toggle("wrong", !ok); inp.setAttribute("aria-invalid", ok ? "false" : "true");
+    var m = inp.parentNode.querySelector(".mark"); if (!m) { m = document.createElement("span"); m.className = "mark"; inp.parentNode.appendChild(m); }
+    m.textContent = ok ? "Correct" : "Try again"; m.className = "mark " + (ok ? "ok" : "no");
+  }
+  function handleCheck(secId) {
+    var sec = $(secId); var fb = $("fb-" + secId); if (!sec || !fb) return;
+    var earnedNow = 0, anyWrong = false, anyEmpty = true, wrongList = "";
+    sec.querySelectorAll(".answer[data-accept]").forEach(function (inp) {
+      var val = norm(inp.value); if (!val) return; anyEmpty = false;
+      var accepts = inp.dataset.accept.split("|").map(norm);
+      var ok = accepts.some(function (a) { return val.indexOf(a) !== -1; });
+      markInput(inp, ok);
+      if (ok) { if (!inp.dataset.done) { inp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; } if (state.streak > state.best) state.best = state.streak; }
+      else { anyWrong = true; state.streak = 0; wrongList += "<li>Try <b>" + inp.dataset.model + "</b></li>"; }
+    });
+    sec.querySelectorAll(".mcq").forEach(function (grp) {
+      var chosen = grp.querySelector("input.choice:checked"); if (!chosen) return; anyEmpty = false;
+      var ok = chosen.dataset.correct === "true";
+      grp.querySelectorAll("label").forEach(function (l) { l.classList.remove("correct", "wrong"); });
+      if (ok) { chosen.closest("label").classList.add("correct"); if (!grp.dataset.done) { grp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; } if (state.streak > state.best) state.best = state.streak; }
+      else { anyWrong = true; state.streak = 0; chosen.closest("label").classList.add("wrong"); var ci = grp.querySelector("input.choice[data-correct=true]"); if (ci) ci.closest("label").classList.add("correct"); var stem = grp.querySelector(".stem"); var name = stem ? stem.textContent : "Question"; wrongList += "<li>" + name + " - highlighted is correct.</li>"; }
+    });
+    if (anyEmpty) {
+      var hasAny = false; sec.querySelectorAll(".answer[data-accept]").forEach(function(i){ if(norm(i.value)) hasAny=true; }); sec.querySelectorAll(".mcq input.choice:checked").forEach(function(){ hasAny=true; });
+      if (!hasAny) { fb.className = "feedback bad"; fb.innerHTML = "Answer at least one, then press Check."; updateHUD(); return; }
+    }
+    if (anyWrong) { fb.className = "feedback bad"; fb.innerHTML = "+" + earnedNow + " XP this round." + (wrongList ? "<ul>" + wrongList + "</ul>" : "") + " Fix Try again and press Check again."; }
+    else { fb.className = "feedback good"; fb.innerHTML = earnedNow > 0 ? "All correct! +" + earnedNow + " XP. Keep streak!" : "All correct! Already earned XP, nice consistency!"; }
+    updateHUD();
+  }
+  document.querySelectorAll("[data-check]").forEach(function (btn) { btn.addEventListener("click", function () { handleCheck(btn.dataset.check); }); });
+  document.querySelectorAll("[data-reveal]").forEach(function (btn) { btn.addEventListener("click", function () { var el = $(btn.dataset.reveal); var h = el.hasAttribute("hidden"); if (h) { el.removeAttribute("hidden"); btn.setAttribute("aria-expanded", "true"); btn.textContent = "Hide model"; } else { el.setAttribute("hidden", ""); btn.setAttribute("aria-expanded", "false"); btn.textContent = "Show model"; } }); });
+  document.querySelectorAll("[data-complete]").forEach(function (btn) { btn.addEventListener("click", function () { var sec = $(btn.dataset.complete); if (!sec || sec.classList.contains("complete")) return; sec.classList.add("complete"); state.done++; updateHUD(); sec.scrollIntoView({ block: "start", behavior: "smooth" }); if (state.done >= TOTAL_ACTS) showResults(); }); });
+  function showResults() { var acc = state.total ? Math.round(state.correct / state.total * 100) : 0; $("rPoints").textContent = state.points; $("rAcc").textContent = acc + "%"; $("rStreak").textContent = state.best; $("certDate").textContent = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }); $("results").removeAttribute("hidden"); $("results").scrollIntoView({ block: "start", behavior: "smooth" }); launchConfetti(); }
+  var nameInput = $("certLearnerName"); if (nameInput) nameInput.addEventListener("input", function () { var n = this.value.trim(); $("certName").textContent = n || "Shirley"; });
+  var printBtn = $("printBtn"); if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+  function launchConfetti() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c = $("confetti"), ctx = c.getContext("2d"); if (!c || !ctx) return;
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    var colors = ["#ffd400", "#38e0c8", "#ffffff", "#ff8a8a", "#9ad0ff"];
+    var parts = []; for (var i = 0; i < 140; i++) parts.push({ x: Math.random()*c.width, y: -20 - Math.random()*c.height*0.4, vx: (Math.random()-0.5)*3, vy: 2+Math.random()*3, s: 4+Math.random()*6, col: colors[i%colors.length], rot: Math.random()*Math.PI, vr: (Math.random()-0.5)*0.18 });
+    var t0 = Date.now();
+    function frame() { ctx.clearRect(0,0,c.width,c.height); parts.forEach(function(p){ p.x+=p.vx; p.y+=p.vy; p.vy+=0.035; p.rot+=p.vr; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.col; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s); ctx.restore(); }); if (Date.now()-t0 < 2800) requestAnimationFrame(frame); else ctx.clearRect(0,0,c.width,c.height); }
+    frame();
+  }
+  updateHUD();
+})();
+</script>
+<script src="../../xapi-include.js" defer></script>
+</body>
+</html>
