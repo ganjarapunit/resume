@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1, Let us see your level, Annisa, Interactive Lesson</title>
+<style>
+  :root{
+    --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
+    --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400; --accent-2:#38e0c8;
+    --good:#38e0c8; --bad:#ff8a8a; --border:#2a3d57; --focus:#ffd400;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+  a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+  a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
+  .hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--border);padding:.6rem 1rem}
+  .hud-inner{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+  .stat{display:flex;align-items:center;gap:.4rem;font-weight:700;color:var(--ink);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
+  .stat svg{width:18px;height:18px}
+  .progress-wrap{flex:1 1 220px;min-width:200px}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
+  .progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+  header.hero{max-width:980px;margin:0 auto;padding:2rem 1rem 1rem;text-align:center}
+  header.hero h1{font-size:clamp(1.6rem,4vw,2.5rem);margin:0 0 .4rem;color:#fff;text-shadow:0 0 24px rgba(56,224,200,.25);line-height:1.2}
+  header.hero p{color:var(--muted);margin:.2rem auto;max-width:660px}
+  .pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.85rem;font-weight:700;margin:.2rem}
+  main{max-width:980px;margin:0 auto;padding:1rem}
+  .intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:1rem 1.2rem;margin:1rem 0 1.5rem}
+  .intro h2{margin-top:0;color:var(--accent);font-size:1.2rem}
+  .intro ul{margin:.4rem 0;padding-left:1.2rem}
+  .intro li{margin:.25rem 0}
+  .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.8rem;font-size:.9rem;color:var(--muted)}
+  .credit strong{color:var(--accent-2)}
+  .how{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.8rem}
+  .how strong{color:var(--accent)}
+  .activity{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem 1.2rem;margin:1.2rem 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.4rem}
+  .badge{width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.2rem}
+  .act-head h2{margin:0;font-size:1.25rem;color:#fff;flex:1 1 auto}
+  .tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.2rem .7rem;font-size:.8rem;font-weight:700}
+  .goal{color:var(--muted);margin:.3rem 0 .8rem}
+  .exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem}
+  .q{font-weight:700;margin:.2rem 0 .6rem;color:#fff}
+  .chart{width:100%;border-collapse:collapse;margin:.5rem 0;background:#06121f;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+  .chart th,.chart td{padding:.4rem .6rem;text-align:center;border:1px solid var(--border)}
+  .chart th{background:var(--surface);color:var(--accent)}
+  .fill{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;margin:.5rem 0}
+  .fill .lead,.fill .tail{color:var(--ink)}
+  input.answer{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.35rem .55rem;font-size:1rem;min-width:150px;font-family:inherit}
+  input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
+  input.answer.wrong{border-color:var(--bad)}
+  .mark{font-size:.8rem;font-weight:700;margin-left:.3rem}
+  .mark.ok{color:var(--good)} .mark.no{color:var(--bad)}
+  .mcq{margin:.7rem 0}
+  .mcq .stem{font-weight:700;color:#fff;margin-bottom:.3rem}
+  .mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.45rem .7rem;margin:.3rem 0;cursor:pointer}
+  .mcq label.correct{border-color:var(--good)} .mcq label.wrong{border-color:var(--bad)}
+  .mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.5rem}
+  textarea{width:100%;min-height:90px;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.55rem;font-size:1rem;font-family:inherit;resize:vertical}
+  button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:1rem;padding:.55rem 1.1rem;border-radius:10px;cursor:pointer;margin-top:.7rem;font-family:inherit}
+  button.btn:hover{filter:brightness(1.05)}
+  button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+  button.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .feedback{margin-top:.7rem;padding:.7rem .9rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.98rem}
+  .feedback.good{border-color:var(--good)} .feedback.bad{border-color:var(--bad)}
+  .speak{margin-top:.9rem;padding:.8rem 1rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
+  .speak h3{margin:0 0 .3rem;color:var(--accent-2);font-size:1.05rem}
+  .model{margin-top:.5rem;padding:.6rem .8rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink)}
+  .model[hidden]{display:none}
+  .tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.6rem;color:var(--muted);font-size:.93rem}
+  .tip strong{color:var(--accent)}
+  .done-flag{display:inline-block;margin-left:.5rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s}
+  .activity.complete .done-flag{opacity:1}
+  .results{margin:2rem 0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.4rem;text-align:center}
+  .results[hidden]{display:none}
+  .results h2{color:var(--accent);margin-top:0}
+  .score-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin:1rem 0}
+  .score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.8rem 1.2rem;min-width:130px}
+  .score-box .n{font-size:1.8rem;font-weight:800;color:var(--accent-2)}
+  .score-box .l{color:var(--muted);font-size:.85rem}
+  .cert{margin:1.2rem auto;max-width:560px;background:#06121f;border:2px solid var(--accent);border-radius:14px;padding:1.4rem;text-align:center;box-shadow:0 0 30px rgba(255,212,0,.15)}
+  .cert h3{color:var(--accent);margin:0 0 .3rem;letter-spacing:2px}
+  .cert .who{font-size:1.5rem;font-weight:800;color:#fff;margin:.4rem 0}
+  .cert .sub{color:var(--muted)}
+  .cert .badge-line{color:var(--accent-2);font-weight:800;margin-top:.5rem}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+  footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.9rem}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  @media (max-width:560px){.hud-inner{font-size:.85rem} input.answer{min-width:120px}}
+  #login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
+  #login[hidden]{display:none}
+  .login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.6rem;max-width:430px;width:100%;text-align:center;box-shadow:0 0 40px rgba(255,212,0,.15)}
+  .login-card h2{color:var(--accent);margin-top:0}
+  .login-card p{color:var(--muted)}
+  .login-card input{width:100%;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.6rem;font-size:1rem;margin:.6rem 0;font-family:inherit}
+  .login-card input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .error-table{width:100%;border-collapse:collapse;margin:.6rem 0;background:#06121f;border:1px solid var(--border)}
+  .error-table th,.error-table td{border:1px solid var(--border);padding:.4rem .6rem;text-align:left;font-size:.95rem}
+  .error-table th{background:var(--surface);color:var(--accent)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+<div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="login-card">
+    <h2 id="loginTitle">Welcome, Annisa</h2>
+    <p>Enter your name to start Day 1 and save your progress.</p>
+    <label for="loginName" style="font-weight:700;">Your name</label>
+    <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Annisa" aria-label="Your name">
+    <button class="btn" id="loginStart">Start lesson</button>
+  </div>
+</div>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+      <span id="points">0 XP</span>
+    </div>
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg>
+      <span id="streak">Streak 0</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progText">0 / 10 complete</span></div>
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Day 1, Let us see your level</h1>
+  <p>A calm first step. We learn how IELTS is scored, we write a little together, then we set your 3 goals. No stress, we go slow.</p>
+  <span class="pill">Annisa, 30 Day Plan</span>
+  <span class="pill">10 activities</span>
+  <span class="pill">40 to 45 min</span>
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="How to use this lesson">
+    <h2>How this lesson works</h2>
+    <ul>
+      <li>Type your answers, then press <strong>Check my answers</strong>.</li>
+      <li>Say one sentence aloud for the speaking parts.</li>
+      <li>Press <strong>Mark complete</strong> to fill the progress bar.</li>
+      <li>Finish all 10 to unlock your certificate.</li>
+    </ul>
+    <div class="how"><strong>Your 4 scores today:</strong> Task (did you answer all parts), Organization (is it clear), Vocabulary (are words natural), Grammar (are sentences correct). We use 1 to 5. Small steps are good.</div>
+    <div class="credit"><strong>You will keep:</strong> a shared document with your teacher, your error list (3 columns), and your portfolio of 5 best texts at Day 30.</div>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">1</span>
+      <h2>Welcome</h2>
+      <span class="tag">You and your teacher</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Say hello. Tell your teacher one easy and one hard thing about writing.</p>
+    <div class="exercise">
+      <p class="q">Your turn, write or speak.</p>
+      <label for="sp1" style="font-weight:700;">Why do you want IELTS writing? What is easy, what is hard?</label>
+      <textarea id="sp1" placeholder="e.g. I need Band 6.5 for university. Vocabulary is easy. Grammar is hard."></textarea>
+      <div class="tip"><strong>Example:</strong> Writing is hard because I stop to translate word by word.</div>
+    </div>
+    <button class="btn ghost" data-reveal="model1" aria-expanded="false">Show example</button>
+    <div class="model" id="model1" hidden>I want Band 6.5 for my studies. Vocabulary is easier for me. Grammar is harder, I make article mistakes. I want to write faster.</div>
+    <button class="btn ghost" data-complete="act1">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">2</span>
+      <h2>The 4 Scores</h2>
+      <span class="tag">IELTS Writing</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Match each score to its meaning. This helps you understand feedback.</p>
+    <div class="exercise">
+      <p class="q">Choose the best meaning.</p>
+      <div class="mcq" data-group="g1">
+        <div class="stem">Task</div>
+        <label><input type="radio" class="choice" name="g1" data-correct="true"> Did you answer the question and cover all parts</label>
+        <label><input type="radio" class="choice" name="g1"> Did you use many long sentences</label>
+        <label><input type="radio" class="choice" name="g1"> Did you use formal linkers like Moreover</label>
+      </div>
+      <div class="mcq" data-group="g2">
+        <div class="stem">Organization</div>
+        <label><input type="radio" class="choice" name="g2" data-correct="true"> Is it clear, with paragraphs and natural linking</label>
+        <label><input type="radio" class="choice" name="g2"> Did you use rare vocabulary</label>
+        <label><input type="radio" class="choice" name="g2"> Did you write exactly 250 words</label>
+      </div>
+      <div class="mcq" data-group="g3">
+        <div class="stem">Vocabulary</div>
+        <label><input type="radio" class="choice" name="g3" data-correct="true"> Are words natural and varied, not repeated</label>
+        <label><input type="radio" class="choice" name="g3"> Did you memorise many idioms</label>
+        <label><input type="radio" class="choice" name="g3"> Did you use past tense correctly</label>
+      </div>
+      <div class="mcq" data-group="g4">
+        <div class="stem">Grammar</div>
+        <label><input type="radio" class="choice" name="g4" data-correct="true"> Are sentences accurate, with some complex ones</label>
+        <label><input type="radio" class="choice" name="g4"> Did you use only short sentences</label>
+        <label><input type="radio" class="choice" name="g4"> Did you write a summary</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act2">Check my answers</button>
+    <div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it aloud</h3>
+      <p>Which of the 4 is your strongest today, which is weakest? One sentence each.</p>
+      <textarea id="sp2" placeholder="e.g. Vocabulary is strongest. Grammar is weakest."></textarea>
+    </div>
+    <button class="btn ghost" data-complete="act2">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="activity" id="act3" data-act="3">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">3</span>
+      <h2>Chart Check</h2>
+      <span class="tag">Task 1, overview</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Find the good overview. A good overview has 2 big trends, no numbers.</p>
+    <div class="exercise">
+      <p class="q">Look at the chart, then read the two texts.</p>
+      <table class="chart" aria-label="Homework hours per week">
+        <tr><th>Country</th><th>2010</th><th>2020</th></tr>
+        <tr><td>Japan</td><td>7 hours</td><td>5 hours</td></tr>
+        <tr><td>Germany</td><td>6 hours</td><td>6 hours</td></tr>
+        <tr><td>Brazil</td><td>6 hours</td><td>9 hours</td></tr>
+      </table>
+      <p style="color:var(--muted);font-size:.92rem;">Text A: "The chart shows homework hours in Japan, Germany, Brazil. In 2020 Brazil was highest at 9 hours. Japan fell to 5. Big change for Brazil."</p>
+      <p style="color:var(--muted);font-size:.92rem;">Text B: "Overall, students in Brazil spent more time on homework than in Japan and Germany, and this gap grew between 2010 and 2020."</p>
+      <div class="mcq" data-group="g5">
+        <div class="stem">Which text has a clear overview?</div>
+        <label><input type="radio" class="choice" name="g5"> Text A</label>
+        <label><input type="radio" class="choice" name="g5" data-correct="true"> Text B</label>
+      </div>
+      <div class="mcq" data-group="g6">
+        <div class="stem">Why is that text better?</div>
+        <label><input type="radio" class="choice" name="g6" data-correct="true"> It gives 2 big trends with no numbers</label>
+        <label><input type="radio" class="choice" name="g6"> It lists all the numbers</label>
+        <label><input type="radio" class="choice" name="g6"> It is longer</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act3">Check my answers</button>
+    <div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="tip"><strong>Tip to remember:</strong> A good overview has 2 big trends. No numbers in the overview, numbers go in the next paragraphs.</div>
+    <button class="btn ghost" data-complete="act3">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 4 -->
+  <section class="activity" id="act4" data-act="4">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">4</span>
+      <h2>Essay Check</h2>
+      <span class="tag">Task 2, thesis</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Find the clear thesis. A clear thesis gives opinion plus plan.</p>
+    <div class="exercise">
+      <p class="q">Question: Some people think online learning is better than classroom learning. Do you agree or disagree?</p>
+      <p style="color:var(--muted);font-size:.92rem;">Thesis 1: "I partly agree because online learning has benefits and also problems."</p>
+      <p style="color:var(--muted);font-size:.92rem;">Thesis 2: "I disagree. Online learning is flexible, but it weakens student interaction, so classrooms remain better overall."</p>
+      <div class="mcq" data-group="g7">
+        <div class="stem">Which thesis is clearer?</div>
+        <label><input type="radio" class="choice" name="g7"> Thesis 1</label>
+        <label><input type="radio" class="choice" name="g7" data-correct="true"> Thesis 2</label>
+      </div>
+      <div class="mcq" data-group="g8">
+        <div class="stem">Why?</div>
+        <label><input type="radio" class="choice" name="g8" data-correct="true"> It gives opinion, two points, and direction for the essay</label>
+        <label><input type="radio" class="choice" name="g8"> It is more general</label>
+        <label><input type="radio" class="choice" name="g8"> It has no opinion</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act4">Check my answers</button>
+    <div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it aloud</h3>
+      <p>Read Thesis 2 aloud. Then say it again in your own words.</p>
+      <textarea id="sp4" placeholder="e.g. I do not think online learning is better, it is flexible but less interactive."></textarea>
+    </div>
+    <button class="btn ghost" data-complete="act4">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 5 -->
+  <section class="activity" id="act5" data-act="5">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">5</span>
+      <h2>Write Together, Task 1</h2>
+      <span class="tag">3 sentences</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Write a short Task 1 with your teacher in your shared document. Copy your draft here to check.</p>
+    <div class="exercise">
+      <p class="q">Use the same chart from Activity 3. Complete the overview with no numbers.</p>
+      <div class="fill"><span class="lead">Overall, students in Brazil spent</span> <input class="answer" data-accept="more time" data-model="more time" aria-label="words after spent"> <span class="tail">than in Japan and Germany,</span></div>
+      <div class="fill"><span class="lead">and this gap</span> <input class="answer" data-accept="grew|widened|increased" data-model="grew" aria-label="verb after gap"> <span class="tail">between 2010 and 2020.</span></div>
+      <div class="fill"><span class="lead">The most marked change was in Brazil, where homework</span> <input class="answer" data-accept="rose|increased|went up" data-model="rose" aria-label="verb after homework"> <span class="tail">from 6 to 9 hours.</span></div>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:.6rem;">Then write your own full 3-sentence version in the shared document with your teacher.</p>
+    </div>
+    <button class="btn" data-check="act5">Check my answers</button>
+    <div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <div class="model" id="model5full" style="margin-top:.6rem;">Model: Overall, students in Brazil spent more time on homework than those in Japan and Germany, and the gap between them widened between 2010 and 2020. The most marked change was in Brazil, where weekly homework rose from 6 to 9 hours. By contrast, homework time in Japan fell from 7 to 5 hours, while Germany remained stable at 6 hours.</div>
+    <button class="btn ghost" data-reveal="model5full" aria-expanded="false">Show model paragraph</button>
+    <button class="btn ghost" data-complete="act5">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 6 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">6</span>
+      <h2>Write Together, Task 2</h2>
+      <span class="tag">One paragraph, PEEL</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Write one paragraph together. PEEL: Point, Evidence, Explain, Link. One good paragraph is enough.</p>
+    <div class="exercise">
+      <p class="q">Choose the correct PEEL order, then write your paragraph in the shared document.</p>
+      <div class="mcq" data-group="g9">
+        <div class="stem">What is the correct PEEL order?</div>
+        <label><input type="radio" class="choice" name="g9" data-correct="true"> Point, Evidence, Explain, Link</label>
+        <label><input type="radio" class="choice" name="g9"> Evidence, Point, Link, Explain</label>
+        <label><input type="radio" class="choice" name="g9"> Link, Point, Explain, Evidence</label>
+      </div>
+      <label for="sp6" style="font-weight:700;">Your paragraph plan, write 4 short notes (teacher will help):</label>
+      <textarea id="sp6" placeholder="Point: Online learning is flexible.&#10;Evidence: I can rewatch a lesson.&#10;Explain: This helps me understand hard ideas.&#10;Link: Even so, classrooms are still better because..."></textarea>
+      <div class="tip"><strong>PEEL is for all writing, not only IELTS.</strong> You will use it again from Day 10.</div>
+    </div>
+    <button class="btn" data-check="act6">Check my answers</button>
+    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <button class="btn ghost" data-reveal="model6" aria-expanded="false">Show model paragraph</button>
+    <div class="model" id="model6" hidden>One clear advantage of online learning is flexibility. For example, I can watch a recorded lesson again when I miss a point, which is hard in a busy classroom. This repeated access helps me understand difficult ideas without slowing other students. Even so, this flexibility alone does not make online learning better overall, because interaction with teachers still matters.</div>
+    <button class="btn ghost" data-complete="act6">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">7</span>
+      <h2>Your Error List</h2>
+      <span class="tag">Fix one pattern</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Small steps. We fix one pattern today only. You keep this list for 30 days.</p>
+    <div class="exercise">
+      <p class="q">Choose one pattern to fix first. Your teacher will write it in your shared document.</p>
+      <table class="error-table" aria-label="Error list with 3 columns">
+        <tr><th>My sentence</th><th>Better sentence</th><th>My new try</th></tr>
+        <tr><td>Brazil was highest at 9 hour.</td><td>Brazil was highest at 9 hours.</td><td>Germany stayed at 6 hours.</td></tr>
+      </table>
+      <div class="mcq" data-group="g10">
+        <div class="stem">Which pattern will you fix today?</div>
+        <label><input type="radio" class="choice" name="g10"> A) articles, a, the, no article</label>
+        <label><input type="radio" class="choice" name="g10"> B) past tense for 2010 and 2020</label>
+        <label><input type="radio" class="choice" name="g10"> C) singular or plural, hour vs hours</label>
+        <label><input type="radio" class="choice" name="g10"> D) another pattern my teacher saw</label>
+      </div>
+      <label for="sp7" style="font-weight:700;">Write your My new try here:</label>
+      <textarea id="sp7" placeholder="Write one correct sentence with your pattern, e.g. Homework in Japan fell from 7 to 5 hours."></textarea>
+    </div>
+    <button class="btn" data-check="act7">Check my choice</button>
+    <div class="feedback" id="fb-act7" aria-live="polite"></div>
+    <div class="tip"><strong>Rule:</strong> Small daily steps beat one big weekly step. When an error disappears, we celebrate.</div>
+    <button class="btn ghost" data-complete="act7">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">8</span>
+      <h2>Your Level Today</h2>
+      <span class="tag">1 to 5</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Score yourself 1 to 5 for the 4 things. Your teacher scores too. We keep both.</p>
+    <div class="exercise">
+      <p class="q">Move each slider to your self score. 1 is starting, 5 is strong.</p>
+      <label for="sTask" style="font-weight:700;">Task, did you cover all parts?</label>
+      <input type="range" id="sTask" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="Task score 1 to 5">
+      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <label for="sOrg" style="font-weight:700;margin-top:.6rem;display:block;">Organization, is it clear and linked?</label>
+      <input type="range" id="sOrg" min="1" max="5" value="3" style="width:100%;accent-color:#38e0c8;" aria-label="Organization score 1 to 5">
+      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <label for="sVoc" style="font-weight:700;margin-top:.6rem;display:block;">Vocabulary, are words natural?</label>
+      <input type="range" id="sVoc" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="Vocabulary score 1 to 5">
+      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <label for="sGra" style="font-weight:700;margin-top:.6rem;display:block;">Grammar, are sentences correct?</label>
+      <input type="range" id="sGra" min="1" max="5" value="3" style="width:100%;accent-color:#38e0c8;" aria-label="Grammar score 1 to 5">
+      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:.6rem;">Write these 4 numbers in your shared document under Day 1 Snapshot. Your teacher adds their scores next to yours.</p>
+    </div>
+    <button class="btn ghost" data-complete="act8">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">9</span>
+      <h2>Your 3 Goals</h2>
+      <span class="tag">For the next 30 days</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Make 3 small goals. Keep them in your shared document. We check them on Day 9, 17, and 30.</p>
+    <div class="exercise">
+      <p class="q">Write 3 goals. Use the sentence starters.</p>
+      <div class="fill"><span class="lead">1. I want to</span> <input class="answer" data-accept="write" data-model="write an overview with no numbers" aria-label="goal 1"> <span class="tail">.</span></div>
+      <div class="fill"><span class="lead">2. I want to</span> <input class="answer" data-accept="make|fix|use" data-model="make fewer article mistakes" aria-label="goal 2"> <span class="tail">.</span></div>
+      <div class="fill"><span class="lead">3. I want to</span> <input class="answer" data-accept="write" data-model="write faster without stopping" aria-label="goal 3"> <span class="tail">.</span></div>
+      <div class="tip"><strong>Good examples:</strong> I want to write an overview with 2 trends and no numbers. I want to fix one article mistake per lesson. I want to write 150 words in 20 minutes by Day 9.</div>
+    </div>
+    <button class="btn" data-check="act9">Check my answers</button>
+    <div class="feedback" id="fb-act9" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it aloud</h3>
+      <p>Read your 3 goals aloud to your teacher.</p>
+      <textarea id="sp9" placeholder="Copy your 3 full goals here to keep them."></textarea>
+      <button class="btn ghost" data-reveal="model9" aria-expanded="false">Show example goals</button>
+      <div class="model" id="model9" hidden>1. I want to write an overview with 2 trends and no numbers. 2. I want to make fewer article mistakes. 3. I want to write faster without stopping to translate.</div>
+    </div>
+    <button class="btn ghost" data-complete="act9">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">10</span>
+      <h2>Homework and Next Step</h2>
+      <span class="tag">15 to 20 min</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="goal">Close Day 1. Know what to do after class and what comes tomorrow.</p>
+    <div class="exercise">
+      <p class="q">Check your homework plan.</p>
+      <div class="mcq" data-group="g11">
+        <div class="stem">If you are tired after class, what can you do?</div>
+        <label><input type="radio" class="choice" name="g11" data-correct="true"> Review your error list for 5 minutes</label>
+        <label><input type="radio" class="choice" name="g11"> Skip everything and do nothing</label>
+        <label><input type="radio" class="choice" name="g11"> Write a full essay of 250 words</label>
+      </div>
+      <div class="mcq" data-group="g12">
+        <div class="stem">What is Day 2 about?</div>
+        <label><input type="radio" class="choice" name="g12" data-correct="true"> The Overview, the big picture, no numbers</label>
+        <label><input type="radio" class="choice" name="g12"> How to write a CV</label>
+        <label><input type="radio" class="choice" name="g12"> How to write an abstract</label>
+      </div>
+      <label for="sp10" style="font-weight:700;">Your homework after class, write Done or To do:</label>
+      <textarea id="sp10" placeholder="1. Write 3 goals cleanly in the doc.&#10;2. Rewrite one paragraph with the correction.&#10;3. Write 5 new sentences with 5 new words."></textarea>
+    </div>
+    <button class="btn" data-check="act10">Check my answers</button>
+    <div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <div class="tip"><strong>Remember:</strong> You will have 5 best texts in your portfolio at Day 30, plus one small text about why you chose them. Day 1 texts count if you like them.</div>
+    <button class="btn ghost" data-complete="act10">Mark complete</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results" hidden aria-label="Lesson results">
+    <h2>Day 1 Complete, Well Done Annisa</h2>
+    <p>You learned the 4 scores, checked a chart and an essay, wrote together, and set your goals. Small steps, every day.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">Total XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+    </div>
+    <div class="cert" id="cert">
+      <h3>CERTIFICATE OF COMPLETION</h3>
+      <div class="sub">Day 1, Let us see your level, 30-Day Writing Plan</div>
+      <div class="who" id="certName">Annisa</div>
+      <div class="sub">completed the IELTS writing diagnostic and set 3 goals for the next 30 days.</div>
+      <div class="badge-line" id="certBadge">Badge: Brave Starter</div>
+      <div class="sub" id="certDate"></div>
+    </div>
+    <p>
+      <label for="certLearnerName" style="font-weight:700;">Name for certificate:</label><br>
+      <input class="answer" id="certLearnerName" style="min-width:220px;margin-top:.4rem;" aria-label="Your name for the certificate">
+    </p>
+    <button class="btn" id="printBtn">Print or save as PDF</button>
+  </section>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Day 1, Let us see your level, Annisa, 30-Day Writing Plan. 10 activities. Homework: Write 3 goals, rewrite one paragraph, write 5 new sentences. Or 5 minutes review of your error list.</p>
+  <p style="margin-top:.4rem;color:var(--muted);">Your portfolio at Day 30: 5 best texts plus one small text about why you chose them.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var TOTAL_ACTS=10;
+  var state={points:0,streak:0,best:0,correct:0,total:0,done:0};
+  document.querySelectorAll(".answer").forEach(function(){state.total++;});
+  document.querySelectorAll(".mcq").forEach(function(){state.total++;});
+  function norm(s){return (s||"").trim().toLowerCase().replace(/\s+/g," ").replace(/[.?!]+$/,"");}
+  function $(id){return document.getElementById(id);}
+  function updateHUD(){
+    $("points").textContent=state.points+" XP";
+    $("streak").textContent="Streak "+state.streak;
+    $("progText").textContent=state.done+" / "+TOTAL_ACTS+" complete";
+    $("bar").style.width=(state.done/TOTAL_ACTS*100)+"%";
+  }
+  function markInput(inp,ok){
+    inp.classList.toggle("correct",ok);
+    inp.classList.toggle("wrong",!ok);
+    inp.setAttribute("aria-invalid",ok?"false":"true");
+    var m=inp.parentNode.querySelector(".mark");
+    if(!m){m=document.createElement("span");m.className="mark";inp.parentNode.appendChild(m);}
+    m.textContent=ok?"Correct":"Try again";
+    m.className="mark "+(ok?"ok":"no");
+  }
+  function handleCheck(secId){
+    var sec=$(secId);
+    var fb=$("fb-"+secId);
+    var earnedNow=0,okCount=0,wrongList="";
+    var anyWrong=false,anyEmpty=false;
+    sec.querySelectorAll(".answer").forEach(function(inp,i){
+      var val=norm(inp.value);
+      if(!val){anyEmpty=true;return;}
+      var accepts=inp.dataset.accept.split("|").map(norm);
+      var ok=accepts.some(function(a){return val.indexOf(a)!==-1;});
+      markInput(inp,ok);
+      if(ok){
+        okCount++;
+        if(!inp.dataset.done){inp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        wrongList+="<li>Item "+(i+1)+": try <b>"+inp.dataset.model+"</b></li>";
+      }
+    });
+    sec.querySelectorAll(".mcq").forEach(function(grp,gi){
+      var chosen=grp.querySelector("input.choice:checked");
+      if(!chosen){anyEmpty=true;return;}
+      var ok=chosen.dataset.correct==="true";
+      grp.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});
+      if(ok){
+        chosen.closest("label").classList.add("correct");
+        okCount++;
+        if(!grp.dataset.done){grp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        chosen.closest("label").classList.add("wrong");
+        var corr=grp.querySelector("input.choice[data-correct=true]");
+        if(corr) corr.closest("label").classList.add("correct");
+        wrongList+="<li>Question "+(gi+1)+": the correct answer is highlighted.</li>";
+      }
+    });
+    if(anyEmpty && earnedNow===0 && okCount===0){
+      fb.className="feedback bad";
+      fb.innerHTML="Please answer the questions first, then press Check.";
+      updateHUD();return;
+    }
+    if(anyWrong){
+      fb.className="feedback bad";
+      fb.innerHTML="You earned <b>"+earnedNow+" XP</b> this round. Review these:"+(wrongList?"<ul>"+wrongList+"</ul>":"")+" Press Check again after you fix them.";
+    } else {
+      fb.className="feedback good";
+      fb.innerHTML="All correct. +"+earnedNow+" XP. Keep that streak going!";
+    }
+    updateHUD();
+  }
+  document.querySelectorAll("[data-check]").forEach(function(btn){
+    btn.addEventListener("click",function(){handleCheck(btn.dataset.check);});
+  });
+  document.querySelectorAll("[data-reveal]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var el=$(btn.dataset.reveal);
+      var hidden=el.hasAttribute("hidden");
+      if(hidden){el.removeAttribute("hidden");btn.setAttribute("aria-expanded","true");btn.textContent="Hide";}
+      else {el.setAttribute("hidden","");btn.setAttribute("aria-expanded","false");btn.textContent=btn.textContent.indexOf("model")!==-1?"Show model paragraph":"Show example";}
+      if(btn.id==="showModel5") btn.textContent=hidden?"Hide":"Show model paragraph";
+    });
+  });
+  // Fix reveal labels after toggle
+  document.querySelectorAll("[data-reveal]").forEach(function(btn){
+    var orig=btn.textContent;
+    btn.addEventListener("click",function(){
+      var el=document.getElementById(btn.dataset.reveal);
+      if(!el) return;
+      if(el.hasAttribute("hidden")) btn.textContent=orig;
+      else btn.textContent="Hide";
+    });
+  });
+  document.querySelectorAll("[data-complete]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var sec=document.getElementById(btn.dataset.complete);
+      if(sec.classList.contains("complete")) return;
+      sec.classList.add("complete");
+      state.done++;
+      updateHUD();
+      sec.scrollIntoView({block:"start",behavior:"smooth"});
+      if(state.done>=TOTAL_ACTS) showResults();
+    });
+  });
+  function showResults(){
+    var acc=state.total?Math.round(state.correct/state.total*100):0;
+    $("rPoints").textContent=state.points;
+    $("rAcc").textContent=acc+"%";
+    $("rStreak").textContent=state.best;
+    $("certDate").textContent=new Date().toLocaleDateString();
+    $("results").removeAttribute("hidden");
+    $("results").scrollIntoView({block:"start",behavior:"smooth"});
+    launchConfetti();
+  }
+  $("certLearnerName").addEventListener("input",function(){
+    var n=this.value.trim();
+    $("certName").textContent=n||"Annisa";
+  });
+  $("printBtn").addEventListener("click",function(){window.print();});
+  function launchConfetti(){
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c=$("confetti"),ctx=c.getContext("2d");
+    c.width=window.innerWidth;c.height=window.innerHeight;
+    var colors=["#ffd400","#38e0c8","#ffffff","#ff8a8a","#9ad0ff"];
+    var parts=[];
+    for(var i=0;i<140;i++) parts.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:4+Math.random()*6,col:colors[i%colors.length]});
+    var t0=Date.now();
+    function frame(){
+      ctx.clearRect(0,0,c.width,c.height);
+      parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.03;ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,p.s,p.s);});
+      if(Date.now()-t0<2600) requestAnimationFrame(frame);
+      else ctx.clearRect(0,0,c.width,c.height);
+    }
+    frame();
+  }
+  updateHUD();
+})();
+</script>
+
+<script src="../../xapi-include.js" defer></script>
+<script>
+// Annisa Day 1 - precise verbs/objects preserved via proxy LRS (mirrors original html logic)
+// Keeps launched / answered (per item with LessonId/secId/item-n) / marked-as-complete / experienced
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act6:1,act7:1,act8:1,act10:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>
