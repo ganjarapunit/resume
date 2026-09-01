@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 The Overview The Big Picture Annisa Interactive</title>
+<style>
+  :root{
+    --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
+    --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400; --accent-2:#38e0c8;
+    --good:#38e0c8; --bad:#ff8a8a; --border:#2a3d57; --focus:#ffd400;
+    --warn:#ffb700;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+  a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+  a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
+  .hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--border);padding:.6rem 1rem}
+  .hud-inner{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+  .stat{display:flex;align-items:center;gap:.4rem;font-weight:700;color:var(--ink);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
+  .stat svg{width:18px;height:18px}
+  .progress-wrap{flex:1 1 220px;min-width:200px}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
+  .progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+  header.hero{max-width:980px;margin:0 auto;padding:1.7rem 1rem 1rem;text-align:center}
+  header.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 .3rem;color:#fff;text-shadow:0 0 24px rgba(56,224,200,.25);line-height:1.2}
+  header.hero p{color:var(--muted);margin:.2rem auto;max-width:640px;font-size:.98rem}
+  .pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.82rem;font-weight:700;margin:.2rem}
+  main{max-width:980px;margin:0 auto;padding:1rem}
+  .intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:1rem 0 1.3rem}
+  .intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
+  .rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+  .rule-box strong{color:var(--accent)}
+  .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.85rem;font-weight:700}
+  .rule-item.ok{border-color:var(--good);color:var(--good)}
+  .rule-item.no{border-color:var(--bad);color:var(--bad)}
+  .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
+  .credit strong{color:var(--accent-2)}
+  .credit a{color:var(--accent)}
+  .steps-mini{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
+  .steps-mini span{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.3rem .6rem;font-size:.82rem;color:var(--muted)}
+  .steps-mini strong{color:var(--ink)}
+  .activity{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
+  .badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.15rem}
+  .act-head h2{margin:0;font-size:1.15rem;color:#fff;flex:1 1 auto}
+  .tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700}
+  .hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
+  .exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
+  .q{font-weight:700;margin:.15rem 0 .5rem;color:#fff;font-size:.95rem}
+  .chart{width:100%;border-collapse:collapse;margin:.4rem 0;background:#06121f;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+  .chart th,.chart td{padding:.4rem .5rem;text-align:center;border:1px solid var(--border);font-size:.92rem}
+  .chart th{background:var(--surface);color:var(--accent);font-size:.85rem}
+  .chart td{color:var(--ink)}
+  .fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
+  .fill .lead,.fill .tail{color:var(--ink);font-size:.92rem}
+  input.answer,textarea{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
+  input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  input.answer{min-width:140px}
+  textarea{width:100%;min-height:88px;resize:vertical}
+  input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
+  input.answer.wrong{border-color:var(--bad)}
+  .mark{font-size:.78rem;font-weight:700;margin-left:.3rem}
+  .mark.ok{color:var(--good)} .mark.no{color:var(--bad)}
+  .mcq{margin:.55rem 0}
+  .mcq .stem{font-weight:700;color:#fff;margin-bottom:.25rem;font-size:.93rem}
+  .mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.4rem .65rem;margin:.25rem 0;cursor:pointer;font-size:.92rem}
+  .mcq label.correct{border-color:var(--good)} .mcq label.wrong{border-color:var(--bad)}
+  .mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+  button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit}
+  button.btn:hover{filter:brightness(1.05)}
+  button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+  button.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
+  .feedback.good{border-color:var(--good)} .feedback.bad{border-color:var(--bad)}
+  .feedback ul{margin:.35rem 0;padding-left:1.1rem}
+  .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem;display:flex;gap:.4rem;align-items:flex-start}
+  .mini-tip strong{color:var(--accent)}
+  .mini-tip .ico{flex:none;font-size:1rem}
+  .speak{margin-top:.7rem;padding:.65rem .85rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
+  .speak h3{margin:0 0 .2rem;color:var(--accent-2);font-size:.95rem}
+  .model{margin-top:.45rem;padding:.5rem .7rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink);font-size:.9rem}
+  .model[hidden]{display:none}
+  .done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s;font-size:.85rem}
+  .activity.complete .done-flag{opacity:1}
+  .results{margin:2rem 0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.3rem;text-align:center}
+  .results[hidden]{display:none}
+  .results h2{color:var(--accent);margin-top:0;font-size:1.3rem}
+  .score-grid{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:.9rem 0}
+  .score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;min-width:125px}
+  .score-box .n{font-size:1.7rem;font-weight:800;color:var(--accent-2)}
+  .score-box .l{color:var(--muted);font-size:.82rem}
+  .cert{margin:1rem auto;max-width:540px;background:#06121f;border:2px solid var(--accent);border-radius:14px;padding:1.2rem;text-align:center;box-shadow:0 0 30px rgba(255,212,0,.15)}
+  .cert h3{color:var(--accent);margin:0 0 .2rem;letter-spacing:2px;font-size:.95rem}
+  .cert .who{font-size:1.4rem;font-weight:800;color:#fff;margin:.35rem 0}
+  .cert .sub{color:var(--muted);font-size:.88rem}
+  .cert .badge-line{color:var(--accent-2);font-weight:800;margin-top:.4rem;font-size:.92rem}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+  footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.82rem}
+  footer a{color:var(--accent)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  @media (max-width:560px){.hud-inner{font-size:.85rem} input.answer{min-width:120px}}
+  #login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
+  #login[hidden]{display:none}
+  .login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(255,212,0,.15)}
+  .login-card h2{color:var(--accent);margin-top:0}
+  .login-card p{color:var(--muted);font-size:.92rem}
+  .login-card input{width:100%;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.55rem;font-size:1rem;margin:.55rem 0;font-family:inherit}
+  .login-card input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  .chart-figure{margin:.5rem 0;background:#fff;border:2px solid var(--border);border-radius:10px;padding:.4rem;text-align:center}
+  .chart-figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px}
+  .chart-figure figcaption{font-size:.78rem;color:#222;margin-top:.35rem;line-height:1.35}
+  @media (max-width:700px){.two-col{grid-template-columns:1fr}}
+  .vis-note{font-size:.82rem;color:var(--muted);margin:.3rem 0}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+<div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="login-card">
+    <h2 id="loginTitle">Welcome Annisa</h2>
+    <p>Your name to start.</p>
+    <label for="loginName" style="font-weight:700;">Your name</label>
+    <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Annisa" aria-label="Your name">
+    <button class="btn" id="loginStart">Start</button>
+  </div>
+</div>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+      <span id="points">0 XP</span>
+    </div>
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg>
+      <span id="streak">Streak 0</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progText">0 / 10 complete</span></div>
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Day 2 The Overview</h1>
+  <p>One skill. Big picture, no numbers.</p>
+  <span class="pill">Annisa</span>
+  <span class="pill">10 short tasks</span>
+  <span class="pill">40 min</span>
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="Today">
+    <h2>Today</h2>
+    <div class="rule-box" aria-label="The rule">
+      <span class="rule-item ok">Overall, ...</span>
+      <span class="rule-item ok">2 big trends</span>
+      <span class="rule-item no">0 numbers</span>
+    </div>
+    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">Overview = map. Details = walk. Numbers go after.</p>
+    <div class="steps-mini" aria-label="How">
+      <span><strong>1</strong> Look</span>
+      <span><strong>2</strong> Choose / Type</span>
+      <span><strong>3</strong> Check</span>
+      <span><strong>4</strong> Complete</span>
+    </div>
+    <div class="credit"><strong>Charts:</strong> Adapted for class from <a href="https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/">IELTS Liz</a> + British Council. Data simple, for practice.</div>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">1</span>
+      <h2>Hello</h2>
+      <span class="tag">1 min</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Day 1 → Day 2. One memory.</p>
+    <div class="exercise">
+      <label for="sp1" style="font-weight:700;font-size:.93rem;">One thing from Day 1?</label>
+      <textarea id="sp1" placeholder="e.g. My fix was past tense."></textarea>
+    </div>
+    <button class="btn ghost" data-reveal="model1" aria-expanded="false">Example</button>
+    <div class="model" id="model1" hidden>My fix: past tense. My goal: overview with 2 trends, no numbers.</div>
+    <button class="btn ghost" data-complete="act1">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">2</span>
+      <h2>What is it?</h2>
+      <span class="tag">Pick</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Map, not walk.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g1">
+        <div class="stem">Overview is:</div>
+        <label><input type="radio" class="choice" name="g1" data-correct="true"> Big picture. 2 trends. No numbers.</label>
+        <label><input type="radio" class="choice" name="g1"> All numbers.</label>
+        <label><input type="radio" class="choice" name="g1"> Opinion at end.</label>
+      </div>
+      <div class="mcq" data-group="g2">
+        <div class="stem">Where?</div>
+        <label><input type="radio" class="choice" name="g2"> In the first line.</label>
+        <label><input type="radio" class="choice" name="g2" data-correct="true"> After the first line. New paragraph.</label>
+        <label><input type="radio" class="choice" name="g2"> At the end only.</label>
+      </div>
+      <div class="mcq" data-group="g3">
+        <div class="stem">How long?</div>
+        <label><input type="radio" class="choice" name="g3"> 4 - 5 lines.</label>
+        <label><input type="radio" class="choice" name="g3" data-correct="true"> 1 - 2 lines.</label>
+        <label><input type="radio" class="choice" name="g3"> 1 word.</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act2">Check</button>
+    <div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="mini-tip"><span class="ico" aria-hidden="true">💡</span><span><strong>Start with Overall,</strong> → 2 trends.</span></div>
+    <button class="btn ghost" data-complete="act2">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="activity" id="act3" data-act="3">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">3</span>
+      <h2>Good or weak?</h2>
+      <span class="tag">Look</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Same chart. Two texts.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="Line chart TV watching methods 2004 to 2014">
+        <img src="images/tv-methods-line.png" alt="Line chart: TV method 2004-2014. Internet low to 195k. Broadcast 95k to 8k. Cable 85k to 60k. Satellite 70k to 110k." width="700" height="420" loading="lazy">
+        <figcaption>TV 2004 → 2014. Internet ↑, cable + broadcast ↓.</figcaption>
+      </figure>
+      <div style="background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.4rem 0;font-size:.9rem;">
+        <p style="margin:.15rem 0;"><strong>A</strong> Overall, broadcast fell, cable fell, satellite rose slightly and internet rose a lot. In 2004 broadcast was 90k and internet was almost zero.</p>
+        <p style="margin:.15rem 0;color:var(--muted);"><strong>B</strong> Overall, internet use rose dramatically to become the most common method, while broadcast and cable both declined, with satellite rising only slightly.</p>
+      </div>
+      <div class="mcq" data-group="g4">
+        <div class="stem">Good one?</div>
+        <label><input type="radio" class="choice" name="g4"> A</label>
+        <label><input type="radio" class="choice" name="g4" data-correct="true"> B</label>
+      </div>
+      <div class="mcq" data-group="g5">
+        <div class="stem">Why?</div>
+        <label><input type="radio" class="choice" name="g5" data-correct="true"> 2 trends. No numbers.</label>
+        <label><input type="radio" class="choice" name="g5"> Many numbers.</label>
+        <label><input type="radio" class="choice" name="g5"> Longer.</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act3">Check</button>
+    <div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="mini-tip"><span class="ico" aria-hidden="true">✗</span><span>A = numbers inside. Not overview.</span></div>
+    <button class="btn ghost" data-complete="act3">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 4 -->
+  <section class="activity" id="act4" data-act="4">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">4</span>
+      <h2>Find the best</h2>
+      <span class="tag">Core</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">3 texts. 1 good.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="Bar chart homework hours">
+        <img src="images/homework-bar.png" alt="Bar chart: Japan 7 in 2010, 5 in 2020. Germany 6 and 6. Brazil 6 and 9." width="620" height="400" loading="lazy">
+        <figcaption>Homework hours per week.</figcaption>
+      </figure>
+      <div style="background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem;">
+        <p style="margin:.15rem 0;"><strong>1</strong> Overall, Japan had 7 hours in 2010 and 5 in 2020. Germany had 6 and 6. Brazil had 6 and 9.</p>
+        <p style="margin:.15rem 0;"><strong>2</strong> Overall, students in Asia spent more time than in South America, and homework increased everywhere.</p>
+        <p style="margin:.15rem 0;color:var(--muted);"><strong>3</strong> Overall, students in Brazil spent more time than in Japan and Germany, and this gap widened.</p>
+      </div>
+      <div class="mcq" data-group="g6">
+        <div class="stem">Best?</div>
+        <label><input type="radio" class="choice" name="g6"> 1</label>
+        <label><input type="radio" class="choice" name="g6"> 2</label>
+        <label><input type="radio" class="choice" name="g6" data-correct="true"> 3</label>
+      </div>
+      <div class="mcq" data-group="g7">
+        <div class="stem">Why is 1 weak?</div>
+        <label><input type="radio" class="choice" name="g7" data-correct="true"> Only numbers. No big picture.</label>
+        <label><input type="radio" class="choice" name="g7"> No numbers.</label>
+      </div>
+      <div class="mcq" data-group="g8">
+        <div class="stem">Why is 2 weak?</div>
+        <label><input type="radio" class="choice" name="g8" data-correct="true"> Not true. Not everywhere.</label>
+        <label><input type="radio" class="choice" name="g8"> Too many numbers.</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act4">Check</button>
+    <div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="mini-tip"><span class="ico" aria-hidden="true">✓</span><span><strong>3</strong> = 2 trends. 0 numbers. True.</span></div>
+    <button class="btn ghost" data-complete="act4">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 5 -->
+  <section class="activity" id="act5" data-act="5">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">5</span>
+      <h2>Words, no numbers</h2>
+      <span class="tag">Words</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Say change. No numbers.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g9">
+        <div class="stem">Up a lot?</div>
+        <label><input type="radio" class="choice" name="g9" data-correct="true"> rose dramatically</label>
+        <label><input type="radio" class="choice" name="g9"> remained stable</label>
+        <label><input type="radio" class="choice" name="g9"> increased slightly</label>
+      </div>
+      <div class="mcq" data-group="g10">
+        <div class="stem">Stay same?</div>
+        <label><input type="radio" class="choice" name="g10" data-correct="true"> remained stable</label>
+        <label><input type="radio" class="choice" name="g10"> fell sharply</label>
+        <label><input type="radio" class="choice" name="g10"> rose dramatically</label>
+      </div>
+      <p style="margin:.5rem 0;font-weight:700;color:var(--accent);font-size:.9rem;">Your turn. With Overall,</p>
+      <div class="fill"><span class="lead">Overall, internet</span> <input class="answer" data-accept="rose dramatically|increased dramatically|increased sharply|rose sharply" data-model="rose dramatically" aria-label="internet"> <span class="tail">,</span></div>
+      <div class="fill"><span class="lead">while cable</span> <input class="answer" data-accept="declined|fell sharply|declined markedly|fell" data-model="declined" aria-label="cable"> <span class="tail">.</span></div>
+    </div>
+    <button class="btn" data-check="act5">Check</button>
+    <div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it</h3>
+      <textarea id="sp5" placeholder="Overall, ... while ..."></textarea>
+    </div>
+    <button class="btn ghost" data-complete="act5">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 6 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">6</span>
+      <h2>Where?</h2>
+      <span class="tag">Place</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">4 parts. Find overview.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="Mini chart for place">
+        <img src="images/tv-methods-line.png" alt="Same line chart TV 2004-2014 as before, for place check." width="700" height="420" loading="lazy">
+        <figcaption>Same TV chart. Focus on place: [1] Intro → [2] Overview.</figcaption>
+      </figure>
+      <div style="background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.88rem;">
+        <p style="margin:.12rem 0;"><strong>[1]</strong> The chart compares TV use, 2004 to 2014.</p>
+        <p style="margin:.12rem 0;"><strong>[2]</strong> Overall, internet rose dramatically to become the most common, while broadcast and cable declined.</p>
+        <p style="margin:.12rem 0;color:var(--muted);"><strong>[3]</strong> In 2004 cable and broadcast were highest, about 70-100k. Internet was almost zero.</p>
+        <p style="margin:.12rem 0;color:var(--muted);"><strong>[4]</strong> By 2014 internet was almost 200k, broadcast was the lowest.</p>
+      </div>
+      <div class="mcq" data-group="g11">
+        <div class="stem">Overview = ?</div>
+        <label><input type="radio" class="choice" name="g11"> [1]</label>
+        <label><input type="radio" class="choice" name="g11" data-correct="true"> [2]</label>
+        <label><input type="radio" class="choice" name="g11"> [3]</label>
+      </div>
+      <div class="mcq" data-group="g12">
+        <div class="stem">True?</div>
+        <label><input type="radio" class="choice" name="g12" data-correct="true"> 1-2 lines. No numbers. After [1].</label>
+        <label><input type="radio" class="choice" name="g12"> At the end only.</label>
+        <label><input type="radio" class="choice" name="g12"> With all numbers.</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act6">Check</button>
+    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <div class="mini-tip"><span class="ico" aria-hidden="true">📍</span><span><strong>Place:</strong> [1] Intro → [2] Overview → [3] [4] Details.</span></div>
+    <button class="btn ghost" data-complete="act6">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">7</span>
+      <h2>We write</h2>
+      <span class="tag">With teacher</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Together. One line.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="TV chart for we write">
+        <img src="images/tv-methods-line.png" alt="TV 2004 to 2014 line chart, internet up, broadcast and cable down." width="700" height="420" loading="lazy">
+        <figcaption>TV 2004 → 2014.</figcaption>
+      </figure>
+      <div class="two-col">
+        <div style="background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.55rem;font-size:.85rem;">
+          <strong style="color:var(--accent)">Steps:</strong><br>
+          1. Overall,<br>
+          2. What went up?<br>
+          3. What went down?<br>
+          4. Link: <em>while</em>
+        </div>
+        <div style="background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.55rem;font-size:.85rem;">
+          <strong style="color:var(--accent-2)">Model:</strong><br>
+          Overall, internet rose dramatically, while broadcast and cable declined.
+        </div>
+      </div>
+      <label for="sp7" style="font-weight:700;margin-top:.5rem;display:block;font-size:.9rem;">Paste your line here:</label>
+      <textarea id="sp7" placeholder="Overall, ... while ..."></textarea>
+    </div>
+    <button class="btn ghost" data-reveal="model7" aria-expanded="false">Model</button>
+    <div class="model" id="model7" hidden>Overall, internet use rose dramatically to become the most common, while broadcast and cable declined markedly.</div>
+    <button class="btn ghost" data-complete="act7">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">8</span>
+      <h2>Fix it</h2>
+      <span class="tag">Fix</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Same chart. Fix the weak one.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="Tourists bar chart real">
+        <img src="images/tourists-bar.png" alt="Real bar chart: 2018 Paris 200, Rome 150, Berlin 90. 2022 Paris 180, Rome 210, Berlin 170." width="650" height="420" loading="lazy">
+        <figcaption>Real IELTS chart: Tourists 2018 vs 2022.</figcaption>
+      </figure>
+      <p class="vis-note">Weak: Overall, Paris had 200k in 2018 and Rome had 210k in 2022.</p>
+      <div class="mcq" data-group="g13">
+        <div class="stem">Why weak?</div>
+        <label><input type="radio" class="choice" name="g13" data-correct="true"> Only numbers. No trend.</label>
+        <label><input type="radio" class="choice" name="g13"> No numbers.</label>
+        <label><input type="radio" class="choice" name="g13"> Too short.</label>
+      </div>
+      <label for="sp8" style="font-weight:700;font-size:.9rem;">Your fix. Overall, ... (no numbers):</label>
+      <textarea id="sp8" placeholder="Overall, Rome ... while Paris ..."></textarea>
+    </div>
+    <button class="btn" data-check="act8">Check</button>
+    <div class="feedback" id="fb-act8" aria-live="polite"></div>
+    <button class="btn ghost" data-reveal="model8" aria-expanded="false">Model</button>
+    <div class="model" id="model8" hidden>Overall, Rome and Berlin increased while Paris fell slightly, with Rome becoming the most popular by the end.</div>
+    <button class="btn ghost" data-complete="act8">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">9</span>
+      <h2>You write</h2>
+      <span class="tag">You do</span>
+      <span class="timer" id="timerLabel">5:00</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Alone. 5 minutes.</p>
+    <div class="exercise">
+      <figure class="chart-figure" role="group" aria-label="Fruit and veg chart crisp remaster">
+        <img src="images/fruit_veg_remastered.png" alt="Bar chart: UK five-a-day, 2001 low about 11.5 percent, rises to peak about 16.2 percent in 2006, then falls to about 13.9 percent in 2008, still under one in five." width="1200" height="823" loading="lazy">
+        <figcaption>High-res remaster. Source: IELTS Liz Oct 2018. <a href="https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/">Source</a> • <a href="https://ieltsliz.com/wp-content/uploads/2018/10/IELTS-Bar-Chart-October-2018-300x300.png">Original</a></figcaption>
+      </figure>
+      <p style="font-weight:700;color:var(--accent);font-size:.88rem;">1-2 lines. 2 trends. No numbers. Start: Overall,</p>
+      <label for="sp9" style="font-weight:700;font-size:.9rem;">Your overview:</label>
+      <textarea id="sp9" placeholder="Overall, ..."></textarea>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;">
+        <button class="btn" id="startTimer" type="button">Start 5:00</button>
+        <button class="btn ghost" id="stopTimer" type="button">Stop</button>
+      </div>
+      <p class="vis-note" id="timerHint">Press Start → write.</p>
+    </div>
+    <button class="btn ghost" data-reveal="model9" aria-expanded="false">Model</button>
+    <div class="model" id="model9" hidden>Overall, the proportion eating five portions a day remained low, rising to a peak mid-period before falling slightly.</div>
+    <button class="btn ghost" data-complete="act9">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">10</span>
+      <h2>Check + list</h2>
+      <span class="tag">1 fix</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">One fix only. Small step.</p>
+    <div class="exercise">
+      <table class="chart" aria-label="Error list">
+        <tr><th>My sentence</th><th>Better</th><th>My try</th></tr>
+        <tr><td>use rise</td><td>use rose</td><td>tourists increased</td></tr>
+      </table>
+      <div class="mcq" data-group="g14">
+        <div class="stem">Your fix today?</div>
+        <label><input type="radio" class="choice" name="g14"> A) rose / fell</label>
+        <label><input type="radio" class="choice" name="g14"> B) the / an / in</label>
+        <label><input type="radio" class="choice" name="g14"> C) spelling</label>
+        <label><input type="radio" class="choice" name="g14"> D) teacher says</label>
+      </div>
+      <label for="sp10" style="font-weight:700;font-size:.9rem;">My new try:</label>
+      <textarea id="sp10" placeholder="e.g. Overall, the number rose then fell."></textarea>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.6rem;">
+        <label style="font-weight:700;font-size:.85rem;">How clear now? 1-5</label>
+        <input type="range" id="feel" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="How clear 1 to 5">
+        <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;"><span>1 hard</span><span>3 ok</span><span>5 clear</span></div>
+      </div>
+      <div class="mini-tip"><span class="ico" aria-hidden="true">📚</span><span><strong>Homework:</strong> Fix 1 line + 5 short lines with new words. Or 5 min list.</span></div>
+    </div>
+    <button class="btn" data-check="act10">Check</button>
+    <div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <button class="btn ghost" data-complete="act10">Mark complete</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results" hidden aria-label="Lesson results">
+    <h2>Done Annisa ✓</h2>
+    <p>2 trends. No numbers. You did it.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+    </div>
+    <div class="cert" id="cert">
+      <h3>CERTIFICATE</h3>
+      <div class="sub">Day 2 The Overview</div>
+      <div class="who" id="certName">Annisa</div>
+      <div class="sub">2 trends. No numbers. Clear overview.</div>
+      <div class="badge-line" id="certBadge">Big Picture Thinker</div>
+      <div class="sub" id="certDate"></div>
+    </div>
+    <p>
+      <label for="certLearnerName" style="font-weight:700;font-size:.9rem;">Name:</label><br>
+      <input class="answer" id="certLearnerName" style="min-width:200px;margin-top:.35rem;" aria-label="Your name">
+    </p>
+    <button class="btn" id="printBtn">Print / PDF</button>
+  </section>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Day 2 Overview. 10 tasks. 2 trends. No numbers.</p>
+  <p style="margin-top:.3rem;"><a href="./Annisa-Day02-The-Overview-Teacher.html">Teacher page</a></p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var TOTAL_ACTS=10;
+  var state={points:0,streak:0,best:0,correct:0,total:0,done:0};
+  document.querySelectorAll(".answer").forEach(function(){state.total++;});
+  document.querySelectorAll(".mcq").forEach(function(){state.total++;});
+  function norm(s){return (s||"").trim().toLowerCase().replace(/\s+/g," ").replace(/[.?!]+$/,"");}
+  function $(id){return document.getElementById(id);}
+  function updateHUD(){
+    $("points").textContent=state.points+" XP";
+    $("streak").textContent="Streak "+state.streak;
+    $("progText").textContent=state.done+" / "+TOTAL_ACTS+" complete";
+    $("bar").style.width=(state.done/TOTAL_ACTS*100)+"%";
+  }
+  function markInput(inp,ok){
+    inp.classList.toggle("correct",ok);
+    inp.classList.toggle("wrong",!ok);
+    inp.setAttribute("aria-invalid",ok?"false":"true");
+    var m=inp.parentNode.querySelector(".mark");
+    if(!m){m=document.createElement("span");m.className="mark";inp.parentNode.appendChild(m);}
+    m.textContent=ok?"Correct":"Try again";
+    m.className="mark "+(ok?"ok":"no");
+  }
+  function handleCheck(secId){
+    var sec=$(secId);
+    var fb=$("fb-"+secId);
+    var earnedNow=0,okCount=0,wrongList="";
+    var anyWrong=false,anyEmpty=false;
+    sec.querySelectorAll(".answer").forEach(function(inp){
+      if(inp.id==="learnerName") return;
+      var val=norm(inp.value);
+      if(!val){anyEmpty=true;return;}
+      var accepts=inp.dataset.accept?inp.dataset.accept.split("|").map(norm):[];
+      var ok=accepts.length===0 || accepts.some(function(a){return val.indexOf(a)!==-1;});
+      markInput(inp,ok);
+      if(ok){
+        okCount++;
+        if(!inp.dataset.done){inp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        wrongList+="<li>Try <b>"+(inp.dataset.model||"check")+"</b></li>";
+      }
+    });
+    sec.querySelectorAll(".mcq").forEach(function(grp){
+      var chosen=grp.querySelector("input.choice:checked");
+      if(!chosen){anyEmpty=true;return;}
+      var ok=chosen.dataset.correct==="true";
+      grp.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});
+      if(ok){
+        chosen.closest("label").classList.add("correct");
+        okCount++;
+        if(!grp.dataset.done){grp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        chosen.closest("label").classList.add("wrong");
+        var corr=grp.querySelector("input.choice[data-correct=true]");
+        if(corr) corr.closest("label").classList.add("correct");
+        wrongList+="<li>See green answer.</li>";
+      }
+    });
+    if(anyEmpty && earnedNow===0 && okCount===0){
+      fb.className="feedback bad";
+      fb.innerHTML="Answer first, then Check.";
+      updateHUD();return;
+    }
+    if(anyWrong){
+      fb.className="feedback bad";
+      fb.innerHTML="+"+earnedNow+" XP. Fix:"+(wrongList?"<ul>"+wrongList+"</ul>":"");
+    } else {
+      fb.className="feedback good";
+      fb.innerHTML="Nice. +"+earnedNow+" XP.";
+    }
+    updateHUD();
+  }
+  document.querySelectorAll("[data-check]").forEach(function(btn){
+    btn.addEventListener("click",function(){handleCheck(btn.dataset.check);});
+  });
+  document.querySelectorAll("[data-reveal]").forEach(function(btn){
+    var orig=btn.textContent;
+    btn.addEventListener("click",function(){
+      var el=$(btn.dataset.reveal);
+      var hidden=el.hasAttribute("hidden");
+      if(hidden){el.removeAttribute("hidden");btn.setAttribute("aria-expanded","true");btn.textContent="Hide";}
+      else {el.setAttribute("hidden","");btn.setAttribute("aria-expanded","false");btn.textContent=orig;}
+    });
+  });
+  document.querySelectorAll("[data-complete]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var sec=document.getElementById(btn.dataset.complete);
+      if(sec.classList.contains("complete")) return;
+      sec.classList.add("complete");
+      state.done++;
+      updateHUD();
+      sec.scrollIntoView({block:"start",behavior:"smooth"});
+      if(state.done>=TOTAL_ACTS) showResults();
+    });
+  });
+  function showResults(){
+    var acc=state.total?Math.round(state.correct/state.total*100):0;
+    $("rPoints").textContent=state.points;
+    $("rAcc").textContent=acc+"%";
+    $("rStreak").textContent=state.best;
+    $("certDate").textContent=new Date().toLocaleDateString();
+    $("results").removeAttribute("hidden");
+    $("results").scrollIntoView({block:"start",behavior:"smooth"});
+    launchConfetti();
+  }
+  $("certLearnerName").addEventListener("input",function(){
+    var n=this.value.trim();
+    $("certName").textContent=n||"Annisa";
+  });
+  $("printBtn").addEventListener("click",function(){window.print();});
+  function launchConfetti(){
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c=$("confetti"),ctx=c.getContext("2d");
+    c.width=window.innerWidth;c.height=window.innerHeight;
+    var colors=["#ffd400","#38e0c8","#ffffff","#ff8a8a","#9ad0ff"];
+    var parts=[];
+    for(var i=0;i<140;i++) parts.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:4+Math.random()*6,col:colors[i%colors.length]});
+    var t0=Date.now();
+    function frame(){
+      ctx.clearRect(0,0,c.width,c.height);
+      parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.03;ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,p.s,p.s);});
+      if(Date.now()-t0<2600) requestAnimationFrame(frame);
+      else ctx.clearRect(0,0,c.width,c.height);
+    }
+    frame();
+  }
+  updateHUD();
+  var timer=null, remain=300;
+  var timerLabel=$("timerLabel"), timerBtn=$("startTimer"), stopBtn=$("stopTimer"), hint=$("timerHint");
+  function renderTimer(){
+    var m=Math.floor(remain/60), s=remain%60;
+    if(timerLabel) timerLabel.textContent=m+":"+(s<10?"0"+s:s);
+  }
+  if(timerBtn) timerBtn.addEventListener("click",function(){
+    if(timer) return;
+    remain=300; renderTimer();
+    if(hint) hint.textContent="Writing now ...";
+    timer=setInterval(function(){
+      remain--; renderTimer();
+      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time up. 2 trends? 0 numbers?"; }
+    },1000);
+  });
+  if(stopBtn) stopBtn.addEventListener("click",function(){
+    if(timer){ clearInterval(timer); timer=null; if(hint) hint.textContent="Stopped. Check then Complete."; }
+  });
+  renderTimer();
+})();
+</script>
+
+<script src="../../xapi-include.js" defer></script>
+<script>
+// Annisa Day 2 - precise verbs/objects preserved via proxy LRS (mirrors original html logic)
+// Keeps launched / answered (per item) / marked-as-complete / experienced
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act7:1,act8:1,act9:1,act10:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName' || item.id==='learnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>
