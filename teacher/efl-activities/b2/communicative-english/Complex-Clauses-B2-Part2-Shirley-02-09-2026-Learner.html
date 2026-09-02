@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Complex Sentences Part 2 - B2 Interactive - Shirley - 02-09-2026</title>
+<style>
+  :root {
+    --bg: #07101f;
+    --surface: #0f1b2e;
+    --surface-2: #13233b;
+    --ink: #f5f9ff;
+    --muted: #b9c6d8;
+    --accent: #ffd400;
+    --accent-2: #38e0c8;
+    --good: #38e0c8;
+    --bad: #ff8a8a;
+    --border: #2a3d57;
+    --focus: #ffd400;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+  body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, #14253f 0%, var(--bg) 60%) fixed, var(--bg); color: var(--ink); font-family: "Segoe UI", Verdana, Arial, sans-serif; line-height: 1.6; }
+  a.skip { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  a.skip:focus { left: 0; top: 0; width: auto; height: auto; background: var(--accent); color: #000; padding: .6rem 1rem; z-index: 60; border: 3px solid #fff; font-weight: bold; }
+  .hud { position: sticky; top: 0; z-index: 40; background: rgba(7,16,31,0.92); backdrop-filter: blur(6px); border-bottom: 2px solid var(--border); padding: .55rem 1rem; }
+  .hud-inner { max-width: 980px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+  .stat { display: flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--ink); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: .3rem .75rem; font-size: .92rem; }
+  .stat svg { width: 16px; height: 16px; }
+  .progress-wrap { flex: 1 1 220px; min-width: 200px; }
+  .progress-label { font-size: .82rem; color: var(--muted); margin-bottom: .18rem; }
+  .progress-track { height: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .45s ease; }
+  header.hero { max-width: 980px; margin: 0 auto; padding: 1.6rem 1rem .8rem; text-align: center; }
+  header.hero h1 { font-size: clamp(1.65rem, 4vw, 2.4rem); margin: 0 0 .3rem; color: #fff; text-shadow: 0 0 24px rgba(56,224,200,0.22); line-height: 1.2; }
+  header.hero p { color: var(--muted); margin: .25rem auto; max-width: 720px; font-size: .96rem; }
+  .pill { display: inline-block; background: var(--surface-2); border: 1px solid var(--border); color: var(--accent); border-radius: 999px; padding: .2rem .7rem; font-size: .82rem; font-weight: 700; margin: .18rem; }
+  .pill.alt { color: var(--accent-2); }
+  main { max-width: 980px; margin: 0 auto; padding: 1rem; }
+  .intro { background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 12px; padding: .9rem 1rem; margin: 1rem 0; }
+  .intro h2 { margin: 0 0 .3rem; color: var(--accent); font-size: 1.08rem; }
+  .steps { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 0; }
+  .step { flex: 1 1 160px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: .5rem .6rem; text-align: center; font-size: .88rem; }
+  .step strong { color: #fff; display: block; font-size: .9rem; }
+  .step span { color: var(--muted); }
+  .grammar-box { background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent-2); border-radius: 12px; padding: .9rem 1rem; margin: 1rem 0; }
+  .grammar-box h2 { margin: 0 0 .3rem; color: var(--accent-2); font-size: 1.08rem; }
+  .grammar-grid { display: grid; gap: .45rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: .5rem; }
+  .grammar-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: .55rem .65rem; text-align: center; }
+  .grammar-card strong { color: var(--accent); font-size: 1rem; }
+  .grammar-card div { color: var(--muted); font-size: .86rem; margin-top: .15rem; }
+  .activity { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.1rem; margin: 1.2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.32); }
+  .act-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .3rem; }
+  .badge { width: 38px; height: 38px; flex: none; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06121f; font-weight: 800; font-size: 1.1rem; }
+  .act-head h2 { margin: 0; font-size: 1.15rem; color: #fff; flex: 1 1 auto; line-height: 1.25; }
+  .tag { background: var(--surface-2); border: 1px solid var(--border); color: var(--accent-2); border-radius: 999px; padding: .15rem .6rem; font-size: .75rem; font-weight: 700; }
+  .goal { color: var(--muted); margin: .15rem 0 .6rem; font-size: .88rem; }
+  .exercise { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: .8rem .9rem; }
+  .q { font-weight: 700; margin: 0 0 .45rem; color: #fff; font-size: .95rem; }
+  .hint { color: var(--muted); font-size: .82rem; margin: .25rem 0 0; }
+  .fill { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: .45rem 0; font-size: .95rem; }
+  .fill .lead, .fill .tail { color: var(--ink); }
+  input.answer { background: #06121f; color: #fff; border: 2px solid var(--border); border-radius: 8px; padding: .32rem .5rem; font-size: .96rem; min-width: 110px; font-family: inherit; }
+  input.answer.small { min-width: 90px; max-width: 150px; }
+  input.answer.wide { min-width: 200px; flex: 1 1 260px; }
+  input.answer:focus-visible, textarea:focus-visible, button:focus-visible, input[type=radio]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  input.answer.correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(56,224,200,0.35); }
+  input.answer.wrong { border-color: var(--bad); }
+  .mark { font-size: .78rem; font-weight: 700; margin-left: .25rem; }
+  .mark.ok { color: var(--good); }
+  .mark.no { color: var(--bad); }
+  .mcq { margin: .6rem 0; }
+  .mcq .stem { font-weight: 700; color: #fff; margin-bottom: .3rem; font-size: .95rem; }
+  .mcq label { display: block; background: #06121f; border: 2px solid var(--border); border-radius: 8px; padding: .4rem .65rem; margin: .3rem 0; cursor: pointer; font-size: .95rem; }
+  .mcq label.correct { border-color: var(--good); }
+  .mcq label.wrong { border-color: var(--bad); }
+  .mcq input { accent-color: var(--accent-2); width: 17px; height: 17px; vertical-align: middle; margin-right: .45rem; }
+  .sentence-list { list-style: none; padding: 0; margin: .3rem 0; }
+  .sentence-list li { background: #06121f; border: 1px solid var(--border); border-radius: 8px; padding: .4rem .6rem; margin: .3rem 0; font-size: .95rem; }
+  .sentence-list .label { display: inline-block; background: var(--surface-2); border: 1px solid var(--border); color: var(--accent); font-weight: 800; border-radius: 6px; padding: .08rem .35rem; margin-right: .35rem; font-size: .8rem; }
+  textarea { width: 100%; min-height: 76px; background: #06121f; color: #fff; border: 2px solid var(--border); border-radius: 8px; padding: .5rem; font-size: .95rem; font-family: inherit; resize: vertical; }
+  textarea.small { min-height: 56px; }
+  button.btn { background: linear-gradient(135deg, var(--accent), #ffe34d); color: #06121f; border: 2px solid #fff; font-weight: 800; font-size: .95rem; padding: .48rem 1rem; border-radius: 10px; cursor: pointer; margin-top: .6rem; font-family: inherit; }
+  button.btn:hover { filter: brightness(1.05); }
+  button.btn.ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--border); }
+  button.btn.ghost:hover { background: #1a2c4a; }
+  button.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .feedback { margin-top: .55rem; padding: .6rem .8rem; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); font-size: .92rem; }
+  .feedback.good { border-color: var(--good); }
+  .feedback.bad { border-color: var(--bad); }
+  .feedback:empty { display: none; }
+  .speak { margin-top: .75rem; padding: .6rem .85rem; border-left: 4px solid var(--accent-2); background: var(--surface-2); border-radius: 0 10px 10px 0; }
+  .speak h3 { margin: 0 0 .2rem; color: var(--accent-2); font-size: .96rem; }
+  .speak p { margin: .15rem 0; font-size: .92rem; }
+  .model { margin-top: .4rem; padding: .5rem .7rem; background: #06121f; border: 1px dashed var(--border); border-radius: 8px; color: var(--ink); font-size: .92rem; }
+  .model[hidden] { display: none; }
+  .done-flag { display: inline-block; margin-left: .4rem; color: var(--good); font-weight: 800; opacity: 0; transition: opacity .3s; font-size: .9rem; }
+  .activity.complete .done-flag { opacity: 1; }
+  .activity.complete { border-color: var(--good); }
+  .results { margin: 1.8rem 0; background: linear-gradient(135deg, var(--surface), var(--surface-2)); border: 2px solid var(--accent); border-radius: 18px; padding: 1.2rem; text-align: center; }
+  .results[hidden] { display: none; }
+  .results h2 { color: var(--accent); margin-top: 0; }
+  .score-grid { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; margin: .8rem 0; }
+  .score-box { background: #06121f; border: 1px solid var(--border); border-radius: 12px; padding: .65rem 1rem; min-width: 120px; }
+  .score-box .n { font-size: 1.6rem; font-weight: 800; color: var(--accent-2); }
+  .score-box .l { color: var(--muted); font-size: .82rem; }
+  .cert { margin: 1rem auto; max-width: 540px; background: #06121f; border: 2px solid var(--accent); border-radius: 14px; padding: 1.2rem; text-align: center; box-shadow: 0 0 30px rgba(255,212,0,0.15); }
+  .cert h3 { color: var(--accent); margin: 0 0 .25rem; letter-spacing: 2px; font-size: 1rem; }
+  .cert .who { font-size: 1.4rem; font-weight: 800; color: #fff; margin: .35rem 0; }
+  .cert .sub { color: var(--muted); font-size: .88rem; }
+  .cert .badge-line { color: var(--accent-2); font-weight: 800; margin-top: .4rem; font-size: .92rem; }
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 80; }
+  footer { text-align: center; padding: 1.6rem 1rem; color: var(--muted); border-top: 1px solid var(--border); font-size: .85rem; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  @media (max-width: 560px) { input.answer { min-width: 100px; } input.answer.wide { min-width: 130px; } }
+  @media print { .hud, button.btn { display: none; } .activity { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg><span id="points">0 XP</span></div>
+    <div class="stat" aria-live="polite"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg><span id="streak">Streak 0</span></div>
+    <div class="progress-wrap"><div class="progress-label"><span id="progText">0 / 7 complete</span></div><div class="progress-track"><div class="progress-fill" id="bar"></div></div></div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Make It Flow - B2 Part 2</h1>
+      
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="How to use">
+    <h2>How to use - Part 2</h2>
+    <div class="steps">
+      <div class="step"><strong>Type and Check</strong><span>10 XP per correct</span></div>
+      <div class="step"><strong>Say it aloud</strong><span>then reveal model</span></div>
+      <div class="step"><strong>Complete</strong><span>bar fills to certificate</span></div>
+    </div>
+    <p class="hint" style="margin-top:.5rem;">Short steps, one idea at a time. Say each answer aloud.</p>
+  </section>
+
+  <section class="grammar-box" aria-label="Recall">
+    <h2>Recall - 3 shapes from Part 1</h2>
+    <div class="grammar-grid">
+      <div class="grammar-card"><strong>Why or When</strong><div>because / although / while / when / if</div></div>
+      <div class="grammar-card"><strong>Which One</strong><div>who / whom / whose / which / that</div></div>
+      <div class="grammar-card"><strong>The Whole Idea</strong><div>that / what / whoever / whether</div></div>
+    </div>
+    
+  </section>
+
+  <!-- 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head"><span class="badge">1</span><h2>Quick recall</h2><span class="tag">warm up</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Which shape?</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g1-1"><div class="stem">Although it had been raining for hours, she still went out.</div><label><input type="radio" class="choice" name="g1-1" data-correct="true"> Why or When</label><label><input type="radio" class="choice" name="g1-1"> Which One</label><label><input type="radio" class="choice" name="g1-1"> The Whole Idea</label></div>
+      <div class="mcq" data-group="g1-2"><div class="stem">The student who had studied for months finally passed.</div><label><input type="radio" class="choice" name="g1-2"> Why or When</label><label><input type="radio" class="choice" name="g1-2" data-correct="true"> Which One</label><label><input type="radio" class="choice" name="g1-2"> The Whole Idea</label></div>
+      <div class="mcq" data-group="g1-3"><div class="stem">What surprised us was that he had finished early.</div><label><input type="radio" class="choice" name="g1-3"> Why or When</label><label><input type="radio" class="choice" name="g1-3"> Which One</label><label><input type="radio" class="choice" name="g1-3" data-correct="true"> The Whole Idea</label></div>
+      <div class="mcq" data-group="g1-4"><div class="stem">She smiled when she saw the gift that I had wrapped so badly.</div><label><input type="radio" class="choice" name="g1-4" data-correct="true"> Why or When</label><label><input type="radio" class="choice" name="g1-4"> Which One</label><label><input type="radio" class="choice" name="g1-4"> The Whole Idea</label></div>
+    </div>
+    <button class="btn" data-check="act1">Check</button><div class="feedback" id="fb-act1" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Read 1 aloud with pause after comma.</p><button class="btn ghost" data-reveal="model1" aria-expanded="false">Show</button><div class="model" id="model1" hidden>Although it had been raining for hours, she still went out.</div></div>
+    <button class="btn ghost" data-complete="act1">Mark complete</button>
+  </section>
+
+  <!-- 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head"><span class="badge">2</span><h2>Speed choose</h2><span class="tag">fast choice</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Pick the small word fast.</p>
+    <div class="exercise">
+      <div class="fill"><span class="lead">1.</span> <input class="answer small" data-accept="although" data-model="Although" aria-label="1"> <span class="tail">she had been working, she kept going.</span></div>
+      <div class="fill"><span class="lead">2. The report</span> <input class="answer small" data-accept="that|which" data-model="that" aria-label="2"> <span class="tail">was sent last week overlooks data.</span></div>
+      <div class="fill"><span class="lead">3. I do not know</span> <input class="answer small" data-accept="what" data-model="what" aria-label="3"> <span class="tail">she has decided.</span></div>
+      <div class="fill"><span class="lead">4.</span> <input class="answer small" data-accept="when" data-model="When" aria-label="4"> <span class="tail">you have finished, tell me what you think.</span></div>
+      <div class="fill"><span class="lead">5. The woman</span> <input class="answer small" data-accept="whom|who" data-model="whom" aria-label="5"> <span class="tail">I spoke to yesterday called again.</span></div>
+      <div class="fill"><span class="lead">6.</span> <input class="answer small" data-accept="that" data-model="That" aria-label="6"> <span class="tail">he has worked so hard explains why he is tired.</span></div>
+    </div>
+    <button class="btn" data-check="act2">Check</button><div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Say 1 and 4 smoothly.</p><button class="btn ghost" data-reveal="model2" aria-expanded="false">Show</button><div class="model" id="model2" hidden>Although she had been working, she kept going. When you have finished, tell me what you think.</div></div>
+    <button class="btn ghost" data-complete="act2">Mark complete</button>
+  </section>
+
+  <!-- 3 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head"><span class="badge">6</span><h2>Your story chain</h2><span class="tag">past narrative</span><span class="done-flag">DONE</span></div>
+    <p class="goal">5 parts, two shapes inside, speak smoothly.</p>
+    <div class="exercise">
+      <label for="t6-1" style="font-weight:700; color:#fff;">1. Although I had been planning for weeks, ...</label><textarea id="t6-1" class="small" placeholder="I still felt nervous when I arrived"></textarea>
+      <label for="t6-2" style="font-weight:700; color:#fff;">2. When I arrived at the place that I had booked, ...</label><textarea id="t6-2" class="small" placeholder="I realised I had left the key"></textarea>
+      <label for="t6-3" style="font-weight:700; color:#fff;">3. What surprised me most was that ...</label><textarea id="t6-3" class="small" placeholder="she had already prepared everything"></textarea>
+      <label for="t6-4" style="font-weight:700; color:#fff;">4. Since that day, I have ...</label><textarea id="t6-4" class="small" placeholder="kept in touch and have visited twice"></textarea>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Read your 4 as one story with pauses.</p><button class="btn ghost" data-reveal="model6" aria-expanded="false">Show example</button><div class="model" id="model6" hidden>Although I had been planning for weeks, I still felt nervous when I arrived at the place that I had booked.</div></div>
+    <button class="btn ghost" data-complete="act6">Mark complete</button>
+  </section>
+
+  <!-- 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head"><span class="badge">7</span><h2>Explain and persuade</h2><span class="tag">Why or When + Whole Idea</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Persuade a friend to join a course.</p>
+    <div class="exercise">
+      <label for="t7-1" style="font-weight:700; color:#fff;">1. Although you have been busy, ...</label><textarea id="t7-1" class="small" placeholder="you will feel better when you try something new"></textarea>
+      <label for="t7-2" style="font-weight:700; color:#fff;">2. What matters most is that ...</label><textarea id="t7-2" class="small" placeholder="you have already tried so hard"></textarea>
+      <label for="t7-3" style="font-weight:700; color:#fff;">3. It is clear that the course, which ... , has helped many.</label><textarea id="t7-3" class="small" placeholder="which starts next week"></textarea>
+      <p class="hint">Try one sentence with two shapes: although + what or that + which.</p>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Say your 3 as one short talk.</p><button class="btn ghost" data-reveal="model7" aria-expanded="false">Show</button><div class="model" id="model7" hidden>Although you have been busy, you will feel better when you try. What matters most is that you have tried. It is clear that the course, which starts next week, has helped many.</div></div>
+    <button class="btn ghost" data-complete="act7">Mark complete</button>
+  </section>
+
+  <!-- 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head"><span class="badge">8</span><h2>Describe and recommend</h2><span class="tag">Which One showcase</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Use whose, whom, where, which with perfect.</p>
+    <div class="exercise">
+      <label for="t8-1" style="font-weight:700; color:#fff;">1. The cafe where I have spent the most time is ...</label><textarea id="t8-1" class="small" placeholder="near the park, which has just been renovated"></textarea>
+      <label for="t8-2" style="font-weight:700; color:#fff;">2. The teacher whose course I took is ...</label><textarea id="t8-2" class="small" placeholder="very kind, who has supported me since I started"></textarea>
+      <label for="t8-3" style="font-weight:700; color:#fff;">3. The friend whom I met while I was living abroad is ...</label><textarea id="t8-3" class="small" placeholder="now nearby, where we often meet"></textarea>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Say one with two pauses for commas.</p><button class="btn ghost" data-reveal="model8" aria-expanded="false">Show</button><div class="model" id="model8" hidden>The cafe where I have spent the most time, which has just been renovated, is near the park.</div></div>
+    <button class="btn ghost" data-complete="act8">Mark complete</button>
+  </section>
+
+  <!-- 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head"><span class="badge">9</span><h2>Smooth or clunky?</h2><span class="tag">pick natural B2</span><span class="done-flag">DONE</span></div>
+    <p class="goal">Choose the smoother B2 version.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g9-1"><div class="stem">A Although it was raining for hours before we went. B Although it had been raining for hours, we went.</div><label><input type="radio" class="choice" name="g9-1"> A</label><label><input type="radio" class="choice" name="g9-1" data-correct="true"> B - had been + comma</label></div>
+      <div class="mcq" data-group="g9-2"><div class="stem">A The house that Jack built it is famous. B The house Jack built is famous.</div><label><input type="radio" class="choice" name="g9-2"> A</label><label><input type="radio" class="choice" name="g9-2" data-correct="true"> B - drop extra it</label></div>
+      <div class="mcq" data-group="g9-3"><div class="stem">A I do not know what has she decided. B I do not know what she has decided.</div><label><input type="radio" class="choice" name="g9-3"> A</label><label><input type="radio" class="choice" name="g9-3" data-correct="true"> B - what she has</label></div>
+      <div class="mcq" data-group="g9-4"><div class="stem">A My brother who lives abroad has just arrived. (one brother) B My brother, who lives abroad, has just arrived.</div><label><input type="radio" class="choice" name="g9-4"> A</label><label><input type="radio" class="choice" name="g9-4" data-correct="true"> B - commas for extra info</label></div>
+      <div class="mcq" data-group="g9-5"><div class="stem">A When I will have finished, I will call you. B When I have finished, I will call you.</div><label><input type="radio" class="choice" name="g9-5"> A</label><label><input type="radio" class="choice" name="g9-5" data-correct="true"> B - have finished not will after when</label></div>
+    </div>
+    <button class="btn" data-check="act9">Check</button><div class="feedback" id="fb-act9" aria-live="polite"></div>
+    <div class="speak"><h3>Say it</h3><p>Read each B smooth version once.</p><button class="btn ghost" data-reveal="model9" aria-expanded="false">Show</button><div class="model" id="model9" hidden>B in each is smoother for B2.</div></div>
+    <button class="btn ghost" data-complete="act9">Mark complete</button>
+  </section>
+
+  <!-- 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head"><span class="badge">10</span><h2>Your 90 seconds Part 2</h2><span class="tag">chain it - B2</span><span class="done-flag">DONE</span></div>
+    <p class="goal">6 longer sentences, 2 with two shapes, mix perfect.</p>
+    <div class="exercise">
+      <label for="a10-1" style="font-weight:700; color:#fff;">Why or When - 1</label><textarea id="a10-1" class="small" placeholder="Although I had been feeling tired, I kept working on the project that I had started while I was still studying."></textarea>
+      <label for="a10-2" style="font-weight:700; color:#fff;">Why or When - 2</label><textarea id="a10-2" class="small" placeholder="When I have finished the draft that you sent, I will tell you what I think."></textarea>
+      <label for="a10-3" style="font-weight:700; color:#fff;">Which One - 1</label><textarea id="a10-3" class="small" placeholder="The cafe that Jack built, which has just been renovated, is famous again."></textarea>
+      <label for="a10-4" style="font-weight:700; color:#fff;">Which One - 2</label><textarea id="a10-4" class="small" placeholder="The person whose advice I trust most has just arrived."></textarea>
+      <label for="a10-5" style="font-weight:700; color:#fff;">The Whole Idea - 1</label><textarea id="a10-5" class="small" placeholder="What surprised me most is that she has never complained."></textarea>
+      <label for="a10-6" style="font-weight:700; color:#fff;">The Whole Idea - 2</label><textarea id="a10-6" class="small" placeholder="I still do not know whether she will have finished by Friday."></textarea>
+      <p class="hint">Aim for two sentences with two shapes inside.</p>
+    </div>
+    <div class="speak"><h3>Say it</h3><p>Read all six as one 90 second flow.</p><button class="btn ghost" data-reveal="model10" aria-expanded="false">Show starters</button><div class="model" id="model10" hidden>When I have finished the draft that you sent, I will tell you what I really think, although it has been difficult to focus.</div></div>
+    <button class="btn ghost" data-complete="act10">Mark complete - unlock certificate</button>
+  </section>
+
+  <section class="results" id="results" hidden aria-label="Results">
+    <h2>Great job, Shirley! - Part 2 Done</h2>
+    <p>You chained two shapes and kept it smooth.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+      <div class="score-box"><div class="n" id="rDone">0 / 7</div><div class="l">Activities</div></div>
+    </div>
+    <div class="cert" id="cert">
+      <h3>CERTIFICATE</h3>
+      <div class="sub">Make It Flow - B2 Part 2</div>
+      <div class="who" id="certName">Shirley</div>
+      <div class="sub">Chaining Why or When, Which One, Whole Idea with perfect</div>
+      <div class="badge-line">Badge: Fluent Chainer - B2</div>
+      <div class="sub" id="certDate"></div>
+    </div>
+    <p><label for="certLearnerName" style="font-weight:700;">Name for certificate:</label><br><input class="answer" id="certLearnerName" style="min-width:220px; margin-top:.4rem; text-align:center;" aria-label="Name for certificate" placeholder="Shirley"></p>
+    <button class="btn" id="printBtn">Print or save as PDF</button>
+    <p class="hint">Part 1 + Part 2 together: 20 activities.</p>
+  </section>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Make It Flow - B2 Part 2 - Shirley - 02-09-2026 - 7 activities - Continuation</p>
+  <p>Free examples adapted from British Council LearnEnglish and BBC Learning English - WCAG 2.1 AA</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var TOTAL_ACTS = 7;
+  var state = { points: 0, streak: 0, best: 0, correct: 0, total: 0, done: 0 };
+  document.querySelectorAll(".answer[data-accept]").forEach(function () { state.total++; });
+  document.querySelectorAll(".mcq").forEach(function () { state.total++; });
+  function norm(s) { return (s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[.?!,]+$/, ""); }
+  function $(id) { return document.getElementById(id); }
+  function updateHUD() { $("points").textContent = state.points + " XP"; $("streak").textContent = "Streak " + state.streak; $("progText").textContent = state.done + " / " + TOTAL_ACTS + " complete"; $("bar").style.width = (state.done / TOTAL_ACTS * 100) + "%"; if ($("rDone")) $("rDone").textContent = state.done + " / " + TOTAL_ACTS; }
+  function markInput(inp, ok) {
+    inp.classList.toggle("correct", ok); inp.classList.toggle("wrong", !ok); inp.setAttribute("aria-invalid", ok ? "false" : "true");
+    var m = inp.parentNode.querySelector(".mark"); if (!m) { m = document.createElement("span"); m.className = "mark"; inp.parentNode.appendChild(m); }
+    m.textContent = ok ? "Correct" : "Try again"; m.className = "mark " + (ok ? "ok" : "no");
+  }
+  function handleCheck(secId) {
+    var sec = $(secId); var fb = $("fb-" + secId); if (!sec || !fb) return;
+    var earnedNow = 0, anyWrong = false, anyEmpty = true, wrongList = "";
+    sec.querySelectorAll(".answer[data-accept]").forEach(function (inp) {
+      var val = norm(inp.value); if (!val) return; anyEmpty = false;
+      var accepts = inp.dataset.accept.split("|").map(norm);
+      var ok = accepts.some(function (a) { return val.indexOf(a) !== -1; });
+      markInput(inp, ok);
+      if (ok) { if (!inp.dataset.done) { inp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; } if (state.streak > state.best) state.best = state.streak; }
+      else { anyWrong = true; state.streak = 0; wrongList += "<li>Try <b>" + inp.dataset.model + "</b></li>"; }
+    });
+    sec.querySelectorAll(".mcq").forEach(function (grp) {
+      var chosen = grp.querySelector("input.choice:checked"); if (!chosen) return; anyEmpty = false;
+      var ok = chosen.dataset.correct === "true";
+      grp.querySelectorAll("label").forEach(function (l) { l.classList.remove("correct", "wrong"); });
+      if (ok) { chosen.closest("label").classList.add("correct"); if (!grp.dataset.done) { grp.dataset.done = "1"; state.points += 10; state.correct++; state.streak++; earnedNow += 10; } if (state.streak > state.best) state.best = state.streak; }
+      else { anyWrong = true; state.streak = 0; chosen.closest("label").classList.add("wrong"); var ci = grp.querySelector("input.choice[data-correct=true]"); if (ci) ci.closest("label").classList.add("correct"); var stem = grp.querySelector(".stem"); var name = stem ? stem.textContent : "Question"; wrongList += "<li>" + name + " - highlighted is correct.</li>"; }
+    });
+    if (anyEmpty) {
+      var hasAny = false; sec.querySelectorAll(".answer[data-accept]").forEach(function(i){ if(norm(i.value)) hasAny=true; }); sec.querySelectorAll(".mcq input.choice:checked").forEach(function(){ hasAny=true; });
+      if (!hasAny) { fb.className = "feedback bad"; fb.innerHTML = "Answer at least one, then press Check."; updateHUD(); return; }
+    }
+    if (anyWrong) { fb.className = "feedback bad"; fb.innerHTML = "+" + earnedNow + " XP this round." + (wrongList ? "<ul>" + wrongList + "</ul>" : "") + " Fix Try again and press Check again."; }
+    else { fb.className = "feedback good"; fb.innerHTML = earnedNow > 0 ? "All correct! +" + earnedNow + " XP. Keep streak!" : "All correct! Already earned XP, nice consistency!"; }
+    updateHUD();
+  }
+  document.querySelectorAll("[data-check]").forEach(function (btn) { btn.addEventListener("click", function () { handleCheck(btn.dataset.check); }); });
+  document.querySelectorAll("[data-reveal]").forEach(function (btn) { btn.addEventListener("click", function () { var el = $(btn.dataset.reveal); var h = el.hasAttribute("hidden"); if (h) { el.removeAttribute("hidden"); btn.setAttribute("aria-expanded", "true"); btn.textContent = "Hide model"; } else { el.setAttribute("hidden", ""); btn.setAttribute("aria-expanded", "false"); btn.textContent = "Show model"; } }); });
+  document.querySelectorAll("[data-complete]").forEach(function (btn) { btn.addEventListener("click", function () { var sec = $(btn.dataset.complete); if (!sec || sec.classList.contains("complete")) return; sec.classList.add("complete"); state.done++; updateHUD(); sec.scrollIntoView({ block: "start", behavior: "smooth" }); if (state.done >= TOTAL_ACTS) showResults(); }); });
+  function showResults() { var acc = state.total ? Math.round(state.correct / state.total * 100) : 0; $("rPoints").textContent = state.points; $("rAcc").textContent = acc + "%"; $("rStreak").textContent = state.best; $("certDate").textContent = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }); $("results").removeAttribute("hidden"); $("results").scrollIntoView({ block: "start", behavior: "smooth" }); launchConfetti(); }
+  var nameInput = $("certLearnerName"); if (nameInput) nameInput.addEventListener("input", function () { var n = this.value.trim(); $("certName").textContent = n || "Shirley"; });
+  var printBtn = $("printBtn"); if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+  function launchConfetti() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c = $("confetti"), ctx = c.getContext("2d"); if (!c || !ctx) return;
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    var colors = ["#ffd400", "#38e0c8", "#ffffff", "#ff8a8a", "#9ad0ff"];
+    var parts = []; for (var i=0;i<120;i++) parts.push({ x: Math.random()*c.width, y: Math.random()*c.height - c.height, r: 4+Math.random()*6, vx: -1+Math.random()*2, vy: 2+Math.random()*4, col: colors[i%colors.length], a: Math.random()*Math.PI });
+    var t=0; function frame(){ t++; ctx.clearRect(0,0,c.width,c.height); parts.forEach(function(p){ p.x+=p.vx; p.y+=p.vy; p.a+=0.05; if(p.y>c.height) p.y=-10; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle=p.col; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6); ctx.restore(); }); if(t<300) requestAnimationFrame(frame); else ctx.clearRect(0,0,c.width,c.height); }
+    frame();
+  }
+  updateHUD();
+})();
+</script>
+<script src="../../xapi-include.js" defer></script>
+</body>
+</html>
