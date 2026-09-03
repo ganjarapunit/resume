@@ -500,8 +500,8 @@
       <div class="sub" id="certDate"></div>
     </div>
     <p>
-      <label for="learnerName" style="font-weight:700;">Name for certificate:</label><br>
-      <input class="answer" id="learnerName" style="min-width:220px;margin-top:.4rem;" aria-label="Your name for the certificate">
+      <label for="certLearnerName" style="font-weight:700;">Name for certificate:</label><br>
+      <input class="answer" id="certLearnerName" style="min-width:220px;margin-top:.4rem;" aria-label="Your name for the certificate">
     </p>
     <button class="btn" id="printBtn">Print or save as PDF</button>
   </section>
@@ -633,7 +633,7 @@
     $("results").scrollIntoView({block:"start",behavior:"smooth"});
     launchConfetti();
   }
-  $("learnerName").addEventListener("input",function(){
+  $("certLearnerName").addEventListener("input",function(){
     var n=this.value.trim();
     $("certName").textContent=n||"Annisa";
   });
@@ -657,59 +657,67 @@
   updateHUD();
 })();
 </script>
+
+<script src="../../xapi-include.js" defer></script>
 <script>
-(function(){
-  "use strict";
-  var LRS={endpoint:"https://game.lrs.io/xapi/",username:"15c3b9ec-a224-4400-a4b6-8d5689141737",password:"14e0c46b-ee82-4f7a-af05-4ee330e68aae"};
-  var LESSON_ID="https://ef-teach.example/lessons/"+(location.pathname.split("/").pop()||"lesson");
-  var LEARNER="";
-  var VERBS={launched:["http://adlnet.gov/expapi/verbs/launched","launched"],answered:["http://adlnet.gov/expapi/verbs/answered","answered"],marked:["https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete","marked as complete"],experienced:["http://id.tincanapi.com/verb/experienced","experienced"]};
-  var sentChecks={},completed={};
-  function send(verbKey,objectId,objectName){
-    if(!LRS.endpoint||LRS.endpoint.indexOf("YOUR_LRS")!==-1) return;
-    var v=VERBS[verbKey];
-    var stmt={actor:{objectType:"Agent",name:LEARNER||"Anonymous Learner",account:{homePage:"https://ef-teach.example",name:LEARNER||"anonymous-learner"}},verb:{id:v[0],display:{"en-US":v[1]}},object:{id:objectId,definition:{name:{"en-US":objectName}}},timestamp:new Date().toISOString(),context:{contextActivities:{parent:[{id:LESSON_ID}]}}};
-    try{var xhr=new XMLHttpRequest();xhr.open("POST",LRS.endpoint+"statements",true);xhr.setRequestHeader("Authorization","Basic "+btoa(LRS.username+":"+LRS.password));xhr.setRequestHeader("Content-Type","application/json");xhr.setRequestHeader("X-Experience-API-Version","1.0.3");xhr.send(JSON.stringify(stmt));}catch(e){}
+// Annisa Day 1 - precise verbs/objects preserved via proxy LRS (mirrors original html logic)
+// Keeps launched / answered (per item with LessonId/secId/item-n) / marked-as-complete / experienced
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
   }
-  var login=document.getElementById("login"),loginInput=document.getElementById("loginName"),loginStart=document.getElementById("loginStart");
-  if(loginInput) loginInput.focus();
-  function startLesson(){
-    LEARNER=(loginInput.value||"").trim()||"Annisa";
-    if(login) login.setAttribute("hidden","");
-    var cn=document.getElementById("learnerName");if(cn){cn.value=LEARNER;cn.dispatchEvent(new Event("input"));}
-    send("launched",LESSON_ID,document.title);
-  }
-  if(loginStart) loginStart.addEventListener("click",startLesson);
-  if(loginInput) loginInput.addEventListener("keydown",function(e){if(e.key==="Enter") startLesson();});
   var OPEN_ACTS={act1:1,act6:1,act7:1,act8:1,act10:1};
-  document.querySelectorAll("[data-check]").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var secId=btn.getAttribute("data-check");
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
       if(OPEN_ACTS[secId]) return;
       if(sentChecks[secId]) return;
       sentChecks[secId]=true;
-      var sec=document.getElementById(secId),n=0;
-      sec.querySelectorAll(".answer,.mcq").forEach(function(item){
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
         n++;
-        var name="Item "+n;
-        var stem=item.querySelector?item.querySelector(".stem"):null;
-        if(stem) name=stem.textContent;
-        else if(item.getAttribute("aria-label")) name=item.getAttribute("aria-label");
-        send("answered",LESSON_ID+"/"+secId+"/item-"+n,secId+": "+name);
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
       });
     });
   });
-  document.querySelectorAll("[data-complete]").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var secId=btn.getAttribute("data-complete");
-      var sec=document.getElementById(secId);
-      if(sec.classList.contains("complete")) return;
-      if(OPEN_ACTS[secId]) send("marked",LESSON_ID+"/"+secId,secId+" open answers");
-      completed[secId]=true;
-      if(Object.keys(completed).length>=10) send("experienced",LESSON_ID,document.title);
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
     });
   });
-})();
+});
 </script>
 </body>
 </html>

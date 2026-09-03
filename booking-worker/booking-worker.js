@@ -29,6 +29,9 @@ export default {
     if (url.pathname.endsWith('/needs-analysis')) {
       return handleNeedsAnalysis(request, env, corsHeaders);
     }
+    if (url.pathname.endsWith('/submission') || url.pathname.endsWith('/writing-submission')) {
+      return handleSubmission(request, env, corsHeaders);
+    }
 
     let data;
     try {
@@ -226,6 +229,144 @@ async function handleNeedsAnalysis(request, env, corsHeaders) {
 
   return new Response(JSON.stringify({ ok: true }),
     { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+}
+
+async function handleSubmission(request, env, corsHeaders) {
+  let data;
+  try {
+    data = await request.json();
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'Invalid JSON' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }
+
+  // Support single submission or batch
+  const submissions = Array.isArray(data.submissions) ? data.submissions : [data];
+  const timestamp = new Date().toISOString();
+  const results = [];
+
+  for (const sub of submissions) {
+    const name = String(sub.name || data.name || '').trim();
+    const email = String(sub.email || data.email || '').trim();
+    const lesson = String(sub.lesson || data.lesson || '').trim();
+    const lessonTitle = String(sub.lessonTitle || data.lessonTitle || lesson).trim();
+    const activityId = String(sub.activityId || data.activityId || '').trim();
+    const activityTitle = String(sub.activityTitle || data.activityTitle || activityId).trim();
+    const text = String(sub.text || data.text || '').trim();
+    const activityType = String(sub.activityType || data.activityType || 'writing').trim();
+
+    if (!name || !lesson || !text) {
+      results.push({ ok: false, error: 'Missing name, lesson or text', activityId });
+      continue;
+    }
+    if (text.length < 2) {
+      results.push({ ok: false, error: 'Text too short', activityId });
+      continue;
+    }
+    // Truncate very long texts for email (keep full for Sheet)
+    const shortText = text.length > 2000 ? text.slice(0, 2000) + '…' : text;
+
+    const emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOk) {
+      results.push({ ok: false, error: 'Invalid email', activityId });
+      continue;
+    }
+
+    const subject = `[Writing] ${name} — ${lessonTitle} — ${activityTitle}`;
+    const textBody = `New writing submission
+
+Name: ${name}
+${email ? 'Email: ' + email + '\n' : ''}Lesson: ${lessonTitle} (${lesson})
+Activity: ${activityTitle} (${activityId})
+Type: ${activityType}
+Time: ${timestamp}
+
+Text:
+${text}
+
+---
+View all submissions in your Google Sheet. Reply to this email to give feedback.`;
+
+    const htmlBody = `<h2>New writing submission</h2>
+<p><strong>Name:</strong> ${escapeHtml(name)}${email ? '<br><strong>Email:</strong> ' + escapeHtml(email) : ''}<br>
+<strong>Lesson:</strong> ${escapeHtml(lessonTitle)} (${escapeHtml(lesson)})<br>
+<strong>Activity:</strong> ${escapeHtml(activityTitle)} (${escapeHtml(activityId)})<br>
+<strong>Type:</strong> ${escapeHtml(activityType)}<br>
+<strong>Time:</strong> ${escapeHtml(timestamp)}</p>
+<div style="background:#f4f6fb;border:2px solid #c9d4e6;border-radius:10px;padding:14px;white-space:pre-wrap;font-family:monospace;">${escapeHtml(text)}</div>
+<p style="color:#5b6678;font-size:.9rem;">All submissions are also logged to your Google Sheet. Reply to give feedback.</p>`;
+
+    try {
+      const res = await sendBrevo(env, {
+        sender: { name: 'EFL Writing Submission', email: 'punit@punitganjara.com' },
+        to: [{ email: 'ganjarapunit@gmail.com', name: 'Punit Ganjara' }],
+        replyTo: email ? { email: email, name: name } : { email: 'ganjarapunit@gmail.com', name: name },
+        subject: subject,
+        textContent: textBody,
+        htmlContent: htmlBody
+      });
+      if (!res.ok) {
+        const detail = await res.text();
+        results.push({ ok: false, error: 'Email failed', detail, activityId });
+        continue;
+      }
+    } catch (e) {
+      results.push({ ok: false, error: 'Email send error', activityId });
+      continue;
+    }
+
+    // Forward to Google Sheet webhook if configured
+    if (env.GOOGLE_SHEET_WEBHOOK_URL) {
+      try {
+        await fetch(env.GOOGLE_SHEET_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: timestamp,
+            name: name,
+            email: email,
+            lesson: lesson,
+            lessonTitle: lessonTitle,
+            activityId: activityId,
+            activityTitle: activityTitle,
+            activityType: activityType,
+            text: text,
+            url: lesson
+          })
+        });
+      } catch (e) {
+        console.error('Sheet webhook failed', e);
+      }
+    }
+
+    // Also optionally forward to a Google Docs webhook if configured
+    if (env.GOOGLE_DOCS_WEBHOOK_URL) {
+      try {
+        await fetch(env.GOOGLE_DOCS_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: timestamp,
+            name: name,
+            email: email,
+            lesson: lesson,
+            lessonTitle: lessonTitle,
+            activityId: activityId,
+            activityTitle: activityTitle,
+            text: text
+          })
+        });
+      } catch (e) {
+        console.error('Docs webhook failed', e);
+      }
+    }
+
+    results.push({ ok: true, activityId });
+  }
+
+  const allOk = results.every(r => r.ok);
+  return new Response(JSON.stringify({ ok: allOk, results }),
+    { status: allOk ? 200 : 207, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 }
 
 async function handleReview(request, env, corsHeaders) {

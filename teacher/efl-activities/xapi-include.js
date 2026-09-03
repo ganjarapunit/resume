@@ -225,6 +225,49 @@
       var id = lessonActivityId() + '#' + slug;
       emit(verb, { objectType: 'Activity', id: id }, { name: name, definition: { type: 'http://adlnet.gov/expapi/activities/' + (type || 'item'), description: { 'en-US': name } } });
     }
+    // --- Writing submission to Google Sheets/Docs (ganjarapunit@gmail.com) + email ---
+    var SUBMISSION_ENDPOINT = HOME + '/api/submission';
+    var submittedCache = new Set();
+    function submitWriting(activityEl, text, fieldId, fieldType){
+      if(!text || text.trim().length < 3) return;
+      var key = (activityEl.id || 'unknown') + '|' + (fieldId || 'field') + '|' + text.trim().substring(0,40);
+      if(submittedCache.has(key)) return;
+      submittedCache.add(key);
+      var l = learner() || {name:'Guest', email:''};
+      var payload = {
+        name: l.name || 'Guest',
+        email: l.email || '',
+        lesson: location.pathname,
+        lessonTitle: document.title,
+        activityId: activityEl.id || 'unknown',
+        activityTitle: (activityEl.querySelector('h2') ? activityEl.querySelector('h2').textContent.trim().substring(0,80) : activityEl.id),
+        text: text.trim().substring(0, 5000),
+        activityType: fieldType || 'writing',
+        url: location.href,
+        timestamp: new Date().toISOString()
+      };
+      fetch(SUBMISSION_ENDPOINT, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+    }
+    // Auto-submit all writing in an activity on Check / Mark complete
+    function submitActivityWritings(activityEl){
+      if(!activityEl) return;
+      var fields = activityEl.querySelectorAll('textarea, input.answer');
+      fields.forEach(function(f){
+        if(!f.value || !f.value.trim()) return;
+        // For gap-fills, only submit if meaningful (wide or multi-word)
+        if(f.tagName === 'INPUT' && !f.classList.contains('wide') && f.value.trim().split(/\s+/).length < 3){
+          var isOpenAct = /act1|act6|act7|act8|act10|act14|act15/.test(activityEl.id);
+          if(!isOpenAct) return;
+        }
+        if(f.value.trim().length < 3) return;
+        submitWriting(activityEl, f.value, f.id || f.name || 'field', f.tagName === 'TEXTAREA' ? 'writing' : 'gap-fill');
+      });
+    }
+
     // Check answers -> checked, Mark done/complete -> completed, View script/model -> viewed
     document.querySelectorAll('[data-check]').forEach(function(btn){
       btn.addEventListener('click', function(){
@@ -232,6 +275,8 @@
         var heading = sec ? (sec.querySelector('.act-head h2') || sec.querySelector('h2') || sec.querySelector('h3')) : null;
         var itemName = heading ? heading.textContent.trim() : btn.dataset.check;
         sendItem(VERBS.checked, itemName, 'assessment');
+        // Submit any writing in this activity to Google Sheets
+        setTimeout(function(){ submitActivityWritings(sec); }, 200);
       });
     });
     document.querySelectorAll('[data-complete]').forEach(function(btn){
@@ -241,6 +286,7 @@
         var heading = sec.querySelector('.act-head h2') || sec.querySelector('h2');
         var itemName = heading ? heading.textContent.trim() : btn.dataset.complete;
         sendItem(VERBS.completed, itemName, 'activity');
+        setTimeout(function(){ submitActivityWritings(sec); }, 200);
       });
     });
     document.querySelectorAll('[data-reveal]').forEach(function(btn){
@@ -313,9 +359,24 @@
           var label = act.querySelector('label[for="'+ta.id+'"]');
           var itemText = label ? label.textContent.trim().substring(0,60) : ta.id;
           sendItem(v, act.id + ': ' + itemText, isPredict ? 'prediction' : (isReflect ? 'reflection' : 'writing'));
+          // Also submit to Google Sheets/Docs for teacher feedback
+          if(ta.value.trim().length >= 5) submitWriting(act, ta.value, ta.id, isPredict ? 'prediction' : (isReflect ? 'reflection' : 'writing'));
         };
         ta.addEventListener('change', handler);
         ta.addEventListener('blur', handler);
+      });
+      // Also capture gap-fill writing inputs (input.answer) for feedback tracking
+      act.querySelectorAll('input.answer').forEach(function(inp){
+        var inpHandler = function(){
+          if(!inp.value.trim() || inp.value.trim().length < 2) return;
+          // Only submit meaningful writing (not single-word gap fills that are auto-graded)
+          // We submit if the input is wide (longer answer) or part of an open writing activity
+          var isOpen = /act1|act6|act7|act8|act10|act14|act15/.test(act.id) || inp.classList.contains('wide') || inp.closest('.speak');
+          if(!isOpen && inp.value.trim().split(/\s+/).length < 3) return;
+          submitWriting(act, inp.value, inp.id || inp.name || 'input', 'gap-fill');
+        };
+        inp.addEventListener('change', inpHandler);
+        inp.addEventListener('blur', inpHandler);
       });
       act.querySelectorAll('audio').forEach(function(aud){
         aud.addEventListener('play', function(){
