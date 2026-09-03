@@ -54,25 +54,16 @@ function doPost(e) {
     });
     
     return ContentService.createTextOutput(JSON.stringify({ ok: true, docs: docs }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ ok: false, error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({ ok: true, message: 'EFL Writing Webhook is live. POST writing submissions here.' }))
     .setMimeType(ContentService.MimeType.JSON);
-}
-
-function doOptions(e) {
-  return ContentService.createTextOutput('')
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 function getOrCreateSheet() {
