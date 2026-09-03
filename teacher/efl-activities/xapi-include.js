@@ -268,6 +268,135 @@
       });
     }
 
+    // --- Explicit Submit buttons: only for REAL writing tasks (not warm-ups, speak-notes, reflections, goals, single-sentence drills) ---
+    // Allowlist by file + activity + field. Multi-part drafts (story chains, 90-sec sets, thesis pairs) share one button per activity.
+    var REAL_WRITING = [
+      { file: 'annisa-day04', act: 'act8', fields: ['sp8'] },
+      { file: 'annisa-day04', act: 'act9', fields: ['sp9a', 'sp9b'] },
+      { file: 'annisa-day03', act: 'act7', fields: ['sp7'] },
+      { file: 'annisa-day03', act: 'act8', fields: ['sp8'] },
+      { file: 'annisa-day03', act: 'act9', fields: ['sp9'] },
+      { file: 'annisa-day02', act: 'act7', fields: ['sp7'] },
+      { file: 'annisa-day02', act: 'act8', fields: ['sp8'] },
+      { file: 'annisa-day02', act: 'act9', fields: ['sp9'] },
+      { file: 'complex-clauses-b2-part2', act: 'act6', fields: ['t6-1', 't6-2', 't6-3', 't6-4'] },
+      { file: 'complex-clauses-b2-part2', act: 'act7', fields: ['t7-1', 't7-2', 't7-3'] },
+      { file: 'complex-clauses-b2-part2', act: 'act10', fields: ['a10-1', 'a10-2', 'a10-3', 'a10-4', 'a10-5', 'a10-6'] },
+      { file: 'complex-clauses-b2-shirley', act: 'act10', fields: ['a10-1', 'a10-2', 'a10-3', 'a10-4', 'a10-5', 'a10-6'] },
+      { file: 'adverbial-wh-clauses', act: 'act14', fields: ['a14-3', 'a14-4', 'a14-5'] },
+      { file: 'adverbial-wh-clauses', act: 'act15', fields: ['a15-draft'] },
+      { file: 'conditionals-review', act: 'act9', fields: ['a9a'] },
+      { file: 'listening-skills-interview', act: 'act7', fields: ['sp7'] },
+      { file: 'listening-skills-interview', act: 'act8', fields: ['sp8'] },
+      { file: 'listening-skills-interview', act: 'act9', fields: ['sp9'] },
+      { file: 'delta', act: 'a10', fields: ['writeBox'] }
+    ];
+    function fileTag(){
+      var f = location.pathname.toLowerCase();
+      if (f.indexOf('delta') > -1) return 'delta';
+      if (f.indexOf('complex-clauses-b2-part2') > -1) return 'complex-clauses-b2-part2';
+      if (f.indexOf('complex-clauses') > -1) return 'complex-clauses-b2-shirley';
+      if (f.indexOf('adverbial-wh-clauses') > -1) return 'adverbial-wh-clauses';
+      if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
+      if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
+      if (f.indexOf('annisa-day04') > -1) return 'annisa-day04';
+      if (f.indexOf('annisa-day03') > -1) return 'annisa-day03';
+      if (f.indexOf('annisa-day02') > -1) return 'annisa-day02';
+      return '';
+    }
+    function fieldLabel(container, ta){
+      var lab = container.querySelector('label[for="' + ta.id + '"]');
+      var t = lab ? lab.textContent.trim().replace(/\s+/g, ' ').substring(0, 60) : '';
+      if (!t) t = ta.getAttribute('aria-label') || ta.getAttribute('placeholder') || ta.id;
+      return String(t).trim().substring(0, 60);
+    }
+    function injectSubmitButtons(){
+      var tag = fileTag();
+      if (!tag) return;
+      var seen = {};
+      var containers = document.querySelectorAll('.activity, article.card');
+      containers.forEach(function(container){
+        if (!container.id || seen[container.id]) return;
+        seen[container.id] = true;
+        var rule = null;
+        for (var i = 0; i < REAL_WRITING.length; i++){
+          if (REAL_WRITING[i].file === tag && REAL_WRITING[i].act === container.id){ rule = REAL_WRITING[i]; break; }
+        }
+        if (!rule) return;
+        var fields = [];
+        rule.fields.forEach(function(fid){
+          var ta = document.getElementById(fid);
+          if (ta && container.contains(ta) && ta.tagName === 'TEXTAREA') fields.push(ta);
+        });
+        if (!fields.length || container.querySelector('.wsubmit-wrap')) return;
+        var anchor = container.querySelector('.exercise') || container.querySelector('fieldset') || container.querySelector('.activity-body') || container;
+        var wrap = document.createElement('div');
+        wrap.className = 'wsubmit-wrap';
+        wrap.setAttribute('style', 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn wsubmit-btn';
+        btn.textContent = fields.length > 1 ? 'Submit writing for feedback (' + fields.length + ' parts)' : 'Submit writing for feedback';
+        btn.setAttribute('aria-label', 'Submit your writing in this activity to your teacher for feedback');
+        var status = document.createElement('span');
+        status.className = 'wsubmit-status';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        status.setAttribute('style', 'font-size:.88rem;font-weight:700;');
+        wrap.appendChild(btn);
+        wrap.appendChild(status);
+        anchor.appendChild(wrap);
+        btn.addEventListener('click', function(){
+          var parts = [];
+          fields.forEach(function(ta){
+            var v = (ta.value || '').trim();
+            if (v.length >= 3) parts.push('[' + fieldLabel(container, ta) + ']\n' + v.substring(0, 2500));
+          });
+          var combined = parts.join('\n\n').trim();
+          if (!combined || combined.replace(/\[.*?\]/g, '').trim().length < 15){
+            status.textContent = 'Write at least a sentence first, then submit.';
+            fields[0].focus();
+            return;
+          }
+          btn.disabled = true;
+          var origText = btn.textContent;
+          btn.textContent = 'Sending...';
+          status.textContent = '';
+          var l = learner() || { name: 'Guest', email: '' };
+          var h = container.querySelector('h2');
+          var payload = {
+            name: l.name || 'Guest',
+            email: l.email || '',
+            lesson: location.pathname,
+            lessonTitle: document.title,
+            activityId: container.id,
+            activityTitle: (h ? h.textContent.trim().substring(0, 80) : container.id),
+            text: combined.substring(0, 5000),
+            activityType: 'writing-submit',
+            url: location.href,
+            timestamp: new Date().toISOString()
+          };
+          fetch(SUBMISSION_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).then(function(r){
+            if (!r.ok) throw new Error('bad status');
+            return r.json().catch(function(){ return {}; });
+          }).then(function(){
+            try { submittedCache.add(container.id + '|submit|' + combined.substring(0, 40)); } catch (e) {}
+            status.textContent = 'Submitted. Punit will give feedback.';
+            btn.textContent = 'Submitted. Send again if you edit.';
+            btn.disabled = false;
+          }).catch(function(){
+            status.textContent = 'Could not submit. Check connection and try again.';
+            btn.textContent = origText;
+            btn.disabled = false;
+          });
+        });
+      });
+    }
+
     // Check answers -> checked, Mark done/complete -> completed, View script/model -> viewed
     document.querySelectorAll('[data-check]').forEach(function(btn){
       btn.addEventListener('click', function(){
@@ -389,6 +518,8 @@
         });
       });
     });
+
+    injectSubmitButtons();
 
     document.addEventListener('submit', function () { window.LRS.answered(); window.LRS.completed(); });
     var terminate = function () { send({ verb: VERBS.terminated, object: lessonAct }); };
