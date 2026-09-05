@@ -353,16 +353,9 @@
       <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
       <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
     </div>
-    <div class="cert" id="cert">
-      <h3>CERTIFICATE OF COMPLETION</h3>
-      <div class="sub">C1 Selective Attention - Three Extracts Separate, Three Texts Separate</div>
-      <div class="who" id="certName">Learner</div>
-      <div class="sub">completed 10 activities with clear separation</div>
-      <div class="badge-line" id="certBadge">Badge: Precise Listener-Reader</div>
-      <div class="sub" id="certDate"></div>
-    </div>
-    <p><label for="learnerName" style="font-weight:700">Enter name for certificate:</label><br><input class="answer" id="learnerName" style="min-width:240px;margin-top:.4rem" aria-label="Your name for the certificate"></p>
-    <button class="btn" id="printBtn">Print or save as PDF</button>
+    
+    
+    
     <div class="credit" style="margin-top:1rem;text-align:left"><strong>Credit:</strong> Audio from engxam.com. Reading from examenglish.com. Thank you to the owners.</div>
   </section>
   <canvas id="confetti" aria-hidden="true"></canvas>
@@ -416,52 +409,8 @@
     });
   });
   document.querySelectorAll("[data-complete]").forEach(function(btn){btn.addEventListener("click",function(){var sec=$(btn.dataset.complete);if(sec.classList.contains("complete"))return;sec.classList.add("complete");state.done++;updateHUD();sec.scrollIntoView({block:"start",behavior:"smooth"});if(state.done>=TOTAL_ACTS)showResults()})});
-  function showResults(){var acc=state.total?Math.round(state.correct/state.total*100):0;$("rPoints").textContent=state.points;$("rAcc").textContent=acc+"%";$("rStreak").textContent=state.best;$("certDate").textContent=new Date().toLocaleDateString();$("results").removeAttribute("hidden");$("results").scrollIntoView({block:"start",behavior:"smooth"});launchConfetti()}
-  $("learnerName").addEventListener("input",function(){var n=this.value.trim();$("certName").textContent=n||"Learner"});
-  $("printBtn").addEventListener("click",function(){window.print()});
-  function launchConfetti(){
-    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var c=$("confetti"),ctx=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
-    var colors=["#ffd400","#38e0c8","#ffffff","#ff8a8a","#9ad0ff"];var parts=[];
-    for(var i=0;i<140;i++)parts.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*0.4,vx:(Math.random()-0.5)*3,vy:2+Math.random()*3,s:4+Math.random()*6,col:colors[i%colors.length]});
-    var t0=Date.now();function frame(){ctx.clearRect(0,0,c.width,c.height);parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=0.03;ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,p.s,p.s)});if(Date.now()-t0<2600)requestAnimationFrame(frame);else ctx.clearRect(0,0,c.width,c.height)}frame();
-  }
-
-  // Recording feature for speaking tasks
-  (function(){
-    const ids = ["sp9"];
-    ids.forEach(id => {
-      const btnRec = document.querySelector(`[data-record="${id}"]`);
-      const btnStop = document.querySelector(`[data-stop="${id}"]`);
-      const btnPlay = document.querySelector(`[data-play="${id}"]`);
-      const status = document.querySelector(`[data-status="${id}"]`);
-      const audio = document.querySelector(`[data-audio="${id}"]`);
-      let mediaRecorder, chunks = [], stream;
-      if(!btnRec) return;
-      btnRec.addEventListener("click", async () => {
-        try {
-          stream = await navigator.mediaDevices.getUserMedia({audio:true});
-          chunks = [];
-          mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.ondataavailable = e => { if(e.data.size>0) chunks.push(e.data); };
-          mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, {type:"audio/webm"});
-            const url = URL.createObjectURL(blob);
-            audio.src = url;
-            audio.style.display = "block";
-            btnPlay.disabled = false;
-            status.textContent = "Ready to play. Listen and re-record if needed.";
-            stream.getTracks().forEach(t=>t.stop());
-          };
-          mediaRecorder.start();
-          btnRec.disabled = true;
-          btnStop.disabled = false;
-          btnPlay.disabled = true;
-          status.textContent = "Recording... speak now.";
-        } catch(err) {
-          status.textContent = "Microphone blocked. Check browser permission.";
-        }
-      });
+  function showResults(){var acc=state.total?Math.round(state.correct/state.total*100):0;$("rPoints").textContent=state.points;$("rAcc").textContent=acc+"%";$("rStreak").textContent=state.best;$("results").removeAttribute("hidden");$("results").scrollIntoView({block:"start",behavior:"smooth"});launchConfetti()}
+  
       btnStop.addEventListener("click", () => {
         if(mediaRecorder && mediaRecorder.state==="recording"){
           mediaRecorder.stop();

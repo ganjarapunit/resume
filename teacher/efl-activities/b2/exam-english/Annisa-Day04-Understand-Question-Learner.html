@@ -461,19 +461,9 @@
       <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
       <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
     </div>
-    <div class="cert" id="cert">
-      <h3>CERTIFICATE</h3>
-      <div class="sub">Day 4 Understand the Question</div>
-      <div class="who" id="certName">Annisa</div>
-      <div class="sub">Sorted 8 questions by type and wrote 3 clear thesis lines.</div>
-      <div class="badge-line" id="certBadge">Sharp Reader</div>
-      <div class="sub" id="certDate"></div>
-    </div>
-    <p>
-      <label for="certLearnerName" style="font-weight:700;font-size:.9rem;">Name:</label><br>
-      <input class="answer" id="certLearnerName" style="min-width:200px;margin-top:.35rem;" aria-label="Your name">
-    </p>
-    <button class="btn" id="printBtn">Print / PDF</button>
+    
+    
+    
   </section>
   <canvas id="confetti" aria-hidden="true"></canvas>
 </main>
@@ -589,17 +579,13 @@
     $("rPoints").textContent=state.points;
     $("rAcc").textContent=acc+"%";
     $("rStreak").textContent=state.best;
-    $("certDate").textContent=new Date().toLocaleDateString();
+    
     $("results").removeAttribute("hidden");
     $("results").scrollIntoView({block:"start",behavior:"smooth"});
     launchConfetti();
   }
-  $("certLearnerName").addEventListener("input",function(){
-    var n=this.value.trim();
-    $("certName").textContent=n||"Annisa";
-  });
-  $("printBtn").addEventListener("click",function(){window.print();});
-  function launchConfetti(){
+  
+    function launchConfetti(){
     if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var c=$("confetti"),ctx=c.getContext("2d");
     c.width=window.innerWidth;c.height=window.innerHeight;

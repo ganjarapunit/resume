@@ -131,7 +131,7 @@
   <h1>Wh-Clauses for Daily Life</h1>
   <p>which - what - who - where - how. Link ideas smoothly in real life.</p>
   <p><strong>Shirley, B1-B2</strong> - 15 tiny steps, one idea at a time.</p>
-  <span class="pill">15 activities</span><span class="pill alt">Speak every step</span><span class="pill">XP + certificate</span>
+  <span class="pill">15 activities</span><span class="pill alt">Speak every step</span><span class="pill">XP</span>
 </header>
 
 <main id="main">
@@ -140,7 +140,7 @@
     <div class="steps">
       <div class="step"><strong>Type - Check</strong><span>10 XP per correct</span></div>
       <div class="step"><strong>Say it aloud</strong><span>then reveal model</span></div>
-      <div class="step"><strong>Complete</strong><span>bar fills to certificate</span></div>
+      <div class="step"><strong>Complete</strong><span>bar fills when you finish</span></div>
     </div>
     <p class="hint" style="margin-top:.5rem;">Think of your real kitchen, street, morning. Real life makes each wh-clause stick.</p>
   </section>
@@ -388,7 +388,7 @@
       <label for="a15-draft" style="font-weight:700; color:#fff;">Draft then speak 60 seconds</label><textarea id="a15-draft" placeholder="I wake up where light is soft. I choose which clothes to wear. I ask who can help. I love how flat feels calm. I shop where bread is fresh."></textarea>
     </div>
     <div class="speak"><h3>After you speak - compare</h3><button class="btn ghost" data-reveal="model15" aria-expanded="false">Show model</button><div class="model" id="model15" hidden>I wake up where light is soft. I choose which clothes to wear. I ask who can help with lunch. I love how flat feels calm. I shop where bread is fresh. Tell me what you do after work.</div></div>
-    <button class="btn ghost" data-complete="act15">Mark complete - unlock certificate</button>
+    <button class="btn ghost" data-complete="act15">Mark complete</button>
   </section>
 
   <section class="results" id="results" hidden aria-label="Results">
@@ -400,16 +400,9 @@
       <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
       <div class="score-box"><div class="n" id="rDone">0 / 15</div><div class="l">Activities</div></div>
     </div>
-    <div class="cert" id="cert">
-      <h3>CERTIFICATE</h3>
-      <div class="sub">Wh-Clauses for Daily Life - B1-B2</div>
-      <div class="who" id="certName">Shirley</div>
-      <div class="sub">15 activities - which what who where how</div>
-      <div class="badge-line">Badge: Daily Life Connector</div>
-      <div class="sub" id="certDate"></div>
-    </div>
-    <p><label for="certLearnerName" style="font-weight:700;">Name for certificate:</label><br><input class="answer" id="certLearnerName" style="min-width:220px; margin-top:.4rem; text-align:center;" aria-label="Name for certificate" placeholder="Shirley"></p>
-    <button class="btn" id="printBtn">Print or save as PDF</button>
+    
+    
+    
   </section>
 
   <canvas id="confetti" aria-hidden="true"></canvas>
@@ -464,10 +457,8 @@
   document.querySelectorAll("[data-check]").forEach(function (btn) { btn.addEventListener("click", function () { handleCheck(btn.dataset.check); }); });
   document.querySelectorAll("[data-reveal]").forEach(function (btn) { btn.addEventListener("click", function () { var el = $(btn.dataset.reveal); var h = el.hasAttribute("hidden"); if (h) { el.removeAttribute("hidden"); btn.setAttribute("aria-expanded", "true"); btn.textContent = "Hide model"; } else { el.setAttribute("hidden", ""); btn.setAttribute("aria-expanded", "false"); btn.textContent = "Show model"; } }); });
   document.querySelectorAll("[data-complete]").forEach(function (btn) { btn.addEventListener("click", function () { var sec = $(btn.dataset.complete); if (!sec || sec.classList.contains("complete")) return; sec.classList.add("complete"); state.done++; updateHUD(); sec.scrollIntoView({ block: "start", behavior: "smooth" }); if (state.done >= TOTAL_ACTS) showResults(); }); });
-  function showResults() { var acc = state.total ? Math.round(state.correct / state.total * 100) : 0; $("rPoints").textContent = state.points; $("rAcc").textContent = acc + "%"; $("rStreak").textContent = state.best; $("certDate").textContent = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }); $("results").removeAttribute("hidden"); $("results").scrollIntoView({ block: "start", behavior: "smooth" }); launchConfetti(); }
-  var nameInput = $("certLearnerName"); if (nameInput) nameInput.addEventListener("input", function () { var n = this.value.trim(); $("certName").textContent = n || "Shirley"; });
-  var printBtn = $("printBtn"); if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
-  function launchConfetti() {
+  function showResults() { var acc = state.total ? Math.round(state.correct / state.total * 100) : 0; $("rPoints").textContent = state.points; $("rAcc").textContent = acc + "%"; $("rStreak").textContent = state.best;  $("results").removeAttribute("hidden"); $("results").scrollIntoView({ block: "start", behavior: "smooth" }); launchConfetti(); }
+      function launchConfetti() {
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var c = $("confetti"), ctx = c.getContext("2d"); if (!c || !ctx) return;
     c.width = window.innerWidth; c.height = window.innerHeight;

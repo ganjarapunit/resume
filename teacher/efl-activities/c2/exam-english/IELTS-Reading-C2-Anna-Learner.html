@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading C2 - The Shallows and the Depths - Learner - Anna</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Verdana,Arial,Helvetica,sans-serif;font-size:18px;line-height:1.7;margin:0;padding:0}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 16px;font-weight:bold;z-index:200}
+.skip:focus{left:8px;top:8px}
+.hud{position:sticky;top:0;z-index:100;background:#000;border-bottom:3px solid var(--accent);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center}
+.hud strong{color:var(--accent)}
+.hud .barwrap{flex:1 1 200px;max-width:340px;background:var(--surface-2);border:2px solid var(--border);border-radius:20px;height:18px;overflow:hidden}
+.hud .bar{height:100%;width:0%;background:var(--accent-2)}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+header.lesson{border-bottom:3px solid var(--accent);padding-bottom:14px}
+h1{font-size:1.6rem;line-height:1.3;color:#fff;margin:0 0 8px}
+h2{font-size:1.25rem;color:var(--accent);margin:0 0 8px}
+p,li{color:var(--ink)}
+.badge{display:inline-block;background:var(--accent);color:#000;font-weight:bold;font-size:0.9rem;border-radius:20px;padding:2px 12px;margin-right:8px}
+.act{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:20px;margin:22px 0}
+.act.done{border-color:var(--accent-2)}
+.reading{background:#000;border:2px solid var(--accent-2);border-radius:10px;padding:16px;margin:12px 0}
+.reading p{color:#fff}
+label{display:block;font-weight:bold;margin:12px 0 4px;color:var(--ink)}
+input[type=text],textarea{width:100%;background:#000;color:#fff;border:2px solid var(--border);border-radius:8px;padding:10px;font-size:1rem;font-family:inherit}
+input[type=text]:focus,textarea:focus{border-color:var(--accent);outline:none}
+input.correct,textarea.correct{border-color:var(--good)}
+input.wrong,textarea.wrong{border-color:var(--bad)}
+fieldset{border:2px solid var(--border);border-radius:10px;margin:12px 0;padding:12px}
+legend{font-weight:bold;color:var(--ink);padding:0 8px}
+.mcq label{display:flex;gap:10px;align-items:flex-start;font-weight:normal;background:#000;border:2px solid var(--border);border-radius:8px;padding:10px;margin:8px 0;cursor:pointer}
+.mcq label.correct{border-color:var(--good)}
+.mcq label.picked{outline:3px solid var(--accent);outline-offset:2px}
+.mcq input{margin-top:6px;transform:scale(1.3)}
+.btn{background:var(--accent);color:#000;border:3px solid var(--accent);border-radius:8px;font-weight:bold;font-size:1rem;padding:9px 18px;cursor:pointer;margin:10px 8px 0 0}
+.btn.ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn:hover,.btn:focus-visible{background:#fff;border-color:#fff;color:#000;outline:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.feedback{min-height:1.6em;margin-top:10px;font-weight:bold}
+.feedback.ok{color:var(--good)}
+.feedback.no{color:var(--bad)}
+.mark{display:inline-block;margin-left:10px;font-weight:bold;font-size:0.95rem}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--bad)}
+.model{display:none;background:var(--surface-2);border:2px dashed var(--accent-2);border-radius:10px;padding:12px 14px;margin-top:10px}
+.model.show{display:block}
+.model em{color:var(--accent-2)}
+.nameRow{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:12px 0}
+.cert{display:none;background:#000;border:3px solid var(--accent);border-radius:14px;padding:24px;text-align:center;margin:26px 0}
+.cert.show{display:block}
+.cert h2{font-size:1.5rem}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:none}
+footer{color:var(--muted);font-size:0.95rem;padding-bottom:40px}
+a{color:var(--accent-2)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+@media print{.hud,.btn,canvas{display:none!important}body{background:#fff;color:#000}.act{background:#fff;color:#000;border-color:#000}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to activities</a>
+<div class="hud" role="status" aria-label="Progress">
+<span><strong>XP</strong> <span id="xp">0</span></span>
+<span><strong>Streak</strong> <span id="streak">0</span></span>
+<span><strong>Done</strong> <span id="done">0</span>/15</span>
+<span class="barwrap" aria-hidden="true"><span class="bar" id="bar"></span></span>
+</div>
+<div class="wrap">
+<header class="lesson">
+<h1>The Shallows and the Depths: IELTS Reading, C2</h1>
+</header>
+<main id="main">
+
+<section class="act activity" id="act1" data-act="act1" aria-labelledby="h1">
+<h2 id="h1"><span class="badge">1</span>Reading you, warm up</h2>
+<p>Speak aloud, 2 to 3 sentences each. Then type one line to lock it in.</p>
+<ol>
+<li>Do you skim more or study more in English?</li>
+<li>When did you last get lost in a text and forget time?</li>
+<li>What kind of IELTS passage slows you down most?</li>
+</ol>
+<label for="in1">Type one honest line, example: I skim headlines but study reports closely.</label>
+<input type="text" id="in1" class="free" placeholder="Your line here">
+<div><button class="btn ghost" data-reveal="model1">Show model</button>
+<button class="btn ghost" data-complete="act1">Mark complete</button></div>
+<div class="model" id="model1"><em>Model: I tend to skim news and messages to filter, but I study work reports closely. I lost track of time with a long feature on cities. Dense scientific passages with long noun phrases slow me down most.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act2" data-act="act2" aria-labelledby="h2">
+<h2 id="h2"><span class="badge">2</span>Predict from the title</h2>
+<div class="reading"><p><strong>THE SHALLOWS AND THE DEPTHS: Reclaiming Attention in an Age of Skimming</strong></p></div>
+<p>Speak your predictions first. What could shallows and depths mean? Story, argument, or research summary? What three ideas do you expect?</p>
+<label for="in2">Type your best guess in one sentence</label>
+<input type="text" id="in2" class="free" placeholder="I expect...">
+<div><button class="btn ghost" data-reveal="model2">Show model</button>
+<button class="btn ghost" data-complete="act2">Mark complete</button></div>
+<div class="model" id="model2"><em>Model: I expect an argument about superficial online reading versus deep focused reading, probably with brain research and practical advice for learners. Shallows suggests skimming, depths suggests deep reading.</em><br>IELTS tip: 30 seconds on the title and first lines saves minutes later.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act3" data-act="act3" aria-labelledby="h3">
+<h2 id="h3"><span class="badge">3</span>Skim A and B, 2 minutes</h2>
+<div class="reading">
+<p><strong>A.</strong> We read more than ever, and understand less than we dare admit. Messages, headlines, captions. The average smartphone user meets more words in a day than a 17th-century scholar met in a lifetime. Yet most of that meeting is glancing, not reading. We skim to cope, and skimming, repeated often enough, becomes our default.</p>
+<p><strong>B.</strong> Neuroscientists make a useful distinction. Skimming is efficient for spotting relevance. Deep reading is slower and more embodied. It draws on regions linked to empathy, inference and memory. When you linger over a complex sentence, your brain treats it almost like lived experience. When you skim it, you keep the gist, but lose the texture.</p>
+</div>
+<p>Set a 2 minute timer. No dictionary. Then answer.</p>
+<fieldset><legend class="stem">What is the main idea of A and B?</legend>
+<div class="mcq" data-group="g3">
+<label><input type="radio" class="choice" name="g3" data-correct="true"> Overload pushes us to skim, and skimming becomes automatic. Skimming finds relevance, deep reading builds understanding.</label>
+<label><input type="radio" class="choice" name="g3"> Smartphones have destroyed reading and nobody reads deeply any more.</label>
+<label><input type="radio" class="choice" name="g3"> Neuroscientists agree that skimming is always better than slow reading.</label>
+</div>
+</fieldset>
+<div><button class="btn" data-check="act3">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act4" data-act="act4" aria-labelledby="h4">
+<h2 id="h4"><span class="badge">4</span>Say the gist in 30 seconds</h2>
+<p>Cover the text. Speak for 30 seconds starting with: This part is mainly about... or The writer is saying that...</p>
+<div><button class="btn ghost" data-reveal="model4">Show model</button>
+<button class="btn ghost" data-complete="act4">Mark complete</button></div>
+<div class="model" id="model4"><em>Model: This part is mainly about how we skim to handle overload, and how that turns automatic. The writer is saying that skimming is useful for finding relevance, but deep reading gives you memory and feeling for a text.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act5" data-act="act5" aria-labelledby="h5">
+<h2 id="h5"><span class="badge">5</span>Meet C and D, headings match</h2>
+<div class="reading">
+<p><strong>C.</strong> This matters beyond literature. In one study, students who read a story with full attention were later better at reading ambiguous social situations than peers who skimmed summaries. Deep readers held several perspectives at once. Skimmers remembered facts, but missed motive.</p>
+<p><strong>D.</strong> Schools feel this daily. Exams like IELTS still reward what skimming erodes: following an argument, spotting paraphrase, telling what is stated from what is only implied. Readers who hunt only keywords fall for traps, because writers rephrase ideas and hide qualifications in small clauses.</p>
+</div>
+<p>Headings: i. A skill tests still demand. ii. What deep readers gain. iii. A habit shaped by overload.</p>
+<fieldset><legend class="stem">Paragraph C</legend>
+<div class="mcq" data-group="g5a">
+<label><input type="radio" class="choice" name="g5a" data-correct="true"> ii. What deep readers gain</label>
+<label><input type="radio" class="choice" name="g5a"> i. A skill tests still demand</label>
+<label><input type="radio" class="choice" name="g5a"> iii. A habit shaped by overload</label>
+</div>
+</fieldset>
+<fieldset><legend class="stem">Paragraph D</legend>
+<div class="mcq" data-group="g5b">
+<label><input type="radio" class="choice" name="g5b" data-correct="true"> i. A skill tests still demand</label>
+<label><input type="radio" class="choice" name="g5b"> ii. What deep readers gain</label>
+<label><input type="radio" class="choice" name="g5b"> iii. A habit shaped by overload</label>
+</div>
+</fieldset>
+<div><button class="btn" data-check="act5">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act6" data-act="act6" aria-labelledby="h6">
+<h2 id="h6"><span class="badge">6</span>True, False, Not Given</h2>
+<p>Use A to D above. Decide, then say why aloud in one sentence.</p>
+<fieldset><legend class="stem">1. Scholars in the 17th century read more daily than smartphone users today.</legend>
+<div class="mcq" data-group="g6a">
+<label><input type="radio" class="choice" name="g6a"> True</label>
+<label><input type="radio" class="choice" name="g6a" data-correct="true"> False</label>
+<label><input type="radio" class="choice" name="g6a"> Not Given</label>
+</div>
+</fieldset>
+<fieldset><legend class="stem">2. Deep reading draws on brain areas linked to memory and empathy.</legend>
+<div class="mcq" data-group="g6b">
+<label><input type="radio" class="choice" name="g6b" data-correct="true"> True</label>
+<label><input type="radio" class="choice" name="g6b"> False</label>
+<label><input type="radio" class="choice" name="g6b"> Not Given</label>
+</div>
+</fieldset>
+<fieldset><legend class="stem">3. Skimmers in the study remembered no facts at all.</legend>
+<div class="mcq" data-group="g6c">
+<label><input type="radio" class="choice" name="g6c"> True</label>
+<label><input type="radio" class="choice" name="g6c" data-correct="true"> False</label>
+<label><input type="radio" class="choice" name="g6c"> Not Given</label>
+</div>
+</fieldset>
+<div><button class="btn" data-check="act6">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act7" data-act="act7" aria-labelledby="h7">
+<h2 id="h7"><span class="badge">7</span>Close read E, words in context</h2>
+<div class="reading">
+<p><strong>E.</strong> The response is not to abandon technology, but to train attention as a skill. Slow-reading groups, print sabbaths, single-tab reading. All share one principle: decide in advance what deserves depth. Preview to select, then commit fully. In IELTS terms, skim to orient, scan to locate, then read closely to decide. Fluency, in the end, is knowing which gear to use.</p>
+</div>
+<p>Type short glosses. One or two words are enough.</p>
+<label for="a7a">1. abandon means...</label>
+<input type="text" id="a7a" class="answer" data-accept="give up|quit|leave behind|stop using" data-model="give up completely" aria-describedby="h7">
+<label for="a7b">2. qualifications hidden in small clauses means...</label>
+<input type="text" id="a7b" class="answer" data-accept="limits|conditions|unless|although|exceptions|small clauses" data-model="small limits on a claim, like unless or although" aria-describedby="h7">
+<label for="a7c">3. knowing which gear to use means...</label>
+<input type="text" id="a7c" class="answer" data-accept="choosing speed|choosing approach|choosing method|which speed|which strategy" data-model="choosing the right speed and approach" aria-describedby="h7">
+<div><button class="btn" data-check="act7">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act8" data-act="act8" aria-labelledby="h8">
+<h2 id="h8"><span class="badge">8</span>Paraphrase lab</h2>
+<p>Say each in your own words aloud. Change the grammar, not just one word. Then compare.</p>
+<ol>
+<li>Skimming, repeated often enough, becomes our default.</li>
+<li>You keep the gist, but lose the texture.</li>
+<li>Preview to select, then commit fully.</li>
+</ol>
+<div><button class="btn ghost" data-reveal="model8">Show models</button>
+<button class="btn ghost" data-complete="act8">Mark complete</button></div>
+<div class="model" id="model8"><em>1. If you skim all the time, it turns into your automatic habit.<br>2. You get the general idea, but miss the nuance and feeling.<br>3. Look over the text to choose, then give it your full focus.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act9" data-act="act9" aria-labelledby="h9">
+<h2 id="h9"><span class="badge">9</span>What does it refer to</h2>
+<p>Tiny words, big meaning. Look back at the passage.</p>
+<label for="a9a">1. Para A: most of that meeting is glancing. That meeting is...</label>
+<input type="text" id="a9a" class="answer" data-accept="encounter|daily words|meeting words|overload|seeing words" data-model="our daily encounter with huge amounts of text" aria-describedby="h9">
+<label for="a9b">2. Para B: When you skim it, you keep the gist. It is...</label>
+<input type="text" id="a9b" class="answer" data-accept="complex sentence|sentence" data-model="a complex sentence" aria-describedby="h9">
+<label for="a9c">3. Para E: All share one principle. All is...</label>
+<input type="text" id="a9c" class="answer" data-accept="slow-reading|print sabbaths|single-tab|practices|three" data-model="slow-reading groups, print sabbaths and single-tab reading" aria-describedby="h9">
+<div><button class="btn" data-check="act9">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act10" data-act="act10" aria-labelledby="h10">
+<h2 id="h10"><span class="badge">10</span>Read between the lines</h2>
+<p>Speak two sentences for each, then reveal and compare.</p>
+<ol>
+<li>Why might a strong speaker still struggle with IELTS reading?</li>
+<li>Why do test writers rephrase instead of repeating words?</li>
+<li>What could texture mean in your own reading?</li>
+</ol>
+<div><button class="btn ghost" data-reveal="model10">Show models</button>
+<button class="btn ghost" data-complete="act10">Mark complete</button></div>
+<div class="model" id="model10"><em>1. Because conversational fluency does not guarantee patience for long arguments. If you hunt only keywords, you miss qualifications.<br>2. To test meaning, not word matching. Paraphrase separates skimmers from readers.<br>3. Texture could be tone, irony, hesitation, the human layer behind facts.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act11" data-act="act11" aria-labelledby="h11">
+<h2 id="h11"><span class="badge">11</span>Voice and stance</h2>
+<fieldset><legend class="stem">How does the writer feel overall?</legend>
+<div class="mcq" data-group="g11">
+<label><input type="radio" class="choice" name="g11" data-correct="true"> Concerned but constructive, worried and hopeful</label>
+<label><input type="radio" class="choice" name="g11"> Fully neutral and detached</label>
+<label><input type="radio" class="choice" name="g11"> Purely nostalgic for the past</label>
+<label><input type="radio" class="choice" name="g11"> Dismissive, reading does not matter</label>
+</div>
+</fieldset>
+<div><button class="btn" data-check="act11">Check</button>
+<button class="btn ghost" data-reveal="model11">Show evidence</button></div>
+<div class="model" id="model11"><em>Evidence: understand less than we dare admit and fall for traps show concern. Train attention as a skill and knowing which gear to use show agency and hope.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act12" data-act="act12" aria-labelledby="h12">
+<h2 id="h12"><span class="badge">12</span>60 second summary</h2>
+<p>Plan 30 seconds, speak 60 seconds. Cover all four: problem, brain science, school link, solution. Record on your phone if you can.</p>
+<div><button class="btn ghost" data-reveal="model12">Show model</button>
+<button class="btn ghost" data-complete="act12">Mark complete</button></div>
+<div class="model" id="model12"><em>Model, about 60 seconds: We see so much text that skimming becomes automatic. Brain science says skimming spots relevance, but deep reading builds empathy and memory. That matters for school, because IELTS rewards following arguments and spotting paraphrase, which skimmers miss. The fix is to train attention. Preview to choose, then read what matters closely.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act13" data-act="act13" aria-labelledby="h13">
+<h2 id="h13"><span class="badge">13</span>Argue it</h2>
+<p>Statement: Skimming is not decline. It is a smart adaptation to too much information. Do you agree? Speak with I partly agree or disagree because, plus one example from work or studies.</p>
+<label for="in13">Type your key sentence</label>
+<input type="text" id="in13" class="free" placeholder="I partly agree because...">
+<div><button class="btn ghost" data-reveal="model13">Show frame</button>
+<button class="btn ghost" data-complete="act13">Mark complete</button></div>
+<div class="model" id="model13"><em>Frame: I partly agree because filtering is essential, you cannot read everything closely. That said, adaptation becomes decline when we lose the ability to switch gears. In my work, I skim reports to triage, then block time for the two that need depth.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act14" data-act="act14" aria-labelledby="h14">
+<h2 id="h14"><span class="badge">14</span>Think aloud under time</h2>
+<p>From paragraph D: IELTS rewards three things. Complete them. Scan first, then type.</p>
+<label for="a14a">1. following an...</label>
+<input type="text" id="a14a" class="answer" data-accept="argument" data-model="argument" aria-describedby="h14">
+<label for="a14b">2. spotting...</label>
+<input type="text" id="a14b" class="answer" data-accept="paraphrase" data-model="paraphrase" aria-describedby="h14">
+<label for="a14c">3. telling what is stated from what is only...</label>
+<input type="text" id="a14c" class="answer" data-accept="implied|implication" data-model="implied" aria-describedby="h14">
+<div><button class="btn" data-check="act14">Check</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act15" data-act="act15" aria-labelledby="h15">
+<h2 id="h15"><span class="badge">15</span>Takeaway</h2>
+<p>Finish aloud in two sentences. One habit to keep, one to change. One phrase to reuse this week.</p>
+<label for="in15a">My keep and change</label>
+<input type="text" id="in15a" class="free" placeholder="I will keep... I will change...">
+<label for="in15b">My phrase, example: knowing which gear to use</label>
+<input type="text" id="in15b" class="free" placeholder="My phrase...">
+<div><button class="btn ghost" data-complete="act15">Finish</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+
+
+</main>
+<footer>
+<p>Self study version. Speak every speaking task aloud before you reveal the model. Passage is original, written for C2 IELTS practice.</p>
+</footer>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+var xp=0, streak=0, done=new Set();
+var xpEl=document.getElementById('xp'), stEl=document.getElementById('streak'),
+    doneEl=document.getElementById('done'), bar=document.getElementById('bar');
+function hud(){xpEl.textContent=xp;stEl.textContent=streak;doneEl.textContent=done.size;bar.style.width=(done.size/15*100)+'%';}
+function norm(s){return (s||'').toLowerCase().trim().replace(/[.,!?;:"'()]+$/g,'').replace(/\s+/g,' ');}
+function feedback(sec, ok, msg){var f=sec.querySelector('.feedback');f.textContent=msg;f.className='feedback '+(ok?'ok':'no');}
+function markDone(id, pts){
+  var sec=document.querySelector('[data-act="'+id+'"]');
+  if(!sec||done.has(id)) return;
+  done.add(id); sec.classList.add('done');
+  if(pts) xp+=pts;
+  var f=sec.querySelector('.feedback');
+  if(f && !f.textContent) {f.textContent='Done. Nice work.';f.className='feedback ok';}
+  hud();
+}
+
+document.querySelectorAll('[data-complete]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var id=b.getAttribute('data-complete');
+    markDone(id,5);
+    var sec=document.querySelector('[data-act="'+id+'"]');
+    feedback(sec,true,'Done. Counted. Keep speaking.');
+    hud();
+  });
+});
+document.querySelectorAll('[data-reveal]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var m=document.getElementById(b.getAttribute('data-reveal'));
+    if(m) m.classList.toggle('show');
+  });
+});
+document.querySelectorAll('[data-check]').forEach(function(b){
+  b.addEventListener('click',function(){check(b.getAttribute('data-check'));});
+});
+function check(id){
+  var sec=document.querySelector('[data-act="'+id+'"]');
+  if(!sec) return;
+  var answers=sec.querySelectorAll('input.answer');
+  var mcqs=sec.querySelectorAll('.mcq');
+  var total=answers.length+mcqs.length, good=0, bad=false;
+  sec.querySelectorAll('.mark').forEach(function(m){m.remove();});
+  answers.forEach(function(inp){
+    inp.classList.remove('correct','wrong');inp.removeAttribute('aria-invalid');
+    var v=norm(inp.value);
+    var acc=(inp.getAttribute('data-accept')||'').split('|').map(norm).filter(Boolean);
+    var ok=v&&acc.some(function(a){return v.indexOf(a)!==-1;});
+    var s=document.createElement('span');s.className='mark '+(ok?'ok':'no');
+    if(!v){s.textContent='Type first';inp.classList.add('wrong');inp.setAttribute('aria-invalid','true');bad=true;}
+    else if(ok){s.textContent='Correct';inp.classList.add('correct');inp.setAttribute('aria-invalid','false');good++;
+      if(!inp.dataset.aw){xp+=10;inp.dataset.aw='1';}}
+    else{s.textContent='Try again. Model: '+(inp.getAttribute('data-model')||'');inp.classList.add('wrong');inp.setAttribute('aria-invalid','true');bad=true;}
+    inp.after(s);
+  });
+  mcqs.forEach(function(m){
+    var g=m.getAttribute('data-group');
+    var picked=sec.querySelector('input[name="'+g+'"]:checked');
+    m.querySelectorAll('label').forEach(function(l){l.classList.remove('correct','picked');});
+    var correctInput=m.querySelector('input[data-correct="true"]');
+    if(correctInput&&correctInput.closest('label')) correctInput.closest('label').classList.add('correct');
+    if(!picked){bad=true;return;}
+    if(picked.closest('label')) picked.closest('label').classList.add('picked');
+    if(picked.getAttribute('data-correct')==='true'){good++;if(!m.dataset.aw){xp+=10;m.dataset.aw='1';}}
+    else{bad=true;}
+  });
+  if(bad){streak=0;feedback(sec,false,good+' of '+total+' correct. Wrong items show Try again with a hint. Fix and Check again.');}
+  else{streak++;feedback(sec,true,'All correct. Streak '+streak+'. Well read.');markDone(id,0);}
+  hud();
+}
+function boom(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c=document.getElementById('confetti'),x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;c.style.display='block';
+  var cols=['#ffd400','#38e0c8','#ffffff','#ff8a8a'],ps=[];
+  for(var i=0;i<140;i++)ps.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*0.3,w:6+Math.random()*6,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*Math.PI,col:cols[i%4]});
+  var t=0;(function anim(){t++;x.clearRect(0,0,c.width,c.height);
+    ps.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.r+=0.05;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.col;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore();});
+    if(t<220)requestAnimationFrame(anim);else c.style.display='none';})();
+}
+hud();
+})();
+</script>
+<script src="../../xapi-include.js" defer></script>
+<script>
+// Annisa Day 3/4 - precise verbs/objects via proxy (mirrors original)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act2:1,act13:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</body>
+</html>

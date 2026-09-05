@@ -242,7 +242,7 @@
       <li>Type or choose your answers, then press <strong>Check my answers</strong> for instant feedback. You can listen again any time.</li>
       <li>You earn points for correct answers and keep a streak. Use the <strong>Speak it aloud</strong> boxes to practise.</li>
       <li>Press <strong>Mark activity complete</strong> when you finish. The progress bar fills as you go.</li>
-      <li>Finish all 10 to unlock your certificate.</li>
+      <li>Finish all 10 to complete your practice.</li>
     </ul>
     <div class="credit">
       <strong>Audio credit:</strong> British Council, LearnEnglish (learnenglish.britishcouncil.org), "An interview about listening skills." Used for free, non commercial educational purposes. All rights to the source audio belong to the British Council.
@@ -558,19 +558,9 @@
       <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Accuracy</div></div>
       <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
     </div>
-    <div class="cert" id="cert">
-      <h3>CERTIFICATE OF COMPLETION</h3>
-      <div class="sub">Listening Skills Interview, B1 Level</div>
-      <div class="who" id="certName">Motivated Learner</div>
-      <div class="sub">completed all 10 activities and learned how to manage difficult listening.</div>
-      <div class="badge-line" id="certBadge">Badge: Active Listener</div>
-      <div class="sub" id="certDate"></div>
-    </div>
-    <p>
-      <label for="learnerName" style="font-weight:700;">Enter your name for the certificate:</label><br>
-      <input class="answer" id="learnerName" style="min-width:220px;margin-top:.4rem;" aria-label="Your name for the certificate">
-    </p>
-    <button class="btn" id="printBtn">Print or save as PDF</button>
+    
+    
+    
     <div class="credit" style="margin-top:1rem;text-align:left;">
       <strong>Audio credit:</strong> British Council, LearnEnglish, "An interview about listening skills." Used for free, non commercial educational purposes. All rights to the source audio belong to the British Council.
     </div>
@@ -709,18 +699,14 @@
     $("rPoints").textContent = state.points;
     $("rAcc").textContent = acc + "%";
     $("rStreak").textContent = state.best;
-    $("certDate").textContent = new Date().toLocaleDateString();
+    
     $("results").removeAttribute("hidden");
     $("results").scrollIntoView({ block: "start", behavior: "smooth" });
     launchConfetti();
   }
 
-  $("learnerName").addEventListener("input", function () {
-    var n = this.value.trim();
-    $("certName").textContent = n || "Motivated Learner";
-  });
-  $("printBtn").addEventListener("click", function () { window.print(); });
-
+  
+  
   function launchConfetti() {
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var c = $("confetti"), ctx = c.getContext("2d");
