@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 7 Linking and Formal Tone Annisa Interactive</title>
+<style>
+  :root{
+    --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
+    --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400; --accent-2:#38e0c8;
+    --good:#38e0c8; --bad:#ff8a8a; --border:#2a3d57; --focus:#ffd400;
+    --warn:#ffb700;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+  a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+  a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
+  .hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--border);padding:.6rem 1rem}
+  .hud-inner{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+  .stat{display:flex;align-items:center;gap:.4rem;font-weight:700;color:var(--ink);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
+  .stat svg{width:18px;height:18px}
+  .progress-wrap{flex:1 1 220px;min-width:200px}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
+  .progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+  header.hero{max-width:980px;margin:0 auto;padding:1.7rem 1rem 1rem;text-align:center}
+  header.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 .3rem;color:#fff;text-shadow:0 0 24px rgba(56,224,200,.25);line-height:1.2}
+  header.hero p{color:var(--muted);margin:.2rem auto;max-width:640px;font-size:.98rem}
+  .pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.82rem;font-weight:700;margin:.2rem}
+  main{max-width:980px;margin:0 auto;padding:1rem}
+  .intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:1rem 0 1.3rem}
+  .intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
+  .rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+  .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
+  .rule-item.ok{border-color:var(--good);color:var(--good)}
+  .rule-item.no{border-color:var(--bad);color:var(--bad)}
+  .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
+  .credit strong{color:var(--accent-2)}
+  .credit a{color:var(--accent)}
+  .steps-mini{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
+  .steps-mini span{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.3rem .6rem;font-size:.82rem;color:var(--muted)}
+  .steps-mini strong{color:var(--ink)}
+  .activity{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
+  .badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.15rem}
+  .act-head h2{margin:0;font-size:1.15rem;color:#fff;flex:1 1 auto}
+  .tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700}
+  .hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
+  .exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
+  .qbox{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem}
+  .fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
+  .fill .lead,.fill .tail{color:var(--ink);font-size:.92rem}
+  input.answer,textarea{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
+  input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  input.answer{min-width:140px}
+  textarea{width:100%;min-height:88px;resize:vertical}
+  input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
+  input.answer.wrong{border-color:var(--bad)}
+  .mark{font-size:.78rem;font-weight:700;margin-left:.3rem}
+  .mark.ok{color:var(--good)} .mark.no{color:var(--bad)}
+  .mcq{margin:.55rem 0}
+  .mcq .stem{font-weight:700;color:#fff;margin-bottom:.25rem;font-size:.93rem}
+  .mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.4rem .65rem;margin:.25rem 0;cursor:pointer;font-size:.92rem}
+  .mcq label.correct{border-color:var(--good)} .mcq label.wrong{border-color:var(--bad)}
+  .mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+  button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit}
+  button.btn:hover{filter:brightness(1.05)}
+  button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+  .feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
+  .feedback.good{border-color:var(--good)} .feedback.bad{border-color:var(--bad)}
+  .feedback ul{margin:.35rem 0;padding-left:1.1rem}
+  .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
+  .mini-tip strong{color:var(--accent)}
+  .speak{margin-top:.7rem;padding:.65rem .85rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
+  .speak h3{margin:0 0 .2rem;color:var(--accent-2);font-size:.95rem}
+  .model{margin-top:.45rem;padding:.5rem .7rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink);font-size:.9rem}
+  .model[hidden]{display:none}
+  .done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s;font-size:.85rem}
+  .activity.complete .done-flag{opacity:1}
+  .results{margin:2rem 0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.3rem;text-align:center}
+  .results[hidden]{display:none}
+  .results h2{color:var(--accent);margin-top:0;font-size:1.3rem}
+  .score-grid{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:.9rem 0}
+  .score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;min-width:125px}
+  .score-box .n{font-size:1.7rem;font-weight:800;color:var(--accent-2)}
+  .score-box .l{color:var(--muted);font-size:.82rem}
+  .cert{margin:1rem auto;max-width:540px;background:#06121f;border:2px solid var(--accent);border-radius:14px;padding:1.2rem;text-align:center;box-shadow:0 0 30px rgba(255,212,0,.15)}
+  .cert h3{color:var(--accent);margin:0 0 .2rem;letter-spacing:2px;font-size:.95rem}
+  .cert .who{font-size:1.4rem;font-weight:800;color:#fff;margin:.35rem 0}
+  .cert .sub{color:var(--muted);font-size:.88rem}
+  .cert .badge-line{color:var(--accent-2);font-weight:800;margin-top:.4rem;font-size:.92rem}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+  footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.82rem}
+  footer a{color:var(--accent)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  @media (max-width:560px){input.answer{min-width:120px}}
+  #login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
+  #login[hidden]{display:none}
+  .login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(255,212,0,.15)}
+  .login-card h2{color:var(--accent);margin-top:0}
+  .login-card p{color:var(--muted);font-size:.92rem}
+  .login-card input{width:100%;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.55rem;font-size:1rem;margin:.55rem 0;font-family:inherit}
+  .timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
+  .vis-note{font-size:.82rem;color:var(--muted);margin:.3rem 0}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+<div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="login-card">
+    <h2 id="loginTitle">Welcome Annisa</h2>
+    <p>Your name to start Day 7.</p>
+    <label for="loginName" style="font-weight:700;">Your name</label>
+    <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Annisa" aria-label="Your name">
+    <button class="btn" id="loginStart">Start</button>
+  </div>
+</div>
+
+<div class="hud" role="region" aria-label="Your progress">
+  <div class="hud-inner">
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+      <span id="points">0 XP</span>
+    </div>
+    <div class="stat" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg>
+      <span id="streak">Streak 0</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progText">0 / 10 complete</span></div>
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>Day 7 Flow and Tone</h1>
+  <p>One linker is enough. Keep it formal but natural.</p>
+  <span class="pill">Annisa</span>
+  <span class="pill">10 short tasks</span>
+  <span class="pill">40 min</span>
+</header>
+
+<main id="main">
+  <section class="intro" aria-label="Today">
+    <h2>Today</h2>
+    <div class="rule-box" aria-label="The rule">
+      <span class="rule-item ok">1 big linker</span>
+      <span class="rule-item ok">This, Such, which</span>
+      <span class="rule-item no">No stuff, full forms</span>
+    </div>
+    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">We use the same Day 6 PEEL and the same ideas, with better flow.</p>
+    <div class="steps-mini" aria-label="How">
+      <span><strong>1</strong> Look</span>
+      <span><strong>2</strong> Choose / Type</span>
+      <span><strong>3</strong> Check</span>
+      <span><strong>4</strong> Complete</span>
+    </div>
+    <div class="credit"><strong>Questions:</strong> Adapted for class from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz 100 Essay Questions</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing">British Council Take IELTS Writing</a>. Free classroom use.</div>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="activity" id="act1" data-act="1">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">1</span>
+      <h2>Hello</h2>
+      <span class="tag">1 min</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">From PEEL to flow.</p>
+    <div class="exercise">
+      <div class="qbox"><strong>Q1:</strong> Online learning is better. Your Day 6 Point: One clear advantage is flexibility.</div>
+      <label for="sp1" style="font-weight:700;font-size:.93rem;">Your Point again, 1 line:</label>
+      <textarea id="sp1" placeholder="e.g. One clear advantage is flexibility." aria-label="Your Point again"></textarea>
+      
+    </div>
+    <button class="btn ghost" data-reveal="model1" aria-expanded="false">Example</button>
+    <div class="model" id="model1" hidden>One clear advantage of online learning is flexibility.</div>
+    <button class="btn ghost" data-complete="act1">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="activity" id="act2" data-act="2">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">2</span>
+      <h2>Trap?</h2>
+      <span class="tag">Look</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">4 linkers, but 0 real links.</p>
+    <div class="exercise">
+      <div class="qbox">Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, good.</div>
+      <div class="mcq" data-group="g1">
+        <div class="stem">How many linkers should you keep?</div>
+        <label><input type="radio" class="choice" name="g1" data-correct="true"> 1</label>
+        <label><input type="radio" class="choice" name="g1"> 4</label>
+      </div>
+      <div class="mcq" data-group="g2">
+        <div class="stem">What is the rule?</div>
+        <label><input type="radio" class="choice" name="g2" data-correct="true"> 1 big linker is enough</label>
+        <label><input type="radio" class="choice" name="g2"> More is better</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act2">Check</button>
+    <div class="feedback" id="fb-act2" aria-live="polite"></div>
+    <button class="btn ghost" data-complete="act2">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="activity" id="act3" data-act="3">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">3</span>
+      <h2>This Such</h2>
+      <span class="tag">Words</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Do not use ‘Moreover’. Use ‘This’ and ‘Such’.</p>
+    <div class="exercise">
+      <div class="qbox">Online study is flexible. This advantage lets students rewatch. Such access reduces stress.</div>
+      <div class="mcq" data-group="g3">
+        <div class="stem">What does ‘This advantage’ link back to?</div>
+        <label><input type="radio" class="choice" name="g3" data-correct="true"> Flexible before</label>
+        <label><input type="radio" class="choice" name="g3"> New idea</label>
+      </div>
+      <div class="fill"><span class="lead">Lessons help.</span> <input class="answer" data-accept="Such access" data-model="Such access" aria-label="Such access"> <span class="tail">reduces stress.</span></div>
+    </div>
+    <button class="btn" data-check="act3">Check</button>
+    <div class="feedback" id="fb-act3" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it aloud</h3>
+      <textarea id="sp3" placeholder="This advantage ... Such access ..."></textarea>
+      
+    </div>
+    <button class="btn ghost" data-complete="act3">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 4 -->
+  <section class="activity" id="act4" data-act="4">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">4</span>
+      <h2>Join it</h2>
+      <span class="tag">Type</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Join ideas inside the sentence, not between sentences.</p>
+    <div class="exercise">
+      <div class="fill"><span class="lead">Flexibility is useful</span> <input class="answer" data-accept="because" data-model="because" aria-label="because"> <span class="tail">lessons can be rewatched.</span></div>
+      <div class="fill"><span class="lead">Lessons</span> <input class="answer" data-accept="which" data-model="which" aria-label="which"> <span class="tail">can be rewatched help busy students.</span></div>
+      <div class="fill"><span class="lead"></span> <input class="answer" data-accept="While" data-model="While" aria-label="While"> <span class="tail">online is flexible, interaction is weak.</span></div>
+    </div>
+    <button class="btn" data-check="act4">Check</button>
+    <div class="feedback" id="fb-act4" aria-live="polite"></div>
+    <div class="speak">
+      <h3>Say it aloud</h3>
+      <textarea id="sp4" placeholder="One joined line with because, which or While."></textarea>
+      
+    </div>
+    <button class="btn ghost" data-complete="act4">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 5 -->
+  <section class="activity" id="act5" data-act="5">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">5</span>
+      <h2>Tone?</h2>
+      <span class="tag">Formal</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Use formal words, not spoken words.</p>
+    <div class="exercise">
+      <div class="mcq" data-group="g4">
+        <div class="stem">What is the formal word for ‘stuff’?</div>
+        <label><input type="radio" class="choice" name="g4" data-correct="true"> aspects</label>
+        <label><input type="radio" class="choice" name="g4"> stuff</label>
+      </div>
+      <div class="mcq" data-group="g5">
+        <div class="stem">What are the formal forms of contractions?</div>
+        <label><input type="radio" class="choice" name="g5"> dont, cant</label>
+        <label><input type="radio" class="choice" name="g5" data-correct="true"> do not, cannot</label>
+      </div>
+      <div class="fill"><span class="lead">Students</span> <input class="answer" data-accept="receive considerable" data-model="receive considerable" aria-label="receive considerable"> <span class="tail">help.</span></div>
+    </div>
+    <button class="btn" data-check="act5">Check</button>
+    <div class="feedback" id="fb-act5" aria-live="polite"></div>
+    <button class="btn ghost" data-complete="act5">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 6 -->
+  <section class="activity" id="act6" data-act="6">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">6</span>
+      <h2>Which flows?</h2>
+      <span class="tag">Look</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Which one stops and which one flows?</p>
+    <div class="exercise">
+      <div class="qbox"><strong>A</strong> Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, good.</div>
+      <div class="qbox"><strong>B</strong> One advantage is flexibility. Lessons which can be rewatched help. This flexibility reduces stress because students review at own pace. Even so, not enough alone.</div>
+      <div class="mcq" data-group="g6">
+        <div class="stem">Which paragraph flows better?</div>
+        <label><input type="radio" class="choice" name="g6"> A</label>
+        <label><input type="radio" class="choice" name="g6" data-correct="true"> B</label>
+      </div>
+      <div class="mcq" data-group="g7">
+        <div class="stem">Why does it flow better?</div>
+        <label><input type="radio" class="choice" name="g7" data-correct="true"> This, which, because, 1 linker</label>
+        <label><input type="radio" class="choice" name="g7"> 4 big linkers</label>
+      </div>
+    </div>
+    <button class="btn" data-check="act6">Check</button>
+    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <button class="btn ghost" data-complete="act6">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 7 -->
+  <section class="activity" id="act7" data-act="7">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">7</span>
+      <h2>Fix it</h2>
+      <span class="tag">With teacher</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Cut 3 linkers and keep 1.</p>
+    <div class="exercise">
+      <div class="qbox">Bad: Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, not enough.</div>
+      <div class="fill"><span class="lead">One clear advantage is</span> <input class="answer" data-accept="flexibility" data-model="flexibility" aria-label="flexibility"> <span class="tail">.</span></div>
+      <div class="fill"><span class="lead">Lessons</span> <input class="answer" data-accept="which" data-model="which" aria-label="which"> <span class="tail">can be rewatched help.</span></div>
+      <label for="sp7" style="font-weight:700;font-size:.9rem;">Your fixed PEEL, 4 lines:</label>
+      <textarea id="sp7" placeholder="One clear advantage is ... Lessons which ... This flexibility ... Even so, ..."></textarea>
+      
+    </div>
+    <button class="btn" data-check="act7">Check</button>
+    <div class="feedback" id="fb-act7" aria-live="polite"></div>
+    <button class="btn ghost" data-reveal="model7" aria-expanded="false">Model</button>
+    <div class="model" id="model7" hidden>One clear advantage of online learning is flexibility. Lessons which can be rewatched help busy students. This flexibility reduces stress because students can review at their own pace. Even so, this benefit alone does not beat live interaction.</div>
+    <button class="btn ghost" data-complete="act7">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 8 -->
+  <section class="activity" id="act8" data-act="8">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">8</span>
+      <h2>Tone up</h2>
+      <span class="tag">Formal</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">No ‘stuff’. Use full forms.</p>
+    <div class="exercise">
+      <div class="qbox">Informal: Online stuff is good. You get a lot. Do not worry, you cannot fail.</div>
+      <div class="fill"><span class="lead">Online study has</span> <input class="answer" data-accept="valuable aspects" data-model="valuable aspects" aria-label="valuable aspects"> <span class="tail">.</span></div>
+      <div class="fill"><span class="lead">Students</span> <input class="answer" data-accept="receive considerable" data-model="receive considerable" aria-label="receive considerable"> <span class="tail">help.</span></div>
+      <label for="sp8" style="font-weight:700;font-size:.9rem;">Your formal lines, 2 lines:</label>
+      <textarea id="sp8" placeholder="Online study has valuable aspects. Students receive ... They do not ..."></textarea>
+      
+    </div>
+    <button class="btn" data-check="act8">Check</button>
+    <div class="feedback" id="fb-act8" aria-live="polite"></div>
+    <button class="btn ghost" data-reveal="model8" aria-expanded="false">Model</button>
+    <div class="model" id="model8" hidden>Online study has valuable aspects. Students receive considerable help because lessons can be reviewed. They do not need to worry, and they cannot fall behind. This flexibility is valuable.</div>
+    <button class="btn ghost" data-complete="act8">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 9 -->
+  <section class="activity" id="act9" data-act="9">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">9</span>
+      <h2>You fix PEEL</h2>
+      <span class="tag">You do</span>
+      <span class="timer" id="timerLabel">8:00</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Now write by yourself. Take 8 minutes.</p>
+    <div class="exercise">
+      <div class="qbox">Take your Day 6 PEEL and keep the ideas. Fix the flow and tone: use 1 linker, ‘This’ plus a noun, ‘which’ or ‘because’. Write full forms like ‘do not’, not ‘don’t’.</div>
+      <label for="sp9" style="font-weight:700;font-size:.9rem;">Your smooth PEEL, 4 to 5 lines:</label>
+      <textarea id="sp9" style="min-height:140px;" placeholder="One clear advantage is flexibility. Lessons which ... This flexibility ... Even so, ..."></textarea>
+      
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;">
+        <button class="btn" id="startTimer" type="button">Start 8:00</button>
+        <button class="btn ghost" id="stopTimer" type="button">Stop</button>
+      </div>
+      <p class="vis-note" id="timerHint">Press Start, then write your paragraph.</p>
+    </div>
+    <button class="btn ghost" data-reveal="model9" aria-expanded="false">Model</button>
+    <div class="model" id="model9" hidden>One clear advantage of online learning is flexibility. Lessons which can be rewatched help busy students. This flexibility reduces stress because students can review at their own pace. Even so, this benefit alone does not make online learning better overall.</div>
+    <button class="btn ghost" data-complete="act9">Mark complete</button>
+  </section>
+
+  <!-- ACTIVITY 10 -->
+  <section class="activity" id="act10" data-act="10">
+    <div class="act-head">
+      <span class="badge" aria-hidden="true">10</span>
+      <h2>Check + list</h2>
+      <span class="tag">1 fix</span>
+      <span class="done-flag" aria-hidden="true">DONE</span>
+    </div>
+    <p class="hint-line">Choose one fix to focus on.</p>
+    <div class="exercise">
+      <table style="width:100%;border-collapse:collapse;background:#06121f;" aria-label="Error list">
+        <tr><th style="border:1px solid var(--border);padding:.4rem;">My sentence</th><th style="border:1px solid var(--border);padding:.4rem;">Better</th><th style="border:1px solid var(--border);padding:.4rem;">My try</th></tr>
+        <tr><td style="border:1px solid var(--border);padding:.4rem;">Moreover, moreover, moreover.</td><td style="border:1px solid var(--border);padding:.4rem;">Even so, this flexibility helps.</td><td style="border:1px solid var(--border);padding:.4rem;">Lessons which can be rewatched help.</td></tr>
+      </table>
+      <div class="mcq" data-group="g10">
+        <div class="stem">What is your fix today?</div>
+        <label><input type="radio" class="choice" name="g10"> A) Use 1 linker, not 4</label>
+        <label><input type="radio" class="choice" name="g10"> B) Use full forms, do not shorten them</label>
+        <label><input type="radio" class="choice" name="g10"> C) Ask the teacher for help</label>
+      </div>
+      <label for="sp10" style="font-weight:700;font-size:.9rem;">Write one good line:</label>
+      <textarea id="sp10" placeholder="Write one line with This, which or do not." aria-label="Write one good line"></textarea>
+      
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.6rem;">
+        <label style="font-weight:700;font-size:.85rem;">How smooth now? 1 to 5</label>
+        <input type="range" id="feel" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="How smooth 1 to 5">
+        <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;"><span>1 hard</span><span>3 ok</span><span>5 smooth</span></div>
+      </div>
+      <div class="mini-tip"><span><strong>Homework:</strong> Fix your PEEL, then learn ‘This’, ‘Such’, ‘which’, ‘do not’ and ‘receive’.</span></div>
+    </div>
+    <button class="btn" data-check="act10">Check</button>
+    <div class="feedback" id="fb-act10" aria-live="polite"></div>
+    <button class="btn ghost" data-complete="act10">Mark complete</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results" hidden aria-label="Lesson results">
+    <h2>Done Annisa</h2>
+    <p>Your flow is smooth and your tone is formal. Your PEEL is ready.</p>
+    <div class="score-grid">
+      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
+      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
+      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
+    </div>
+    
+    
+    
+  </section>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</main>
+
+<footer>
+  <p>Day 7: Linking and Formal Tone. 10 tasks. Flow plus tone.</p>
+  <p style="margin-top:.3rem;"><a href="./Annisa-Day07-Linking-Tone-Teacher.html">Teacher page</a></p>
+  <p style="margin-top:.3rem;font-size:.72rem;">Questions adapted for class from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing">British Council Take IELTS</a>. Free classroom use with credit.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var TOTAL_ACTS=10;
+  var state={points:0,streak:0,best:0,correct:0,total:0,done:0};
+  document.querySelectorAll(".answer").forEach(function(){state.total++;});
+  document.querySelectorAll(".mcq").forEach(function(){state.total++;});
+  function norm(s){return (s||"").trim().toLowerCase().replace(/\s+/g," ").replace(/[.?!]+$/,"");}
+  function $(id){return document.getElementById(id);}
+  function updateHUD(){
+    $("points").textContent=state.points+" XP";
+    $("streak").textContent="Streak "+state.streak;
+    $("progText").textContent=state.done+" / "+TOTAL_ACTS+" complete";
+    $("bar").style.width=(state.done/TOTAL_ACTS*100)+"%";
+  }
+  function markInput(inp,ok){
+    inp.classList.toggle("correct",ok);
+    inp.classList.toggle("wrong",!ok);
+    inp.setAttribute("aria-invalid",ok?"false":"true");
+    var m=inp.parentNode.querySelector(".mark");
+    if(!m){m=document.createElement("span");m.className="mark";inp.parentNode.appendChild(m);}
+    m.textContent=ok?"Correct":"Try again";
+    m.className="mark "+(ok?"ok":"no");
+  }
+  function handleCheck(secId){
+    var sec=$(secId);
+    var fb=$("fb-"+secId);
+    var earnedNow=0,okCount=0,wrongList="";
+    var anyWrong=false,anyEmpty=false;
+    sec.querySelectorAll(".answer").forEach(function(inp){
+      if(inp.id==="learnerName") return;
+      var val=norm(inp.value);
+      if(!val){anyEmpty=true;return;}
+      var accepts=inp.dataset.accept?inp.dataset.accept.split("|").map(norm):[];
+      var ok=accepts.length===0 || accepts.some(function(a){return val.indexOf(a)!==-1;});
+      markInput(inp,ok);
+      if(ok){
+        okCount++;
+        if(!inp.dataset.done){inp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        wrongList+="<li>Try <b>"+(inp.dataset.model||"check")+"</b></li>";
+      }
+    });
+    sec.querySelectorAll(".mcq").forEach(function(grp){
+      var chosen=grp.querySelector("input.choice:checked");
+      if(!chosen){anyEmpty=true;return;}
+      var ok=chosen.dataset.correct==="true";
+      grp.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});
+      if(ok){
+        chosen.closest("label").classList.add("correct");
+        okCount++;
+        if(!grp.dataset.done){grp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
+        if(state.streak>state.best) state.best=state.streak;
+      } else {
+        anyWrong=true;state.streak=0;
+        chosen.closest("label").classList.add("wrong");
+        var corr=grp.querySelector("input.choice[data-correct=true]");
+        if(corr) corr.closest("label").classList.add("correct");
+        wrongList+="<li>See green answer.</li>";
+      }
+    });
+    if(anyEmpty && earnedNow===0 && okCount===0){
+      fb.className="feedback bad";
+      fb.innerHTML="Answer first, then Check.";
+      updateHUD();return;
+    }
+    if(anyWrong){
+      fb.className="feedback bad";
+      fb.innerHTML="+"+earnedNow+" XP. Fix:"+(wrongList?"<ul>"+wrongList+"</ul>":"");
+    } else {
+      fb.className="feedback good";
+      fb.innerHTML="Nice. +"+earnedNow+" XP.";
+    }
+    updateHUD();
+  }
+  document.querySelectorAll("[data-check]").forEach(function(btn){
+    btn.addEventListener("click",function(){handleCheck(btn.dataset.check);});
+  });
+  document.querySelectorAll("[data-reveal]").forEach(function(btn){
+    var orig=btn.textContent;
+    btn.addEventListener("click",function(){
+      var el=$(btn.dataset.reveal);
+      var hidden=el.hasAttribute("hidden");
+      if(hidden){el.removeAttribute("hidden");btn.setAttribute("aria-expanded","true");btn.textContent="Hide";}
+      else {el.setAttribute("hidden","");btn.setAttribute("aria-expanded","false");btn.textContent=orig;}
+    });
+  });
+  document.querySelectorAll("[data-complete]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var sec=document.getElementById(btn.dataset.complete);
+      if(sec.classList.contains("complete")) return;
+      sec.classList.add("complete");
+      state.done++;
+      updateHUD();
+      sec.scrollIntoView({block:"start",behavior:"smooth"});
+      if(state.done>=TOTAL_ACTS) showResults();
+    });
+  });
+  function showResults(){
+    var acc=state.total?Math.round(state.correct/state.total*100):0;
+    $("rPoints").textContent=state.points;
+    $("rAcc").textContent=acc+"%";
+    $("rStreak").textContent=state.best;
+    
+    $("results").removeAttribute("hidden");
+    $("results").scrollIntoView({block:"start",behavior:"smooth"});
+    launchConfetti();
+  }
+  
+    function launchConfetti(){
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c=$("confetti"),ctx=c.getContext("2d");
+    c.width=window.innerWidth;c.height=window.innerHeight;
+    var colors=["#ffd400","#38e0c8","#ffffff","#ff8a8a","#9ad0ff"];
+    var parts=[];
+    for(var i=0;i<140;i++) parts.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:4+Math.random()*6,col:colors[i%colors.length]});
+    var t0=Date.now();
+    function frame(){
+      ctx.clearRect(0,0,c.width,c.height);
+      parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.03;ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,p.s,p.s);});
+      if(Date.now()-t0<2600) requestAnimationFrame(frame);
+      else ctx.clearRect(0,0,c.width,c.height);
+    }
+    frame();
+  }
+  updateHUD();
+  var timer=null, remain=480;
+  var timerLabel=$("timerLabel"), timerBtn=$("startTimer"), stopBtn=$("stopTimer"), hint=$("timerHint");
+  function renderTimer(){
+    var m=Math.floor(remain/60), s=remain%60;
+    if(timerLabel) timerLabel.textContent=m+":"+(s<10?"0"+s:s);
+  }
+  if(timerBtn) timerBtn.addEventListener("click",function(){
+    if(timer) return;
+    remain=480; renderTimer();
+    if(hint) hint.textContent="Writing now ...";
+    timer=setInterval(function(){
+      remain--; renderTimer();
+      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time is up. Did you use 1 linker, ‘This’, ‘which’ and full forms?"; }
+    },1000);
+  });
+  if(stopBtn) stopBtn.addEventListener("click",function(){
+    if(timer){ clearInterval(timer); timer=null; if(hint) hint.textContent="Stopped. Press Check, then Complete."; }
+  });
+  renderTimer();
+})();
+</script>
+<script src="../../xapi-include.js" defer></script>
+<script>
+// Annisa Day 3/4 - precise verbs/objects via proxy (mirrors original)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act3:1,act4:1,act7:1,act8:1,act9:1,act10:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</body>
+</html>
