@@ -478,7 +478,7 @@ async function handleFeedback(request, env, corsHeaders) {
   const rubric = pickFeedbackRubric(lesson, activityId, activityTitle);
   const prompt = buildFeedbackPrompt(rubric, text.slice(0, 2000), activityTitle, lessonTitle);
   // Try models in order so one model's daily limit never blocks learners.
-  const models = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite'];
+  const models = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemma-4-31b-it', 'gemma-4-26b-a4b-it'];
   let lastStatus = 502;
   for (let mi = 0; mi < models.length; mi++) {
     const model = models[mi];
