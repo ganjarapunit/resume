@@ -477,39 +477,67 @@ async function handleFeedback(request, env, corsHeaders) {
   }
   const rubric = pickFeedbackRubric(lesson, activityId, activityTitle);
   const prompt = buildFeedbackPrompt(rubric, text.slice(0, 2000), activityTitle, lessonTitle);
-  let ctrl;
-  try {
-    ctrl = new AbortController();
-    const timer = setTimeout(function () { ctrl.abort(); }, 25000);
-    let res;
+  // Try models in order so one model's daily limit never blocks learners.
+  const models = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite'];
+  let lastStatus = 502;
+  for (let mi = 0; mi < models.length; mi++) {
+    const model = models[mi];
+    const genConfig = { temperature: 0.4, maxOutputTokens: 900 };
+    if (model === 'gemini-2.5-flash') genConfig.thinkingConfig = { thinkingBudget: 0 };
+    let ctrl;
     try {
-      res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + env.GEMINI_API_KEY, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.4, maxOutputTokens: 900, thinkingConfig: { thinkingBudget: 0 } }
-        }),
-        signal: ctrl.signal
-      });
-    } finally {
-      clearTimeout(timer);
+      ctrl = new AbortController();
+      const timer = setTimeout(function () { ctrl.abort(); }, 25000);
+      let res;
+      try {
+        res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + env.GEMINI_API_KEY, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: genConfig
+          }),
+          signal: ctrl.signal
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (res.ok) {
+        const out = await res.json();
+        const parts = (((out.candidates || [])[0] || {}).content || {}).parts || [];
+        const feedback = parts.map(function (p) { return p.text || ''; }).join('').trim();
+        if (feedback) {
+          return json({ ok: true, feedback: feedback.slice(0, 3000) }, 200);
+        }
+        console.error('Gemini feedback empty', model);
+        return json({ ok: false, error: 'The AI checker gave no answer. Try again in a minute.' }, 502);
+      }
+      lastStatus = res.status;
+      let detail = '';
+      try { detail = await res.text(); } catch (e) { detail = ''; }
+      console.error('Gemini feedback HTTP', model, res.status, detail.slice(0, 200));
+      if (!isQuotaError(res.status, detail) || mi === models.length - 1) {
+        return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 502);
+      }
+      // Otherwise fall through to the next model.
+    } catch (e) {
+      console.error('Gemini feedback error', model, e && e.message ? e.message : e);
+      if (mi === models.length - 1) {
+        return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 504);
+      }
+      // Network/abort errors also fall through to the next model.
     }
-    if (!res.ok) {
-      console.error('Gemini feedback HTTP', res.status);
-      return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 502);
-    }
-    const out = await res.json();
-    const parts = (((out.candidates || [])[0] || {}).content || {}).parts || [];
-    const feedback = parts.map(function (p) { return p.text || ''; }).join('').trim();
-    if (!feedback) {
-      return json({ ok: false, error: 'The AI checker gave no answer. Try again in a minute.' }, 502);
-    }
-    return json({ ok: true, feedback: feedback.slice(0, 3000) }, 200);
-  } catch (e) {
-    console.error('Gemini feedback error', e && e.message ? e.message : e);
-    return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 504);
   }
+  console.error('Gemini feedback all models exhausted, last status', lastStatus);
+  return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 502);
+}
+
+function isQuotaError(status, detail) {
+  if (status === 429) return true;
+  if (status === 403 || status === 400 || status === 503) {
+    return /quota|rate.?limit|exceed|exhaust|resource.?exhausted|daily/i.test(String(detail || ''));
+  }
+  return false;
 }
 
 async function handleReview(request, env, corsHeaders) {
