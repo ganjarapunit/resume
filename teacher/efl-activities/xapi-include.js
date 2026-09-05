@@ -367,7 +367,67 @@
         status.setAttribute('style', 'font-size:.88rem;font-weight:700;');
         wrap.appendChild(btn);
         wrap.appendChild(status);
+        var aibtn = document.createElement('button');
+        aibtn.type = 'button';
+        aibtn.className = 'btn ghost waifeedback-btn';
+        aibtn.textContent = 'Instant AI feedback';
+        aibtn.setAttribute('aria-label', 'Get instant AI feedback on your writing in this activity');
+        wrap.appendChild(aibtn);
         anchor.appendChild(wrap);
+        var aibox = document.createElement('div');
+        aibox.className = 'waifeedback-box';
+        aibox.setAttribute('role', 'status');
+        aibox.setAttribute('aria-live', 'polite');
+        aibox.setAttribute('style', 'display:none;margin-top:10px;padding:10px 12px;border:2px solid currentColor;border-radius:10px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;opacity:.95;');
+        aibox.hidden = true;
+        anchor.appendChild(aibox);
+        aibtn.addEventListener('click', function(){
+          var parts = [];
+          fields.forEach(function(ta){
+            var v = (ta.value || '').trim();
+            if (v.length >= 3) parts.push('[' + fieldLabel(container, ta) + ']\n' + v.substring(0, 2500));
+          });
+          var combined = parts.join('\n\n').trim();
+          if (!combined || combined.replace(/\[.*?\]/g, '').trim().length < 15){
+            aibox.hidden = false;
+            aibox.style.display = '';
+            aibox.textContent = 'Write at least one full sentence first, then ask for feedback.';
+            fields[0].focus();
+            return;
+          }
+          aibtn.disabled = true;
+          var aiOrig = aibtn.textContent;
+          aibtn.textContent = 'Checking...';
+          aibox.hidden = false;
+          aibox.style.display = '';
+          aibox.textContent = 'Reading your writing...';
+          var h = container.querySelector('h2');
+          fetch(HOME + '/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              lesson: location.pathname,
+              lessonTitle: document.title,
+              activityId: container.id,
+              activityTitle: (h ? h.textContent.trim().substring(0, 80) : container.id),
+              text: combined.substring(0, 2000)
+            })
+          }).then(function(r){
+            return r.json().catch(function(){ return { ok: false }; });
+          }).then(function(j){
+            if (j && j.ok && j.feedback) {
+              aibox.textContent = j.feedback;
+            } else {
+              aibox.textContent = (j && j.error) ? j.error : 'The AI checker is busy. Try again in a minute. Your teacher will still give feedback after you submit.';
+            }
+            aibtn.textContent = 'Check again';
+            aibtn.disabled = false;
+          }).catch(function(){
+            aibox.textContent = 'No connection. Check internet and try again. Your teacher will still give feedback after you submit.';
+            aibtn.textContent = aiOrig;
+            aibtn.disabled = false;
+          });
+        });
         btn.addEventListener('click', function(){
           var parts = [];
           fields.forEach(function(ta){

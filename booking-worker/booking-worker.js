@@ -32,6 +32,9 @@ export default {
     if (url.pathname.endsWith('/submission') || url.pathname.endsWith('/writing-submission')) {
       return handleSubmission(request, env, corsHeaders);
     }
+    if (url.pathname.endsWith('/feedback') || url.pathname.endsWith('/ai-feedback')) {
+      return handleFeedback(request, env, corsHeaders);
+    }
 
     let data;
     try {
@@ -367,6 +370,146 @@ View all submissions in your Google Sheet. Reply to this email to give feedback.
   const allOk = results.every(r => r.ok);
   return new Response(JSON.stringify({ ok: allOk, results }),
     { status: allOk ? 200 : 207, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+}
+
+/* ---------- Instant AI writing feedback (Gemini, server-side key) ---------- */
+
+// Lesson-specific rubrics so feedback follows exactly what each lesson teaches.
+function pickFeedbackRubric(lesson, activityId, activityTitle) {
+  const l = String(lesson || '').toLowerCase();
+  const a = String(activityId || '').toLowerCase();
+  const t = String(activityTitle || '').toLowerCase();
+  const where = l + ' ' + a + ' ' + t;
+  if (where.includes('day02') || where.includes('overview')) {
+    return 'IELTS Writing Task 1 OVERVIEW. Required structure: exactly 2 big trends, NO numbers at all, 1 to 2 sentences. '
+      + 'Check: are there exactly 2 trends? Is there any number (must be zero)? Is it 1 to 2 lines?';
+  }
+  if (where.includes('day03') || where.includes('choose-data') || where.includes('choose data')) {
+    return 'IELTS Writing Task 1 DETAILS. Required structure: only the important numbers (never every number), grouped and compared '
+      + 'with words like while / compared to, past tense for finished years, prepositions at / to / from. '
+      + 'Check: are numbers selected (not listed)? Is there a comparison? Is the past tense used?';
+  }
+  if (where.includes('day04') || where.includes('thesis') || where.includes('understand')) {
+    return 'IELTS Writing Task 2 THESIS (1 to 2 lines). Required structure: position + 2 main points + direction. '
+      + 'Discussion questions use WHILE plus your opinion. Problem questions use THIS ESSAY WILL and must NOT say I agree. '
+      + 'Check: is there a clear position? Are there 2 points? Is there a direction (so/overall)? Is the wrong frame used (e.g. I agree in a Problem thesis)?';
+  }
+  if (where.includes('day05') || where.includes('start') || where.includes('paraphrase') || where.includes('conclusion')) {
+    return 'IELTS Writing Task 2 INTRODUCTION + CONCLUSION. Required structure: introduction = paraphrase the question '
+      + '(change most words, keep key words) + thesis; conclusion = restate your opinion starting with IN CONCLUSION, no new ideas. '
+      + 'Check: is the question copied (must be paraphrased)? Is the opinion restated at the end? Is there any new idea in the conclusion (must be zero)?';
+  }
+  if (where.includes('day06') || where.includes('peel')) {
+    return 'PEEL PARAGRAPH (4 to 5 lines, ONE idea only, explained deeply). Required structure: P = one clear Point, '
+      + 'E = Evidence starting with FOR EXAMPLE, E = Explain starting with THIS, L = Link back with EVEN SO or THEREFORE. '
+      + 'Check: is there exactly 1 idea (not a list)? Is there FOR EXAMPLE? Is there an Even so / Therefore link?';
+  }
+  if (where.includes('day07') || where.includes('link') || where.includes('tone')) {
+    return 'LINKING + FORMAL TONE. Required structure: maximum 1 big linker, reference with THIS / SUCH + noun, '
+      + 'join inside sentences with which / because / while, formal words only (no stuff, no contractions: write do not, cannot). '
+      + 'Check: are there 2 or more big linkers (must be max 1)? Is there a This/Such reference? Any informal word or contraction?';
+  }
+  if (where.includes('day08') || where.includes('pairs') || where.includes('collocation')) {
+    return 'NATURAL WORDS + SENTENCES. Required structure: natural collocations (argue THAT, AT your own pace, REDUCE stress), '
+      + 'joined sentences with so / but / because / which / While, zero top errors (This HELPS not This help). '
+      + 'Check: is there an unnatural pair? Is there a top error (subject-verb, article)? Are sentences joined or choppy?';
+  }
+  return 'IELTS Writing (Task 1 or Task 2). Check: does the text answer the question? Is there a clear overview or position? '
+    + 'Are ideas grouped and linked? Are there repeated grammar errors?';
+}
+
+function buildFeedbackPrompt(rubric, text, activityTitle, lessonTitle) {
+  return 'You are Punit, a friendly EFL writing coach. Your learner is Annisa, a Vietnamese adult at B1-B2 level preparing for IELTS.\n'
+    + 'Lesson: ' + lessonTitle + '. Task: ' + activityTitle + '.\n'
+    + 'The lesson requires exactly this structure:\n' + rubric + '\n'
+    + 'Give short, encouraging feedback a B1-B2 learner can act on immediately, in exactly this shape:\n'
+    + 'Good: one specific thing that matches the lesson structure (1 line).\n'
+    + 'Fix: up to 2 problems, each tied to the lesson structure above (1 line each). Ignore anything outside this lesson focus.\n'
+    + 'Try: rewrite ONLY the weakest sentence, keeping the learner ideas, in 1 to 2 lines.\n'
+    + 'Rules: plain text only, no markdown, no hashtags, under 120 words total. Never add new ideas the learner did not write. '
+    + 'If the text is too short or off-task, say so in one line and stop.\n'
+    + 'Learner text:\n' + text;
+}
+
+// Light in-memory throttle (best effort, per isolate) to protect the paid API.
+const feedbackHits = new Map();
+function feedbackAllowed(ip) {
+  const now = Date.now();
+  const windowMs = 5 * 60 * 1000;
+  const maxHits = 8;
+  let hits = feedbackHits.get(ip) || [];
+  hits = hits.filter(function (ts) { return now - ts < windowMs; });
+  if (hits.length >= maxHits) {
+    feedbackHits.set(ip, hits);
+    return false;
+  }
+  hits.push(now);
+  feedbackHits.set(ip, hits);
+  if (feedbackHits.size > 500) feedbackHits.clear();
+  return true;
+}
+
+async function handleFeedback(request, env, corsHeaders) {
+  const json = function (obj, status) {
+    return new Response(JSON.stringify(obj),
+      { status: status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  };
+  if (!env.GEMINI_API_KEY) {
+    return json({ ok: false, error: 'AI feedback is not set up yet. Your writing was still sent to your teacher.' }, 503);
+  }
+  let data;
+  try {
+    data = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: 'Invalid JSON' }, 400);
+  }
+  const text = String(data.text || '').trim();
+  if (text.length < 15) {
+    return json({ ok: false, error: 'Write at least one full sentence first, then try again.' }, 400);
+  }
+  const lesson = String(data.lesson || '').trim();
+  const lessonTitle = String(data.lessonTitle || lesson).trim();
+  const activityId = String(data.activityId || '').trim();
+  const activityTitle = String(data.activityTitle || activityId).trim();
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  if (!feedbackAllowed(ip)) {
+    return json({ ok: false, error: 'Too many checks. Wait a few minutes, then try again.' }, 429);
+  }
+  const rubric = pickFeedbackRubric(lesson, activityId, activityTitle);
+  const prompt = buildFeedbackPrompt(rubric, text.slice(0, 2000), activityTitle, lessonTitle);
+  let ctrl;
+  try {
+    ctrl = new AbortController();
+    const timer = setTimeout(function () { ctrl.abort(); }, 25000);
+    let res;
+    try {
+      res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + env.GEMINI_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.4, maxOutputTokens: 900, thinkingConfig: { thinkingBudget: 0 } }
+        }),
+        signal: ctrl.signal
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    if (!res.ok) {
+      console.error('Gemini feedback HTTP', res.status);
+      return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 502);
+    }
+    const out = await res.json();
+    const parts = (((out.candidates || [])[0] || {}).content || {}).parts || [];
+    const feedback = parts.map(function (p) { return p.text || ''; }).join('').trim();
+    if (!feedback) {
+      return json({ ok: false, error: 'The AI checker gave no answer. Try again in a minute.' }, 502);
+    }
+    return json({ ok: true, feedback: feedback.slice(0, 3000) }, 200);
+  } catch (e) {
+    console.error('Gemini feedback error', e && e.message ? e.message : e);
+    return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your writing was still sent to your teacher.' }, 504);
+  }
 }
 
 async function handleReview(request, env, corsHeaders) {

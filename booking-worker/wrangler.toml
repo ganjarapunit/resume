@@ -8,8 +8,9 @@ routes = [
   { pattern = "punitganjara.com/api/*", zone_name = "punitganjara.com" }
 ]
 
-# Set the Brevo API key as a secret (never commit it):
+# Set API keys as secrets (never commit them):
 #   wrangler secret put BREVO_API_KEY
+#   wrangler secret put GEMINI_API_KEY   (for /api/feedback instant writing feedback)
 #
 # Deploy:
 #   wrangler deploy
