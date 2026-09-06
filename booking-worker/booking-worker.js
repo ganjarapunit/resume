@@ -433,14 +433,14 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
 }
 
 function buildFeedbackPrompt(rubric, text, activityTitle, lessonTitle) {
-  return 'You are Punit, a friendly EFL writing coach. Your learner is Annisa, a Vietnamese adult at B1-B2 level preparing for IELTS.\n'
+  return 'You are Punit, a friendly EFL writing coach. Your learner is an adult at B1-B2 level preparing for IELTS.\n'
     + 'Lesson: ' + lessonTitle + '. Task: ' + activityTitle + '.\n'
     + 'The lesson requires exactly this structure:\n' + rubric + '\n'
     + 'Give short, encouraging feedback a B1-B2 learner can act on immediately, in exactly this shape:\n'
     + 'Good: one specific thing that matches the lesson structure (1 line).\n'
     + 'Fix: up to 2 problems, each tied to the lesson structure above (1 line each). Ignore anything outside this lesson focus.\n'
     + 'Try: rewrite ONLY the weakest sentence, keeping the learner ideas, in 1 to 2 lines.\n'
-    + 'Rules: plain text only, no markdown, no hashtags, under 120 words total. Never add new ideas the learner did not write. '
+    + 'Rules: plain text only, no markdown, no hashtags, under 120 words total. Start your reply with exactly Hi! and never address the learner by any name anywhere. Never add new ideas the learner did not write. '
     + 'If the text is too short or off-task, say so in one line and stop.\n'
     + 'Learner text:\n' + text;
 }
