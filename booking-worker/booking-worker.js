@@ -409,6 +409,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'join inside sentences with which / because / while, formal words only (no stuff, no contractions: write do not, cannot). '
       + 'Check: are there 2 or more big linkers (must be max 1)? Is there a This/Such reference? Any informal word or contraction?';
   }
+  if (where.includes('day09') || where.includes('full-test') || where.includes('full test') || where.includes('mock')) {
+    return 'FULL IELTS WRITING TASK 2 MOCK (40 minutes, 250+ words). Required structure: introduction = paraphrase + thesis '
+      + '(position + 2 points), 2 PEEL body paragraphs (ONE idea each: Point, FOR EXAMPLE evidence, THIS explanation, EVEN SO or THEREFORE link), '
+      + 'conclusion restating the opinion with IN CONCLUSION and no new ideas. Plus: max 1 big linker, formal words (no contractions), '
+      + 'natural pairs (argue THAT, AT your own pace, REDUCE stress), zero top errors (This HELPS). '
+      + 'Check: is it 250+ words? Are there 4 parts? Is each body ONE idea with PEEL links? Any copied question words, informal words, or top errors?';
+  }
   if (where.includes('day08') || where.includes('pairs') || where.includes('collocation')) {
     return 'NATURAL WORDS + SENTENCES. Required structure: natural collocations (argue THAT, AT your own pace, REDUCE stress), '
       + 'joined sentences with so / but / because / which / While, zero top errors (This HELPS not This help). '
