@@ -309,6 +309,11 @@
       { file: 'complex-clauses-b2-shirley', act: 'act10', fields: ['a10-1', 'a10-2', 'a10-3', 'a10-4', 'a10-5', 'a10-6'] },
       { file: 'adverbial-wh-clauses', act: 'act14', fields: ['a14-3', 'a14-4', 'a14-5'] },
       { file: 'adverbial-wh-clauses', act: 'act15', fields: ['a15-draft'] },
+      { file: 'lesson-17', act: 'act10', fields: ['a10input'], input: true },
+      { file: 'lesson-17', act: 'act13', fields: ['a13input'], input: true },
+      { file: 'lesson-17', act: 'act15', fields: ['a15q1', 'a15q2'] },
+      { file: 'lesson-17', act: 'act17', fields: ['a17input', 'a17q'] },
+      { file: 'lesson-17', act: 'act19', fields: ['a19input'], input: true },
       { file: 'conditionals-review', act: 'act9', fields: ['a9a'] },
       { file: 'listening-skills-interview', act: 'act7', fields: ['sp7'] },
       { file: 'listening-skills-interview', act: 'act8', fields: ['sp8'] },
@@ -317,6 +322,7 @@
     ];
     function fileTag(){
       var f = location.pathname.toLowerCase();
+      if (f.indexOf('lesson-17') > -1) return 'lesson-17';
       if (f.indexOf('delta') > -1) return 'delta';
       if (f.indexOf('complex-clauses-b2-part2') > -1) return 'complex-clauses-b2-part2';
       if (f.indexOf('complex-clauses') > -1) return 'complex-clauses-b2-shirley';
@@ -355,10 +361,12 @@
         var fields = [];
         rule.fields.forEach(function(fid){
           var ta = document.getElementById(fid);
-          if (ta && container.contains(ta) && ta.tagName === 'TEXTAREA') fields.push(ta);
+          if (!ta || !container.contains(ta)) return;
+          if (ta.tagName === 'TEXTAREA') fields.push(ta);
+          else if (rule.input && ta.tagName === 'INPUT' && (!ta.type || ta.type === 'text' || ta.type === 'search')) fields.push(ta);
         });
         if (!fields.length || container.querySelector('.wsubmit-wrap')) return;
-        var anchor = container.querySelector('.exercise') || container.querySelector('fieldset') || container.querySelector('.activity-body') || container;
+        var anchor = container.querySelector('.exercise') || container.querySelector('.interactive') || container.querySelector('fieldset') || container.querySelector('.activity-body') || container;
         var wrap = document.createElement('div');
         wrap.className = 'wsubmit-wrap';
         wrap.setAttribute('style', 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;');

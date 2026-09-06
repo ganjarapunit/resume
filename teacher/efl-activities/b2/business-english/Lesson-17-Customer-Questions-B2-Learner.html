@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 17 Student - Customer Questions: Requirements and Decision Criteria</title>
+<meta name="description" content="Interactive B1+ to B2 student lesson - 20 speaking activities, discovery questions, requirements and decision criteria, high contrast, WCAG 2.1 AA">
+<style>
+:root{--bg:#000;--fg:#fff;--muted:#9AA8BD;--muted2:#CBD5E1;--accent:#FFD400;--accent2:#38E0C8;--accent3:#7AD1FF;--panel:#0A0A0A;--card:#080C14;--card2:#0E1424;--head:#0B1220;--border:#1E2A3A;--border2:#2A3D57;--okbg:#001F14;--okbd:#00E676;--okfg:#EAFFF5;--review:#FFB84D;--reviewbg:#1A1200;--core:#38E0C8;--role:#C27CFF;--radius:14px;--focus:3px solid var(--accent)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:17px}
+a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:var(--focus);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:10px 14px;font-weight:900;border-radius:0 0 8px 0;z-index:999}
+.skip:focus{left:10px;top:10px}
+header{display:none}
+.top-mini{max-width:980px;margin:0 auto;padding:10px 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:var(--bg)}
+.top-mini h1{margin:0;font-size:1.05rem;line-height:1.3;color:var(--accent);font-weight:900;letter-spacing:-.01em}
+.top-mini .lesson-id{color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.mini-progress{flex:1;max-width:180px;height:6px;background:#0B1220;border:1px solid var(--border);border-radius:999px;overflow:hidden;margin-left:auto}
+.mini-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
+main{max-width:980px;margin:0 auto;padding:16px 16px 40px}
+.intro{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin:14px 0}
+@media(max-width:820px){.intro{grid-template-columns:1fr}}
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.card h2{margin:0 0 6px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.card p{margin:4px 0;color:var(--muted2);font-size:.92rem}
+.opener{border-left:5px solid var(--accent);background:var(--panel)}
+.opener strong{color:var(--accent2)}
+.toc{margin:14px 0}
+.toc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:700px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:9px 11px;text-decoration:none;color:var(--muted2);transition:transform .15s,border-color .15s,background .15s}
+.toc-item:hover{border-color:var(--border2);transform:translateY(-1px)}
+.toc-item.done{border-color:var(--okbd);background:rgba(0,230,118,.06)}
+.toc-item .n{width:28px;height:28px;border-radius:50%;background:#111A2A;border:1px solid var(--border);display:grid;place-items:center;font-weight:900;font-size:.78rem;color:var(--accent);flex-shrink:0}
+.toc-item.done .n{background:var(--okbd);color:#002414;border-color:var(--okbd)}
+.toc-item b{color:var(--fg);font-size:.86rem}
+.toc-item span{font-size:.76rem;color:var(--muted)}
+section.activity{background:var(--card);border:1.5px solid #1C2433;border-radius:16px;margin:18px 0;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.act-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(180deg,#0B1220,#080C14);border-bottom:1px solid #1C2433;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.act-head h3{margin:0;flex:1;min-width:220px;font-size:1.02rem;line-height:1.3}
+.act-head h3 .num{color:var(--accent);margin-right:6px}
+.tag{font-size:.66rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1.5px solid var(--border2);white-space:nowrap}
+.tag.review{color:var(--review);border-color:var(--review);background:var(--reviewbg)}
+.tag.core{color:var(--core);border-color:var(--core);background:rgba(56,224,200,.09)}
+.tag.extra{color:var(--accent3);border-color:var(--accent3);background:rgba(122,209,255,.09)}
+.tag.role{color:var(--role);border-color:var(--role);background:rgba(194,124,255,.09)}
+.tag.vocab{color:var(--accent);border-color:var(--accent);background:rgba(255,212,0,.09)}
+.meta-line{padding:8px 14px 0;color:var(--muted);font-size:.8rem;display:flex;gap:14px;flex-wrap:wrap}
+.meta-line b{color:var(--muted2)}
+.desc{margin:8px 14px 6px;color:var(--muted2);font-size:.92rem}
+.challenge{margin:6px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.challenge .pill{font-size:.74rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:#111A2A;border:1px solid var(--border);color:var(--muted2);padding:6px 10px;border-radius:999px}
+.interactive{margin:10px 14px 12px;background:#060A14;border:1.5px solid var(--border2);border-radius:12px;padding:14px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.btn{background:var(--accent);color:#000;border:none;padding:11px 16px;border-radius:10px;font-weight:900;cursor:pointer;font-size:.88rem;display:inline-flex;align-items:center;gap:6px;min-height:44px;min-width:44px;justify-content:center}
+button.btn.secondary{background:#111A2A;color:var(--fg);border:1.5px solid var(--border2)}
+button.btn.ghost{background:transparent;color:var(--accent2);border:1.5px solid var(--border2)}
+button.btn:hover:not(:disabled){filter:brightness(1.05)}
+.feedback{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.9rem;display:none}
+.feedback.ok{display:block;background:var(--okbg);border:1.5px solid var(--okbd);color:var(--okfg)}
+.feedback.bad{display:block;background:#1A0A0A;border:1.5px solid #FF6B6B;color:#FFD9D9}
+.feedback.info{display:block;background:#0A1424;border:1.5px solid #2A5BD7;color:#D6E4FF}
+.grid-flip{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
+.flip{perspective:900px;min-height:176px;height:auto}
+.flip-inner{position:relative;width:100%;min-height:176px;height:100%;transition:transform .55s;transform-style:preserve-3d;cursor:pointer}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;border:1.5px solid var(--border2);padding:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow-y:auto;overflow-x:hidden;word-wrap:break-word;hyphens:auto;scrollbar-width:thin}
+.flip-back{background:var(--okbg);border-color:var(--okbd);color:var(--okfg);transform:rotateY(180deg);justify-content:flex-start;padding-top:14px}
+.flip-front{background:#0E1424;color:var(--fg)}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.match-grid{grid-template-columns:1fr}}
+.match-col{display:grid;gap:8px}
+.pick{width:100%;text-align:left;background:#0E1424;border:1.5px solid var(--border2);color:var(--fg);padding:10px 11px;border-radius:10px;cursor:pointer;font-size:.9rem}
+.pick.selected{border-color:var(--accent);background:rgba(255,212,0,.12);box-shadow:0 0 0 2px rgba(255,212,0,.15)}
+.pick.matched{border-color:var(--okbd);background:rgba(0,230,118,.12);color:var(--okfg)}
+.pick.wrong{border-color:#FF6B6B;background:rgba(255,107,107,.1)}
+.order-list{display:grid;gap:8px}
+.order-item{display:flex;gap:8px;align-items:center;background:#0E1424;border:1.5px solid var(--border2);border-radius:12px;padding:8px 10px}
+.order-item .drag{cursor:grab;font-size:1.1rem;user-select:none}
+.order-item:focus-within{border-color:var(--accent)}
+.word-chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{background:#111A2A;border:1.5px solid var(--border2);color:var(--fg);padding:7px 10px;border-radius:999px;cursor:pointer;font-size:.88rem}
+.chip:hover{border-color:var(--accent3)}
+.sentence-box{min-height:46px;background:#0B1220;border:1.5px dashed var(--border2);border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sentence-box.filled{border-style:solid;border-color:var(--okbd);background:rgba(0,230,118,.06)}
+.chat{max-height:320px;overflow:auto;display:grid;gap:10px;padding:10px;background:#05070D;border:1px solid var(--border);border-radius:10px}
+.bubble{max-width:82%;padding:10px 12px;border-radius:14px;font-size:.92rem;line-height:1.5}
+.bubble.me{background:linear-gradient(180deg,#FFD400,#FFB800);color:#000;justify-self:end;border-bottom-right-radius:4px}
+.bubble.them{background:#0E1424;border:1px solid var(--border);color:var(--fg);justify-self:start;border-bottom-left-radius:4px}
+.help-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.help-chip{background:rgba(122,209,255,.12);border:1px solid rgba(122,209,255,.4);color:var(--accent3);padding:6px 9px;border-radius:999px;cursor:pointer;font-size:.82rem}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;color:var(--accent);font-size:1.1rem}
+.details{margin:10px 14px 14px;background:#0E1424;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.details summary{cursor:pointer;padding:10px 12px;font-weight:800;color:var(--accent2);list-style:none;display:flex;align-items:center;gap:8px}
+.details summary::-webkit-details-marker{display:none}
+.details[open] summary{border-bottom:1px solid var(--border)}
+.details .inside{padding:12px;color:var(--muted2);font-size:.93rem}
+.checklist{display:grid;gap:6px;margin-top:8px}
+.check{display:flex;gap:8px;align-items:center;background:#0B1220;border:1px solid var(--border);border-radius:9px;padding:7px 10px;font-size:.88rem;color:var(--muted2)}
+.check input{accent-color:var(--okbd);width:18px;height:18px}
+.sr-only{position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson content</a>
+<div class="top-mini" role="banner" aria-label="Lesson title">
+  <span class="lesson-id">Lesson 17 - B1+ to B2 - 40 min</span>
+  <h1>Customer questions: requirements and decision criteria</h1>
+  <div class="mini-progress" aria-hidden="true"><i id="progressBar"></i></div>
+  <span id="progressText" style="font-size:.7rem;font-weight:800;color:var(--muted);white-space:nowrap">0%</span>
+</div>
+<main id="main">
+  <nav class="card toc" id="toc" aria-label="Lesson overview">
+    <h2>20 activities - tap to jump (40 min)</h2>
+    <div class="toc-grid" id="tocGrid"></div>
+    <p style="color:var(--muted);font-size:.8rem;margin:10px 0 0">Tip: the same 10 discovery words appear everywhere. Spiral challenge: bank hides from Activity 9, answers get longer.</p>
+  </nav>
+
+  <section class="activity" id="act1" data-title="Review 1 - 7 step price story">
+    <div class="act-head"><h3><span class="num">01</span> Review 1 - The 7 step price story from Lesson 16</h3><span class="tag review">Review</span><span class="tag extra">1.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> recall the flow from memory, no bank</span><span><b>Mode:</b> drag to order, then speak</span></div>
+    <p class="desc">Drag the 7 steps into order. Start with align, end with next steps. Then say one sentence per step out loud from memory.</p>
+    <div class="interactive" id="a1box">
+      <div class="order-list" id="a1list" role="list" aria-label="Reorder the 7 steps"></div>
+      <div class="controls">
+        <button class="btn" onclick="checkA1()">Check order</button>
+        <button class="btn secondary" onclick="shuffleA1()">Shuffle</button>
+        <button class="btn ghost" onclick="speak('Thanks for joining, the purpose is to align on pricing. The customer indicated our quotation is over budget. Could you walk me through the competitor scope so we compare like for like. When you consider total cost of ownership, our scope justifies the price. While the competitor appears cheaper, their scope is narrower. If we narrowed the scope, we could propose a more cost effective alternative. I will send a detailed comparison by Friday. Does that work for you?')">Play model</button>
+      </div>
+      <div class="feedback" id="a1fb" role="status" aria-live="polite"></div>
+      <div class="challenge"><span class="pill">After check: say 7 sentences in 30 sec</span><span class="pill">Spiral: no bank this time</span></div>
+    </div>
+    <details class="details"><summary>Show model answer</summary><div class="inside">
+      1 Thanks for joining, the purpose is to align on pricing.<br>2 The customer indicated our quotation is over budget.<br>3 Could you walk me through the competitor scope so we compare like for like?<br>4 When you consider total cost of ownership, our scope justifies the price.<br>5 While the competitor appears cheaper, their scope is narrower.<br>6 If we narrowed the scope, we could propose a more cost effective alternative.<br>7 I will send a detailed comparison by Friday. Does that work for you?
+    </div></details>
+  </section>
+
+  <section class="activity" id="act2" data-title="Vocabulary - 10 discovery words">
+    <div class="act-head"><h3><span class="num">02</span> Vocabulary - 10 discovery words</h3><span class="tag vocab">Core 1 - Vocab</span><span class="tag extra">3 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> see, hear and use the same 10 words you will reuse all lesson</span></div>
+    <p class="desc">Tap each card to flip. Hear it, see the definition and one natural question. Flip all 10 to unlock the quick check.</p>
+    <div class="interactive">
+      <div class="grid-flip" id="a2grid"></div>
+      <div class="controls">
+        <button class="btn secondary" onclick="flipAllA2()">Flip all</button>
+        <button class="btn ghost" onclick="resetA2()">Reset</button>
+        <span id="a2count" style="align-self:center;color:var(--muted);font-weight:800"></span>
+      </div>
+      <div id="a2check" style="margin-top:12px;display:none;background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <p style="margin:0 0 8px;color:var(--accent2);font-weight:800">Quick check - choose the word for the definition:</p>
+        <p id="a2q" style="margin:0 0 8px"></p>
+        <div class="word-chips" id="a2opts"></div>
+        <div class="feedback" id="a2fb" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+    <details class="details"><summary>Show phrase list</summary><div class="inside" id="a2list"></div></details>
+  </section>
+
+  <section class="activity" id="act3" data-title="Meaning matching">
+    <div class="act-head"><h3><span class="num">03</span> Meaning matching - Match word to definition</h3><span class="tag core">Core 2</span><span class="tag extra">2.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> match each word to its correct definition</span><span><b>How:</b> tap a word, then tap its definition</span></div>
+    <p class="desc">Tap one word on the left, then its match on the right. Green means correct pair. Try to beat 60 seconds.</p>
+    <div class="interactive">
+      <div class="match-grid">
+        <div class="match-col" id="a3left" role="listbox" aria-label="Words"></div>
+        <div class="match-col" id="a3right" role="listbox" aria-label="Definitions"></div>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="checkA3()">Check all</button>
+        <button class="btn secondary" onclick="resetA3()">Reset</button>
+        <span id="a3score" style="align-self:center;color:var(--muted);font-weight:800"></span>
+      </div>
+      <div class="feedback" id="a3fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show correct pairs</summary><div class="inside">1-C, 2-E, 3-B, 4-A, 5-G, 6-I, 7-H, 8-J, 9-D, 10-F</div></details>
+  </section>
+
+  <section class="activity" id="act4" data-title="Quick say - Smooth questions">
+    <div class="act-head"><h3><span class="num">04</span> Quick say - Pronounce questions naturally</h3><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> say chunks smoothly, one breath per phrase</span></div>
+    <p class="desc">Tap play to hear the natural rhythm, then tap I said it. Link the words: What_are your main requirements?</p>
+    <div class="interactive" id="a4box"></div>
+  </section>
+
+  <section class="activity" id="act5" data-title="Sentence unjumble">
+    <div class="act-head"><h3><span class="num">05</span> Sentence unjumble - 6 discovery questions</h3><span class="tag core">Core 3</span><span class="tag extra">3 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> build 6 correct questions - you will reuse them in the next dialogue</span></div>
+    <p class="desc">Tap words in order to build the question. Tap the sentence to remove last word. Complete all 6 with the 10 target words.</p>
+    <div class="interactive">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+        <span style="color:var(--muted);font-weight:800">Question</span><span id="a5idx" class="badge" style="background:var(--head);color:var(--accent);border:1px solid var(--border)">1 / 6</span>
+        <div style="flex:1"></div>
+        <button class="btn secondary" onclick="prevA5()">Prev</button>
+        <button class="btn secondary" onclick="nextA5()">Next</button>
+      </div>
+      <div class="sentence-box" id="a5answer" tabindex="0" aria-label="Your sentence - tap to remove last word" onclick="undoA5()" role="button"></div>
+      <div class="word-chips" id="a5chips" style="margin-top:10px"></div>
+      <div class="controls">
+        <button class="btn" onclick="checkA5()">Check</button>
+        <button class="btn secondary" onclick="clearA5()">Clear</button>
+        <button class="btn ghost" onclick="hintA5()">Hint: first word</button>
+      </div>
+      <div class="feedback" id="a5fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show all 6 correct questions</summary><div class="inside">
+      1 What are your main requirements for backup power?<br>2 What are your key decision criteria apart from price?<br>3 Could you share your budget range and your timeline for delivery?<br>4 What is your priority if space is a constraint?<br>5 Could you clarify the load demand and the operating hours?<br>6 Who is the decision maker, and what should we clarify next?
+    </div></details>
+  </section>
+
+  <section class="activity" id="act6" data-title="Dialogue ordering - Discovery call">
+    <div class="act-head"><h3><span class="num">06</span> Dialogue ordering - Discovery call with Ms Weber</h3><span class="tag core">Core 4</span><span class="tag extra">2.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> put the 8 lines in logical turn taking order</span></div>
+    <p class="desc">Drag the lines to order. Use up and down buttons for keyboard. Then read the dialogue with polite intonation and swap roles.</p>
+    <div class="interactive">
+      <div class="order-list" id="a6list" role="list" aria-label="Dialogue lines to order"></div>
+      <div class="controls">
+        <button class="btn" onclick="checkA6()">Check order</button>
+        <button class="btn secondary" onclick="shuffleA6()">Shuffle</button>
+        <button class="btn ghost" onclick="playA6()">Play dialogue</button>
+      </div>
+      <div class="feedback" id="a6fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show correct order</summary><div class="inside">1-B, 2-A, 3-C, 4-D, 5-E, 6-F, 7-G, 8-H<br><br>B Thanks for joining. What are your main requirements for backup power?<br>A We need about 250 kVA for the factory, but details are still open.<br>C Thank you. What are your key decision criteria apart from price?<br>D Reliability first, then service. Price comes third.<br>E Could you share your budget range and your timeline for delivery?<br>F Budget around 80k, delivery in about ten weeks if possible.<br>G Space is tight, we run about ten hours per day at 200 kW.<br>H What is your priority if space is a constraint? Could you clarify the load demand and the operating hours? Who is the decision maker?</div></details>
+  </section>
+
+  <section class="activity" id="act7" data-title="Review 2 - Like for like question">
+    <div class="act-head"><h3><span class="num">07</span> Review 2 - Like for like as a question</h3><span class="tag review">Review</span><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> turn Lesson 16 statements into discovery questions</span></div>
+    <p class="desc">Tap the chips to build the professional question. Start with Could you walk me through.</p>
+    <div class="interactive">
+      <div class="sentence-box" id="a7box" style="min-height:56px"></div>
+      <div class="word-chips" id="a7chips" style="margin-top:10px"></div>
+      <div class="controls">
+        <button class="btn" onclick="checkA7()">Check</button>
+        <button class="btn secondary" onclick="clearA7()">Clear</button>
+        <button class="btn ghost" onclick="speak('Could you walk me through the competitor scope so we can compare like for like? What is included and what is excluded in terms of warranty and service?')">Play model</button>
+      </div>
+      <div class="feedback" id="a7fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show model</summary><div class="inside">Could you walk me through the competitor scope so we can compare like for like? What is included and what is excluded in terms of warranty and service?</div></details>
+  </section>
+
+  <section class="activity" id="act8" data-title="New conversation - With Anna">
+    <div class="act-head"><h3><span class="num">08</span> New conversation - Internal prep with Anna</h3><span class="tag core">Core 5</span><span class="tag extra">2.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> same 10 words, new context - internal prep</span></div>
+    <p class="desc">Choose the correct order number for each line (1 to 8). Same vocabulary but with a colleague. Second read: hide the bank.</p>
+    <div class="interactive" id="a8box"></div>
+    <div class="feedback" id="a8fb" role="status" aria-live="polite" style="margin:0 14px 12px"></div>
+    <details class="details"><summary>Show correct order</summary><div class="inside">1-A, 2-B, 3-C, 4-D, 5-E, 6-F, 7-G, 8-H<br>A How did the discovery call go?<br>B Good, but many requirements are still unclear.<br>C What are the decision criteria and priorities so far?<br>D Reliability first, then service. Space is a constraint.<br>E Did you get budget range and timeline?<br>F Around 80k and ten weeks, but I must confirm load demand and operating hours.<br>G Who is the decision maker?<br>H Not confirmed. I will ask a clear follow-up question about approval and next steps.</div></details>
+  </section>
+
+  <section class="activity" id="act9" data-title="Spot the gap - Missing info">
+    <div class="act-head"><h3><span class="num">09</span> Spot the gap - Ask to fill missing info</h3><span class="tag extra">2 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> describe gaps and ask 3 precise questions</span></div>
+    <p class="desc">Look at the numbers, then tap to complete each question starter. No bank. Say each question out loud after you choose.</p>
+    <div class="interactive">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;font-size:.82rem">
+        <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:10px"><div style="color:var(--muted);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase">Known</div><div style="font-weight:900">250 kVA<br><span style="color:var(--muted);font-weight:600">10 weeks<br>reliability first</span></div></div>
+        <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:10px"><div style="color:var(--muted);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase">Unclear</div><div style="font-weight:900">budget ?<br><span style="color:var(--muted);font-weight:600">hours ?<br>maker ?</span></div></div>
+        <div style="background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.3);border-radius:10px;padding:10px"><div style="color:var(--accent);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase">Ask</div><div style="font-weight:900;color:var(--accent)">3 questions<br>open only</div></div>
+      </div>
+      <div id="a9box" style="display:grid;gap:10px"></div>
+      <div class="feedback" id="a9fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show models</summary><div class="inside">
+      1 Could you share your budget range for this project so I can check options?<br>2 Could you clarify the daily operating hours and the load demand in kW?<br>3 Who is the decision maker for final approval, and what is your timeline?
+    </div></details>
+  </section>
+
+  <section class="activity" id="act10" data-title="Role play - Discover needs">
+    <div class="act-head"><h3><span class="num">10</span> Role play - Discover needs without pitching too fast</h3><span class="tag role">Core 6</span><span class="tag extra">4 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> ask only, no price yet - use 5 target words</span></div>
+    <p class="desc">Play the chat. Ms Weber is vague. Tap a helpful phrase chip to insert it, then send. Your checklist ticks automatically.</p>
+    <div class="interactive">
+      <div class="chat" id="a10chat" aria-live="polite" aria-label="Role play chat"></div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input id="a10input" placeholder="Type or tap a chip to build your question..." style="flex:1;background:#0B1220;border:1.5px solid var(--border2);color:var(--fg);padding:11px 12px;border-radius:10px;font-size:.95rem" aria-label="Your message">
+        <button class="btn" onclick="sendA10()">Send</button>
+      </div>
+      <div class="help-chips" id="a10chips"></div>
+      <div class="checklist" id="a10checks" style="margin-top:10px"></div>
+      <div class="controls">
+        <button class="btn secondary" onclick="resetA10()">Restart</button>
+        <button class="btn ghost" onclick="speak('What are your main requirements for this site. What are your key decision criteria apart from price. Could you share your budget range and timeline. Could you clarify load demand and operating hours.')">Play model flow</button>
+      </div>
+      <div class="feedback" id="a10fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show model role play</summary><div class="inside">
+      You: Thanks for joining. What are your main requirements for backup power?<br>Ms Weber: Something reliable, 250 kVA maybe.<br>You: Thank you. What are your key decision criteria apart from price?<br>You: Could you share your budget range and your timeline for delivery?<br>You: What is your priority if space is a constraint? Could you clarify the load demand and the operating hours?<br>You: Who is the decision maker, and what should we clarify next?
+    </div></details>
+  </section>
+
+  <section class="activity" id="act11" data-title="Review 3 - Conditional follow-up">
+    <div class="act-head"><h3><span class="num">11</span> Review 3 - Conditional follow-up: If you needed</h3><span class="tag review">Review</span><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> check with If you..., would... - do not promise</span></div>
+    <p class="desc">Match the condition on the left to the soft check on the right. Then say the full conditional question out loud.</p>
+    <div class="interactive">
+      <div class="match-grid">
+        <div class="match-col" id="a11left"></div>
+        <div class="match-col" id="a11right"></div>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="checkA11()">Check</button>
+        <button class="btn secondary" onclick="resetA11()">Reset</button>
+      </div>
+      <div class="feedback" id="a11fb" role="status" aria-live="polite"></div>
+      <div style="margin-top:10px;background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:10px">
+        <div style="color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:800">Say</div>
+        <div style="font-weight:600">If you needed 250 kVA continuous for ten hours, would a larger fuel tank be a priority? Could you confirm the operating hours?</div>
+        <button class="btn ghost" style="margin-top:8px" onclick="speak('If you needed 250 kVA continuous for ten hours, would a larger fuel tank be a priority? Could you confirm the operating hours?')">Play</button>
+      </div>
+    </div>
+    <details class="details"><summary>Show alternatives</summary><div class="inside">If space is a constraint, would a compact canopy be relevant? If delivery in ten weeks is fixed, should we prioritize stock units?</div></details>
+  </section>
+
+  <section class="activity" id="act12" data-title="Numbers that matter">
+    <div class="act-head"><h3><span class="num">12</span> Numbers that matter - Ask with numbers politely</h3><span class="tag extra">1.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> embed numbers in questions with hedging</span></div>
+    <p class="desc">Tap play to hear the model question, then type your version with about, around or approximately. Say numbers politely, with hedging.</p>
+    <div class="interactive" id="a12box"></div>
+  </section>
+
+  <section class="activity" id="act13" data-title="Open vs closed questions">
+    <div class="act-head"><h3><span class="num">13</span> Open vs closed - Ask better questions</h3><span class="tag extra">1.5 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> choose the open version that gives more info</span></div>
+    <p class="desc">For each pair, tap the better discovery question. Green explains why it works.</p>
+    <div class="interactive" id="a13box"></div>
+    <div style="margin-top:12px;background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+      <div style="color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:800">Now fix this - type and check</div>
+      <p style="margin:6px 0;color:var(--muted2)">Closed: Do you need backup power?</p>
+      <div style="display:flex;gap:8px">
+        <input id="a13input" placeholder="Type open version..." style="flex:1;background:#060A14;border:1.5px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:8px">
+        <button class="btn" onclick="checkA13soft()">Check</button>
+      </div>
+      <div class="feedback" id="a13softfb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show open model</summary><div class="inside">What are your main requirements for backup power on this site?</div></details>
+  </section>
+
+  <section class="activity" id="act14" data-title="Question funnel">
+    <div class="act-head"><h3><span class="num">14</span> Question funnel - Open, probe, check in one flow</h3><span class="tag extra">2 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> connect 3 levels into one smooth 30 second flow</span></div>
+    <p class="desc">Drag the connectors into the correct gaps. Use Thank you, Could you clarify, If I understand correctly. Then say the whole flow without stopping.</p>
+    <div class="interactive">
+      <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px;line-height:1.9">
+        <span>What are your main requirements for this site? </span>
+        <select id="a14s1" aria-label="Connector 1" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option><option>Thank you,</option><option>Could you clarify</option><option>If I understand correctly,</option></select>
+        <span> reliability first is clear. </span>
+        <select id="a14s2" aria-label="Connector 2" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option><option>Thank you,</option><option>Could you clarify</option><option>If I understand correctly,</option></select>
+        <span> the load demand and operating hours in more detail? </span>
+        <select id="a14s3" aria-label="Connector 3" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option><option>Thank you,</option><option>Could you clarify</option><option>If I understand correctly,</option></select>
+        <span> you need 200 kW for ten hours per day. Is that right?</span>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="checkA14()">Check</button>
+        <button class="btn ghost" onclick="speak('What are your main requirements for this site? Thank you, reliability first is clear. Could you clarify the load demand and operating hours in more detail? If I understand correctly, you need 200 kW for ten hours per day. Is that right?')">Play model</button>
+      </div>
+      <div class="feedback" id="a14fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show full model flow</summary><div class="inside">What are your main requirements for this site? Thank you, reliability first is clear. Could you clarify the load demand and operating hours in more detail? If I understand correctly, you need 200 kW for ten hours per day. Is that right?</div></details>
+  </section>
+
+  <section class="activity" id="act15" data-title="Polite follow-up">
+    <div class="act-head"><h3><span class="num">15</span> Polite follow-up - Go one level deeper</h3><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> follow up before you change topic</span></div>
+    <p class="desc">Customer: Reliability is most important. Type your two follow-up questions. The checker looks for Could you explain and May I ask a follow-up.</p>
+    <div class="interactive">
+      <div style="display:grid;gap:10px">
+        <div>
+          <label for="a15q1" style="color:var(--muted2);font-weight:700">1 You said reliability is the priority. Could you explain...</label>
+          <textarea id="a15q1" rows="2" placeholder="You said reliability is the priority. Could you explain what that means for service and response time?" style="width:100%;background:#0B1220;border:1.5px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:10px;margin-top:4px"></textarea>
+        </div>
+        <div>
+          <label for="a15q2" style="color:var(--muted2);font-weight:700">2 May I ask a follow-up question about...</label>
+          <textarea id="a15q2" rows="2" placeholder="May I ask a follow-up question about operating hours and load peaks so we size the unit correctly?" style="width:100%;background:#0B1220;border:1.5px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:10px;margin-top:4px"></textarea>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="checkA15()">Check my questions</button>
+        <button class="btn ghost" onclick="fillA15()">Fill model</button>
+      </div>
+      <div class="feedback" id="a15fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show models</summary><div class="inside">1 You said reliability is the priority. Could you explain what that means for service and response time?<br>2 May I ask a follow-up question about operating hours and load peaks so we size the unit correctly?</div></details>
+  </section>
+
+  <section class="activity" id="act16" data-title="Mini presentation">
+    <div class="act-head"><h3><span class="num">16</span> Mini presentation - 90 second needs summary</h3><span class="tag extra">2 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> speak 60 to 90 seconds with clear signposts, no bank</span></div>
+    <p class="desc">Follow the 4 steps, tap start to begin the 90 second timer. Try to use each signpost out loud from memory.</p>
+    <div class="interactive">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">
+        <div class="check" id="a16c1"><input type="checkbox" disabled><span>To summarize</span></div>
+        <div class="check" id="a16c2"><input type="checkbox" disabled><span>main requirement</span></div>
+        <div class="check" id="a16c3"><input type="checkbox" disabled><span>decision criteria</span></div>
+        <div class="check" id="a16c4"><input type="checkbox" disabled><span>Did I miss</span></div>
+      </div>
+      <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <div style="color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:800">Structure - say each line, then expand</div>
+        <div style="margin-top:6px;display:grid;gap:4px;color:var(--muted2)">
+          <div>1 Opening: <b style="color:var(--fg)">To summarize what I understood...</b></div>
+          <div>2 Needs: <b style="color:var(--fg)">Your main requirement is...</b></div>
+          <div>3 Criteria: <b style="color:var(--fg)">Your decision criteria are...</b></div>
+          <div>4 Close: <b style="color:var(--fg)">Did I miss any requirement?</b></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap">
+        <div class="timer" id="a16timer">01:30</div>
+        <button class="btn" id="a16start" onclick="toggleA16()">Start 90 sec</button>
+        <button class="btn secondary" onclick="resetA16()">Reset</button>
+        <button class="btn ghost" onclick="speak('To summarize what I understood, your main requirement is about 250 kVA backup for the factory, around 200 kW continuous for ten hours per day. Your decision criteria are reliability first, then service, with price third. Space is a constraint and timeline is about ten weeks with a budget range around 80k. Did I miss any requirement or priority?')">Play model</button>
+        <span style="color:var(--muted);font-size:.82rem">Tip: speak, do not read. Breathe.</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <input id="a16input" placeholder="Type keywords you said to tick boxes (optional)..." style="flex:1;min-width:200px;background:#0B1220;border:1px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:8px">
+        <button class="btn secondary" onclick="checkA16()">Tick</button>
+      </div>
+    </div>
+    <details class="details"><summary>Show 90 second script</summary><div class="inside">To summarize what I understood, your main requirement is about 250 kVA backup for the factory, around 200 kW continuous for ten hours per day. Your decision criteria are reliability first, then service, with price third. Space is a constraint and timeline is about ten weeks with a budget range around 80k. Did I miss any requirement or priority? Who is the decision maker for the next step?</div></details>
+  </section>
+
+  <section class="activity" id="act17" data-title="Listening to summary">
+    <div class="act-head"><h3><span class="num">17</span> Listening to summary - Fast speech, you summarize</h3><span class="tag extra">1.5 min</span><span class="tag core">B2 listening</span></div>
+    <div class="meta-line"><span><b>Goal:</b> listen faster than Lesson 16, summarize and follow up</span></div>
+    <p class="desc">First listen at normal speed, then try fast. Use the transcript only after you listen. Type your summary.</p>
+    <div class="interactive">
+      <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn" id="a17play" onclick="playA17()">Play normal</button>
+          <button class="btn secondary" onclick="playA17fast()">Play fast</button>
+          <label style="display:flex;gap:6px;align-items:center;color:var(--muted);font-size:.84rem"><input type="range" id="a17speed" min="0.8" max="1.4" step="0.1" value="1" oninput="updateA17speed(this.value)"> <span id="a17speedv">1.0x</span></label>
+          <button class="btn ghost" onclick="toggleTranscript()">Show transcript</button>
+        </div>
+        <div id="a17transcript" style="display:none;margin-top:10px;color:var(--muted2);font-size:.88rem;border-top:1px solid var(--border);padding-top:10px">We need backup for the factory, roughly two hundred fifty kVA. Reliability is the top priority, service second. Budget is around eighty thousand, delivery in ten weeks. Space is tight, we run ten hours a day at about two hundred kilowatts. Final approval is still open.</div>
+        <div style="margin-top:10px;display:grid;gap:8px">
+          <textarea id="a17input" rows="2" placeholder="Type your summary: If I understood correctly, you mean..." style="width:100%;background:#060A14;border:1.5px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:8px"></textarea>
+          <textarea id="a17q" rows="1" placeholder="Your follow-up: May I ask a follow-up question about the decision maker...?" style="width:100%;background:#060A14;border:1.5px solid var(--border2);color:var(--fg);padding:10px 12px;border-radius:8px"></textarea>
+        </div>
+        <div class="controls">
+          <button class="btn" onclick="checkA17()">Check summary</button>
+        </div>
+        <div class="feedback" id="a17fb" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+    <details class="details"><summary>Show model summary</summary><div class="inside">If I understood correctly, you need 250 kVA with reliability first, around 80k in ten weeks, tight space and ten hours at 200 kW. Is that right? May I ask a follow-up question about the decision maker?</div></details>
+  </section>
+
+  <section class="activity" id="act18" data-title="Show understanding">
+    <div class="act-head"><h3><span class="num">18</span> Show understanding - Acknowledge before next question</h3><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> acknowledge warmly before you continue</span></div>
+    <p class="desc">Build two professional turns. Choose the softener, then add the next question. Tap play to hear the warm version.</p>
+    <div class="interactive" id="a18box"></div>
+  </section>
+
+  <section class="activity" id="act19" data-title="Full simulation">
+    <div class="act-head"><h3><span class="num">19</span> Full simulation - Discovery to next steps under pressure</h3><span class="tag role">Full sim - 4 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> run the complete discovery flow without stopping</span></div>
+    <p class="desc">Step through the simulation. Choose or type your line for each step. Ms Weber will be vague and short on time once. Acknowledge first.</p>
+    <div class="interactive">
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap" id="a19dots"></div>
+      <div class="chat" id="a19chat" style="min-height:260px"></div>
+      <div id="a19choices" style="display:grid;gap:8px;margin-top:10px"></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <input id="a19input" placeholder="Or type your own line and press Enter..." style="flex:1;background:#0B1220;border:1.5px solid var(--border2);color:var(--fg);padding:11px 12px;border-radius:10px">
+        <button class="btn" onclick="sendA19()">Send</button>
+        <button class="btn secondary" onclick="restartA19()">Restart</button>
+      </div>
+      <div class="feedback" id="a19fb" role="status" aria-live="polite"></div>
+    </div>
+    <details class="details"><summary>Show full model run</summary><div class="inside">
+      Open: Thanks for joining, Ms Weber. What are your main requirements for backup power on this site?<br>Criteria: Thank you. What are your key decision criteria apart from price?<br>Budget: Could you share your budget range and your timeline for delivery?<br>Constraint: What is your priority if space is a constraint? Could you clarify the load demand and the operating hours?<br>Maker: Who is the decision maker, and what should we clarify next?<br>Next steps: I will send a short requirements summary and two sizing options by Friday. Does that work for you?
+    </div></details>
+  </section>
+
+  <section class="activity" id="act20" data-title="Homework and takeaways">
+    <div class="act-head"><h3><span class="num">20</span> Homework and takeaways - 5 phrases and 3 corrections</h3><span class="tag extra">1 min</span></div>
+    <div class="meta-line"><span><b>Goal:</b> leave with 5 phrases you will use and 3 errors to avoid</span></div>
+    <p class="desc">Choose one homework, tick your takeaways, then print your personal checklist. Your progress confetti awaits.</p>
+    <div class="interactive">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <button class="pick" style="text-align:center;padding:14px" onclick="pickHW('A')" id="hwA"><b>Homework A</b><br><span style="color:var(--muted)">Record 90 sec</span><br>summarize 250 kVA needs, use all 10 words</button>
+        <button class="pick" style="text-align:center;padding:14px" onclick="pickHW('B')" id="hwB"><b>Homework B</b><br><span style="color:var(--muted)">Write 4 questions</span><br>requirements, criteria, budget plus timeline, follow-up</button>
+        <button class="pick" style="text-align:center;padding:14px" onclick="pickHW('C')" id="hwC"><b>Homework C</b><br><span style="color:var(--muted)">Shadow 3 questions</span><br>focus on rising intonation</button>
+      </div>
+      <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+          <div style="font-weight:900;color:var(--accent)">5 phrases to keep</div>
+          <div class="checklist" id="a20phrases"></div>
+        </div>
+        <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
+          <div style="font-weight:900;color:var(--review)">3 corrections to avoid</div>
+          <div id="a20corr" style="display:grid;gap:6px;margin-top:8px;color:var(--muted2);font-size:.88rem"></div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="printTakeaways()">Print checklist</button>
+        <button class="btn secondary" onclick="confetti()">Celebrate</button>
+        <span id="a20sel" style="align-self:center;color:var(--muted);font-weight:800"></span>
+      </div>
+      <div class="feedback info" id="a20fb" style="display:block">Tip: Save 5 corrected questions plus these 5 phrases plus 5 words you hesitated on. Repeat this page once out loud at home before the next lesson.</div>
+    </div>
+  </section>
+
+  <footer style="padding:16px;border-top:2px solid var(--accent);color:var(--muted);font-size:.82rem;margin-top:24px;background:#080808;border-radius:12px;text-align:center">
+    <div style="color:var(--okfg);font-weight:800">You finished all 20 activities - great work!</div>
+    <div style="margin-top:6px;color:var(--muted2)">Review your 5 phrases and speak them once more before the next lesson. Progress is saved automatically.</div>
+  </footer>
+</main>
+<script>
+let bestVoice=null;let voicesReady=false;
+function pickBestVoice(){const voices=speechSynthesis.getVoices();if(!voices.length)return null;const enVoices=voices.filter(v=>v.lang.toLowerCase().startsWith('en'));const gbVoices=enVoices.filter(v=>v.lang.toLowerCase()==='en-gb');const pool=gbVoices.length?gbVoices:enVoices;let best=pool[0];let bestScore=-1;for(const v of pool){let score=0;const n=v.name.toLowerCase();if(n.includes('google'))score+=10;if(n.includes('natural'))score+=9;if(n.includes('neural'))score+=9;if(n.includes('premium'))score+=8;if(n.includes('enhanced'))score+=7;if(n.includes('aria'))score+=6;if(n.includes('jenny')||n.includes('guy')||n.includes('sonia')||n.includes('ryan')||n.includes('libby'))score+=5;if(v.localService===false)score+=4;if(v.lang==='en-GB')score+=5;if(n.includes('uk')||n.includes('british'))score+=4;if(v.default)score+=1;if(score>bestScore){bestScore=score;best=v;}}return best;}
+function loadBestVoice(){bestVoice=pickBestVoice();voicesReady=true;}
+if('speechSynthesis' in window){loadBestVoice();if(typeof speechSynthesis.onvoiceschanged!=='undefined'){speechSynthesis.onvoiceschanged=loadBestVoice;}}
+function speak(text,opts={}){if(!('speechSynthesis' in window))return;if(!voicesReady)loadBestVoice();speechSynthesis.cancel();const isQuestion=text.trim().endsWith('?');const hasHedging=/could you|if i understand|if you needed|thank you for sharing/i.test(text);const u=new SpeechSynthesisUtterance(text);if(bestVoice)u.voice=bestVoice;u.lang=bestVoice?bestVoice.lang:'en-GB';let rate=opts.rate;if(!rate){if(hasHedging)rate=0.90;else if(text.length>140)rate=0.92;else if(isQuestion)rate=0.93;else rate=0.94;}let pitch=opts.pitch;if(!pitch){if(isQuestion)pitch=1.08;else if(hasHedging)pitch=1.02;else pitch=1.00;}u.rate=rate;u.pitch=pitch;u.volume=1.0;speechSynthesis.speak(u);}
+function speakWithRate(text,rate){speak(text,{rate:rate});}
+function saveProgress(){const done=[...document.querySelectorAll('section.activity')].filter(s=>s.classList.contains('done')).map(s=>s.id);localStorage.setItem('lesson17done',JSON.stringify(done));updateProgress();}
+function updateProgress(){const total=20,done=document.querySelectorAll('section.activity.done').length,pct=Math.round(done/total*100);const bar=document.getElementById('progressBar');const txt=document.getElementById('progressText');if(bar)bar.style.width=pct+'%';if(txt)txt.textContent=pct+'%';buildToc();}
+function markDone(id){document.getElementById(id).classList.add('done');saveProgress();}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr;}
+function vibrate(ok){try{navigator.vibrate&&navigator.vibrate(ok?30:[30,30,30]);}catch(e){}}
+const titles=["Review 1 - 7 step story","Vocab - 10 discovery words","Meaning matching","Quick say","Sentence unjumble","Dialogue - Discovery call","Review 2 - Like for like Q","New conv - With Anna","Spot the gap","Role play","Review 3 - Conditional","Numbers","Open vs closed","Question funnel","Follow-up","Mini presentation","Listening summary","Show understanding","Full simulation","Homework"];
+function buildToc(){const grid=document.getElementById('tocGrid');if(!grid)return;grid.innerHTML='';for(let i=1;i<=20;i++){const id='act'+i,sec=document.getElementById(id),done=sec&&sec.classList.contains('done');const a=document.createElement('a');a.href='#'+id;a.className='toc-item'+(done?' done':'');a.innerHTML='<div class="n">'+(done?'✓':i)+'</div><div style="flex:1"><b>'+titles[i-1]+'</b><br><span>'+(sec?sec.querySelector('.tag').textContent:'')+'</span></div>';grid.appendChild(a);}}
+const a1correct=['align','over budget','clarify scope','total cost','compare','conditional alternative','next steps'];
+let a1order=[];
+function renderA1(){const c=document.getElementById('a1list');c.innerHTML='';a1order.forEach((txt,i)=>{const row=document.createElement('div');row.className='order-item';row.draggable=true;row.dataset.idx=i;row.tabIndex=0;row.innerHTML='<span class="drag" aria-hidden="true">≡</span><span style="flex:1;font-weight:700">'+(i+1)+'. '+txt+'</span><button class="btn secondary" style="padding:6px 8px" aria-label="Move up" onclick="moveA1('+i+',-1)">↑</button><button class="btn secondary" style="padding:6px 8px" aria-label="Move down" onclick="moveA1('+i+',1)">↓</button>';row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',i);row.style.opacity=.5});row.addEventListener('dragend',()=>row.style.opacity=1);row.addEventListener('dragover',e=>e.preventDefault());row.addEventListener('drop',e=>{e.preventDefault();const from=+e.dataTransfer.getData('text/plain'),to=i;const v=a1order.splice(from,1)[0];a1order.splice(to,0,v);renderA1();});row.addEventListener('keydown',e=>{if(e.key==='ArrowUp'){e.preventDefault();moveA1(i,-1)}if(e.key==='ArrowDown'){e.preventDefault();moveA1(i,1)}});c.appendChild(row);});}
+function moveA1(i,dir){const j=i+dir;if(j<0||j>=a1order.length)return;[a1order[i],a1order[j]]=[a1order[j],a1order[i]];renderA1();}
+function shuffleA1(){a1order=shuffle([...a1correct]);renderA1();document.getElementById('a1fb').className='feedback';document.getElementById('a1fb').style.display='none';}
+function checkA1(){const fb=document.getElementById('a1fb');let ok=true;for(let i=0;i<a1correct.length;i++)if(a1order[i]!==a1correct[i])ok=false;if(ok){fb.className='feedback ok';fb.style.display='block';fb.textContent='Perfect order! Now say one sentence per step out loud from memory, no bank.';markDone('act1');vibrate(true);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Not yet. Hint: start with align, end with next steps.';vibrate(false);}}
+shuffleA1();
+const vocab=[
+  {w:'requirement',pos:'noun',def:'specific need the customer has',ex:'What are your main requirements for backup power?'},
+  {w:'decision criteria',pos:'phrase',def:'factors used to choose a supplier',ex:'What are your key decision criteria apart from price?'},
+  {w:'budget range',pos:'phrase',def:'approximate money available',ex:'Could you share your budget range for this project?'},
+  {w:'timeline',pos:'noun',def:'deadline for decision and delivery',ex:'What is your timeline for decision and delivery?'},
+  {w:'priority',pos:'noun',def:'most important point',ex:'What is your priority when you compare reliability and cost?'},
+  {w:'constraint',pos:'noun',def:'limitation like space, noise, fuel',ex:'Are there any constraints on site like space or noise?'},
+  {w:'load demand',pos:'phrase',def:'how much power is needed in kW',ex:'Could you clarify the load demand in kW?'},
+  {w:'operating hours',pos:'phrase',def:'hours per day the unit runs',ex:'How many operating hours per day do you expect?'},
+  {w:'decision maker',pos:'noun',def:'person who approves the purchase',ex:'Who is the decision maker for final approval?'},
+  {w:'follow-up question',pos:'phrase',def:'deeper question to clarify',ex:'May I ask one follow-up question about service?'}
+];
+let a2flipped=new Set();
+function renderA2(){const grid=document.getElementById('a2grid');grid.innerHTML='';vocab.forEach((v,i)=>{const card=document.createElement('div');card.className='flip';card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Flip '+v.w);card.innerHTML='<div class="flip-inner"><div class="flip-face flip-front"><div><div style="font-weight:900;font-size:1.05rem">'+v.w+'</div><div style="color:var(--muted);font-size:.75rem;margin-top:4px">'+v.pos+'</div><div style="margin-top:8px;color:var(--accent2);font-size:.78rem;font-weight:800">Tap to flip</div></div></div><div class="flip-face flip-back"><div><div style="font-weight:800">'+v.def+'</div><div style="margin-top:6px;font-size:.84rem">'+v.ex+'</div><button class="btn ghost" style="margin-top:8px;padding:6px 8px" onclick="event.stopPropagation();speak(\''+v.w.replace(/'/g,"\\'")+'. '+v.ex.replace(/'/g,"\\'")+'\')">Play</button></div></div></div>';const toggle=()=>{card.classList.toggle('flipped');if(card.classList.contains('flipped'))a2flipped.add(i);else a2flipped.delete(i);updateA2();};card.addEventListener('click',toggle);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});grid.appendChild(card);});updateA2();buildA2list();}
+function updateA2(){document.getElementById('a2count').textContent=a2flipped.size+'/10 flipped';if(a2flipped.size>=10){document.getElementById('a2check').style.display='block';nextA2q();markDone('act2');}}
+function flipAllA2(){document.querySelectorAll('.flip').forEach(c=>c.classList.add('flipped'));a2flipped=new Set(vocab.map((_,i)=>i));updateA2();}
+function resetA2(){document.querySelectorAll('.flip').forEach(c=>c.classList.remove('flipped'));a2flipped.clear();updateA2();document.getElementById('a2fb').style.display='none';}
+function buildA2list(){document.getElementById('a2list').innerHTML=vocab.map(v=>'<div style="padding:6px 0;border-bottom:1px solid #1E2A3A"><b style="color:var(--accent)">'+v.w+'</b> <span style="color:var(--muted)">('+v.pos+')</span> - '+v.def+'<br><span style="color:var(--muted2)">'+v.ex+'</span></div>').join('');}
+let a2current=null;
+function nextA2q(){const idx=Math.floor(Math.random()*vocab.length);a2current=vocab[idx];document.getElementById('a2q').textContent='"'+a2current.def+'" - which word?';const opts=shuffle([...vocab].sort(()=>Math.random()-.5).slice(0,4));if(!opts.find(o=>o.w===a2current.w)){opts[0]=a2current;shuffle(opts);}const c=document.getElementById('a2opts');c.innerHTML='';opts.forEach(o=>{const b=document.createElement('button');b.className='chip';b.textContent=o.w;b.onclick=()=>{const fb=document.getElementById('a2fb');if(o.w===a2current.w){fb.className='feedback ok';fb.style.display='block';fb.textContent='Correct! '+o.w+' - '+o.ex;vibrate(true);setTimeout(nextA2q,1200);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Try again. Listen: '+a2current.w;vibrate(false);}};c.appendChild(b);});}
+renderA2();
+const a3pairs=[
+  {w:'requirement',d:'specific need the customer has',k:'C'},
+  {w:'decision criteria',d:'factors used to choose a supplier',k:'E'},
+  {w:'budget range',d:'approximate money available',k:'B'},
+  {w:'timeline',d:'deadline for decision and delivery',k:'A'},
+  {w:'priority',d:'most important point',k:'G'},
+  {w:'constraint',d:'limitation like space, noise, fuel',k:'I'},
+  {w:'load demand',d:'how much power is needed in kW',k:'H'},
+  {w:'operating hours',d:'hours per day the unit runs',k:'J'},
+  {w:'decision maker',d:'person who approves the purchase',k:'D'},
+  {w:'follow-up question',d:'deeper question to clarify',k:'F'}
+];
+let a3leftSel=null,a3rightSel=null,a3matched=new Set();
+function renderA3(){const left=document.getElementById('a3left'),right=document.getElementById('a3right');left.innerHTML='';right.innerHTML='';a3pairs.forEach((p,i)=>{const b=document.createElement('button');b.className='pick';b.textContent=(i+1)+'. '+p.w;b.dataset.i=i;b.onclick=()=>selectA3('left',i);left.appendChild(b);});const shuffled=shuffle(a3pairs.map((p,i)=>({p,i})).slice());shuffled.forEach(obj=>{const b=document.createElement('button');b.className='pick';b.textContent=obj.p.k+'. '+obj.p.d;b.dataset.i=obj.i;b.onclick=()=>selectA3('right',obj.i);right.appendChild(b);});}
+function selectA3(side,i){if(a3matched.has(i))return;if(side==='left'){a3leftSel=i;document.querySelectorAll('#a3left .pick').forEach(el=>el.classList.toggle('selected',+el.dataset.i===i));}else{a3rightSel=i;document.querySelectorAll('#a3right .pick').forEach(el=>el.classList.toggle('selected',+el.dataset.i===i));}if(a3leftSel!==null&&a3rightSel!==null){const leftBtn=document.querySelector('#a3left .pick[data-i="'+a3leftSel+'"]');const rightBtn=document.querySelector('#a3right .pick[data-i="'+a3rightSel+'"]');if(a3leftSel===a3rightSel){leftBtn.classList.remove('selected');rightBtn.classList.remove('selected');leftBtn.classList.add('matched');rightBtn.classList.add('matched');leftBtn.disabled=true;rightBtn.disabled=true;a3matched.add(a3leftSel);document.getElementById('a3score').textContent=a3matched.size+'/10 matched';if(a3matched.size===10){const fb=document.getElementById('a3fb');fb.className='feedback ok';fb.style.display='block';fb.textContent='Excellent! Now say one match as a question: What are your main requirements?';markDone('act3');vibrate(true);}}else{rightBtn.classList.add('wrong');setTimeout(()=>{rightBtn.classList.remove('wrong');rightBtn.classList.remove('selected');leftBtn.classList.remove('selected');},700);vibrate(false);}a3leftSel=null;a3rightSel=null;}}
+function checkA3(){if(a3matched.size===10)return;const fb=document.getElementById('a3fb');fb.className='feedback info';fb.style.display='block';fb.textContent='Keep tapping: word then definition. Matched '+a3matched.size+'/10.';}
+function resetA3(){a3matched.clear();a3leftSel=null;a3rightSel=null;renderA3();document.getElementById('a3fb').style.display='none';document.getElementById('a3score').textContent='';}
+renderA3();
+const a4phrases=['your main requirements','key decision criteria','budget range','timeline for delivery','top priority','site constraint','load demand in kW','daily operating hours','decision maker','follow-up question'];
+function renderA4(){const box=document.getElementById('a4box');box.innerHTML='';a4phrases.forEach((ph,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin-bottom:8px';row.innerHTML='<button class="btn ghost" style="padding:7px 10px" aria-label="Play '+ph+'" onclick="speak(\''+ph+'\')">Play</button><span style="flex:1;font-weight:700">'+(i+1)+'. '+ph+'</span><label style="display:flex;gap:6px;align-items:center;cursor:pointer;color:var(--muted)"><input type="checkbox" onchange="if(this.checked){this.parentElement.style.color=\'var(--okbd)\';checkA4()}"> I said it</label>';box.appendChild(row);});}
+function checkA4(){const total=document.querySelectorAll('#a4box input[type=checkbox]').length,done=document.querySelectorAll('#a4box input[type=checkbox]:checked').length;if(done>=7)markDone('act4');if(done===total){const fb=document.createElement('div');fb.className='feedback ok';fb.style.display='block';fb.textContent='Great rhythm! Now try: Could you clarify the load demand? Who is the decision maker?';document.getElementById('a4box').appendChild(fb);}}
+renderA4();
+const a5sentences=[
+  {words:['What','are','your','main','requirements','for','backup','power?'],hint:'What'},
+  {words:['What','are','your','key','decision','criteria','apart','from','price?'],hint:'What'},
+  {words:['Could','you','share','your','budget','range','and','your','timeline','for','delivery?'],hint:'Could'},
+  {words:['What','is','your','priority','if','space','is','a','constraint?'],hint:'What'},
+  {words:['Could','you','clarify','the','load','demand','and','the','operating','hours?'],hint:'Could'},
+  {words:['Who','is','the','decision','maker','and','what','should','we','clarify','next?'],hint:'Who'}
+];
+let a5idx=0,a5built=[];
+function renderA5(){document.getElementById('a5idx').textContent=(a5idx+1)+' / 6';const sent=a5sentences[a5idx];const shuffled=shuffle([...sent.words]);const chips=document.getElementById('a5chips');chips.innerHTML='';shuffled.forEach(w=>{const b=document.createElement('button');b.className='chip';b.textContent=w;b.onclick=()=>{a5built.push(w);renderA5built();b.disabled=true;b.style.opacity=.4;};chips.appendChild(b);});renderA5built();}
+function renderA5built(){const box=document.getElementById('a5answer');box.innerHTML=a5built.length?a5built.map(w=>'<span style="background:#111A2A;border:1px solid var(--border2);padding:6px 9px;border-radius:999px">'+w+'</span>').join(''):'<span style="color:var(--muted)">Tap words to build - tap here to undo last</span>';box.className='sentence-box'+(a5built.length?' filled':'');}
+function undoA5(){if(!a5built.length)return;const last=a5built.pop();renderA5built();[...document.getElementById('a5chips').children].forEach(b=>{if(b.textContent===last&&b.disabled){b.disabled=false;b.style.opacity=1;return;}});}
+function clearA5(){a5built=[];renderA5();document.getElementById('a5fb').style.display='none';}
+function hintA5(){const fb=document.getElementById('a5fb');fb.className='feedback info';fb.style.display='block';fb.textContent='Hint: starts with "'+a5sentences[a5idx].hint+'"';}
+function checkA5(){const correct=a5sentences[a5idx].words.join(' ');const attempt=a5built.join(' ');const fb=document.getElementById('a5fb');if(attempt===correct){fb.className='feedback ok';fb.style.display='block';fb.textContent='Correct! Say it out loud with rising intonation, then tap Next.';vibrate(true);markDone('act5');if(a5idx<5)setTimeout(()=>{a5idx++;a5built=[];renderA5();},900);else{fb.textContent+=' All 6 done!';}}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Not yet. Check word order. Hint: '+correct.split(' ').slice(0,3).join(' ')+' ...';vibrate(false);}}
+function nextA5(){if(a5idx<5){a5idx++;a5built=[];renderA5();}}
+function prevA5(){if(a5idx>0){a5idx--;a5built=[];renderA5();}}
+renderA5();
+const a6correct=['B','A','C','D','E','F','G','H'];
+const a6data=[
+  {k:'A',speaker:'Ms Weber',text:'We need about 250 kVA for the factory, but details are still open.'},
+  {k:'B',speaker:'You',text:'Thanks for joining. What are your main requirements for backup power?'},
+  {k:'C',speaker:'You',text:'Thank you. What are your key decision criteria apart from price?'},
+  {k:'D',speaker:'Ms Weber',text:'Reliability first, then service. Price comes third.'},
+  {k:'E',speaker:'You',text:'Could you share your budget range and your timeline for delivery?'},
+  {k:'F',speaker:'Ms Weber',text:'Budget around 80k, delivery in about ten weeks if possible.'},
+  {k:'G',speaker:'Ms Weber',text:'Space is tight, we run about ten hours per day at 200 kW.'},
+  {k:'H',speaker:'You',text:'What is your priority if space is a constraint? Could you clarify the load demand and the operating hours? Who is the decision maker, and what should we clarify next?'}
+];
+let a6order=[];
+function renderA6(){const c=document.getElementById('a6list');c.innerHTML='';a6order.forEach((k,i)=>{const d=a6data.find(x=>x.k===k);const row=document.createElement('div');row.className='order-item';row.draggable=true;row.dataset.k=k;row.innerHTML='<span class="drag" aria-hidden="true">≡</span><span style="min-width:28px;height:28px;display:grid;place-items:center;background:'+(d.speaker==='You'?'var(--accent)':'var(--head)')+';color:'+(d.speaker==='You'?'#000':'var(--accent2)')+';border-radius:50%;font-weight:900;font-size:.75rem">'+d.k+'</span><div style="flex:1"><div style="font-size:.78rem;color:var(--muted);font-weight:800">'+d.speaker+'</div><div style="font-size:.88rem">'+d.text+'</div></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn secondary" style="padding:4px 6px" onclick="moveA6(\''+k+'\',-1)" aria-label="Move up">↑</button><button class="btn secondary" style="padding:4px 6px" onclick="moveA6(\''+k+'\',1)" aria-label="Move down">↓</button></div>';row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',k);row.style.opacity=.5});row.addEventListener('dragend',()=>row.style.opacity=1);row.addEventListener('dragover',e=>e.preventDefault());row.addEventListener('drop',e=>{e.preventDefault();const from=e.dataTransfer.getData('text/plain');const to=k;const fi=a6order.indexOf(from),ti=a6order.indexOf(to);a6order.splice(fi,1);a6order.splice(ti,0,from);renderA6();});c.appendChild(row);});}
+function moveA6(k,dir){const i=a6order.indexOf(k),j=i+dir;if(j<0||j>=a6order.length)return;[a6order[i],a6order[j]]=[a6order[j],a6order[i]];renderA6();}
+function shuffleA6(){a6order=shuffle(a6correct.slice());renderA6();document.getElementById('a6fb').style.display='none';}
+function checkA6(){const fb=document.getElementById('a6fb');let ok=true;for(let i=0;i<a6correct.length;i++)if(a6order[i]!==a6correct[i])ok=false;if(ok){fb.className='feedback ok';fb.style.display='block';fb.textContent='Perfect flow! Now read it out loud, focus on polite rising tone: Could you share...';markDone('act6');vibrate(true);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Check again. Hint: start with B Thanks for joining, end with H What is your priority...';vibrate(false);}}
+function playA6(){const text=a6correct.map(k=>{const d=a6data.find(x=>x.k===k);return d.speaker+': '+d.text;}).join(' ');speak(text);}
+shuffleA6();
+const a7words=['Could','you','walk','me','through','the','competitor','scope','so','we','can','compare','like','for','like?'];
+let a7built=[];
+function renderA7(){const box=document.getElementById('a7box');box.innerHTML=a7built.length?a7built.join(' '):'<span style="color:var(--muted)">Tap chips below to build...</span>';const chips=document.getElementById('a7chips');if(!chips.dataset.done){chips.innerHTML='';shuffle([...a7words]).forEach(w=>{const b=document.createElement('button');b.className='chip';b.textContent=w;b.onclick=()=>{a7built.push(w);renderA7();b.disabled=true;b.style.opacity=.4;if(a7built.length===a7words.length)checkA7();};chips.appendChild(b);});chips.dataset.done=1;}}
+function clearA7(){a7built=[];document.getElementById('a7chips').innerHTML='';document.getElementById('a7chips').dataset.done='';renderA7();document.getElementById('a7fb').style.display='none';}
+function checkA7(){const target=a7words.join(' ');const attempt=a7built.join(' ');const fb=document.getElementById('a7fb');if(attempt===target){fb.className='feedback ok';fb.style.display='block';fb.textContent='Excellent! Lesson 16 language now as a question. Add: What is included and what is excluded?';markDone('act7');vibrate(true);}else if(a7built.length===a7words.length){fb.className='feedback bad';fb.style.display='block';fb.textContent='Check order. Start: Could you walk me through...';vibrate(false);}}
+renderA7();
+const a8data=[
+  {k:'A',t:'Anna | How did the discovery call go?'},
+  {k:'B',t:'You | Good, but many requirements are still unclear.'},
+  {k:'C',t:'Anna | What are the decision criteria and priorities so far?'},
+  {k:'D',t:'You | Reliability first, then service. Space is a constraint.'},
+  {k:'E',t:'Anna | Did you get budget range and timeline?'},
+  {k:'F',t:'You | Around 80k and ten weeks, but I must confirm load demand and operating hours.'},
+  {k:'G',t:'Anna | Who is the decision maker?'},
+  {k:'H',t:'You | Not confirmed. I will ask a clear follow-up question about approval and next steps.'}
+];
+function renderA8(){const box=document.getElementById('a8box');box.innerHTML='';shuffle([...a8data]).forEach(d=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin:0 14px 8px';row.innerHTML='<select aria-label="Order for '+d.k+'" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:7px;border-radius:8px;font-weight:800;min-width:58px"><option value="">-</option>'+[1,2,3,4,5,6,7,8].map(n=>'<option>'+n+'</option>').join('')+'</select><span style="min-width:22px;height:22px;display:grid;place-items:center;background:var(--head);color:var(--accent2);border-radius:50%;font-weight:900;font-size:.75rem">'+d.k+'</span><span style="font-size:.86rem">'+d.t+'</span>';box.appendChild(row);});const c=document.createElement('div');c.className='controls';c.style.margin='10px 14px';c.innerHTML='<button class="btn" onclick="checkA8()">Check order</button><button class="btn secondary" onclick="renderA8()">Shuffle</button>';box.appendChild(c);}
+function checkA8(){const rows=[...document.querySelectorAll('#a8box select')];const mapping={};let ok=true;rows.forEach(sel=>{const k=sel.parentElement.querySelector('span:nth-child(2)').textContent.trim();const v=sel.value;if(v)mapping[v]=k;});for(let i=1;i<=8;i++){if(mapping[i]!==['A','B','C','D','E','F','G','H'][i-1])ok=false;}const fb=document.getElementById('a8fb');if(Object.keys(mapping).length<8){fb.className='feedback info';fb.style.display='block';fb.textContent='Choose a number 1 to 8 for each line.';return;}if(ok){fb.className='feedback ok';fb.style.display='block';fb.textContent='Perfect! Same words, new context. Now read again without looking at the bank.';markDone('act8');vibrate(true);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Not yet. Correct order is 1-A, 2-B, 3-C, 4-D, 5-E, 6-F, 7-G, 8-H.';vibrate(false);}}
+renderA8();
+const a9sentences=[
+  {pre:'',mid:'Could you share',opts:['Could you share','Could you clarify','Who is'],correct:'Could you share',post:' your budget range for this project so I can check options?',hint:'ask for budget'},
+  {pre:'',mid:'Could you clarify',opts:['Could you share','Could you clarify','Who is'],correct:'Could you clarify',post:' the daily operating hours and the load demand in kW?',hint:'ask for details'},
+  {pre:'',mid:'Who is',opts:['Could you share','Could you clarify','Who is'],correct:'Who is',post:' the decision maker for final approval, and what is your timeline?',hint:'ask for person'}
+];
+function renderA9(){const box=document.getElementById('a9box');box.innerHTML='';a9sentences.forEach((s,i)=>{const row=document.createElement('div');row.style.cssText='background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:10px';row.innerHTML='<div style="font-weight:700;margin-bottom:6px">Question '+(i+1)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><select id="a9s'+i+'" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option>'+s.opts.map(o=>'<option>'+o+'</option>').join('')+'</select><span style="flex:1">'+s.post+'</span></div><button class="btn ghost" style="margin-top:6px;padding:6px 8px" onclick="speak(\''+s.correct+' '+s.post.replace(/'/g,"\\'")+'\')">Play</button>';box.appendChild(row);});const c=document.createElement('div');c.className='controls';c.innerHTML='<button class="btn" onclick="checkA9()">Check starters</button>';box.appendChild(c);}
+function checkA9(){let all=true;a9sentences.forEach((s,i)=>{if(document.getElementById('a9s'+i).value!==s.correct)all=false;});const fb=document.getElementById('a9fb');if(all){fb.className='feedback ok';fb.style.display='block';fb.textContent='All starters correct! Now say all 3 questions without reading.';markDone('act9');vibrate(true);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Check: 1 Could you share, 2 Could you clarify, 3 Who is.';vibrate(false);}}
+renderA9();
+const a10chipsData=[
+  'What are your main requirements for this site?',
+  'What are your key decision criteria apart from price?',
+  'Could you share your budget range and timeline?',
+  'What is your priority if space is a constraint?',
+  'Could you clarify the load demand and the operating hours?',
+  'Who is the decision maker? May I ask a follow-up question?'
+];
+let a10vocab=new Set();
+function renderA10(){const chat=document.getElementById('a10chat');chat.innerHTML='<div class="bubble them">Ms Weber: We need backup power for the factory, but details are still open.</div>';const chips=document.getElementById('a10chips');chips.innerHTML='';a10chipsData.forEach(t=>{const b=document.createElement('button');b.className='help-chip';b.textContent=t;b.onclick=()=>{const inp=document.getElementById('a10input');inp.value=inp.value?inp.value+' '+t:t;inp.focus();};chips.appendChild(b);});renderA10checks();document.getElementById('a10fb').style.display='none';a10vocab.clear();document.getElementById('a10input').value='';document.getElementById('a10input').onkeydown=e=>{if(e.key==='Enter'){sendA10();}};}
+function renderA10checks(){const box=document.getElementById('a10checks');box.innerHTML='';vocab.forEach(v=>{const row=document.createElement('label');row.className='check';row.innerHTML='<input type="checkbox" disabled '+(a10vocab.has(v.w)?'checked':'')+'><span>'+v.w+'</span><span style="margin-left:auto;color:var(--muted);font-size:.76rem">'+(a10vocab.has(v.w)?'used':'-')+'</span>';box.appendChild(row);});}
+function sendA10(){const inp=document.getElementById('a10input');const txt=inp.value.trim();if(!txt)return;const chat=document.getElementById('a10chat');const me=document.createElement('div');me.className='bubble me';me.textContent='You: '+txt;chat.appendChild(me);vocab.forEach(v=>{if(txt.toLowerCase().includes(v.w))a10vocab.add(v.w);});renderA10checks();let reply='';const lower=txt.toLowerCase();if(lower.includes('requirement'))reply='Ms Weber: We need about 250 kVA, reliability is key.';else if(lower.includes('decision criteria')||lower.includes('criteria'))reply='Ms Weber: Reliability first, then service. Price third.';else if(lower.includes('budget')||lower.includes('timeline'))reply='Ms Weber: Around 80k, delivery in ten weeks if possible.';else if(lower.includes('priority')||lower.includes('constraint'))reply='Ms Weber: Space is tight, that is a real constraint.';else if(lower.includes('load')||lower.includes('operating hours'))reply='Ms Weber: About 200 kW, ten hours per day.';else if(lower.includes('decision maker')||lower.includes('follow-up'))reply='Ms Weber: Final approval is still open. Good follow-up question.';else reply='Ms Weber: Thank you. Could you be more specific? Try a phrase chip with requirement or timeline.';setTimeout(()=>{const them=document.createElement('div');them.className='bubble them';them.textContent=reply;chat.appendChild(them);chat.scrollTop=chat.scrollHeight;if(a10vocab.size>=5){const fb=document.getElementById('a10fb');fb.className='feedback ok';fb.style.display='block';fb.textContent='Great! You used '+a10vocab.size+' target words. You asked before you pitched.';markDone('act10');vibrate(true);}},600);inp.value='';chat.scrollTop=chat.scrollHeight;}
+function resetA10(){renderA10();}
+renderA10();
+const a11conds=[
+  {c:'If you needed 250 kVA continuous,',r:'would a larger fuel tank be a priority?'},
+  {c:'If space is a constraint,',r:'would a compact canopy be relevant?'},
+  {c:'If delivery in ten weeks is fixed,',r:'should we prioritize stock units?'}
+];
+let a11leftSel2=null,a11rightSel2=null,a11matched2=new Set();
+function renderA11(){const left=document.getElementById('a11left'),right=document.getElementById('a11right');left.innerHTML='';right.innerHTML='';a11conds.forEach((p,i)=>{const b=document.createElement('button');b.className='pick';b.textContent=p.c;b.dataset.i=i;b.onclick=()=>selA11('left',i);left.appendChild(b);});shuffle([...a11conds].map((p,i)=>({p,i}))).forEach(obj=>{const b=document.createElement('button');b.className='pick';b.textContent=obj.p.r;b.dataset.i=obj.i;b.onclick=()=>selA11('right',obj.i);right.appendChild(b);});}
+function selA11(side,i){if(a11matched2.has(i))return;if(side==='left'){a11leftSel2=i;document.querySelectorAll('#a11left .pick').forEach(el=>el.classList.toggle('selected',+el.dataset.i===i));}else{a11rightSel2=i;document.querySelectorAll('#a11right .pick').forEach(el=>el.classList.toggle('selected',+el.dataset.i===i));}if(a11leftSel2!==null&&a11rightSel2!==null){const lb=document.querySelector('#a11left .pick[data-i="'+a11leftSel2+'"]');const rb=document.querySelector('#a11right .pick[data-i="'+a11rightSel2+'"]');if(a11leftSel2===a11rightSel2){lb.classList.add('matched');rb.classList.add('matched');lb.disabled=true;rb.disabled=true;a11matched2.add(a11leftSel2);if(a11matched2.size===3){document.getElementById('a11fb').className='feedback ok';document.getElementById('a11fb').style.display='block';document.getElementById('a11fb').textContent='All matched! Now say: If you needed... would...? Could you confirm?';markDone('act11');vibrate(true);}}else{rb.classList.add('wrong');setTimeout(()=>{rb.classList.remove('wrong');lb.classList.remove('selected');rb.classList.remove('selected');},700);vibrate(false);}a11leftSel2=null;a11rightSel2=null;}}
+function checkA11(){if(a11matched2.size===3)return;const fb=document.getElementById('a11fb');fb.className='feedback info';fb.style.display='block';fb.textContent='Tap a condition on the left, then its check on the right.';}
+function resetA11(){a11matched2.clear();renderA11();document.getElementById('a11fb').style.display='none';}
+renderA11();
+const a12items=[
+  {label:'250 kVA / 200 kW continuous',correct:'Could you confirm the load demand is around 200 kW continuous, about 250 kVA?'},
+  {label:'10 hours per day',correct:'How many operating hours per day, approximately ten hours?'},
+  {label:'around 80,000 EUR budget',correct:'Could you share if the budget range is around eighty thousand euros?'},
+  {label:'10 weeks timeline',correct:'Is the timeline about ten weeks for delivery and commissioning?'}
+];
+function renderA12(){const box=document.getElementById('a12box');box.innerHTML='';a12items.forEach((it,i)=>{const row=document.createElement('div');row.style.cssText='background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px';row.innerHTML='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div style="font-weight:800">'+(i+1)+'. '+it.label+'</div><button class="btn ghost" style="padding:6px 8px" onclick="speak(\''+it.correct.replace(/'/g,"\\'")+'\')">Play</button><div style="display:flex;gap:6px;flex-wrap:wrap">'+['about','around','approximately','per day'].map(h=>' <button class="chip" onclick="this.style.background=\'rgba(255,212,0,.2)\';this.style.borderColor=\'var(--accent)\'">'+h+'</button>').join('')+'</div></div><div style="margin-top:8px;display:flex;gap:8px"><input placeholder="Type your question..." style="flex:1;background:#060A14;border:1px solid var(--border2);color:var(--fg);padding:8px 10px;border-radius:8px" id="a12in'+i+'"><button class="btn secondary" onclick="checkA12('+i+')">Check</button></div><div class="feedback" id="a12fb'+i+'" aria-live="polite" role="status"></div>';box.appendChild(row);});}
+function checkA12(i){const inp=document.getElementById('a12in'+i);const txt=inp.value.toLowerCase();const fb=document.getElementById('a12fb'+i);const hasHedge=txt.includes('about')||txt.includes('around')||txt.includes('approximately')||txt.includes('per day');if(txt.length<10){fb.className='feedback bad';fb.style.display='block';fb.textContent='Type a full question.';return;}if(!hasHedge){fb.className='feedback info';fb.style.display='block';fb.textContent='Add hedging: about, around, approximately, per day.';return;}fb.className='feedback ok';fb.style.display='block';fb.textContent='Good! Model: '+a12items[i].correct;vibrate(true);if([...document.querySelectorAll('[id^=a12fb]')].filter(el=>el.classList.contains('ok')).length>=2)markDone('act12');}
+renderA12();
+const a13pairs=[
+  {a:'Is price important?',b:'What are your key decision criteria apart from price?',correct:'b',why:'What plus plural opens the talk and invites a list'},
+  {a:'Do you have constraints?',b:'Are there any constraints on site like space or noise?',correct:'b',why:'Are there any plus examples gets details without a yes or no trap'},
+  {a:'Is ten weeks okay?',b:'What is your timeline for decision and delivery?',correct:'b',why:'What is your timeline avoids yes or no and gets the real deadline'}
+];
+function renderA13(){const box=document.getElementById('a13box');box.innerHTML='';a13pairs.forEach((p,i)=>{const row=document.createElement('div');row.style.cssText='background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px';row.innerHTML='<div style="font-weight:800;margin-bottom:6px">Pair '+(i+1)+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="pick" onclick="pickA13('+i+',\'a\')" id="a13a'+i+'">A '+p.a+'</button><button class="pick" onclick="pickA13('+i+',\'b\')" id="a13b'+i+'">B '+p.b+'</button></div><div class="feedback" id="a13fb'+i+'"></div>';box.appendChild(row);});}
+function pickA13(i,choice){const p=a13pairs[i];const fb=document.getElementById('a13fb'+i);document.getElementById('a13a'+i).classList.remove('matched','wrong');document.getElementById('a13b'+i).classList.remove('matched','wrong');if(choice===p.correct){document.getElementById('a13'+choice+i).classList.add('matched');fb.className='feedback ok';fb.style.display='block';fb.textContent='Correct! '+p.why;vibrate(true);if(document.querySelectorAll('#a13box .matched').length===3)markDone('act13');}else{document.getElementById('a13'+choice+i).classList.add('wrong');fb.className='feedback bad';fb.style.display='block';fb.textContent='Try the open version. Discovery needs What and How.';vibrate(false);}}
+function checkA13soft(){const txt=document.getElementById('a13input').value.toLowerCase();const fb=document.getElementById('a13softfb');if(txt.includes('what are your')&&txt.includes('requirement')){fb.className='feedback ok';fb.style.display='block';fb.textContent='Perfect open question! Model: What are your main requirements for backup power on this site?';markDone('act13');vibrate(true);}else if(txt.includes('what are')){fb.className='feedback info';fb.style.display='block';fb.textContent='Good start with What are. Add main requirements for backup power.';}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Use: What are your main requirements for...?';vibrate(false);}}
+renderA13();
+function checkA14(){const s1=document.getElementById('a14s1').value,s2=document.getElementById('a14s2').value,s3=document.getElementById('a14s3').value;const fb=document.getElementById('a14fb');if(s1==='Thank you,'&&s2==='Could you clarify'&&s3==='If I understand correctly,'){fb.className='feedback ok';fb.style.display='block';fb.textContent='Perfect funnel! Now say the whole flow in one breath without stopping.';markDone('act14');vibrate(true);}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Check: 1 Thank you, 2 Could you clarify, 3 If I understand correctly,';vibrate(false);}}
+function checkA15(){const q1=document.getElementById('a15q1').value.toLowerCase(),q2=document.getElementById('a15q2').value.toLowerCase();const fb=document.getElementById('a15fb');const ok1=q1.includes('could you explain')&&q1.includes('priority');const ok2=q2.includes('may i ask a follow-up')||q2.includes('follow-up question');if(ok1&&ok2){fb.className='feedback ok';fb.style.display='block';fb.textContent='Both follow-ups are warm and deep. You quoted first, then went deeper.';markDone('act15');vibrate(true);}else{let msg='';if(!ok1)msg+='Q1 needs: Could you explain ... priority. ';if(!ok2)msg+='Q2 needs: May I ask a follow-up question about...';fb.className='feedback bad';fb.style.display='block';fb.textContent=msg;vibrate(false);}}
+function fillA15(){document.getElementById('a15q1').value='You said reliability is the priority. Could you explain what that means for service and response time?';document.getElementById('a15q2').value='May I ask a follow-up question about operating hours and load peaks so we size the unit correctly?';}
+let a16timer=null,a16sec=90,a16run=false;
+function toggleA16(){const btn=document.getElementById('a16start');if(!a16run){a16run=true;btn.textContent='Stop';btn.style.background='#FF6B6B';a16timer=setInterval(()=>{a16sec--;document.getElementById('a16timer').textContent=String(Math.floor(a16sec/60)).padStart(2,'0')+':'+String(a16sec%60).padStart(2,'0');if(a16sec<=0){clearInterval(a16timer);a16run=false;btn.textContent='Start 90 sec';btn.style.background='';document.getElementById('a16timer').textContent='00:00 - well done!';markDone('act16');vibrate(true);confetti();}},1000);}else{clearInterval(a16timer);a16run=false;btn.textContent='Start 90 sec';btn.style.background='';}}
+function resetA16(){clearInterval(a16timer);a16run=false;a16sec=90;document.getElementById('a16timer').textContent='01:30';document.getElementById('a16start').textContent='Start 90 sec';document.getElementById('a16start').style.background='';document.querySelectorAll('#act16 .check input').forEach(c=>c.checked=false);}
+function checkA16(){const txt=document.getElementById('a16input').value.toLowerCase();const checks=[txt.includes('summarize')||txt.includes('to summarize'),txt.includes('main requirement')||txt.includes('requirement'),txt.includes('decision criteria')||txt.includes('criteria'),txt.includes('did i miss')||txt.includes('miss any')];checks.forEach((ok,i)=>{document.querySelector('#a16c'+(i+1)+' input').checked=ok;document.getElementById('a16c'+(i+1)).style.borderColor=ok?'var(--okbd)':'var(--border)';});if(checks.filter(Boolean).length>=3)markDone('act16');}
+let a17rate=1;
+function playA17(){speakWithRate('We need backup for the factory, roughly two hundred fifty kVA. Reliability is the top priority, service second. Budget is around eighty thousand, delivery in ten weeks. Space is tight, we run ten hours a day at about two hundred kilowatts. Final approval is still open.',a17rate);}
+function playA17fast(){speakWithRate('We need backup for the factory, roughly two hundred fifty kVA. Reliability is the top priority, service second. Budget is around eighty thousand, delivery in ten weeks. Space is tight, we run ten hours a day at about two hundred kilowatts. Final approval is still open.',1.25);}
+function updateA17speed(v){a17rate=parseFloat(v);document.getElementById('a17speedv').textContent=v+'x';}
+function toggleTranscript(){const t=document.getElementById('a17transcript');t.style.display=t.style.display==='none'?'block':'none';}
+function checkA17(){const s=document.getElementById('a17input').value.toLowerCase(),q=document.getElementById('a17q').value.toLowerCase();const fb=document.getElementById('a17fb');const okS=s.includes('if i understood correctly')||s.includes('if i understand correctly')||s.includes('250')&&s.includes('reliability');const okQ=q.includes('follow-up')||q.includes('decision maker')||q.includes('is that right');if(s.length<10){fb.className='feedback bad';fb.style.display='block';fb.textContent='Type a one sentence summary starting with If I understood correctly...';return;}if(okS&&okQ){fb.className='feedback ok';fb.style.display='block';fb.textContent='Great listening! You captured needs and asked a smart follow-up.';markDone('act17');vibrate(true);}else if(okS){fb.className='feedback info';fb.style.display='block';fb.textContent='Summary good, now add a follow-up: May I ask a follow-up question about the decision maker?';}else{fb.className='feedback bad';fb.style.display='block';fb.textContent='Try: If I understood correctly, you need 250 kVA with reliability first, around 80k in ten weeks. Is that right?';vibrate(false);}}
+const a18data=[
+  {prompt:'Customer: Reliability is most important.',softeners:['Thanks for sharing that, that helps a lot.','I see why reliability is the priority.'],correct:0,clause:'my next question is about timeline and approval. When do you need final delivery?'},
+  {prompt:'Customer: Space is tight, ten hours per day.',softeners:['That is very helpful, thanks.','I appreciate the detail on hours and space.'],correct:0,clause:'if I may, one follow-up question about load peaks and operating hours?'}
+];
+function renderA18(){const box=document.getElementById('a18box');box.innerHTML='';a18data.forEach((d,i)=>{const row=document.createElement('div');row.style.cssText='background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px';row.innerHTML='<div style="font-weight:800;margin-bottom:6px">'+d.prompt+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+d.softeners.map((s,si)=>'<button class="chip" onclick="pickA18('+i+','+si+')" id="a18s'+i+si+'">'+s+'</button>').join('')+'</div><div style="display:flex;gap:8px"><input id="a18in'+i+'" placeholder="Add next question with timeline or follow-up..." style="flex:1;background:#060A14;border:1px solid var(--border2);color:var(--fg);padding:8px 10px;border-radius:8px"><button class="btn secondary" onclick="checkA18('+i+')">Check</button><button class="btn ghost" style="padding:6px 8px" onclick="speak(\''+(d.softeners[d.correct]+' '+d.clause).replace(/'/g,"\\'")+'\')">Play</button></div><div class="feedback" id="a18fb'+i+'"></div>';box.appendChild(row);});}
+function pickA18(i,si){document.querySelectorAll('[id^=a18s'+i+']').forEach(b=>b.style.borderColor='var(--border2)');document.getElementById('a18s'+i+si).style.borderColor='var(--accent)';document.getElementById('a18s'+i+si).dataset.sel=1;}
+function checkA18(i){const d=a18data[i];const inp=document.getElementById('a18in'+i).value.toLowerCase();const fb=document.getElementById('a18fb'+i);const hasQ=inp.includes('?')||inp.includes('timeline')||inp.includes('follow-up')||inp.includes('could you')||inp.includes('when');const hasSoft=[...document.querySelectorAll('[id^=a18s'+i+']')].some(b=>b.dataset.sel);if(!hasQ){fb.className='feedback bad';fb.style.display='block';fb.textContent='Add a clear next question with timeline or follow-up.';return;}if(!hasSoft){fb.className='feedback info';fb.style.display='block';fb.textContent='Tap a softener on top first.';return;}fb.className='feedback ok';fb.style.display='block';fb.textContent='Warm and professional! Example: '+d.softeners[d.correct]+' '+d.clause;vibrate(true);if(document.querySelectorAll('#a18box .feedback.ok').length===2)markDone('act18');}
+renderA18();
+const a19steps=[
+  {speaker:'You',prompt:'Opening - choose your line',choices:['Thanks for joining, Ms Weber. What are your main requirements for backup power on this site?','Hello, I want to show you our prices.'],correct:0,feedback:'Good open discovery with requirements.'},
+  {speaker:'Ms Weber',text:'Something reliable, details are still open.',nextPrompt:'Criteria - ask before you propose',choices:['Thank you. What are your key decision criteria apart from price?','Our generator is very reliable.'],correct:0,feedback:'Excellent, you ask for criteria first.'},
+  {speaker:'You',prompt:'Budget and timeline - ask politely',choices:['Could you share your budget range and your timeline for delivery?','What is your budget? Tell me now.'],correct:0,feedback:'Polite Could you share with both budget and timeline.'},
+  {speaker:'Ms Weber',text:'Around 80k, ten weeks. Sorry, short on time today.',nextPrompt:'Constraint - acknowledge, then ask',choices:['Thanks for sharing that, that helps. What is your priority if space is a constraint? Could you clarify load and hours?','Okay, here is our offer.'],correct:0,feedback:'Great acknowledge plus constraint plus load question.'},
+  {speaker:'You',prompt:'Decision maker - close the gap',choices:['Who is the decision maker, and what should we clarify next?','Who decides?'],correct:0,feedback:'Professional full form with follow-up.'},
+  {speaker:'You',prompt:'Next steps - close professionally',choices:['I will send a short requirements summary and two sizing options by Friday. Does that work for you?','I will think about it.'],correct:0,feedback:'Clear next steps with date and check.'}
+];
+let a19idx=0;
+function renderA19(){const dots=document.getElementById('a19dots');dots.innerHTML='';a19steps.forEach((_,i)=>{const d=document.createElement('div');d.style.cssText='width:32px;height:8px;border-radius:999px;background:'+(i<a19idx?'var(--okbd)':i===a19idx?'var(--accent)':'#1E2A3A');dots.appendChild(d);});const chat=document.getElementById('a19chat');if(a19idx===0&&chat.children.length===0){const start=document.createElement('div');start.className='bubble them';start.textContent='Ms Weber: Thanks for joining, Christian. We need backup power, but we have little time today.';chat.appendChild(start);}const choices=document.getElementById('a19choices');choices.innerHTML='';const step=a19steps[a19idx];if(step){const label=document.createElement('div');label.style.cssText='color:var(--accent);font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase';label.textContent=(step.prompt||step.nextPrompt||'Your turn');choices.appendChild(label);step.choices.forEach((c,i)=>{const b=document.createElement('button');b.className='pick';b.style.textAlign='left';b.textContent=c;b.onclick=()=>chooseA19(i);choices.appendChild(b);});}else{const done=document.createElement('div');done.className='feedback ok';done.style.display='block';done.textContent='Simulation complete! You opened, asked criteria, budget, constraints, maker and closed with next steps. Strong discovery.';choices.appendChild(done);markDone('act19');}}
+function chooseA19(choiceIdx){const step=a19steps[a19idx];const chat=document.getElementById('a19chat');const isCorrect=choiceIdx===step.correct;const you=document.createElement('div');you.className='bubble me';you.textContent='You: '+step.choices[choiceIdx];chat.appendChild(you);const fb=document.createElement('div');fb.className='feedback '+(isCorrect?'ok':'bad');fb.style.display='block';fb.style.marginTop='6px';fb.textContent=(isCorrect?'✓ ':'✗ ')+step.feedback+(isCorrect?'':' Try the softer professional line.');chat.appendChild(fb);chat.scrollTop=chat.scrollHeight;if(isCorrect){a19idx++;setTimeout(()=>{if(a19idx<a19steps.length&&a19steps[a19idx].text){const them=document.createElement('div');them.className='bubble them';them.textContent='Ms Weber: '+a19steps[a19idx].text;chat.appendChild(them);chat.scrollTop=chat.scrollHeight;if(a19steps[a19idx].nextPrompt){a19idx++;renderA19();}else{renderA19();}}else{renderA19();}updateA19inputPlaceholder();},700);vibrate(isCorrect);if(a19idx>=a19steps.length)markDone('act19');}}
+function sendA19(){const inp=document.getElementById('a19input');const txt=inp.value.trim();if(!txt)return;const chat=document.getElementById('a19chat');const you=document.createElement('div');you.className='bubble me';you.textContent='You: '+txt;chat.appendChild(you);const step=a19steps[a19idx];let ok=false;if(step){const lower=txt.toLowerCase();if(a19idx===0)ok=lower.includes('requirement');else if(a19idx===1)ok=lower.includes('decision criteria')||lower.includes('criteria');else if(a19idx===2)ok=lower.includes('budget')&&lower.includes('timeline');else if(a19idx===3)ok=lower.includes('priority')||lower.includes('constraint')||lower.includes('clarify');else if(a19idx===4)ok=lower.includes('decision maker')&&(lower.includes('follow')||lower.includes('clarify')||lower.includes('what should'));else if(a19idx===5)ok=lower.includes('send')&&lower.includes('friday');const fb=document.createElement('div');fb.className='feedback '+(ok?'ok':'info');fb.style.display='block';fb.textContent=ok?'Nice own words! Tap a choice to continue.':'Good effort. Tap a suggested choice for the model, or try again with the keyword.';chat.appendChild(fb);if(ok){a19idx++;setTimeout(renderA19,600);markDone('act19');}}inp.value='';chat.scrollTop=chat.scrollHeight;}
+function restartA19(){a19idx=0;document.getElementById('a19chat').innerHTML='';document.getElementById('a19fb').style.display='none';renderA19();updateA19inputPlaceholder();}
+function updateA19inputPlaceholder(){const step=a19steps[a19idx];document.getElementById('a19input').placeholder=step?'Your line for: '+(step.prompt||step.nextPrompt):'Simulation done - restart to practice again';}
+renderA19();updateA19inputPlaceholder();
+const phrases=[
+  'What are your main requirements for backup power on this site?',
+  'What are your key decision criteria apart from price?',
+  'Could you share your budget range and your timeline for delivery?',
+  'Could you clarify the load demand and the operating hours?',
+  'Who is the decision maker and may I ask one follow-up question?'
+];
+const corrs=[
+  'What are your criterias → What are your criteria (already plural)',
+  'What is your budget? → Could you share your budget range? (softer)',
+  'Who decides? → Who is the decision maker? (professional)'
+];
+function renderA20(){const pBox=document.getElementById('a20phrases');pBox.innerHTML='';phrases.forEach((p,i)=>{const row=document.createElement('label');row.className='check';row.innerHTML='<input type="checkbox" id="a20p'+i+'" onchange="checkA20()"><span>'+p+'</span>';pBox.appendChild(row);});const cBox=document.getElementById('a20corr');cBox.innerHTML='';corrs.forEach(c=>{const d=document.createElement('div');d.style.cssText='background:#1A0A0A;border:1px solid #3A1F1F;border-radius:8px;padding:8px;font-size:.84rem';d.textContent=c;cBox.appendChild(d);});}
+function pickHW(which){['A','B','C'].forEach(l=>document.getElementById('hw'+l).style.borderColor='var(--border)');document.getElementById('hw'+which).style.borderColor='var(--okbd)';document.getElementById('hw'+which).style.background='rgba(0,230,118,.08)';document.getElementById('a20sel').textContent='Selected: Homework '+which;markDone('act20');const fb=document.getElementById('a20fb');fb.className='feedback ok';fb.style.display='block';fb.textContent='Homework '+which+' selected. Do it within 24 hours for best retention.';vibrate(true);}
+function checkA20(){const done=document.querySelectorAll('#a20phrases input:checked').length;if(done>=3)markDone('act20');}
+function printTakeaways(){const selected=[...document.querySelectorAll('#a20phrases input:checked')].map((cb,i)=>phrases[[...document.querySelectorAll('#a20phrases input')].indexOf(cb)]).join('\n');const w=window.open('','_blank');w.document.write('<pre style="font-family:Consolas,monospace;white-space:pre-wrap;padding:20px">'+'Lesson 17 - Customer questions - Takeaways\n'+'Student: Christian\n'+'Date: '+new Date().toLocaleDateString()+'\n\n'+'5 phrases to keep:\n'+phrases.map(p=>' - '+p).join('\n')+'\n\n'+'3 corrections:\n'+corrs.map(c=>' - '+c).join('\n')+'\n\n'+'My checked phrases:\n'+(selected||'(none)')+'\n\n'+'Next: objections, competitor cheaper, with less preparation.\n'+'</pre>');w.document.close();w.print();}
+function confetti(){const fb=document.getElementById('a20fb');fb.className='feedback ok';fb.style.display='block';fb.textContent='Celebration! You completed Lesson 17. Repeat key questions out loud once more.';for(let i=0;i<24;i++){const s=document.createElement('div');s.textContent='●';s.style.cssText='position:fixed;left:'+(Math.random()*100)+'vw;top:-10px;color:'+['#FFD400','#38E0C8','#7AD1FF','#C27CFF'][i%4]+';font-size:'+(10+Math.random()*12)+'px;animation:fall '+(1+Math.random()*1.5)+'s linear forwards;z-index:9999';document.body.appendChild(s);setTimeout(()=>s.remove(),2000);}markDone('act20');}
+renderA20();
+const style=document.createElement('style');style.textContent='@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}';document.head.appendChild(style);
+(function(){const saved=localStorage.getItem('lesson17done');if(saved){try{JSON.parse(saved).forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('done');});}catch(e){}}updateProgress();})();
+window.speak=speak;
+</script>
+<!-- xAPI tracking with varied verbs/objects -->
+<script src="../../xapi-include.js?v=4" defer></script>
+<script>
+// Christian Lesson 17 – varied verbs/objects instrumentation for all 20 activities
+// Hooks run after xapi-include loads; they reuse window.LRS.send with lesson-specific verbs.
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var ACT_HOME = HOME + location.pathname.split('#')[0];
+  function vb(id, display){ return { id: id, display: { 'en-US': display } }; }
+  var VB = {
+    matched:   vb(HOME + '/expapi/verbs/matched', 'matched'),
+    viewed:    vb('http://id.tincanapi.com/verb/viewed', 'viewed'),
+    checked:   vb(HOME + '/expapi/verbs/checked', 'checked'),
+    answered:  vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    wrote:     vb(HOME + '/expapi/verbs/wrote', 'wrote'),
+    listened:  vb(HOME + '/expapi/verbs/listened', 'listened to'),
+    practised: vb(HOME + '/expapi/verbs/practised', 'practised'),
+    completed: vb('http://adlnet.gov/expapi/verbs/completed', 'completed'),
+    recorded:  vb(HOME + '/expapi/verbs/recorded', 'recorded'),
+    reflected: vb(HOME + '/expapi/verbs/reflected', 'reflected'),
+    predicted: vb(HOME + '/expapi/verbs/predicted', 'predicted'),
+    reviewed:  vb(HOME + '/expapi/verbs/reviewed', 'reviewed')
+  };
+  function sendVerb(v, name, type){
+    var slug = (name || 'item').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/,'').substring(0,60) || 'item';
+    var id = ACT_HOME + '#' + slug;
+    window.LRS.send({ verb: v, object: { objectType: 'Activity', id: id, definition: { name: { 'en-US': name }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'item'), description: { 'en-US': name } } } });
+  }
+  function okFb(id){ var el = document.getElementById(id); return el && el.classList.contains('ok'); }
+  // --- 01: 7-step price story ordering ---
+  var origCheckA1 = window.checkA1;
+  if(origCheckA1) window.checkA1 = function(){ var r = origCheckA1.apply(this, arguments); sendVerb(VB.checked, 'Review 1 – Check 7-step order', 'assessment'); if(okFb('a1fb')) sendVerb(VB.matched, 'act1: ordered 7 steps', 'ordering'); return r; };
+  // --- 02: vocab flips + quick check ---
+  var origUpdateA2 = window.updateA2;
+  if(origUpdateA2) window.updateA2 = function(){ var r = origUpdateA2.apply(this, arguments); var n = document.getElementById('a2count'); if(n && n.textContent && n.textContent.indexOf('10/10')===0) sendVerb(VB.viewed, 'Vocabulary – 10 cards flipped', 'vocabulary'); return r; };
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.classList.contains('chip') && e.target.closest('#a2opts')){
+      sendVerb(VB.matched, 'act2: vocab choice', 'question');
+    }
+  });
+  // --- 03: meaning matching ---
+  var origSelectA3 = window.selectA3;
+  if(origSelectA3) window.selectA3 = function(side,i){
+    var r = origSelectA3.apply(this, arguments);
+    setTimeout(function(){
+      var leftBtn = document.querySelector('#a3left .pick.matched[data-i="'+i+'"]');
+      if(leftBtn){
+        var w = (typeof a3pairs !== 'undefined' && a3pairs[i]) ? a3pairs[i].w : ('word-'+i);
+        sendVerb(VB.matched, 'act3: ' + w + ' matched', 'vocabulary');
+      }
+    }, 150);
+    return r;
+  };
+  var origCheckA3 = window.checkA3;
+  if(origCheckA3) window.checkA3 = function(){ sendVerb(VB.checked, 'Meaning matching – Check all', 'assessment'); return origCheckA3.apply(this, arguments); };
+  // --- 04: quick say (listened + practised) ---
+  document.querySelectorAll('#a4box').forEach(function(box){
+    box.addEventListener('click', function(e){
+      if(e.target && e.target.tagName==='BUTTON' && e.target.textContent.indexOf('Play')>-1) sendVerb(VB.listened, 'Quick say – listened to phrase', 'audio');
+      if(e.target && e.target.type==='checkbox' && e.target.checked) sendVerb(VB.practised, 'Quick say – practised phrase', 'speech');
+    });
+  });
+  // --- 05: sentence unjumble ---
+  var origCheckA5 = window.checkA5;
+  if(origCheckA5) window.checkA5 = function(){ var n = (typeof a5idx !== 'undefined') ? (a5idx+1) : ''; sendVerb(VB.checked, 'Sentence unjumble – Check ' + n, 'assessment'); var r = origCheckA5.apply(this, arguments); if(okFb('a5fb')) sendVerb(VB.wrote, 'act5: built question ' + n, 'writing'); return r; };
+  // --- 06: dialogue ordering ---
+  var origCheckA6 = window.checkA6;
+  if(origCheckA6) window.checkA6 = function(){ sendVerb(VB.checked, 'Dialogue ordering – Check discovery call', 'assessment'); var r = origCheckA6.apply(this, arguments); if(okFb('a6fb')) sendVerb(VB.matched, 'act6: dialogue ordered', 'ordering'); return r; };
+  var origPlayA6 = window.playA6;
+  if(origPlayA6) window.playA6 = function(){ sendVerb(VB.listened, 'Dialogue – played model', 'audio'); return origPlayA6.apply(this, arguments); };
+  // --- 07: like-for-like question builder ---
+  var origCheckA7 = window.checkA7;
+  if(origCheckA7) window.checkA7 = function(){ var r = origCheckA7.apply(this, arguments); sendVerb(VB.checked, 'Like-for-like question – Check', 'assessment'); if(okFb('a7fb')) sendVerb(VB.wrote, 'act7: built discovery question', 'writing'); return r; };
+  // --- 08: internal prep ordering via selects ---
+  var origCheckA8 = window.checkA8;
+  if(origCheckA8) window.checkA8 = function(){ var r = origCheckA8.apply(this, arguments); sendVerb(VB.checked, 'Internal prep – Check order', 'assessment'); if(okFb('a8fb')) sendVerb(VB.matched, 'act8: prep dialogue ordered', 'ordering'); return r; };
+  document.querySelectorAll('#a8box select').forEach(function(sel){
+    sel.addEventListener('change', function(){ if(sel.value) sendVerb(VB.matched, 'act8: line position ' + sel.value, 'ordering'); });
+  });
+  // --- 09: question starters via selects ---
+  var origCheckA9 = window.checkA9;
+  if(origCheckA9) window.checkA9 = function(){ var r = origCheckA9.apply(this, arguments); sendVerb(VB.checked, 'Spot the gap – Check starters', 'assessment'); if(okFb('a9fb')) sendVerb(VB.matched, 'act9: starters correct', 'grammar'); return r; };
+  document.querySelectorAll('#a9box select').forEach(function(sel){
+    sel.addEventListener('change', function(){ if(sel.value) sendVerb(VB.matched, 'act9: starter chosen', 'vocabulary'); });
+  });
+  // --- 10: role play chat ---
+  var origSendA10 = window.sendA10;
+  if(origSendA10) window.sendA10 = function(){ var inp=document.getElementById('a10input'); var txt=inp? inp.value.trim() : ''; var r = origSendA10.apply(this, arguments); if(txt) sendVerb(VB.wrote, 'Role play – wrote: ' + txt.substring(0,50), 'writing'); if(okFb('a10fb')) sendVerb(VB.completed, 'Role play – 5 target words used', 'activity'); return r; };
+  // --- 11: conditional matching ---
+  var origCheckA11 = window.checkA11;
+  if(origCheckA11) window.checkA11 = function(){ sendVerb(VB.checked, 'Conditional follow-up – Check', 'assessment'); return origCheckA11.apply(this, arguments); };
+  var origSelA11 = window.selA11;
+  if(origSelA11) window.selA11 = function(side,i){
+    var r = origSelA11.apply(this, arguments);
+    setTimeout(function(){
+      var lb = document.querySelector('#a11left .pick.matched[data-i="'+i+'"]');
+      if(lb) sendVerb(VB.matched, 'act11: conditional pair matched', 'grammar');
+    }, 150);
+    return r;
+  };
+  // --- 12: hedged number questions (typed) ---
+  var origCheckA12 = window.checkA12;
+  if(origCheckA12) window.checkA12 = function(i){ sendVerb(VB.checked, 'Numbers – Check hedged question', 'assessment'); var r = origCheckA12.apply(this, arguments); return r; };
+  // --- 13: open vs closed + soft rewrite ---
+  var origPickA13 = window.pickA13;
+  if(origPickA13) window.pickA13 = function(i,c){ var r = origPickA13.apply(this, arguments); sendVerb(VB.answered, 'act13: open-vs-closed choice', 'question'); return r; };
+  var origCheckA13soft = window.checkA13soft;
+  if(origCheckA13soft) window.checkA13soft = function(){ var r = origCheckA13soft.apply(this, arguments); sendVerb(VB.checked, 'Open question rewrite – Check', 'assessment'); if(okFb('a13softfb')) sendVerb(VB.wrote, 'act13: wrote open question', 'writing'); return r; };
+  // --- 14: question funnel connectors ---
+  var origCheckA14 = window.checkA14;
+  if(origCheckA14) window.checkA14 = function(){ var r = origCheckA14.apply(this, arguments); sendVerb(VB.checked, 'Question funnel – Check connectors', 'assessment'); if(okFb('a14fb')) sendVerb(VB.matched, 'act14: funnel connected', 'ordering'); return r; };
+  // --- 15: polite follow-ups (typed) ---
+  var origCheckA15 = window.checkA15;
+  if(origCheckA15) window.checkA15 = function(){ var r = origCheckA15.apply(this, arguments); sendVerb(VB.checked, 'Follow-up questions – Check', 'assessment'); if(okFb('a15fb')) sendVerb(VB.wrote, 'act15: wrote follow-ups', 'writing'); return r; };
+  // --- 16: mini presentation keywords ---
+  var origCheckA16 = window.checkA16;
+  if(origCheckA16) window.checkA16 = function(){ var r = origCheckA16.apply(this, arguments); sendVerb(VB.practised, 'Mini presentation – keywords ticked', 'speech'); return r; };
+  // --- 17: listening summary (typed) ---
+  var origPlayA17 = window.playA17;
+  if(origPlayA17) window.playA17 = function(){ sendVerb(VB.listened, 'Listening summary – normal speed', 'audio'); return origPlayA17.apply(this, arguments); };
+  var origPlayA17fast = window.playA17fast;
+  if(origPlayA17fast) window.playA17fast = function(){ sendVerb(VB.listened, 'Listening summary – fast speed', 'audio'); return origPlayA17fast.apply(this, arguments); };
+  var origCheckA17 = window.checkA17;
+  if(origCheckA17) window.checkA17 = function(){ var r = origCheckA17.apply(this, arguments); sendVerb(VB.checked, 'Listening summary – Check', 'assessment'); if(okFb('a17fb')) sendVerb(VB.wrote, 'act17: wrote summary + follow-up', 'writing'); return r; };
+  // --- 18: softener + next question ---
+  var origCheckA18 = window.checkA18;
+  if(origCheckA18) window.checkA18 = function(i){ var r = origCheckA18.apply(this, arguments); sendVerb(VB.checked, 'Show understanding – Check turn', 'assessment'); return r; };
+  // --- 19: full simulation ---
+  var origChooseA19 = window.chooseA19;
+  if(origChooseA19) window.chooseA19 = function(i){ var r = origChooseA19.apply(this, arguments); sendVerb(VB.answered, 'Full simulation – step choice', 'question'); return r; };
+  var origSendA19 = window.sendA19;
+  if(origSendA19) window.sendA19 = function(){ var inp=document.getElementById('a19input'); var txt=inp? inp.value.trim() : ''; var r = origSendA19.apply(this, arguments); if(txt) sendVerb(VB.wrote, 'Full simulation – wrote: ' + txt.substring(0,50), 'writing'); return r; };
+  // --- 20: homework choice ---
+  var origPickHW = window.pickHW;
+  if(origPickHW) window.pickHW = function(w){ var r = origPickHW.apply(this, arguments); sendVerb(VB.completed, 'Homework ' + w + ' selected', 'activity'); return r; };
+});
+</script>
+</body>
+
+</html>

@@ -421,6 +421,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'joined sentences with so / but / because / which / While, zero top errors (This HELPS not This help). '
       + 'Check: is there an unnatural pair? Is there a top error (subject-verb, article)? Are sentences joined or choppy?';
   }
+  if (where.includes('business-english') || where.includes('lesson-17') || where.includes('lesson-16') || where.includes('price-discussion') || where.includes('conditionals') || where.includes('customer-questions') || where.includes('discovery')) {
+    return 'PROFESSIONAL B2 BUSINESS DISCOVERY ENGLISH (customer calls about requirements, criteria, budget, timeline). Required style: '
+      + 'open questions (What / Could you share / Could you clarify), a softener first (Thank you / Could you clarify / If I understand correctly), '
+      + 'hedged numbers (about / around / approximately), soft conditional checks (If you needed ... would ...), '
+      + 'full professional forms (Who is the decision maker, not Who decides), needs asked before any pitching. '
+      + 'Check: is it an open question (not yes/no)? Is there a softener? Are numbers hedged? Is it polite, complete and professional?';
+  }
   return 'IELTS Writing (Task 1 or Task 2). Check: does the text answer the question? Is there a clear overview or position? '
     + 'Are ideas grouped and linked? Are there repeated grammar errors?';
 }
