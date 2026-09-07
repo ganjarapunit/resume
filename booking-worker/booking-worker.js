@@ -421,6 +421,24 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'joined sentences with so / but / because / which / While, zero top errors (This HELPS not This help). '
       + 'Check: is there an unnatural pair? Is there a top error (subject-verb, article)? Are sentences joined or choppy?';
   }
+  if (where.includes('day10') || where.includes('essay-types') || where.includes('essay types')) {
+    return 'ESSAY TYPES (Argument / Expository / Discussion). Required frames: Argument = I ARGUE THAT + position; '
+      + 'Expository = THIS ESSAY WILL + explanation, NEVER I agree and NEVER an opinion; Discussion = WHILE + both views + I. '
+      + 'The same PEEL works inside all three; mainly the first line changes. '
+      + 'Check: does the first line match the question type? Is there an opinion where only explanation belongs (must be zero)? '
+      + 'Is the Discussion missing While or the writer I?';
+  }
+  if (where.includes('day11') || where.includes('fair argument')) {
+    return 'FAIR ARGUMENT PARAGRAPH (5 to 6 sentences, ONE idea). Required shape: Claim I ARGUE THAT + 2 reasons, '
+      + 'support FOR INSTANCE + THIS means, fair counter ADMITTEDLY or WHILE IT IS TRUE THAT, firm answer HOWEVER or THEREFORE. '
+      + 'Check: is there a clear claim? Is there proof with For instance? Is the other side answered fairly (Admittedly) then firmly (However)? '
+      + 'Is it one idea, not a new topic?';
+  }
+  if (where.includes('day12') || where.includes('point by point')) {
+    return 'POINT-BY-POINT COMPARISON (both ideas in EVERY line). Required shape: compare inside each line with WHILE / WHEREAS / IN CONTRAST, '
+      + 'both names in each line, maximum 1 linker, full clause after While (WHILE online IS flexible, not WHILE online flexible). '
+      + 'Check: does every line contain both ideas? Is there a block list with no compare inside? Is While followed by a full clause?';
+  }
   if (where.includes('business-english') || where.includes('lesson-17') || where.includes('lesson-16') || where.includes('price-discussion') || where.includes('conditionals') || where.includes('customer-questions') || where.includes('discovery')) {
     return 'PROFESSIONAL B2 BUSINESS DISCOVERY ENGLISH (customer calls about requirements, criteria, budget, timeline). Required style: '
       + 'open questions (What / Could you share / Could you clarify), a softener first (Thank you / Could you clarify / If I understand correctly), '

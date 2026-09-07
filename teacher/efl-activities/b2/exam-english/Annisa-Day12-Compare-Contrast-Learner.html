@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 3 Choose the Right Data Annisa Interactive</title>
+<title>Day 12 Compare and Contrast Annisa Interactive</title>
 <style>
   :root{
     --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
@@ -32,7 +32,7 @@
   .intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:1rem 0 1.3rem}
   .intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
   .rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
-  .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.85rem;font-weight:700}
+  .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
   .rule-item.ok{border-color:var(--good);color:var(--good)}
   .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
   .credit strong{color:var(--accent-2)}
@@ -47,11 +47,7 @@
   .tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700}
   .hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
   .exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
-  .q{font-weight:700;margin:.15rem 0 .5rem;color:#fff;font-size:.95rem}
-  .chart{width:100%;border-collapse:collapse;margin:.4rem 0;background:#06121f;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-  .chart th,.chart td{padding:.4rem .5rem;text-align:center;border:1px solid var(--border);font-size:.92rem}
-  .chart th{background:var(--surface);color:var(--accent);font-size:.85rem}
-  .chart td{color:var(--ink)}
+  .qbox{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem}
   .fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
   .fill .lead,.fill .tail{color:var(--ink);font-size:.92rem}
   input.answer,textarea{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
@@ -70,14 +66,11 @@
   button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit}
   button.btn:hover{filter:brightness(1.05)}
   button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
-  button.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
   .feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
   .feedback.good{border-color:var(--good)} .feedback.bad{border-color:var(--bad)}
   .feedback ul{margin:.35rem 0;padding-left:1.1rem}
-  .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem;display:flex;gap:.4rem;align-items:flex-start}
+  .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
   .mini-tip strong{color:var(--accent)}
-  .speak{margin-top:.7rem;padding:.65rem .85rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
-  .speak h3{margin:0 0 .2rem;color:var(--accent-2);font-size:.95rem}
   .model{margin-top:.45rem;padding:.5rem .7rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink);font-size:.9rem}
   .model[hidden]{display:none}
   .done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s;font-size:.85rem}
@@ -107,10 +100,6 @@
   .login-card input{width:100%;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.55rem;font-size:1rem;margin:.55rem 0;font-family:inherit}
   .timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
   .vis-note{font-size:.82rem;color:var(--muted);margin:.3rem 0}
-  .chart-figure{margin:.5rem 0;background:#fff;border:2px solid var(--border);border-radius:10px;padding:.4rem;text-align:center}
-  .chart-figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px}
-  .chart-figure figcaption{font-size:.78rem;color:#222;margin-top:.35rem;line-height:1.35}
-  .chart-figure figcaption a{color:#0a3d8f}
 </style>
 </head>
 <body>
@@ -118,7 +107,7 @@
 <div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
   <div class="login-card">
     <h2 id="loginTitle">Welcome Annisa</h2>
-    <p>Your name to start Day 3.</p>
+    <p>Your name to start Day 12.</p>
     <label for="loginName" style="font-weight:700;">Your name</label>
     <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Annisa" aria-label="Your name">
     <button class="btn" id="loginStart">Start</button>
@@ -143,8 +132,8 @@
 </div>
 
 <header class="hero">
-  <h1>Day 3 Choose the Right Data</h1>
-  <p>Same charts, new skill. Compare the data, do not just list it.</p>
+  <h1>Day 12 Point by Point</h1>
+  <p>Keep both ideas inside each paragraph. Compare, do not list them apart.</p>
   <span class="pill">Annisa</span>
   <span class="pill">10 short tasks</span>
   <span class="pill">40 min</span>
@@ -154,18 +143,18 @@
   <section class="intro" aria-label="Today">
     <h2>Today</h2>
     <div class="rule-box" aria-label="The rule">
-      <span class="rule-item ok">Big: highest, lowest</span>
-      <span class="rule-item ok">Change: rise, fall, overtake</span>
-      <span class="rule-item ok">Group + compare</span>
+      <span class="rule-item ok">while / whereas</span>
+      <span class="rule-item ok">Both names each line</span>
+      <span class="rule-item ok">1 linker only</span>
     </div>
-    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">Your overview has no numbers. Your details include only the important numbers.</p>
+    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">Same Q1 ideas, only a new shape.</p>
     <div class="steps-mini" aria-label="How">
       <span><strong>1</strong> Look</span>
       <span><strong>2</strong> Choose / Type</span>
       <span><strong>3</strong> Check</span>
       <span><strong>4</strong> Complete</span>
     </div>
-    <div class="credit"><strong>Charts:</strong> Remastered in high resolution for clarity from low resolution teaching drafts. Data adapted for class from <a href="https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/">IELTS Liz Sample Charts</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS Task 1</a>. Simplified teaching data, same as Day 1 and 2. Free classroom use with credit.</div>
+    <div class="credit"><strong>Frames:</strong> Comparison moves following <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/essay_writing/">Purdue OWL</a>. Topics from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a>. Free use.</div>
   </section>
 
   <!-- ACTIVITY 1 -->
@@ -173,16 +162,16 @@
     <div class="act-head">
       <span class="badge" aria-hidden="true">1</span>
       <h2>Hello</h2>
-      <span class="tag">1 min</span>
+      <span class="tag">2 min</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Let us connect Days 1 and 2 to Day 3.</p>
+    <p class="hint-line">Recall one word.</p>
     <div class="exercise">
-      <label for="sp1" style="font-weight:700;font-size:.93rem;">What is one rule from Day 2?</label>
-      <textarea id="sp1" placeholder="e.g. Overview: 2 trends, no numbers."></textarea>
+      <label for="sp1" style="font-weight:700;font-size:.93rem;">Which one word compares two things?</label>
+      <textarea id="sp1" placeholder="e.g. while."></textarea>
     </div>
     <button class="btn ghost" data-reveal="model1" aria-expanded="false">Example</button>
-    <div class="model" id="model1" hidden>My overview rule: describe 2 big trends, no numbers. My fix: use the past tense, rose and fell.</div>
+    <div class="model" id="model1" hidden>while. Or whereas. One is enough today.</div>
     <button class="btn ghost" data-complete="act1">Mark complete</button>
   </section>
 
@@ -190,37 +179,20 @@
   <section class="activity" id="act2" data-act="2">
     <div class="act-head">
       <span class="badge" aria-hidden="true">2</span>
-      <h2>Overview or detail?</h2>
+      <h2>2 shapes</h2>
       <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Look at the tourists chart. It is the same chart as Day 2.</p>
+    <p class="hint-line">Apart or inside?</p>
     <div class="exercise">
-      <figure class="chart-figure" role="group" aria-label="Bar chart tourists 2018 and 2022">
-        <img src="images/tourists-bar-remastered.png" alt="Bar chart: Tourists in thousands. 2018 Paris 200, Rome 150, Berlin 90. 2022 Paris 180, Rome 210, Berlin 170." width="1000" height="620" loading="lazy">
-        <figcaption>Tourists 2018 vs 2022. Remastered. Adapted from British Council practice via <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS</a>. Free classroom use.</figcaption>
-      </figure>
-      <table class="chart" aria-label="Tourists in thousands">
-        <tr><th>City</th><th>2018</th><th>2022</th></tr>
-        <tr><td>Paris</td><td>200</td><td>180</td></tr>
-        <tr><td>Rome</td><td>150</td><td>210</td></tr>
-        <tr><td>Berlin</td><td>90</td><td>170</td></tr>
-      </table>
-      <p style="font-size:.9rem;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem;">1. Overall, Rome overtook Paris, while Berlin grew from the lowest start.<br>2. In 2018 Paris stood at 200 thousand.</p>
       <div class="mcq" data-group="g1">
-        <div class="stem">Which one is the overview?</div>
-        <label><input type="radio" class="choice" name="g1" data-correct="true"> Sentence 1, it has no numbers and 2 trends</label>
-        <label><input type="radio" class="choice" name="g1"> Sentence 2, it has a number</label>
-      </div>
-      <div class="mcq" data-group="g2">
-        <div class="stem">Is ‘Overall, Paris had 200’ a good overview?</div>
-        <label><input type="radio" class="choice" name="g2"> Good overview</label>
-        <label><input type="radio" class="choice" name="g2" data-correct="true"> Still weak, no trend</label>
+        <div class="stem">What is ‘point by point’?</div>
+        <label><input type="radio" class="choice" name="g1" data-correct="true"> Both ideas in each paragraph</label>
+        <label><input type="radio" class="choice" name="g1"> All A, then all B</label>
       </div>
     </div>
     <button class="btn" data-check="act2">Check</button>
     <div class="feedback" id="fb-act2" aria-live="polite"></div>
-    <div class="mini-tip"><span><strong>Job:</strong> The overview maps the ideas. The details walk through them.</span></div>
     <button class="btn ghost" data-complete="act2">Mark complete</button>
   </section>
 
@@ -228,32 +200,21 @@
   <section class="activity" id="act3" data-act="3">
     <div class="act-head">
       <span class="badge" aria-hidden="true">3</span>
-      <h2>Choose</h2>
-      <span class="tag">3 rules</span>
+      <h2>Signals</h2>
+      <span class="tag">4 only</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Do not use every number. Choose only the important ones.</p>
+    <p class="hint-line">Say all 4 signals.</p>
     <div class="exercise">
-      <div class="mcq" data-group="g3">
-        <div class="stem">What does ‘big’ mean?</div>
-        <label><input type="radio" class="choice" name="g3" data-correct="true"> Highest and lowest</label>
-        <label><input type="radio" class="choice" name="g3"> Every number</label>
-        <label><input type="radio" class="choice" name="g3"> No numbers</label>
+      <div class="mcq" data-group="g2">
+        <div class="stem">Which words contrast inside one line?</div>
+        <label><input type="radio" class="choice" name="g2" data-correct="true"> while, whereas</label>
+        <label><input type="radio" class="choice" name="g2"> Moreover, Furthermore</label>
       </div>
-      <div class="mcq" data-group="g4">
-        <div class="stem">What does ‘change’ mean?</div>
-        <label><input type="radio" class="choice" name="g4" data-correct="true"> Biggest rise, fall, overtake</label>
-        <label><input type="radio" class="choice" name="g4"> Copy the table</label>
-      </div>
-      <div class="mcq" data-group="g5">
-        <div class="stem">What does ‘group’ mean?</div>
-        <label><input type="radio" class="choice" name="g5" data-correct="true"> Put similar together, compare</label>
-        <label><input type="radio" class="choice" name="g5"> List alone, one by one</label>
-      </div>
+      <div class="fill"><span class="lead">Online suits busy learners.</span> <input class="answer" data-accept="In contrast" data-model="In contrast" aria-label="In contrast"> <span class="tail">, classrooms suit discussion.</span></div>
     </div>
     <button class="btn" data-check="act3">Check</button>
     <div class="feedback" id="fb-act3" aria-live="polite"></div>
-    <div class="mini-tip"><span><strong>Band 7:</strong> Select, highlight and compare.</span></div>
     <button class="btn ghost" data-complete="act3">Mark complete</button>
   </section>
 
@@ -261,32 +222,21 @@
   <section class="activity" id="act4" data-act="4">
     <div class="act-head">
       <span class="badge" aria-hidden="true">4</span>
-      <h2>Compare</h2>
-      <span class="tag">Words</span>
+      <h2>Block?</h2>
+      <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Write naturally. Do not just list the numbers.</p>
+    <p class="hint-line">Find the weakness in this paragraph.</p>
     <div class="exercise">
-      <div class="mcq" data-group="g6">
-        <div class="stem">Which word is comparative?</div>
-        <label><input type="radio" class="choice" name="g6" data-correct="true"> higher than</label>
-        <label><input type="radio" class="choice" name="g6"> the most visited</label>
-        <label><input type="radio" class="choice" name="g6"> while</label>
+      <div class="qbox">Online is flexible. Lessons can be rewatched. Classrooms offer discussion. Teachers answer fast.</div>
+      <div class="mcq" data-group="g3">
+        <div class="stem">What is the weakness?</div>
+        <label><input type="radio" class="choice" name="g3" data-correct="true"> No compare inside</label>
+        <label><input type="radio" class="choice" name="g3"> Too long</label>
       </div>
-      <div class="mcq" data-group="g7">
-        <div class="stem">Which word is superlative?</div>
-        <label><input type="radio" class="choice" name="g7" data-correct="true"> the most visited</label>
-        <label><input type="radio" class="choice" name="g7"> compared to</label>
-      </div>
-      <div class="fill"><span class="lead">In 2018 Paris was</span> <input class="answer" data-accept="higher than" data-model="higher than" aria-label="comparative"> <span class="tail">Rome,</span></div>
-      <div class="fill"><span class="lead"> </span> <input class="answer" data-accept="while" data-model="while" aria-label="link word"> <span class="tail">by 2022 Rome was the most visited.</span></div>
     </div>
     <button class="btn" data-check="act4">Check</button>
     <div class="feedback" id="fb-act4" aria-live="polite"></div>
-    <div class="speak">
-      <h3>Say it</h3>
-      <textarea id="sp4" placeholder="In 2018 Paris was higher than Rome, while by 2022..."></textarea>
-    </div>
     <button class="btn ghost" data-complete="act4">Mark complete</button>
   </section>
 
@@ -294,23 +244,23 @@
   <section class="activity" id="act5" data-act="5">
     <div class="act-head">
       <span class="badge" aria-hidden="true">5</span>
-      <h2>Numbers</h2>
-      <span class="tag">Past + about</span>
+      <h2>Model</h2>
+      <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">2018 is in the past, so use the past tense.</p>
+    <p class="hint-line">2 points, both sides together.</p>
     <div class="exercise">
-      <div class="fill"><span class="lead">In 2018 Rome</span> <input class="answer" data-accept="stood at" data-model="stood at" aria-label="stood at"> <span class="tail">about 150 thousand,</span></div>
-      <div class="fill"><span class="lead">then it</span> <input class="answer" data-accept="rose to" data-model="rose to" aria-label="rose to"> <span class="tail">210 thousand by 2022.</span></div>
-      <div class="mcq" data-group="g8">
-        <div class="stem">Why do we use the past tense?</div>
-        <label><input type="radio" class="choice" name="g8" data-correct="true"> Because 2018 and 2022 are finished</label>
-        <label><input type="radio" class="choice" name="g8"> Because all charts use the present tense</label>
+      <div class="qbox"><strong>1</strong> While online offers flexibility, classrooms offer interaction.<br><strong>2</strong> Online can be rewatched, whereas live answers are instant.</div>
+      <div class="mcq" data-group="g4">
+        <div class="stem">What is point 1 about?</div>
+        <label><input type="radio" class="choice" name="g4" data-correct="true"> Flexibility</label>
+        <label><input type="radio" class="choice" name="g4"> Only online</label>
       </div>
     </div>
     <button class="btn" data-check="act5">Check</button>
     <div class="feedback" id="fb-act5" aria-live="polite"></div>
-    <div class="mini-tip"><span><strong>Prepositions:</strong> at 150, to 210, from 150 to 210.</span></div>
+    <button class="btn ghost" data-reveal="model5" aria-expanded="false">Model</button>
+    <div class="model" id="model5" hidden>Model: line 1 is flexibility, line 2 compares rewatch versus instant answers with whereas.</div>
     <button class="btn ghost" data-complete="act5">Mark complete</button>
   </section>
 
@@ -318,27 +268,16 @@
   <section class="activity" id="act6" data-act="6">
     <div class="act-head">
       <span class="badge" aria-hidden="true">6</span>
-      <h2>Which details?</h2>
-      <span class="tag">Core</span>
+      <h2>Which wins?</h2>
+      <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Text A lists the numbers. Text B compares them.</p>
+    <p class="hint-line">Apart or inside?</p>
     <div class="exercise">
-      <figure class="chart-figure" role="group" aria-label="Same tourists chart for judgement">
-        <img src="images/tourists-bar-remastered.png" alt="Same tourists chart: Paris 200 to 180, Rome 150 to 210, Berlin 90 to 170." width="1000" height="620" loading="lazy">
-        <figcaption>Same tourists chart. Remastered. Source: <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS</a>.</figcaption>
-      </figure>
-      <p style="font-size:.88rem;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem;"><strong>A</strong> In 2018 Paris was 200, Rome 150, Berlin 90. In 2022 Paris 180, Rome 210, Berlin 170.</p>
-      <p style="font-size:.88rem;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem;"><strong>B</strong> In 2018 Paris stood at 200, compared to 150 in Rome and 90 in Berlin. By 2022 Rome rose to 210 and overtook Paris, while Berlin almost doubled to 170.</p>
-      <div class="mcq" data-group="g9">
-        <div class="stem">Which text is better?</div>
-        <label><input type="radio" class="choice" name="g9"> A</label>
-        <label><input type="radio" class="choice" name="g9" data-correct="true"> B</label>
-      </div>
-      <div class="mcq" data-group="g10">
-        <div class="stem">Why is it better?</div>
-        <label><input type="radio" class="choice" name="g10" data-correct="true"> It groups and compares with trend verbs</label>
-        <label><input type="radio" class="choice" name="g10"> It has more numbers</label>
+      <div class="mcq" data-group="g5">
+        <div class="stem">Which is better?</div>
+        <label><input type="radio" class="choice" name="g5"> Block, all A then all B</label>
+        <label><input type="radio" class="choice" name="g5" data-correct="true"> Point by point, compare inside</label>
       </div>
     </div>
     <button class="btn" data-check="act6">Check</button>
@@ -350,29 +289,22 @@
   <section class="activity" id="act7" data-act="7">
     <div class="act-head">
       <span class="badge" aria-hidden="true">7</span>
-      <h2>We write 1</h2>
+      <h2>Fix it</h2>
       <span class="tag">With teacher</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Let us write about the 2018 start together.</p>
+    <p class="hint-line">Write 2 lines together.</p>
     <div class="exercise">
-      <figure class="chart-figure" role="group" aria-label="Tourists 2018 start chart">
-        <img src="images/tourists-bar-remastered.png" alt="Tourists chart, focus 2018: Paris 200, Rome 150, Berlin 90." width="1000" height="620" loading="lazy">
-        <figcaption>Tourists chart. Focus 2018. Remastered. Source: <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS</a>.</figcaption>
-      </figure>
-      <table class="chart" aria-label="Tourists 2018 start">
-        <tr><th>2018</th><th>Paris</th><th>Rome</th><th>Berlin</th></tr>
-        <tr><td>Thousands</td><td>200</td><td>150</td><td>90</td></tr>
-      </table>
-      <div class="fill"><span class="lead">In 2018 Paris stood at 200,</span> <input class="answer" data-accept="compared to" data-model="compared to" aria-label="compared to"> <span class="tail">150 in Rome and 90 in Berlin.</span></div>
-      <div class="fill"><span class="lead">Berlin was</span> <input class="answer" data-accept="the lowest" data-model="the lowest" aria-label="the lowest"> <span class="tail">at 90.</span></div>
-      <label for="sp7" style="font-weight:700;font-size:.9rem;">Paste your 2 lines here:</label>
-      <textarea id="sp7" placeholder="In 2018, ... Compared to ..."></textarea>
+      <div class="fill"><span class="lead">Lessons</span> <input class="answer" data-accept="which" data-model="which" aria-label="which"> <span class="tail">can be rewatched help, whereas live answers are instant.</span></div>
+      <div class="fill"><span class="lead"></span> <input class="answer" data-accept="While" data-model="While" aria-label="While"> <span class="tail">online suits busy learners, classrooms suit discussion.</span></div>
+      <label for="sp7" style="font-weight:700;font-size:.9rem;">Your 2 lines:</label>
+      <textarea id="sp7" placeholder="Lessons which ... whereas ... While ..."></textarea>
+      
     </div>
     <button class="btn" data-check="act7">Check</button>
     <div class="feedback" id="fb-act7" aria-live="polite"></div>
     <button class="btn ghost" data-reveal="model7" aria-expanded="false">Model</button>
-    <div class="model" id="model7" hidden>In 2018 Paris stood at 200 thousand, compared to 150 in Rome and just 90 in Berlin. Berlin had the lowest figure, less than half the Paris total.</div>
+    <div class="model" id="model7" hidden>Lessons which can be rewatched help busy learners, whereas live answers are instant. While online suits busy learners, classrooms suit discussion.</div>
     <button class="btn ghost" data-complete="act7">Mark complete</button>
   </section>
 
@@ -380,29 +312,18 @@
   <section class="activity" id="act8" data-act="8">
     <div class="act-head">
       <span class="badge" aria-hidden="true">8</span>
-      <h2>We write 2</h2>
-      <span class="tag">Change</span>
+      <h2>Your topics</h2>
+      <span class="tag">You do</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Now write about the 2022 change. Type one sentence yourself.</p>
+    <p class="hint-line">Write 2 lines with both names in each.</p>
     <div class="exercise">
-      <figure class="chart-figure" role="group" aria-label="Tourists 2022 change chart">
-        <img src="images/tourists-bar-remastered.png" alt="Tourists chart, focus 2022: Paris 180, Rome 210, Berlin 170. Rome highest." width="1000" height="620" loading="lazy">
-        <figcaption>Tourists chart. Focus 2022. Remastered. Source: <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS</a>.</figcaption>
-      </figure>
-      <table class="chart" aria-label="Tourists 2022 change">
-        <tr><th>2022</th><th>Paris</th><th>Rome</th><th>Berlin</th></tr>
-        <tr><td>Thousands</td><td>180</td><td>210</td><td>170</td></tr>
-      </table>
-      <div class="fill"><span class="lead">By 2022 Rome</span> <input class="answer" data-accept="rose to|had risen to" data-model="rose to" aria-label="rose to"> <span class="tail">210 and overtook Paris,</span></div>
-      <div class="fill"><span class="lead"></span> <input class="answer" data-accept="while" data-model="while" aria-label="while"> <span class="tail">Berlin almost doubled to 170.</span></div>
-      <label for="sp8" style="font-weight:700;font-size:.9rem;">Write your 2 lines:</label>
-      <textarea id="sp8" placeholder="By 2022, Rome ... while Berlin ..."></textarea>
+      <label for="sp8" style="font-weight:700;font-size:.9rem;">Write 2 topic sentences:</label>
+      <textarea id="sp8" placeholder="While online ... classrooms ... Whereas online ... classrooms ..."></textarea>
+      
     </div>
-    <button class="btn" data-check="act8">Check</button>
-    <div class="feedback" id="fb-act8" aria-live="polite"></div>
     <button class="btn ghost" data-reveal="model8" aria-expanded="false">Model</button>
-    <div class="model" id="model8" hidden>By 2022 Rome had risen to 210 and overtook Paris, which fell slightly to 180, while Berlin almost doubled to 170. Rome became the most visited city.</div>
+    <div class="model" id="model8" hidden>While online offers flexibility, classrooms offer stronger interaction. Whereas online suits solo review, classrooms suit live discussion.</div>
     <button class="btn ghost" data-complete="act8">Mark complete</button>
   </section>
 
@@ -410,34 +331,24 @@
   <section class="activity" id="act9" data-act="9">
     <div class="act-head">
       <span class="badge" aria-hidden="true">9</span>
-      <h2>You write</h2>
-      <span class="tag">Full Task 1</span>
-      <span class="timer" id="timerLabel">12:00</span>
+      <h2>You compare</h2>
+      <span class="tag">You do</span>
+      <span class="timer" id="timerLabel">7:00</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Use the homework chart from Day 1. Write a full report.</p>
+    <p class="hint-line">Now write by yourself. Take 7 minutes.</p>
     <div class="exercise">
-      <figure class="chart-figure" role="group" aria-label="Homework hours chart remastered">
-        <img src="images/homework-bar-remastered.png" alt="Bar chart: Homework hours per week. Japan 7 in 2010, 5 in 2020. Germany 6 and 6. Brazil 6 and 9." width="1000" height="620" loading="lazy">
-        <figcaption>High resolution remaster. Same data as Day 1. Style adapted from <a href="https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/">IELTS Liz Sample Charts</a>. Free classroom use with credit.</figcaption>
-      </figure>
-      <table class="chart" aria-label="Homework hours per week">
-        <tr><th>Country</th><th>2010</th><th>2020</th></tr>
-        <tr><td>Japan</td><td>7 hours</td><td>5 hours</td></tr>
-        <tr><td>Germany</td><td>6 hours</td><td>6 hours</td></tr>
-        <tr><td>Brazil</td><td>6 hours</td><td>9 hours</td></tr>
-      </table>
-      <p style="font-weight:700;color:var(--accent);font-size:.88rem;">Write 4 parts: 1. Introduction, 2. Overview with no numbers, 3. 2010 details, 4. 2020 details. Write about 150 words. Use ‘while’ once.</p>
-      <label for="sp9" style="font-weight:700;font-size:.9rem;">Your full Task 1:</label>
-      <textarea id="sp9" style="min-height:160px;" placeholder="The chart compares ... Overall, ... In 2010 ... By 2020 ..."></textarea>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;">
-        <button class="btn" id="startTimer" type="button">Start 12:00</button>
+      <label for="sp9" style="font-weight:700;font-size:.9rem;">One paragraph, 4 to 5 lines:</label>
+      <textarea id="sp9" style="min-height:130px;" placeholder="While online ... whereas ... Both ... In contrast ..."></textarea>
+      
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;">
+        <button class="btn" id="startTimer" type="button">Start 7:00</button>
         <button class="btn ghost" id="stopTimer" type="button">Stop</button>
       </div>
-      <p class="vis-note" id="timerHint">Press Start, then write your report.</p>
+      <p class="vis-note" id="timerHint">Press Start, then write your paragraph.</p>
     </div>
     <button class="btn ghost" data-reveal="model9" aria-expanded="false">Model</button>
-    <div class="model" id="model9" hidden>The chart compares homework hours in Japan, Germany and Brazil in 2010 and 2020. Overall, Brazil spent more time than Japan and Germany, and this gap widened. In 2010 Japan was highest at 7 hours, compared to 6 in Germany and Brazil. By 2020 Brazil rose to 9 and became highest, while Japan fell to 5, the lowest, and Germany stayed at 6.</div>
+    <div class="model" id="model9" hidden>While online learning offers flexibility, classrooms offer stronger interaction. Online lessons can be rewatched, whereas classroom questions get instant answers. Both need motivation, but live discussion builds it faster. In contrast to flexible solo study, classrooms remain better for learning together.</div>
     <button class="btn ghost" data-complete="act9">Mark complete</button>
   </section>
 
@@ -445,30 +356,30 @@
   <section class="activity" id="act10" data-act="10">
     <div class="act-head">
       <span class="badge" aria-hidden="true">10</span>
-      <h2>Check + list</h2>
+      <h2>Check</h2>
       <span class="tag">1 fix</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
     <p class="hint-line">Choose one fix to focus on.</p>
     <div class="exercise">
-      <table class="chart" aria-label="Error list">
-        <tr><th>My sentence</th><th>Better</th><th>My try</th></tr>
-        <tr><td>Rome has risen to 210.</td><td>Rome rose to 210.</td><td>Paris fell to 180.</td></tr>
+      <table style="width:100%;border-collapse:collapse;background:#06121f;" aria-label="Error list">
+        <tr><th style="border:1px solid var(--border);padding:.4rem;">My sentence</th><th style="border:1px solid var(--border);padding:.4rem;">Better</th><th style="border:1px solid var(--border);padding:.4rem;">My try</th></tr>
+        <tr><td style="border:1px solid var(--border);padding:.4rem;">While online flexible.</td><td style="border:1px solid var(--border);padding:.4rem;">While online is flexible.</td><td style="border:1px solid var(--border);padding:.4rem;">Whereas classes are live.</td></tr>
       </table>
-      <div class="mcq" data-group="g11">
+      <div class="mcq" data-group="g6">
         <div class="stem">What is your fix today?</div>
-        <label><input type="radio" class="choice" name="g11"> A) Past tense verbs like rose, fell and stood</label>
-        <label><input type="radio" class="choice" name="g11"> B) Articles and links like the and compared to</label>
-        <label><input type="radio" class="choice" name="g11"> C) Something else the teacher suggests</label>
+        <label><input type="radio" class="choice" name="g6"> A) Use a full clause after ‘While’</label>
+        <label><input type="radio" class="choice" name="g6"> B) Use new words only</label>
+        <label><input type="radio" class="choice" name="g6"> C) Ask the teacher for help</label>
       </div>
-      <label for="sp10" style="font-weight:700;font-size:.9rem;">My new try:</label>
-      <textarea id="sp10" placeholder="e.g. Berlin almost doubled to 170."></textarea>
+      <label for="sp10" style="font-weight:700;font-size:.9rem;">Write one good line:</label>
+      <textarea id="sp10" placeholder="Write one line with while or whereas." aria-label="One good line"></textarea>
+      
       <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.6rem;">
         <label style="font-weight:700;font-size:.85rem;">How clear now? 1 to 5</label>
         <input type="range" id="feel" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="How clear 1 to 5">
         <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;"><span>1 hard</span><span>3 ok</span><span>5 clear</span></div>
       </div>
-      <div class="mini-tip"><span><strong>Homework:</strong> Fix 1 line, then write 5 lines using compared to, while, stood at, rose to and overtook.</span></div>
     </div>
     <button class="btn" data-check="act10">Check</button>
     <div class="feedback" id="fb-act10" aria-live="polite"></div>
@@ -478,7 +389,7 @@
   <!-- RESULTS -->
   <section class="results" id="results" hidden aria-label="Lesson results">
     <h2>Done Annisa</h2>
-    <p>You compared the data, you did not just list it. Your full Task 1 is ready.</p>
+    <p>You can now compare point by point.</p>
     <div class="score-grid">
       <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
       <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
@@ -492,9 +403,9 @@
 </main>
 
 <footer>
-  <p>Day 3: Choose the Right Data. 10 tasks. Compare, do not just list.</p>
-  <p style="margin-top:.3rem;"><a href="./Annisa-Day03-Choose-Data-Teacher.html">Teacher page</a></p>
-  <p style="margin-top:.3rem;font-size:.72rem;">Charts adapted for class from <a href="https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/">IELTS Liz</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic/task-1">British Council Take IELTS</a>. Simplified teaching data.</p>
+  <p>Day 12: Compare and Contrast. 10 tasks. Essentials only.</p>
+  <p style="margin-top:.3rem;"><a href="./Annisa-Day12-Compare-Contrast-Teacher.html">Teacher page</a></p>
+  <p style="margin-top:.3rem;font-size:.72rem;">Frames from <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/essay_writing/">Purdue OWL</a>. Topics from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a>. Free use.</p>
 </footer>
 
 <script>
@@ -625,7 +536,7 @@
     frame();
   }
   updateHUD();
-  var timer=null, remain=720;
+  var timer=null, remain=420;
   var timerLabel=$("timerLabel"), timerBtn=$("startTimer"), stopBtn=$("stopTimer"), hint=$("timerHint");
   function renderTimer(){
     var m=Math.floor(remain/60), s=remain%60;
@@ -633,11 +544,11 @@
   }
   if(timerBtn) timerBtn.addEventListener("click",function(){
     if(timer) return;
-    remain=720; renderTimer();
+    remain=420; renderTimer();
     if(hint) hint.textContent="Writing now ...";
     timer=setInterval(function(){
       remain--; renderTimer();
-      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time is up. Did you include all 4 parts, ‘while’ and a superlative?"; }
+      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time is up. Did you include both names in each line?"; }
     },1000);
   });
   if(stopBtn) stopBtn.addEventListener("click",function(){
@@ -646,7 +557,6 @@
   renderTimer();
 })();
 </script>
-
 <script src="../../xapi-include.js?v=5" defer></script>
 <script>
 // Annisa Day 3/4 - precise verbs/objects via proxy (mirrors original)
@@ -708,5 +618,6 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 </script>
+</body>
 </body>
 </html>
