@@ -713,6 +713,88 @@
     .reveal.visible { opacity: 1; transform: none; }
   }
 
+  /* - PACKAGES: glass 3D cards, WCAG AA contrast - */
+  .pack-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: rgba(244, 246, 251, 0.8);
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 26px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 2px 6px rgba(11, 31, 58, 0.08),
+      0 22px 55px rgba(11, 31, 58, 0.14);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  [data-theme="dark"] .pack-card {
+    background: rgba(18, 32, 58, 0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      0 22px 55px rgba(0, 0, 0, 0.5);
+  }
+  .pack-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+  .pack-card::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -80px;
+    top: -80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(11, 61, 145, 0.1), transparent 65%);
+    pointer-events: none;
+  }
+  [data-theme="dark"] .pack-card::after {
+    background: radial-gradient(circle, rgba(127, 176, 255, 0.14), transparent 65%);
+  }
+  .pack-card > * { position: relative; z-index: 1; }
+  .pack-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 4px 10px rgba(11, 31, 58, 0.1),
+      0 30px 70px rgba(11, 31, 58, 0.2);
+  }
+  .price-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 4px;
+  }
+  .price-pill {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--primary-ink);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .pack-card .tag-list li {
+    color: var(--text);
+  }
+  .pack-card a:focus-visible,
+  .pack-card .btn:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pack-card { transition: none; }
+    .pack-card:hover { transform: none; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 880px) {
     .hero-grid { grid-template-columns: 1fr; }
@@ -923,7 +1005,7 @@
             How I teach
           </a>
         </div>
-        <p class="cta-note">Fixed packs: IELTS Speaking Intensive 4.9M VND local / $299 international for 8 sessions. Team pack 18M VND per month. <a href="https://calendly.com/ganjarapunit/30min" rel="noopener" style="color:inherit;font-weight:800">Book a free trial chat on Calendly</a> to start.</p>
+        <p class="cta-note">Fixed packs: IELTS Speaking Intensive 4.9M VND local / $299 international for 8 sessions. Team pack 18M VND per month. <a href="https://calendly.com/ganjarapunit/30min" rel="noopener" style="color:inherit;font-weight:800;text-decoration:underline;text-underline-offset:3px">Book a free trial chat on Calendly</a> to start.</p>
       </div>
       <figure class="portrait">
         <img src="https://punitganjara.com/teacher/punit-portrait.jpg" srcset="https://punitganjara.com/teacher/punit-portrait.jpg 1x" alt="Punit Ganjara, ESL teacher, trainer and instructional designer, based in Ho Chi Minh City" loading="eager" decoding="async" onerror="this.onerror=null;this.src='punit-portrait.jpg';this.srcset='punit-portrait.jpg 1x'">
@@ -1252,31 +1334,39 @@
         <h2 id="pack-h">Pick a package, book on Calendly</h2>
       </div>
       <div class="grid grid-2">
-        <div class="card reveal">
+        <div class="card pack-card reveal">
           <h3>IELTS Speaking Intensive, 4 weeks</h3>
+          <div class="price-row" aria-label="Pricing">
+            <span class="price-pill">4.9M VND local</span>
+            <span class="price-pill">$299 international</span>
+          </div>
           <p class="prose" style="margin:8px 0 12px">8 x 60 min live on Google Meet plus SCORM Masterclass access, written feedback after each session, final mock test.</p>
           <ul class="tag-list">
-            <li>4.9M VND local</li>
-            <li>$299 international</li>
-            <li>8 sessions</li>
+            <li>8 live sessions</li>
+            <li>Voice recorder practice</li>
             <li>Feedback reports</li>
+            <li>Mock test included</li>
           </ul>
           <div class="cta-row" style="margin-top:16px">
-            <a class="btn btn-primary" href="https://calendly.com/ganjarapunit/30min" rel="noopener">Book Trial Chat</a>
+            <a class="btn btn-primary" href="https://calendly.com/ganjarapunit/30min" rel="noopener" aria-label="Book an IELTS trial chat on Calendly">Book Trial Chat</a>
             <a class="btn btn-outline" href="#contact">Ask a question</a>
           </div>
         </div>
-        <div class="card reveal">
+        <div class="card pack-card reveal">
           <h3>For Centers: Team Pack + SCORM License</h3>
+          <div class="price-row" aria-label="Pricing">
+            <span class="price-pill">18M VND per month</span>
+            <span class="price-pill">Up to 12 learners</span>
+          </div>
           <p class="prose" style="margin:8px 0 12px">2 sessions per week for up to 12 learners, plus license to use my IELTS SCORM and EFL activities as homework. Monthly retainer.</p>
           <ul class="tag-list">
-            <li>18M VND per month</li>
-            <li>Up to 12 learners</li>
+            <li>2 sessions per week</li>
             <li>SCORM included</li>
+            <li>EFL homework pack</li>
             <li>HCMC + online</li>
           </ul>
           <div class="cta-row" style="margin-top:16px">
-            <a class="btn btn-primary" href="https://calendly.com/ganjarapunit/30min" rel="noopener">Book Center Call</a>
+            <a class="btn btn-primary" href="https://calendly.com/ganjarapunit/30min" rel="noopener" aria-label="Book a center partnership call on Calendly">Book Center Call</a>
             <a class="btn btn-outline" href="https://punitganjara.com/#offers" rel="noopener">View ID Offers</a>
           </div>
         </div>
