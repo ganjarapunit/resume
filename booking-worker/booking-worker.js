@@ -439,6 +439,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'both names in each line, maximum 1 linker, full clause after While (WHILE online IS flexible, not WHILE online flexible). '
       + 'Check: does every line contain both ideas? Is there a block list with no compare inside? Is While followed by a full clause?';
   }
+  if (where.includes('day13') || where.includes('cause')) {
+    return 'CAREFUL CAUSE AND EFFECT (hedged academic claims). Required language: careful verbs MAY CAUSE / IS LINKED TO / OFTEN for claims, '
+      + 'strong verbs LEADS TO / RESULTS IN only for plain facts, cause-to-effect chains joined with THIS / WHICH, closer AS A RESULT. '
+      + 'Never absolute words (always / all / destroys) for opinions. '
+      + 'Check: is there an absolute claim (must be zero)? Is there a careful verb (may / linked to / often)? '
+      + 'Do the sentences chain cause to effect?';
+  }
   if (where.includes('business-english') || where.includes('lesson-17') || where.includes('lesson-16') || where.includes('price-discussion') || where.includes('conditionals') || where.includes('customer-questions') || where.includes('discovery')) {
     return 'PROFESSIONAL B2 BUSINESS DISCOVERY ENGLISH (customer calls about requirements, criteria, budget, timeline). Required style: '
       + 'open questions (What / Could you share / Could you clarify), a softener first (Thank you / Could you clarify / If I understand correctly), '

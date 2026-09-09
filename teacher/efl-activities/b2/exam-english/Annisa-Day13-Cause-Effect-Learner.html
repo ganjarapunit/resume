@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 7 Linking and Formal Tone Annisa Interactive</title>
+<title>Day 13 Cause and Effect Annisa Interactive</title>
 <style>
   :root{
     --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
@@ -34,7 +34,6 @@
   .rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
   .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
   .rule-item.ok{border-color:var(--good);color:var(--good)}
-  .rule-item.no{border-color:var(--bad);color:var(--bad)}
   .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
   .credit strong{color:var(--accent-2)}
   .credit a{color:var(--accent)}
@@ -72,8 +71,6 @@
   .feedback ul{margin:.35rem 0;padding-left:1.1rem}
   .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
   .mini-tip strong{color:var(--accent)}
-  .speak{margin-top:.7rem;padding:.65rem .85rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
-  .speak h3{margin:0 0 .2rem;color:var(--accent-2);font-size:.95rem}
   .model{margin-top:.45rem;padding:.5rem .7rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink);font-size:.9rem}
   .model[hidden]{display:none}
   .done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s;font-size:.85rem}
@@ -110,7 +107,7 @@
 <div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
   <div class="login-card">
     <h2 id="loginTitle">Welcome Annisa</h2>
-    <p>Your name to start Day 7.</p>
+    <p>Your name to start Day 13.</p>
     <label for="loginName" style="font-weight:700;">Your name</label>
     <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Annisa" aria-label="Your name">
     <button class="btn" id="loginStart">Start</button>
@@ -135,8 +132,8 @@
 </div>
 
 <header class="hero">
-  <h1>Day 7 Flow and Tone</h1>
-  <p>One linker is enough. Keep it formal but natural.</p>
+  <h1>Day 13 Careful Causes</h1>
+  <p>Use may, often and linked to. Careful beats absolute.</p>
   <span class="pill">Annisa</span>
   <span class="pill">10 short tasks</span>
   <span class="pill">40 min</span>
@@ -146,18 +143,18 @@
   <section class="intro" aria-label="Today">
     <h2>Today</h2>
     <div class="rule-box" aria-label="The rule">
-      <span class="rule-item ok">1 big linker</span>
-      <span class="rule-item ok">This, Such, which</span>
-      <span class="rule-item no">No stuff, full forms</span>
+      <span class="rule-item ok">may cause</span>
+      <span class="rule-item ok">is linked to</span>
+      <span class="rule-item ok">As a result</span>
     </div>
-    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">We use the same Day 6 PEEL and the same ideas, with better flow.</p>
+    <p style="margin:.5rem 0 0;color:var(--muted);font-size:.88rem;">Choose your topic. Write your paragraph with careful words.</p>
     <div class="steps-mini" aria-label="How">
       <span><strong>1</strong> Look</span>
       <span><strong>2</strong> Choose / Type</span>
       <span><strong>3</strong> Check</span>
       <span><strong>4</strong> Complete</span>
     </div>
-    <div class="credit"><strong>Questions:</strong> Adapted for class from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz 100 Essay Questions</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing">British Council Take IELTS Writing</a>. Free classroom use.</div>
+    <div class="credit"><strong>Frames:</strong> Cause language following <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/essay_writing/">Purdue OWL</a>. Topics from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a>. Free use.</div>
   </section>
 
   <!-- ACTIVITY 1 -->
@@ -165,18 +162,21 @@
     <div class="act-head">
       <span class="badge" aria-hidden="true">1</span>
       <h2>Hello</h2>
-      <span class="tag">1 min</span>
+      <span class="tag">2 min</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">From PEEL to flow.</p>
+    <p class="hint-line">Pick your topic.</p>
     <div class="exercise">
-      <div class="qbox"><strong>Q1:</strong> Online learning is better. Your Day 6 Point: One clear advantage is flexibility.</div>
-      <label for="sp1" style="font-weight:700;font-size:.93rem;">Your Point again, 1 line:</label>
-      <textarea id="sp1" placeholder="e.g. One clear advantage is flexibility." aria-label="Your Point again"></textarea>
-      
+      <div class="mcq" data-group="g0">
+        <div class="stem">What is your topic today?</div>
+        <label><input type="radio" class="choice" name="g0"> Online study</label>
+        <label><input type="radio" class="choice" name="g0"> Homework</label>
+        <label><input type="radio" class="choice" name="g0"> Health</label>
+        <label><input type="radio" class="choice" name="g0"> Tourism</label>
+      </div>
     </div>
-    <button class="btn ghost" data-reveal="model1" aria-expanded="false">Example</button>
-    <div class="model" id="model1" hidden>One clear advantage of online learning is flexibility.</div>
+    <button class="btn" data-check="act1">Check</button>
+    <div class="feedback" id="fb-act1" aria-live="polite"></div>
     <button class="btn ghost" data-complete="act1">Mark complete</button>
   </section>
 
@@ -184,22 +184,16 @@
   <section class="activity" id="act2" data-act="2">
     <div class="act-head">
       <span class="badge" aria-hidden="true">2</span>
-      <h2>Trap?</h2>
+      <h2>Careful?</h2>
       <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">4 linkers, but 0 real links.</p>
+    <p class="hint-line">The safe phrase wins.</p>
     <div class="exercise">
-      <div class="qbox">Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, good.</div>
       <div class="mcq" data-group="g1">
-        <div class="stem">How many linkers should you keep?</div>
-        <label><input type="radio" class="choice" name="g1" data-correct="true"> 1</label>
-        <label><input type="radio" class="choice" name="g1"> 4</label>
-      </div>
-      <div class="mcq" data-group="g2">
-        <div class="stem">What is the rule?</div>
-        <label><input type="radio" class="choice" name="g2" data-correct="true"> 1 big linker is enough</label>
-        <label><input type="radio" class="choice" name="g2"> More is better</label>
+        <div class="stem">Which is safer?</div>
+        <label><input type="radio" class="choice" name="g1" data-correct="true"> May reduce motivation for some</label>
+        <label><input type="radio" class="choice" name="g1"> Always destroys motivation</label>
       </div>
     </div>
     <button class="btn" data-check="act2">Check</button>
@@ -211,27 +205,21 @@
   <section class="activity" id="act3" data-act="3">
     <div class="act-head">
       <span class="badge" aria-hidden="true">3</span>
-      <h2>This Such</h2>
-      <span class="tag">Words</span>
+      <h2>Verbs</h2>
+      <span class="tag">4 only</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Do not use ‘Moreover’. Use ‘This’ and ‘Such’.</p>
+    <p class="hint-line">2 strong verbs, 2 careful verbs.</p>
     <div class="exercise">
-      <div class="qbox">Online study is flexible. This advantage lets students rewatch. Such access reduces stress.</div>
-      <div class="mcq" data-group="g3">
-        <div class="stem">What does ‘This advantage’ link back to?</div>
-        <label><input type="radio" class="choice" name="g3" data-correct="true"> Flexible before</label>
-        <label><input type="radio" class="choice" name="g3"> New idea</label>
+      <div class="mcq" data-group="g2">
+        <div class="stem">Which verbs state facts?</div>
+        <label><input type="radio" class="choice" name="g2" data-correct="true"> leads to, results in</label>
+        <label><input type="radio" class="choice" name="g2"> may cause, is linked to</label>
       </div>
-      <div class="fill"><span class="lead">Lessons help.</span> <input class="answer" data-accept="Such access" data-model="Such access" aria-label="Such access"> <span class="tail">reduces stress.</span></div>
+      <div class="fill"><span class="lead">Stress</span> <input class="answer" data-accept="is linked to" data-model="is linked to" aria-label="is linked to"> <span class="tail">low sleep.</span></div>
     </div>
     <button class="btn" data-check="act3">Check</button>
     <div class="feedback" id="fb-act3" aria-live="polite"></div>
-    <div class="speak">
-      <h3>Say it aloud</h3>
-      <textarea id="sp3" placeholder="This advantage ... Such access ..."></textarea>
-      
-    </div>
     <button class="btn ghost" data-complete="act3">Mark complete</button>
   </section>
 
@@ -239,23 +227,21 @@
   <section class="activity" id="act4" data-act="4">
     <div class="act-head">
       <span class="badge" aria-hidden="true">4</span>
-      <h2>Join it</h2>
-      <span class="tag">Type</span>
+      <h2>Chain</h2>
+      <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Join ideas inside the sentence, not between sentences.</p>
+    <p class="hint-line">Follow the chain from cause to effect.</p>
     <div class="exercise">
-      <div class="fill"><span class="lead">Flexibility is useful</span> <input class="answer" data-accept="because" data-model="because" aria-label="because"> <span class="tail">lessons can be rewatched.</span></div>
-      <div class="fill"><span class="lead">Lessons</span> <input class="answer" data-accept="which" data-model="which" aria-label="which"> <span class="tail">can be rewatched help busy students.</span></div>
-      <div class="fill"><span class="lead"></span> <input class="answer" data-accept="While" data-model="While" aria-label="While"> <span class="tail">online is flexible, interaction is weak.</span></div>
+      <div class="qbox">Late lessons lead to tired mornings. This tiredness is linked to weaker focus, which may reduce learning.</div>
+      <div class="mcq" data-group="g3">
+        <div class="stem">Which words are careful?</div>
+        <label><input type="radio" class="choice" name="g3" data-correct="true"> linked to, may</label>
+        <label><input type="radio" class="choice" name="g3"> always, all</label>
+      </div>
     </div>
     <button class="btn" data-check="act4">Check</button>
     <div class="feedback" id="fb-act4" aria-live="polite"></div>
-    <div class="speak">
-      <h3>Say it aloud</h3>
-      <textarea id="sp4" placeholder="One joined line with because, which or While."></textarea>
-      
-    </div>
     <button class="btn ghost" data-complete="act4">Mark complete</button>
   </section>
 
@@ -263,23 +249,17 @@
   <section class="activity" id="act5" data-act="5">
     <div class="act-head">
       <span class="badge" aria-hidden="true">5</span>
-      <h2>Tone?</h2>
-      <span class="tag">Formal</span>
+      <h2>Which wins?</h2>
+      <span class="tag">Look</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Use formal words, not spoken words.</p>
+    <p class="hint-line">Absolute or careful?</p>
     <div class="exercise">
       <div class="mcq" data-group="g4">
-        <div class="stem">What is the formal word for ‘stuff’?</div>
-        <label><input type="radio" class="choice" name="g4" data-correct="true"> aspects</label>
-        <label><input type="radio" class="choice" name="g4"> stuff</label>
+        <div class="stem">Which is better?</div>
+        <label><input type="radio" class="choice" name="g4"> Always destroys family life</label>
+        <label><input type="radio" class="choice" name="g4" data-correct="true"> May reduce family time, linked to stress</label>
       </div>
-      <div class="mcq" data-group="g5">
-        <div class="stem">What are the formal forms of contractions?</div>
-        <label><input type="radio" class="choice" name="g5"> dont, cant</label>
-        <label><input type="radio" class="choice" name="g5" data-correct="true"> do not, cannot</label>
-      </div>
-      <div class="fill"><span class="lead">Students</span> <input class="answer" data-accept="receive considerable" data-model="receive considerable" aria-label="receive considerable"> <span class="tail">help.</span></div>
     </div>
     <button class="btn" data-check="act5">Check</button>
     <div class="feedback" id="fb-act5" aria-live="polite"></div>
@@ -290,27 +270,18 @@
   <section class="activity" id="act6" data-act="6">
     <div class="act-head">
       <span class="badge" aria-hidden="true">6</span>
-      <h2>Which flows?</h2>
-      <span class="tag">Look</span>
+      <h2>Causes</h2>
+      <span class="tag">You do</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Which one stops and which one flows?</p>
+    <p class="hint-line">Write 2 lines on your topic.</p>
     <div class="exercise">
-      <div class="qbox"><strong>A</strong> Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, good.</div>
-      <div class="qbox"><strong>B</strong> One advantage is flexibility. Lessons which can be rewatched help. This flexibility reduces stress because students review at own pace. Even so, not enough alone.</div>
-      <div class="mcq" data-group="g6">
-        <div class="stem">Which paragraph flows better?</div>
-        <label><input type="radio" class="choice" name="g6"> A</label>
-        <label><input type="radio" class="choice" name="g6" data-correct="true"> B</label>
-      </div>
-      <div class="mcq" data-group="g7">
-        <div class="stem">Why does it flow better?</div>
-        <label><input type="radio" class="choice" name="g7" data-correct="true"> This, which, because, 1 linker</label>
-        <label><input type="radio" class="choice" name="g7"> 4 big linkers</label>
-      </div>
+      <label for="sp6" style="font-weight:700;font-size:.9rem;">Write 2 causes:</label>
+      <textarea id="sp6" placeholder="e.g. Late lessons lead to short sleep."></textarea>
+      
     </div>
-    <button class="btn" data-check="act6">Check</button>
-    <div class="feedback" id="fb-act6" aria-live="polite"></div>
+    <button class="btn ghost" data-reveal="model6" aria-expanded="false">Model</button>
+    <div class="model" id="model6" hidden>Late lessons lead to short sleep. Heavy homework is linked to evening stress.</div>
     <button class="btn ghost" data-complete="act6">Mark complete</button>
   </section>
 
@@ -318,23 +289,18 @@
   <section class="activity" id="act7" data-act="7">
     <div class="act-head">
       <span class="badge" aria-hidden="true">7</span>
-      <h2>Fix it</h2>
-      <span class="tag">With teacher</span>
+      <h2>Effects</h2>
+      <span class="tag">You do</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Cut 3 linkers and keep 1.</p>
+    <p class="hint-line">Write 2 lines on the same topic.</p>
     <div class="exercise">
-      <div class="qbox">Bad: Moreover, flexible. Furthermore, rewatch. Moreover, good. In addition, not enough.</div>
-      <div class="fill"><span class="lead">One clear advantage is</span> <input class="answer" data-accept="flexibility" data-model="flexibility" aria-label="flexibility"> <span class="tail">.</span></div>
-      <div class="fill"><span class="lead">Lessons</span> <input class="answer" data-accept="which" data-model="which" aria-label="which"> <span class="tail">can be rewatched help.</span></div>
-      <label for="sp7" style="font-weight:700;font-size:.9rem;">Your fixed PEEL, 4 lines:</label>
-      <textarea id="sp7" placeholder="One clear advantage is ... Lessons which ... This flexibility ... Even so, ..."></textarea>
+      <label for="sp7" style="font-weight:700;font-size:.9rem;">2 effects with As a result:</label>
+      <textarea id="sp7" placeholder="e.g. As a result, tired learners may lose focus."></textarea>
       
     </div>
-    <button class="btn" data-check="act7">Check</button>
-    <div class="feedback" id="fb-act7" aria-live="polite"></div>
     <button class="btn ghost" data-reveal="model7" aria-expanded="false">Model</button>
-    <div class="model" id="model7" hidden>One clear advantage of online learning is flexibility. Lessons which can be rewatched help busy students. This flexibility reduces stress because students can review at their own pace. Even so, this benefit alone does not beat live interaction.</div>
+    <div class="model" id="model7" hidden>As a result, tired learners may lose focus. Tired evenings are often linked to slower homework.</div>
     <button class="btn ghost" data-complete="act7">Mark complete</button>
   </section>
 
@@ -342,23 +308,18 @@
   <section class="activity" id="act8" data-act="8">
     <div class="act-head">
       <span class="badge" aria-hidden="true">8</span>
-      <h2>Tone up</h2>
-      <span class="tag">Formal</span>
+      <h2>Join it</h2>
+      <span class="tag">With teacher</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">No ‘stuff’. Use full forms.</p>
+    <p class="hint-line">Join 4 lines into 1 paragraph.</p>
     <div class="exercise">
-      <div class="qbox">Informal: Online stuff is good. You get a lot. Do not worry, you cannot fail.</div>
-      <div class="fill"><span class="lead">Online study has</span> <input class="answer" data-accept="valuable aspects" data-model="valuable aspects" aria-label="valuable aspects"> <span class="tail">.</span></div>
-      <div class="fill"><span class="lead">Students</span> <input class="answer" data-accept="receive considerable" data-model="receive considerable" aria-label="receive considerable"> <span class="tail">help.</span></div>
-      <label for="sp8" style="font-weight:700;font-size:.9rem;">Your formal lines, 2 lines:</label>
-      <textarea id="sp8" placeholder="Online study has valuable aspects. Students receive ... They do not ..."></textarea>
+      <label for="sp8" style="font-weight:700;font-size:.9rem;">Joined paragraph, 4 to 5 lines:</label>
+      <textarea id="sp8" placeholder="One cause of ... which leads to ... This ... As a result ..."></textarea>
       
     </div>
-    <button class="btn" data-check="act8">Check</button>
-    <div class="feedback" id="fb-act8" aria-live="polite"></div>
     <button class="btn ghost" data-reveal="model8" aria-expanded="false">Model</button>
-    <div class="model" id="model8" hidden>Online study has valuable aspects. Students receive considerable help because lessons can be reviewed. They do not need to worry, and they cannot fall behind. This flexibility is valuable.</div>
+    <div class="model" id="model8" hidden>One cause of poor sleep is late online lessons, which lead to short nights. This short sleep is linked to weaker focus. As a result, tired learners may learn less.</div>
     <button class="btn ghost" data-complete="act8">Mark complete</button>
   </section>
 
@@ -366,25 +327,24 @@
   <section class="activity" id="act9" data-act="9">
     <div class="act-head">
       <span class="badge" aria-hidden="true">9</span>
-      <h2>You fix PEEL</h2>
+      <h2>You write it</h2>
       <span class="tag">You do</span>
-      <span class="timer" id="timerLabel">8:00</span>
+      <span class="timer" id="timerLabel">7:00</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
-    <p class="hint-line">Now write by yourself. Take 8 minutes.</p>
+    <p class="hint-line">Now write by yourself. Take 7 minutes.</p>
     <div class="exercise">
-      <div class="qbox">Take your Day 6 PEEL and keep the ideas. Fix the flow and tone: use 1 linker, ‘This’ plus a noun, ‘which’ or ‘because’. Write full forms like ‘do not’, not ‘don’t’.</div>
-      <label for="sp9" style="font-weight:700;font-size:.9rem;">Your smooth PEEL, 4 to 5 lines:</label>
-      <textarea id="sp9" style="min-height:140px;" placeholder="One clear advantage is flexibility. Lessons which ... This flexibility ... Even so, ..."></textarea>
+      <label for="sp9" style="font-weight:700;font-size:.9rem;">One paragraph, 4 to 5 lines:</label>
+      <textarea id="sp9" style="min-height:130px;" placeholder="One cause ... may cause ... is linked to ... As a result ..."></textarea>
       
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;">
-        <button class="btn" id="startTimer" type="button">Start 8:00</button>
+        <button class="btn" id="startTimer" type="button">Start 7:00</button>
         <button class="btn ghost" id="stopTimer" type="button">Stop</button>
       </div>
       <p class="vis-note" id="timerHint">Press Start, then write your paragraph.</p>
     </div>
     <button class="btn ghost" data-reveal="model9" aria-expanded="false">Model</button>
-    <div class="model" id="model9" hidden>One clear advantage of online learning is flexibility. Lessons which can be rewatched help busy students. This flexibility reduces stress because students can review at their own pace. Even so, this benefit alone does not make online learning better overall.</div>
+    <div class="model" id="model9" hidden>Long homework hours may cause evening stress for many families. This stress is linked to shorter rest and slower next day focus. As a result, short balanced tasks often work better than long late ones.</div>
     <button class="btn ghost" data-complete="act9">Mark complete</button>
   </section>
 
@@ -392,7 +352,7 @@
   <section class="activity" id="act10" data-act="10">
     <div class="act-head">
       <span class="badge" aria-hidden="true">10</span>
-      <h2>Check + list</h2>
+      <h2>Check</h2>
       <span class="tag">1 fix</span>
       <span class="done-flag" aria-hidden="true">DONE</span>
     </div>
@@ -400,23 +360,22 @@
     <div class="exercise">
       <table style="width:100%;border-collapse:collapse;background:#06121f;" aria-label="Error list">
         <tr><th style="border:1px solid var(--border);padding:.4rem;">My sentence</th><th style="border:1px solid var(--border);padding:.4rem;">Better</th><th style="border:1px solid var(--border);padding:.4rem;">My try</th></tr>
-        <tr><td style="border:1px solid var(--border);padding:.4rem;">Moreover, moreover, moreover.</td><td style="border:1px solid var(--border);padding:.4rem;">Even so, this flexibility helps.</td><td style="border:1px solid var(--border);padding:.4rem;">Lessons which can be rewatched help.</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:.4rem;">Stress causes all problems.</td><td style="border:1px solid var(--border);padding:.4rem;">Stress may cause some problems.</td><td style="border:1px solid var(--border);padding:.4rem;">Late nights may lead to tired days.</td></tr>
       </table>
-      <div class="mcq" data-group="g10">
+      <div class="mcq" data-group="g5">
         <div class="stem">What is your fix today?</div>
-        <label><input type="radio" class="choice" name="g10"> A) Use 1 linker, not 4</label>
-        <label><input type="radio" class="choice" name="g10"> B) Use full forms, do not shorten them</label>
-        <label><input type="radio" class="choice" name="g10"> C) Ask the teacher for help</label>
+        <label><input type="radio" class="choice" name="g5"> A) Use ‘may’, ‘some’, ‘many’</label>
+        <label><input type="radio" class="choice" name="g5"> B) Use ‘always’, ‘all’</label>
+        <label><input type="radio" class="choice" name="g5"> C) Ask the teacher for help</label>
       </div>
-      <label for="sp10" style="font-weight:700;font-size:.9rem;">Write one good line:</label>
-      <textarea id="sp10" placeholder="Write one line with This, which or do not." aria-label="Write one good line"></textarea>
+      <label for="sp10" style="font-weight:700;font-size:.9rem;">Write one careful line:</label>
+      <textarea id="sp10" placeholder="Write one line with may or linked to." aria-label="One careful line"></textarea>
       
       <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.6rem;">
-        <label style="font-weight:700;font-size:.85rem;">How smooth now? 1 to 5</label>
-        <input type="range" id="feel" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="How smooth 1 to 5">
-        <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;"><span>1 hard</span><span>3 ok</span><span>5 smooth</span></div>
+        <label style="font-weight:700;font-size:.85rem;">How careful? 1 to 5</label>
+        <input type="range" id="feel" min="1" max="5" value="3" style="width:100%;accent-color:#ffd400;" aria-label="How careful 1 to 5">
+        <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;"><span>1 absolute</span><span>3 ok</span><span>5 careful</span></div>
       </div>
-      <div class="mini-tip"><span><strong>Homework:</strong> Fix your PEEL, then learn ‘This’, ‘Such’, ‘which’, ‘do not’ and ‘receive’.</span></div>
     </div>
     <button class="btn" data-check="act10">Check</button>
     <div class="feedback" id="fb-act10" aria-live="polite"></div>
@@ -426,7 +385,7 @@
   <!-- RESULTS -->
   <section class="results" id="results" hidden aria-label="Lesson results">
     <h2>Done Annisa</h2>
-    <p>Your flow is smooth and your tone is formal. Your PEEL is ready.</p>
+    <p>Your careful causes are ready.</p>
     <div class="score-grid">
       <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
       <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
@@ -440,9 +399,9 @@
 </main>
 
 <footer>
-  <p>Day 7: Linking and Formal Tone. 10 tasks. Flow plus tone.</p>
-  <p style="margin-top:.3rem;"><a href="./Annisa-Day07-Linking-Tone-Teacher.html">Teacher page</a></p>
-  <p style="margin-top:.3rem;font-size:.72rem;">Questions adapted for class from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a> and <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing">British Council Take IELTS</a>. Free classroom use with credit.</p>
+  <p>Day 13: Cause and Effect. 10 tasks. Essentials only.</p>
+  <p style="margin-top:.3rem;"><a href="./Annisa-Day13-Cause-Effect-Teacher.html">Teacher page</a></p>
+  <p style="margin-top:.3rem;font-size:.72rem;">Frames from <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/essay_writing/">Purdue OWL</a>. Topics from <a href="https://ieltsliz.com/100-ielts-essay-questions/">IELTS Liz</a>. Free use.</p>
 </footer>
 
 <script>
@@ -472,6 +431,7 @@
   function handleCheck(secId){
     var sec=$(secId);
     var fb=$("fb-"+secId);
+    if(!fb) return;
     var earnedNow=0,okCount=0,wrongList="";
     var anyWrong=false,anyEmpty=false;
     sec.querySelectorAll(".answer").forEach(function(inp){
@@ -493,7 +453,9 @@
     sec.querySelectorAll(".mcq").forEach(function(grp){
       var chosen=grp.querySelector("input.choice:checked");
       if(!chosen){anyEmpty=true;return;}
-      var ok=chosen.dataset.correct==="true";
+      var ok=true;
+      var corr=grp.querySelector("input.choice[data-correct=true]");
+      if(corr) ok=chosen.dataset.correct==="true";
       grp.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});
       if(ok){
         chosen.closest("label").classList.add("correct");
@@ -503,7 +465,6 @@
       } else {
         anyWrong=true;state.streak=0;
         chosen.closest("label").classList.add("wrong");
-        var corr=grp.querySelector("input.choice[data-correct=true]");
         if(corr) corr.closest("label").classList.add("correct");
         wrongList+="<li>See green answer.</li>";
       }
@@ -529,6 +490,7 @@
     var orig=btn.textContent;
     btn.addEventListener("click",function(){
       var el=$(btn.dataset.reveal);
+      if(!el) return;
       var hidden=el.hasAttribute("hidden");
       if(hidden){el.removeAttribute("hidden");btn.setAttribute("aria-expanded","true");btn.textContent="Hide";}
       else {el.setAttribute("hidden","");btn.setAttribute("aria-expanded","false");btn.textContent=orig;}
@@ -573,7 +535,7 @@
     frame();
   }
   updateHUD();
-  var timer=null, remain=480;
+  var timer=null, remain=420;
   var timerLabel=$("timerLabel"), timerBtn=$("startTimer"), stopBtn=$("stopTimer"), hint=$("timerHint");
   function renderTimer(){
     var m=Math.floor(remain/60), s=remain%60;
@@ -581,11 +543,11 @@
   }
   if(timerBtn) timerBtn.addEventListener("click",function(){
     if(timer) return;
-    remain=480; renderTimer();
+    remain=420; renderTimer();
     if(hint) hint.textContent="Writing now ...";
     timer=setInterval(function(){
       remain--; renderTimer();
-      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time is up. Did you use 1 linker, ‘This’, ‘which’ and full forms?"; }
+      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time is up. Did you use ‘may’ and ‘linked to’?"; }
     },1000);
   });
   if(stopBtn) stopBtn.addEventListener("click",function(){
@@ -612,7 +574,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var v = VERBS[vKey];
     window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
   }
-  var OPEN_ACTS={act1:1,act3:1,act4:1,act7:1,act8:1,act9:1,act10:1};
+  var OPEN_ACTS={act1:1,act6:1,act7:1,act8:1,act9:1,act10:1};
   var sentChecks={};
   document.querySelectorAll('[data-check]').forEach(function(btn){
     btn.addEventListener('click', function(){
