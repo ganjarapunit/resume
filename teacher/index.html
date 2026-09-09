@@ -795,6 +795,37 @@
     .pack-card:hover { transform: none; }
   }
 
+  /* - EFL menu: honest availability signaling - */
+  .efl-group li .soon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: .92rem;
+  }
+  .soon-tag {
+    flex: none;
+    font-size: .68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    opacity: .8;
+  }
+  .efl-note {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: .82rem;
+    color: var(--text-muted);
+    border-top: 2px solid var(--border);
+    padding-top: 12px;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 880px) {
     .hero-grid { grid-template-columns: 1fr; }
@@ -889,17 +920,17 @@
           <div class="efl-group">
             <a class="efl-level" href="efl-activities/#a1">A1 <span>Beginner</span></a>
             <ul>
-              <li><a href="efl-activities/#a1-communicative">Communicative English</a></li>
-              <li><a href="efl-activities/#a1-business">Business English</a></li>
-              <li><a href="efl-activities/#a1-exam">Exam-oriented English</a></li>
+              <li><span class="soon">Communicative English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Business English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Exam-oriented English <span class="soon-tag">Soon</span></span></li>
             </ul>
           </div>
           <div class="efl-group">
             <a class="efl-level" href="efl-activities/#a2">A2 <span>Elementary</span></a>
             <ul>
-              <li><a href="efl-activities/#a2-communicative">Communicative English</a></li>
-              <li><a href="efl-activities/#a2-business">Business English</a></li>
-              <li><a href="efl-activities/#a2-exam">Exam-oriented English</a></li>
+              <li><span class="soon">Communicative English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Business English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Exam-oriented English <span class="soon-tag">Soon</span></span></li>
             </ul>
           </div>
           <div class="efl-group">
@@ -921,16 +952,16 @@
           <div class="efl-group">
             <a class="efl-level" href="efl-activities/#c1">C1 <span>Advanced</span></a>
             <ul>
-              <li><a href="efl-activities/#c1-communicative">Communicative English</a></li>
-              <li><a href="efl-activities/#c1-business">Business English</a></li>
+              <li><span class="soon">Communicative English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Business English <span class="soon-tag">Soon</span></span></li>
               <li><a class="is-available" href="efl-activities/#c1-exam">Exam-oriented English <span class="avail-dot" aria-hidden="true"></span><span class="sr-only">— lessons available</span></a></li>
             </ul>
           </div>
           <div class="efl-group">
             <a class="efl-level" href="efl-activities/#c2">C2 <span>Proficiency</span></a>
             <ul>
-              <li><a href="efl-activities/#c2-communicative">Communicative English</a></li>
-              <li><a href="efl-activities/#c2-business">Business English</a></li>
+              <li><span class="soon">Communicative English <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Business English <span class="soon-tag">Soon</span></span></li>
               <li><a class="is-available" href="efl-activities/#c2-exam">Exam-oriented English <span class="avail-dot" aria-hidden="true"></span><span class="sr-only">— lessons available</span></a></li>
             </ul>
           </div>
@@ -938,10 +969,11 @@
             <a class="efl-level" href="efl-activities/#teacher-training">Teacher Training</a>
             <ul>
               <li><a class="is-available" href="efl-activities/#tt-classroom">Classroom Practice <span class="avail-dot" aria-hidden="true"></span><span class="sr-only">— lessons available</span></a></li>
-              <li><a href="efl-activities/#tt-planning">Lesson Planning</a></li>
-              <li><a href="efl-activities/#tt-development">Professional Development</a></li>
+              <li><span class="soon">Lesson Planning <span class="soon-tag">Soon</span></span></li>
+              <li><span class="soon">Professional Development <span class="soon-tag">Soon</span></span></li>
             </ul>
           </div>
+          <p class="efl-note">Green dot marks lessons ready now. Other levels show the full curriculum map and open as they are published.</p>
         </div>
       </li>
       <li>
