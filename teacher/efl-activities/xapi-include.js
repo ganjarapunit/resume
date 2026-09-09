@@ -59,7 +59,7 @@
     var moduleId = (parts[i + 1] || '') + '-' + category.replace(/-english$/, '');
     var catLabel = category.endsWith('-english')
       ? category.slice(0, -8).replace(/^\w/, function (c) { return c.toUpperCase(); }) + ' English'
-      : category;
+      : category.replace(/-/g, ' ').replace(/^\w/, function (c) { return c.toUpperCase(); });
     var moduleName = level + ' ' + catLabel;
     var isIndex = location.pathname.endsWith('/efl-activities/') || location.pathname.endsWith('/efl-activities/index.html') || moduleId === '-index.html' || !level;
     return {

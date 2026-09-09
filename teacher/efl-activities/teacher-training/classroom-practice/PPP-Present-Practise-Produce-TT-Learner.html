@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPP: Present, Practise, Produce — Teacher Training (Classroom Practice)</title>
+<style>
+:root{
+--bg:#070B18; --panel:#111A36; --panel2:#0C1330; --text:#FFFFFF; --muted:#E6EAF2;
+--accent:#FFD400; --accent-ink:#111100; --line:#2A3763; --focus:#FFD400; --ok:#7CFFB2;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;line-height:1.5}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 16px;font-weight:700;z-index:99}
+.skip:focus{left:12px;top:12px}
+.topbar{max-width:1100px;margin:0 auto;padding:18px 20px 0}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{background:var(--accent);color:#111;font-weight:800;font-size:13px;letter-spacing:.06em;
+padding:6px 10px;border-radius:999px;text-transform:uppercase}
+.brand h1{font-size:20px;margin:0}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:15px}
+.progress{height:8px;background:#1E2A5A;border-radius:999px;margin:14px 0 6px;overflow:hidden}
+.progress>div{height:100%;width:10%;background:var(--accent);border-radius:999px}
+.meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
+/* Stage and deck: deck is the fullscreen target */
+#stage{max-width:1100px;margin:0 auto;padding:10px 20px 6px}
+#deck{background:linear-gradient(180deg,var(--panel),var(--panel2));
+border:2px solid var(--line);border-radius:18px;min-height:62vh;
+padding:28px;position:relative;overflow:hidden}
+#deck:fullscreen{background:#070B18;border:none;border-radius:0;width:100vw;max-width:none;height:100vh;min-height:100vh;
+padding:5vh 6vw;margin:0;display:block;overflow:auto}
+#deck:fullscreen .slide.active{min-height:86vh;gap:48px;align-content:center}
+#deck:fullscreen h2{font-size:clamp(38px,5.6vw,72px)}
+#deck:fullscreen .lead{font-size:clamp(20px,2.6vw,30px);max-width:44ch}
+#deck:fullscreen .kicker{font-size:15px}
+#deck:fullscreen .biglist li{font-size:clamp(19px,2.2vw,28px);padding:16px 18px}
+#deck:fullscreen .example{font-size:clamp(24px,3vw,36px);padding:22px 24px}
+#deck:fullscreen .formula{font-size:clamp(22px,2.8vw,34px);padding:18px 20px}
+#deck:fullscreen .pill{font-size:clamp(17px,2vw,24px);padding:10px 18px}
+#deck:fullscreen .photowrap img{height:46vh;min-height:320px}
+#deck:fullscreen .photowrap.trio img{height:45vh;min-height:310px}
+#deck:fullscreen figcaption{font-size:15px}
+#deck:fullscreen .fs-hint{font-size:16px;max-width:70ch}
+.slide{display:none;animation:fade .25s ease}
+.slide.active{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
+.slide.wide.active{grid-template-columns:1fr}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:820px){.quad{grid-template-columns:1fr}}
+.quad div{background:#0A1130;border:1.5px solid var(--line);border-radius:12px;padding:14px}
+.quad strong{color:var(--accent);display:block;font-size:15px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.quad span{font-size:17px}
+#deck:fullscreen .quad span{font-size:clamp(17px,2vw,26px)}
+#deck:fullscreen .quad strong{font-size:16px}
+@keyframes fade{from{opacity:.2}to{opacity:1}}
+@media(max-width:820px){.slide.active{grid-template-columns:1fr}#deck{padding:20px}}
+.kicker{color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;margin:0 0 8px}
+h2{font-size:clamp(28px,4.2vw,44px);line-height:1.1;margin:0 0 12px}
+.lead{font-size:clamp(17px,2.2vw,21px);color:var(--muted);margin:0 0 14px;max-width:34ch}
+.biglist{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.biglist li{background:#0A1130;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:18px}
+.biglist strong{color:var(--accent)}
+.pill{display:inline-block;background:var(--accent);color:#111;font-weight:800;
+border-radius:999px;padding:8px 14px;font-size:16px;margin:4px 8px 0 0}
+.example{background:#000;border:2px solid var(--accent);border-radius:14px;padding:16px 18px;font-size:22px;font-weight:700}
+.example small{display:block;font-weight:400;font-size:15px;color:var(--muted);margin-top:6px}
+.example3{display:grid;gap:8px}
+.example3 span{display:block}
+.formula{background:#000;border-radius:14px;border:2px dashed var(--accent);padding:14px 16px;font-size:20px;font-weight:700}
+.timeline{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:16px;color:var(--muted)}
+.timeline .line{flex:1;height:4px;background:#2E3D7A;border-radius:999px;position:relative}
+.timeline .dot{position:absolute;right:12%;top:50%;transform:translateY(-50%);width:18px;height:18px;
+background:var(--accent);border-radius:50%;border:3px solid #000}
+.sliderbox{background:#000;border:2px solid var(--accent);border-radius:14px;padding:14px 16px;margin:14px 0}
+.sliderq{margin:0 0 8px;font-size:18px;font-weight:700}
+.sliderlabels{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:6px}
+input[type=range]{width:100%;height:48px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;
+background:linear-gradient(90deg,#3A4A8A 0 33%,#5A6DB0 33% 55%,var(--accent) 55% 100%)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;margin-top:-11px;
+border-radius:50%;background:var(--accent);border:4px solid #000;box-shadow:0 0 0 2px var(--accent)}
+input[type=range]::-moz-range-track{height:10px;border-radius:999px;
+background:linear-gradient(90deg,#3A4A8A 0 33%,#5A6DB0 33% 55%,var(--accent) 55% 100%)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
+background:var(--accent);border:4px solid #000;box-shadow:0 0 0 2px var(--accent)}
+.sliderfb{margin:10px 0 0;font-size:18px;font-weight:700;min-height:28px}
+.sliderfb.good{color:var(--ok)}
+.sliderfb.try{color:var(--accent)}
+#deck:fullscreen .sliderq{font-size:clamp(19px,2.2vw,28px)}
+#deck:fullscreen .sliderfb{font-size:clamp(19px,2.2vw,28px)}
+.gapbox{background:#000;border:2px solid var(--accent);border-radius:14px;padding:14px 16px;margin:14px 0}
+.gapline{margin:0 0 10px;font-size:clamp(20px,2.6vw,28px);font-weight:700}
+.gaprow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.gapbox label{position:absolute;left:-9999px}
+.gapbox input[type=text]{font:inherit;font-size:19px;font-weight:700;color:#fff;background:#0A1130;
+border:2px solid var(--accent);border-radius:10px;padding:12px 14px;min-height:52px;width:min(260px,100%)}
+.gapbox input[type=text]::placeholder{color:#9AA6C7;font-weight:400}
+.gapbtn{font:inherit;font-weight:800;font-size:17px;border-radius:12px;padding:12px 22px;
+min-height:52px;cursor:pointer;border:2px solid var(--accent);background:var(--accent);color:#111}
+.gapfb{margin:10px 0 0;font-size:18px;font-weight:700;min-height:28px}
+.gapfb.good{color:var(--ok)}
+.gapfb.try{color:var(--accent)}
+.gaphint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+#deck:fullscreen .gapline{font-size:clamp(24px,3vw,36px)}
+#deck:fullscreen .gapfb{font-size:clamp(19px,2.2vw,28px)}
+.stressbox{background:#000;border:2px solid var(--accent);border-radius:14px;padding:14px 16px;margin:14px 0}
+.stressq{margin:0 0 10px;font-size:18px;font-weight:700}
+.wordrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.wbtn{font:inherit;font-weight:700;font-size:20px;border-radius:12px;padding:12px 18px;
+min-height:52px;cursor:pointer;border:2px solid var(--line);background:#0A1130;color:#fff}
+.wbtn:hover{border-color:var(--accent)}
+.wbtn.on{background:var(--accent);color:#111;border-color:var(--accent)}
+.stressrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stressfb{margin:10px 0 0;font-size:18px;font-weight:700;min-height:28px}
+.stressfb.good{color:var(--ok)}
+.stressfb.try{color:var(--accent)}
+.stresshint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.slots{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+.slotwrap{display:flex;flex-direction:column;gap:6px}
+.slotlabel{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.slot{min-height:62px;min-width:96px;border:2px dashed var(--line);border-radius:12px;background:#0A1130;
+display:flex;gap:6px;padding:8px;align-items:center;justify-content:center;flex-wrap:wrap;cursor:pointer}
+.slot.wide{min-width:170px}
+.slot.over{border-color:var(--accent);border-style:solid}
+.slot .wbtn{min-height:44px;padding:8px 14px;font-size:18px}
+.tail{display:flex;gap:6px;align-items:center;padding-bottom:12px;font-size:22px;font-weight:700}
+.wbtn.tailw{min-height:44px;padding:8px 12px;font-size:19px}
+.wbtn.picked{outline:3px solid var(--ok);outline-offset:2px}
+#deck:fullscreen .slot{min-height:76px;min-width:120px}
+#deck:fullscreen .slot.wide{min-width:210px}
+#deck:fullscreen .tail{font-size:28px}
+#deck:fullscreen .stressq{font-size:clamp(19px,2.2vw,28px)}
+#deck:fullscreen .wbtn{font-size:clamp(20px,2.6vw,32px);padding:14px 22px}
+#deck:fullscreen .stressfb{font-size:clamp(19px,2.2vw,28px)}
+figure{margin:0;display:flex;flex-direction:column}
+.photowrap{background:#000;border-radius:14px;overflow:hidden;border:2px solid var(--line)}
+.photowrap img{display:block;width:100%;height:320px;object-fit:cover;object-position:center;background:#1A2450}
+.photowrap.trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px}
+.photowrap.trio img{height:308px}
+@media(max-width:820px){.photowrap img{height:220px}}
+figcaption{font-size:13px;color:var(--muted);padding:8px 12px;background:#0A1130}
+.fs-hint{display:none;background:#000;border:1.5px solid var(--accent);border-radius:10px;
+padding:8px 12px;font-size:14px;margin-top:16px}
+#deck:fullscreen .fs-hint{display:block}
+/* Toolbar is OUTSIDE #deck by design. Fullscreen shows slides only. */
+#toolbar{max-width:1100px;margin:0 auto;padding:12px 20px 26px;
+display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.navgroup{display:flex;gap:12px}
+button{font:inherit;font-weight:800;font-size:17px;border-radius:12px;padding:12px 20px;
+min-height:48px;min-width:120px;cursor:pointer;border:2px solid var(--accent)}
+#prevBtn,#nextBtn{background:var(--accent);color:#111}
+#fsBtn{background:transparent;color:var(--accent)}
+button:hover{filter:brightness(1.08)}
+.counter{color:var(--muted);font-size:16px;font-weight:700}
+.help{max-width:1100px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:14px}
+kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:2px 8px;color:#fff}
+@media(prefers-reduced-motion:reduce){.slide{animation:none}}
+@media print{#toolbar,.help{display:none}.slide{display:grid !important;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to slides</a>
+<p style="max-width:1100px;margin:0 auto;padding:14px 20px 0;font-size:15px;font-weight:700"><a href="../../#teacher-training">&larr; Back to Teacher Training</a></p>
+<div class="topbar">
+<div class="brand">
+<span class="badge">CELTA Input</span>
+<div>
+<h1>Teach with PPP: Show, Help, Use</h1>
+<p>For trainee teachers. One idea per slide. Simple words. Clear pictures.</p>
+</div>
+</div>
+<div class="progress" aria-hidden="true"><div id="bar"></div></div>
+<div class="meta"><span id="slideno" aria-live="polite">Slide 1 of 15</span><span>Use Left and Right keys. Press Full screen to project.</span></div>
+</div>
+
+<main id="stage">
+<!-- Fullscreen target starts here -->
+<div id="deck" role="region" aria-roledescription="slide deck" aria-label="PPP learner deck">
+<section class="slide active" aria-roledescription="slide" aria-label="Slide 1 of 15">
+<div>
+<p class="kicker">Start here</p>
+<h2>Good lessons have 3 steps.</h2>
+<p class="lead">Today you learn PPP. You will use it in Teaching Practice 1.</p>
+<ul class="biglist">
+<li><strong>1. Show</strong> new language in context</li>
+<li><strong>2. Help</strong> learners practise safely</li>
+<li><strong>3. Use</strong> language to communicate</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=70" alt="Trainee teachers in a classroom looking at the board" loading="eager" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 2 of 15">
+<div>
+<p class="kicker">Why PPP</p>
+<h2>New language is hard.</h2>
+<p class="lead">First we show. Then we help. Then learners speak free. No overload.</p>
+<div><span class="pill">Show</span><span class="pill">Help</span><span class="pill">Use</span></div>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=70" alt="Two A2 learners studying together, showing learning takes support" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 3 of 15">
+<div>
+<p class="kicker">The 3 parts</p>
+<h2>Present. Practise. Produce.</h2>
+<ul class="biglist">
+<li><strong>Present:</strong> show meaning, form, sound. 10 mins.</li>
+<li><strong>Practise:</strong> small safe tasks. 12 mins.</li>
+<li><strong>Produce:</strong> real talk with a goal. 15 mins.</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=900&q=70" alt="Teacher and one learner doing real talk together in a 1-1 lesson" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 4 of 15">
+<div>
+<p class="kicker">Demo: you are the learner</p>
+<h2>She is going to visit her mum.</h2>
+<p class="lead">Weekend plan. Future. Decided.</p>
+<div class="example example3"><span>She is going to visit her mum.</span><span>They are going to play football.</span><span>He is going to travel.</span></div>
+</div>
+<figure>
+<div class="photowrap trio">
+<img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=400&q=70" alt="Daughter visiting her mum at home" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+<img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=70" alt="Two friends going to play football" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+<img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=70" alt="Man going to travel with a map" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 5 of 15">
+<div>
+<p class="kicker">Present: meaning</p>
+<h2>Where is the visit?</h2>
+<div class="sliderbox">
+<p class="sliderq">Move the yellow dot. Where is Anna's visit?</p>
+<div class="sliderlabels" aria-hidden="true"><span>Past</span><span>Now</span><span>Future plan</span></div>
+<input type="range" id="timeSlider" min="0" max="100" value="85" step="1" aria-label="When is Anna's visit? Move the dot from past to future plan" aria-describedby="sliderFeedback">
+<p id="sliderFeedback" class="sliderfb good" aria-live="polite">Good. Future plan. Correct.</p>
+</div>
+<div class="example">Did she do it already? No.<br>Is it a plan? Yes.</div>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=70" alt="Same daughter visiting her mum, to check meaning of She is going to visit" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 6 of 15">
+<div>
+<p class="kicker">Present: form and sound</p>
+<h2>Build it. Stress it.</h2>
+<div class="formula">Subject + be + going to + verb</div>
+<div class="stressbox">
+<p class="stressq">Build it, then stress it. Put 5 words in the boxes. Then tap GOING, VISIT, MUM.</p>
+<div class="slots">
+<div class="slotwrap"><span class="slotlabel">Subject</span><div class="slot" data-slot="subj" data-max="1" tabindex="0" role="button" aria-label="Subject box. Holds 1 word."></div></div>
+<div class="slotwrap"><span class="slotlabel">be</span><div class="slot" data-slot="be" data-max="1" tabindex="0" role="button" aria-label="be box. Holds 1 word."></div></div>
+<div class="slotwrap"><span class="slotlabel">going to</span><div class="slot wide" data-slot="goingto" data-max="2" tabindex="0" role="button" aria-label="going to box. Holds 2 words."></div></div>
+<div class="slotwrap"><span class="slotlabel">verb</span><div class="slot" data-slot="verb" data-max="1" tabindex="0" role="button" aria-label="verb box. Holds 1 word."></div></div>
+<span class="tail"><button type="button" class="wbtn tailw" aria-pressed="false" aria-label="her, tap if loud">her</button><button type="button" class="wbtn tailw" aria-pressed="false" aria-label="mum, tap if loud">mum</button>.</span>
+</div>
+<div class="wordrow" id="bankRow" role="group" aria-label="Word bank. Tap a word, then tap a box. Or drag each word into a box.">
+<button type="button" class="wbtn bank" draggable="true" data-word="visit">visit</button>
+<button type="button" class="wbtn bank" draggable="true" data-word="She">She</button>
+<button type="button" class="wbtn bank" draggable="true" data-word="to">to</button>
+<button type="button" class="wbtn bank" draggable="true" data-word="is">is</button>
+<button type="button" class="wbtn bank" draggable="true" data-word="going">going</button>
+</div>
+<div class="stressrow">
+<button type="button" class="gapbtn" id="buildCheck">Check</button>
+<button type="button" class="gapbtn" id="buildClear" style="background:transparent;color:var(--accent)">Clear</button>
+</div>
+<p id="buildFeedback" class="stressfb" aria-live="polite"></p>
+<p class="stresshint">Say the yellow words longer and stronger. Clap on each one.</p>
+</div>
+<!-- stress merged into the build box above -->
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=70" alt="Daughter visiting mum, matches sentence She is going to visit her mum" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 7 of 15">
+<div>
+<p class="kicker">Practise: safe</p>
+<h2>Type it. Say it.</h2>
+<div class="gapbox">
+<p class="gapline">She ___ visit her mum.</p>
+<div class="gaprow">
+<label for="gapInput">Type the missing words</label>
+<input type="text" id="gapInput" placeholder="Type 3 words" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="30" aria-describedby="gapFeedback gapHint">
+<button type="button" class="gapbtn" id="gapCheck">Check</button>
+</div>
+<p id="gapFeedback" class="gapfb" aria-live="polite"></p>
+<p id="gapHint" class="gaphint">Use 3 words. Then say the full sentence aloud.</p>
+</div>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=70" alt="Learner doing safe controlled writing: She is going to visit" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 8 of 15">
+<div>
+<p class="kicker">Produce: real talk</p>
+<h2>Plan a weekend together.</h2>
+<p class="lead">Find 3 plans you BOTH like. You must agree. Speak, do not write.</p>
+<div class="example">Are you going to play on Saturday?<small>Yes, I am. How about Sunday?</small></div>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=70" alt="Two friends planning a weekend together outside" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 9 of 15">
+<div>
+<p class="kicker">Golden rules</p>
+<h2>5 rules for TP1.</h2>
+<ul class="biglist">
+<li>1. Short show. Long use.</li>
+<li>2. Check, do not ask Do you understand?</li>
+<li>3. Drill sound every time.</li>
+<li>4. Give a clear goal for talk.</li>
+<li>5. Correct late in free talk.</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=70" alt="Checklist on desk, matches 5 rules list for TP1" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 10 of 15">
+<div>
+<p class="kicker">Check and close</p>
+<h2>What is P1? P2? P3?</h2>
+<p class="lead">Tell your partner in 30 seconds. Then we plan TP1.</p>
+<ul class="biglist">
+<li><strong>P1:</strong> Show. <strong>P2:</strong> Help. <strong>P3:</strong> Use.</li>
+<li>Photos: Unsplash, free to use. No attribution required, given here for transparency.</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=900&q=70" alt="Two trainees telling each other P1, P2 and P3 in 30 seconds" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide wide" aria-roledescription="slide" aria-label="Slide 11 of 15">
+<div>
+<p class="kicker">Present: pick your letter</p>
+<h2>Show A, B, C, or D.</h2>
+<p class="lead">Pick your TP letter first. Then use only its Show box.</p>
+<div class="quad">
+<div><strong>A: going to</strong><span>Show the mum photo. Say: She is going to visit her mum. Ask: Did she do it already? No. Is it a plan? Yes.</span></div>
+<div><strong>B: past simple</strong><span>Show a film photo. Say: I watched a film last night. Ask: Did I watch it yesterday? Yes. Is it now? No.</span></div>
+<div><strong>C: can</strong><span>Show a swim photo. Say: I can swim. I cannot fly. Ask: Can I swim? Yes. Can I fly? No.</span></div>
+<div><strong>D: comparatives</strong><span>Show two towns. Say: My town is bigger than your town. Ask: Which town is big? My town. Are they the same? No.</span></div>
+</div>
+</div>
+</section>
+
+<section class="slide wide" aria-roledescription="slide" aria-label="Slide 12 of 15">
+<div>
+<p class="kicker">Practise: same letter</p>
+<h2>Stay with your letter.</h2>
+<p class="lead">Safe gaps. The learner says the full sentence. You correct at once.</p>
+<div class="quad">
+<div><strong>A: going to gaps</strong><span>She ___ visit her mum. Answer: is going to. Say it. Then type it.</span></div>
+<div><strong>B: -ed gaps</strong><span>I watch___ a film last night. Answer: watched. Say it. Then read it aloud.</span></div>
+<div><strong>C: can gaps</strong><span>I ___ swim. She ___ fly. Answers: can, cannot. Say each full sentence.</span></div>
+<div><strong>D: -er gaps</strong><span>My town is ___ than yours. Answer: bigger. Say it. Then type it.</span></div>
+</div>
+</div>
+</section>
+
+<section class="slide wide" aria-roledescription="slide" aria-label="Slide 13 of 15">
+<div>
+<p class="kicker">Produce: same letter</p>
+<h2>Talk with your letter.</h2>
+<p class="lead">Real talk with a goal. Your learner must use the target form.</p>
+<div class="quad">
+<div><strong>A: weekend plans</strong><span>Agree on 2 shared plans together. Say each plan with going to.</span></div>
+<div><strong>B: last weekend</strong><span>Tell 4 actions from last weekend. Find 2 actions you both did. Use watched, played, cooked.</span></div>
+<div><strong>C: abilities card</strong><span>Make a card with 4 true sentences with can. Read 2 aloud. Example: I can cook.</span></div>
+<div><strong>D: best town</strong><span>Compare 2 towns with bigger, smaller, cleaner. Choose the best place to visit and say why.</span></div>
+</div>
+</div>
+</section>
+
+<section class="slide wide" aria-roledescription="slide" aria-label="Slide 14 of 15">
+<div>
+<p class="kicker">Your 1-1 TP: pick one path</p>
+<h2>Choose A, B, C, or D.</h2>
+<p class="lead">One letter from start to end. Use its boxes on Slides 11, 12, and 13.</p>
+<div class="quad">
+<div><strong>A: Online, A2</strong><span>Teach going to for weekend plans. Outcome: agree on 2 shared plans together.</span></div>
+<div><strong>B: Classroom, A2</strong><span>Teach past simple for last weekend. Example: I watched a film. Outcome: tell 4 actions and find 2 you both did.</span></div>
+<div><strong>C: Classroom, A1</strong><span>Teach can and cannot for abilities. Example: I can swim. Outcome: make a card with 4 true sentences and read 2 aloud.</span></div>
+<div><strong>D: Online, A2</strong><span>Teach comparatives for towns. Example: My town is bigger than your town. Outcome: compare 2 towns and choose the best place to visit.</span></div>
+</div>
+</div>
+</section>
+
+<section class="slide wide" aria-roledescription="slide" aria-label="Slide 15 of 15">
+<div>
+<p class="kicker">Plan it in 20 minutes</p>
+<h2>Plan PPP plus feedback.</h2>
+<p class="lead">Stay with one letter A to D through Slides 11, 12, and 13. Plan 30 minutes.</p>
+<div class="quad">
+<div><strong>1. Aim</strong><span>Write one aim with your letter. Example B: my learner will talk about last weekend with past simple.</span></div>
+<div><strong>2. Stages</strong><span>Show your letter box. Drill its sound. Practise its gaps. Produce its talk.</span></div>
+<div><strong>3. Delayed feedback</strong><span>Listen in produce. Write 4 sentences you hear. Fix them together. Drill the correct forms.</span></div>
+<div><strong>4. Check</strong><span>Ask your learner to say the real plans again with the correct form.</span></div>
+</div>
+</div>
+</section>
+
+<p class="fs-hint">Full screen on. Use <kbd>Left</kbd> <kbd>Right</kbd> to move. Press <kbd>Esc</kbd> to exit.</p>
+</div>
+<!-- Fullscreen target ends here -->
+</main>
+
+<!-- Toolbar is OUTSIDE #deck. This keeps Next and Back outside fullscreen, as requested. -->
+<div id="toolbar" role="toolbar" aria-label="Slide controls">
+<div class="navgroup">
+<button id="prevBtn" type="button" aria-label="Previous slide">Back</button>
+<button id="nextBtn" type="button" aria-label="Next slide">Next</button>
+</div>
+<span class="counter" id="counter2">1 / 15</span>
+<button id="fsBtn" type="button" aria-label="Show slides full screen">Full screen</button>
+</div>
+
+<div class="help">
+<p><strong>How to use:</strong> Click Next and Back, or use <kbd>Left</kbd> <kbd>Right</kbd> <kbd>Home</kbd> <kbd>End</kbd>. Full screen shows slides only. Controls stay outside fullscreen. In fullscreen use keys, press <kbd>Esc</kbd> to exit. Design: high contrast, one idea per slide, large text, keyboard access. Mayer principles used: segmenting, signaling, coherence, redundancy.</p>
+</div>
+
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var bar=document.getElementById('bar');
+var no=document.getElementById('slideno');
+var c2=document.getElementById('counter2');
+var prev=document.getElementById('prevBtn');
+var next=document.getElementById('nextBtn');
+var fsBtn=document.getElementById('fsBtn');
+var deck=document.getElementById('deck');
+var i=0;
+function show(n){
+i=Math.max(0,Math.min(slides.length-1,n));
+slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+var pct=Math.round(((i+1)/slides.length)*100);
+bar.style.width=pct+'%';
+no.textContent='Slide '+(i+1)+' of '+slides.length;
+c2.textContent=(i+1)+' / '+slides.length;
+prev.disabled=(i===0);
+next.disabled=(i===slides.length-1);
+prev.style.opacity=(i===0)?'.5':'1';
+next.style.opacity=(i===slides.length-1)?'.5':'1';
+}
+prev.addEventListener('click',function(){show(i-1);});
+next.addEventListener('click',function(){show(i+1);});
+document.addEventListener('keydown',function(e){
+if(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='BUTTON'||e.target.tagName==='SELECT')){return;}
+if(e.target && e.target.classList && e.target.classList.contains('slot')){return;}
+if(e.key==='ArrowRight'){show(i+1);}
+else if(e.key==='ArrowLeft'){show(i-1);}
+else if(e.key==='Home'){show(0);}
+else if(e.key==='End'){show(slides.length-1);}
+});
+var slider=document.getElementById('timeSlider');
+var fb=document.getElementById('sliderFeedback');
+function checkSlider(){
+if(!slider||!fb){return;}
+var v=parseInt(slider.value,10);
+if(v>=67){fb.textContent='Good. Future plan. Correct.';fb.className='sliderfb good';}
+else if(v>=34){fb.textContent='That is Now. Not yet. Move the dot right.';fb.className='sliderfb try';}
+else{fb.textContent='That is Past. She did not do it. Move the dot right.';fb.className='sliderfb try';}
+}
+if(slider){slider.addEventListener('input',checkSlider);checkSlider();}
+var gapInput=document.getElementById('gapInput');
+var gapCheck=document.getElementById('gapCheck');
+var gapFb=document.getElementById('gapFeedback');
+function norm(s){return (s||'').toLowerCase().trim().replace(/\s+/g,' ');}
+function checkGap(){
+if(!gapInput||!gapFb){return;}
+var v=norm(gapInput.value);
+if(v==='is going to'||v==="'s going to"||v==='’s going to'){gapFb.textContent='Yes. She is going to visit her mum. Say it aloud.';gapFb.className='gapfb good';}
+else if(v===''){gapFb.textContent='Type 3 words first.';gapFb.className='gapfb try';}
+else{gapFb.textContent='Almost. Use 3 words: is going to.';gapFb.className='gapfb try';}
+}
+if(gapCheck){gapCheck.addEventListener('click',checkGap);}
+if(gapInput){gapInput.addEventListener('keydown',function(e){if(e.key==='Enter'){checkGap();}});}
+var bankRow=document.getElementById('bankRow');
+var buildCheck=document.getElementById('buildCheck');
+var buildClear=document.getElementById('buildClear');
+var buildFb=document.getElementById('buildFeedback');
+var slots=Array.prototype.slice.call(document.querySelectorAll('.slot'));
+var picked=null;
+var buildLocked=false;
+function unpick(){if(picked){picked.classList.remove('picked');picked=null;}}
+function bankWords(slotEl){
+return Array.prototype.slice.call(slotEl.querySelectorAll('.bank')).map(function(c){return c.getAttribute('data-word');});
+}
+function placeChip(chip,slotEl){
+if(!chip||!slotEl){return;}
+if(buildLocked){unpick();if(buildFb){buildFb.textContent='Build is done. Press Clear to rebuild.';buildFb.className='stressfb try';}return;}
+var max=parseInt(slotEl.getAttribute('data-max'),10)||1;
+if(slotEl.querySelectorAll('.bank').length>=max&&chip.parentElement!==slotEl){
+if(buildFb){buildFb.textContent='That box is full. Try another box.';buildFb.className='stressfb try';}
+return;
+}
+slotEl.appendChild(chip);
+unpick();
+if(buildFb&&buildFb.className==='stressfb try'){buildFb.textContent='';buildFb.className='stressfb';}
+}
+function sendToBank(chip){if(bankRow&&chip){bankRow.appendChild(chip);}unpick();}
+document.addEventListener('click',function(e){
+var chip=e.target&&e.target.closest?e.target.closest('.bank'):null;
+var slotEl=e.target&&e.target.closest?e.target.closest('.slot'):null;
+if(chip&&slotEl){e.stopPropagation();if(buildLocked){var son=chip.classList.toggle('on');chip.setAttribute('aria-pressed',son?'true':'false');}else{sendToBank(chip);}return;}
+if(chip){
+if(picked===chip){unpick();}
+else{unpick();picked=chip;chip.classList.add('picked');}
+return;
+}
+if(slotEl&&picked){placeChip(picked,slotEl);}
+});
+slots.forEach(function(slotEl){
+slotEl.addEventListener('keydown',function(e){
+if((e.key==='Enter'||e.key===' ')&&picked){e.preventDefault();placeChip(picked,slotEl);}
+});
+slotEl.addEventListener('dragover',function(e){e.preventDefault();slotEl.classList.add('over');});
+slotEl.addEventListener('dragleave',function(){slotEl.classList.remove('over');});
+slotEl.addEventListener('drop',function(e){
+e.preventDefault();slotEl.classList.remove('over');
+var w=e.dataTransfer?e.dataTransfer.getData('text/plain'):'';
+var chip=w?document.querySelector('.bank[data-word="'+w+'"]'):picked;
+if(chip){placeChip(chip,slotEl);}
+});
+});
+if(bankRow){
+bankRow.addEventListener('dragover',function(e){e.preventDefault();});
+bankRow.addEventListener('drop',function(e){
+e.preventDefault();
+var w=e.dataTransfer?e.dataTransfer.getData('text/plain'):'';
+var chip=w?document.querySelector('.bank[data-word="'+w+'"]'):null;
+if(chip){sendToBank(chip);}
+});
+}
+document.addEventListener('dragstart',function(e){
+var chip=e.target&&e.target.closest?e.target.closest('.bank'):null;
+if(chip&&e.dataTransfer){e.dataTransfer.setData('text/plain',chip.getAttribute('data-word'));e.dataTransfer.effectAllowed='move';}
+});
+function checkBuild(){
+if(!buildFb){return;}
+var got={};
+slots.forEach(function(s){got[s.getAttribute('data-slot')]=bankWords(s);});
+var ok=got.subj&&got.subj.length===1&&got.subj[0]==='She'
+&&got.be&&got.be.length===1&&got.be[0]==='is'
+&&got.verb&&got.verb.length===1&&got.verb[0]==='visit'
+&&got.goingto&&got.goingto.length===2;
+if(!ok){
+buildLocked=false;
+var placed=slots.reduce(function(n,s){return n+bankWords(s).length;},0);
+if(placed===0){buildFb.textContent='Move 5 words into the boxes first.';buildFb.className='stressfb try';return;}
+if(got.goingto&&got.goingto.length===2){buildFb.textContent='Almost. Check the order: going then to.';buildFb.className='stressfb try';return;}
+buildFb.textContent='Not yet. Subject is She. be is is. Try again.';buildFb.className='stressfb try';return;
+}
+if(got.goingto[0]!=='going'||got.goingto[1]!=='to'){
+buildLocked=false;
+buildFb.textContent='Almost. Check the order: going then to.';buildFb.className='stressfb try';return;
+}
+if(!buildLocked){
+buildLocked=true;
+buildFb.textContent='Good build. Now tap the 3 loud words: GOING, VISIT, MUM.';buildFb.className='stressfb good';return;
+}
+var loud=0, wrong=0;
+Array.prototype.slice.call(document.querySelectorAll('.slot .bank.on')).forEach(function(b){
+var w=b.getAttribute('data-word');
+if(w==='going'||w==='visit'){loud++;}
+else{wrong++;}
+});
+document.querySelectorAll('.tailw.on').forEach(function(b){
+if(b.textContent.trim().toLowerCase()==='mum'){loud++;}
+else{wrong++;}
+});
+if(loud===3&&wrong===0){buildFb.textContent='Yes. GOING, VISIT, MUM are loud. Say it together.';buildFb.className='stressfb good';}
+else if(loud===0&&wrong===0){buildFb.textContent='Tap 3 loud words first.';buildFb.className='stressfb try';}
+else{buildFb.textContent='Listen: She is GOING to VISIT her MUM. Tap again.';buildFb.className='stressfb try';}
+}
+if(buildCheck){buildCheck.addEventListener('click',checkBuild);}
+if(buildClear){buildClear.addEventListener('click',function(){
+var chips=Array.prototype.slice.call(document.querySelectorAll('.slot .bank'));
+chips.forEach(function(c){c.classList.remove('on');c.setAttribute('aria-pressed','false');if(bankRow){bankRow.appendChild(c);}});
+tailws.forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+unpick();
+buildLocked=false;
+if(buildFb){buildFb.textContent='';buildFb.className='stressfb';}
+});}
+var tailws=Array.prototype.slice.call(document.querySelectorAll('.tailw'));
+tailws.forEach(function(b){
+b.addEventListener('click',function(){
+if(!buildLocked){if(buildFb){buildFb.textContent='Finish the build first. Press Check.';buildFb.className='stressfb try';}return;}
+var on=b.classList.toggle('on');
+b.setAttribute('aria-pressed',on?'true':'false');
+});
+});
+fsBtn.addEventListener('click',function(){
+if(!document.fullscreenElement){
+if(deck.requestFullscreen){deck.requestFullscreen().catch(function(){});}
+}else{if(document.exitFullscreen){document.exitFullscreen();}}
+});
+document.addEventListener('fullscreenchange',function(){
+if(document.fullscreenElement){fsBtn.textContent='Exit full screen';}
+else{fsBtn.textContent='Full screen';}
+});
+show(0);
+})();
+</script>
+<script>
+// Lightweight LRS hooks for the deck (mirrors lesson-page tracking in xapi-include.js).
+(function(){
+  var deck = document.getElementById('deck');
+  if(!deck) return;
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var done = false;
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(s){
+    var h = s.querySelector('h2');
+    var t = h ? h.textContent.trim().replace(/\s+/g,' ').substring(0,60) : '';
+    return (s.getAttribute('aria-label') || 'Slide') + (t ? ': ' + t : '');
+  }
+  function viewed(s){
+    try{
+      var l = L(); if(!l) return;
+      l.itemAccessed(label(s), 'slide');
+      if(slides.indexOf(s) === slides.length - 1 && !done){
+        done = true;
+        if(window.LRS && window.LRS.completed) window.LRS.completed({});
+      }
+    }catch(e){}
+  }
+  var tries = 0;
+  var timer = setInterval(function(){
+    tries++;
+    if(L() || tries > 60){
+      clearInterval(timer);
+      var cur = deck.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  }, 500);
+  if(window.MutationObserver){
+    var mo = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el = m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s, { attributes:true, attributeFilter:['class'] }); });
+  }
+  function hook(id, name){
+    var b = document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      try{ var l = L(); if(l) l.itemAccessed(name, 'question'); }catch(e){}
+    });
+  }
+  hook('gapCheck', 'Gap check: She is going to visit her mum (Where is the visit?)');
+  hook('buildCheck', 'Build check: She is going to visit (Build it. Stress it.)');
+  var slider = document.getElementById('timeSlider');
+  if(slider){
+    slider.addEventListener('change', function(){
+      try{ var l = L(); if(l) l.itemAccessed('Timeline slider: Anna visit (Present: meaning)', 'interaction'); }catch(e){}
+    });
+  }
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+</body>
+</html>
