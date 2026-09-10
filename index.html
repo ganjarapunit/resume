@@ -1349,6 +1349,40 @@ body {
   border-radius: 6px;
 }
 
+.offer-steps {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.offer-steps li {
+  border-radius: 16px;
+  padding: 16px 18px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="dark"] .offer-steps li {
+  background: rgba(30, 41, 59, 0.55);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.offer-steps strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
 @media (max-width: 768px) {
   .offers-grid {
     grid-template-columns: 1fr;
@@ -1356,6 +1390,10 @@ body {
 
   .offer-card {
     padding: 28px 24px;
+  }
+
+  .offer-steps {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2327,7 +2365,7 @@ body {
     <div>
       <div class="section-label">Fixed-Price Offers</div>
       <h2 class="section-title" id="offers-h">Pick a package, book a call, start next week</h2>
-      <p class="project-desc" style="max-width:640px;margin-top:12px">Two starter offers based on work already live on this site. No custom quotes needed to start. Every booking starts with a free 15 min audit on Calendly.</p>
+      <p class="project-desc" style="max-width:640px;margin-top:12px">Two starter offers based on work already live on this site. No custom quotes needed to start. Every booking starts with a free 15 min call on Calendly. I take 2 builds per month.</p>
     </div>
   </div>
   <div class="offers-grid">
@@ -2342,7 +2380,8 @@ body {
         <li><strong>Fix</strong> one course: $650 local / $950 global</li>
         <li><strong>New</strong> mini-course: from $1,800</li>
         <li><strong>New</strong> full course: from $3,900</li>
-        <li><strong>Your logo</strong> on my courses: white-label from $900 per year</li>
+        <li><strong>Your logo</strong> on my courses: white-label from $900 per year, per centre</li>
+        <li><strong>Care plan</strong>: yearly updates from 15% of build price</li>
       </ul>
       <p class="project-desc offer-proof">Proof: <a href="ielts-masterclass/" target="_blank" rel="noopener noreferrer">IELTS Masterclass</a>, <a href="workplace-safety-scorm/" target="_blank" rel="noopener noreferrer">Workplace Safety</a>, <a href="adapt-framework-xapi/" target="_blank" rel="noopener noreferrer">Adapt xAPI demo</a></p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -2359,7 +2398,7 @@ body {
       <p class="project-desc">Speaking coaching for people and teams. Live lessons plus online practice.</p>
       <ul class="offer-list">
         <li><strong>8 live lessons</strong>, feedback, mock test</li>
-        <li><strong>Team pack</strong> for centres: 18M VND per month</li>
+        <li><strong>Team pack</strong> for centres: 18M VND per month, stop any time</li>
         <li><strong>IELTS materials</strong> with your logo: custom quote on request</li>
       </ul>
       <p class="project-desc offer-proof">Proof: <a href="teacher/">Teaching page</a>, <a href="ielts-masterclass/" target="_blank" rel="noopener noreferrer">IELTS Masterclass with voice recorder</a></p>
@@ -2369,6 +2408,12 @@ body {
       </div>
     </article>
   </div>
+  <ol class="offer-steps reveal" aria-label="How working with me goes">
+    <li><strong>1. Free call</strong>Book 30 min. We check your needs.</li>
+    <li><strong>2. Fixed quote</strong>You get scope and price in 24 hours.</li>
+    <li><strong>3. I build</strong>Course, tests, QA report included.</li>
+    <li><strong>4. You launch</strong>Reports show learning works.</li>
+  </ol>
 </section>
 
 <!-- CTA -->
