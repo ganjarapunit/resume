@@ -394,7 +394,7 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'Discussion questions use WHILE plus your opinion. Problem questions use THIS ESSAY WILL and must NOT say I agree. '
       + 'Check: is there a clear position? Are there 2 points? Is there a direction (so/overall)? Is the wrong frame used (e.g. I agree in a Problem thesis)?';
   }
-  if (where.includes('day05') || where.includes('start') || where.includes('paraphrase') || where.includes('conclusion')) {
+  if ((where.includes('day05') || where.includes('start') || where.includes('paraphrase') || where.includes('conclusion')) && !where.includes('day14')) {
     return 'IELTS Writing Task 2 INTRODUCTION + CONCLUSION. Required structure: introduction = paraphrase the question '
       + '(change most words, keep key words) + thesis; conclusion = restate your opinion starting with IN CONCLUSION, no new ideas. '
       + 'Check: is the question copied (must be paraphrased)? Is the opinion restated at the end? Is there any new idea in the conclusion (must be zero)?';
@@ -445,6 +445,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'Never absolute words (always / all / destroys) for opinions. '
       + 'Check: is there an absolute claim (must be zero)? Is there a careful verb (may / linked to / often)? '
       + 'Do the sentences chain cause to effect?';
+  }
+  if (where.includes('day14') || where.includes('paraphrase') || where.includes('cite')) {
+    return 'PARAPHRASE + CITE (one source only, honest lines). Required shape: new frame (According to X (YEAR) / X (YEAR) suggests), '
+      + 'at least 2 new words AND a new word order, author plus year in EVERY line. '
+      + 'Check: is only 1 word changed (must be 2+)? Is the order the same (must be new)? Is the author plus year missing?';
   }
   if (where.includes('business-english') || where.includes('lesson-17') || where.includes('lesson-16') || where.includes('price-discussion') || where.includes('conditionals') || where.includes('customer-questions') || where.includes('discovery')) {
     return 'PROFESSIONAL B2 BUSINESS DISCOVERY ENGLISH (customer calls about requirements, criteria, budget, timeline). Required style: '
