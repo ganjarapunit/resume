@@ -169,6 +169,14 @@ padding:8px 12px;font-size:14px;margin-top:16px}
   .photowrap.trio img{height:auto;aspect-ratio:16/10}
   #deck:fullscreen .photowrap.trio img{height:auto;min-height:0;aspect-ratio:16/10}
 }
+/* Planner's corner: sentence starters on the final planning slide */
+.corner{margin-top:12px;background:#000;border:2px dashed var(--accent);border-radius:12px;padding:12px 14px}
+.corner .chead{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.corner p{margin:6px 0;font-size:15px}
+.corner strong{color:var(--accent)}
+@media(min-width:821px){.corner .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}}
+#deck:fullscreen .corner p{font-size:clamp(14px,1.6vw,20px)}
+#deck:fullscreen .corner .chead{font-size:14px}
 /* Toolbar is OUTSIDE #deck by design. Fullscreen shows slides only. */
 #toolbar{max-width:1100px;margin:0 auto;padding:12px 20px 26px;
 display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -197,13 +205,53 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 </div>
 </div>
 <div class="progress" aria-hidden="true"><div id="bar"></div></div>
-<div class="meta"><span id="slideno" aria-live="polite">Slide 1 of 15</span><span>Use Left and Right keys. Press Full screen to project.</span></div>
+<div class="meta"><span id="slideno" aria-live="polite">Slide 1 of 17</span><span>Use Left and Right keys. Press Full screen to project.</span></div>
 </div>
 
 <main id="stage">
 <!-- Fullscreen target starts here -->
 <div id="deck" role="region" aria-roledescription="slide deck" aria-label="PPP learner deck">
-<section class="slide active" aria-roledescription="slide" aria-label="Slide 1 of 15">
+<section class="slide active" aria-roledescription="slide" aria-label="Slide 1 of 17">
+<div>
+<p class="kicker">Your goals today</p>
+<h2>By the end, you can teach this.</h2>
+<p class="lead">Good teachers share the plan first. Copy this in your TP1.</p>
+<ul class="biglist">
+<li><strong>1.</strong> Name the 3 steps: Show, Help, Use.</li>
+<li><strong>2.</strong> Show meaning with a picture and 2 check questions.</li>
+<li><strong>3.</strong> Drill a sentence so the stress sounds right.</li>
+<li><strong>4.</strong> Run one safe gap task, then set a real-talk goal.</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=900&q=70" alt="Trainer at the board sharing today's goals with trainees" loading="eager" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 2 of 17">
+<div>
+<p class="kicker">Copy me today</p>
+<h2>Steal these 4 moves.</h2>
+<p class="lead">Watch how I teach you. Do the same with your learner.</p>
+<ul class="biglist">
+<li><strong>1.</strong> Short instructions. Show, do not explain.</li>
+<li><strong>2.</strong> Check with questions. Never ask Do you understand?</li>
+<li><strong>3.</strong> Drill every sentence. Say it, clap the stress.</li>
+<li><strong>4.</strong> Praise first. Correct after free talk, not during.</li>
+</ul>
+</div>
+<figure>
+<div class="photowrap">
+<img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=70" alt="A classroom where the trainee will soon teach his first lesson" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+</div>
+<figcaption>(Unsplash)</figcaption>
+</figure>
+</section>
+
+<section class="slide" aria-roledescription="slide" aria-label="Slide 1 of 15">
 <div>
 <p class="kicker">Start here</p>
 <h2>Good lessons have 3 steps.</h2>
@@ -452,7 +500,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <div>
 <p class="kicker">Your 1-1 TP: pick one path</p>
 <h2>Choose A, B, C, or D.</h2>
-<p class="lead">One letter from start to end. Use its boxes on Slides 11, 12, and 13.</p>
+<p class="lead">One letter from start to end. Use its boxes on Slides 13, 14, and 15.</p>
 <div class="quad">
 <div><strong>A: Online, A2</strong><span>Teach going to for weekend plans. Outcome: agree on 2 shared plans together.</span></div>
 <div><strong>B: Classroom, A2</strong><span>Teach past simple for last weekend. Example: I watched a film. Outcome: tell 4 actions and find 2 you both did.</span></div>
@@ -466,12 +514,21 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <div>
 <p class="kicker">Plan it in 20 minutes</p>
 <h2>Plan PPP plus feedback.</h2>
-<p class="lead">Stay with one letter A to D through Slides 11, 12, and 13. Plan 30 minutes.</p>
+<p class="lead">Stay with one letter A to D through Slides 13, 14, and 15. Plan 30 minutes.</p>
 <div class="quad">
 <div><strong>1. Aim</strong><span>Write one aim with your letter. Example B: my learner will talk about last weekend with past simple.</span></div>
 <div><strong>2. Stages</strong><span>Show your letter box. Drill its sound. Practise its gaps. Produce its talk.</span></div>
 <div><strong>3. Delayed feedback</strong><span>Listen in produce. Write 4 sentences you hear. Fix them together. Drill the correct forms.</span></div>
 <div><strong>4. Check</strong><span>Ask your learner to say the real plans again with the correct form.</span></div>
+</div>
+<div class="corner">
+<p class="chead">Planner's corner: say it like this</p>
+<div class="cgrid">
+<p><strong>Aim:</strong> By the end, my learner will be able to ___.</p>
+<p><strong>Stages:</strong> First I show ___. Then we practise ___. Finally they ___.</p>
+<p><strong>Feedback:</strong> I will write 4 sentences I hear. We fix them together.</p>
+<p><strong>Check:</strong> Tell me your plans again with ___.</p>
+</div>
 </div>
 </div>
 </section>
@@ -479,7 +536,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <p class="fs-hint">Full screen on. Use <kbd>Left</kbd> <kbd>Right</kbd> to move. Press <kbd>Esc</kbd> to exit.</p>
 <div class="fs-nav" role="toolbar" aria-label="Slide controls (fullscreen)">
 <button id="fsPrevBtn" type="button" aria-label="Previous slide">&lsaquo; Back</button>
-<span class="fs-count" id="fsCount" aria-live="polite">1 / 15</span>
+<span class="fs-count" id="fsCount" aria-live="polite">1 / 17</span>
 <button id="fsNextBtn" type="button" aria-label="Next slide">Next &rsaquo;</button>
 </div>
 </div>
@@ -492,7 +549,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <button id="prevBtn" type="button" aria-label="Previous slide">Back</button>
 <button id="nextBtn" type="button" aria-label="Next slide">Next</button>
 </div>
-<span class="counter" id="counter2">1 / 15</span>
+<span class="counter" id="counter2">1 / 17</span>
 <button id="fsBtn" type="button" aria-label="Show slides full screen">Full screen</button>
 </div>
 
@@ -503,6 +560,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <script>
 (function(){
 var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+slides.forEach(function(s,k){s.setAttribute('aria-label','Slide '+(k+1)+' of '+slides.length);});
 var bar=document.getElementById('bar');
 var no=document.getElementById('slideno');
 var c2=document.getElementById('counter2');
