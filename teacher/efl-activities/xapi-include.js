@@ -271,6 +271,11 @@
     // --- Explicit Submit buttons: only for REAL writing tasks (not warm-ups, speak-notes, reflections, goals, single-sentence drills) ---
     // Allowlist by file + activity + field. Multi-part drafts (story chains, 90-sec sets, thesis pairs) share one button per activity.
     var REAL_WRITING = [
+      { file: 'annisa-day15', act: 'act6', fields: ['sp6'] },
+      { file: 'annisa-day15', act: 'act7', fields: ['sp7'] },
+      { file: 'annisa-day15', act: 'act8', fields: ['sp8'] },
+      { file: 'annisa-day15', act: 'act9', fields: ['sp9'] },
+      { file: 'annisa-day15', act: 'act10', fields: ['sp10'] },
       { file: 'anna-quiet-archive', act: 'act13', fields: ['in13'], input: true },
       { file: 'anna-quiet-archive', act: 'act15', fields: ['in15a', 'in15b'], input: true },
       { file: 'annisa-day14', act: 'act7', fields: ['sp7'] },
@@ -349,6 +354,7 @@
       if (f.indexOf('adverbial-wh-clauses') > -1) return 'adverbial-wh-clauses';
       if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
+      if (f.indexOf('annisa-day15') > -1) return 'annisa-day15';
       if (f.indexOf('quiet-archive') > -1) return 'anna-quiet-archive';
       if (f.indexOf('annisa-day14') > -1) return 'annisa-day14';
       if (f.indexOf('annisa-day13') > -1) return 'annisa-day13';

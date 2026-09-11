@@ -380,6 +380,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
   const a = String(activityId || '').toLowerCase();
   const t = String(activityTitle || '').toLowerCase();
   const where = l + ' ' + a + ' ' + t;
+  if (where.includes('day15') || where.includes('synthesis') || where.includes('two sources') || where.includes('two become one')) {
+    return 'SYNTHESIS (two sources, ONE idea, one paragraph). Required shape: BOTH authors named with years, '
+      + 'one shared idea (never two separate summaries), a paraphrased line from each source, closer starting with TOGETHER. '
+      + 'Check: are both authors named? Is it one shared idea or two summaries? Is there a Together closer?';
+  }
   if (where.includes('anna') || where.includes('quiet') || where.includes('archive') || where.includes('shallows') || where.includes('depths')) {
     return 'C2 IELTS READING (short written responses). Required shape: key sentence with I PARTLY AGREE / DISAGREE + BECAUSE + '
       + 'one example from work or studies (not from the passage); takeaway with one habit to keep, one to change, one reusable phrase. '
