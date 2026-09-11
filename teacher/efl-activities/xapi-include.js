@@ -276,6 +276,12 @@
       { file: 'annisa-day15', act: 'act8', fields: ['sp8'] },
       { file: 'annisa-day15', act: 'act9', fields: ['sp9'] },
       { file: 'annisa-day15', act: 'act10', fields: ['sp10'] },
+      { file: 'anna-strategies', act: 'act6', fields: ['in6', 'in6t'], input: true },
+      { file: 'anna-strategies', act: 'act10', fields: ['in10'], input: true },
+      { file: 'anna-strategies', act: 'act12', fields: ['in12t'], input: true },
+      { file: 'anna-strategies', act: 'act13', fields: ['in13'], input: true },
+      { file: 'anna-strategies', act: 'act14', fields: ['in14'], input: true },
+      { file: 'anna-strategies', act: 'act15', fields: ['in15'], input: true },
       { file: 'anna-quiet-archive', act: 'act13', fields: ['in13'], input: true },
       { file: 'anna-quiet-archive', act: 'act15', fields: ['in15a', 'in15b'], input: true },
       { file: 'annisa-day14', act: 'act7', fields: ['sp7'] },
@@ -355,6 +361,7 @@
       if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
       if (f.indexOf('annisa-day15') > -1) return 'annisa-day15';
+      if (f.indexOf('strategies') > -1) return 'anna-strategies';
       if (f.indexOf('quiet-archive') > -1) return 'anna-quiet-archive';
       if (f.indexOf('annisa-day14') > -1) return 'annisa-day14';
       if (f.indexOf('annisa-day13') > -1) return 'annisa-day13';

@@ -380,6 +380,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
   const a = String(activityId || '').toLowerCase();
   const t = String(activityTitle || '').toLowerCase();
   const where = l + ' ' + a + ' ' + t;
+  if (where.includes('strategies') || where.includes('pro reader') || where.includes('micro teach') || where.includes('micro-teach')) {
+    return 'C2 READING STRATEGIES + MICRO-TEACH (pro reader, teacher toolkit). Required shape: inference with BECAUSE plus text proof; '
+      + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
+      + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
+  }
   if (where.includes('day15') || where.includes('synthesis') || where.includes('two sources') || where.includes('two become one')) {
     return 'SYNTHESIS (two sources, ONE idea, one paragraph). Required shape: BOTH authors named with years, '
       + 'one shared idea (never two separate summaries), a paraphrased line from each source, closer starting with TOGETHER. '

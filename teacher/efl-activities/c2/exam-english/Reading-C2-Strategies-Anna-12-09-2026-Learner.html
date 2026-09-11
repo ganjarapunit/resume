@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading C2 Pro Reader and Teacher Toolkit - Learner - Anna</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Verdana,Arial,Helvetica,sans-serif;font-size:18px;line-height:1.7;margin:0;padding:0}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 16px;font-weight:bold;z-index:200}
+.skip:focus{left:8px;top:8px}
+.hud{position:sticky;top:0;z-index:100;background:#000;border-bottom:3px solid var(--accent);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center}
+.hud strong{color:var(--accent)}
+.hud .barwrap{flex:1 1 200px;max-width:340px;background:var(--surface-2);border:2px solid var(--border);border-radius:20px;height:18px;overflow:hidden}
+.hud .bar{height:100%;width:0%;background:var(--accent-2)}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+header.lesson{border-bottom:3px solid var(--accent);padding-bottom:14px}
+h1{font-size:1.6rem;line-height:1.3;color:#fff;margin:0 0 8px}
+h2{font-size:1.25rem;color:var(--accent);margin:0 0 8px}
+p,li{color:var(--ink)}
+.sub{color:var(--accent-2);font-weight:bold;font-size:1rem;margin:4px 0 8px}
+.badge{display:inline-block;background:var(--accent);color:#000;font-weight:bold;font-size:0.9rem;border-radius:20px;padding:2px 12px;margin-right:8px}
+.act{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:20px;margin:22px 0}
+.act.done{border-color:var(--accent-2)}
+.reading{background:#000;border:2px solid var(--accent-2);border-radius:10px;padding:16px;margin:12px 0}
+.reading p{color:#fff}
+label{display:block;font-weight:bold;margin:12px 0 4px;color:var(--ink)}
+input[type=text],textarea{width:100%;background:#000;color:#fff;border:2px solid var(--border);border-radius:8px;padding:10px;font-size:1rem;font-family:inherit}
+input[type=text]:focus,textarea:focus{border-color:var(--accent);outline:none}
+input.correct,textarea.correct{border-color:var(--good)}
+input.wrong,textarea.wrong{border-color:var(--bad)}
+fieldset{border:2px solid var(--border);border-radius:10px;margin:12px 0;padding:12px}
+legend{font-weight:bold;color:var(--ink);padding:0 8px}
+.mcq label{display:flex;gap:10px;align-items:flex-start;font-weight:normal;background:#000;border:2px solid var(--border);border-radius:8px;padding:10px;margin:8px 0;cursor:pointer}
+.mcq label.correct{border-color:var(--good)}
+.mcq label.picked{outline:3px solid var(--accent);outline-offset:2px}
+.mcq input{margin-top:6px;transform:scale(1.3)}
+.btn{background:var(--accent);color:#000;border:3px solid var(--accent);border-radius:8px;font-weight:bold;font-size:1rem;padding:9px 18px;cursor:pointer;margin:10px 8px 0 0}
+.btn.ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn:hover,.btn:focus-visible{background:#fff;border-color:#fff;color:#000;outline:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.feedback{min-height:1.6em;margin-top:10px;font-weight:bold}
+.feedback.ok{color:var(--good)}
+.feedback.no{color:var(--bad)}
+.mark{display:inline-block;margin-left:10px;font-weight:bold;font-size:0.95rem}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--bad)}
+.model{display:none;background:var(--surface-2);border:2px dashed var(--accent-2);border-radius:10px;padding:12px 14px;margin-top:10px}
+.model.show{display:block}
+.model em{color:var(--accent-2)}
+.nameRow{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:12px 0}
+.teachbox{background:#000;border:2px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:10px}
+.teachbox strong{color:var(--accent)}
+.cert{display:none;background:#000;border:3px solid var(--accent);border-radius:14px;padding:24px;text-align:center;margin:26px 0}
+.cert.show{display:block}
+.cert h2{font-size:1.5rem}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:none}
+footer{color:var(--muted);font-size:0.95rem;padding-bottom:40px}
+a{color:var(--accent-2)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+@media print{.hud,.btn,canvas{display:none!important}body{background:#fff;color:#000}.act{background:#fff;color:#000;border-color:#000}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to activities</a>
+<div class="hud" role="status" aria-label="Progress">
+<span><strong>XP</strong> <span id="xp">0</span></span>
+<span><strong>Streak</strong> <span id="streak">0</span></span>
+<span><strong>Done</strong> <span id="done">0</span>/15</span>
+<span class="barwrap" aria-hidden="true"><span class="bar" id="bar"></span></span>
+</div>
+<div class="wrap">
+<header class="lesson">
+<h1>Read Like a Pro, Teach It Like a Pro</h1>
+<p>Hi Anna. Fifteen short steps. Each step has two layers: first read as a pro reader, then bank how you would teach it. Speak first, then type to lock it in.</p>
+</header>
+<main id="main">
+
+<section class="act activity" id="act1" data-act="act1" aria-labelledby="h1">
+<h2 id="h1"><span class="badge">1</span>Reader and teacher you</h2>
+<p class="sub">Sub-skill: readiness to read, personalising</p>
+<p>Speak, two sentences each. Then type one line.</p>
+<ol>
+<li>What do you read slowly, what do you only skim?</li>
+<li>What slows your students most?</li>
+<li>One reading win from your classes this month?</li>
+</ol>
+<label for="in1">Type one line that links you and your class</label>
+<input type="text" id="in1" class="free" placeholder="Example: I skim news, my students stall on long sentences.">
+<div><button class="btn ghost" data-reveal="model1">Show model</button>
+<button class="btn ghost" data-complete="act1">Mark complete</button></div>
+<div class="model" id="model1"><em>Model: I read contracts slowly, news I skim. My students stall on long sentences and unknown words. One win: scanning for numbers worked well last week.</em></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act2" data-act="act2" aria-labelledby="h2">
+<h2 id="h2"><span class="badge">2</span>Predict from the title</h2>
+<p class="sub">Sub-skill: predicting and previewing</p>
+<div class="reading"><p><strong>THE SHALLOW CURRENT: Why Deep Reading Feels Harder Now</strong></p></div>
+<p>Speak your guess. What could shallow current mean? Problem, story, or advice? What three ideas do you expect?</p>
+<label for="in2">Type your guess in one sentence</label>
+<input type="text" id="in2" class="free" placeholder="I expect...">
+<label for="in2t">Type your 2 minute classroom version in one line</label>
+<input type="text" id="in2t" class="free" placeholder="Example: Title only, 30 seconds, three guesses.">
+<div><button class="btn ghost" data-reveal="model2">Show model</button>
+<button class="btn ghost" data-complete="act2">Mark complete</button></div>
+<div class="model" id="model2"><em>Model: I expect a problem plus advice text about skim culture, with psychology and tips.</em><br>Teach it: title only, 30 seconds, three guesses. Do not confirm yet.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act3" data-act="act3" aria-labelledby="h3">
+<h2 id="h3"><span class="badge">3</span>Skim A, 90 seconds</h2>
+<p class="sub">Sub-skill: skimming for gist</p>
+<div class="reading">
+<p><strong>A.</strong> We skim more than any generation before us. Feeds, headlines and summaries train the eye to move on quickly. This is useful for updates, but it weakens slow reading. Psychologists call this cognitive patience, the willingness to stay with a difficult page. When every text competes for a second of attention, patience thins. We start more, we finish less, and complex ideas feel heavier than they are.</p>
+</div>
+<p>Set 90 seconds. No dictionary. Gist only.</p>
+<fieldset><legend class="stem">What is the main idea?</legend>
+<div class="mcq" data-group="g3">
+<label><input type="radio" class="choice" name="g3" data-correct="true"> We skim a lot now. Good for updates, bad for slow reading. Patience thins.</label>
+<label><input type="radio" class="choice" name="g3"> Skimming has solved slow reading and hard ideas feel light.</label>
+<label><input type="radio" class="choice" name="g3"> Psychologists say stop reading updates completely.</label>
+</div></fieldset>
+<div class="teachbox"><strong>Teach it:</strong> timer on, eyes forward, gist in one line. Say: 90 seconds, no dictionary, one line.</div>
+<div><button class="btn" data-check="act3">Check</button>
+<button class="btn ghost" data-complete="act3">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act4" data-act="act4" aria-labelledby="h4">
+<h2 id="h4"><span class="badge">4</span>Scan B like a detective</h2>
+<p class="sub">Sub-skill: scanning for specific information</p>
+<div class="reading">
+<p><strong>B.</strong> The problem is not intelligence. Studies of eye movement show skilled readers still make rapid jumps, but they return to hard spots with purpose. They slow at names, numbers and contrast words like yet, while and however. They ask, what is the writer claiming here, and where is the proof. Readers who pause at structure, first sentence, last sentence, linking words, recover meaning faster.</p>
+</div>
+<p>Scan for 2 minutes. Hunt, do not reread.</p>
+<label for="q4a">1. What do skilled readers still do fast?</label>
+<input type="text" id="q4a" class="answer" data-accept="rapid jumps|move fast|jump" data-model="rapid jumps">
+<label for="q4b">2. Where do they slow down? Name two signals.</label>
+<input type="text" id="q4b" class="answer" data-accept="names|numbers|contrast|yet|while|however|structure|linking" data-model="names, numbers, contrast words">
+<label for="q4c">3. What two questions do they ask?</label>
+<input type="text" id="q4c" class="answer" data-accept="claiming|proof" data-model="What is the claim, where is the proof">
+<div class="teachbox"><strong>Teach it:</strong> questions before text. Say: read questions first, hunt, do not reread.</div>
+<div><button class="btn" data-check="act4">Check</button>
+<button class="btn ghost" data-complete="act4">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act5" data-act="act5" aria-labelledby="h5">
+<h2 id="h5"><span class="badge">5</span>Detail check</h2>
+<p class="sub">Sub-skill: reading for detail, True False Not Given</p>
+<p>Look back at A and B. Decide with proof.</p>
+<fieldset><legend class="stem">1. Feeds train the eye to move on quickly.</legend>
+<div class="mcq" data-group="g5a">
+<label><input type="radio" class="choice" name="g5a" data-correct="true"> True, direct match in A.</label>
+<label><input type="radio" class="choice" name="g5a"> False</label>
+<label><input type="radio" class="choice" name="g5a"> Not Given</label>
+</div></fieldset>
+<fieldset><legend class="stem">2. Skilled readers never make rapid jumps.</legend>
+<div class="mcq" data-group="g5b">
+<label><input type="radio" class="choice" name="g5b"> True</label>
+<label><input type="radio" class="choice" name="g5b" data-correct="true"> False, they still make rapid jumps.</label>
+<label><input type="radio" class="choice" name="g5b"> Not Given</label>
+</div></fieldset>
+<fieldset><legend class="stem">3. Eye studies were done only with students.</legend>
+<div class="mcq" data-group="g5c">
+<label><input type="radio" class="choice" name="g5c"> True</label>
+<label><input type="radio" class="choice" name="g5c"> False</label>
+<label><input type="radio" class="choice" name="g5c" data-correct="true"> Not Given, text never says who took part.</label>
+</div></fieldset>
+<div class="teachbox"><strong>Teach it:</strong> verdict plus proof. If you cannot point to it, it is Not Given.</div>
+<div><button class="btn" data-check="act5">Check</button>
+<button class="btn ghost" data-complete="act5">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act6" data-act="act6" aria-labelledby="h6">
+<h2 id="h6"><span class="badge">6</span>Chunk one heavy sentence</h2>
+<p class="sub">Sub-skill: handling complex syntax</p>
+<div class="reading"><p>Readers who pause at structure, first sentence, last sentence, linking words, recover meaning faster than readers who reread every word from the start.</p></div>
+<fieldset><legend class="stem">Where is the main verb?</legend>
+<div class="mcq" data-group="g6">
+<label><input type="radio" class="choice" name="g6"> pause</label>
+<label><input type="radio" class="choice" name="g6" data-correct="true"> recover</label>
+<label><input type="radio" class="choice" name="g6"> reread</label>
+</div></fieldset>
+<label for="in6">Say it in 12 words or less. Type your short version.</label>
+<input type="text" id="in6" class="free" placeholder="Example: Strategic pausing beats full rereading.">
+<label for="in6t">How would you demo this on the board? One line.</label>
+<input type="text" id="in6t" class="free" placeholder="Example: Cover middle, find verb, add who.">
+<div><button class="btn ghost" data-reveal="model6">Show model</button>
+<button class="btn ghost" data-complete="act6">Mark complete</button></div>
+<div class="model" id="model6"><em>Model: Strategic pausing beats full rereading.</em><br>Teach it: three slashes on board. Find the verb first.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act7" data-act="act7" aria-labelledby="h7">
+<h2 id="h7"><span class="badge">7</span>What does it point to</h2>
+<p class="sub">Sub-skill: reference and cohesion</p>
+<p>Replace the small word. If sense holds, you are right.</p>
+<label for="q7a">1. A: This is useful for updates. This means?</label>
+<input type="text" id="q7a" class="answer" data-accept="moving on|skimming|move on quickly|skim quickly" data-model="moving on quickly through feeds">
+<label for="q7b">2. A: ideas feel heavier than they are. they means?</label>
+<input type="text" id="q7b" class="answer" data-accept="complex ideas|ideas" data-model="complex ideas">
+<label for="q7c">3. B: They slow at names. They means?</label>
+<input type="text" id="q7c" class="answer" data-accept="skilled readers|readers" data-model="skilled readers">
+<div class="teachbox"><strong>Teach it:</strong> put your guess back in. Say: does it still make sense.</div>
+<div><button class="btn" data-check="act7">Check</button>
+<button class="btn ghost" data-complete="act7">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act8" data-act="act8" aria-labelledby="h8">
+<h2 id="h8"><span class="badge">8</span>Meet C, guess lexis</h2>
+<p class="sub">Sub-skill: deducing meaning from context</p>
+<div class="reading">
+<p><strong>C.</strong> The answer is not to read everything slowly. Strong readers switch gears. They preview to build a map, skim to find the spine, scan to locate proof, then read one key passage closely. They accept some ambiguity on the first pass and resolve it on the second. Attention, like a muscle, responds to training.</p>
+</div>
+<p>Guess from context. No dictionary.</p>
+<label for="q8a">switch gears means?</label>
+<input type="text" id="q8a" class="answer" data-accept="change speed|change style|change pace|switch speed" data-model="change speed or style">
+<label for="q8b">find the spine means?</label>
+<input type="text" id="q8b" class="answer" data-accept="main line|backbone|main argument|main idea" data-model="find the main line of argument">
+<label for="q8c">accept some ambiguity means?</label>
+<input type="text" id="q8c" class="answer" data-accept="allow unclear|unclear parts|tolerate|not stop" data-model="allow unclear parts for now">
+<div class="teachbox"><strong>Teach it:</strong> clue, guess, check. Say: guess from friends nearby, check after.</div>
+<div><button class="btn" data-check="act8">Check</button>
+<button class="btn ghost" data-complete="act8">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act9" data-act="act9" aria-labelledby="h9">
+<h2 id="h9"><span class="badge">9</span>Where is the spine</h2>
+<p class="sub">Sub-skill: text structure and discourse signals</p>
+<p>No new text. Map A, B, C.</p>
+<fieldset><legend class="stem">A does what?</legend>
+<div class="mcq" data-group="g9a">
+<label><input type="radio" class="choice" name="g9a" data-correct="true"> Sets the problem</label>
+<label><input type="radio" class="choice" name="g9a"> Tells a funny story</label>
+<label><input type="radio" class="choice" name="g9a"> Gives the full fix</label>
+</div></fieldset>
+<fieldset><legend class="stem">B does what?</legend>
+<div class="mcq" data-group="g9b">
+<label><input type="radio" class="choice" name="g9b" data-correct="true"> Shows the skill good readers use</label>
+<label><input type="radio" class="choice" name="g9b"> Blames readers</label>
+<label><input type="radio" class="choice" name="g9b"> Lists jokes</label>
+</div></fieldset>
+<fieldset><legend class="stem">C does what?</legend>
+<div class="mcq" data-group="g9c">
+<label><input type="radio" class="choice" name="g9c" data-correct="true"> Gives balance and fix</label>
+<label><input type="radio" class="choice" name="g9c"> Ends bleak</label>
+<label><input type="radio" class="choice" name="g9c"> Changes topic</label>
+</div></fieldset>
+<div class="teachbox"><strong>Teach it:</strong> first line, last line, links. Map in 60 seconds.</div>
+<div><button class="btn" data-check="act9">Check</button>
+<button class="btn ghost" data-complete="act9">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act10" data-act="act10" aria-labelledby="h10">
+<h2 id="h10"><span class="badge">10</span>Infer what is not said</h2>
+<p class="sub">Sub-skill: inference, implied meaning</p>
+<ol>
+<li>Why do complex ideas feel heavier than they are?</li>
+<li>Why does full rereading help less?</li>
+<li>Why accept ambiguity on the first pass?</li>
+</ol>
+<label for="in10">Type your best inference with proof in one line</label>
+<input type="text" id="in10" class="free" placeholder="Because the text says X, I infer Y.">
+<div><button class="btn ghost" data-reveal="model10">Show model</button>
+<button class="btn ghost" data-complete="act10">Mark complete</button></div>
+<div class="model" id="model10"><em>Model: Skim habits thin patience, so effort feels like difficulty. Full rereading wastes time, pause at structure is faster. Early gaps clear once the map is built.</em><br>Teach it: what says it, what means it. Show both.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act11" data-act="act11" aria-labelledby="h11">
+<h2 id="h11"><span class="badge">11</span>Hear the writer voice</h2>
+<p class="sub">Sub-skill: attitude, purpose, tone</p>
+<fieldset><legend class="stem">Best match for tone and purpose?</legend>
+<div class="mcq" data-group="g11">
+<label><input type="radio" class="choice" name="g11"> Worried and alarmist, only warns.</label>
+<label><input type="radio" class="choice" name="g11"> Fully neutral, no feeling.</label>
+<label><input type="radio" class="choice" name="g11" data-correct="true"> Practical and quietly hopeful, warns a little then coaches.</label>
+</div></fieldset>
+<label for="in11">Type one phrase that proves it</label>
+<input type="text" id="in11" class="answer" data-accept="patience thins|heavier|responds to training|recover meaning|switch gears|read one key" data-model="responds to training">
+<div class="teachbox"><strong>Teach it:</strong> vote with phrase. Say: worried, neutral or hopeful. Show me the words.</div>
+<div><button class="btn" data-check="act11">Check</button>
+<button class="btn ghost" data-complete="act11">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act12" data-act="act12" aria-labelledby="h12">
+<h2 id="h12"><span class="badge">12</span>Paraphrase lab</h2>
+<p class="sub">Sub-skill: recognising and producing paraphrase</p>
+<label for="q12a">1. Patience thins.</label>
+<input type="text" id="q12a" class="answer" data-accept="lose the will|lose patience|less patient|hard to stay" data-model="We lose the will to stay with hard pages">
+<label for="q12b">2. Attention, like a muscle, responds to training.</label>
+<input type="text" id="q12b" class="answer" data-accept="grows stronger|stronger with|training|practice|muscle" data-model="Focus grows stronger with practice">
+<label for="q12c">3. Fluency returns, not as speed, but as control.</label>
+<input type="text" id="q12c" class="answer" data-accept="control|steady|not fast|not speed" data-model="Good reading is steady control, not fast eyes">
+<label for="in12t">Which one would you teach first, and why? One line.</label>
+<input type="text" id="in12t" class="free" placeholder="Example: Number 2 first, image is clear.">
+<div><button class="btn" data-check="act12">Check</button>
+<button class="btn ghost" data-complete="act12">Mark complete</button></div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act13" data-act="act13" aria-labelledby="h13">
+<h2 id="h13"><span class="badge">13</span>Sixty second retell</h2>
+<p class="sub">Sub-skill: summarising and synthesising</p>
+<p>Retell A to C for a busy friend. Include habit, skill, fix. Plan 30 seconds, speak 60 seconds.</p>
+<label for="in13">Type your three point plan, habit plus skill plus fix</label>
+<input type="text" id="in13" class="free" placeholder="Example: Skim habit, pause at signals, switch gears.">
+<div><button class="btn ghost" data-reveal="model13">Show retell model</button>
+<button class="btn ghost" data-complete="act13">Mark complete</button></div>
+<div class="model" id="model13"><em>Retell model: We skim constantly now, which helps updates but weakens slow reading. Skilled readers still move fast, but they slow at key signals and ask where the proof is. The fix is to switch gears, preview, skim, scan, then read one passage closely. Attention can be trained like a muscle.</em><br>Teach it: habit plus skill plus fix, one linker each.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act14" data-act="act14" aria-labelledby="h14">
+<h2 id="h14"><span class="badge">14</span>Teach it in 90 seconds</h2>
+<p class="sub">Sub-skill: modelling and checking, teacher clarity</p>
+<p>Pick one move from today. Teach it aloud in 90 seconds as if to a B2 student. Name it, show it, check them.</p>
+<label for="in14">Type your micro teach script in two lines</label>
+<input type="text" id="in14" class="free" placeholder="Example: Today scanning. Watch me. Question first, hunt numbers. Your turn.">
+<div><button class="btn ghost" data-reveal="model14">Show model</button>
+<button class="btn ghost" data-complete="act14">Mark complete</button></div>
+<div class="model" id="model14"><em>Model: Today scanning. Watch me. Question first, hunt numbers and capitals. Your turn: hunt where they slow down. Show me.</em><br>Tip: less talk, more try. One glow, one grow after.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="act activity" id="act15" data-act="act15" aria-labelledby="h15">
+<h2 id="h15"><span class="badge">15</span>Pro reader kit</h2>
+<p class="sub">Sub-skill: self regulation and transfer</p>
+<label for="in15">Type three lines: keep as reader, teach first, phrase to use</label>
+<input type="text" id="in15" class="free" placeholder="Example: I will chunk at the verb. I will teach preview first. My phrase is switch gears.">
+<div><button class="btn ghost" data-reveal="model15">Show model</button>
+<button class="btn ghost" data-complete="act15">Mark complete</button></div>
+<div class="model" id="model15"><em>Model: I will keep switching gears by purpose. I will teach preview first, title only, 30 seconds. My phrase is locate proof.</em><br>Next: one hard page, preview 30 sec, skim 1 min, close read one passage, 45 sec retell. Same for your class.</div>
+<div class="feedback" aria-live="polite"></div>
+</section>
+
+</main>
+<footer>
+<p>Self study version for a teacher. Same 300 word text as the teacher lesson. Tip: speak before you type. Try each move with one class text this week.</p>
+<p><a href="#main">Back to top</a></p>
+</footer>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+  var xp=0, streak=0, doneSet={};
+  var xpEl=document.getElementById('xp'), stEl=document.getElementById('streak'),
+      doneEl=document.getElementById('done'), bar=document.getElementById('bar');
+  function norm(s){return (s||'').toLowerCase().trim().replace(/[.\s]+$/,'');}
+  function update(){xpEl.textContent=xp;stEl.textContent=streak;doneEl.textContent=Object.keys(doneSet).length;bar.style.width=(Object.keys(doneSet).length/15*100)+'%';
+    if(Object.keys(doneSet).length>=15){confetti();}}
+  function mark(el,ok){el.classList.remove('correct','wrong');el.classList.add(ok?'correct':'wrong');el.setAttribute('aria-invalid',ok?'false':'true');
+    var p=el.parentElement.querySelector('.mark[data-for="'+el.id+'"]');if(p)p.remove();
+    var s=document.createElement('span');s.className='mark '+(ok?'ok':'no');s.setAttribute('data-for',el.id);s.textContent=ok?'Correct':'Try again';el.after(s);}
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var act=document.querySelector('[data-act="'+btn.getAttribute('data-check')+'"]');
+      var fb=act.querySelector('.feedback');var allOk=true, gained=0;
+      act.querySelectorAll('input.answer').forEach(function(inp){
+        var acc=(inp.getAttribute('data-accept')||'').split('|');var v=norm(inp.value);var ok=false;
+        for(var i=0;i<acc.length;i++){if(v.indexOf(norm(acc[i]))!==-1&&norm(acc[i]).length>0){ok=true;break;}}
+        if(!inp.value.trim())ok=false;mark(inp,ok);
+        if(ok){if(!inp.dataset.scored){gained+=10;inp.dataset.scored='1';}}else{allOk=false;}
+      });
+      act.querySelectorAll('.mcq').forEach(function(m){
+        var chosen=m.querySelector('input:checked');
+        m.querySelectorAll('label').forEach(function(l){l.classList.remove('correct','picked');});
+        var right=m.querySelector('[data-correct="true"]');
+        if(right)right.closest('label').classList.add('correct');
+        if(chosen){chosen.closest('label').classList.add('picked');
+          if(chosen.hasAttribute('data-correct')){if(!m.dataset.scored){gained+=10;m.dataset.scored='1';}}
+          else{allOk=false;}
+        }else{allOk=false;}
+      });
+      if(gained>0){xp+=gained;streak+=1;}else{streak=0;}
+      if(allOk){fb.textContent='Nice, Anna. That is pro level control.';fb.className='feedback ok';}
+      else{fb.textContent='Good try. Check the marks, fix one line, check again.';fb.className='feedback no';}
+      update();
+    });
+  });
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var id=btn.getAttribute('data-complete');
+      var act=document.querySelector('[data-act="'+id+'"]');
+      var fb=act.querySelector('.feedback');
+      if(!doneSet[id]){doneSet[id]=1;act.classList.add('done');xp+=5;}
+      if(fb&&!fb.textContent){fb.textContent='Done. One step closer.';fb.className='feedback ok';}
+      update();
+    });
+  });
+  document.querySelectorAll('[data-reveal]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.getElementById(btn.getAttribute('data-reveal')).classList.toggle('show');
+    });
+  });
+  function confetti(){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var c=document.getElementById('confetti');c.style.display='block';c.width=innerWidth;c.height=innerHeight;
+    var x=c.getContext('2d'),p=[],n=120,t=0;
+    for(var i=0;i<n;i++)p.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*0.3,w:6+Math.random()*6,h:8+Math.random()*8,v:2+Math.random()*3,r:Math.random()*Math.PI,vr:(Math.random()-0.5)*0.2,col:i%3==0?'#ffd400':(i%3==1?'#38e0c8':'#ffffff')});
+    (function anim(){x.clearRect(0,0,c.width,c.height);t++;
+      p.forEach(function(q){q.y+=q.v;q.r+=q.vr;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.col;x.fillRect(-q.w/2,-q.h/2,q.w,q.h);x.restore();});
+      if(t<220)requestAnimationFrame(anim);else c.style.display='none';})();
+  }
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Anna Strategies - precise verbs/objects via proxy (mirrors original)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act2:1,act6:1,act10:1,act13:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>
