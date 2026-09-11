@@ -380,6 +380,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
   const a = String(activityId || '').toLowerCase();
   const t = String(activityTitle || '').toLowerCase();
   const where = l + ' ' + a + ' ' + t;
+  if (where.includes('anna') || where.includes('quiet') || where.includes('archive') || where.includes('shallows') || where.includes('depths')) {
+    return 'C2 IELTS READING (short written responses). Required shape: key sentence with I PARTLY AGREE / DISAGREE + BECAUSE + '
+      + 'one example from work or studies (not from the passage); takeaway with one habit to keep, one to change, one reusable phrase. '
+      + 'Check: is there a clear position with because? Is there a work-or-studies example (not passage facts)? Is the takeaway complete (keep + change + phrase)?';
+  }
   if (where.includes('day02') || where.includes('overview')) {
     return 'IELTS Writing Task 1 OVERVIEW. Required structure: exactly 2 big trends, NO numbers at all, 1 to 2 sentences. '
       + 'Check: are there exactly 2 trends? Is there any number (must be zero)? Is it 1 to 2 lines?';
