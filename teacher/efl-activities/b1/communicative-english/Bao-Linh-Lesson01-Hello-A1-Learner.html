@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1: Hello! Bao and Linh</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+/* Fullscreen root: everything that stays visible in fullscreen */
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:10%; background:var(--accent)}
+/* Deck: side buttons live OUTSIDE the card. Bottom buttons live INSIDE the card. Only one set visible at a time. */
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem}
+.target .vi{display:block; font-size:1rem; font-weight:400; color:var(--muted); margin-top:.2rem}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.role{display:grid; gap:.8rem; margin:.8rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.role div{background:#0c1628; border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; font-size:clamp(1.1rem,3vw,1.3rem)}
+.role strong{color:var(--accent)}
+.dots{display:flex; gap:.7rem; margin:.8rem 0; flex-wrap:wrap}
+.dot{flex:1 1 8rem; min-height:56px; font-size:1.05rem; font-weight:800; border-radius:12px; border:2px solid var(--border); background:#0c1628; color:var(--ink); cursor:pointer; padding:.6rem}
+.dot[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b}
+.choice{display:block; width:100%; text-align:left; margin:.5rem 0; min-height:56px; font-size:clamp(1.05rem,3vw,1.25rem); font-weight:700; border-radius:12px; cursor:pointer; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.7rem 1rem}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.wordbank{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.wordbank button{min-height:52px; font-size:1.15rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.55rem .95rem; cursor:pointer}
+.dlg-bank{display:flex; flex-direction:column; gap:.6rem; margin:.7rem 0}
+.dlg-item{min-height:56px; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; text-align:left; border-radius:12px; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.7rem 1rem; cursor:grab}
+.dlg-item.sel{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.dlg-item.placed{display:none}
+.drop-list{list-style:none; padding:0; margin:.7rem 0; display:flex; flex-direction:column; gap:.6rem}
+.drop-box{min-height:60px; border:2px dashed var(--border); border-radius:12px; padding:.6rem .8rem; display:flex; gap:.8rem; align-items:center; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; background:#0c1628}
+.drop-box.over{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.drop-box.filled{border-style:solid; border-color:var(--accent-2)}
+.boxnum{flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
+.boxhint{color:var(--muted); font-weight:400}
+.drop-box.filled .boxhint{color:var(--ink); font-weight:700}
+.answer-line{background:#0c1628; border:1px dashed var(--border); border-radius:10px; min-height:3.2em; padding:.7rem 1rem; font-size:1.3rem; font-weight:800}
+.gap{font-size:clamp(1.15rem,3.4vw,1.4rem); background:#0c1628; border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; margin:.6rem 0}
+.gap input{font-size:1.15rem; font-weight:800; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:8px; padding:.35rem .6rem; min-width:7rem; max-width:10rem; margin:0 .25rem}
+.gap input.correct{border-color:var(--good)}
+.gap input.wrong{border-color:var(--bad)}
+.rec-row{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.rec-row button{flex:1 1 9rem; min-height:52px; font-size:1rem; font-weight:800; border-radius:10px; cursor:pointer; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem}
+.rec-row button:disabled{opacity:.4; cursor:not-allowed}
+.rec-row button.danger{border-color:var(--bad)}
+audio.rec-play{width:100%; margin-top:.5rem}
+.checklist{list-style:none; padding:0; margin:.8rem 0}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+/* Bottom nav: INSIDE the fullscreen card, below content, in normal flow. Never overlays. */
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:#0c1628}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+/* Strictly responsive switch */
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+/* Fully responsive hardening: no horizontal scroll from 320px phones to wide desktop */
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+.target, .card .big, .role div, .drop-box, .gap, .answer-line{overflow-wrap:break-word}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .gap{padding:.75rem .8rem}
+  .gap input{min-width:5.2rem; max-width:8.5rem; margin:.15rem .2rem}
+  .drop-box{padding:.55rem .6rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+  .boxnum{width:2rem; height:2rem; font-size:1.05rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to lesson</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>Lesson 1: Hello! Bao and Linh</h1>
+        <p class="sub">Together on one screen. Speak aloud. 60 minutes.</p>
+      </div>
+      <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 14</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="14" aria-valuenow="1" id="progressBar"><div id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Lesson slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+
+          <section class="slide active" role="group" aria-roledescription="slide" aria-label="1 of 14 Hello">
+            <span class="eyebrow">Hello!</span>
+            <h2 tabindex="-1">Hello! Bao and Linh</h2>
+            <p class="lead">Today you can:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">👋</div><div class="big">Say hello</div><div class="small">Good morning</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">💬</div><div class="big">Ask how</div><div class="small">How are you?</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🤝</div><div class="big">Introduce</div><div class="small">This is my wife</div></div>
+            </div>
+            <p class="instruction">Together. Speak aloud.</p>
+            <div class="target" style="text-align:center">Hello! We are Bao and Linh.</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="2 of 14 Meet">
+            <span class="eyebrow teal">Words 1 . Meet</span>
+            <h2 tabindex="-1">Meet: hello</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="cards">
+              <div class="card"><div class="big">Hello</div><div class="small">first word</div><button class="speak-btn" type="button" data-say="Hello!" data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">Hi</div><div class="small">friends</div><button class="speak-btn" type="button" data-say="Hi!" data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">Good morning</div><div class="small">before 12</div><button class="speak-btn" type="button" data-say="Good morning!" data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">Good evening</div><div class="small">after 6</div><button class="speak-btn" type="button" data-say="Good evening!" data-voice="female">Listen</button></div>
+            </div>
+            <p class="instruction">Bao: morning. Linh: evening.</p>
+            <div class="target">hel-LO, GOOD MORN-ing, GOOD EVE-ning</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="3 of 14 Leave">
+            <span class="eyebrow teal">Words 2 . Leave</span>
+            <h2 tabindex="-1">Leave: bye</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="cards">
+              <div class="card"><div class="big">Bye</div><div class="small">friends</div><button class="speak-btn" type="button" data-say="Bye!" data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">Goodbye</div><div class="small">polite</div><button class="speak-btn" type="button" data-say="Goodbye!" data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">See you!</div><div class="small">again soon</div><button class="speak-btn" type="button" data-say="See you!" data-voice="female">Listen</button></div>
+            </div>
+            <div class="target">Goodbye! See you!</div>
+            <div class="target">GOOD-bye, SEE you</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="4 of 14 Names">
+            <span class="eyebrow teal">Say . Names</span>
+            <h2 tabindex="-1">I am. My name is.</h2>
+            <p class="instruction">Point to you. Say.</p>
+            <div class="target">I am Bao. MY NAME is Bao.</div>
+            <div class="target">This is my WIFE, Linh.</div>
+            <div class="target">This is my HUS-band, Bao.</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="My name is Bao. This is my wife, Linh." data-voice="male">Listen: Bao</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="My name is Linh. This is my husband, Bao." data-voice="female">Listen: Linh</button>
+            </div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="5 of 14 How are you">
+            <span class="eyebrow teal">Say . Feel</span>
+            <h2 tabindex="-1">How are you?</h2>
+            <p class="instruction">Ask. Answer.</p>
+            <div class="cards">
+              <div class="card"><div class="big">I am fine.</div><div class="small">OK</div><button class="speak-btn" type="button" data-say="I am fine, thank you." data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">I am great!</div><div class="small">very good</div><button class="speak-btn" type="button" data-say="I am great!" data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">And you?</div><div class="small">ask back</div><button class="speak-btn" type="button" data-say="And you?" data-voice="female">Listen</button></div>
+            </div>
+            <div class="target">How are YOU?</div>
+            <div class="target">I am FINE.</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="6 of 14 Nice to meet you">
+            <span class="eyebrow">Say 3 times</span>
+            <h2 tabindex="-1">Nice to meet you!</h2>
+            <div class="target" style="text-align:center"><span aria-hidden="true" style="display:block; font-size:2.4rem">🤝</span>Nice to MEET-you TOO!</div>
+            <p class="instruction">Say. Tap 1, 2, 3.</p>
+            <div class="dots" role="group" aria-label="Say three times">
+              <button class="dot" type="button" aria-pressed="false">Say 1</button>
+              <button class="dot" type="button" aria-pressed="false">Say 2</button>
+              <button class="dot" type="button" aria-pressed="false">Say 3</button>
+            </div>
+            <button class="speak-btn" type="button" data-say="Nice to meet you! Nice to meet you too!" data-voice="female">Listen: both</button>
+            <div class="feedback" aria-live="polite"></div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="7 of 14 Check">
+            <span class="eyebrow">Check . Listen + build</span>
+            <h2 tabindex="-1">Check: hear + build</h2>
+            <p class="instruction">1. Listen. Which?</p>
+            <button class="speak-btn" type="button" data-say="Good evening! How are you?" data-voice="female">Play</button>
+            <button class="choice" type="button" data-correct="false">Good morning! I am Bao.</button>
+            <button class="choice" type="button" data-correct="true">Good evening! How are you?</button>
+            <div class="feedback" id="quizFb" aria-live="polite"></div>
+            <p class="instruction">2. Build: tap in order.</p>
+            <div class="wordbank" role="group" aria-label="Word bank">
+              <button type="button" data-w="meet">meet</button>
+              <button type="button" data-w="you!">you!</button>
+              <button type="button" data-w="Nice">Nice</button>
+              <button type="button" data-w="to">to</button>
+            </div>
+            <div class="answer-line" id="builtLine" aria-live="polite">Tap words...</div>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearWords">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkWords">Check</button>
+            </div>
+            <div class="feedback" id="buildFb" aria-live="polite"></div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="8 of 14 Order">
+            <span class="eyebrow">Check . Order</span>
+            <h2 tabindex="-1">Order: morning talk</h2>
+            <p class="instruction">Drag to boxes 1 to 5. Say.</p>
+            <div class="dlg-bank" id="dlgBank" role="group" aria-label="Talk lines. Drag one to a box.">
+              <button type="button" class="dlg-item" draggable="true" data-d="3" data-t="Nice to meet you too! How are you?">A: Nice to meet you too! How are you?</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="1" data-t="Good morning! My name is Bao.">A: Good morning! My name is Bao.</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="4" data-t="I am great, thank you. And you?">B: I am great, thank you. And you?</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="2" data-t="Hi! My name is Linh. Nice to meet you!">B: Hi! My name is Linh. Nice to meet you!</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="5" data-t="I am fine, thank you.">A: I am fine, thank you.</button>
+            </div>
+            <ol class="drop-list" id="dlgBoxes" aria-label="Boxes 1 to 5. Drop one line in each.">
+              <li class="drop-box" data-box="1" tabindex="0" aria-label="Box 1. Empty."><span class="boxnum" aria-hidden="true">1</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="2" tabindex="0" aria-label="Box 2. Empty."><span class="boxnum" aria-hidden="true">2</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="3" tabindex="0" aria-label="Box 3. Empty."><span class="boxnum" aria-hidden="true">3</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="4" tabindex="0" aria-label="Box 4. Empty."><span class="boxnum" aria-hidden="true">4</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="5" tabindex="0" aria-label="Box 5. Empty."><span class="boxnum" aria-hidden="true">5</span><span class="boxhint">Drop here</span></li>
+            </ol>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearDlg">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkDlg">Check</button>
+            </div>
+            <div class="feedback" id="dlgFb" aria-live="polite"></div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="9 of 14 Roleplay 1">
+            <span class="eyebrow">Together . Roleplay 1</span>
+            <h2 tabindex="-1">Morning meet ☀️</h2>
+            <p class="instruction">Pretend: first time. Swap roles.</p>
+            <div class="role">
+              <div><strong>A:</strong><br>Good morning! My name is Bao.</div>
+              <div><strong>B:</strong><br>Hi! My name is Linh. Nice to meet you!</div>
+            </div>
+            <div class="role">
+              <div><strong>A:</strong><br>Nice to meet you too! How are you?</div>
+              <div><strong>B:</strong><br>I am great, thank you. And you?</div>
+            </div>
+            <div class="target">A: I am fine, thank you.</div>
+            <p class="instruction">Listen one line. Then say.</p>
+            <div class="lines" role="group" aria-label="Morning dialogue lines">
+              <button class="speak-btn" type="button" data-say="Good morning! My name is Bao." data-voice="male">1 A: Good morning...</button>
+              <button class="speak-btn" type="button" data-say="Hi! My name is Linh. Nice to meet you!" data-voice="female">2 B: Hi! My name...</button>
+              <button class="speak-btn" type="button" data-say="Nice to meet you too! How are you?" data-voice="male">3 A: Nice to meet...</button>
+              <button class="speak-btn" type="button" data-say="I am great, thank you. And you?" data-voice="female">4 B: I am great...</button>
+              <button class="speak-btn" type="button" data-say="I am fine, thank you." data-voice="male">5 A: I am fine...</button>
+            </div>
+            <p class="instruction">Now Linh is A. Bao is B.</p>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-playall="1">Play all in order</button>
+            </div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="10 of 14 Roleplay 2">
+            <span class="eyebrow">Together . Roleplay 2</span>
+            <h2 tabindex="-1">Evening goodbye 🌙</h2>
+            <p class="instruction">You know each other. Say bye. Try!</p>
+            <div class="role">
+              <div><strong>A:</strong><br>Good evening! How are you?</div>
+              <div><strong>B:</strong><br>I am fine, thank you. And you?</div>
+            </div>
+            <div class="role">
+              <div><strong>A:</strong><br>I am great! Goodbye!</div>
+              <div><strong>B:</strong><br>Goodbye! See you!</div>
+            </div>
+            <p class="instruction">Listen one line. Then say.</p>
+            <div class="lines" role="group" aria-label="Evening dialogue lines">
+              <button class="speak-btn" type="button" data-say="Good evening! How are you?" data-voice="male">1 A: Good evening...</button>
+              <button class="speak-btn" type="button" data-say="I am fine, thank you. And you?" data-voice="female">2 B: I am fine...</button>
+              <button class="speak-btn" type="button" data-say="I am great! Goodbye!" data-voice="male">3 A: I am great...</button>
+              <button class="speak-btn" type="button" data-say="Goodbye! See you!" data-voice="female">4 B: Goodbye...</button>
+            </div>
+            <p class="instruction">Change. Add your names.</p>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-playall="1">Play all in order</button>
+            </div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="11 of 14 Fill">
+            <span class="eyebrow">Check . Fill</span>
+            <h2 tabindex="-1">Fill: one word</h2>
+            <p class="instruction">Say. Write. Check.</p>
+            <div class="gap">1. GOOD <input type="text" inputmode="text" autocomplete="off" data-answer="morning" aria-label="Blank 1">! My <input type="text" inputmode="text" autocomplete="off" data-answer="name" aria-label="Blank 2"> is Bao.</div>
+            <div class="gap">2. How <input type="text" inputmode="text" autocomplete="off" data-answer="are" aria-label="Blank 3"> you? I am <input type="text" inputmode="text" autocomplete="off" data-answer="fine" aria-label="Blank 4">, thank you.</div>
+            <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="Good morning! My name is Bao. How are you? I am fine, thank you." data-voice="male">Play</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkGap">Check</button>
+            </div>
+            <div class="feedback" id="gapFb" aria-live="polite"></div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="12 of 14 Make">
+            <span class="eyebrow">Check . Make</span>
+            <h2 tabindex="-1">Make: new sentence</h2>
+            <p class="instruction">Tap in order. Say.</p>
+            <div class="wordbank" role="group" aria-label="Word bank 2">
+              <button type="button" data-w2="are">are</button>
+              <button type="button" data-w2="How">How</button>
+              <button type="button" data-w2="you?">you?</button>
+            </div>
+            <div class="answer-line" id="builtLine2" aria-live="polite">Tap words...</div>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearWords2">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkWords2">Check</button>
+            </div>
+            <div class="feedback" id="buildFb2" aria-live="polite"></div>
+            <div class="gap">Say it: <button class="speak-btn" type="button" data-say="How are you?" data-voice="female" style="margin-top:.4rem">Play: How are you?</button></div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="13 of 14 Record">
+            <span class="eyebrow">Say . Record</span>
+            <h2 tabindex="-1">Record: Bao + Linh</h2>
+            <p class="instruction">Each one. Say. Listen. Again.</p>
+            <div class="role">
+              <div>
+                <strong>Bao says:</strong><br>Good morning! My name is Bao. Nice to MEET-you TOO!
+                <div class="rec-row" role="group" aria-label="Bao voice recorder">
+                  <button type="button" id="recBtnBao">Record</button>
+                  <button type="button" id="stopBtnBao" class="danger" disabled>Stop</button>
+                  <button type="button" id="playRecBtnBao" disabled>Play mine</button>
+                </div>
+                <audio class="rec-play" id="recAudioBao" controls aria-label="Bao recording"></audio>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecBao" disabled>Save Bao</button>
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="Good morning! My name is Bao. Nice to meet you too!" data-voice="male">Play model</button>
+                </div>
+                <div class="feedback" id="recFbBao" aria-live="polite">Bao: only on this device.</div>
+              </div>
+              <div>
+                <strong>Linh says:</strong><br>Hi! My name is Linh. Nice to MEET-you TOO!
+                <div class="rec-row" role="group" aria-label="Linh voice recorder">
+                  <button type="button" id="recBtnLinh">Record</button>
+                  <button type="button" id="stopBtnLinh" class="danger" disabled>Stop</button>
+                  <button type="button" id="playRecBtnLinh" disabled>Play mine</button>
+                </div>
+                <audio class="rec-play" id="recAudioLinh" controls aria-label="Linh recording"></audio>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecLinh" disabled>Save Linh</button>
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="Hi! My name is Linh. Nice to meet you too!" data-voice="female">Play model</button>
+                </div>
+                <div class="feedback" id="recFbLinh" aria-live="polite">Linh: only on this device.</div>
+              </div>
+            </div>
+            <div class="feedback" aria-live="polite">Nothing sent. Sounds stay here.</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="14 of 14 Done">
+            <span class="eyebrow">Done 🎉</span>
+            <h2 tabindex="-1">We did it!</h2>
+            <p class="instruction">Tick. I can say:</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox"> Good morning / Good evening / See you</label></li>
+              <li><label><input type="checkbox"> My name is... This is my husband / wife...</label></li>
+              <li><label><input type="checkbox"> How are you? I am fine / great. And you?</label></li>
+              <li><label><input type="checkbox"> Nice to meet you too! Goodbye!</label></li>
+            </ul>
+            <div class="target" style="text-align:center">Tonight: meet, ask, say bye. Only English!</div>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 14</div>
+        <div class="bottom-nav" aria-label="Lesson navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Arrows on keyboard work. Listen buttons use the best natural voice on your device. Bao is male voice. Linh is female voice. Best in full screen.</p>
+</footer>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  // High quality natural voices: prefer Neural, Natural, Online, Google en-US. Bao male, Linh female.
+  var VOICES=[];
+  function loadVoices(){ try{ VOICES = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }catch(e){ VOICES=[]; } }
+  if('speechSynthesis' in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+  function scoreVoice(v, prefer){
+    var name=((v.name||'')+' '+(v.lang||'')).toLowerCase();
+    var s=0;
+    var lang=(v.lang||'').toLowerCase();
+    if(lang.indexOf('en-us')===0) s+=60;
+    else if(lang.indexOf('en_')===0 || lang.indexOf('en-')===0) s+=25;
+    if(name.indexOf('natural')>-1) s+=45;
+    if(name.indexOf('online')>-1) s+=30;
+    if(name.indexOf('neural')>-1) s+=35;
+    if(name.indexOf('google us english')>-1) s+=40;
+    else if(name.indexOf('google')>-1) s+=18;
+    if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1) s+=15;
+    if(name.indexOf('samantha')>-1 || name.indexOf('zira')>-1) s+=12;
+    if(name.indexOf('compact')>-1 || name.indexOf('mobile')>-1) s-=20;
+    if(prefer==='female'){
+      if(name.indexOf('female')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('karen')>-1 || name.indexOf('zira')>-1 || name.indexOf('moira')>-1 || name.indexOf('tessa')>-1) s+=25;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('alex')>-1) s-=40;
+    } else if(prefer==='male'){
+      if(name.indexOf('male')>-1 && name.indexOf('female')===-1) s+=30;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('google uk english male')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('zira')>-1) s-=40;
+    }
+    return s;
+  }
+  function pickVoice(prefer){
+    if(!VOICES.length) loadVoices();
+    if(!VOICES.length) return null;
+    var best=null, bestScore=-999;
+    for(var i=0;i<VOICES.length;i++){
+      var sc=scoreVoice(VOICES[i], prefer);
+      if(sc>bestScore){ bestScore=sc; best=VOICES[i]; }
+    }
+    return best;
+  }
+  function speak(t, prefer, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t);
+      u.lang='en-US';
+      u.volume=1;
+      if(prefer==='male'){ u.rate=0.96; u.pitch=0.9; }
+      else { u.rate=0.97; u.pitch=1.1; }
+      var v=pickVoice(prefer);
+      if(v) u.voice=v;
+      if(btn){
+        btn.classList.add('speaking');
+        u.onend=function(){ btn.classList.remove('speaking'); };
+        u.onerror=function(){ btn.classList.remove('speaking'); };
+      }
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
+    });
+  });
+  // Play all lines in order, one by one, male then female. No overlap.
+  function speakSequence(items, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      if(btn) btn.classList.add('speaking');
+      items.forEach(function(it, i){
+        var u=new SpeechSynthesisUtterance(it.text);
+        u.lang='en-US'; u.volume=1;
+        if(it.voice==='male'){ u.rate=0.96; u.pitch=0.9; }
+        else { u.rate=0.97; u.pitch=1.1; }
+        var v=pickVoice(it.voice);
+        if(v) u.voice=v;
+        if(i===items.length-1 && btn){
+          u.onend=function(){ btn.classList.remove('speaking'); };
+          u.onerror=function(){ btn.classList.remove('speaking'); };
+        }
+        window.speechSynthesis.speak(u);
+      });
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-playall]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var slide=b.closest('.slide');
+      var lineBtns=slide ? slide.querySelectorAll('.lines [data-say]') : [];
+      var items=[];
+      lineBtns.forEach(function(lb){ items.push({text: lb.getAttribute('data-say'), voice: lb.getAttribute('data-voice')||'female'}); });
+      if(items.length) speakSequence(items, b);
+    });
+  });
+
+  // Dots
+  document.querySelectorAll('.slide').forEach(function(sl){
+    var dots=sl.querySelectorAll('.dot');
+    var fb=sl.querySelector('.feedback');
+    if(!dots.length || sl.querySelector('.wordbank')) return;
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        var on=d.getAttribute('aria-pressed')==='true';
+        d.setAttribute('aria-pressed', String(!on));
+        var done=sl.querySelectorAll('.dot[aria-pressed="true"]').length;
+        if(fb){
+          if(done===dots.length){ fb.textContent='Great! 3 times!'; fb.className='feedback ok'; }
+          else if(done===0){ fb.textContent=''; fb.className='feedback'; }
+          else { fb.textContent=done+' of 3. Again!'; fb.className='feedback'; }
+        }
+      });
+    });
+  });
+
+  // Choice quiz
+  var choices=document.querySelectorAll('.choice');
+  var qfb=document.getElementById('quizFb');
+  choices.forEach(function(c){
+    c.addEventListener('click', function(){
+      var ok=c.getAttribute('data-correct')==='true';
+      choices.forEach(function(x){ x.style.borderColor=''; });
+      if(ok){ c.style.borderColor='#38e0c8'; qfb.textContent='Correct! Well done!'; qfb.className='feedback ok'; }
+      else { c.style.borderColor='#ff8a8a'; qfb.textContent='Try again. Tap Play.'; qfb.className='feedback no'; }
+    });
+  });
+
+  // Word order builder 1: Nice to meet you, shuffled bank
+  var built=[];
+  var line=document.getElementById('builtLine');
+  var bfb=document.getElementById('buildFb');
+  function renderBuilt(){ line.textContent = built.length ? built.join(' ') : 'Tap words...'; }
+  document.querySelectorAll('.wordbank button[data-w]').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(built.length<4){ built.push(b.getAttribute('data-w')); renderBuilt(); bfb.textContent=''; bfb.className='feedback'; }
+    });
+  });
+  document.getElementById('clearWords').addEventListener('click', function(){ built=[]; renderBuilt(); bfb.textContent=''; bfb.className='feedback'; });
+  document.getElementById('checkWords').addEventListener('click', function(){
+    var s=built.join(' ');
+    if(s==='Nice to meet you!'){ bfb.textContent='Correct! Say it!'; bfb.className='feedback ok'; }
+    else { bfb.textContent='Try again. Nice...?'; bfb.className='feedback no'; }
+  });
+
+  // Word order builder 2: How are you, shuffled bank
+  var built2=[];
+  var line2=document.getElementById('builtLine2');
+  var bfb2=document.getElementById('buildFb2');
+  function renderBuilt2(){ line2.textContent = built2.length ? built2.join(' ') : 'Tap words...'; }
+  document.querySelectorAll('button[data-w2]').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(built2.length<3){ built2.push(b.getAttribute('data-w2')); renderBuilt2(); bfb2.textContent=''; bfb2.className='feedback'; }
+    });
+  });
+  document.getElementById('clearWords2').addEventListener('click', function(){ built2=[]; renderBuilt2(); bfb2.textContent=''; bfb2.className='feedback'; });
+  document.getElementById('checkWords2').addEventListener('click', function(){
+    var s=built2.join(' ');
+    if(s==='How are you?'){ bfb2.textContent='Correct! Ask Bao. Ask Linh.'; bfb2.className='feedback ok'; }
+    else { bfb2.textContent='Try again. How...?'; bfb2.className='feedback no'; }
+  });
+
+  // Dialog ordering: drag sentences to numbered boxes 1 to 5. Mouse drag plus tap and keyboard fallback.
+  (function(){
+    var bank=document.getElementById('dlgBank');
+    var boxes=document.querySelectorAll('#dlgBoxes .drop-box');
+    var fb=document.getElementById('dlgFb');
+    if(!bank) return;
+    var held=null;
+    function clearFb(){ fb.textContent=''; fb.className='feedback'; }
+    function labelBox(box){
+      var n=box.getAttribute('data-box');
+      var d=box.getAttribute('data-filled');
+      box.setAttribute('aria-label', d ? ('Box '+n+'. '+box.querySelector('.boxhint').textContent+'. Tap to take back.') : ('Box '+n+'. Empty.'));
+    }
+    function selectItem(btn){
+      document.querySelectorAll('.dlg-item.sel').forEach(function(x){ x.classList.remove('sel'); });
+      if(btn && !btn.classList.contains('placed')){ btn.classList.add('sel'); held=btn; }
+      else held=null;
+    }
+    function sendBack(d){
+      var btn=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+      if(btn) btn.classList.remove('placed');
+      if(held===btn) held=null;
+    }
+    function placeInBox(box, d, text){
+      var prev=box.getAttribute('data-filled');
+      if(prev) sendBack(prev);
+      box.setAttribute('data-filled', d);
+      box.classList.add('filled');
+      box.querySelector('.boxhint').textContent=text;
+      var btn=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+      if(btn){ btn.classList.add('placed'); btn.classList.remove('sel'); }
+      if(held && held.getAttribute('data-d')===d) held=null;
+      labelBox(box); clearFb();
+    }
+    function takeBack(box){
+      var d=box.getAttribute('data-filled');
+      if(!d) return;
+      box.removeAttribute('data-filled');
+      box.classList.remove('filled');
+      box.querySelector('.boxhint').textContent='Drop here';
+      sendBack(d); labelBox(box); clearFb();
+    }
+    // Source: click or Enter selects. Native drag for mouse.
+    bank.querySelectorAll('.dlg-item').forEach(function(btn){
+      btn.addEventListener('click', function(){ selectItem(btn); });
+      btn.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectItem(btn); }
+      });
+      btn.addEventListener('dragstart', function(e){
+        held=btn;
+        try{ e.dataTransfer.setData('text/plain', btn.getAttribute('data-d')); e.dataTransfer.effectAllowed='move'; }catch(err){}
+      });
+      btn.addEventListener('dragend', function(){ held=null; });
+    });
+    boxes.forEach(function(box){
+      box.addEventListener('dragover', function(e){ e.preventDefault(); box.classList.add('over'); });
+      box.addEventListener('dragleave', function(){ box.classList.remove('over'); });
+      box.addEventListener('drop', function(e){
+        e.preventDefault(); box.classList.remove('over');
+        var d=null, text='';
+        try{ d=e.dataTransfer.getData('text/plain'); }catch(err){}
+        if(!d && held) d=held.getAttribute('data-d');
+        if(!d) return;
+        var src=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+        if(src) text=src.textContent;
+        if(d && text) placeInBox(box, d, text);
+      });
+      function activate(){
+        if(held){ placeInBox(box, held.getAttribute('data-d'), held.textContent); }
+        else takeBack(box);
+      }
+      box.addEventListener('click', activate);
+      box.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); }
+      });
+      labelBox(box);
+    });
+    document.getElementById('clearDlg').addEventListener('click', function(){
+      boxes.forEach(function(box){
+        box.removeAttribute('data-filled');
+        box.classList.remove('filled');
+        box.querySelector('.boxhint').textContent='Drop here';
+        labelBox(box);
+      });
+      bank.querySelectorAll('.dlg-item.placed').forEach(function(x){ x.classList.remove('placed'); });
+      held=null; fb.textContent=''; fb.className='feedback';
+    });
+    document.getElementById('checkDlg').addEventListener('click', function(){
+      var seq=[];
+      boxes.forEach(function(box){ seq.push(box.getAttribute('data-filled')||'0'); });
+      if(seq.join(',')==='1,2,3,4,5'){ fb.textContent='Correct! Now say it together!'; fb.className='feedback ok'; }
+      else { fb.textContent='Try again. Box 1: Good morning...?'; fb.className='feedback no'; }
+    });
+  })();
+
+  // Gap fill: morning, name, are, fine. Case and space tolerant.
+  function normGap(v){ return (v||'').toLowerCase().trim().replace(/\s+/g,' '); }
+  document.getElementById('checkGap').addEventListener('click', function(){
+    var inputs=document.querySelectorAll('input[data-answer]');
+    var allOk=true, firstBad=null;
+    inputs.forEach(function(inp){
+      var ok = normGap(inp.value)===normGap(inp.getAttribute('data-answer'));
+      inp.classList.toggle('correct', ok);
+      inp.classList.toggle('wrong', !ok);
+      inp.setAttribute('aria-invalid', String(!ok));
+      if(!ok){ allOk=false; if(!firstBad) firstBad=inp; }
+    });
+    var fb=document.getElementById('gapFb');
+    if(allOk){ fb.textContent='Correct! Say both lines!'; fb.className='feedback ok'; }
+    else { fb.textContent='Try again. Tap Play. Fix red.'; fb.className='feedback no'; if(firstBad) firstBad.focus(); }
+  });
+
+  // Voice recorders, one each for Bao and Linh. Local only. Nothing uploaded.
+  function setupRecorder(ids, fileName, prompt){
+    var recBtn=document.getElementById(ids.rec);
+    var stopBtn=document.getElementById(ids.stop);
+    var playBtn=document.getElementById(ids.play);
+    var audio=document.getElementById(ids.audio);
+    var dl=document.getElementById(ids.dl);
+    var fb=document.getElementById(ids.fb);
+    if(!recBtn) return;
+    var mr=null, chunks=[], stream=null, url='';
+    function say(m, ok){
+      fb.textContent=m;
+      fb.className = ok===true ? 'feedback ok' : (ok===false ? 'feedback no' : 'feedback');
+    }
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder==='undefined'){
+      say('Mic not ready here. Say aloud together.', false);
+      recBtn.disabled=true;
+      return;
+    }
+    recBtn.addEventListener('click', function(){
+      navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
+        stream=s; chunks=[];
+        try{ mr=new MediaRecorder(s); }catch(e){ say('Record blocked. Say aloud together.', false); return; }
+        mr.ondataavailable=function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+        mr.onstop=function(){
+          try{
+            var blob=new Blob(chunks, {type: mr.mimeType || 'audio/webm'});
+            if(url) URL.revokeObjectURL(url);
+            url=URL.createObjectURL(blob);
+            audio.src=url;
+            playBtn.disabled=false;
+            dl.disabled=false;
+            dl.onclick=function(){
+              var a=document.createElement('a');
+              a.href=url; a.download=fileName;
+              document.body.appendChild(a); a.click(); a.remove();
+            };
+            say('Done. Tap Play mine. Only on this device.', true);
+          }catch(e){ say('Saved. Tap Play mine.', true); }
+          if(stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream=null; }
+        };
+        mr.start();
+        recBtn.disabled=true; stopBtn.disabled=false; playBtn.disabled=true;
+        say(prompt);
+      }).catch(function(){ say('Mic blocked. Allow mic, or say aloud together.', false); });
+    });
+    stopBtn.addEventListener('click', function(){
+      if(mr && mr.state!=='inactive') mr.stop();
+      recBtn.disabled=false; stopBtn.disabled=true;
+    });
+    playBtn.addEventListener('click', function(){ if(audio.src) audio.play(); });
+  }
+  setupRecorder({rec:'recBtnBao', stop:'stopBtnBao', play:'playRecBtnBao', audio:'recAudioBao', dl:'dlRecBao', fb:'recFbBao'}, 'bao-hello.webm', 'Bao, now say your line!');
+  setupRecorder({rec:'recBtnLinh', stop:'stopBtnLinh', play:'playRecBtnLinh', audio:'recAudioLinh', dl:'dlRecLinh', fb:'recFbLinh'}, 'linh-hello.webm', 'Linh, now say your line!');
+
+  // Fullscreen with fallback
+  function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+</script>
+<script>
+// Lightweight LRS hooks for the deck (mirrors lesson-page tracking in xapi-include.js).
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var done=false;
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(s){
+    var h=s.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (s.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(s){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(s), 'slide');
+      if(slides.indexOf(s)===slides.length-1 && !done){
+        done=true;
+        if(window.LRS && window.LRS.completed) window.LRS.completed({});
+      }
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  }, 500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s, {attributes:true, attributeFilter:['class']}); });
+  }
+  function hook(id, name){
+    var b=document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed(name, 'question'); }catch(e){}
+    });
+  }
+  hook('checkWords', 'Word build check: Nice to meet you');
+  hook('checkWords2', 'Word build check: How are you');
+  hook('checkDlg', 'Dialogue order check: morning talk');
+  hook('checkGap', 'Gap fill check: morning, name, are, fine');
+  document.querySelectorAll('.choice').forEach(function(c){
+    c.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed('Listen and choose: '+(c.textContent.trim().replace(/\s+/g,' ').substring(0,60)), 'question'); }catch(e){}
+    });
+  });
+  ['recBtnBao','recBtnLinh'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed('Voice record: '+id, 'audio'); }catch(e){}
+    });
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+</body>
+</html>
