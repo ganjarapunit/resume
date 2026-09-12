@@ -380,6 +380,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
   const a = String(activityId || '').toLowerCase();
   const t = String(activityTitle || '').toLowerCase();
   const where = l + ' ' + a + ' ' + t;
+  if (where.includes('career-coach') || where.includes('career coach') || where.includes('as the coach') || where.includes('good coach')) {
+    return 'B1 CAREER-COACH ROLEPLAY (warm, soft English). Required shape: warm open questions (What brings you here / Tell me about), '
+      + 'soft advice NEVER You must (Why do not you / You could / Have you thought about), echo plans back with So you, one small step to close. '
+      + 'Check: is advice soft (no You must)? Is there a warm question? Is the plan echoed with So?';
+  }
   if (where.includes('strategies') || where.includes('pro reader') || where.includes('micro teach') || where.includes('micro-teach')) {
     return 'C2 READING STRATEGIES + MICRO-TEACH (pro reader, teacher toolkit). Required shape: inference with BECAUSE plus text proof; '
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '

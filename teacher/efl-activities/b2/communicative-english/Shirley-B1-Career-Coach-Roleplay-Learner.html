@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shirley B1 You Are the Coach - Student - 12-09-2026</title>
+<style>
+:root{--bg:#0a0a0a;--surface:#0f1b2e;--surface-2:#13233b;--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent-2:#38e0c8;--border:#2a3d57;--focus:#ffd400}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.7;margin:0;font-size:19px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:10px 16px;font-weight:bold;z-index:99}
+.skip:focus{left:8px;top:8px}
+header,main,footer{max-width:860px;margin:0 auto;padding:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin:14px 0}
+.badge{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px 12px;font-size:15px;color:var(--muted);margin:2px 4px 2px 0}
+h1{font-size:30px;line-height:1.3;margin:8px 0}
+h2{font-size:23px;margin:0 0 8px;color:var(--accent)}
+p,li{color:var(--ink)}
+.muted{color:var(--muted)}
+.bank{background:#fff;color:#000;border-radius:8px;padding:12px;margin:10px 0}
+.bank p{color:#000}
+label{display:block;font-weight:bold;margin:10px 0 4px}
+textarea,input[type=text]{width:100%;background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:10px;font-size:18px}
+textarea:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.hint{color:var(--muted);font-size:16px}
+strong.hl{color:var(--accent)}
+.hud{position:sticky;top:0;z-index:100;background:#000;border-bottom:3px solid var(--accent);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center}
+.hud strong{color:var(--accent)}
+.hud .barwrap{flex:1 1 200px;max-width:340px;background:var(--surface-2);border:2px solid var(--border);border-radius:20px;height:18px;overflow:hidden}
+.hud .bar{height:100%;width:0%;background:var(--accent-2)}
+.btn{background:var(--accent);color:#000;border:3px solid var(--accent);border-radius:8px;font-weight:bold;font-size:1rem;padding:9px 18px;cursor:pointer;margin:10px 8px 0 0}
+.btn.ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn:hover,.btn:focus-visible{background:#fff;border-color:#fff;color:#000;outline:none}
+.feedback{min-height:1.6em;margin-top:10px;font-weight:bold}
+.feedback.ok{color:var(--accent-2)}
+.card.complete{border-color:var(--accent-2)}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:none}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="hud" role="status" aria-label="Progress">
+<span><strong>XP</strong> <span id="xp">0</span></span>
+<span><strong>Streak</strong> <span id="streak">0</span></span>
+<span><strong>Done</strong> <span id="done">0</span>/15</span>
+<span class="barwrap" aria-hidden="true"><span class="bar" id="bar"></span></span>
+</div>
+<header>
+<p class="muted">Shirley, B1, one to one, 12-09-2026</p>
+<h1>You Are the Coach: First Meeting</h1>
+<p>You are the career coach. Your teacher is Daniel, a new client. He thinks about change. Speak a lot. There are no wrong ideas.</p>
+<div><span class="badge">15 activities</span><span class="badge">60 min</span><span class="badge">Speaking first</span></div>
+<div class="bank" aria-label="Your phrase bank">
+<p><strong>Your phrase bank. Use these all lesson.</strong><br>What brings you here today?<br>Tell me a bit about your job.<br>What do you enjoy most at work?<br>What worries you most about change?<br>What is one small step you can take this month?<br>Tell me more about that. Why is that. What else.<br>Why do not you... You could... Have you thought about...</p>
+</div>
+</header>
+<main id="main">
+
+<section class="card activity" id="act1" aria-labelledby="s1"><h2 id="s1">1. Warm up</h2><p>30 seconds each. Speak fast.</p><p>I love work when...<br>Work is hard when...<br>Ask your teacher one question.</p><label for="t1">Your notes</label><textarea id="t1" rows="2" aria-label="Warm up notes"></textarea>
+<div><button class="btn ghost" data-complete="act1">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act2" aria-labelledby="s2"><h2 id="s2">2. Good coach</h2><p>What does a good coach do? Say 3 ideas.</p><p class="hint">Ideas: listens, asks, smiles, gives time, supports.</p><label for="t2">Your 3 ideas</label><textarea id="t2" rows="2" aria-label="Good coach ideas"></textarea>
+<div><button class="btn ghost" data-complete="act2">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act3" aria-labelledby="s3"><h2 id="s3">3. Meet Daniel</h2><p>Listen to Daniel. Then say: Who is he. Why does he come.</p><p class="hint">Listen only first time. No notes. Then 2 sentences.</p><label for="t3">Who and why</label><textarea id="t3" rows="2" aria-label="Who and why"></textarea>
+<div><button class="btn ghost" data-complete="act3">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act4" aria-labelledby="s4"><h2 id="s4">4. Your 5 questions</h2><p>You are the coach. Ask your teacher each one. Warm voice.</p><div class="bank"><p>1 What brings you here today?<br>2 Tell me a bit about your job.<br>3 What do you enjoy most at work?<br>4 What worries you most about change?<br>5 What is one small step you can take this month?</p></div><p class="hint">Say all 5. Then say them again, smoother.</p>
+<div><button class="btn ghost" data-complete="act4">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act5" aria-labelledby="s5"><h2 id="s5">5. Sound warm</h2><p>Listen. Repeat. Copy the music.</p><div class="bank"><p>1 What BRINGS you HERE toDAY?<br>2 What do you enJOY MOST?<br>3 Tell me a BIT aBOUT your JOB.</p></div><p class="hint">Loud words carry meaning. Smile when you speak.</p>
+<div><button class="btn ghost" data-complete="act5">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act6" aria-labelledby="s6"><h2 id="s6">6. 6 work words as the coach</h2><p>You are the coach. Match fast. Then say each one to Daniel.</p><p>1 stuck, 2 target, 3 training, 4 salary cut, 5 flexible, 6 risk</p><label for="t6">Your matches</label><input type="text" id="t6" class="answer" aria-label="Vocabulary matches"><p class="hint">Then speak to him: You feel... Your targets are... Training takes...</p>
+<div><button class="btn ghost" data-complete="act6">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act7" aria-labelledby="s7"><h2 id="s7">7. Keep him talking</h2><p>He says little. You keep him going. Say these:</p><div class="bank"><p>Tell me more about that.<br>Why is that.<br>What else.</p></div><p>Use one with your teacher now.</p>
+<div><button class="btn ghost" data-complete="act7">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act8" aria-labelledby="s8"><h2 id="s8">8. Soft advice as the coach</h2><p>You are the coach. Daniel listens. Advise him softly. Do not say You must.</p><p>1 He needs ideas. Start with Why do not you...<br>2 He needs experience. Start with You could...<br>3 He needs money. Start with Have you thought about...</p><label for="t8">Your 3 soft sentences to Daniel</label><textarea id="t8" rows="3" aria-label="Soft advice sentences to Daniel"></textarea>
+<div><button class="btn ghost" data-complete="act8">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act9" aria-labelledby="s9"><h2 id="s9">9. Plans: check as the coach</h2><p>You are the coach. Daniel tells you his plan. Say it back to him:</p><p>1 His plan: So you ___ volunteer next month.<br>2 His new idea: So you ___ call a teacher today.<br>3 His thought: So you think teaching ___ suit you.</p><label for="t9">Your sentences to Daniel</label><input type="text" id="t9" class="answer" aria-label="Plan check sentences to Daniel">
+<div><button class="btn ghost" data-complete="act9">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act10" aria-labelledby="s10"><h2 id="s10">10. Roleplay 1: Opening</h2><p>You are the coach. 2 minutes. Start:</p><div class="bank"><p>Hello Daniel, nice to meet you...<br>What brings you here today?<br>Tell me a bit about your job.</p></div><p class="hint">Goal: warm start, 2 questions, one follow up.</p>
+<div><button class="btn ghost" data-complete="act10">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act11" aria-labelledby="s11"><h2 id="s11">11. Roleplay 2: Explore</h2><p>3 minutes. Ask about likes and worries. Keep him talking.</p><div class="bank"><p>What do you enjoy most?<br>Why is that? Tell me more. What else?<br>What worries you most?</p></div><p class="hint">React naturally: I see. That sounds hard. That is interesting.</p><label for="t11">Words you want to use</label><input type="text" id="t11" class="answer" aria-label="Words for explore">
+<div><button class="btn ghost" data-complete="act11">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act12" aria-labelledby="s12"><h2 id="s12">12. Roleplay 3: Plan and close</h2><p>2 minutes. Agree one small step. End warm.</p><div class="bank"><p>What is one small step this month?<br>Why do not you... You could...<br>So, you are going to... Great to meet you.</p></div>
+<div><button class="btn ghost" data-complete="act12">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act13" aria-labelledby="s13"><h2 id="s13">13. Again, smoother</h2><p>Do your best part again. 2 minutes. No stopping.</p><p class="hint">Goal: less pause, more flow. Same client, easier this time.</p>
+<div><button class="btn ghost" data-complete="act13">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act14" aria-labelledby="s14"><h2 id="s14">14. Your real style</h2><p>Real you. Tell your teacher:</p><p>How are you different as a coach?<br>Which 2 questions do you love most?<br>What will you say first to a real client?</p><label for="t14">Your style</label><textarea id="t14" rows="3" aria-label="Your coaching style"></textarea>
+<div><button class="btn ghost" data-complete="act14">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<section class="card activity" id="act15" aria-labelledby="s15"><h2 id="s15">15. Stars and homework</h2><p>2 things you did well. 1 wish. Tell your teacher.</p><p><strong class="hl">Homework:</strong> 1 minute voice note. Welcome Daniel. Ask 3 questions. Suggest 1 small step.</p><label for="t15">Your homework plan</label><textarea id="t15" rows="3" aria-label="Homework plan"></textarea>
+<div><button class="btn ghost" data-complete="act15">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+</main>
+<footer>
+<div class="card"><p class="muted">Shirley, well done. You spoke as the coach today. Bring your voice note next time.</p></div>
+</footer>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+var xp=0, streak=0, done=new Set();
+var xpEl=document.getElementById('xp'), stEl=document.getElementById('streak'),
+    doneEl=document.getElementById('done'), bar=document.getElementById('bar');
+function hud(){xpEl.textContent=xp;stEl.textContent=streak;doneEl.textContent=done.size;bar.style.width=(done.size/15*100)+'%';}
+function feedback(sec, ok, msg){var f=sec.querySelector('.feedback');if(f){f.textContent=msg;f.className='feedback '+(ok?'ok':'');}}
+function markDone(id, pts){
+  var sec=document.getElementById(id);
+  if(!sec||done.has(id)) return;
+  done.add(id); sec.classList.add('complete');
+  if(pts) xp+=pts;
+  streak++;
+  hud();
+  if(done.size>=15){boom();}
+}
+document.querySelectorAll('[data-complete]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var id=b.getAttribute('data-complete');
+    markDone(id,5);
+    var sec=document.getElementById(id);
+    feedback(sec,true,'Done. Counted. Keep speaking.');
+    hud();
+  });
+});
+function boom(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c=document.getElementById('confetti'),x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;c.style.display='block';
+  var cols=['#ffd400','#38e0c8','#ffffff','#ff8a8a'],ps=[];
+  for(var i=0;i<140;i++)ps.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*0.3,w:6+Math.random()*6,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*Math.PI,col:cols[i%4]});
+  var t=0;(function anim(){t++;x.clearRect(0,0,c.width,c.height);
+    ps.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.r+=0.05;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.col;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore();});
+    if(t<220)requestAnimationFrame(anim);else c.style.display='none';})();
+}
+hud();
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Shirley Career Coach - precise verbs/objects via proxy (mirrors original)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act2:1,act3:1,act6:1,act8:1,act9:1,act11:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>

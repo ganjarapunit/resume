@@ -276,6 +276,9 @@
       { file: 'annisa-day15', act: 'act8', fields: ['sp8'] },
       { file: 'annisa-day15', act: 'act9', fields: ['sp9'] },
       { file: 'annisa-day15', act: 'act10', fields: ['sp10'] },
+      { file: 'shirley-career-coach', act: 'act8', fields: ['t8'] },
+      { file: 'shirley-career-coach', act: 'act14', fields: ['t14'] },
+      { file: 'shirley-career-coach', act: 'act15', fields: ['t15'] },
       { file: 'anna-strategies', act: 'act6', fields: ['in6', 'in6t'], input: true },
       { file: 'anna-strategies', act: 'act10', fields: ['in10'], input: true },
       { file: 'anna-strategies', act: 'act12', fields: ['in12t'], input: true },
@@ -361,6 +364,7 @@
       if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
       if (f.indexOf('annisa-day15') > -1) return 'annisa-day15';
+      if (f.indexOf('career-coach') > -1) return 'shirley-career-coach';
       if (f.indexOf('strategies') > -1) return 'anna-strategies';
       if (f.indexOf('quiet-archive') > -1) return 'anna-quiet-archive';
       if (f.indexOf('annisa-day14') > -1) return 'annisa-day14';
