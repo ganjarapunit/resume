@@ -35,6 +35,9 @@ export default {
     if (url.pathname.endsWith('/feedback') || url.pathname.endsWith('/ai-feedback')) {
       return handleFeedback(request, env, corsHeaders);
     }
+    if (url.pathname.endsWith('/speech-feedback')) {
+      return handleSpeechFeedback(request, env, corsHeaders);
+    }
 
     let data;
     try {
@@ -602,6 +605,89 @@ function isQuotaError(status, detail) {
     return /quota|rate.?limit|exceed|exhaust|resource.?exhausted|daily/i.test(String(detail || ''));
   }
   return false;
+}
+
+/* ---------- Instant AI speech feedback (voice recordings, Gemini audio input) ---------- */
+
+function buildSpeechPrompt(who, expectedText) {
+  return 'You are Punit, a friendly EFL speaking coach. Your learner is a complete beginner (A1) speaking English aloud.\n'
+    + 'The learner (' + who + ') should say exactly this line:\n' + expectedText + '\n'
+    + 'Listen to the attached recording and score how close it is. Reply in exactly this shape, plain text only, no markdown, under 100 words. Start your reply with exactly Hi!\n'
+    + 'Score: a whole number from 1 to 10.\n'
+    + 'Good: one specific thing they said well (1 line).\n'
+    + 'Fix: up to 2 pronunciation problems, each with the exact words to repeat (1 line each).\n'
+    + 'Try: write the full correct line for them to repeat once.\n'
+    + 'If you hear no English speech at all, give Score: 1 and say so in one line, then stop.';
+}
+
+async function handleSpeechFeedback(request, env, corsHeaders) {
+  const json = function (obj, status) {
+    return new Response(JSON.stringify(obj),
+      { status: status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  };
+  if (!env.GEMINI_API_KEY) {
+    return json({ ok: false, error: 'AI feedback is not set up yet. Your recording was not sent anywhere.' }, 503);
+  }
+  let data;
+  try {
+    data = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: 'Invalid JSON' }, 400);
+  }
+  const audio = String(data.audio || '').replace(/\s+/g, '');
+  if (audio.length < 1000 || /[^A-Za-z0-9+/=]/.test(audio)) {
+    return json({ ok: false, error: 'Record first, then tap Instant AI feedback.' }, 400);
+  }
+  if (audio.length > 2800000) {
+    return json({ ok: false, error: 'Recording is too long. Keep it under 30 seconds.' }, 400);
+  }
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  if (!feedbackAllowed(ip)) {
+    return json({ ok: false, error: 'Too many checks. Wait a few minutes, then try again.' }, 429);
+  }
+  const who = String(data.who || 'learner').trim().slice(0, 20);
+  const expectedText = String(data.expectedText || '').trim().slice(0, 300);
+  const prompt = buildSpeechPrompt(who, expectedText);
+  // Audio-capable models only. Fall through on any error so one bad model never blocks learners.
+  const models = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite'];
+  for (let mi = 0; mi < models.length; mi++) {
+    const model = models[mi];
+    let ctrl;
+    try {
+      ctrl = new AbortController();
+      const timer = setTimeout(function () { ctrl.abort(); }, 45000);
+      let res;
+      try {
+        res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + env.GEMINI_API_KEY, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType: 'audio/wav', data: audio } }] }],
+            generationConfig: { temperature: 0.4, maxOutputTokens: 600 }
+          }),
+          signal: ctrl.signal
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (res.ok) {
+        const out = await res.json();
+        const parts = (((out.candidates || [])[0] || {}).content || {}).parts || [];
+        const feedback = parts.map(function (p) { return p.text || ''; }).join('').trim();
+        if (feedback) {
+          return json({ ok: true, feedback: feedback.slice(0, 3000) }, 200);
+        }
+        console.error('Gemini speech empty', model);
+      } else {
+        let detail = '';
+        try { detail = await res.text(); } catch (e) { detail = ''; }
+        console.error('Gemini speech HTTP', model, res.status, detail.slice(0, 200));
+      }
+    } catch (e) {
+      console.error('Gemini speech error', model, e && e.message ? e.message : e);
+    }
+  }
+  return json({ ok: false, error: 'The AI checker is busy. Try again in a minute. Your recording was not kept.' }, 502);
 }
 
 async function handleReview(request, env, corsHeaders) {

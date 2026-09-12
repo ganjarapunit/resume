@@ -398,6 +398,10 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
                   <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecBao" disabled>Save Bao</button>
                   <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="Good morning! My name is Bao. Nice to meet you too!" data-voice="male">Play model</button>
                 </div>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="aiFbBao">Instant AI feedback</button>
+                </div>
+                <div class="feedback" id="aiFbBoxBao" role="status" aria-live="polite"></div>
                 <div class="feedback" id="recFbBao" aria-live="polite">Bao: only on this device.</div>
               </div>
               <div>
@@ -412,10 +416,14 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
                   <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecLinh" disabled>Save Linh</button>
                   <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="Hi! My name is Linh. Nice to meet you too!" data-voice="female">Play model</button>
                 </div>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="aiFbLinh">Instant AI feedback</button>
+                </div>
+                <div class="feedback" id="aiFbBoxLinh" role="status" aria-live="polite"></div>
                 <div class="feedback" id="recFbLinh" aria-live="polite">Linh: only on this device.</div>
               </div>
             </div>
-            <div class="feedback" aria-live="polite">Nothing sent. Sounds stay here.</div>
+            <div class="feedback" aria-live="polite">Recordings stay on this device. Only the AI-feedback copy is sent, when you tap the button.</div>
           </section>
 
           <section class="slide" role="group" aria-roledescription="slide" aria-label="14 of 14 Done">
@@ -800,6 +808,8 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
         mr.onstop=function(){
           try{
             var blob=new Blob(chunks, {type: mr.mimeType || 'audio/webm'});
+            if(!window.__recBlobs) window.__recBlobs={};
+            window.__recBlobs[ids.rec]=blob;
             if(url) URL.revokeObjectURL(url);
             url=URL.createObjectURL(blob);
             audio.src=url;
@@ -918,6 +928,70 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
     });
   });
 })();
+</script>
+<script>
+// Instant AI feedback on voice recordings: convert to 16k mono WAV, score via /api/speech-feedback.
+function blobToWavB64(blob){
+  return blob.arrayBuffer().then(function(buf){
+    var AC=window.AudioContext||window.webkitAudioContext;
+    var ac=new AC();
+    return ac.decodeAudioData(buf).then(function(audio){
+      var targetRate=16000;
+      var ch=audio.getChannelData(0);
+      var ratio=audio.sampleRate/targetRate;
+      var len=Math.floor(ch.length/ratio);
+      var out=new Int16Array(len);
+      for(var i=0;i<len;i++){
+        var v=ch[Math.floor(i*ratio)]||0;
+        v=Math.max(-1,Math.min(1,v));
+        out[i]=v<0?v*0x8000:v*0x7FFF;
+      }
+      var dataLen=out.length*2;
+      var buffer=new ArrayBuffer(44+dataLen);
+      var vw=new DataView(buffer);
+      function ws(o,s){ for(var k=0;k<s.length;k++) vw.setUint8(o+k,s.charCodeAt(k)); }
+      ws(0,'RIFF'); vw.setUint32(4,36+dataLen,true); ws(8,'WAVE'); ws(12,'fmt ');
+      vw.setUint32(16,16,true); vw.setUint16(20,1,true); vw.setUint16(22,1,true);
+      vw.setUint32(24,targetRate,true); vw.setUint32(28,targetRate*2,true);
+      vw.setUint16(32,2,true); vw.setUint16(34,16,true); ws(36,'data');
+      vw.setUint32(40,dataLen,true);
+      for(var j=0;j<out.length;j++) vw.setInt16(44+j*2,out[j],true);
+      var bytes=new Uint8Array(buffer);
+      var bin='';
+      var CH=0x8000;
+      for(var p=0;p<bytes.length;p+=CH){ bin+=String.fromCharCode.apply(null,bytes.subarray(p,p+CH)); }
+      var b64=btoa(bin);
+      try{ ac.close(); }catch(e){}
+      return b64;
+    });
+  });
+}
+function aiSpeechFeedback(who, blobKey, expected, btnId, boxId){
+  var btn=document.getElementById(btnId), box=document.getElementById(boxId);
+  if(!btn||!box) return;
+  function say(m, cls){ box.textContent=m; box.className='feedback'+(cls?' '+cls:''); }
+  var blob=(window.__recBlobs||{})[blobKey];
+  if(!blob){ say('Record first, then tap Instant AI feedback.', 'no'); return; }
+  btn.disabled=true; say('Listening...');
+  blobToWavB64(blob).then(function(b64){
+    return fetch('https://punitganjara.com/api/speech-feedback', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ lesson: location.pathname, lessonTitle: document.title,
+        activityId:'slide-13-record', activityTitle:'Record: '+who,
+        who: who, expectedText: expected, audio: b64, mimeType:'audio/wav' })
+    }).then(function(r){ return r.json().catch(function(){ return {ok:false}; }); });
+  }).then(function(j){
+    if(j && j.ok && j.feedback){ say(j.feedback, 'ok'); }
+    else { say((j&&j.error)||'The AI checker is busy. Try again in a minute.', 'no'); }
+    btn.disabled=false;
+  }).catch(function(){
+    say('No connection. Check internet and try again.', 'no');
+    btn.disabled=false;
+  });
+  try{ if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('AI speech feedback: '+who, 'audio'); }catch(e){}
+}
+document.getElementById('aiFbBao').addEventListener('click', function(){ aiSpeechFeedback('Bao','recBtnBao','Good morning! My name is Bao. Nice to meet you too!','aiFbBao','aiFbBoxBao'); });
+document.getElementById('aiFbLinh').addEventListener('click', function(){ aiSpeechFeedback('Linh','recBtnLinh','Hi! My name is Linh. Nice to meet you too!','aiFbLinh','aiFbBoxLinh'); });
 </script>
 <script src="../../xapi-include.js?v=6" defer></script>
 </body>
