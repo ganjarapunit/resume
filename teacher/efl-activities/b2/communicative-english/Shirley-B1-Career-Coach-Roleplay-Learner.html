@@ -34,6 +34,13 @@ strong.hl{color:var(--accent)}
 .feedback{min-height:1.6em;margin-top:10px;font-weight:bold}
 .feedback.ok{color:var(--accent-2)}
 .card.complete{border-color:var(--accent-2)}
+details.key{margin-top:10px;background:#000;border:2px solid var(--border);border-radius:8px;padding:10px 12px}
+details.key summary{cursor:pointer;font-weight:bold;color:var(--accent)}
+details.key summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+details.key[open]{border-color:var(--accent-2)}
+.allkey{margin:18px 0}
+.allkey h3{color:var(--accent);font-size:19px;margin:14px 0 6px}
+.allkey ol{margin:6px 0;padding-left:22px}
 canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:none}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -58,12 +65,15 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:n
 <main id="main">
 
 <section class="card activity" id="act1" aria-labelledby="s1"><h2 id="s1">1. Warm up</h2><p>30 seconds each. Speak fast.</p><p>I love work when...<br>Work is hard when...<br>Ask your teacher one question.</p><label for="t1">Your notes</label><textarea id="t1" rows="2" aria-label="Warm up notes"></textarea>
+<details class="key"><summary>Show model</summary><p>Model: I love work when I help people. Work is hard when there is no time. My question: What do you enjoy most at work?</p></details>
 <div><button class="btn ghost" data-complete="act1">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act2" aria-labelledby="s2"><h2 id="s2">2. Good coach</h2><p>What does a good coach do? Say 3 ideas.</p><p class="hint">Ideas: listens, asks, smiles, gives time, supports.</p><label for="t2">Your 3 ideas</label><textarea id="t2" rows="2" aria-label="Good coach ideas"></textarea>
+<details class="key"><summary>Show model</summary><p>Model: A good coach listens first, asks short questions, and gives time to think.</p></details>
 <div><button class="btn ghost" data-complete="act2">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act3" aria-labelledby="s3"><h2 id="s3">3. Meet Daniel</h2><p>Listen to Daniel. Then say: Who is he. Why does he come.</p><p class="hint">Listen only first time. No notes. Then 2 sentences.</p><label for="t3">Who and why</label><textarea id="t3" rows="2" aria-label="Who and why"></textarea>
+<details class="key"><summary>Show model</summary><p>Model: Daniel is a new client. He comes because he thinks about a career change.</p></details>
 <div><button class="btn ghost" data-complete="act3">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act4" aria-labelledby="s4"><h2 id="s4">4. Your 5 questions</h2><p>You are the coach. Ask your teacher each one. Warm voice.</p><div class="bank"><p>1 What brings you here today?<br>2 Tell me a bit about your job.<br>3 What do you enjoy most at work?<br>4 What worries you most about change?<br>5 What is one small step you can take this month?</p></div><p class="hint">Say all 5. Then say them again, smoother.</p>
@@ -73,21 +83,25 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:n
 <div><button class="btn ghost" data-complete="act5">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act6" aria-labelledby="s6"><h2 id="s6">6. 6 work words as the coach</h2><p>You are the coach. Match fast. Then say each one to Daniel.</p><p>1 stuck, 2 target, 3 training, 4 salary cut, 5 flexible, 6 risk</p><label for="t6">Your matches</label><input type="text" id="t6" class="answer" aria-label="Vocabulary matches"><p class="hint">Then speak to him: You feel... Your targets are... Training takes...</p>
+<details class="key"><summary>Show answers</summary><p>1 stuck = no progress, cannot move.<br>2 target = your goal.<br>3 training = learning new skills.<br>4 salary cut = less pay.<br>5 flexible = free hours, easy to change.<br>6 risk = danger, you may fail.</p></details>
 <div><button class="btn ghost" data-complete="act6">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act7" aria-labelledby="s7"><h2 id="s7">7. Keep him talking</h2><p>He says little. You keep him going. Say these:</p><div class="bank"><p>Tell me more about that.<br>Why is that.<br>What else.</p></div><p>Use one with your teacher now.</p>
 <div><button class="btn ghost" data-complete="act7">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act8" aria-labelledby="s8"><h2 id="s8">8. Soft advice as the coach</h2><p>You are the coach. Daniel listens. Advise him softly. Do not say You must.</p><p>1 He needs ideas. Start with Why do not you...<br>2 He needs experience. Start with You could...<br>3 He needs money. Start with Have you thought about...</p><label for="t8">Your 3 soft sentences to Daniel</label><textarea id="t8" rows="3" aria-label="Soft advice sentences to Daniel"></textarea>
+<details class="key"><summary>Show models</summary><p>1 Why do not you volunteer one day a month?<br>2 You could call a teacher this week.<br>3 Have you thought about joining a short course?</p></details>
 <div><button class="btn ghost" data-complete="act8">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act9" aria-labelledby="s9"><h2 id="s9">9. Plans: check as the coach</h2><p>You are the coach. Daniel tells you his plan. Say it back to him:</p><p>1 His plan: So you ___ volunteer next month.<br>2 His new idea: So you ___ call a teacher today.<br>3 His thought: So you think teaching ___ suit you.</p><label for="t9">Your sentences to Daniel</label><input type="text" id="t9" class="answer" aria-label="Plan check sentences to Daniel">
+<details class="key"><summary>Show models</summary><p>1 So you will volunteer next month.<br>2 So you will call a teacher today.<br>3 So you think teaching will suit you.</p></details>
 <div><button class="btn ghost" data-complete="act9">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act10" aria-labelledby="s10"><h2 id="s10">10. Roleplay 1: Opening</h2><p>You are the coach. 2 minutes. Start:</p><div class="bank"><p>Hello Daniel, nice to meet you...<br>What brings you here today?<br>Tell me a bit about your job.</p></div><p class="hint">Goal: warm start, 2 questions, one follow up.</p>
 <div><button class="btn ghost" data-complete="act10">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act11" aria-labelledby="s11"><h2 id="s11">11. Roleplay 2: Explore</h2><p>3 minutes. Ask about likes and worries. Keep him talking.</p><div class="bank"><p>What do you enjoy most?<br>Why is that? Tell me more. What else?<br>What worries you most?</p></div><p class="hint">React naturally: I see. That sounds hard. That is interesting.</p><label for="t11">Words you want to use</label><input type="text" id="t11" class="answer" aria-label="Words for explore">
+<details class="key"><summary>Show model</summary><p>Model: enjoy, worry, change, step, better. Example: What do you enjoy most? What worries you?</p></details>
 <div><button class="btn ghost" data-complete="act11">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act12" aria-labelledby="s12"><h2 id="s12">12. Roleplay 3: Plan and close</h2><p>2 minutes. Agree one small step. End warm.</p><div class="bank"><p>What is one small step this month?<br>Why do not you... You could...<br>So, you are going to... Great to meet you.</p></div>
@@ -97,10 +111,37 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:150;display:n
 <div><button class="btn ghost" data-complete="act13">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act14" aria-labelledby="s14"><h2 id="s14">14. Your real style</h2><p>Real you. Tell your teacher:</p><p>How are you different as a coach?<br>Which 2 questions do you love most?<br>What will you say first to a real client?</p><label for="t14">Your style</label><textarea id="t14" rows="3" aria-label="Your coaching style"></textarea>
+<details class="key"><summary>Show model</summary><p>Model: I ask first and talk less. I love What worries you most and What is one small step. My first line to a real client: What brings you here today?</p></details>
 <div><button class="btn ghost" data-complete="act14">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
 
 <section class="card activity" id="act15" aria-labelledby="s15"><h2 id="s15">15. Stars and homework</h2><p>2 things you did well. 1 wish. Tell your teacher.</p><p><strong class="hl">Homework:</strong> 1 minute voice note. Welcome Daniel. Ask 3 questions. Suggest 1 small step.</p><label for="t15">Your homework plan</label><textarea id="t15" rows="3" aria-label="Homework plan"></textarea>
+<details class="key"><summary>Show model</summary><p>Model: Two stars: warm voice, good questions. My wish: smoother follow-ups. Homework: Hello Daniel, nice to meet you. What brings you here? Tell me about your job. What do you enjoy most? Small step: Why do not you write three ideas this week?</p></details>
 <div><button class="btn ghost" data-complete="act15">Mark complete</button></div><div class="feedback" aria-live="polite"></div></section>
+
+<details class="key allkey" id="answerkey">
+<summary>Answer key: vocabulary, advice, plan check</summary>
+<h3>Activity 6: 6 work words</h3>
+<ol>
+<li>stuck = no progress, cannot move</li>
+<li>target = your goal</li>
+<li>training = learning new skills</li>
+<li>salary cut = less pay</li>
+<li>flexible = free hours, easy to change</li>
+<li>risk = danger, you may fail</li>
+</ol>
+<h3>Activity 8: soft advice, one starter each</h3>
+<ol>
+<li>Why do not you + verb: Why do not you volunteer one day a month?</li>
+<li>You could + verb: You could call a teacher this week.</li>
+<li>Have you thought about + verb-ing: Have you thought about joining a short course?</li>
+</ol>
+<h3>Activity 9: plan check, echo with So</h3>
+<ol>
+<li>So you will volunteer next month.</li>
+<li>So you will call a teacher today.</li>
+<li>So you think teaching will suit you.</li>
+</ol>
+</details>
 
 </main>
 <footer>
@@ -144,6 +185,20 @@ function boom(){
 }
 hud();
 })();
+</script>
+<script>
+// Report model/answer-key opens to the LRS (mirrors data-reveal tracking).
+document.querySelectorAll('details.key').forEach(function(d){
+  d.addEventListener('toggle', function(){
+    if(!d.open) return;
+    try{
+      if(window.LRS && window.LRS.itemAccessed){
+        var s=d.querySelector('summary');
+        window.LRS.itemAccessed('Model viewed: '+(s?s.textContent.trim().replace(/\s+/g,' ').substring(0,60):(d.id||'key')), 'model');
+      }
+    }catch(e){}
+  });
+});
 </script>
 <script src="../../xapi-include.js?v=6" defer></script>
 <script>
