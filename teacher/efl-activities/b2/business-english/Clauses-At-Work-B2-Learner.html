@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learner Deck: Three Clause Types at Work (B1)</title>
+<style>
+:root{--bg:#0a0a0a;--surface:#0f1b2e;--surface-2:#13233b;--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent-2:#38e0c8;--good:#38e0c8;--bad:#ff8a8a;--border:#2a3d57;--focus:#ffd400}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;font-size:clamp(16px,0.5vw + 15px,19px);line-height:1.7;margin:0;overflow-x:hidden}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 18px;font-weight:bold;z-index:300}
+.skip:focus{left:8px;top:8px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* App + HUD (stays visible in fullscreen) */
+#app{min-height:100vh;display:flex;flex-direction:column}
+.hud{position:sticky;top:0;z-index:100;background:#000;border-bottom:3px solid var(--accent);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hud strong{color:var(--accent)}
+.hud .bar{flex:1 1 140px;height:14px;background:var(--surface-2);border:2px solid var(--border);border-radius:999px;overflow:hidden;min-width:120px}
+.hud .fill{height:100%;width:0;background:var(--accent-2)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;max-width:1100px;width:100%;margin:0 auto}
+.toolbar label{color:var(--muted)}
+#jump{background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:10px;min-height:48px;max-width:100%}
+/* Deck grid: side nav lives OUTSIDE the slide on large screens */
+.deck-grid{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:0 16px 24px;display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
+.slide-viewport{width:100%;max-width:880px;margin:0 auto;min-width:0}
+.slide{display:none;background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:clamp(16px,3vw,28px)}
+.slide.active{display:block}
+.slide h2{color:var(--ink);font-size:clamp(1.15rem,2.5vw,1.4rem);margin:0 0 4px}
+.slide h2:focus{outline:none}
+.slide.active h2:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.meta{color:var(--muted);font-size:.95rem;margin:0 0 10px}
+.tag{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 10px;font-size:.85rem;margin:2px 4px 2px 0}
+.tag.adv{border-color:var(--accent);color:var(--accent)}
+.tag.att{border-color:var(--accent-2);color:var(--accent-2)}
+.tag.noun{border-color:#9ec5ff;color:#9ec5ff}
+.q{background:#000;border:2px solid var(--border);border-radius:10px;padding:12px 14px;margin:10px 0;overflow-wrap:anywhere}
+.q p{margin:.3em 0}
+label.row{display:block;background:var(--surface-2);border:2px solid var(--border);border-radius:8px;padding:10px 12px;margin:8px 0;cursor:pointer;min-height:48px}
+label.row.correct{border-color:var(--good)}
+label.row.wrong{border-color:var(--bad)}
+input[type=text]{width:100%;max-width:100%;background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:12px;font-size:1rem;margin:6px 0;min-height:48px}
+textarea{width:100%;max-width:100%;background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:12px;font-size:1rem;margin:6px 0;min-height:88px;font-family:inherit}
+input.answer.correct{border-color:var(--good)}
+input.answer.wrong{border-color:var(--bad)}
+.mark{font-weight:bold;margin-left:8px}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--bad)}
+.hint{display:block;color:var(--muted);font-size:.9rem}
+/* Buttons: never icon-only, 48px targets, no absolute overlay anywhere */
+.btn{background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 20px;font-size:1rem;font-weight:bold;cursor:pointer;margin:8px 8px 0 0;min-height:48px;min-width:48px}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,label.row:focus-within{outline:3px solid var(--focus);outline-offset:3px}
+/* Side nav: OUTSIDE the slide, only on large screens, static flow at the sides */
+.nav-side{display:none;background:transparent;color:var(--accent);border:3px solid var(--accent);border-radius:12px;font-size:1rem;font-weight:bold;cursor:pointer;min-height:64px;min-width:96px;padding:12px 16px;align-self:center}
+.nav-side:disabled{opacity:.4;cursor:not-allowed}
+/* Inner nav: INSIDE normal flow below the slide, only on small screens, stacked, never overlaying */
+.nav-inner{display:flex;gap:12px;margin:14px 0 0;padding:14px 0 0;border-top:2px solid var(--border);position:static}
+.nav-inner .btn{flex:1 1 0;margin:0}
+.model{background:var(--surface-2);border-left:6px solid var(--accent-2);border-radius:0 10px 10px 0;padding:10px 14px;margin:10px 0}
+details.key{background:#000;border:2px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0}
+details.key summary{cursor:pointer;font-weight:bold;color:var(--accent);font-size:1.02rem;padding:10px 0;min-height:48px}
+details.key[open]{border-color:var(--accent)}
+.feedback{font-weight:bold}
+.done-note{color:var(--good);font-weight:bold}
+#cert{background:#000;border:3px solid var(--accent);border-radius:14px;padding:24px;text-align:center;margin:12px 0}
+#cert h3{color:var(--accent);margin-top:0}
+footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);padding:14px 16px;max-width:1100px;width:100%;margin:0 auto}
+/* Large screens: 3-column grid, side buttons outside the slide, inner nav off */
+@media (min-width:900px){
+.deck-grid{grid-template-columns:auto minmax(0,880px) auto;align-items:center;justify-content:center}
+.nav-side{display:block}
+.nav-inner{display:none}
+}
+/* Small screens: single column, side buttons off, inner nav in flow below content */
+@media (max-width:899.98px){
+.nav-side{display:none}
+.nav-inner{display:flex}
+.toolbar{padding:10px 12px}
+.deck-grid{padding:0 12px 20px}
+}
+/* Fullscreen: same responsive rules hold, app scrolls, slides scroll inside */
+#app:fullscreen{background:#000;overflow:auto;padding-bottom:24px}
+#app:fullscreen .slide-viewport{max-height:none}
+#app:fullscreen .slide{max-height:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="app">
+<a class="skip" href="#slide-view">Skip to slide</a>
+<div class="hud" role="region" aria-label="Progress">
+<span><strong>XP:</strong> <span id="xp">0</span></span>
+<span><strong>Streak:</strong> <span id="streak">0</span></span>
+<span><strong>Done:</strong> <span id="done">0</span>/15</span>
+<span class="bar" aria-hidden="true"><span class="fill" id="fill"></span></span>
+<button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
+</div>
+<div class="toolbar">
+<span id="counter" aria-hidden="true"><strong>Slide 1 of 17</strong></span>
+<label for="jump">Go to slide:</label>
+<select id="jump">
+<option value="0">Cover: Three clause types</option>
+<option value="1">1. Your work week</option>
+<option value="2">2. Which sounds better</option>
+<option value="3">3. Sort A, B, or C</option>
+<option value="4">4. Adverbial endings</option>
+<option value="5">5. Your true lines</option>
+<option value="6">6. who, which, that, where</option>
+<option value="7">7. Join two lines</option>
+<option value="8">8. Polite questions</option>
+<option value="9">9. think, know, said</option>
+<option value="10">10. Label the email</option>
+<option value="11">11. Fix the chat</option>
+<option value="12">12. Meeting replies</option>
+<option value="13">13. Six true lines</option>
+<option value="14">14. Late delivery call</option>
+<option value="15">15. Exit ticket</option>
+<option value="16">Finish</option>
+</select>
+</div>
+<p class="vh" id="slide-live" aria-live="polite"></p>
+
+<div class="deck-grid">
+<button class="nav-side" id="prevSide" aria-label="Back to previous slide">Back</button>
+<div class="slide-viewport" id="slide-view">
+
+<section class="slide active" id="cover" role="group" aria-roledescription="slide" aria-label="Slide 1 of 17: Cover">
+<h2 tabindex="-1">Three clause types at work</h2>
+<p class="meta">B1 | Work English | Use Back and Next to move. 15 activities plus cover and finish.</p>
+<p><span class="tag adv">A = adverbial: when, why, if</span> <span class="tag att">B = attributive: describes a noun</span> <span class="tag noun">C = noun clause: after think, know, tell</span></p>
+<div class="q"><p>Because the shop was busy, I stayed late. The rota that is by the till has the hours. I think that Friday will be busy. Three links, one workday.</p></div>
+<p><button class="btn" data-goto="1">Start: Activity 1</button></p>
+<details class="key"><summary>How this deck works. Select to open.</summary><p>One slide at a time. Answer on the slide, press Check, open the key, then press Next. Say each answer aloud once.</p></details>
+</section>
+
+<section class="slide activity" id="act1" role="group" aria-roledescription="slide" aria-label="Slide 2 of 17: Activity 1" hidden>
+<h2 tabindex="-1">Activity 1. Your work week</h2>
+<p class="meta">Speak. 1 or 2 sentences each.</p>
+<div class="q"><p>1. What was busy this week?<br>2. Who helped you at work?<br>3. What do you want to finish next week?</p></div>
+<button class="btn ghost" data-reveal="model1">Show models</button>
+<div class="model" id="model1" hidden><p><i>I was busy because we had a stock check. Lan helped me. She is the colleague who knows the system. I want to finish the report that is late.</i></p></div>
+<p><button class="btn ghost" data-complete="act1">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>No fixed answers. Any true reply is good. Aim for one because, who, or that line.</p></details>
+</section>
+
+<section class="slide activity" id="act2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 17: Activity 2" hidden>
+<h2 tabindex="-1">Activity 2. Which sounds better at work?</h2>
+<p class="meta">Choose a or b.</p>
+<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Meeting at 10. Be there. b) When the meeting starts at 10, please be there.</p>
+<label class="row"><input type="radio" class="choice" name="g2a" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label></div></div>
+<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the file. You sent yesterday. b) I need the file that you sent yesterday.</p>
+<label class="row"><input type="radio" class="choice" name="g2b" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label></div></div>
+<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the key? Tell me. b) Can you tell me where the key is?</p>
+<label class="row"><input type="radio" class="choice" name="g2c" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label></div></div>
+<p><button class="btn" data-check="act2">Check</button> <button class="btn ghost" data-complete="act2">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>b, when clause gives time.</li><li>b, that points to the right file.</li><li>b, polite noun clause.</li></ol></details>
+</section>
+
+<section class="slide activity" id="act3" role="group" aria-roledescription="slide" aria-label="Slide 4 of 17: Activity 3" hidden>
+<h2 tabindex="-1">Activity 3. Sort: A, B, or C?</h2>
+<p class="meta">A = when, why, if. B = describes a noun. C = after think, know, tell.</p>
+<div class="q"><div class="mcq" data-group="g3_1"><p><b>1.</b> I stayed late because the client called.</p>
+<label class="row"><input type="radio" class="choice" name="g3_1" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_1"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_1"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_2"><p><b>2.</b> She is the manager who hired me.</p>
+<label class="row"><input type="radio" class="choice" name="g3_2"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_2" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_2"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_3"><p><b>3.</b> I know that the delivery is late.</p>
+<label class="row"><input type="radio" class="choice" name="g3_3"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_3"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_3" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_4"><p><b>4.</b> If the printer works, print two copies.</p>
+<label class="row"><input type="radio" class="choice" name="g3_4" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_4"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_4"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_5"><p><b>5.</b> The room where we meet is cold.</p>
+<label class="row"><input type="radio" class="choice" name="g3_5"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_5" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_5"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_6"><p><b>6.</b> Do you know when the bus leaves?</p>
+<label class="row"><input type="radio" class="choice" name="g3_6"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_6"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_6" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_7"><p><b>7.</b> Although it rained, we finished the stock check.</p>
+<label class="row"><input type="radio" class="choice" name="g3_7" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_7"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_7"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_8"><p><b>8.</b> The form that you need is on my desk.</p>
+<label class="row"><input type="radio" class="choice" name="g3_8"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_8" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_8"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_9"><p><b>9.</b> Can you tell me what time the shop opens?</p>
+<label class="row"><input type="radio" class="choice" name="g3_9"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_9"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_9" data-correct="true"> C</label></div></div>
+<p><button class="btn" data-check="act3">Check</button> <button class="btn ghost" data-complete="act3">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>A: 1, 4, 7. B: 2, 5, 8. C: 3, 6, 9.</p></details>
+</section>
+
+<section class="slide activity" id="act4" role="group" aria-roledescription="slide" aria-label="Slide 5 of 17: Activity 4" hidden>
+<h2 tabindex="-1">Activity 4. Adverbial: choose the right ending <span class="tag adv">A</span></h2>
+<div class="q"><div class="mcq" data-group="g4_1"><p><b>1.</b> I left early because ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_1" data-correct="true"> my son was sick</label>
+<label class="row"><input type="radio" class="choice" name="g4_1"> you arrive at the office</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_2"><p><b>2.</b> Call me when ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_2" data-correct="true"> you arrive at the office</label>
+<label class="row"><input type="radio" class="choice" name="g4_2"> there were no mistakes</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_3"><p><b>3.</b> If the customer waits, ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_3" data-correct="true"> offer water and a chair</label>
+<label class="row"><input type="radio" class="choice" name="g4_3"> my son was sick</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_4"><p><b>4.</b> Although the day was long, ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_4" data-correct="true"> we finished with a smile</label>
+<label class="row"><input type="radio" class="choice" name="g4_4"> offer water and a chair</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_5"><p><b>5.</b> We checked twice so that ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_5" data-correct="true"> there were no mistakes</label>
+<label class="row"><input type="radio" class="choice" name="g4_5"> we finished with a smile</label></div></div>
+<p><button class="btn" data-check="act4">Check</button> <button class="btn ghost" data-complete="act4">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 my son was sick. 2 you arrive at the office. 3 offer water and a chair. 4 we finished with a smile. 5 there were no mistakes.</p></details>
+</section>
+
+<section class="slide activity" id="act5" role="group" aria-roledescription="slide" aria-label="Slide 6 of 17: Activity 5" hidden>
+<h2 tabindex="-1">Activity 5. Adverbial: your true lines <span class="tag adv">A</span></h2>
+<p class="meta">Say, then type. Short lines are best.</p>
+<div class="q"><p>1. I hurry when ...<br>2. I call my manager if ...<br>3. I stayed late last week because ...<br>4. Although I was tired, I ...</p></div>
+<div class="q"><p><label for="a5t">Type your 4 lines here, then say each one aloud.</label><textarea id="a5t" rows="4" placeholder="I hurry when the phone rings..." autocomplete="off"></textarea></p></div>
+<button class="btn ghost" data-reveal="model5">Show models</button>
+<div class="model" id="model5" hidden><p><i>I hurry when the phone rings at closing time. I call my manager if the till does not work. I stayed late because we had new stock. Although I was tired, I helped a new colleague.</i></p></div>
+<p><button class="btn ghost" data-complete="act5">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept true lines. Check each starts with the right linker and has a subject plus verb after it.</p></details>
+</section>
+
+<section class="slide activity" id="act6" role="group" aria-roledescription="slide" aria-label="Slide 7 of 17: Activity 6" hidden>
+<h2 tabindex="-1">Activity 6. who, which, that, where <span class="tag att">B</span></h2>
+<p class="meta">Type one word. People take who. Things take which or that. Places take where.</p>
+<div class="q"><p><label for="a61">1. The colleague ___ trained me is on leave.</label><input type="text" class="answer" id="a61" data-accept="who" data-model="who" autocomplete="off"></p></div>
+<div class="q"><p><label for="a62">2. The laptop ___ I use is very slow.</label><input type="text" class="answer" id="a62" data-accept="which|that" data-model="which or that" autocomplete="off"></p></div>
+<div class="q"><p><label for="a63">3. The shop ___ I work is near the station.</label><input type="text" class="answer" id="a63" data-accept="where" data-model="where" autocomplete="off"></p></div>
+<div class="q"><p><label for="a64">4. The email ___ you sent had no file.</label><input type="text" class="answer" id="a64" data-accept="that|which" data-model="that or which" autocomplete="off"></p></div>
+<div class="q"><p><label for="a65">5. Our boss is someone ___ listens well.</label><input type="text" class="answer" id="a65" data-accept="who" data-model="who" autocomplete="off"></p></div>
+<div class="q"><p><label for="a66">6. The box ___ is by the door is for returns.</label><input type="text" class="answer" id="a66" data-accept="which|that" data-model="which or that" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act6">Check</button> <button class="btn ghost" data-complete="act6">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>who</li><li>which or that</li><li>where</li><li>that or which</li><li>who</li><li>which or that</li></ol></details>
+</section>
+
+<section class="slide activity" id="act7" role="group" aria-roledescription="slide" aria-label="Slide 8 of 17: Activity 7" hidden>
+<h2 tabindex="-1">Activity 7. Join two lines into one <span class="tag att">B</span></h2>
+<p class="meta">Type the key words. Example: who asked.</p>
+<div class="q"><p>1. I emailed the client. She asked for the report.<br><label for="a71">Joined with:</label><input type="text" class="answer" id="a71" data-accept="who asked" data-model="who asked for the report" autocomplete="off"></p></div>
+<div class="q"><p>2. The printer is broken. We use it every day.<br><label for="a72">Joined with:</label><input type="text" class="answer" id="a72" data-accept="that we use|which we use" data-model="that we use every day" autocomplete="off"></p></div>
+<div class="q"><p>3. This is the room. We pack orders here.<br><label for="a73">Joined with:</label><input type="text" class="answer" id="a73" data-accept="where we pack" data-model="where we pack orders" autocomplete="off"></p></div>
+<div class="q"><p>4. I found the key. You lost it yesterday.<br><label for="a74">Joined with:</label><input type="text" class="answer" id="a74" data-accept="that you lost|which you lost" data-model="that you lost yesterday" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act7">Check</button> <button class="btn ghost" data-complete="act7">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>I emailed the client who asked for the report.</li><li>The printer that we use every day is broken.</li><li>This is the room where we pack orders.</li><li>I found the key that you lost yesterday.</li></ol></details>
+</section>
+
+<section class="slide activity" id="act8" role="group" aria-roledescription="slide" aria-label="Slide 9 of 17: Activity 8" hidden>
+<h2 tabindex="-1">Activity 8. Polite questions <span class="tag noun">C</span></h2>
+<p class="meta">Type the end part. Use statement order. No flip.</p>
+<div class="q"><p><label for="a81">1. Can you tell me ...? (Where is the stockroom?)</label><input type="text" class="answer" id="a81" data-accept="where the stockroom is" data-model="where the stockroom is" autocomplete="off"></p></div>
+<div class="q"><p><label for="a82">2. Do you know ...? (What time does the meeting start?)</label><input type="text" class="answer" id="a82" data-accept="what time the meeting starts" data-model="what time the meeting starts" autocomplete="off"></p></div>
+<div class="q"><p><label for="a83">3. Can you tell me ...? (Is Mr Lee in today?)</label><input type="text" class="answer" id="a83" data-accept="if mr lee is|whether mr lee is" data-model="if Mr Lee is in today" autocomplete="off"></p></div>
+<div class="q"><p><label for="a84">4. Do you know ...? (When will the van come?)</label><input type="text" class="answer" id="a84" data-accept="when the van will come" data-model="when the van will come" autocomplete="off"></p></div>
+<div class="q"><p><label for="a85">5. Can you tell me ...? (Why is this bill high?)</label><input type="text" class="answer" id="a85" data-accept="why this bill is" data-model="why this bill is high" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act8">Check</button> <button class="btn ghost" data-complete="act8">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>where the stockroom is</li><li>what time the meeting starts</li><li>if (or whether) Mr Lee is in today</li><li>when the van will come</li><li>why this bill is high</li></ol></details>
+</section>
+
+<section class="slide activity" id="act9" role="group" aria-roledescription="slide" aria-label="Slide 10 of 17: Activity 9" hidden>
+<h2 tabindex="-1">Activity 9. think, know, said <span class="tag noun">C</span></h2>
+<div class="q"><div class="mcq" data-group="g9_1"><p><b>1.</b> I think ___ we need more staff on Saturdays.</p>
+<label class="row"><input type="radio" class="choice" name="g9_1" data-correct="true"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_1"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_1"> whether</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_2"><p><b>2.</b> She said ___ the new rota starts Monday.</p>
+<label class="row"><input type="radio" class="choice" name="g9_2" data-correct="true"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_2"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_2"> whether</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_3"><p><b>3.</b> I do not know ___ to do about the broken till.</p>
+<label class="row"><input type="radio" class="choice" name="g9_3"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_3" data-correct="true"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_3"> whether</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_4"><p><b>4.</b> He asked ___ I can work late on Friday.</p>
+<label class="row"><input type="radio" class="choice" name="g9_4"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_4"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_4" data-correct="true"> whether (if is also fine)</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_5"><p><b>5.</b> I am not sure ___ the client paid or not.</p>
+<label class="row"><input type="radio" class="choice" name="g9_5"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_5"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_5" data-correct="true"> whether</label></div></div>
+<p><button class="btn" data-check="act9">Check</button> <button class="btn ghost" data-complete="act9">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 that. 2 that. 3 what. 4 whether or if. 5 whether. Note: we often drop that in speech for 1 and 2.</p></details>
+</section>
+
+<section class="slide activity" id="act10" role="group" aria-roledescription="slide" aria-label="Slide 11 of 17: Activity 10" hidden>
+<h2 tabindex="-1">Activity 10. Label the email: A, B, or C?</h2>
+<div class="q"><p>Hi team,<br>(1) When you open the shop, please check the fridge.<br>The list (2) that I left on the desk shows the plan.<br>I think (3) that we are low on milk.<br>(4) If a customer asks for oat milk, offer tea instead.<br>Can you tell me (5) who will close tonight?<br>The rota (6) which is by the till has the hours.</p></div>
+<div class="q"><div class="mcq" data-group="g10_1"><p><b>1.</b></p><label class="row"><input type="radio" class="choice" name="g10_1" data-correct="true"> A</label><label class="row"><input type="radio" class="choice" name="g10_1"> B</label><label class="row"><input type="radio" class="choice" name="g10_1"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_2"><p><b>2.</b></p><label class="row"><input type="radio" class="choice" name="g10_2"> A</label><label class="row"><input type="radio" class="choice" name="g10_2" data-correct="true"> B</label><label class="row"><input type="radio" class="choice" name="g10_2"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_3"><p><b>3.</b></p><label class="row"><input type="radio" class="choice" name="g10_3"> A</label><label class="row"><input type="radio" class="choice" name="g10_3"> B</label><label class="row"><input type="radio" class="choice" name="g10_3" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_4"><p><b>4.</b></p><label class="row"><input type="radio" class="choice" name="g10_4" data-correct="true"> A</label><label class="row"><input type="radio" class="choice" name="g10_4"> B</label><label class="row"><input type="radio" class="choice" name="g10_4"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_5"><p><b>5.</b></p><label class="row"><input type="radio" class="choice" name="g10_5"> A</label><label class="row"><input type="radio" class="choice" name="g10_5"> B</label><label class="row"><input type="radio" class="choice" name="g10_5" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_6"><p><b>6.</b></p><label class="row"><input type="radio" class="choice" name="g10_6"> A</label><label class="row"><input type="radio" class="choice" name="g10_6" data-correct="true"> B</label><label class="row"><input type="radio" class="choice" name="g10_6"> C</label></div></div>
+<p><button class="btn" data-check="act10">Check</button> <button class="btn ghost" data-complete="act10">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 A. 2 B. 3 C. 4 A. 5 C. 6 B.</p></details>
+</section>
+
+<section class="slide activity" id="act11" role="group" aria-roledescription="slide" aria-label="Slide 12 of 17: Activity 11" hidden>
+<h2 tabindex="-1">Activity 11. Fix the chat: choose the right line</h2>
+<div class="q"><div class="mcq" data-group="g11_1"><p><b>1.</b> Although it was busy, but we helped all clients.</p>
+<label class="row"><input type="radio" class="choice" name="g11_1" data-correct="true"> Although it was busy, we helped all clients.</label>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although it was busy, but we helped all clients.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_2"><p><b>2.</b> The driver which brought the boxes is waiting.</p>
+<label class="row"><input type="radio" class="choice" name="g11_2" data-correct="true"> The driver who brought the boxes is waiting.</label>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The driver which brought the boxes is waiting.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_3"><p><b>3.</b> Do you know where is the new rota?</p>
+<label class="row"><input type="radio" class="choice" name="g11_3" data-correct="true"> Do you know where the new rota is?</label>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Do you know where is the new rota?</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_4"><p><b>4.</b> The room where we eat it is small.</p>
+<label class="row"><input type="radio" class="choice" name="g11_4" data-correct="true"> The room where we eat is small.</label>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The room where we eat it is small.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_5"><p><b>5.</b> She said me that she will be late.</p>
+<label class="row"><input type="radio" class="choice" name="g11_5" data-correct="true"> She told me that she will be late.</label>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that she will be late.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_6"><p><b>6.</b> If you will see Lan, tell her I called.</p>
+<label class="row"><input type="radio" class="choice" name="g11_6" data-correct="true"> If you see Lan, tell her I called.</label>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If you will see Lan, tell her I called.</label></div></div>
+<p><button class="btn" data-check="act11">Check</button> <button class="btn ghost" data-complete="act11">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>All first options are right. 1: no but with although. 2: who for people. 3: statement order. 4: drop extra it. 5: told me, not said me. 6: if plus present.</p></details>
+</section>
+
+<section class="slide activity" id="act12" role="group" aria-roledescription="slide" aria-label="Slide 13 of 17: Activity 12" hidden>
+<h2 tabindex="-1">Activity 12. Meetings: choose the natural reply</h2>
+<div class="q"><div class="mcq" data-group="g12_1"><p><b>1.</b> Boss: The file is late.</p>
+<label class="row"><input type="radio" class="choice" name="g12_1" data-correct="true"> I know that the net was down. I will send it now.</label>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I know.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_2"><p><b>2.</b> Client: Where is my order?</p>
+<label class="row"><input type="radio" class="choice" name="g12_2" data-correct="true"> Can you tell me your name so that I can check?</label>
+<label class="row"><input type="radio" class="choice" name="g12_2"> What is your name? Tell me.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_3"><p><b>3.</b> You need help.</p>
+<label class="row"><input type="radio" class="choice" name="g12_3" data-correct="true"> The task which you gave me is hard. Can you show me?</label>
+<label class="row"><input type="radio" class="choice" name="g12_3"> Task hard. Help.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_4"><p><b>4.</b> Plan change.</p>
+<label class="row"><input type="radio" class="choice" name="g12_4" data-correct="true"> If we start at 9, we can finish by 12.</label>
+<label class="row"><input type="radio" class="choice" name="g12_4"> If we will start at 9, we finish.</label></div></div>
+<p><button class="btn" data-check="act12">Check</button> <button class="btn ghost" data-complete="act12">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>All first options. They are fuller, politer, and use the clause correctly.</p></details>
+</section>
+
+<section class="slide activity" id="act13" role="group" aria-roledescription="slide" aria-label="Slide 14 of 17: Activity 13" hidden>
+<h2 tabindex="-1">Activity 13. Write: six true lines</h2>
+<p class="meta">Write about your real job. Then say each line aloud.</p>
+<div class="q"><p>1. The part of my job that I like most is ...<br>2. I work best when ...<br>3. My colleague, who ..., helps me a lot.<br>4. I think that our team should ...<br>5. If we have a problem at work, we ...<br>6. Ask one real question with Can you tell me ...?</p></div>
+<div class="q"><p><label for="a13t">Type your 6 lines here, then say each one aloud.</label><textarea id="a13t" rows="6" placeholder="The part of my job that I like most is..." autocomplete="off"></textarea></p></div>
+<button class="btn ghost" data-reveal="model13">Show models</button>
+<div class="model" id="model13" hidden><p><i>1. The part of my job that I like most is helping new staff. (B) 2. I work best when the shop is quiet. (A) 3. My colleague, who speaks three languages, helps me a lot. (B) 4. I think that our team should plan breaks better. (C) 5. If we have a problem at work, we call the supervisor. (A) 6. Can you tell me how I can improve my emails? (C)</i></p></div>
+<p><button class="btn ghost" data-complete="act13">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept true lines. After you write, label each one A, B, or C.</p></details>
+</section>
+
+<section class="slide activity" id="act14" role="group" aria-roledescription="slide" aria-label="Slide 15 of 17: Activity 14" hidden>
+<h2 tabindex="-1">Activity 14. Speak: fix a late delivery</h2>
+<p class="meta">A delivery is 2 days late. You call the supplier. Use at least 1 A, 1 B, and 1 C.</p>
+<div class="q"><p>Start: <i>Hello, I am calling about ...</i><br>Help: <i>Because the boxes did not come, ... / The order that we need is ... / Can you tell me when ...?</i></p></div>
+<button class="btn ghost" data-reveal="model14">Show model call</button>
+<div class="model" id="model14" hidden><p><i>Hello, I am calling about the order that we placed on Monday. (B) Because the boxes did not come, our shelves are empty. (A) Can you tell me when the van will arrive? (C) If it comes today, we can still serve customers. (A)</i></p></div>
+<p><button class="btn ghost" data-complete="act14">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>No fixed script. Good if you used one of each type and the supplier could follow you. Record your try and play it back once.</p></details>
+</section>
+
+<section class="slide activity" id="act15" role="group" aria-roledescription="slide" aria-label="Slide 16 of 17: Activity 15" hidden>
+<h2 tabindex="-1">Activity 15. Exit ticket: 3 lines for tomorrow</h2>
+<p class="meta">Write 3 lines you can really use at work.</p>
+<div class="q"><p><label for="a151">1. One A line with when, if, or because.</label><input type="text" id="a151" autocomplete="off"></p>
+<p><label for="a152">2. One B line with who, which, that, or where.</label><input type="text" id="a152" autocomplete="off"></p>
+<p><label for="a153">3. One C line with Can you tell me ... or I think ...</label><input type="text" id="a153" autocomplete="off"></p></div>
+<button class="btn ghost" data-reveal="model15">Show models</button>
+<div class="model" id="model15" hidden><p><i>1. If the queue is long, I will open till two. (A) 2. I will clean the shelf that is near the door. (B) 3. I think that Friday will be busy, so I will ask for help. (C)</i></p></div>
+<p><button class="btn ghost" data-complete="act15">Finish lesson</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept real plans. Check word order after tell me, and who for people. Keep these 3 lines for next time.</p></details>
+</section>
+
+<section class="slide" id="finish" role="group" aria-roledescription="slide" aria-label="Slide 17 of 17: Finish" hidden>
+<h2 tabindex="-1">Finish</h2>
+<p><strong>XP: <span id="xp2">0</span> | Done: <span id="done2">0</span>/15</strong></p>
+<p id="cert-msg">Finish all 15 Mark complete buttons to complete the deck.</p>
+<details class="key"><summary>What to do next. Select to open.</summary><p>Keep your 3 exit lines. Use one at work tomorrow. Start next class by saying which one you really used.</p></details>
+</section>
+
+<div class="nav-inner" aria-label="Slide navigation">
+<button class="btn ghost" id="prevInner" aria-label="Back to previous slide">Back</button>
+<button class="btn" id="nextInner" aria-label="Go to next slide">Next</button>
+</div>
+
+</div>
+<button class="nav-side" id="nextSide" aria-label="Go to next slide">Next</button>
+</div>
+<footer><p>Student deck, B1. Same 15 activities as the teacher pack. Tip: say each checked sentence aloud once.</p></footer>
+</div>
+<canvas id="conf" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;display:none"></canvas>
+<script>
+var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var cur=0;
+var counter=document.getElementById('counter');
+var jump=document.getElementById('jump');
+var live=document.getElementById('slide-live');
+var prevS=document.getElementById('prevSide'),nextS=document.getElementById('nextSide');
+var prevI=document.getElementById('prevInner'),nextI=document.getElementById('nextInner');
+function show(n,focus){
+if(n<0)n=0;if(n>slides.length-1)n=slides.length-1;cur=n;
+slides.forEach(function(s,i){if(i===n){s.classList.add('active');s.removeAttribute('hidden');}else{s.classList.remove('active');s.setAttribute('hidden','');}});
+counter.innerHTML='<strong>Slide '+(n+1)+' of '+slides.length+'</strong>';
+jump.value=String(n);
+var t=slides[n].getAttribute('aria-label')||('Slide '+(n+1));
+live.textContent=t;
+var dis0=(n===0),dis1=(n===slides.length-1);
+prevS.disabled=dis0;prevI.disabled=dis0;nextS.disabled=dis1;nextI.disabled=dis1;
+var vp=document.getElementById('slide-view');
+if(vp&&vp.scrollIntoView){try{vp.scrollIntoView({block:'start'});}catch(e){vp.scrollIntoView();}}
+if(focus!==false){var h=slides[n].querySelector('h2');if(h){h.focus({preventScroll:true});}}
+}
+function prev(){show(cur-1);}function next(){show(cur+1);}
+prevS.addEventListener('click',prev);prevI.addEventListener('click',prev);
+nextS.addEventListener('click',next);nextI.addEventListener('click',next);
+jump.addEventListener('change',function(){show(parseInt(jump.value,10));});
+document.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){show(parseInt(b.getAttribute('data-goto'),10));});});
+document.addEventListener('keydown',function(e){
+if(e.target&&e.target.closest&&(e.target.closest('input,textarea,select,[contenteditable="true"]')))return;
+if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();next();}
+else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+else if(e.key==='Home'){e.preventDefault();show(0);}
+else if(e.key==='End'){e.preventDefault();show(slides.length-1);}
+});
+var touchX=null;
+document.getElementById('slide-view').addEventListener('touchstart',function(e){if(e.touches&&e.touches.length===1){touchX=e.touches[0].clientX;}},{passive:true});
+document.getElementById('slide-view').addEventListener('touchend',function(e){
+if(touchX===null)return;
+if(e.target&&e.target.closest&&(e.target.closest('input,textarea,select')))return;
+var dx=e.changedTouches[0].clientX-touchX;touchX=null;
+if(Math.abs(dx)>48){if(dx<0)next();else prev();}
+},{passive:true});
+var fsBtn=document.getElementById('fsBtn'),app=document.getElementById('app');
+function fsOn(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
+function fsLabel(){var on=fsOn();fsBtn.textContent=on?'Exit full screen':'Full screen';fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+if(!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen)){fsBtn.hidden=true;}
+fsBtn.addEventListener('click',function(){
+try{
+if(!fsOn()){if(app.requestFullscreen)app.requestFullscreen();else if(app.webkitRequestFullscreen)app.webkitRequestFullscreen();}
+else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}
+}catch(e){}
+setTimeout(fsLabel,300);
+});
+document.addEventListener('fullscreenchange',fsLabel);
+document.addEventListener('webkitfullscreenchange',fsLabel);
+var state={xp:0,streak:0,done:{},cheered:false};
+function norm(s){return (s||'').toLowerCase().trim().replace(/[.?!]+$/,'').replace(/\s+/g,' ');}
+function upd(){document.getElementById('xp').textContent=state.xp;document.getElementById('streak').textContent=state.streak;
+var n=Object.keys(state.done).length;document.getElementById('done').textContent=n;
+document.getElementById('done2').textContent=n;document.getElementById('xp2').textContent=state.xp;
+document.getElementById('fill').style.width=(n/15*100)+'%';
+if(n>=15){document.getElementById('cert-msg').textContent='Complete. All 15 activities done.';confetti();}
+}
+document.querySelectorAll('[data-reveal]').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.getAttribute('data-reveal'));if(el){el.hidden=!el.hidden;}});});
+document.querySelectorAll('[data-check]').forEach(function(btn){btn.addEventListener('click',function(){
+var sec=document.getElementById(btn.getAttribute('data-check'));if(!sec)return;
+var items=0,ok=0;
+sec.querySelectorAll('input.answer').forEach(function(inp){
+items++;var acc=(inp.getAttribute('data-accept')||'').split('|');var v=norm(inp.value);
+var good=acc.some(function(a){return v.indexOf(norm(a))!==-1;});
+inp.classList.remove('correct','wrong');inp.setAttribute('aria-invalid',good?'false':'true');
+var m=inp.parentElement.querySelector('.mark');if(m)m.remove();
+var s=document.createElement('span');s.className='mark '+(good?'ok':'no');s.textContent=good?'Correct':'Try again';
+inp.after(s);if(good){ok++;}
+var lbl=sec.querySelector('label[for="'+inp.id+'"]');if(lbl){var dm=inp.getAttribute('data-model');if(!good&&dm&&!lbl.querySelector('.hint')){var h=document.createElement('span');h.className='hint';h.textContent='Model: '+dm;lbl.appendChild(h);}}
+});
+sec.querySelectorAll('.mcq').forEach(function(g){
+items++;var checked=g.querySelector('input.choice:checked');
+g.querySelectorAll('label.row').forEach(function(l){l.classList.remove('correct','wrong');});
+if(!checked){return;}
+var good=checked.hasAttribute('data-correct');
+var lab=checked.closest('label');if(lab)lab.classList.add(good?'correct':'wrong');
+var c2=g.querySelector('input[data-correct]');var c2l=c2?c2.closest('label'):null;if(c2l)c2l.classList.add('correct');
+if(good){ok++;}
+});
+var fb=sec.querySelector('.feedback');if(fb){fb.textContent=ok+' of '+items+' right.';fb.style.color=ok===items?'var(--good)':'var(--ink)';}
+if(items>0&&ok===items){state.xp+=ok*10;state.streak++;}else{state.streak=0;}upd();
+});});
+document.querySelectorAll('[data-complete]').forEach(function(btn){btn.addEventListener('click',function(){
+var id=btn.getAttribute('data-complete');state.done[id]=true;
+var sec=document.getElementById(id);var n=sec?sec.querySelector('.done-note'):null;if(n)n.textContent='Done.';
+btn.disabled=true;upd();
+});});
+function confetti(){
+if(state.cheered&&Object.keys(state.done).length>15)return;
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var c=document.getElementById('conf');c.style.display='block';var x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+var p=[];for(var i=0;i<120;i++){p.push({x:Math.random()*c.width,y:-20-Math.random()*200,w:6+Math.random()*6,h:8+Math.random()*8,v:2+Math.random()*3});}
+var t=0;(function f(){x.clearRect(0,0,c.width,c.height);x.fillStyle='#ffd400';p.forEach(function(o){o.y+=o.v;x.fillRect(o.x,o.y,o.w,o.h);});if(++t<160)requestAnimationFrame(f);else c.style.display='none';})();
+state.cheered=true;
+}
+show(0,false);upd();
+</script>
+<script>
+// Lightweight LRS hooks for the deck (mirrors lesson-page tracking in xapi-include.js).
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var done=false;
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(s){
+    var h=s.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (s.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(s){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(s), 'slide');
+      if(slides.indexOf(s)===slides.length-1 && !done){
+        done=true;
+        if(window.LRS && window.LRS.completed) window.LRS.completed({});
+      }
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  }, 500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s, {attributes:true, attributeFilter:['class']}); });
+  }
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      try{ var l=L(); if(!l) return; l.itemAccessed('Check: '+btn.getAttribute('data-check'), 'question'); }catch(e){}
+    });
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Clauses at Work - precise verbs/objects via proxy (mirrors original)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act5:1,act13:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+        completed['_marked_'+secId]=true;
+        sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+      }
+      if(!completed[secId]){
+        completed[secId]=true;
+        if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=10){
+          sendPrecise('experienced', LESSON_ID, document.title);
+        }
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

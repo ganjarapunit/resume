@@ -383,6 +383,12 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
   const a = String(activityId || '').toLowerCase();
   const t = String(activityTitle || '').toLowerCase();
   const where = l + ' ' + a + ' ' + t;
+  if (where.includes('clauses-at-work') || where.includes('attributive') || where.includes('three clause')) {
+    return 'THREE CLAUSE TYPES AT WORK (A = adverbial, B = attributive, C = noun clause). Required shape: A with when / if / because / although '
+      + 'plus subject plus verb (no but with although, if plus present); B with who for people, which / that for things, where for places '
+      + '(no extra pronoun); C with statement order after tell me / know (no flip: where the rota is, not where is the rota). '
+      + 'Check: is the linker right for A/B/C? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
+  }
   if (where.includes('career-coach') || where.includes('career coach') || where.includes('as the coach') || where.includes('good coach')) {
     return 'B1 CAREER-COACH ROLEPLAY (warm, soft English). Required shape: warm open questions (What brings you here / Tell me about), '
       + 'soft advice NEVER You must (Why do not you / You could / Have you thought about), echo plans back with So you, one small step to close. '
