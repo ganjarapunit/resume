@@ -399,6 +399,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
+  if (where.includes('day16') || where.includes('abstract')) {
+    return 'ABSTRACT (100 to 150 words, 5 parts B A M R C, one study only). Required shape: Background (general problem, present tense), '
+      + 'Aim (THIS STUDY AIMS TO), Method (past tense joined / did / took plus how many, how long, what test), '
+      + 'Results (RESULTS SHOW THAT plus one number, careful may / show / compared to, never prove or always), '
+      + 'Conclusion (IN CONCLUSION plus may). '
+      + 'Check: are all 5 parts present in order? Is the method past tense with numbers? Is there a careful result number? Is it 100 to 150 words?';
+  }
   if (where.includes('day15') || where.includes('synthesis') || where.includes('two sources') || where.includes('two become one')) {
     return 'SYNTHESIS (two sources, ONE idea, one paragraph). Required shape: BOTH authors named with years, '
       + 'one shared idea (never two separate summaries), a paraphrased line from each source, closer starting with TOGETHER. '
