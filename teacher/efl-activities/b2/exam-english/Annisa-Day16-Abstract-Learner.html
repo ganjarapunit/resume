@@ -5,714 +5,592 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Day 16 Write an Abstract Interactive</title>
 <style>
-  :root{
-    --bg:#07101f; --surface:#0f1b2e; --surface-2:#13233b;
-    --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400; --accent-2:#38e0c8;
-    --good:#38e0c8; --bad:#ff8a8a; --border:#2a3d57; --focus:#ffd400;
-    --warn:#ffb700;
-  }
-  *{box-sizing:border-box}
-  html{font-size:18px;scroll-behavior:smooth}
-  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
-  a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-  a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
-  .hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--border);padding:.6rem 1rem}
-  .hud-inner{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
-  .stat{display:flex;align-items:center;gap:.4rem;font-weight:700;color:var(--ink);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
-  .stat svg{width:18px;height:18px}
-  .progress-wrap{flex:1 1 220px;min-width:200px}
-  .progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
-  .progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
-  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
-  header.hero{max-width:980px;margin:0 auto;padding:1.7rem 1rem 1rem;text-align:center}
-  header.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 .3rem;color:#fff;text-shadow:0 0 24px rgba(56,224,200,.25);line-height:1.2}
-  header.hero p{color:var(--muted);margin:.2rem auto;max-width:640px;font-size:.98rem}
-  .pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.82rem;font-weight:700;margin:.2rem}
-  main{max-width:980px;margin:0 auto;padding:1rem}
-  .intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:1rem 0 1.3rem}
-  .intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
-  .rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
-  .rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
-  .rule-item.ok{border-color:var(--good);color:var(--good)}
-  .rule-letter{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;font-weight:800;margin-right:.3rem;color:#06121f}
-  .b{background:var(--accent)}.a{background:#7cc4ff}.m{background:#c9a7ff}.r{background:var(--accent-2)}.c{background:#ffb700}
-  .credit{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
-  .credit strong{color:var(--accent-2)}
-  .steps-mini{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
-  .steps-mini span{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.3rem .6rem;font-size:.82rem;color:var(--muted)}
-  .steps-mini strong{color:var(--ink)}
-  .activity{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
-  .badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.15rem}
-  .act-head h2{margin:0;font-size:1.15rem;color:#fff;flex:1 1 auto}
-  .tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700}
-  .hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
-  .exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
-  .qbox{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem}
-  .model-text{background:#06121f;border:1px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-size:.92rem;line-height:1.7}
-  .model-text .lab{display:inline-block;font-size:.72rem;font-weight:800;border-radius:6px;padding:.05rem .45rem;margin-right:.35rem;vertical-align:middle;color:#06121f}
-  .model-text p{margin:.35rem 0}
-  .model-text .note{color:var(--muted);font-size:.82rem;margin-bottom:0}
-  .fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
-  .fill .lead,.fill .tail{color:var(--ink);font-size:.92rem}
-  input.answer,textarea{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
-  input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible,input[type=checkbox]:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-  input.answer{min-width:140px}
-  textarea{width:100%;min-height:88px;resize:vertical}
-  input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
-  input.answer.wrong{border-color:var(--bad)}
-  .mark{font-size:.78rem;font-weight:700;margin-left:.3rem}
-  .mark.ok{color:var(--good)} .mark.no{color:var(--bad)}
-  .mcq{margin:.55rem 0}
-  .mcq .stem{font-weight:700;color:#fff;margin-bottom:.25rem;font-size:.93rem}
-  .mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.4rem .65rem;margin:.25rem 0;cursor:pointer;font-size:.92rem}
-  .mcq label.correct{border-color:var(--good)} .mcq label.wrong{border-color:var(--bad)}
-  .mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
-  button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit}
-  button.btn:hover{filter:brightness(1.05)}
-  button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
-  .feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
-  .feedback.good{border-color:var(--good)} .feedback.bad{border-color:var(--bad)}
-  .feedback ul{margin:.35rem 0;padding-left:1.1rem}
-  .mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
-  .mini-tip strong{color:var(--accent)}
-  .model{margin-top:.45rem;padding:.5rem .7rem;background:#06121f;border:1px dashed var(--border);border-radius:8px;color:var(--ink);font-size:.9rem}
-  .model[hidden]{display:none}
-  details.key{margin-top:.6rem;border:2px solid var(--good);border-radius:10px;background:#0a1f1c}
-  details.key summary{cursor:pointer;padding:.55rem .8rem;font-weight:800;color:var(--good);font-size:.93rem}
-  details.key summary:hover{text-decoration:underline}
-  details.key .key-body{padding:.1rem .9rem .8rem;color:#eafff8;font-size:.9rem;border-top:1px solid var(--border)}
-  details.key .key-body ol,details.key .key-body ul{margin:.35rem 0;padding-left:1.15rem}
-  .done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;transition:opacity .3s;font-size:.85rem}
-  .activity.complete .done-flag{opacity:1}
-  .wordcount{font-size:.82rem;color:var(--warn);font-weight:700;margin-top:.3rem}
-  .check-list label{display:block;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;margin:.25rem 0;font-size:.9rem;cursor:pointer}
-  .check-list input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
-  .results{margin:2rem 0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.3rem;text-align:center}
-  .results[hidden]{display:none}
-  .results h2{color:var(--accent);margin-top:0;font-size:1.3rem}
-  .score-grid{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:.9rem 0}
-  .score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;min-width:125px}
-  .score-box .n{font-size:1.7rem;font-weight:800;color:var(--accent-2)}
-  .score-box .l{color:var(--muted);font-size:.82rem}
-  #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
-  footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.82rem}
-  footer a{color:var(--accent)}
-  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-  @media (max-width:560px){input.answer{min-width:120px}}
-  #login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
-  #login[hidden]{display:none}
-  .login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(255,212,0,.15)}
-  .login-card h2{color:var(--accent);margin-top:0}
-  .login-card p{color:var(--muted);font-size:.92rem}
-  .login-card input{width:100%;background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.55rem;font-size:1rem;margin:.55rem 0;font-family:inherit}
-  .timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
-  .vis-note{font-size:.82rem;color:var(--muted);margin:.3rem 0}
-  .speak{margin-top:.7rem;padding:.65rem .85rem;border-left:4px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0}
-  .speak h3{margin:0 0 .2rem;color:var(--accent-2);font-size:.95rem}
+:root{
+--bg:#07101f;--surface:#0f1b2e;--surface-2:#13233b;
+--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent-2:#38e0c8;
+--good:#38e0c8;--bad:#ff8a8a;--border:#2a3d57;--focus:#ffd400;--warn:#ffb700;
+}
+*{box-sizing:border-box}
+html{font-size:20px;scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.7}
+a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
+.hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.94);border-bottom:2px solid var(--border);padding:.6rem 1rem}
+.hud-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.stat{display:flex;align-items:center;gap:.4rem;font-weight:700;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
+.progress-wrap{flex:1 1 220px;min-width:200px}
+.progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
+.progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+header.hero{max-width:1100px;margin:0 auto;padding:1.2rem 1rem .4rem;text-align:center}
+header.hero h1{font-size:clamp(1.5rem,4vw,2.2rem);margin:0 0 .3rem;color:#fff;line-height:1.2}
+header.hero p{color:var(--muted);margin:.2rem auto;max-width:660px;font-size:.95rem}
+.pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.82rem;font-weight:700;margin:.2rem}
+main{max-width:1100px;margin:0 auto;padding:0 1rem 1rem}
+/* ---------- Deck shell ---------- */
+.deck-shell{background:transparent;border:1px solid var(--border);border-radius:18px;padding:.8rem;margin:.6rem 0 1.2rem}
+.deck-shell:fullscreen{overflow:auto;background:var(--bg);padding:1rem;border-radius:0}
+.deck-topbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.slide-count{font-weight:800;color:var(--accent);font-size:.95rem}
+.deck-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.toc-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;color:var(--muted);font-size:.88rem;margin-top:.7rem}
+.toc-row select{max-width:100%}
+/* Large screens: Back/Next sit OUTSIDE the slide card, flanking it in normal flow. Never overlaid. */
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{display:flex;position:sticky;top:38vh}
+.nav-slot.nav-left{justify-content:flex-end}
+.nav-slot.nav-right{justify-content:flex-start}
+button.nav{min-height:56px;min-width:96px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:12px;font-weight:800;font-size:1rem;padding:.6rem 1rem;cursor:pointer;font-family:inherit}
+button.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+button.nav:disabled{opacity:.4;cursor:not-allowed}
+.deck{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem}
+.deck-shell:fullscreen .deck{max-height:none}
+.slides{min-width:0}
+.slide{display:none;min-width:0}
+.slide.active{display:block}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+/* Inside-deck nav slot for small screens. Hidden on large screens. */
+.nav-inside{display:none}
+/* ---------- Slide content ---------- */
+.intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:0 0 1rem}
+.intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
+.rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
+.rule-letter{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;font-weight:800;margin-right:.3rem;color:#06121f}
+.b{background:var(--accent)}.a{background:#7cc4ff}.m{background:#c9a7ff}.r{background:var(--accent-2)}.c{background:#ffb700}
+.steps-mini{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
+.steps-mini span{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.3rem .6rem;font-size:.82rem;color:var(--muted)}
+.steps-mini strong{color:var(--ink)}
+.activity{margin:0}
+.act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
+.badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.15rem}
+.act-head h2{margin:0;font-size:clamp(1.12rem,3vw,1.3rem);color:#fff;flex:1 1 auto}
+.tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700;white-space:nowrap}
+.hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
+.exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;min-width:0}
+.model-text{background:#06121f;border:1px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-size:.92rem;line-height:1.7}
+.model-text .lab{display:inline-block;font-size:.72rem;font-weight:800;border-radius:6px;padding:.05rem .45rem;margin-right:.35rem;vertical-align:middle;color:#06121f}
+.qbox{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem;overflow-wrap:anywhere}
+.fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
+.fill .lead,.fill .tail{font-size:.92rem}
+input.answer,textarea,select{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
+input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible,input[type=checkbox]:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+input.answer{min-width:150px;max-width:100%}
+textarea{width:100%;min-height:88px;resize:vertical}
+input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
+input.answer.wrong{border-color:var(--bad)}
+.mark{font-size:.78rem;font-weight:700;margin-left:.3rem}
+.mark.ok{color:var(--good)}.mark.no{color:var(--bad)}
+.mcq{margin:.55rem 0}
+.mcq .stem{font-weight:700;color:#fff;margin-bottom:.25rem;font-size:.93rem}
+.mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.4rem .65rem;margin:.25rem 0;cursor:pointer;font-size:.92rem}
+.mcq label.correct{border-color:var(--good)}.mcq label.wrong{border-color:var(--bad)}
+.mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit;margin-right:.4rem;min-height:48px}
+button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+.feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
+.feedback.good{border-color:var(--good)}.feedback.bad{border-color:var(--bad)}
+.mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
+.mini-tip strong{color:var(--accent)}
+details.key{margin-top:.6rem;border:2px solid var(--good);border-radius:10px;background:#0a1f1c}
+details.key summary{cursor:pointer;padding:.55rem .8rem;font-weight:800;color:var(--good);font-size:.93rem;min-height:44px}
+details.key summary:hover{text-decoration:underline}
+details.key .key-body{padding:.1rem .9rem .8rem;color:#eafff8;font-size:.9rem;border-top:1px solid var(--border)}
+details.key .key-body ol,details.key .key-body ul{margin:.35rem 0;padding-left:1.15rem}
+.done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;font-size:.85rem}
+.activity.complete .done-flag{opacity:1}
+.wordcount{font-size:.82rem;color:var(--warn);font-weight:700;margin-top:.3rem}
+.check-list label{display:block;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;margin:.25rem 0;font-size:.9rem;cursor:pointer}
+.check-list input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+.results{margin:0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.3rem;text-align:center}
+.results h2{color:var(--accent);margin-top:0}
+.score-grid{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:.9rem 0}
+.score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;min-width:125px}
+.score-box .n{font-size:1.7rem;font-weight:800;color:var(--accent-2)}
+.score-box .l{color:var(--muted);font-size:.82rem}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.82rem}
+footer a{color:var(--accent)}
+#login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
+#login[hidden]{display:none}
+.login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;text-align:center}
+.login-card h2{color:var(--accent);margin-top:0}
+.login-card p{color:var(--muted);font-size:.92rem}
+.login-card input{width:100%;margin:.55rem 0}
+.timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* ---------- Small screens: Back/Next move INSIDE the deck, stacked below content in flow. No overlay. ---------- */
+@media (max-width:760px){
+.deck-shell{padding:.6rem}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
+.nav-inside button.nav{width:100%;min-height:52px}
+.deck{padding:.85rem}
+.toc-row select{width:100%}
+}
+@media (max-width:760px){
+html{font-size:19px}
+}
+@media (max-width:560px){
+input.answer{min-width:120px}
+html{font-size:18px}
+button.btn{width:100%;margin-right:0}
+.nav-inside{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to lesson content</a>
+<a class="skip" href="#deck">Skip to lesson slides</a>
 <div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-  <div class="login-card">
-    <h2 id="loginTitle">Welcome</h2>
-    <p>Your name to start Day 16.</p>
-    <label for="loginName" style="font-weight:700;">Your name</label>
-    <input id="loginName" type="text" autocomplete="name" placeholder="e.g. Alex" aria-label="Your name">
-    <button class="btn" id="loginStart">Start</button>
-  </div>
+<div class="login-card">
+<h2 id="loginTitle">Welcome</h2>
+<p>Type your name to start Day 16.</p>
+<label for="loginName" style="font-weight:700;">Your name</label>
+<input id="loginName" type="text" autocomplete="name" placeholder="e.g. Alex" aria-label="Your name">
+<button class="btn" id="loginStart">Start</button>
 </div>
-
+</div>
 <div class="hud" role="region" aria-label="Your progress">
-  <div class="hud-inner">
-    <div class="stat" aria-live="polite">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-      <span id="points">0 XP</span>
-    </div>
-    <div class="stat" aria-live="polite">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2c1 4-2 5-2 8a3 3 0 006 0c0-1 1-2 1-2 3 2 4 5 4 8a8 8 0 11-16 0c0-5 4-9 7-14z"/></svg>
-      <span id="streak">Streak 0</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span id="progText">0 / 15 complete</span></div>
-      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
-    </div>
-  </div>
+<div class="hud-inner">
+<div class="stat" aria-label="Experience points">XP <span id="xp">0</span></div>
+<div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
+<div class="progress-wrap">
+<div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
+<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
-
+</div>
+</div>
 <header class="hero">
-  <h1>Day 16 Write an Abstract</h1>
-  <p>Make a long text short. One clear summary, 100 to 150 words.</p>
-  <span class="pill">15 short tasks</span>
-  <span class="pill">40 to 45 min</span>
-  <span class="pill">Abstract: 5 parts</span>
+<h1>Day 16: Write an Abstract</h1>
+<p>Make a long text short. One clear summary, 100 to 150 words.</p>
+<div><span class="pill">40 to 45 min</span><span class="pill">One to one</span><span class="pill">Abstract: 5 parts</span></div>
 </header>
-
 <main id="main">
-  <section class="intro" aria-label="Today">
-    <h2>Today</h2>
-    <p style="margin:.4rem 0 0;">How to write a 100 to 150 word abstract: background, aim, method, results, conclusion. Same Lee (2023) and Smith (2024) homework idea from Day 14 and Day 15. No new topic to learn. Your Day 15 synthesis point becomes the aim line today.</p>
-    <p style="color:var(--muted);font-size:.88rem;margin:.3rem 0 0;">You already know: PEEL from Day 6, cite with year from Day 14, Both plus Together from Day 15, careful may plus is linked to from Day 13. Today we reuse them in short form.</p>
-    <div class="rule-box" aria-label="The five parts">
-      <span class="rule-item"><span class="rule-letter b">B</span>Background</span>
-      <span class="rule-item"><span class="rule-letter a">A</span>Aim</span>
-      <span class="rule-item"><span class="rule-letter m">M</span>Method</span>
-      <span class="rule-item"><span class="rule-letter r">R</span>Results</span>
-      <span class="rule-item"><span class="rule-letter c">C</span>Conclusion</span>
-    </div>
-    <div class="steps-mini" aria-label="How">
-      <span><strong>1</strong> Look</span>
-      <span><strong>2</strong> Think</span>
-      <span><strong>3</strong> Build together</span>
-      <span><strong>4</strong> Write alone</span>
-      <span><strong>5</strong> Check</span>
-    </div>
-  </section>
+<div class="deck-shell" id="deckShell">
+<div class="deck-topbar">
+<div class="slide-count" id="slideCount" aria-live="polite">Slide 1 of 17</div>
+<div class="deck-actions">
+<button class="btn ghost" id="fsBtn" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button>
+</div>
+</div>
+<div class="steps-mini" aria-label="Lesson steps" style="margin:0 0 .6rem;"><span><strong>1</strong> Look</span><span><strong>2</strong> Think</span><span><strong>3</strong> Build together</span><span><strong>4</strong> Write alone</span><span><strong>5</strong> Check</span></div>
+<div class="deck-layout" id="deckLayout">
+<div class="nav-slot nav-left" id="navLeft"><button class="nav" id="prevBtn" aria-label="Go to previous slide">Back</button></div>
+<div class="deck" id="deck" role="region" aria-roledescription="carousel" aria-label="Lesson slides">
+<div class="slides" id="slides">
 
-  <!-- ACTIVITY 1 -->
-  <section class="activity" id="act1" data-act="1">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">1</span>
-      <h2>What is an abstract?</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Read. Choose.</p>
-    <div class="exercise">
-      <div class="mcq" data-group="g1">
-        <div class="stem">1. An abstract is:</div>
-        <label><input type="radio" class="choice" name="g1"> a) A long story about your life.</label>
-        <label><input type="radio" class="choice" name="g1" data-correct="true"> b) A short summary of a study, 100 to 150 words.</label>
-        <label><input type="radio" class="choice" name="g1"> c) An email to a teacher.</label>
-      </div>
-      <div class="mcq" data-group="g1b">
-        <div class="stem">2. Where do we put an abstract?</div>
-        <label><input type="radio" class="choice" name="g1b" data-correct="true"> a) At the start of a paper, before the main text.</label>
-        <label><input type="radio" class="choice" name="g1b"> b) At the end, after the references.</label>
-      </div>
-    </div>
-    <button class="btn" data-check="act1">Check</button>
-    <div class="feedback" id="fb-act1" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act1">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>1. b. 2. a. An abstract is a short summary at the start. Today we aim for 100 to 150 words.</p></div></details>
-  </section>
+<!-- COVER -->
+<section class="slide" data-title="Cover: today you will learn" aria-labelledby="cover-h">
+<div class="intro" style="margin:0;">
+<h2 id="cover-h" tabindex="-1">Today you will learn</h2>
+<p>How to write a 100 to 150 word abstract: background, aim, method, results, conclusion. Same Lee (2023) and Smith (2024) homework idea from Day 14 and Day 15. No new topic to learn. Your Day 15 synthesis point becomes the aim line today.</p>
+<p style="color:var(--muted);font-size:.88rem;margin:.3rem 0 0;">You already know: PEEL from Day 6, cite with year from Day 14, Both plus Together from Day 15, careful may plus is linked to from Day 13. Today we reuse them in short form.</p>
+<div class="rule-box" aria-label="The five parts">
+<span class="rule-item"><span class="rule-letter b">B</span>Background</span>
+<span class="rule-item"><span class="rule-letter a">A</span>Aim</span>
+<span class="rule-item"><span class="rule-letter m">M</span>Method</span>
+<span class="rule-item"><span class="rule-letter r">R</span>Results</span>
+<span class="rule-item"><span class="rule-letter c">C</span>Conclusion</span>
+</div>
+<p class="hint-line" style="margin-top:.6rem;">Use Next to move. Use Full screen for a big view. Left and right arrow keys also move.</p>
+<button class="btn" id="startBtn">Start lesson</button>
+</div>
+</section>
 
-  <!-- ACTIVITY 2 -->
-  <section class="activity" id="act2" data-act="2">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">2</span>
-      <h2>Read our model</h2>
-      <span class="tag">3 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Read one time. Then answer.</p>
-    <div class="exercise">
-      <div class="model-text" aria-label="Model abstract about short homework">
-        <p><span class="lab b">B</span>Many students spend long late hours on homework and lose focus. Their habits become weak, and learning feels slow. Both Lee (2023) and Smith (2024) suggest short balanced tasks work best.</p>
-        <p><span class="lab a">A</span>This study aims to test if short daily homework builds stronger habits.</p>
-        <p><span class="lab m">M</span>Sixty students joined the study for two weeks in March. Group A did short 20 minute tasks each day. Group B did long 90 minute late tasks. All students took the same habit test at the end.</p>
-        <p><span class="lab r">R</span>Results show that Group A scored 18 percent higher than Group B.</p>
-        <p><span class="lab c">C</span>In conclusion, short daily homework may build stronger habits and protect focus.</p>
-        <p class="note">104 words. Same Lee plus Smith idea from Day 15. We use this text all lesson. No new reading.</p>
-      </div>
-      <div class="mcq" data-group="g2">
-        <div class="stem">What helped habits?</div>
-        <label><input type="radio" class="choice" name="g2" data-correct="true"> a) Short daily tasks, 20 minutes each day.</label>
-        <label><input type="radio" class="choice" name="g2"> b) Long late tasks, 90 minutes at night.</label>
-        <label><input type="radio" class="choice" name="g2"> c) No homework at all.</label>
-      </div>
-    </div>
-    <button class="btn" data-check="act2">Check</button>
-    <div class="feedback" id="fb-act2" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act2">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>a. Short daily tasks helped. Group A scored 18 percent higher. Same shared idea as Day 15.</p></div></details>
-  </section>
+<!-- 1 -->
+<section class="slide activity" id="act1" data-title="Activity 1: What is an abstract?" aria-labelledby="act1-h">
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 id="act1-h" tabindex="-1">What is an abstract? <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Read. Choose.</p>
+<div class="exercise">
+<div class="mcq" data-group="g1">
+<p class="stem">1. An abstract is:</p>
+<label><input type="radio" class="choice" name="g1" data-correct="false"> a) A long story about your life.</label>
+<label><input type="radio" class="choice" name="g1" data-correct="true"> b) A short summary of a study, 100 to 150 words.</label>
+<label><input type="radio" class="choice" name="g1" data-correct="false"> c) An email to a teacher.</label>
+</div>
+<div class="mcq" data-group="g1b">
+<p class="stem">2. Where do we put an abstract?</p>
+<label><input type="radio" class="choice" name="g1b" data-correct="true"> a) At the start of a paper, before the main text.</label>
+<label><input type="radio" class="choice" name="g1b" data-correct="false"> b) At the end, after the references.</label>
+</div>
+<button class="btn" data-check="act1">Check</button>
+<button class="btn ghost" data-complete="act1">Mark complete</button>
+<div class="feedback" id="fb-act1" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Busy readers read the abstract first. Clear abstract, more readers.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. b. 2. a. An abstract is a short summary at the start. Today we aim for 100 to 150 words.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 3 -->
-  <section class="activity" id="act3" data-act="3">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">3</span>
-      <h2>Name the 5 parts</h2>
-      <span class="tag">3 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Write one letter: B, A, M, R, C.</p>
-    <div class="exercise">
-      <div class="fill"><span class="lead">1. This study aims to test if... is Part</span> <input class="answer" data-accept="a|aim" data-model="A, aim" aria-label="Part for sentence 1"></div>
-      <div class="fill"><span class="lead">2. Sixty students joined... is Part</span> <input class="answer" data-accept="m|method" data-model="M, method" aria-label="Part for sentence 2"></div>
-      <div class="fill"><span class="lead">3. Many students spend long late hours... is Part</span> <input class="answer" data-accept="b|background" data-model="B, background" aria-label="Part for sentence 3"></div>
-      <div class="fill"><span class="lead">4. Results show that Group A scored... is Part</span> <input class="answer" data-accept="r|results|result" data-model="R, results" aria-label="Part for sentence 4"></div>
-      <div class="fill"><span class="lead">5. In conclusion, short homework may build... is Part</span> <input class="answer" data-accept="c|conclusion" data-model="C, conclusion" aria-label="Part for sentence 5"></div>
-    </div>
-    <button class="btn" data-check="act3">Check</button>
-    <div class="feedback" id="fb-act3" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act3">Mark complete</button>
-    <div class="mini-tip"><strong>Remember:</strong> B A M R C. Problem, goal, what you did, what you found, what it means.</div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><ol><li>A, aim</li><li>M, method</li><li>B, background</li><li>R, results</li><li>C, conclusion</li></ol></div></details>
-  </section>
+<!-- 2 -->
+<section class="slide activity" id="act2" data-title="Activity 2: Read our model" aria-labelledby="act2-h">
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 id="act2-h" tabindex="-1">Read our model <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Read one time. Then answer.</p>
+<div class="exercise">
+<div class="model-text" aria-label="Model abstract about short homework">
+<p><span class="lab b">B</span>Many students spend long late hours on homework and lose focus. Their habits become weak, and learning feels slow. Both Lee (2023) and Smith (2024) suggest short balanced tasks work best.</p>
+<p><span class="lab a">A</span>This study aims to test if short daily homework builds stronger habits.</p>
+<p><span class="lab m">M</span>Sixty students joined the study for two weeks in March. Group A did short 20 minute tasks each day. Group B did long 90 minute late tasks. All students took the same habit test at the end.</p>
+<p><span class="lab r">R</span>Results show that Group A scored 18 percent higher than Group B.</p>
+<p><span class="lab c">C</span>In conclusion, short daily homework may build stronger habits and protect focus.</p>
+<p style="color:var(--muted);font-size:.82rem;margin-bottom:0;">104 words. Same Lee plus Smith idea from Day 15. We use this text all lesson. No new reading.</p>
+</div>
+<div class="mcq" data-group="g2">
+<p class="stem">What helped habits?</p>
+<label><input type="radio" class="choice" name="g2" data-correct="true"> a) Short daily tasks, 20 minutes each day.</label>
+<label><input type="radio" class="choice" name="g2" data-correct="false"> b) Long late tasks, 90 minutes at night.</label>
+<label><input type="radio" class="choice" name="g2" data-correct="false"> c) No homework at all.</label>
+</div>
+<button class="btn" data-check="act2">Check</button>
+<button class="btn ghost" data-complete="act2">Mark complete</button>
+<div class="feedback" id="fb-act2" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>a. Short daily tasks helped. Group A scored 18 percent higher. Same shared idea as Day 15.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 4 -->
-  <section class="activity" id="act4" data-act="4">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">4</span>
-      <h2>Background or aim?</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">General problem, or this study?</p>
-    <div class="exercise">
-      <div class="fill"><span class="lead">1. Many students lose focus after one hour.</span> <input class="answer" data-accept="background|b" data-model="Background" aria-label="Background or aim number 1"></div>
-      <div class="fill"><span class="lead">2. This study aims to test a simple solution.</span> <input class="answer" data-accept="aim|a" data-model="Aim" aria-label="Background or aim number 2"></div>
-      <div class="fill"><span class="lead">3. Teachers need easy ideas for tired classes.</span> <input class="answer" data-accept="background|b" data-model="Background" aria-label="Background or aim number 3"></div>
-      <div class="fill"><span class="lead">4. This paper asks if short tasks build habits.</span> <input class="answer" data-accept="aim|a" data-model="Aim" aria-label="Background or aim number 4"></div>
-    </div>
-    <button class="btn" data-check="act4">Check</button>
-    <div class="feedback" id="fb-act4" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act4">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>1. Background. 2. Aim. 3. Background. 4. Aim. Background is general. Aim says this study.</p></div></details>
-  </section>
+<!-- 3 -->
+<section class="slide activity" id="act3" data-title="Activity 3: Name the 5 parts" aria-labelledby="act3-h">
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 id="act3-h" tabindex="-1">Name the 5 parts <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Write one letter: B, A, M, R, C.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. This study aims to test if... is</span><label class="qbox" style="border:none;padding:0;background:none;">Part <input class="answer" data-accept="a|aim" aria-label="Part for sentence 1"></label></div>
+<div class="fill"><span class="lead">2. Sixty students joined... is</span><label class="qbox" style="border:none;padding:0;background:none;">Part <input class="answer" data-accept="m|method" aria-label="Part for sentence 2"></label></div>
+<div class="fill"><span class="lead">3. Many students spend long late hours... is</span><label class="qbox" style="border:none;padding:0;background:none;">Part <input class="answer" data-accept="b|background" aria-label="Part for sentence 3"></label></div>
+<div class="fill"><span class="lead">4. Results show that Group A scored... is</span><label class="qbox" style="border:none;padding:0;background:none;">Part <input class="answer" data-accept="r|results|result" aria-label="Part for sentence 4"></label></div>
+<div class="fill"><span class="lead">5. In conclusion, short homework may build... is</span><label class="qbox" style="border:none;padding:0;background:none;">Part <input class="answer" data-accept="c|conclusion" aria-label="Part for sentence 5"></label></div>
+<button class="btn" data-check="act3">Check</button>
+<button class="btn ghost" data-complete="act3">Mark complete</button>
+<div class="feedback" id="fb-act3" aria-live="polite"></div>
+<div class="mini-tip"><strong>Remember:</strong> B A M R C. Problem, goal, what you did, what you found, what it means.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><ol><li>A, aim</li><li>M, method</li><li>B, background</li><li>R, results</li><li>C, conclusion</li></ol></div></details>
+</section>
 
-  <!-- ACTIVITY 5 -->
-  <section class="activity" id="act5" data-act="5">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">5</span>
-      <h2>Method: past verbs</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Method happened before. Use past.</p>
-    <div class="exercise">
-      <div class="fill"><span class="lead">1. Sixty students</span> <input class="answer" data-accept="joined" data-model="joined" aria-label="Verb 1"> <span class="tail">the study.</span></div>
-      <div class="fill"><span class="lead">2. Group A</span> <input class="answer" data-accept="did" data-model="did" aria-label="Verb 2"> <span class="tail">short tasks each day.</span></div>
-      <div class="fill"><span class="lead">3. All students</span> <input class="answer" data-accept="took|did|completed" data-model="took" aria-label="Verb 3"> <span class="tail">the same habit test.</span></div>
-    </div>
-    <button class="btn" data-check="act5">Check</button>
-    <div class="feedback" id="fb-act5" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act5">Mark complete</button>
-    <div class="mini-tip"><strong>Tip:</strong> Method needs numbers too. How many? How long? What test?</div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>1. joined. 2. did. 3. took, or did, or completed. All past.</p></div></details>
-  </section>
+<!-- 4 -->
+<section class="slide activity" id="act4" data-title="Activity 4: Background or aim?" aria-labelledby="act4-h">
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 id="act4-h" tabindex="-1">Background or aim? <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">General problem, or this study?</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. Many students lose focus after one hour.</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="background|b" aria-label="Background or aim number 1"></label></div>
+<div class="fill"><span class="lead">2. This study aims to test a simple solution.</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="aim|a" aria-label="Background or aim number 2"></label></div>
+<div class="fill"><span class="lead">3. Teachers need easy ideas for tired classes.</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="background|b" aria-label="Background or aim number 3"></label></div>
+<div class="fill"><span class="lead">4. This paper asks if short tasks build habits.</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="aim|a" aria-label="Background or aim number 4"></label></div>
+<button class="btn" data-check="act4">Check</button>
+<button class="btn ghost" data-complete="act4">Mark complete</button>
+<div class="feedback" id="fb-act4" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. Background. 2. Aim. 3. Background. 4. Aim. Background is general. Aim says this study.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 6 -->
-  <section class="activity" id="act6" data-act="6">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">6</span>
-      <h2>Careful results</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Good research is careful. No big claims.</p>
-    <div class="exercise">
-      <div class="mcq" data-group="g6">
-        <div class="stem">Which sentence is best? Same careful rule as Day 13.</div>
-        <label><input type="radio" class="choice" name="g6"> a) Short tasks prove all students will focus forever.</label>
-        <label><input type="radio" class="choice" name="g6" data-correct="true"> b) Results show that Group A scored 18 percent higher than Group B.</label>
-        <label><input type="radio" class="choice" name="g6"> c) Short tasks are perfect and always work.</label>
-      </div>
-      <div class="mcq" data-group="g6b">
-        <div class="stem">Which ending is careful?</div>
-        <label><input type="radio" class="choice" name="g6b" data-correct="true"> a) Short homework may build stronger habits.</label>
-        <label><input type="radio" class="choice" name="g6b"> b) Short homework will fix every problem.</label>
-      </div>
-    </div>
-    <button class="btn" data-check="act6">Check</button>
-    <div class="feedback" id="fb-act6" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act6">Mark complete</button>
-    <div class="mini-tip"><strong>Words to use:</strong> show, suggest, may, compared to. Avoid: prove, perfect, always.</div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>First: b. Second: a. Give numbers. Stay careful with may and show.</p></div></details>
-  </section>
+<!-- 5 -->
+<section class="slide activity" id="act5" data-title="Activity 5: Method past verbs" aria-labelledby="act5-h">
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 id="act5-h" tabindex="-1">Method: past verbs <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Method happened before. Use past.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. Sixty students</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="joined" aria-label="Verb 1"></label><span class="tail">the study.</span></div>
+<div class="fill"><span class="lead">2. Group A</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="did" aria-label="Verb 2"></label><span class="tail">short tasks each day.</span></div>
+<div class="fill"><span class="lead">3. All students</span><label class="qbox" style="border:none;padding:0;background:none;"><input class="answer" data-accept="took|did|completed" aria-label="Verb 3"></label><span class="tail">the same habit test.</span></div>
+<button class="btn" data-check="act5">Check</button>
+<button class="btn ghost" data-complete="act5">Mark complete</button>
+<div class="feedback" id="fb-act5" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Method needs numbers too. How many? How long? What test?</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. joined. 2. did. 3. took, or did, or completed. All past.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 7 -->
-  <section class="activity" id="act7" data-act="7">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">7</span>
-      <h2>Put it in order</h2>
-      <span class="tag">3 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Write 1 to 5. 1 is first.</p>
-    <div class="exercise">
-      <div class="fill"><span class="lead">A. Results show Group A scored higher. Order</span> <input class="answer" data-accept="4" data-model="4" aria-label="Order A"></div>
-      <div class="fill"><span class="lead">B. Many students lose focus after long hours. Order</span> <input class="answer" data-accept="1" data-model="1" aria-label="Order B"></div>
-      <div class="fill"><span class="lead">C. In conclusion, short homework may help. Order</span> <input class="answer" data-accept="5" data-model="5" aria-label="Order C"></div>
-      <div class="fill"><span class="lead">D. This study aims to test short homework. Order</span> <input class="answer" data-accept="2" data-model="2" aria-label="Order D"></div>
-      <div class="fill"><span class="lead">E. Sixty students joined for two weeks. Order</span> <input class="answer" data-accept="3" data-model="3" aria-label="Order E"></div>
-    </div>
-    <button class="btn" data-check="act7">Check</button>
-    <div class="feedback" id="fb-act7" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act7">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>B 1, D 2, E 3, A 4, C 5. Same as B A M R C.</p></div></details>
-  </section>
+<!-- 6 -->
+<section class="slide activity" id="act6" data-title="Activity 6: Careful results" aria-labelledby="act6-h">
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 id="act6-h" tabindex="-1">Careful results <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Good research is careful. No big claims.</p>
+<div class="exercise">
+<div class="mcq" data-group="g6">
+<p class="stem">Which sentence is best? Same careful rule as Day 13.</p>
+<label><input type="radio" class="choice" name="g6" data-correct="false"> a) Short tasks prove all students will focus forever.</label>
+<label><input type="radio" class="choice" name="g6" data-correct="true"> b) Results show that Group A scored 18 percent higher than Group B.</label>
+<label><input type="radio" class="choice" name="g6" data-correct="false"> c) Short tasks are perfect and always work.</label>
+</div>
+<div class="mcq" data-group="g6b">
+<p class="stem">Which ending is careful?</p>
+<label><input type="radio" class="choice" name="g6b" data-correct="true"> a) Short homework may build stronger habits.</label>
+<label><input type="radio" class="choice" name="g6b" data-correct="false"> b) Short homework will fix every problem.</label>
+</div>
+<button class="btn" data-check="act6">Check</button>
+<button class="btn ghost" data-complete="act6">Mark complete</button>
+<div class="feedback" id="fb-act6" aria-live="polite"></div>
+<div class="mini-tip"><strong>Words to use:</strong> show, suggest, may, compared to. Avoid: prove, perfect, always.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>First: b. Second: a. Give numbers. Stay careful with may and show.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 8 -->
-  <section class="activity" id="act8" data-act="8">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">8</span>
-      <h2>Make it short</h2>
-      <span class="tag">3 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Say the same. Use fewer words.</p>
-    <div class="exercise">
-      <div class="qbox"><p style="margin:.2rem 0;"><strong>1. Wordy:</strong> Due to the fact that students were very tired, they could not focus in an effective way.</p><label for="a8-1">Short version:</label><textarea id="a8-1" aria-label="Short version 1" placeholder="Write short here..."></textarea></div>
-      <div class="qbox"><p style="margin:.2rem 0;"><strong>2. Wordy:</strong> The results of the study were of a kind that showed an improvement in the scores.</p><label for="a8-2">Short version:</label><textarea id="a8-2" aria-label="Short version 2" placeholder="Write short here..."></textarea></div>
-      <div class="qbox"><p style="margin:.2rem 0;"><strong>3. Wordy:</strong> In conclusion, it can be said that it is possible that short tasks might be helpful.</p><label for="a8-3">Short version:</label><textarea id="a8-3" aria-label="Short version 3" placeholder="Write short here..."></textarea></div>
-    </div>
-    <button class="btn ghost" data-complete="act8">Mark complete</button>
-    <div class="feedback" id="fb-act8" aria-live="polite"></div>
-    <div class="mini-tip"><strong>Tip:</strong> Cut due to the fact that, of a kind that, it can be said that. Keep numbers.</div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><ul><li>1. Because students were tired, they could not focus well.</li><li>2. Results showed higher scores.</li><li>3. In conclusion, short tasks may help.</li></ul><p>Your words can differ. Short and clear is good. Keep numbers if the sentence has one.</p></div></details>
-  </section>
+<!-- 7 -->
+<section class="slide activity" id="act7" data-title="Activity 7: Put it in order" aria-labelledby="act7-h">
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 id="act7-h" tabindex="-1">Put it in order <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Write 1 to 5. 1 is first.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">A. Results show Group A scored higher.</span><label class="qbox" style="border:none;padding:0;background:none;">Order <input class="answer" data-accept="4" aria-label="Order A"></label></div>
+<div class="fill"><span class="lead">B. Many students lose focus after long hours.</span><label class="qbox" style="border:none;padding:0;background:none;">Order <input class="answer" data-accept="1" aria-label="Order B"></label></div>
+<div class="fill"><span class="lead">C. In conclusion, short homework may help.</span><label class="qbox" style="border:none;padding:0;background:none;">Order <input class="answer" data-accept="5" aria-label="Order C"></label></div>
+<div class="fill"><span class="lead">D. This study aims to test short homework.</span><label class="qbox" style="border:none;padding:0;background:none;">Order <input class="answer" data-accept="2" aria-label="Order D"></label></div>
+<div class="fill"><span class="lead">E. Sixty students joined for two weeks.</span><label class="qbox" style="border:none;padding:0;background:none;">Order <input class="answer" data-accept="3" aria-label="Order E"></label></div>
+<button class="btn" data-check="act7">Check</button>
+<button class="btn ghost" data-complete="act7">Mark complete</button>
+<div class="feedback" id="fb-act7" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>B 1, D 2, E 3, A 4, C 5. Same as B A M R C.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 9 -->
-  <section class="activity" id="act9" data-act="9">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">9</span>
-      <h2>Which tense?</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Choose the correct verb.</p>
-    <div class="exercise">
-      <div class="mcq" data-group="g9a">
-        <div class="stem">1. Background: Many students ___ tired after long hours.</div>
-        <label><input type="radio" class="choice" name="g9a" data-correct="true"> feel (present, general truth)</label>
-        <label><input type="radio" class="choice" name="g9a"> felt (past, only yesterday)</label>
-      </div>
-      <div class="mcq" data-group="g9b">
-        <div class="stem">2. Method: Sixty students ___ the study in March.</div>
-        <label><input type="radio" class="choice" name="g9b"> join</label>
-        <label><input type="radio" class="choice" name="g9b" data-correct="true"> joined</label>
-      </div>
-      <div class="mcq" data-group="g9c">
-        <div class="stem">3. Conclusion: Short homework ___ build habits.</div>
-        <label><input type="radio" class="choice" name="g9c" data-correct="true"> may (careful, present, like Day 13)</label>
-        <label><input type="radio" class="choice" name="g9c"> improved yesterday only</label>
-      </div>
-    </div>
-    <button class="btn" data-check="act9">Check</button>
-    <div class="feedback" id="fb-act9" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act9">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>1. feel. 2. joined. 3. may. Background present, method past, conclusion present with may.</p></div></details>
-  </section>
+<!-- 8 -->
+<section class="slide activity" id="act8" data-title="Activity 8: Make it short" aria-labelledby="act8-h">
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 id="act8-h" tabindex="-1">Make it short <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Say the same. Use fewer words.</p>
+<div class="exercise">
+<div class="qbox"><p style="margin:.2rem 0;"><strong>1. Wordy:</strong> Due to the fact that students were very tired, they could not focus in an effective way.</p><label for="a8-1">Short version:</label><textarea id="a8-1" aria-label="Short version 1" placeholder="Write short here..."></textarea></div>
+<div class="qbox"><p style="margin:.2rem 0;"><strong>2. Wordy:</strong> The results of the study were of a kind that showed an improvement in the scores.</p><label for="a8-2">Short version:</label><textarea id="a8-2" aria-label="Short version 2" placeholder="Write short here..."></textarea></div>
+<div class="qbox"><p style="margin:.2rem 0;"><strong>3. Wordy:</strong> In conclusion, it can be said that it is possible that short tasks might be helpful.</p><label for="a8-3">Short version:</label><textarea id="a8-3" aria-label="Short version 3" placeholder="Write short here..."></textarea></div>
+<button class="btn ghost" data-complete="act8">Mark complete</button>
+<div class="feedback" id="fb-act8" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Cut due to the fact that, of a kind that, it can be said that. Keep numbers.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><ul><li>1. Because students were tired, they could not focus well.</li><li>2. Results showed higher scores.</li><li>3. In conclusion, short tasks may help.</li></ul><p>Your words can differ. Short and clear is good. Keep numbers if the sentence has one.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 10 -->
-  <section class="activity" id="act10" data-act="10">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">10</span>
-      <h2>Useful phrases</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Bank: aims to, joined, show that, In conclusion. Same verbs as Day 14, now in abstract frames.</p>
-    <div class="exercise">
-      <div class="fill"><span class="lead">1. This study</span> <input class="answer" data-accept="aims to" data-model="aims to" aria-label="Phrase 1"> <span class="tail">test short homework and habits.</span></div>
-      <div class="fill"><span class="lead">2. Sixty students</span> <input class="answer" data-accept="joined" data-model="joined" aria-label="Phrase 2"> <span class="tail">the study.</span></div>
-      <div class="fill"><span class="lead">3. Results</span> <input class="answer" data-accept="show that" data-model="show that" aria-label="Phrase 3"> <span class="tail">short tasks help habits.</span></div>
-      <div class="fill"><span class="lead">4.</span> <input class="answer" data-accept="in conclusion" data-model="In conclusion" aria-label="Phrase 4"> <span class="tail">short homework may help students.</span></div>
-    </div>
-    <button class="btn" data-check="act10">Check</button>
-    <div class="feedback" id="fb-act10" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act10">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>1. aims to. 2. joined. 3. show that. 4. In conclusion. Copy these into your draft.</p></div></details>
-  </section>
+<!-- 9 -->
+<section class="slide activity" id="act9" data-title="Activity 9: Which tense?" aria-labelledby="act9-h">
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 id="act9-h" tabindex="-1">Which tense? <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Choose the correct verb.</p>
+<div class="exercise">
+<div class="mcq" data-group="g9a">
+<p class="stem">1. Background: Many students ___ tired after long hours.</p>
+<label><input type="radio" class="choice" name="g9a" data-correct="true"> feel (present, general truth)</label>
+<label><input type="radio" class="choice" name="g9a" data-correct="false"> felt (past, only yesterday)</label>
+</div>
+<div class="mcq" data-group="g9b">
+<p class="stem">2. Method: Sixty students ___ the study in March.</p>
+<label><input type="radio" class="choice" name="g9b" data-correct="false"> join</label>
+<label><input type="radio" class="choice" name="g9b" data-correct="true"> joined</label>
+</div>
+<div class="mcq" data-group="g9c">
+<p class="stem">3. Conclusion: Short homework ___ build habits.</p>
+<label><input type="radio" class="choice" name="g9c" data-correct="true"> may (careful, present, like Day 13)</label>
+<label><input type="radio" class="choice" name="g9c" data-correct="false"> improved yesterday only</label>
+</div>
+<button class="btn" data-check="act9">Check</button>
+<button class="btn ghost" data-complete="act9">Mark complete</button>
+<div class="feedback" id="fb-act9" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. feel. 2. joined. 3. may. Background present, method past, conclusion present with may.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 11 -->
-  <section class="activity" id="act11" data-act="11">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">11</span>
-      <h2>Build one together</h2>
-      <span class="tag">5 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">First new numbers today. Same B A M R C order. Do with your teacher.</p>
-    <div class="exercise">
-      <div class="qbox"><p style="margin:.2rem 0;">Topic: sleep and vocabulary. Data: 40 students, 3 weeks. Group A slept 8 hours. Group B slept 6 hours. Test: 15 word test. A remembered 12. B remembered 9.</p></div>
-      <div class="fill"><span class="lead">1. Background: Many students</span> <input class="answer" data-accept="feel tired|forget words|feel sleepy" data-model="forget words" aria-label="Together 1"> <span class="tail">before tests.</span></div>
-      <div class="fill"><span class="lead">2. Aim: This study</span> <input class="answer" data-accept="aims to" data-model="aims to" aria-label="Together 2"> <span class="tail">test if sleep helps memory.</span></div>
-      <div class="fill"><span class="lead">3. Method: Forty students</span> <input class="answer" data-accept="joined" data-model="joined" aria-label="Together 3"> <span class="tail">the study for three weeks.</span></div>
-      <div class="fill"><span class="lead">4. Results</span> <input class="answer" data-accept="show that" data-model="show that" aria-label="Together 4"> <span class="tail">Group A remembered more words.</span></div>
-    </div>
-    <button class="btn" data-check="act11">Check</button>
-    <div class="feedback" id="fb-act11" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act11">Mark complete</button>
-    <div class="mini-tip"><strong>Say it first:</strong> Tell your teacher each sentence. Then type. Slow is good.</div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>Model lines: Many students forget words before tests. This study aims to test if sleep helps memory. Forty students joined the study for three weeks. Results show that Group A remembered more words, 12 compared to 9. In conclusion, enough sleep may help memory. Your words can differ slightly.</p></div></details>
-  </section>
+<!-- 10 -->
+<section class="slide activity" id="act10" data-title="Activity 10: Useful phrases" aria-labelledby="act10-h">
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 id="act10-h" tabindex="-1">Useful phrases <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Bank: aims to, joined, show that, In conclusion. Same verbs as Day 14, now in abstract frames.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. This study</span><input class="answer" data-accept="aims to" aria-label="Phrase 1"><span class="tail">test short homework and habits.</span></div>
+<div class="fill"><span class="lead">2. Sixty students</span><input class="answer" data-accept="joined" aria-label="Phrase 2"><span class="tail">the study.</span></div>
+<div class="fill"><span class="lead">3. Results</span><input class="answer" data-accept="show that" aria-label="Phrase 3"><span class="tail">short tasks help habits.</span></div>
+<div class="fill"><span class="lead">4.</span><input class="answer" data-accept="in conclusion" aria-label="Phrase 4"><span class="tail">short homework may help students.</span></div>
+<button class="btn" data-check="act10">Check</button>
+<button class="btn ghost" data-complete="act10">Mark complete</button>
+<div class="feedback" id="fb-act10" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. aims to. 2. joined. 3. show that. 4. In conclusion. Copy these into your draft.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 12 -->
-  <section class="activity" id="act12" data-act="12">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">12</span>
-      <h2>Plan your abstract</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Choose one topic. Copy the numbers.</p>
-    <div class="exercise">
-      <div class="mcq" data-group="g12">
-        <div class="stem">My topic, choose one:</div>
-        <label><input type="radio" class="choice" name="g12" data-correct="true"> A) Homework and habits, same model numbers (easiest, 60 students, 2 weeks, 18 percent)</label>
-        <label><input type="radio" class="choice" name="g12" data-correct="true"> B) Sleep and vocabulary (small challenge, 40 students, 12 vs 9 words)</label>
-      </div>
-      <div class="qbox"><p style="margin:.2rem 0;"><strong>Data box, copy these numbers:</strong> A: 60 students, 2 weeks, 18 percent higher. B: 40 students, 3 weeks, 8 hours vs 6 hours, 12 vs 9 words.</p>
-      <label for="a12-plan">My 3 numbers (how many, how long, result):</label><textarea id="a12-plan" style="min-height:60px;" aria-label="My three numbers" placeholder="e.g. 40 students, 3 weeks, 12 vs 9..."></textarea></div>
-    </div>
-    <button class="btn ghost" data-complete="act12">Mark complete</button>
-    <div class="feedback" id="fb-act12" aria-live="polite"></div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>Both choices are good. A is easiest because you copy the model numbers. B uses Act 11 numbers. Example A: 60 students, 2 weeks, 18 percent. Example B: 40 students, 3 weeks, 12 vs 9. Keep the same 3 numbers in your draft.</p></div></details>
-  </section>
+<!-- 11 -->
+<section class="slide activity" id="act11" data-title="Activity 11: Build one together" aria-labelledby="act11-h">
+<div class="act-head"><div class="badge" aria-hidden="true">11</div><h2 id="act11-h" tabindex="-1">Build one together <span class="done-flag">Done</span></h2><span class="tag">5 min</span></div>
+<p class="hint-line">First new numbers today. Same B A M R C order. Do with your teacher.</p>
+<div class="exercise">
+<div class="qbox"><p style="margin:.2rem 0;">Topic: sleep and vocabulary. Data: 40 students, 3 weeks. Group A slept 8 hours. Group B slept 6 hours. Test: 15 word test. A remembered 12. B remembered 9.</p></div>
+<div class="fill"><span class="lead">1. Background: Many students</span><input class="answer" data-accept="feel tired|forget words|feel sleepy" aria-label="Together 1"><span class="tail">before tests.</span></div>
+<div class="fill"><span class="lead">2. Aim: This study</span><input class="answer" data-accept="aims to" aria-label="Together 2"><span class="tail">test if sleep helps memory.</span></div>
+<div class="fill"><span class="lead">3. Method: Forty students</span><input class="answer" data-accept="joined" aria-label="Together 3"><span class="tail">the study for three weeks.</span></div>
+<div class="fill"><span class="lead">4. Results</span><input class="answer" data-accept="show that" aria-label="Together 4"><span class="tail">Group A remembered more words.</span></div>
+<button class="btn" data-check="act11">Check</button>
+<button class="btn ghost" data-complete="act11">Mark complete</button>
+<div class="feedback" id="fb-act11" aria-live="polite"></div>
+<div class="mini-tip"><strong>Say it first:</strong> Tell your teacher each sentence. Then type. Slow is good.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Model lines: Many students forget words before tests. This study aims to test if sleep helps memory. Forty students joined the study for three weeks. Results show that Group A remembered more words, 12 compared to 9. In conclusion, enough sleep may help memory. Your words can differ slightly.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 13 -->
-  <section class="activity" id="act13" data-act="13">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">13</span>
-      <h2>Write your draft</h2>
-      <span class="tag">Write alone</span>
-      <span class="timer" id="timerLabel">7:00</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">100 to 150 words. Use B A M R C. Use your numbers. Alone. 7 min.</p>
-    <div class="exercise">
-      <label for="a13-draft" style="font-weight:700;font-size:.9rem;">Your abstract:</label>
-      <textarea id="a13-draft" style="min-height:150px;" aria-label="Your abstract draft" placeholder="Background... Aim... Method... Results... In conclusion..."></textarea>
-      <div class="wordcount" id="wc13" aria-live="polite">Words: 0. Aim: 100 to 150.</div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;">
-        <button class="btn" id="startTimer" type="button">Start 7:00</button>
-        <button class="btn ghost" id="stopTimer" type="button">Stop</button>
-      </div>
-      <p class="vis-note" id="timerHint">Press Start, then write.</p>
-    </div>
-    <button class="btn ghost" data-complete="act13">Mark complete</button>
-    <div class="feedback" id="fb-act13" aria-live="polite"></div>
-    <div class="mini-tip"><strong>Frames to copy:</strong> Many... This study aims to... joined... Results show that... compared to... In conclusion... may...</div>
-    <details class="key"><summary>Answer key, model for Topic A</summary><div class="key-body"><p>If you chose A, use the Act 2 model (104 words, fits 100 to 150): Many students spend long late hours on homework and lose focus. Their habits become weak, and learning feels slow. Both Lee (2023) and Smith (2024) suggest short balanced tasks work best. This study aims to test if short daily homework builds stronger habits. Sixty students joined the study for two weeks in March. Group A did short 20 minute tasks each day. Group B did long 90 minute late tasks. All students took the same habit test at the end. Results show that Group A scored 18 percent higher than Group B. In conclusion, short daily homework may build stronger habits and protect focus.</p><p>If you chose B, join the Act 11 lines in order and add In conclusion, enough sleep may help memory.</p></div></details>
-  </section>
+<!-- 12 -->
+<section class="slide activity" id="act12" data-title="Activity 12: Plan your abstract" aria-labelledby="act12-h">
+<div class="act-head"><div class="badge" aria-hidden="true">12</div><h2 id="act12-h" tabindex="-1">Plan your abstract <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Choose one topic. Copy the numbers.</p>
+<div class="exercise">
+<div class="mcq" data-group="g12">
+<p class="stem">My topic, choose one:</p>
+<label><input type="radio" class="choice" name="g12" data-correct="true"> A) Homework and habits, same model numbers (easiest, 60 students, 2 weeks, 18 percent)</label>
+<label><input type="radio" class="choice" name="g12" data-correct="true"> B) Sleep and vocabulary (small challenge, 40 students, 12 vs 9 words)</label>
+</div>
+<div class="qbox"><p style="margin:.2rem 0;"><strong>Data box, copy these numbers:</strong> A: 60 students, 2 weeks, 18 percent higher. B: 40 students, 3 weeks, 8 hours vs 6 hours, 12 vs 9 words.</p>
+<label for="a12-plan">My 3 numbers (how many, how long, result):</label><textarea id="a12-plan" aria-label="My three numbers" placeholder="e.g. 40 students, 3 weeks, 12 vs 9..."></textarea></div>
+<button class="btn ghost" data-complete="act12">Mark complete</button>
+<div class="feedback" id="fb-act12" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Both choices are good. A is easiest because you copy the model numbers. B uses Act 11 numbers. Example A: 60 students, 2 weeks, 18 percent. Example B: 40 students, 3 weeks, 12 vs 9. Keep the same 3 numbers in your draft.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 14 -->
-  <section class="activity" id="act14" data-act="14">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">14</span>
-      <h2>Check with colours</h2>
-      <span class="tag">3 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Tick each box. Fix one thing.</p>
-    <div class="exercise">
-      <div class="check-list">
-        <label><input type="checkbox" aria-label="Check 1"> B A M R C: I can find all 5 parts in my draft.</label>
-        <label><input type="checkbox" aria-label="Check 2"> Numbers: I have how many, how long, and one result number.</label>
-        <label><input type="checkbox" aria-label="Check 3"> Past tense in method: joined, did, took.</label>
-        <label><input type="checkbox" aria-label="Check 4"> Careful words: may, show, compared to. No prove or always.</label>
-        <label><input type="checkbox" aria-label="Check 5"> Length: 100 to 150 words.</label>
-      </div>
-      <label for="a14-fix" style="font-weight:700;font-size:.9rem;">One fix I will make:</label>
-      <textarea id="a14-fix" style="min-height:60px;" aria-label="One fix" placeholder="e.g. Change prove to may..."></textarea>
-    </div>
-    <button class="btn ghost" data-complete="act14">Mark complete</button>
-    <div class="feedback" id="fb-act14" aria-live="polite"></div>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>Good check: B in one colour, A in second, M in third, R in fourth, C in fifth. If one part is missing, add one sentence. If over 150 words, cut one extra adjective. Fix only one error today, add it to your error list.</p></div></details>
-  </section>
+<!-- 13 -->
+<section class="slide activity" id="act13" data-title="Activity 13: Write your draft" aria-labelledby="act13-h">
+<div class="act-head"><div class="badge" aria-hidden="true">13</div><h2 id="act13-h" tabindex="-1">Write your draft <span class="timer">7 min</span> <span class="done-flag">Done</span></h2><span class="tag">Write alone</span></div>
+<p class="hint-line">100 to 150 words. Use B A M R C. Use your numbers.</p>
+<div class="exercise">
+<label for="a13-draft">Your abstract:</label>
+<textarea id="a13-draft" aria-label="Your abstract draft" placeholder="Background... Aim... Method... Results... In conclusion..." style="min-height:150px;"></textarea>
+<div class="wordcount" id="wc13" aria-live="polite">Words: 0. Aim: 100 to 150.</div>
+<button class="btn ghost" data-complete="act13">Mark complete</button>
+<div class="feedback" id="fb-act13" aria-live="polite"></div>
+<div class="mini-tip"><strong> Frames to copy:</strong> Many... This study aims to... joined... Results show that... compared to... In conclusion... may...</div>
+</div>
+<details class="key"><summary>Answer key, model for Topic A</summary><div class="key-body"><p>If you chose A, use the Act 2 model (104 words, fits 100 to 150): Many students spend long late hours on homework and lose focus. Their habits become weak, and learning feels slow. Both Lee (2023) and Smith (2024) suggest short balanced tasks work best. This study aims to test if short daily homework builds stronger habits. Sixty students joined the study for two weeks in March. Group A did short 20 minute tasks each day. Group B did long 90 minute late tasks. All students took the same habit test at the end. Results show that Group A scored 18 percent higher than Group B. In conclusion, short daily homework may build stronger habits and protect focus.</p><p>If you chose B, join the Act 11 lines in order and add In conclusion, enough sleep may help memory.</p></div></details>
+</section>
 
-  <!-- ACTIVITY 15 -->
-  <section class="activity" id="act15" data-act="15">
-    <div class="act-head">
-      <span class="badge" aria-hidden="true">15</span>
-      <h2>Reflect and next step</h2>
-      <span class="tag">2 min</span>
-      <span class="done-flag" aria-hidden="true">DONE</span>
-    </div>
-    <p class="hint-line">Short. Honest. Then finish.</p>
-    <div class="exercise">
-      <div class="mcq" data-group="g15">
-        <div class="stem">I can now write the 5 parts of an abstract:</div>
-        <label><input type="radio" class="choice" name="g15" data-correct="true"> Yes, with my notes.</label>
-        <label><input type="radio" class="choice" name="g15" data-correct="true"> Almost, I need more practice.</label>
-      </div>
-      <label for="a15-next" style="font-weight:700;font-size:.9rem;">My one goal for Day 17:</label>
-      <textarea id="a15-next" style="min-height:60px;" aria-label="My one goal" placeholder="e.g. Use past tense in method without mistakes..."></textarea>
-      <div class="qbox"><strong>Homework, 15 to 20 min:</strong> Bring your draft to 100 to 150 words. OR rewrite one part with the correction. If tired, review your error list for 5 minutes.</div>
-    </div>
-    <button class="btn" data-check="act15">Check</button>
-    <div class="feedback" id="fb-act15" aria-live="polite"></div>
-    <button class="btn ghost" data-complete="act15">Mark complete</button>
-    <details class="key"><summary>Answer key</summary><div class="key-body"><p>Both answers are good. Honest is best. Keep your abstract for Day 17. We will group sources by theme next. Well done.</p></div></details>
-  </section>
+<!-- 14 -->
+<section class="slide activity" id="act14" data-title="Activity 14: Check with colours" aria-labelledby="act14-h">
+<div class="act-head"><div class="badge" aria-hidden="true">14</div><h2 id="act14-h" tabindex="-1">Check with colours <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Tick each box. Fix one thing.</p>
+<div class="exercise">
+<div class="check-list">
+<label><input type="checkbox" aria-label="Check 1"> B A M R C: I can find all 5 parts in my draft.</label>
+<label><input type="checkbox" aria-label="Check 2"> Numbers: I have how many, how long, and one result number.</label>
+<label><input type="checkbox" aria-label="Check 3"> Past tense in method: joined, did, took.</label>
+<label><input type="checkbox" aria-label="Check 4"> Careful words: may, show, compared to. No prove or always.</label>
+<label><input type="checkbox" aria-label="Check 5"> Length: 100 to 150 words.</label>
+</div>
+<label for="a14-fix">One fix I will make:</label>
+<textarea id="a14-fix" aria-label="One fix" placeholder="e.g. Change prove to may..."></textarea>
+<button class="btn ghost" data-complete="act14">Mark complete</button>
+<div class="feedback" id="fb-act14" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Good check: B in one colour, A in second, M in third, R in fourth, C in fifth. If one part is missing, add one sentence. If over 150 words, cut one extra adjective. Fix only one error today, add it to your error list.</p></div></details>
+</section>
 
-  <!-- RESULTS -->
-  <section class="results" id="results" hidden aria-label="Lesson results">
-    <h2>Done</h2>
-    <p>One study. Five parts. Ready for Day 17.</p>
-    <div class="score-grid">
-      <div class="score-box"><div class="n" id="rPoints">0</div><div class="l">XP</div></div>
-      <div class="score-box"><div class="n" id="rAcc">0%</div><div class="l">Correct</div></div>
-      <div class="score-box"><div class="n" id="rStreak">0</div><div class="l">Best streak</div></div>
-    </div>
-  </section>
-  <canvas id="confetti" aria-hidden="true"></canvas>
+<!-- 15 -->
+<section class="slide activity" id="act15" data-title="Activity 15: Reflect and next step" aria-labelledby="act15-h">
+<div class="act-head"><div class="badge" aria-hidden="true">15</div><h2 id="act15-h" tabindex="-1">Reflect and next step <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Short. Honest. Then finish.</p>
+<div class="exercise">
+<div class="mcq" data-group="g15">
+<p class="stem">I can now write the 5 parts of an abstract:</p>
+<label><input type="radio" class="choice" name="g15" data-correct="true"> Yes, with my notes.</label>
+<label><input type="radio" class="choice" name="g15" data-correct="true"> Almost, I need more practice.</label>
+</div>
+<label for="a15-next">My one goal for Day 17:</label>
+<textarea id="a15-next" aria-label="My one goal" placeholder="e.g. Use past tense in method without mistakes..."></textarea>
+<div class="qbox"><strong>Homework, 15 to 20 min:</strong> Bring your draft to 100 to 150 words. OR rewrite one part with the correction. If tired, review your error list for 5 minutes.</div>
+<button class="btn" data-check="act15">Check</button>
+<button class="btn ghost" data-complete="act15">Mark complete</button>
+<div class="feedback" id="fb-act15" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Both answers are good. Honest is best. Keep your abstract for Day 17. We will group sources by theme next. Well done.</p></div></details>
+</section>
+
+<!-- RESULTS -->
+<section class="slide" data-title="Results" aria-labelledby="res-h">
+<div class="results" id="results">
+<h2 id="res-h" tabindex="-1">Well done</h2>
+<p style="color:var(--muted);font-size:.92rem;margin:.2rem 0 .4rem;">One study. Five parts. Ready for Day 17.</p>
+<div class="score-grid">
+<div class="score-box"><div class="n" id="scoreXp">0</div><div class="l">XP</div></div>
+<div class="score-box"><div class="n" id="scoreDone">0/15</div><div class="l">Done</div></div>
+<div class="score-box"><div class="n" id="scoreStreak">0</div><div class="l">Best streak</div></div>
+</div>
+</div>
+</section>
+
+</div><!-- /slides -->
+<div class="nav-inside" id="navInside" aria-label="Slide navigation"></div>
+</div><!-- /deck -->
+<div class="nav-slot nav-right" id="navRight"><button class="nav" id="nextBtn" aria-label="Go to next slide">Next</button></div>
+</div><!-- /deck-layout -->
+<div class="toc-row">
+<label for="tocSelect">Go to slide:</label>
+<select id="tocSelect" aria-label="Go to slide"></select>
+</div>
+<p class="hint-line" style="margin:.5rem 0 0;">Tip: arrow keys move slides when you are not typing. Your answers stay saved while you move.</p>
+</div><!-- /deck-shell -->
 </main>
-
+<canvas id="confetti" aria-hidden="true"></canvas>
 <footer>
-  <p>Day 16 Write an Abstract. 15 tasks. Essentials only.</p>
-  <p style="margin-top:.3rem;"><a href="../../index.html#b2-exam">All B2 Exam lessons</a></p>
+<p>Day 16 Write an Abstract. 15 tasks. Essentials only.</p>
+<p style="margin-top:.3rem;"><a href="../../index.html#b2-exam">All B2 Exam lessons</a></p>
 </footer>
-
+<div class="sr-only" aria-live="polite" id="slideLive"></div>
 <script>
-(function(){
-  "use strict";
-  var TOTAL_ACTS=15;
-  var state={points:0,streak:0,best:0,correct:0,total:0,done:0};
-  document.querySelectorAll(".answer").forEach(function(){state.total++;});
-  document.querySelectorAll(".mcq").forEach(function(){state.total++;});
-  function norm(s){return (s||"").trim().toLowerCase().replace(/\s+/g," ").replace(/[.?!]+$/,"");}
-  function $(id){return document.getElementById(id);}
-  function updateHUD(){
-    $("points").textContent=state.points+" XP";
-    $("streak").textContent="Streak "+state.streak;
-    $("progText").textContent=state.done+" / "+TOTAL_ACTS+" complete";
-    $("bar").style.width=(state.done/TOTAL_ACTS*100)+"%";
-  }
-  function markInput(inp,ok){
-    inp.classList.toggle("correct",ok);
-    inp.classList.toggle("wrong",!ok);
-    inp.setAttribute("aria-invalid",ok?"false":"true");
-    var m=inp.parentNode.querySelector(".mark");
-    if(!m){m=document.createElement("span");m.className="mark";inp.parentNode.appendChild(m);}
-    m.textContent=ok?"Correct":"Try again";
-    m.className="mark "+(ok?"ok":"no");
-  }
-  function handleCheck(secId){
-    var sec=$(secId);
-    var fb=$("fb-"+secId);
-    if(!fb) return;
-    var earnedNow=0,okCount=0,wrongList="";
-    var anyWrong=false,anyEmpty=false;
-    sec.querySelectorAll(".answer").forEach(function(inp){
-      if(inp.id==="learnerName") return;
-      var val=norm(inp.value);
-      if(!val){anyEmpty=true;return;}
-      var accepts=inp.dataset.accept?inp.dataset.accept.split("|").map(norm):[];
-      var ok=accepts.length===0 || accepts.some(function(a){return val.indexOf(a)!==-1;});
-      markInput(inp,ok);
-      if(ok){
-        okCount++;
-        if(!inp.dataset.done){inp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
-        if(state.streak>state.best) state.best=state.streak;
-      } else {
-        anyWrong=true;state.streak=0;
-        wrongList+="<li>Try <b>"+(inp.dataset.model||"check")+"</b></li>";
-      }
-    });
-    sec.querySelectorAll(".mcq").forEach(function(grp){
-      var chosen=grp.querySelector("input.choice:checked");
-      if(!chosen){anyEmpty=true;return;}
-      var ok=true;
-      var corr=grp.querySelector("input.choice[data-correct=true]");
-      if(corr) ok=chosen.dataset.correct==="true";
-      grp.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});
-      if(ok){
-        chosen.closest("label").classList.add("correct");
-        okCount++;
-        if(!grp.dataset.done){grp.dataset.done="1";state.points+=10;state.correct++;state.streak++;earnedNow+=10;}
-        if(state.streak>state.best) state.best=state.streak;
-      } else {
-        anyWrong=true;state.streak=0;
-        chosen.closest("label").classList.add("wrong");
-        if(corr) corr.closest("label").classList.add("correct");
-        wrongList+="<li>See green answer.</li>";
-      }
-    });
-    if(anyEmpty && earnedNow===0 && okCount===0){
-      fb.className="feedback bad";
-      fb.innerHTML="Answer first, then Check.";
-      updateHUD();return;
-    }
-    if(anyWrong){
-      fb.className="feedback bad";
-      fb.innerHTML="+"+earnedNow+" XP. Fix:"+(wrongList?"<ul>"+wrongList+"</ul>":"");
-    } else {
-      fb.className="feedback good";
-      fb.innerHTML="Nice. +"+earnedNow+" XP.";
-    }
-    updateHUD();
-  }
-  document.querySelectorAll("[data-check]").forEach(function(btn){
-    btn.addEventListener("click",function(){handleCheck(btn.dataset.check);});
-  });
-  document.querySelectorAll("[data-reveal]").forEach(function(btn){
-    var orig=btn.textContent;
-    btn.addEventListener("click",function(){
-      var el=$(btn.dataset.reveal);
-      if(!el) return;
-      var hidden=el.hasAttribute("hidden");
-      if(hidden){el.removeAttribute("hidden");btn.setAttribute("aria-expanded","true");btn.textContent="Hide";}
-      else {el.setAttribute("hidden","");btn.setAttribute("aria-expanded","false");btn.textContent=orig;}
-    });
-  });
-  document.querySelectorAll("[data-complete]").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var sec=document.getElementById(btn.dataset.complete);
-      if(sec.classList.contains("complete")) return;
-      sec.classList.add("complete");
-      state.done++;
-      updateHUD();
-      sec.scrollIntoView({block:"start",behavior:"smooth"});
-      if(state.done>=TOTAL_ACTS) showResults();
-    });
-  });
-  function showResults(){
-    var acc=state.total?Math.round(state.correct/state.total*100):0;
-    $("rPoints").textContent=state.points;
-    $("rAcc").textContent=acc+"%";
-    $("rStreak").textContent=state.best;
-    $("results").removeAttribute("hidden");
-    $("results").scrollIntoView({block:"start",behavior:"smooth"});
-    launchConfetti();
-  }
-  function launchConfetti(){
-    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var c=$("confetti"),ctx=c.getContext("2d");
-    c.width=window.innerWidth;c.height=window.innerHeight;
-    var colors=["#ffd400","#38e0c8","#ffffff","#ff8a8a","#9ad0ff"];
-    var parts=[];
-    for(var i=0;i<140;i++) parts.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:4+Math.random()*6,col:colors[i%colors.length]});
-    var t0=Date.now();
-    function frame(){
-      ctx.clearRect(0,0,c.width,c.height);
-      parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.03;ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,p.s,p.s);});
-      if(Date.now()-t0<2600) requestAnimationFrame(frame);
-      else ctx.clearRect(0,0,c.width,c.height);
-    }
-    frame();
-  }
-  updateHUD();
-  var draft=$("a13-draft");
-  if(draft){draft.addEventListener("input",function(){
-    var w=draft.value.trim().split(/\s+/).filter(Boolean).length;
-    if(!draft.value.trim())w=0;
-    $("wc13").textContent="Words: "+w+". Aim: 100 to 150.";
-  });}
-  var timer=null, remain=420;
-  var timerLabel=$("timerLabel"), timerBtn=$("startTimer"), stopBtn=$("stopTimer"), hint=$("timerHint");
-  function renderTimer(){
-    var m=Math.floor(remain/60), s=remain%60;
-    if(timerLabel) timerLabel.textContent=m+":"+(s<10?"0"+s:s);
-  }
-  if(timerBtn) timerBtn.addEventListener("click",function(){
-    if(timer) return;
-    remain=420; renderTimer();
-    if(hint) hint.textContent="Writing now ...";
-    timer=setInterval(function(){
-      remain--; renderTimer();
-      if(remain<=0){ clearInterval(timer); timer=null; if(hint) hint.textContent="Time up. Check B A M R C, then Complete."; }
-    },1000);
-  });
-  if(stopBtn) stopBtn.addEventListener("click",function(){
-    if(timer){ clearInterval(timer); timer=null; if(hint) hint.textContent="Stopped. Check then Complete."; }
-  });
-  renderTimer();
-})();
+var LEARNER="Guest",xp=0,streak=0,best=0,done=0,totalActs=15;
+try{var _lrsL=JSON.parse(localStorage.getItem("lrs_learner")||"null");if(_lrsL&&_lrsL.name){LEARNER=_lrsL.name;}}catch(_e){}
+function norm(s){return (s||"").toLowerCase().trim().replace(/[.\s]+$/,"");}
+function setHud(){document.getElementById("xp").textContent=xp;document.getElementById("streak").textContent=streak;document.getElementById("doneCount").textContent=done;document.getElementById("progressFill").style.width=(done/totalActs*100)+"%";document.getElementById("progressBar").setAttribute("aria-valuenow",done);}
+var _loginStart=document.getElementById("loginStart");
+if(_loginStart){_loginStart.addEventListener("click",function(){var v=document.getElementById("loginName").value.trim();if(v){LEARNER=v;}document.getElementById("login").hidden=true;});}
+function markCorrect(el){el.classList.remove("wrong");el.classList.add("correct");var m=el.parentElement.querySelector(".mark");if(!m){m=document.createElement("span");m.className="mark";el.parentElement.appendChild(m);}m.textContent=" Correct";m.className="mark ok";}
+function markWrong(el){el.classList.remove("correct");el.classList.add("wrong");var m=el.parentElement.querySelector(".mark");if(!m){m=document.createElement("span");m.className="mark";el.parentElement.appendChild(m);}m.textContent=" Try again";m.className="mark no";}
+document.querySelectorAll("[data-check]").forEach(function(btn){btn.addEventListener("click",function(){var id=btn.getAttribute("data-check");var sec=document.getElementById(id);var okAll=true;sec.querySelectorAll("input.answer").forEach(function(inp){var acc=(inp.getAttribute("data-accept")||"").split("|").map(function(x){return x.trim().toLowerCase();});var v=norm(inp.value);var ok=acc.some(function(a){return v.indexOf(a)!==-1;});if(!inp.value.trim()){ok=false;}if(ok){markCorrect(inp);}else{markWrong(inp);okAll=false;}});sec.querySelectorAll(".mcq").forEach(function(m){var checked=m.querySelector("input:checked");m.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});if(!checked){okAll=false;return;}var lab=checked.closest("label");if(checked.getAttribute("data-correct")==="true"){lab.classList.add("correct");}else{lab.classList.add("wrong");okAll=false;}});var fb=document.getElementById("fb-"+id);if(fb){if(okAll){fb.textContent="Nice work. All correct here.";fb.className="feedback good";xp+=10;streak++;if(streak>best)best=streak;}else{fb.textContent="Good try. Check the red lines, fix, and press Check again.";fb.className="feedback bad";streak=0;}setHud();}});});
+document.querySelectorAll("[data-complete]").forEach(function(btn){btn.addEventListener("click",function(){var id=btn.getAttribute("data-complete");var sec=document.getElementById(id);if(!sec.classList.contains("complete")){sec.classList.add("complete");done++;setHud();var fb=document.getElementById("fb-"+id);if(fb&&!fb.textContent){fb.textContent="Saved. Move to the next activity.";fb.className="feedback";}if(done>=totalActs){document.getElementById("scoreXp").textContent=xp;document.getElementById("scoreDone").textContent=done+"/15";document.getElementById("scoreStreak").textContent=best;fireConfetti();if(typeof showSlide==="function"){showSlide(slides.length-1,true);}}}});});
+var draft=document.getElementById("a13-draft");if(draft){draft.addEventListener("input",function(){var w=draft.value.trim().split(/\s+/).filter(Boolean).length;if(!draft.value.trim())w=0;document.getElementById("wc13").textContent="Words: "+w+". Aim: 100 to 150.";});}
+function fireConfetti(){if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;var c=document.getElementById("confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;var p=[];for(var i=0;i<120;i++){p.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*4,col:i%2?"#ffd400":"#38e0c8",vy:2+Math.random()*3,vx:-1+Math.random()*2});}var t=0;(function anim(){x.clearRect(0,0,c.width,c.height);p.forEach(function(q){q.y+=q.vy;q.x+=q.vx;x.fillStyle=q.col;x.fillRect(q.x,q.y,q.r,q.r);});if(t++<180)requestAnimationFrame(anim);else x.clearRect(0,0,c.width,c.height);})();}
+setHud();
+/* ---------- Deck navigation ---------- */
+var slides=Array.prototype.slice.call(document.querySelectorAll("#slides .slide"));
+var cur=0;
+var prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");
+var navLeft=document.getElementById("navLeft"),navRight=document.getElementById("navRight"),navInside=document.getElementById("navInside");
+var tocSelect=document.getElementById("tocSelect");
+var slideCount=document.getElementById("slideCount"),slideLive=document.getElementById("slideLive");
+slides.forEach(function(s,i){var t=s.getAttribute("data-title")||("Slide "+(i+1));var o=document.createElement("option");o.value=i;o.textContent=(i+1)+". "+t;tocSelect.appendChild(o);});
+function showSlide(n,focusHead){
+if(n<0)n=0;if(n>slides.length-1)n=slides.length-1;cur=n;
+slides.forEach(function(s,i){s.classList.toggle("active",i===cur);});
+prevBtn.disabled=(cur===0);nextBtn.disabled=(cur===slides.length-1);
+tocSelect.value=cur;
+slideCount.textContent="Slide "+(cur+1)+" of "+slides.length;
+var title=slides[cur].getAttribute("data-title")||("Slide "+(cur+1));
+slideLive.textContent=title;
+if(focusHead){var h=slides[cur].querySelector("h2");if(h){h.focus({preventScroll:true});}}
+document.getElementById("deck").scrollIntoView({block:"nearest"});
+}
+prevBtn.addEventListener("click",function(){showSlide(cur-1,true);});
+nextBtn.addEventListener("click",function(){showSlide(cur+1,true);});
+tocSelect.addEventListener("change",function(){showSlide(parseInt(tocSelect.value,10),true);});
+document.getElementById("startBtn").addEventListener("click",function(){showSlide(1,true);});
+document.addEventListener("keydown",function(e){
+var tag=(e.target&&e.target.tagName)||"";
+if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT")return;
+if(e.key==="ArrowRight"){showSlide(cur+1,true);}
+else if(e.key==="ArrowLeft"){showSlide(cur-1,true);}
+else if(e.key==="Home"){showSlide(0,true);}
+else if(e.key==="End"){showSlide(slides.length-1,true);}
+});
+/* Small screens: move Back/Next INSIDE the deck below the slide, in normal flow. Large screens: keep them OUTSIDE, flanking the slide. No overlay at any size. */
+var mq=window.matchMedia("(max-width: 760px)");
+function placeNav(){
+if(mq.matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}
+else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}
+}
+if(mq.addEventListener){mq.addEventListener("change",placeNav);}else if(mq.addListener){mq.addListener(placeNav);}
+placeNav();
+showSlide(0,false);
+/* ---------- Full screen ---------- */
+var fsBtn=document.getElementById("fsBtn"),shell=document.getElementById("deckShell");
+function fsLabel(){
+var on=(document.fullscreenElement===shell);
+fsBtn.textContent=on?"Exit full screen":"Full screen";
+fsBtn.setAttribute("aria-pressed",on?"true":"false");
+fsBtn.setAttribute("aria-label",on?"Exit full screen for lesson slides":"Enter full screen for lesson slides");
+}
+if(!(document.fullscreenEnabled===false)&&shell.requestFullscreen){
+fsBtn.addEventListener("click",function(){
+if(document.fullscreenElement===shell){document.exitFullscreen();}
+else if(shell.requestFullscreen){shell.requestFullscreen();}
+});
+document.addEventListener("fullscreenchange",fsLabel);
+}else{fsBtn.hidden=true;}
+fsLabel();
 </script>
 <script src="../../xapi-include.js?v=6" defer></script>
 <script>
