@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three Clause Types for Health (B2) Interactive</title>
+<style>
+:root{--bg:#0a0a0a;--surface:#0f1b2e;--surface-2:#13233b;--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent-2:#38e0c8;--good:#38e0c8;--bad:#ff8a8a;--border:#2a3d57;--focus:#ffd400}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Verdana,Arial,sans-serif;font-size:clamp(16px,0.5vw + 15px,19px);line-height:1.7;margin:0;overflow-x:hidden}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 18px;font-weight:bold;z-index:300}
+.skip:focus{left:8px;top:8px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#app{min-height:100vh;display:flex;flex-direction:column}
+.hud{position:sticky;top:0;z-index:100;background:#000;border-bottom:3px solid var(--accent);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hud strong{color:var(--accent)}
+.hud .bar{flex:1 1 140px;height:14px;background:var(--surface-2);border:2px solid var(--border);border-radius:999px;overflow:hidden;min-width:120px}
+.hud .fill{height:100%;width:0;background:var(--accent-2)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;max-width:1100px;width:100%;margin:0 auto}
+.toolbar label{color:var(--muted)}
+#jump{background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:10px;min-height:48px;max-width:100%}
+.deck-grid{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:0 16px 24px;display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
+.slide-viewport{width:100%;max-width:880px;margin:0 auto;min-width:0}
+.slide{display:none;background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:clamp(16px,3vw,28px)}
+.slide.active{display:block}
+.slide h2{color:var(--ink);font-size:clamp(1.15rem,2.5vw,1.4rem);margin:0 0 4px}
+.slide h2:focus{outline:none}
+.slide.active h2:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.meta{color:var(--muted);font-size:.95rem;margin:0 0 10px}
+.tag{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 10px;font-size:.85rem;margin:2px 4px 2px 0}
+.tag.adv{border-color:var(--accent);color:var(--accent)}
+.tag.att{border-color:var(--accent-2);color:var(--accent-2)}
+.tag.noun{border-color:#9ec5ff;color:#9ec5ff}
+.q{background:#000;border:2px solid var(--border);border-radius:10px;padding:12px 14px;margin:10px 0;overflow-wrap:anywhere}
+.q p{margin:.3em 0}
+label.row{display:block;background:var(--surface-2);border:2px solid var(--border);border-radius:8px;padding:10px 12px;margin:8px 0;cursor:pointer;min-height:48px}
+label.row.correct{border-color:var(--good)}
+label.row.wrong{border-color:var(--bad)}
+input[type=text]{width:100%;max-width:100%;background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:12px;font-size:1rem;margin:6px 0;min-height:48px}
+input.answer.correct{border-color:var(--good)}
+textarea{width:100%;max-width:100%;background:#000;color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:12px;font-size:1rem;margin:6px 0;min-height:120px;font-family:inherit;resize:vertical}
+input.answer.wrong{border-color:var(--bad)}
+.mark{font-weight:bold;margin-left:8px}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--bad)}
+.hint{display:block;color:var(--muted);font-size:.9rem}
+.btn{background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 20px;font-size:1rem;font-weight:bold;cursor:pointer;margin:8px 8px 0 0;min-height:48px;min-width:48px}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,label.row:focus-within{outline:3px solid var(--focus);outline-offset:3px}
+.nav-side{display:none;background:transparent;color:var(--accent);border:3px solid var(--accent);border-radius:12px;font-size:1rem;font-weight:bold;cursor:pointer;min-height:64px;min-width:96px;padding:12px 16px;align-self:center}
+.nav-side:disabled{opacity:.4;cursor:not-allowed}
+.nav-inner{display:flex;gap:12px;margin:14px 0 0;padding:14px 0 0;border-top:2px solid var(--border);position:static}
+.nav-inner .btn{flex:1 1 0;margin:0}
+.model{background:var(--surface-2);border-left:6px solid var(--accent-2);border-radius:0 10px 10px 0;padding:10px 14px;margin:10px 0}
+details.key{background:#000;border:2px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0}
+details.key summary{cursor:pointer;font-weight:bold;color:var(--accent);font-size:1.02rem;padding:10px 0;min-height:48px}
+details.key[open]{border-color:var(--accent)}
+.feedback{font-weight:bold}
+.done-note{color:var(--good);font-weight:bold}
+footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);padding:14px 16px;max-width:1100px;width:100%;margin:0 auto}
+@media (min-width:900px){
+.deck-grid{grid-template-columns:auto minmax(0,880px) auto;align-items:center;justify-content:center}
+.nav-side{display:block}
+.nav-inner{display:none}
+}
+@media (max-width:899.98px){
+.nav-side{display:none}
+.nav-inner{display:flex}
+.toolbar{padding:10px 12px}
+.deck-grid{padding:0 12px 20px}
+}
+#app:fullscreen{background:#000;overflow:auto;padding-bottom:24px}
+#app:fullscreen .slide-viewport{max-height:none}
+#app:fullscreen .slide{max-height:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="app">
+<a class="skip" href="#slide-view">Skip to slide</a>
+<div class="hud" role="region" aria-label="Progress">
+<span><strong>XP:</strong> <span id="xp">0</span></span>
+<span><strong>Streak:</strong> <span id="streak">0</span></span>
+<span><strong>Done:</strong> <span id="done">0</span>/15</span>
+<span class="bar" aria-hidden="true"><span class="fill" id="fill"></span></span>
+<button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
+</div>
+<div class="toolbar">
+<span id="counter" aria-hidden="true"><strong>Slide 1 of 17</strong></span>
+<label for="jump">Go to slide:</label>
+<select id="jump">
+<option value="0">Cover: Health clauses</option>
+<option value="1">1. Health these days</option>
+<option value="2">2. Which sounds better</option>
+<option value="3">3. Sort A, B, or C</option>
+<option value="4">4. Adverbial endings</option>
+<option value="5">5. Your routine lines</option>
+<option value="6">6. who, whose, which, where</option>
+<option value="7">7. Join and smoothen</option>
+<option value="8">8. Polished questions</option>
+<option value="9">9. doubt, explain, decide</option>
+<option value="10">10. Label the clinic note</option>
+<option value="11">11. Fix the chat</option>
+<option value="12">12. Clinic desk replies</option>
+<option value="13">13. Six true lines</option>
+<option value="14">14. Chemist mix up</option>
+<option value="15">15. Exit ticket</option>
+<option value="16">Finish</option>
+</select>
+</div>
+<p class="vh" id="slide-live" aria-live="polite"></p>
+
+<div class="deck-grid">
+<button class="nav-side" id="prevSide" aria-label="Back to previous slide">Back</button>
+<div class="slide-viewport" id="slide-view">
+
+<section class="slide active" id="cover" role="group" aria-roledescription="slide" aria-label="Slide 1 of 17: Cover">
+<h2 tabindex="-1">Three clause types for health</h2>
+<p class="meta">B2 | Health English | Use Back and Next to move. 15 activities plus cover and finish.</p>
+<p><span class="tag adv">A = adverbial: even though, unless, in case</span> <span class="tag att">B = attributive: who, whose, which, where</span> <span class="tag noun">C = noun clause: wonder, explain, decide</span></p>
+<div class="q"><p>Although the queue was long, nobody complained. The leaflet, which lists the side effects, is inside the box. I wonder whether these tablets need food first. Three links, one clinic visit.</p></div>
+<p><button class="btn" data-goto="1">Start: Activity 1</button></p>
+<details class="key"><summary>How this deck works. Select to open.</summary><p>One slide at a time. Answer on the slide, press Check, open the key, then press Next. Say each answer aloud once.</p></details>
+</section>
+
+<section class="slide" id="act1" role="group" aria-roledescription="slide" aria-label="Slide 2 of 17: Activity 1" hidden>
+<h2 tabindex="-1">Activity 1. Health these days</h2>
+<p class="meta">Speak. 1 or 2 sentences each. General ideas only.</p>
+<div class="q"><p>1. What keeps you healthy these days, and why?<br>2. Who do you ask when you feel unwell?<br>3. What healthy habit would you like to start?</p></div>
+<button class="btn ghost" data-reveal="model1">Show models</button>
+<div class="model" id="model1" hidden><p><i>Walking keeps me healthy because it clears my head. I ask my neighbour, who is a retired nurse, when I feel unsure. I would like to start swimming, where the pool opens early.</i></p></div>
+<p><button class="btn ghost" data-complete="act1">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>No fixed answers. Any general reply is good. Aim for one because, who, or where line.</p></details>
+</section>
+
+<section class="slide" id="act2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 17: Activity 2" hidden>
+<h2 tabindex="-1">Activity 2. Which sounds better at the clinic?</h2>
+<p class="meta">Choose a or b.</p>
+<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Sick. Stay home. b) If your fever stays above 38, please call the clinic.</p>
+<label class="row"><input type="radio" class="choice" name="g2a" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label></div></div>
+<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the tablets. Doctor gave them. b) I need the tablets that the doctor prescribed yesterday.</p>
+<label class="row"><input type="radio" class="choice" name="g2b" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label></div></div>
+<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the pharmacy? Tell me. b) Could you tell me where the pharmacy is?</p>
+<label class="row"><input type="radio" class="choice" name="g2c" value="a"> a</label>
+<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label></div></div>
+<p><button class="btn" data-check="act2">Check</button> <button class="btn ghost" data-complete="act2">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>b, if gives the exact condition.</li><li>b, that picks the right tablets.</li><li>b, polished noun clause.</li></ol></details>
+</section>
+
+<section class="slide" id="act3" role="group" aria-roledescription="slide" aria-label="Slide 4 of 17: Activity 3" hidden>
+<h2 tabindex="-1">Activity 3. Sort: A, B, or C?</h2>
+<p class="meta">A = when, why, on what condition. B = describes a noun. C = after realise, wonder, remember.</p>
+<div class="q"><div class="mcq" data-group="g3_1"><p><b>1.</b> I stayed home because my throat was sore.</p>
+<label class="row"><input type="radio" class="choice" name="g3_1" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_1"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_1"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_2"><p><b>2.</b> The pharmacist who served me spoke slowly and clearly.</p>
+<label class="row"><input type="radio" class="choice" name="g3_2"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_2" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_2"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_3"><p><b>3.</b> I realised that I had missed my second dose.</p>
+<label class="row"><input type="radio" class="choice" name="g3_3"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_3"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_3" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_4"><p><b>4.</b> Unless the fever drops by morning, I will call the doctor.</p>
+<label class="row"><input type="radio" class="choice" name="g3_4" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_4"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_4"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_5"><p><b>5.</b> The clinic where I waited was clean and calm.</p>
+<label class="row"><input type="radio" class="choice" name="g3_5"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_5" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_5"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_6"><p><b>6.</b> I wonder whether these tablets need food first.</p>
+<label class="row"><input type="radio" class="choice" name="g3_6"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_6"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_6" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_7"><p><b>7.</b> Although the queue was long, nobody complained.</p>
+<label class="row"><input type="radio" class="choice" name="g3_7" data-correct="true"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_7"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_7"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_8"><p><b>8.</b> The leaflet, which lists the side effects, is inside the box.</p>
+<label class="row"><input type="radio" class="choice" name="g3_8"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_8" data-correct="true"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_8"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g3_9"><p><b>9.</b> Can you remember what time you took the first pill?</p>
+<label class="row"><input type="radio" class="choice" name="g3_9"> A</label>
+<label class="row"><input type="radio" class="choice" name="g3_9"> B</label>
+<label class="row"><input type="radio" class="choice" name="g3_9" data-correct="true"> C</label></div></div>
+<p><button class="btn" data-check="act3">Check</button> <button class="btn ghost" data-complete="act3">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>A: 1, 4, 7. B: 2, 5, 8. C: 3, 6, 9. Note the commas in 8: extra detail.</p></details>
+</section>
+
+<section class="slide" id="act4" role="group" aria-roledescription="slide" aria-label="Slide 5 of 17: Activity 4" hidden>
+<h2 tabindex="-1">Activity 4. Adverbial: choose the right ending <span class="tag adv">A</span></h2>
+<div class="q"><div class="mcq" data-group="g4_1"><p><b>1.</b> Even though the waiting room was full, ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_1" data-correct="true"> the nurse called each name with a smile</label>
+<label class="row"><input type="radio" class="choice" name="g4_1"> the chemist asks to see it</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_2"><p><b>2.</b> Keep the prescription in case ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_2" data-correct="true"> the chemist asks to see it</label>
+<label class="row"><input type="radio" class="choice" name="g4_2"> the nurse called each name with a smile</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_3"><p><b>3.</b> Unless you finish the course, ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_3" data-correct="true"> the infection may come back</label>
+<label class="row"><input type="radio" class="choice" name="g4_3"> the late clinic is usually quiet</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_4"><p><b>4.</b> The morning surgery fills fast, whereas ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_4" data-correct="true"> the late clinic is usually quiet</label>
+<label class="row"><input type="radio" class="choice" name="g4_4"> the infection may come back</label></div></div>
+<div class="q"><div class="mcq" data-group="g4_5"><p><b>5.</b> Drink water as soon as ...</p>
+<label class="row"><input type="radio" class="choice" name="g4_5" data-correct="true"> you take the tablets so they work faster</label>
+<label class="row"><input type="radio" class="choice" name="g4_5"> the late clinic is usually quiet</label></div></div>
+<p><button class="btn" data-check="act4">Check</button> <button class="btn ghost" data-complete="act4">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 the nurse called each name with a smile. 2 the chemist asks to see it. 3 the infection may come back. 4 the late clinic is usually quiet. 5 you take the tablets so they work faster.</p></details>
+</section>
+
+<section class="slide" id="act5" role="group" aria-roledescription="slide" aria-label="Slide 6 of 17: Activity 5" hidden>
+<h2 tabindex="-1">Activity 5. Adverbial: your routine lines <span class="tag adv">A</span></h2>
+<p class="meta">Say, then type. General ideas only.</p>
+<div class="q"><p>1. I drink ginger tea when ...<br>2. I would see a doctor if ...<br>3. I once missed work because ...<br>4. Although I dislike needles, I ...</p></div>
+<button class="btn ghost" data-reveal="model5">Show models</button>
+<div class="model" id="model5" hidden><p><i>I drink ginger tea when my throat feels scratchy. I would see a doctor if a fever lasted three days. I once missed work because a migraine would not shift. Although I dislike needles, I still get the flu jab.</i></p></div>
+<p><button class="btn ghost" data-complete="act5">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept general true lines. Check each linker plus a subject and verb after it.</p></details>
+</section>
+
+<section class="slide" id="act6" role="group" aria-roledescription="slide" aria-label="Slide 7 of 17: Activity 6" hidden>
+<h2 tabindex="-1">Activity 6. who, whose, which, where, when <span class="tag att">B</span></h2>
+<p class="meta">Type one word. Whose shows owning. Commas mark extra detail.</p>
+<div class="q"><p><label for="a61">1. The boy ___ mother called twice is still waiting.</label><input type="text" class="answer" id="a61" data-accept="whose" data-model="whose" autocomplete="off"></p></div>
+<div class="q"><p><label for="a62">2. April, ___ the pollen is worst, is hard for my allergies.</label><input type="text" class="answer" id="a62" data-accept="when" data-model="when" autocomplete="off"></p></div>
+<div class="q"><p><label for="a63">3. The syrup ___ he prescribed tastes awful.</label><input type="text" class="answer" id="a63" data-accept="which|that" data-model="which or that" autocomplete="off"></p></div>
+<div class="q"><p><label for="a64">4. My neighbour, ___ is a retired nurse, checks on me.</label><input type="text" class="answer" id="a64" data-accept="who" data-model="who" autocomplete="off"></p></div>
+<div class="q"><p><label for="a65">5. The tablets ___ you gave me made me sleepy.</label><input type="text" class="answer" id="a65" data-accept="which|that" data-model="which or that" autocomplete="off"></p></div>
+<div class="q"><p><label for="a66">6. That is the pharmacy ___ I get my vitamins.</label><input type="text" class="answer" id="a66" data-accept="where" data-model="where" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act6">Check</button> <button class="btn ghost" data-complete="act6">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>whose</li><li>when</li><li>which or that</li><li>who</li><li>which or that</li><li>where</li></ol></details>
+</section>
+
+<section class="slide" id="act7" role="group" aria-roledescription="slide" aria-label="Slide 8 of 17: Activity 7" hidden>
+<h2 tabindex="-1">Activity 7. Join two lines into one <span class="tag att">B</span></h2>
+<p class="meta">Type the key words. Example: whose clinic.</p>
+<div class="q"><p>1. I saw a specialist. Her clinic is near the park.<br><label for="a71">Joined with:</label><input type="text" class="answer" id="a71" data-accept="whose clinic" data-model="whose clinic is near the park" autocomplete="off"></p></div>
+<div class="q"><p>2. I lost the slip. You gave it to me on Monday.<br><label for="a72">Joined with:</label><input type="text" class="answer" id="a72" data-accept="that you gave|which you gave" data-model="that you gave me on Monday" autocomplete="off"></p></div>
+<div class="q"><p>3. She recommended a chemist. The staff explain everything there.<br><label for="a73">Joined with:</label><input type="text" class="answer" id="a73" data-accept="where the staff explain" data-model="where the staff explain everything" autocomplete="off"></p></div>
+<div class="q"><p>4. Dr Rao is the doctor. I always ask for her.<br><label for="a74">Joined with:</label><input type="text" class="answer" id="a74" data-accept="who i always ask for|that i always ask for" data-model="who I always ask for" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act7">Check</button> <button class="btn ghost" data-complete="act7">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>I saw a specialist whose clinic is near the park.</li><li>I lost the slip that you gave me on Monday.</li><li>She recommended a chemist where the staff explain everything.</li><li>Dr Rao is the doctor who I always ask for.</li></ol></details>
+</section>
+
+<section class="slide" id="act8" role="group" aria-roledescription="slide" aria-label="Slide 9 of 17: Activity 8" hidden>
+<h2 tabindex="-1">Activity 8. Polished health questions <span class="tag noun">C</span></h2>
+<p class="meta">Type the end part. Use statement order. No flip.</p>
+<div class="q"><p><label for="a81">1. Could you tell me ...? (Where can I get this prescription filled?)</label><input type="text" class="answer" id="a81" data-accept="where i can get this prescription filled" data-model="where I can get this prescription filled" autocomplete="off"></p></div>
+<div class="q"><p><label for="a82">2. Do you happen to know ...? (What time does the clinic close?)</label><input type="text" class="answer" id="a82" data-accept="what time the clinic closes" data-model="what time the clinic closes" autocomplete="off"></p></div>
+<div class="q"><p><label for="a83">3. Could you tell me ...? (Is the doctor running late?)</label><input type="text" class="answer" id="a83" data-accept="whether the doctor is running late|if the doctor is running late" data-model="whether the doctor is running late" autocomplete="off"></p></div>
+<div class="q"><p><label for="a84">4. I wonder ...? (When should I come back?)</label><input type="text" class="answer" id="a84" data-accept="when i should come back" data-model="when I should come back" autocomplete="off"></p></div>
+<div class="q"><p><label for="a85">5. Can you explain ...? (Why did my appointment move?)</label><input type="text" class="answer" id="a85" data-accept="why my appointment was moved" data-model="why my appointment was moved" autocomplete="off"></p></div>
+<p><button class="btn" data-check="act8">Check</button> <button class="btn ghost" data-complete="act8">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><ol><li>where I can get this prescription filled</li><li>what time the clinic closes</li><li>whether (or if) the doctor is running late</li><li>when I should come back</li><li>why my appointment was moved</li></ol></details>
+</section>
+
+<section class="slide" id="act9" role="group" aria-roledescription="slide" aria-label="Slide 10 of 17: Activity 9" hidden>
+<h2 tabindex="-1">Activity 9. doubt, explain, decide <span class="tag noun">C</span></h2>
+<div class="q"><div class="mcq" data-group="g9_1"><p><b>1.</b> I doubt ___ this rash needs antibiotics.</p>
+<label class="row"><input type="radio" class="choice" name="g9_1" data-correct="true"> whether</label>
+<label class="row"><input type="radio" class="choice" name="g9_1"> that</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_2"><p><b>2.</b> She explained ___ I must finish all the tablets.</p>
+<label class="row"><input type="radio" class="choice" name="g9_2" data-correct="true"> why</label>
+<label class="row"><input type="radio" class="choice" name="g9_2"> what</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_3"><p><b>3.</b> I cannot decide ___ to book the morning slot or the evening one.</p>
+<label class="row"><input type="radio" class="choice" name="g9_3" data-correct="true"> whether</label>
+<label class="row"><input type="radio" class="choice" name="g9_3"> that</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_4"><p><b>4.</b> He claims ___ rest matters more than vitamins.</p>
+<label class="row"><input type="radio" class="choice" name="g9_4" data-correct="true"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_4"> whether</label></div></div>
+<div class="q"><div class="mcq" data-group="g9_5"><p><b>5.</b> Nobody told us ___ the blood test would cost.</p>
+<label class="row"><input type="radio" class="choice" name="g9_5" data-correct="true"> how much</label>
+<label class="row"><input type="radio" class="choice" name="g9_5"> that</label></div></div>
+<p><button class="btn" data-check="act9">Check</button> <button class="btn ghost" data-complete="act9">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 whether. 2 why. 3 whether. 4 that. 5 how much.</p></details>
+</section>
+
+<section class="slide" id="act10" role="group" aria-roledescription="slide" aria-label="Slide 11 of 17: Activity 10" hidden>
+<h2 tabindex="-1">Activity 10. Label the clinic note: A, B, or C?</h2>
+<div class="q"><p>Hi all,<br>(1) As soon as you arrive at reception, show your card.<br>The form (2) that I left by the phone covers consent.<br>I gather (3) that results take two days.<br>(4) Unless you hear sooner, come back on Friday.<br>Please confirm (5) who needs a lift to the clinic.<br>The chemist (6), which stays open till midnight, delivers too.</p></div>
+<div class="q"><div class="mcq" data-group="g10_1"><p><b>1.</b></p><label class="row"><input type="radio" class="choice" name="g10_1" data-correct="true"> A</label><label class="row"><input type="radio" class="choice" name="g10_1"> B</label><label class="row"><input type="radio" class="choice" name="g10_1"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_2"><p><b>2.</b></p><label class="row"><input type="radio" class="choice" name="g10_2"> A</label><label class="row"><input type="radio" class="choice" name="g10_2" data-correct="true"> B</label><label class="row"><input type="radio" class="choice" name="g10_2"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_3"><p><b>3.</b></p><label class="row"><input type="radio" class="choice" name="g10_3"> A</label><label class="row"><input type="radio" class="choice" name="g10_3"> B</label><label class="row"><input type="radio" class="choice" name="g10_3" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_4"><p><b>4.</b></p><label class="row"><input type="radio" class="choice" name="g10_4" data-correct="true"> A</label><label class="row"><input type="radio" class="choice" name="g10_4"> B</label><label class="row"><input type="radio" class="choice" name="g10_4"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_5"><p><b>5.</b></p><label class="row"><input type="radio" class="choice" name="g10_5"> A</label><label class="row"><input type="radio" class="choice" name="g10_5"> B</label><label class="row"><input type="radio" class="choice" name="g10_5" data-correct="true"> C</label></div></div>
+<div class="q"><div class="mcq" data-group="g10_6"><p><b>6.</b></p><label class="row"><input type="radio" class="choice" name="g10_6"> A</label><label class="row"><input type="radio" class="choice" name="g10_6" data-correct="true"> B</label><label class="row"><input type="radio" class="choice" name="g10_6"> C</label></div></div>
+<p><button class="btn" data-check="act10">Check</button> <button class="btn ghost" data-complete="act10">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>1 A. 2 B. 3 C. 4 A. 5 C. 6 B.</p></details>
+</section>
+
+<section class="slide" id="act11" role="group" aria-roledescription="slide" aria-label="Slide 12 of 17: Activity 11" hidden>
+<h2 tabindex="-1">Activity 11. Fix the chat: choose the right line</h2>
+<div class="q"><div class="mcq" data-group="g11_1"><p><b>1.</b> Although I felt dizzy, but I finished the shift.</p>
+<label class="row"><input type="radio" class="choice" name="g11_1" data-correct="true"> Although I felt dizzy, I finished the shift.</label>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although I felt dizzy, but I finished the shift.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_2"><p><b>2.</b> The nurse who's advice helped me works nights.</p>
+<label class="row"><input type="radio" class="choice" name="g11_2" data-correct="true"> The nurse whose advice helped me works nights.</label>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The nurse who's advice helped me works nights.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_3"><p><b>3.</b> Could you tell me where is casualty?</p>
+<label class="row"><input type="radio" class="choice" name="g11_3" data-correct="true"> Could you tell me where casualty is?</label>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me where is casualty?</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_4"><p><b>4.</b> The ward where we waited there was freezing.</p>
+<label class="row"><input type="radio" class="choice" name="g11_4" data-correct="true"> The ward where we waited was freezing.</label>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The ward where we waited there was freezing.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_5"><p><b>5.</b> She said me that my pressure was high.</p>
+<label class="row"><input type="radio" class="choice" name="g11_5" data-correct="true"> She told me that my pressure was high.</label>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that my pressure was high.</label></div></div>
+<div class="q"><div class="mcq" data-group="g11_6"><p><b>6.</b> If the fever will not drop, we call the doctor.</p>
+<label class="row"><input type="radio" class="choice" name="g11_6" data-correct="true"> If the fever does not drop, we will call the doctor.</label>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If the fever will not drop, we call the doctor.</label></div></div>
+<p><button class="btn" data-check="act11">Check</button> <button class="btn ghost" data-complete="act11">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>All first options are right. 1: no but with although. 2: whose for owning. 3: statement order. 4: drop extra there. 5: told me, not said me. 6: if plus present, will in the main clause.</p></details>
+</section>
+
+<section class="slide" id="act12" role="group" aria-roledescription="slide" aria-label="Slide 13 of 17: Activity 12" hidden>
+<h2 tabindex="-1">Activity 12. Clinic desk: choose the natural reply</h2>
+<div class="q"><div class="mcq" data-group="g12_1"><p><b>1.</b> Patient: I feel worse.</p>
+<label class="row"><input type="radio" class="choice" name="g12_1" data-correct="true"> I understand that the cough is keeping you up. I will book you in today.</label>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I understand.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_2"><p><b>2.</b> Visitor: Where is X-ray?</p>
+<label class="row"><input type="radio" class="choice" name="g12_2" data-correct="true"> Can you show me your slip so that I can point you right?</label>
+<label class="row"><input type="radio" class="choice" name="g12_2"> Slip? Show me.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_3"><p><b>3.</b> You need help with instructions.</p>
+<label class="row"><input type="radio" class="choice" name="g12_3" data-correct="true"> The instructions which you gave me are unclear. Could you go over them?</label>
+<label class="row"><input type="radio" class="choice" name="g12_3"> Paper unclear. Explain.</label></div></div>
+<div class="q"><div class="mcq" data-group="g12_4"><p><b>4.</b> Advice for a strain.</p>
+<label class="row"><input type="radio" class="choice" name="g12_4" data-correct="true"> Unless you rest this week, the strain will linger.</label>
+<label class="row"><input type="radio" class="choice" name="g12_4"> Unless you will rest, it lingers.</label></div></div>
+<p><button class="btn" data-check="act12">Check</button> <button class="btn ghost" data-complete="act12">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>All first options. They are fuller, kinder, and use the clause correctly.</p></details>
+</section>
+
+<section class="slide" id="act13" role="group" aria-roledescription="slide" aria-label="Slide 14 of 17: Activity 13" hidden>
+<h2 tabindex="-1">Activity 13. Write: six true health lines</h2>
+<p class="meta">Write general ideas. Then say each line aloud.</p>
+<div class="q"><p>1. The habit that keeps me healthiest is ...<br>2. I sleep best when ...<br>3. A food I love, which ..., still comforts me.<br>4. I have learned that staying healthy means ...<br>5. Unless I ..., I always ...<br>6. Ask one real health question with Could you tell me ...?</p>
+<p><label for="t13">Write your six lines here, then say each line aloud:</label><textarea id="t13" aria-label="Six true health lines" placeholder="1. The habit that keeps me healthiest is ..." autocomplete="off"></textarea></p></div>
+<button class="btn ghost" data-reveal="model13">Show models</button>
+<div class="model" id="model13" hidden><p><i>1. The habit that keeps me healthiest is a short walk after dinner. (B) 2. I sleep best when the room is cool and dark. (A) 3. A food I love, which my grandmother taught me to cook, still comforts me. (B) 4. I have learned that staying healthy means guarding my sleep. (C) 5. Unless I plan my meals, I always snack late. (A) 6. Could you tell me how much water I should drink daily? (C)</i></p></div>
+<p><button class="btn ghost" data-complete="act13">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept general true lines. After you write, label each one A, B, or C.</p></details>
+</section>
+
+<section class="slide" id="act14" role="group" aria-roledescription="slide" aria-label="Slide 15 of 17: Activity 14" hidden>
+<h2 tabindex="-1">Activity 14. Speak: sort the chemist mix up</h2>
+<p class="meta">The chemist gave you the wrong tablets. You are at the counter. Use at least 1 A, 1 B, and 1 C.</p>
+<div class="q"><p>Start: <i>Hello, I have a problem with ...</i><br>Help: <i>Although I followed the label, ... / The tablets that I received are ... / Could you tell me whether ...?</i></p></div>
+<button class="btn ghost" data-reveal="model14">Show model scene</button>
+<div class="model" id="model14" hidden><p><i>Hello, I have a problem with the tablets that I collected today. (B) Although I followed the label, the name does not match my prescription. (A) Could you tell me whether these are the right ones? (C) Unless you can confirm it now, I will wait while you check. (A)</i></p></div>
+<p><button class="btn ghost" data-complete="act14">Mark complete</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>No fixed script. Good if you used one of each type and the counter could follow you. Record your try and play it back once.</p></details>
+</section>
+
+<section class="slide" id="act15" role="group" aria-roledescription="slide" aria-label="Slide 16 of 17: Activity 15" hidden>
+<h2 tabindex="-1">Activity 15. Exit ticket: 3 lines for daily life</h2>
+<p class="meta">Write 3 lines you can really use.</p>
+<div class="q"><p><label for="a151">1. One A line with unless, as soon as, or because.</label><input type="text" id="a151" autocomplete="off"></p>
+<p><label for="a152">2. One B line with whose, which, that, or where.</label><input type="text" id="a152" autocomplete="off"></p>
+<p><label for="a153">3. One C line with I wonder ... or Could you tell me ...</label><input type="text" id="a153" autocomplete="off"></p></div>
+<button class="btn ghost" data-reveal="model15">Show models</button>
+<div class="model" id="model15" hidden><p><i>1. Unless I sleep seven hours, I feel rough. (A) 2. I will use the chemist where the staff know my name. (B) 3. I wonder whether I should book the flu jab. (C)</i></p></div>
+<p><button class="btn ghost" data-complete="act15">Finish lesson</button> <span class="done-note" aria-live="polite"></span></p>
+<details class="key"><summary>Answer key. Select to open.</summary><p>Accept real plans. Check word order after tell me, and whose for owning. Keep these 3 lines for next time.</p></details>
+</section>
+
+<section class="slide" id="finish" role="group" aria-roledescription="slide" aria-label="Slide 17 of 17: Finish" hidden>
+<h2 tabindex="-1">Finish</h2>
+<div class="q"><p>You reached the end of the health deck on clauses.</p>
+<p><strong>XP: <span id="xp2">0</span> | Done: <span id="done2">0</span>/15</strong></p>
+<p id="cert-msg">Press all 15 Mark complete buttons to finish every activity.</p></div>
+<details class="key"><summary>What to do next. Select to open.</summary><p>Keep your 3 exit lines. Use one this week. Start next class by saying which one you really used.</p></details>
+</section>
+
+<div class="nav-inner" aria-label="Slide navigation">
+<button class="btn ghost" id="prevInner" aria-label="Back to previous slide">Back</button>
+<button class="btn" id="nextInner" aria-label="Go to next slide">Next</button>
+</div>
+
+</div>
+<button class="nav-side" id="nextSide" aria-label="Go to next slide">Next</button>
+</div>
+<footer><p>Health deck, B2. 15 activities. Tip: say each checked sentence aloud once.</p><p><a href="../../index.html#b2-communicative" style="color:var(--accent)">All B2 Communicative lessons</a></p></footer>
+</div>
+<canvas id="conf" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;display:none"></canvas>
+<script>
+var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var cur=0;
+var counter=document.getElementById('counter');
+var jump=document.getElementById('jump');
+var live=document.getElementById('slide-live');
+var prevS=document.getElementById('prevSide'),nextS=document.getElementById('nextSide');
+var prevI=document.getElementById('prevInner'),nextI=document.getElementById('nextInner');
+function show(n,focus){
+if(n<0)n=0;if(n>slides.length-1)n=slides.length-1;cur=n;
+slides.forEach(function(s,i){if(i===n){s.classList.add('active');s.removeAttribute('hidden');}else{s.classList.remove('active');s.setAttribute('hidden','');}});
+counter.innerHTML='<strong>Slide '+(n+1)+' of '+slides.length+'</strong>';
+jump.value=String(n);
+var t=slides[n].getAttribute('aria-label')||('Slide '+(n+1));
+live.textContent=t;
+var dis0=(n===0),dis1=(n===slides.length-1);
+prevS.disabled=dis0;prevI.disabled=dis0;nextS.disabled=dis1;nextI.disabled=dis1;
+var vp=document.getElementById('slide-view');
+if(vp&&vp.scrollIntoView){try{vp.scrollIntoView({block:'start'});}catch(e){vp.scrollIntoView();}}
+if(focus!==false){var h=slides[n].querySelector('h2');if(h){h.focus({preventScroll:true});}}
+}
+function prev(){show(cur-1);}function next(){show(cur+1);}
+prevS.addEventListener('click',prev);prevI.addEventListener('click',prev);
+nextS.addEventListener('click',next);nextI.addEventListener('click',next);
+jump.addEventListener('change',function(){show(parseInt(jump.value,10));});
+document.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){show(parseInt(b.getAttribute('data-goto'),10));});});
+document.addEventListener('keydown',function(e){
+if(e.target&&e.target.closest&&(e.target.closest('input,textarea,select,[contenteditable="true"]')))return;
+if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();next();}
+else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+else if(e.key==='Home'){e.preventDefault();show(0);}
+else if(e.key==='End'){e.preventDefault();show(slides.length-1);}
+});
+var touchX=null;
+document.getElementById('slide-view').addEventListener('touchstart',function(e){if(e.touches&&e.touches.length===1){touchX=e.touches[0].clientX;}},{passive:true});
+document.getElementById('slide-view').addEventListener('touchend',function(e){
+if(touchX===null)return;
+if(e.target&&e.target.closest&&(e.target.closest('input,textarea,select')))return;
+var dx=e.changedTouches[0].clientX-touchX;touchX=null;
+if(Math.abs(dx)>48){if(dx<0)next();else prev();}
+},{passive:true});
+var fsBtn=document.getElementById('fsBtn'),app=document.getElementById('app');
+function fsOn(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
+function fsLabel(){var on=fsOn();fsBtn.textContent=on?'Exit full screen':'Full screen';fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+if(!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen)){fsBtn.hidden=true;}
+fsBtn.addEventListener('click',function(){
+try{
+if(!fsOn()){if(app.requestFullscreen)app.requestFullscreen();else if(app.webkitRequestFullscreen)app.webkitRequestFullscreen();}
+else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}
+}catch(e){}
+setTimeout(fsLabel,300);
+});
+document.addEventListener('fullscreenchange',fsLabel);
+document.addEventListener('webkitfullscreenchange',fsLabel);
+var state={xp:0,streak:0,done:{},cheered:false};
+function norm(s){return (s||'').toLowerCase().trim().replace(/[.?!]+$/,'').replace(/\s+/g,' ');}
+function upd(){document.getElementById('xp').textContent=state.xp;document.getElementById('streak').textContent=state.streak;
+var n=Object.keys(state.done).length;document.getElementById('done').textContent=n;
+document.getElementById('done2').textContent=n;document.getElementById('xp2').textContent=state.xp;
+document.getElementById('fill').style.width=(n/15*100)+'%';
+if(n>=15){document.getElementById('cert-msg').textContent='All 15 activities done. Well done.';confetti();}
+}
+document.querySelectorAll('[data-reveal]').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.getAttribute('data-reveal'));if(el){el.hidden=!el.hidden;}});});
+document.querySelectorAll('[data-check]').forEach(function(btn){btn.addEventListener('click',function(){
+var sec=document.getElementById(btn.getAttribute('data-check'));if(!sec)return;
+var items=0,ok=0;
+sec.querySelectorAll('input.answer').forEach(function(inp){
+items++;var acc=(inp.getAttribute('data-accept')||'').split('|');var v=norm(inp.value);
+var good=acc.some(function(a){return v.indexOf(norm(a))!==-1;});
+inp.classList.remove('correct','wrong');inp.setAttribute('aria-invalid',good?'false':'true');
+var m=inp.parentElement.querySelector('.mark');if(m)m.remove();
+var s=document.createElement('span');s.className='mark '+(good?'ok':'no');s.textContent=good?'Correct':'Try again';
+inp.after(s);if(good){ok++;}
+var lbl=sec.querySelector('label[for="'+inp.id+'"]');if(lbl){var dm=inp.getAttribute('data-model');if(!good&&dm&&!lbl.querySelector('.hint')){var h=document.createElement('span');h.className='hint';h.textContent='Model: '+dm;lbl.appendChild(h);}}
+});
+sec.querySelectorAll('.mcq').forEach(function(g){
+items++;var checked=g.querySelector('input.choice:checked');
+g.querySelectorAll('label.row').forEach(function(l){l.classList.remove('correct','wrong');});
+if(!checked){return;}
+var good=checked.hasAttribute('data-correct');
+var lab=checked.closest('label');if(lab)lab.classList.add(good?'correct':'wrong');
+var c2=g.querySelector('input[data-correct]');var c2l=c2?c2.closest('label'):null;if(c2l)c2l.classList.add('correct');
+if(good){ok++;}
+});
+var fb=sec.querySelector('.feedback');if(fb){fb.textContent=ok+' of '+items+' right.';fb.style.color=ok===items?'var(--good)':'var(--ink)';}
+if(items>0&&ok===items){state.xp+=ok*10;state.streak++;}else{state.streak=0;}upd();
+});});
+document.querySelectorAll('[data-complete]').forEach(function(btn){btn.addEventListener('click',function(){
+var id=btn.getAttribute('data-complete');state.done[id]=true;
+var sec=document.getElementById(id);var n=sec?sec.querySelector('.done-note'):null;if(n)n.textContent='Done.';
+btn.disabled=true;upd();
+});});
+function confetti(){
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var c=document.getElementById('conf');c.style.display='block';var x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+var p=[];for(var i=0;i<120;i++){p.push({x:Math.random()*c.width,y:-20-Math.random()*200,w:6+Math.random()*6,h:8+Math.random()*8,v:2+Math.random()*3});}
+var t=0;(function f(){x.clearRect(0,0,c.width,c.height);x.fillStyle='#ffd400';p.forEach(function(o){o.y+=o.v;x.fillRect(o.x,o.y,o.w,o.h);});if(++t<160)requestAnimationFrame(f);else c.style.display='none';})();
+}
+show(0,false);upd();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Shirley B2 Clauses Health - precise verbs/objects via proxy (mirrors Travel deck)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act1:1,act5:1,act13:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('input.answer,.mcq').forEach(function(item){
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? (item.querySelector('.stem')||item.querySelector('p')) : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        else if(item.id) name=item.id;
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        if(!state.done[secId]) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=15){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>

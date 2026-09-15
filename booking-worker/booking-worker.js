@@ -389,11 +389,11 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + '(no extra pronoun); C with statement order after tell me / know (no flip: where the rota is, not where is the rota). '
       + 'Check: is the linker right for A/B/C? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
   }
-  if (where.includes('shirley-b2-clauses') || where.includes('when travelling') || where.includes('travel lines') || where.includes('exit ticket')) {
-    return 'TRAVEL CLAUSES (A = adverbial even though / unless / in case, B = attributive who / whose / which / where, C = noun clause wonder / explain / decide). '
+  if (where.includes('shirley-b2-clauses') || where.includes('when travelling') || where.includes('for health') || where.includes('travel lines') || where.includes('health lines') || where.includes('exit ticket') || where.includes('chemist')) {
+    return 'TRAVEL AND HEALTH CLAUSES (A = adverbial even though / unless / in case, B = attributive who / whose / which / where, C = noun clause wonder / explain / decide). '
       + 'Required shape: A with linker plus subject plus verb (no but with although, if plus present, will in the main clause); '
       + 'B with who for people, whose for owning, which / that for things, where for places (no extra pronoun); '
-      + 'C with statement order after tell me / know (no flip: where the taxi rank is, not where is the taxi rank). '
+      + 'C with statement order after tell me / know (no flip: statement order, not question order). '
       + 'Check: is the A/B/C label right? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
   }
   if (where.includes('career-coach') || where.includes('career coach') || where.includes('as the coach') || where.includes('good coach')) {
