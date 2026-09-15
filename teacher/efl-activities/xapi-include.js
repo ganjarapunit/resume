@@ -271,6 +271,7 @@
     // --- Explicit Submit buttons: only for REAL writing tasks (not warm-ups, speak-notes, reflections, goals, single-sentence drills) ---
     // Allowlist by file + activity + field. Multi-part drafts (story chains, 90-sec sets, thesis pairs) share one button per activity.
     var REAL_WRITING = [
+      { file: 'annisa-day17', act: 'act13', fields: ['a13-draft'] },
       { file: 'shirley-b2-clauses', act: 'act13', fields: ['t13'] },
       { file: 'shirley-b2-clauses', act: 'act15', fields: ['a151', 'a152', 'a153'], input: true },
       { file: 'annisa-day16', act: 'act8', fields: ['a8-1', 'a8-2', 'a8-3'] },
@@ -370,6 +371,7 @@
       if (f.indexOf('adverbial-wh-clauses') > -1) return 'adverbial-wh-clauses';
       if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
+      if (f.indexOf('annisa-day17') > -1) return 'annisa-day17';
       if (f.indexOf('shirley-b2-clauses') > -1) return 'shirley-b2-clauses';
       if (f.indexOf('annisa-day16') > -1) return 'annisa-day16';
       if (f.indexOf('annisa-day15') > -1) return 'annisa-day15';

@@ -406,6 +406,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
+  if (where.includes('day17') || where.includes('lit-review') || where.includes('literature') || where.includes('theme first') || where.includes('group sources')) {
+    return 'LIT REVIEW THEME PARAGRAPH (120 to 150 words, theme first, Lee plus Smith under it, Together link, In short close). '
+      + 'Required shape: theme sentence (One clear theme ... is ...), Lee (2023) with present finds plus past studied plus numbers, '
+      + 'Smith (2024) with adds plus hedge is linked to, Together closer, In short final line. '
+      + 'Check: does it start with a theme (not an author)? Are both years present? Are finds/adds present and studied/scored past? '
+      + 'Is there a Together link and In short close? Is it 120 to 150 words?';
+  }
   if (where.includes('day16') || where.includes('abstract')) {
     return 'ABSTRACT (100 to 150 words, 5 parts B A M R C, one study only). Required shape: Background (general problem, present tense), '
       + 'Aim (THIS STUDY AIMS TO), Method (past tense joined / did / took plus how many, how long, what test), '
