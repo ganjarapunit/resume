@@ -389,6 +389,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + '(no extra pronoun); C with statement order after tell me / know (no flip: where the rota is, not where is the rota). '
       + 'Check: is the linker right for A/B/C? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
   }
+  if (where.includes('pronunciation') || where.includes('sound clear') || where.includes('sound-clear') || where.includes('pausing') || where.includes('weak forms')) {
+    return 'PRONUNCIATION FOR WORK (pause | at clause edges, stress CAPS on news words, rise to continue, fall to finish, on A/B/C clause sentences). '
+      + 'Required shape: | marks at clause edges (never mid-phrase), CAPS on new and key words, small words quick and soft, '
+      + 'rise to hold the turn, calm fall to close. '
+      + 'Check: are pauses at clause edges (not mid-phrase)? Is stress on the news (not on small words)? '
+      + 'Does the tune rise to continue and fall to finish?';
+  }
   if (where.includes('shirley-b2-clauses') || where.includes('when travelling') || where.includes('for health') || where.includes('travel lines') || where.includes('health lines') || where.includes('exit ticket') || where.includes('chemist')) {
     return 'TRAVEL AND HEALTH CLAUSES (A = adverbial even though / unless / in case, B = attributive who / whose / which / where, C = noun clause wonder / explain / decide). '
       + 'Required shape: A with linker plus subject plus verb (no but with although, if plus present, will in the main clause); '

@@ -273,6 +273,8 @@
     var REAL_WRITING = [
       { file: 'annisa-day18', act: 'act13', fields: ['a13-draft'] },
       { file: 'annisa-day17', act: 'act13', fields: ['a13-draft'] },
+      { file: 'shirley-b2-pronunciation', act: 'act10', fields: ['a10'] },
+      { file: 'shirley-b2-pronunciation', act: 'act12', fields: ['a12'] },
       { file: 'shirley-b2-clauses-health', act: 'act13', fields: ['t13'] },
       { file: 'shirley-b2-clauses-health', act: 'act15', fields: ['a151', 'a152', 'a153'], input: true },
       { file: 'shirley-b2-clauses', act: 'act13', fields: ['t13'] },
@@ -376,6 +378,7 @@
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
       if (f.indexOf('annisa-day18') > -1) return 'annisa-day18';
       if (f.indexOf('annisa-day17') > -1) return 'annisa-day17';
+      if (f.indexOf('shirley-b2-pronunciation') > -1) return 'shirley-b2-pronunciation';
       if (f.indexOf('shirley-b2-clauses-health') > -1) return 'shirley-b2-clauses-health';
       if (f.indexOf('shirley-b2-clauses') > -1) return 'shirley-b2-clauses';
       if (f.indexOf('annisa-day16') > -1) return 'annisa-day16';
@@ -409,7 +412,7 @@
       var tag = fileTag();
       if (!tag) return;
       var seen = {};
-      var containers = document.querySelectorAll('.activity, article.card');
+      var containers = document.querySelectorAll('.activity, article.card, section.slide');
       containers.forEach(function(container){
         if (!container.id || seen[container.id]) return;
         seen[container.id] = true;

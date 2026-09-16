@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound Clear at Work (B2) Interactive</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#c2cfdf; --accent:#ffd400; --accent-2:#38e0c8;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;line-height:1.7;font-size:clamp(1.2rem,1vw + 1.05rem,1.5rem)}
+a{color:var(--accent-2)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#111;padding:.6rem 1rem;font-weight:800;z-index:99}
+.skip:focus{left:.5rem;top:.5rem}
+.page{max-width:1600px;width:98%;margin:0 auto;padding:1rem .5rem 2rem}
+.topbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem}
+.topbar h1{font-size:clamp(1.3rem,2.8vw,1.8rem);margin:0}
+.controls{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.btn{background:var(--accent);color:#111;border:none;border-radius:8px;padding:.85rem 1.4rem;font-weight:800;cursor:pointer;font-size:1.25rem}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--border)}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.counter{font-weight:700;color:var(--accent);font-size:1.2rem}
+.progress{height:10px;background:#060d1a;border:1px solid var(--border);border-radius:999px;overflow:hidden;margin:.7rem 0}
+.progress > div{height:100%;width:5%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+/* Layout: outer nav sits OUTSIDE #deck on large screens in normal mode.
+   #deck is the fullscreen element, so outer nav is outside fullscreen.
+   Inside #deck we keep side buttons (large) and bottom bar (small),
+   both in normal flow, never overlaying content. */
+.deck-outer{display:flex;gap:.6rem;align-items:stretch;margin-top:.8rem;width:100%}
+.outer-nav{flex:0 0 auto;align-self:center;display:none;background:var(--surface);color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1rem;font-weight:800;cursor:pointer;min-width:104px;font-size:1.2rem}
+@media(min-width:900px){.outer-nav{display:block}}
+#deck{flex:1 1 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:1rem;min-width:0;width:100%}
+#deck:fullscreen{border-radius:0;padding:clamp(1.2rem,3vw,2.5rem);overflow:auto;max-height:100vh;min-height:100vh;justify-content:center}
+.deck-stage{display:flex;gap:.6rem;align-items:stretch;flex:1;width:100%}
+/* Non-fullscreen on large: side buttons hidden so the slide stays wide. Outer Back/Next outside #deck are used instead. Fullscreen keeps side buttons exactly as before. */
+.side-inner{flex:0 0 auto;align-self:center;display:none;background:transparent;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:1.1rem .9rem;font-weight:800;cursor:pointer;min-width:96px;font-size:1.2rem}
+@media(min-width:900px){#deck:fullscreen .side-inner{display:block}}
+.slide-card{flex:1 1 auto;min-width:0;width:100%;max-width:none;background:#060d1a;border:1px solid var(--border);border-radius:12px;padding:clamp(1.6rem,4vw,3rem);min-height:min(76vh,780px);display:flex;flex-direction:column;justify-content:center}
+#deck:fullscreen .slide-card{min-height:80vh}
+.slide{display:none;font-size:clamp(1.2rem,2.4vw,1.55rem);line-height:1.7}
+.slide.active{display:flex;flex-direction:column;justify-content:center;gap:.9rem;animation:fade .25s ease}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+.slide h2{margin:.2rem 0 .8rem;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.15}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus)}
+.slide ol,.slide ul{margin:.6rem 0;padding-left:1.6rem}
+.slide li{margin:.45rem 0}
+.kicker{color:var(--accent-2);font-weight:800;letter-spacing:.02em;font-size:clamp(1rem,2vw,1.25rem);margin:0}
+.rule{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;margin:1rem 0;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.65}
+.big{font-size:clamp(1.35rem,3.2vw,1.9rem);line-height:1.5}
+.keyline{color:var(--muted);font-size:.95rem}
+.kbd{background:#000;border:1px solid var(--border);border-radius:6px;padding:.05rem .4rem;white-space:nowrap}
+.cap{color:var(--accent);font-weight:800}
+.task{margin:.6rem 0}
+textarea,input[type="text"]{width:100%;background:#000;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;font-size:1.25rem;line-height:1.5}
+fieldset{border:1px solid var(--border);border-radius:10px;margin:.8rem 0;padding:1rem;font-size:clamp(1.15rem,2.4vw,1.45rem)}
+legend{padding:0 .4rem;color:var(--accent);font-weight:700}
+label.opt{display:block;padding:.55rem .2rem;cursor:pointer}
+.feedback{min-height:1.4em;font-weight:700;margin-top:.4rem;font-size:1.2rem}
+.feedback.ok{color:var(--accent-2)}
+.feedback.no{color:#ff9a9a}
+details{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin-top:1rem;font-size:clamp(1.15rem,2.4vw,1.45rem)}
+summary{cursor:pointer;font-weight:800;color:var(--accent);font-size:clamp(1.2rem,2.6vw,1.5rem)}
+/* Bottom bar lives INSIDE #deck, in flow below content. Visible only on small screens. Never absolute, never overlay. */
+.bottom-inner{display:flex;gap:.6rem;justify-content:space-between;margin-top:.2rem}
+@media(min-width:900px){.bottom-inner{display:none}}
+.bottom-inner .btn{flex:1}
+/* In fullscreen on large, outer-nav is gone (outside fullscreen element), side-inner takes over, still outside the card, no overlay. */
+.dots{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.dot{width:16px;height:16px;border-radius:50%;border:1px solid var(--muted);background:transparent;padding:0;cursor:pointer}
+.dot[aria-current="true"]{background:var(--accent);border-color:var(--accent)}
+.hint{color:var(--muted);font-size:1.05rem}
+.audiobox{background:#000;border:1px solid var(--border);border-radius:10px;padding:.8rem .9rem;margin:.8rem 0}
+.audiobox p{margin:.1rem 0 .5rem;font-size:clamp(1.05rem,2.2vw,1.3rem)}
+.audiobox audio{width:100%;display:block}
+.voice{color:var(--accent-2);font-weight:800}
+footer{color:var(--muted);font-size:1rem;margin-top:1rem}
+@media(max-width:560px){body{font-size:1.15rem}.slide-card{min-height:68vh;padding:1.4rem}.slide{font-size:1.15rem}.slide h2{font-size:1.7rem}.outer-nav{display:none!important}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to slides</a>
+<div class="page">
+<div class="topbar">
+<h1>Sound Clear at Work: Pausing, Stress, Intonation</h1>
+<div class="controls">
+<span class="counter" id="counter" aria-live="polite">Slide 1 of 18</span>
+<button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
+</div>
+</div>
+<div class="progress" aria-hidden="true"><div id="bar"></div></div>
+<p class="hint">Use Back and Next. You can also use left and right arrow keys. On big screens the Back and Next buttons sit outside the slide. On small screens they sit below the slide, never on top of your text. Keys: <span class="kbd">|</span> pause, <span class="kbd">CAPS</span> stress, <span class="kbd">↗</span> continue, <span class="kbd">↘</span> finish.</p>
+
+<div class="deck-outer">
+<button class="outer-nav" id="prevOuter" aria-label="Previous slide">Back</button>
+<div id="deck" aria-label="Lesson slides">
+<div class="deck-stage">
+<button class="side-inner" id="prevSide" aria-label="Previous slide">Back</button>
+<div class="slide-card" id="slideCard">
+
+<section class="slide active" aria-label="Cover"><p class="kicker">B2 . WORKPLACE PRONUNCIATION</p><h2 tabindex="-1">Sound clear at work</h2><p class="big">Say long work sentences so people catch them <span class="cap">first time</span>.</p><div class="rule"><strong>Today:</strong> 1 adverbial clauses (If, Because, Although). 2 attributive clauses (who, which, that). 3 noun clauses (What I need is, She explained that).<br><strong>Music:</strong> pause <span class="kbd">|</span>, stress <span class="kbd">CAPS</span>, rise <span class="kbd">↗</span>, fall <span class="kbd">↘</span>.</div><p>Say each slide aloud. Check the answer key after you try. Ready.</p><details><summary>Answer key: how to use this deck</summary><p>There is no score here. Try first, speak aloud, then open the key. Good work sounds calm, chunked, with key words loud and small words quick.</p></details></section>
+
+<section class="slide" aria-label="Goals"><p class="kicker">START</p><h2 tabindex="-1">Goals and key</h2><p>By the end you can:</p><ol><li>Pause after front clauses and around extra who info.</li><li>Stress key work words, soften small words.</li><li>Rise to continue, fall to finish.</li></ol><div class="rule">Example: If we FINish TESTing by THURSday, ↗ | we can LAUNCH on MONday ↘</div><details><summary>Answer key</summary><p>Say the example in two chunks. Small rise after Thursday, clear fall after Monday. Loud on FIN, TEST, THURS, LAUNCH, MON.</p></details></section>
+
+<section class="slide activity" id="act1" aria-label="Activity 1"><p class="kicker">ACTIVITY 1 OF 15</p><h2 tabindex="-1">Your voice at work</h2><p>Rate you now. 1 is unclear, 5 is very clear.</p><ol><li>I pause in long sentences.</li><li>I stress key words.</li><li>My voice goes up and down.</li></ol><label for="a1">Type your 3 numbers, then tell your teacher when it is hard to sound clear:</label><input type="text" id="a1" placeholder="Example: 3, 4, 2. Hard in standups."><details><summary>Answer key</summary><p>Open. Example: <em>2, 3, 2. Hard in standups. I speak fast.</em> Goal for today: say three long work sentences so your teacher catches them first time.</p></details></section>
+
+<section class="slide activity" id="act2" aria-label="Activity 2"><p class="kicker">ACTIVITY 2 OF 15 . NOTICE</p><h2 tabindex="-1">Notice the music</h2><p>Ask your teacher to read, or press play and listen to the model voice. Mark <span class="kbd">|</span> where you hear a pause.</p><div class="audiobox"><p><span class="voice">Model voice:</span> clear British English, slow and expressive. Listen twice.</p><audio controls preload="metadata" src="audio/act02_notice.mp3" aria-label="Model voice for Activity 2, three sentences with clear pauses"></audio></div><ol><li>If we finish testing by Thursday we can launch on Monday.</li><li>Our manager who joined in March approved the new rota.</li><li>What I need from you is a short summary by five.</li></ol><label for="a2">Type the 3 lines with | :</label><textarea id="a2" rows="3"></textarea><details><summary>Answer key</summary><p>1. If we finish testing by Thursday, <strong>|</strong> we can launch on Monday.<br>2. Our manager, <strong>|</strong> who joined in March, <strong>|</strong> approved the new rota.<br>3. What I need from you <strong>|</strong> is a short summary by five.</p></details></section>
+
+<section class="slide activity" id="act3" aria-label="Activity 3"><p class="kicker">ACTIVITY 3 OF 15 . RULE</p><h2 tabindex="-1">Discover the rule</h2><p><strong>A.</strong> If we finish testing by Thursday, | we can launch.<br><strong>B.</strong> Our manager, | who joined in March, | approved.<br><strong>C.</strong> What I need | is a short summary.</p><p class="hint">Rules: 1 Extra who info, pause around it. 2 Front condition, pause after it. 3 What subject, pause before is.</p><label for="a3">Type or say your match, A-?, B-?, C-?:</label><input type="text" id="a3" placeholder="Example: A-2, B-1, C-3"><details><summary>Answer key</summary><p><strong>A-2, B-1, C-3.</strong> C is: What I need | is a short summary. Front clause pauses and rises. Extra who pauses like brackets. What subject pauses before the verb, then falls.</p></details></section>
+
+<section class="slide activity" id="act4" aria-label="Activity 4"><p class="kicker">ACTIVITY 4 OF 15 . LISTEN</p><h2 tabindex="-1">Same or different</h2><p>Your teacher says two versions, or press play. Are they the same.</p><div class="audiobox"><p><span class="voice">Model voice:</span> hear flat versus chunked, and how pauses change meaning.</p><audio controls preload="metadata" src="audio/act04_pairs.mp3" aria-label="Model voice for Activity 4, flat versus clear pairs"></audio></div><fieldset><legend>Pair 1: flat no pause, or chunked with pause. Which is clearer.</legend><label class="opt"><input type="radio" name="q4" data-correct="true"> Different. The chunked one is clearer.</label><label class="opt"><input type="radio" name="q4"> Same.</label></fieldset><button class="btn ghost" data-check="q4">Check</button><p class="feedback" aria-live="polite"></p><details><summary>Answer key</summary><p>Pair 1: <strong>Different. Chunked is clearer.</strong> Pair 2: <strong>Different. Meaning changes.</strong> The colleagues who finished early can leave (only some) vs The colleagues, who finished early, can leave (all did). Pair 3: <strong>Different. Natural stress wins.</strong> What I NEED is a SUMmary, not WHAT I need.</p></details></section>
+
+<section class="slide activity" id="act5" aria-label="Activity 5"><p class="kicker">ACTIVITY 5 OF 15 . STRESS</p><h2 tabindex="-1">Stress detective</h2><div class="audiobox"><p><span class="voice">Model voice:</span> listen for the loud, long key words.</p><audio controls preload="metadata" src="audio/act05_stress.mp3" aria-label="Model voice for Activity 5, sentence stress"></audio></div><fieldset><legend>Which words are strongest. Listen and choose.</legend><label class="opt"><input type="radio" name="q5"> A. We moved the DEADline (deadline is main news)</label><label class="opt"><input type="radio" name="q5" data-correct="true"> B. We MOVED the DEADline to FRIday (Friday is the new key date)</label></fieldset><button class="btn ghost" data-check="q5">Check</button><p class="feedback" aria-live="polite"></p><details><summary>Answer key</summary><p><strong>B.</strong> Full music: we MOVED the DEADline to FRIday ↘. She exPLAINED that the SERver was DOWN all MORning ↘. The rePORT that you SENT yesterday was really CLEAR ↘. Stress new and key words.</p></details></section>
+
+<section class="slide activity" id="act6" aria-label="Activity 6"><p class="kicker">ACTIVITY 6 OF 15 . TUNE</p><h2 tabindex="-1">Rise or fall</h2><p>Listen. Does the voice go up to continue, or down to finish.</p><div class="audiobox"><p><span class="voice">Model voice:</span> rise holds your turn, fall closes it.</p><audio controls preload="metadata" src="audio/act06_tune.mp3" aria-label="Model voice for Activity 6, rising and falling intonation"></audio></div><label for="a6">Type rise or fall for 1 to 4: 1 Because the client changed the brief... 2 ...we moved the deadline to Friday. 3 Our manager, who joined in March... 4 ...approved the new rota.</label><input type="text" id="a6" placeholder="Example: 1 rise, 2 fall, 3 rise, 4 fall"><details><summary>Answer key</summary><p><strong>1 rise ↗, 2 fall ↘, 3 rise ↗, 4 fall ↘.</strong> Rise holds your turn. Fall closes the thought. Hand up for rise, hand down for fall.</p></details></section>
+
+<section class="slide activity" id="act7" aria-label="Activity 7"><p class="kicker">ACTIVITY 7 OF 15 . PAUSE</p><h2 tabindex="-1">Chunk and read</h2><p>Add <span class="kbd">|</span>, then read aloud, slow then natural.</p><div class="audiobox"><p><span class="voice">Model voice:</span> copy these chunks and pauses.</p><audio controls preload="metadata" src="audio/act07_chunk.mp3" aria-label="Model voice for Activity 7, chunked reading"></audio></div><ol><li>Although the budget was tight we hired two designers.</li><li>The colleague who handles invoices is on leave.</li><li>Can you confirm whether the meeting is still at ten.</li></ol><label for="a7">Type with | :</label><textarea id="a7" rows="3"></textarea><details><summary>Answer key</summary><p>1. Although the budget was tight, <strong>|</strong> we hired two designers.<br>2. Defining, no pause needed. As extra news: The colleague, <strong>|</strong> who handles invoices, <strong>|</strong> is on leave.<br>3. Can you confirm <strong>|</strong> whether the meeting is still at ten.</p></details></section>
+
+<section class="slide activity" id="act8" aria-label="Activity 8"><p class="kicker">ACTIVITY 8 OF 15 . WEAK FORMS</p><h2 tabindex="-1">Stress and weaken</h2><p>Loud on CAPS. Quick and soft on small words.</p><div class="audiobox"><p><span class="voice">Model voice:</span> loud key words, quick tuh, wuhz, thut.</p><audio controls preload="metadata" src="audio/act08_weak.mp3" aria-label="Model voice for Activity 8, weak forms"></audio></div><ol><li>We moved it TO Friday. Say TO as tuh.</li><li>The server WAS down. Say WAS as wuhz.</li><li>She said THAT it can wait. Say THAT as thut.</li></ol><p>Read all 3 aloud now.</p><details><summary>Answer key</summary><p>we MOVED it <strong>tuh</strong> FRIday ↘. the SERver <strong>wuhz</strong> DOWN all MORning ↘. she SAID <strong>thut</strong> it can WAIT ↘. Short vowel, quiet voice for tuh, wuhz, thut.</p></details></section>
+
+<section class="slide activity" id="act9" aria-label="Activity 9"><p class="kicker">ACTIVITY 9 OF 15 . ECHO</p><h2 tabindex="-1">Echo the manager</h2><p>Copy the music. Link the sounds: moved_on, testing_by, server_was, down_all.</p><div class="audiobox"><p><span class="voice">Model voice:</span> pause and echo after each line, same music.</p><audio controls preload="metadata" src="audio/act09_echo.mp3" aria-label="Model voice for Activity 9, echo with linking"></audio></div><ol><li>We moved on Friday.</li><li>If we finish testing by Thursday, we can launch.</li><li>The server was down all morning.</li></ol><p>Your teacher reads. You echo with the same pauses and stress.</p><details><summary>Answer key</summary><p>we MOVED_on FRIday ↘. If we FINish TESTing_by THURSday, ↗ | we can LAUNCH on MONday ↘. the SERver_was DOWN_all MORning ↘. Smooth, not fast.</p></details></section>
+
+<section class="slide activity" id="act10" aria-label="Activity 10"><p class="kicker">ACTIVITY 10 OF 15 . FIX IT</p><h2 tabindex="-1">Fix the flat email</h2><p class="big">Hi all although testing is late we can still launch on Monday. The checklist that I shared yesterday shows the last tasks. What I suggest is a quick call at ten.</p><div class="audiobox"><p><span class="voice">Model voice:</span> warm and clear email, not flat. Copy this music.</p><audio controls preload="metadata" src="audio/act10_email.mp3" aria-label="Model voice for Activity 10, warm email reading"></audio></div><label for="a10">Add | and CAPS, then read it warm:</label><textarea id="a10" rows="3"></textarea><details><summary>Answer key</summary><p>Sample: Hi ALL, ↗ | although TESTing is LATE, ↗ | we can still LAUNCH on MONday ↘ | The CHECKlist that I SHARED yesterday ↘ | shows the LAST TASKS ↘ | What I sugGEST ↘ | is a QUICK CALL at TEN ↘. Warm voice, clear chunks.</p></details></section>
+
+<section class="slide activity" id="act11" aria-label="Activity 11"><p class="kicker">ACTIVITY 11 OF 15 . MEETINGS</p><h2 tabindex="-1">Meeting lines</h2><p>Choose the best line for each, then say it well.</p><div class="audiobox"><p><span class="voice">Model voice:</span> full and polite meeting lines.</p><audio controls preload="metadata" src="audio/act11_meeting.mp3" aria-label="Model voice for Activity 11, meeting lines"></audio></div><ol><li>Late delivery: A) Because the parts arrived late, we need two more days. B) Parts late. Need days.</li><li>New teammate: A) Priya who knows the client will join us. B) Priya, who knows the client, will join us.</li><li>Ask for help: A) Help me. B) What I need is your eyes on slide two.</li></ol><fieldset><legend>Part 1 quick check</legend><label class="opt"><input type="radio" name="q11" data-correct="true"> 1A. Because the parts arrived late, we need two more days.</label><label class="opt"><input type="radio" name="q11"> 1B. Parts late. Need days.</label></fieldset><button class="btn ghost" data-check="q11">Check part 1</button><p class="feedback" aria-live="polite"></p><label for="a11">Type 1A or 1B, 2A or 2B, 3A or 3B:</label><input type="text" id="a11" placeholder="Example: 1A, 2B, 3B"><details><summary>Answer key</summary><p><strong>1A, 2B, 3B.</strong> 2B: PRIya, | who KNOWS the CLIent, ↗ | will JOIN us ↘. 3B: What I NEED ↘ | is your EYES on SLIDE TWO ↘. Full and polite wins at work.</p></details></section>
+
+<section class="slide activity" id="act12" aria-label="Activity 12"><p class="kicker">ACTIVITY 12 OF 15 . CHECKING</p><h2 tabindex="-1">Polite checking</h2><p>Finish with a noun clause. Calm fall at the end.</p><div class="audiobox"><p><span class="voice">Model voice:</span> calm and confident checks.</p><audio controls preload="metadata" src="audio/act12_checking.mp3" aria-label="Model voice for Activity 12, polite checking"></audio></div><ol><li>What I mean is...</li><li>Could you confirm whether...</li><li>She explained that...</li></ol><label for="a12">Type your 3 lines:</label><textarea id="a12" rows="3"></textarea><details><summary>Answer key</summary><p>Samples: What I MEAN is ↘ | we NEED ONE more TEST ↘. Could you conFIRM ↘ | whether the MEETing is still at TEN ↘. She exPLAINED ↘ | that the SERver was DOWN till NOON ↘. Statement order after that and whether.</p></details></section>
+
+<section class="slide activity" id="act13" aria-label="Activity 13"><p class="kicker">ACTIVITY 13 OF 15 . TALK</p><h2 tabindex="-1">Status update, 1 minute</h2><p>Use all 3. Plan 1 minute, then speak.</p><ol><li>Adverbial: Although, If, Because...</li><li>Who: ...who...</li><li>Noun: What I... / She explained that...</li></ol><p>Start: Quick update on the launch...</p><div class="audiobox"><p><span class="voice">Model voice:</span> one minute update with all three clause types.</p><audio controls preload="metadata" src="audio/act13_update.mp3" aria-label="Model voice for Activity 13, status update"></audio></div><details><summary>Answer key, model</summary><p><em>Quick update on the launch. Although testing was late, ↗ | we are back on track ↘. Sam, | who handles QA, ↗ | cleared the last bugs ↘. What I need now ↘ | is one hour for a final check ↘.</em></p></details></section>
+
+<section class="slide activity" id="act14" aria-label="Activity 14"><p class="kicker">ACTIVITY 14 OF 15 . ROLE PLAY</p><h2 tabindex="-1">The delay</h2><p>You tell your manager the parts are late.</p><ul><li>Explain: use Because...</li><li>Describe help: use ...who...</li><li>Clarify: use What I need is...</li></ul><p>Your teacher asks 2 questions. Stay calm. Pause. Stress key words.</p><div class="audiobox"><p><span class="voice">Model voice:</span> calm delay explanation to copy.</p><audio controls preload="metadata" src="audio/act14_delay.mp3" aria-label="Model voice for Activity 14, delay explanation"></audio></div><details><summary>Answer key, model</summary><p><em>Because the parts arrived late, ↗ | we need two more days ↘. Leo, | who knows the supplier, ↗ | called them this morning ↘. What I need from you ↘ | is a short note to the client ↘.</em></p></details></section>
+
+<section class="slide activity" id="act15" aria-label="Activity 15"><p class="kicker">ACTIVITY 15 OF 15 . PLAN</p><h2 tabindex="-1">Plan and record</h2><p>Rate again 1 to 5, same 3 lines as the start. Then choose ONE:</p><p>A. Pause after front clauses. B. Stress key words. C. Rise to continue, fall to finish.</p><label for="a15">Type your numbers + A, B or C:</label><input type="text" id="a15" placeholder="Example: 4, 4, 4 + A"><details><summary>Answer key</summary><p>Open. Example: <em>4, 4, 4 + A. I pause now after If and Because.</em> Homework: re record your 1 minute update, mark | and CAPS on two real work emails.</p></details></section>
+
+<section class="slide" aria-label="Takeaway"><p class="kicker">FINISH</p><h2 tabindex="-1">Takeaway</h2><div class="rule"><strong>Remember:</strong> pause at clause edges, stress the news, rise to hold, fall to close.<br>If we FINish TESTing by THURSday, ↗ | we can LAUNCH on MONday ↘</div><p>Well done. Send your 30 second voice note update to your teacher.</p><details><summary>Answer key, self check</summary><p>Can you say all three types first time clear. 1 If / Because / Although + pause. 2 who + pauses for extra info. 3 What / that / whether + calm fall. If yes, goal met.</p></details></section>
+
+</div>
+<button class="side-inner" id="nextSide" aria-label="Next slide">Next</button>
+</div>
+<div class="bottom-inner"><button class="btn ghost" id="prevBottom">Back</button><button class="btn" id="nextBottom">Next</button></div>
+<div class="dots" id="dots" aria-label="Choose slide"></div>
+</div>
+<button class="outer-nav" id="nextOuter" aria-label="Next slide">Next</button>
+</div>
+<footer>B2 . Sound Clear at Work . 15 activities . High contrast, keyboard friendly.<p style="margin-top:.4rem;"><a href="../../index.html#b2-communicative">All B2 Communicative lessons</a></p></footer>
+</div>
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var i=0, counter=document.getElementById('counter'), bar=document.getElementById('bar'), dots=document.getElementById('dots');
+slides.forEach(function(_,n){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','Go to slide '+(n+1));d.addEventListener('click',function(){go(n);});dots.appendChild(d);});
+function paint(){
+slides.forEach(function(s,n){s.classList.toggle('active',n===i);});
+counter.textContent='Slide '+(i+1)+' of '+slides.length;
+bar.style.width=((i+1)/slides.length*100)+'%';
+Array.prototype.forEach.call(dots.children,function(d,n){d.setAttribute('aria-current', n===i ? 'true':'false');});
+var h=slides[i].querySelector('h2'); if(h){h.focus({preventScroll:true});}
+document.getElementById('prevOuter').disabled=i===0;
+document.getElementById('prevSide').disabled=i===0;
+document.getElementById('prevBottom').disabled=i===0;
+document.getElementById('nextOuter').disabled=i===slides.length-1;
+document.getElementById('nextSide').disabled=i===slides.length-1;
+document.getElementById('nextBottom').disabled=i===slides.length-1;
+}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));paint();}
+function next(){go(i+1);} function prev(){go(i-1);}
+['prevOuter','prevSide','prevBottom'].forEach(function(id){document.getElementById(id).addEventListener('click',prev);});
+['nextOuter','nextSide','nextBottom'].forEach(function(id){document.getElementById(id).addEventListener('click',next);});
+document.addEventListener('keydown',function(e){if(e.target.matches('input,textarea'))return;if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+document.querySelectorAll('[data-check]').forEach(function(btn){
+btn.addEventListener('click',function(){
+var name=btn.getAttribute('data-check');
+var group=document.querySelectorAll('input[name="'+name+'"]');
+var fb=btn.parentElement.querySelector('.feedback')||btn.nextElementSibling;
+var picked=null,correct=null;
+group.forEach(function(r){if(r.checked)picked=r;if(r.hasAttribute('data-correct'))correct=r;});
+if(!picked){fb.textContent='Choose one first.';fb.className='feedback no';return;}
+if(picked===correct||picked.hasAttribute('data-correct')){fb.textContent='Correct. Nice listening.';fb.className='feedback ok';}
+else{fb.textContent='Try again. Listen for the loud words.';fb.className='feedback no';}
+});
+});
+var fsBtn=document.getElementById('fsBtn'), deck=document.getElementById('deck');
+function inFs(){return document.fullscreenElement===deck;}
+function setFsUI(){var on=inFs();fsBtn.setAttribute('aria-pressed',on?'true':'false');fsBtn.textContent=on?'Exit full screen':'Full screen';}
+fsBtn.addEventListener('click',function(){
+if(!inFs()){if(deck.requestFullscreen)deck.requestFullscreen();else if(deck.webkitRequestFullscreen)deck.webkitRequestFullscreen();}
+else{if(document.exitFullscreen)document.exitFullscreen();}
+});
+document.addEventListener('fullscreenchange',setFsUI);
+paint();
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Pronunciation deck - precise verbs/objects via proxy (slide views, checks, audio, keys)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    listened: vb(HOME + '/expapi/verbs/listened','listened to'),
+    viewed: vb('http://id.tincanapi.com/verb/viewed','viewed'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function slideName(s){
+    var h=s.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    var a=(s.getAttribute('aria-label')||'Slide').trim();
+    return (a+(t?' — '+t:'')).substring(0,100);
+  }
+  function slideKey(s){
+    var m=(s.getAttribute('aria-label')||'').match(/Activity (\d+)/);
+    return m ? ('act'+m[1]) : (s.getAttribute('id')||'slide');
+  }
+  // Slide views + completed on the Takeaway slide
+  var seenLast=false;
+  function viewed(s){
+    sendPrecise('experienced', LESSON_ID+'#'+slideKey(s), 'Viewed slide: '+slideName(s));
+    if(slides.indexOf(s)===slides.length-1 && !seenLast){
+      seenLast=true;
+      sendPrecise('experienced', LESSON_ID, document.title);
+    }
+  }
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s, {attributes:true, attributeFilter:['class']}); });
+  }
+  // Radio checks (q4, q5, q11): one answered statement per group, first answer only
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var g=btn.getAttribute('data-check');
+      if(sentChecks[g]) return;
+      var sec=btn.closest('.slide');
+      var picked=document.querySelector('input[name="'+g+'"]:checked');
+      if(!picked) return;
+      sentChecks[g]=true;
+      var fs=btn.closest('fieldset');
+      var leg=sec ? sec.querySelector('h2') : null;
+      var q=(fs && fs.querySelector('legend')) ? fs.querySelector('legend').textContent.trim().replace(/\s+/g,' ').substring(0,80) : g;
+      var lbl=picked.closest('label');
+      var choice=lbl ? lbl.textContent.trim().replace(/\s+/g,' ').substring(0,60) : '';
+      sendPrecise('answered', LESSON_ID+'/'+slideKey(sec)+'/'+g, slideKey(sec)+': '+q+' -> '+choice);
+    });
+  });
+  // Model audio plays
+  document.querySelectorAll('.audiobox audio').forEach(function(aud){
+    aud.addEventListener('play', function(){
+      var sec=aud.closest('.slide');
+      var cap=aud.getAttribute('aria-label')||'model audio';
+      sendPrecise('listened', LESSON_ID+'/'+slideKey(sec)+'/audio', slideKey(sec)+': '+cap.substring(0,80));
+    });
+  });
+  // Answer keys opened
+  document.querySelectorAll('.slide details').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if(!d.open) return;
+      var sec=d.closest('.slide');
+      var sum=d.querySelector('summary');
+      sendPrecise('viewed', LESSON_ID+'/'+slideKey(sec)+'/key', slideKey(sec)+': '+(sum?sum.textContent.trim().substring(0,60):'Answer key'));
+    });
+  });
+});
+</script>
+</body>
+</html>
