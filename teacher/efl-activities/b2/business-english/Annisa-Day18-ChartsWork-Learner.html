@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 18 Charts for Work Interactive</title>
+<style>
+:root{
+--bg:#07101f;--surface:#0f1b2e;--surface-2:#13233b;
+--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent-2:#38e0c8;
+--good:#38e0c8;--bad:#ff8a8a;--border:#2a3d57;--focus:#ffd400;--warn:#ffb700;
+}
+*{box-sizing:border-box}
+html{font-size:20px;scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.7}
+a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+a.skip:focus{left:0;top:0;width:auto;height:auto;background:var(--accent);color:#000;padding:.6rem 1rem;z-index:60;border:3px solid #fff;font-weight:bold}
+.hud{position:sticky;top:0;z-index:40;background:rgba(7,16,31,.94);border-bottom:2px solid var(--border);padding:.6rem 1rem}
+.hud-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.stat{display:flex;align-items:center;gap:.4rem;font-weight:700;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.3rem .8rem;font-size:.95rem}
+.progress-wrap{flex:1 1 220px;min-width:200px}
+.progress-label{font-size:.85rem;color:var(--muted);margin-bottom:.2rem}
+.progress-track{height:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+header.hero{max-width:1100px;margin:0 auto;padding:1.2rem 1rem .4rem;text-align:center}
+header.hero h1{font-size:clamp(1.5rem,4vw,2.2rem);margin:0 0 .3rem;color:#fff;line-height:1.2}
+header.hero p{color:var(--muted);margin:.2rem auto;max-width:680px;font-size:.95rem}
+.pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.25rem .8rem;font-size:.82rem;font-weight:700;margin:.2rem}
+main{max-width:1100px;margin:0 auto;padding:0 1rem 1rem}
+.deck-shell{background:transparent;border:1px solid var(--border);border-radius:18px;padding:.8rem;margin:.6rem 0 1.2rem}
+.deck-shell:fullscreen{overflow:auto;background:var(--bg);padding:1rem;border-radius:0}
+.deck-topbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.slide-count{font-weight:800;color:var(--accent);font-size:.95rem}
+.deck-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.toc-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;color:var(--muted);font-size:.88rem;margin-top:.7rem}
+.toc-row select{max-width:100%}
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{display:flex;position:sticky;top:38vh}
+.nav-slot.nav-left{justify-content:flex-end}
+.nav-slot.nav-right{justify-content:flex-start}
+button.nav{min-height:56px;min-width:96px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:12px;font-weight:800;font-size:1rem;padding:.6rem 1rem;cursor:pointer;font-family:inherit}
+button.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+button.nav:disabled{opacity:.4;cursor:not-allowed}
+.deck{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem}
+.slides{min-width:0}
+.slide{display:none;min-width:0}
+.slide.active{display:block}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.nav-inside{display:none}
+.intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;padding:.9rem 1.1rem;margin:0 0 1rem}
+.intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.1rem}
+.rule-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-top:.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.rule-item{background:#06121f;border:1px solid var(--border);border-radius:999px;padding:.2rem .7rem;font-size:.82rem;font-weight:700}
+.steps-mini{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
+.steps-mini span{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.3rem .6rem;font-size:.82rem;color:var(--muted)}
+.steps-mini strong{color:var(--ink)}
+.activity{margin:0}
+.act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
+.badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06121f;font-weight:800;font-size:1.15rem}
+.act-head h2{margin:0;font-size:clamp(1.12rem,3vw,1.3rem);color:#fff;flex:1 1 auto}
+.tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent-2);border-radius:999px;padding:.15rem .6rem;font-size:.75rem;font-weight:700;white-space:nowrap}
+.hint-line{color:var(--muted);font-size:.88rem;margin:.15rem 0 .6rem}
+.exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;min-width:0}
+.model-text{background:#06121f;border:1px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-size:.92rem;line-height:1.7}
+.qbox{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin:.35rem 0;font-size:.9rem;overflow-wrap:anywhere}
+.chart-table{width:100%;border-collapse:collapse;margin:.4rem 0;background:#06121f;font-size:.88rem}
+.chart-table th,.chart-table td{border:1px solid var(--border);padding:.4rem .5rem;text-align:left}
+.chart-table th{color:var(--accent)}
+.chart-fig{margin:0 0 .5rem}
+.chart-fig img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--border)}
+.chart-fig figcaption{color:var(--muted);font-size:.82rem;margin-top:.3rem}
+.fill{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.45rem 0}
+.fill .lead,.fill .tail{font-size:.92rem}
+input.answer,textarea,select{background:#06121f;color:#fff;border:2px solid var(--border);border-radius:8px;padding:.38rem .55rem;font-size:.97rem;font-family:inherit}
+input.answer:focus-visible,textarea:focus-visible,button:focus-visible,input[type=radio]:focus-visible,input[type=checkbox]:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+input.answer{min-width:150px;max-width:100%}
+textarea{width:100%;min-height:88px;resize:vertical}
+input.answer.correct{border-color:var(--good);box-shadow:0 0 0 2px rgba(56,224,200,.4)}
+input.answer.wrong{border-color:var(--bad)}
+.mark{font-size:.78rem;font-weight:700;margin-left:.3rem}
+.mark.ok{color:var(--good)}.mark.no{color:var(--bad)}
+.mcq{margin:.55rem 0}
+.mcq .stem{font-weight:700;color:#fff;margin-bottom:.25rem;font-size:.93rem}
+.mcq label{display:block;background:#06121f;border:2px solid var(--border);border-radius:8px;padding:.4rem .65rem;margin:.25rem 0;cursor:pointer;font-size:.92rem}
+.mcq label.correct{border-color:var(--good)}.mcq label.wrong{border-color:var(--bad)}
+.mcq input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+button.btn{background:linear-gradient(135deg,var(--accent),#ffe34d);color:#06121f;border:2px solid #fff;font-weight:800;font-size:.95rem;padding:.5rem 1rem;border-radius:10px;cursor:pointer;margin-top:.6rem;font-family:inherit;margin-right:.4rem;min-height:48px}
+button.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+.feedback{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:.92rem}
+.feedback.good{border-color:var(--good)}.feedback.bad{border-color:var(--bad)}
+.mini-tip{background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;margin-top:.5rem;color:var(--muted);font-size:.85rem}
+.mini-tip strong{color:var(--accent)}
+details.key{margin-top:.6rem;border:2px solid var(--good);border-radius:10px;background:#0a1f1c}
+details.key summary{cursor:pointer;padding:.55rem .8rem;font-weight:800;color:var(--good);font-size:.93rem;min-height:44px}
+details.key summary:hover{text-decoration:underline}
+details.key .key-body{padding:.1rem .9rem .8rem;color:#eafff8;font-size:.9rem;border-top:1px solid var(--border)}
+details.key .key-body ol,details.key .key-body ul{margin:.35rem 0;padding-left:1.15rem}
+.done-flag{display:inline-block;margin-left:.4rem;color:var(--good);font-weight:800;opacity:0;font-size:.85rem}
+.activity.complete .done-flag{opacity:1}
+.wordcount{font-size:.82rem;color:var(--warn);font-weight:700;margin-top:.3rem}
+.check-list label{display:block;background:#06121f;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;margin:.25rem 0;font-size:.9rem;cursor:pointer}
+.check-list input{accent-color:var(--accent-2);width:18px;height:18px;vertical-align:middle;margin-right:.45rem}
+.results{margin:0;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--accent);border-radius:18px;padding:1.3rem;text-align:center}
+.results h2{color:var(--accent);margin-top:0}
+.score-grid{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:.9rem 0}
+.score-box{background:#06121f;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;min-width:125px}
+.score-box .n{font-size:1.7rem;font-weight:800;color:var(--accent-2)}
+.score-box .l{color:var(--muted);font-size:.82rem}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.82rem}
+#login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(4,9,18,.96);padding:1rem}
+#login[hidden]{display:none}
+.login-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;text-align:center}
+.login-card h2{color:var(--accent);margin-top:0}
+.login-card p{color:var(--muted);font-size:.92rem}
+.login-card input{width:100%;margin:.55rem 0}
+.timer{display:inline-block;background:#06121f;border:1px solid var(--warn);color:var(--warn);border-radius:999px;padding:.15rem .55rem;font-size:.82rem;font-weight:700;margin-left:.4rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:760px){
+.deck-shell{padding:.6rem}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
+.nav-inside button.nav{width:100%;min-height:52px}
+.deck{padding:.85rem}
+.toc-row select{width:100%}
+html{font-size:19px}
+}
+@media (max-width:560px){
+input.answer{min-width:120px}
+html{font-size:18px}
+button.btn{width:100%;margin-right:0}
+.nav-inside{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to lesson slides</a>
+<div id="login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+<div class="login-card">
+<h2 id="loginTitle">Welcome</h2>
+<p>Type your name to start Day 18.</p>
+<label for="loginName" style="font-weight:700;">Your name</label>
+<input id="loginName" type="text" autocomplete="name" placeholder="e.g. Alex" aria-label="Your name">
+<button class="btn" id="loginStart">Start</button>
+</div>
+</div>
+<div class="hud" role="region" aria-label="Your progress">
+<div class="hud-inner">
+<div class="stat" aria-label="Experience points">XP <span id="xp">0</span></div>
+<div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
+<div class="progress-wrap">
+<div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
+<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+</div>
+</div>
+<header class="hero">
+<h1>Day 18: Charts for Work</h1>
+<p>Explain a chart to a busy manager. Numbers plus meaning.</p>
+<div><span class="pill">40 to 45 min</span><span class="pill">One to one</span><span class="pill">ODIR: 4 moves</span></div>
+</header>
+<main id="main">
+<div class="deck-shell" id="deckShell">
+<div class="deck-topbar">
+<div class="slide-count" id="slideCount" aria-live="polite">Slide 1 of 17</div>
+<div class="deck-actions">
+<button class="btn ghost" id="fsBtn" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button>
+</div>
+</div>
+<div class="steps-mini" aria-label="Lesson steps" style="margin:0 0 .6rem;"><span><strong>1</strong> Look</span><span><strong>2</strong> Think</span><span><strong>3</strong> Build together</span><span><strong>4</strong> Write alone</span><span><strong>5</strong> Check</span></div>
+<div class="deck-layout" id="deckLayout">
+<div class="nav-slot nav-left" id="navLeft"><button class="nav" id="prevBtn" aria-label="Go to previous slide">Back</button></div>
+<div class="deck" id="deck" role="region" aria-roledescription="carousel" aria-label="Lesson slides">
+<div class="slides" id="slides">
+
+<!-- COVER -->
+<section class="slide" data-title="Cover: today you will learn" aria-labelledby="cover-h">
+<div class="intro" style="margin:0;">
+<h2 id="cover-h" tabindex="-1">Today you will learn</h2>
+<p>How to explain one bar chart to a busy manager. Same pilot numbers from Days 15 to 17, now at work. No new numbers to learn. Big picture first, two numbers, then what it means with This suggests that.</p>
+<p style="color:var(--muted);font-size:.88rem;margin:.3rem 0 0;">You already know: overview with no numbers from Day 2, key numbers from Day 3, formal tone from Day 7, careful may from Day 13, short plus Together from Days 15 and 16. Today we reuse them for work.</p>
+<div class="rule-box" aria-label="ODIR moves">
+<span class="rule-item">Overview</span>
+<span class="rule-item">Detail</span>
+<span class="rule-item">Implication</span>
+<span class="rule-item">Recommendation</span>
+</div>
+<p class="hint-line" style="margin-top:.6rem;">Class draft: 130 to 150 words. Homework to 180. Use Next to move. Arrow keys also move.</p>
+<button class="btn" id="startBtn">Start lesson</button>
+</div>
+</section>
+
+<!-- 1 -->
+<section class="slide activity" id="act1" data-title="Activity 1: Work vs exam chart" aria-labelledby="act1-h">
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 id="act1-h" tabindex="-1">Work vs exam chart <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Read. Choose.</p>
+<div class="exercise">
+<div class="mcq" data-group="g1">
+<p class="stem">A busy manager first asks:</p>
+<label><input type="radio" class="choice" name="g1" data-correct="false"> a) Show me every number in the chart.</label>
+<label><input type="radio" class="choice" name="g1" data-correct="true"> b) So what does this mean for us.</label>
+</div>
+<button class="btn" data-check="act1">Check</button>
+<button class="btn ghost" data-complete="act1">Mark complete</button>
+<div class="feedback" id="fb-act1" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Same rule as Day 2. Big picture first, numbers later.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>b. So what for us. Managers act on meaning, not on every bar.</p></div></details>
+</section>
+
+<!-- 2 -->
+<section class="slide activity" id="act2" data-title="Activity 2: Read our model" aria-labelledby="act2-h">
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 id="act2-h" tabindex="-1">Read our model <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Read one time. Then answer.</p>
+<div class="exercise">
+<figure class="chart-fig" style="margin:0 0 .5rem;">
+<img src="Day18-staff-pilot-chart.png" alt="Bar chart of final skills test scores. Group A, short 20 minute daily sessions, scored 83. Group B, long 90 minute late sessions, scored 70. Group A is 13 points higher.">
+<figcaption>Our chart all lesson: short daily 83 vs long late 70. The same numbers are in the table below.</figcaption>
+</figure>
+<table class="chart-table" aria-label="Staff training pilot data table">
+<tr><th>Group</th><th>Training</th><th>Score</th></tr>
+<tr><td>A, 30 staff</td><td>Short 20 minutes daily</td><td>83</td></tr>
+<tr><td>B, 30 staff</td><td>Long 90 minutes late</td><td>70</td></tr>
+</table>
+<p style="color:var(--muted);font-size:.82rem;margin:.3rem 0;">Pilot: 60 staff, 2 weeks in March. Same final skills test. We use this chart all lesson.</p>
+<div class="model-text" aria-label="Model work commentary">
+<p>Staff training pilot, March, 60 staff, two weeks. Overall, short daily sessions did clearly better than long late sessions. Group A did short 20 minute sessions each day and scored 83 on the final skills test. Group B did long 90 minute late sessions and scored 70. This means Group A scored 13 points higher than Group B, compared to the same test. This suggests that short regular training helps staff learn and stay fresh. Long late sessions may cause tiredness, which is linked to lower scores. We could keep short daily sessions for the next team and check results again in one month.</p>
+<p style="color:var(--muted);font-size:.82rem;margin-bottom:0;">About 140 words. ODIR order: Overview, Detail, Implication, Recommendation.</p>
+</div>
+<div class="mcq" data-group="g2">
+<p class="stem">Which group won?</p>
+<label><input type="radio" class="choice" name="g2" data-correct="true"> a) Group A, short daily, 83.</label>
+<label><input type="radio" class="choice" name="g2" data-correct="false"> b) Group B, long late, 70.</label>
+</div>
+<button class="btn" data-check="act2">Check</button>
+<button class="btn ghost" data-complete="act2">Mark complete</button>
+<div class="feedback" id="fb-act2" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>a. Group A won, 83 vs 70, gap 13. Who is 60 staff. Time is 2 weeks. Test is the same skills test.</p></div></details>
+</section>
+
+<!-- 3 -->
+<section class="slide activity" id="act3" data-title="Activity 3: Overview first" aria-labelledby="act3-h">
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 id="act3-h" tabindex="-1">Overview first <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">No numbers in the overview. Same Day 2 rule.</p>
+<div class="exercise">
+<div class="mcq" data-group="g3">
+<p class="stem">Best overview?</p>
+<label><input type="radio" class="choice" name="g3" data-correct="true"> a) Overall, short daily sessions did clearly better.</label>
+<label><input type="radio" class="choice" name="g3" data-correct="false"> b) Group A scored 83 and Group B scored 70 in March with 60 staff.</label>
+</div>
+<button class="btn" data-check="act3">Check</button>
+<button class="btn ghost" data-complete="act3">Mark complete</button>
+<div class="feedback" id="fb-act3" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>a. Big picture with no numbers. Line b lists numbers with no point.</p></div></details>
+</section>
+
+<!-- 4 -->
+<section class="slide activity" id="act4" data-title="Activity 4: Two numbers only" aria-labelledby="act4-h">
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 id="act4-h" tabindex="-1">Two numbers only <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Manager has one minute. Pick 83 vs 70.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. Group A scored</span><input class="answer" data-accept="83" aria-label="Score A"><span class="tail">on the skills test.</span></div>
+<div class="fill"><span class="lead">2. Group B scored</span><input class="answer" data-accept="70" aria-label="Score B"><span class="tail">on the same test.</span></div>
+<div class="fill"><span class="lead">3. The gap is</span><input class="answer" data-accept="13|13 points" aria-label="Gap"><span class="tail">points.</span></div>
+<button class="btn" data-check="act4">Check</button>
+<button class="btn ghost" data-complete="act4">Mark complete</button>
+<div class="feedback" id="fb-act4" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Park 60 staff and 2 weeks in one short method line. Keep 83 vs 70 in Detail.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. 83. 2. 70. 3. 13. Two scores plus one gap plus test name. That is enough.</p></div></details>
+</section>
+
+<!-- 5 -->
+<section class="slide activity" id="act5" data-title="Activity 5: Compare well" aria-labelledby="act5-h">
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 id="act5-h" tabindex="-1">Compare well <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Use compared to and higher than.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1. Group A scored 83,</span><input class="answer" data-accept="compared to" aria-label="Compare frame"><span class="tail">70 for Group B.</span></div>
+<div class="fill"><span class="lead">2. 13 points</span><input class="answer" data-accept="higher than" aria-label="Gap frame"><span class="tail">Group B.</span></div>
+<button class="btn" data-check="act5">Check</button>
+<button class="btn ghost" data-complete="act5">Mark complete</button>
+<div class="feedback" id="fb-act5" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. compared to. 2. higher than. Check than spelling, not then.</p></div></details>
+</section>
+
+<!-- 6 -->
+<section class="slide activity" id="act6" data-title="Activity 6: Number or meaning?" aria-labelledby="act6-h">
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 id="act6-h" tabindex="-1">Number or meaning? <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Fact or so what.</p>
+<div class="exercise">
+<div class="mcq" data-group="g6">
+<p class="stem">Which is meaning for the manager?</p>
+<label><input type="radio" class="choice" name="g6" data-correct="false"> a) Group A scored 83, Group B scored 70.</label>
+<label><input type="radio" class="choice" name="g6" data-correct="true"> b) Short daily training helps staff learn and stay fresh.</label>
+</div>
+<button class="btn" data-check="act6">Check</button>
+<button class="btn ghost" data-complete="act6">Mark complete</button>
+<div class="feedback" id="fb-act6" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>b. Meaning answers so what. Numbers alone do not tell the manager what to do.</p></div></details>
+</section>
+
+<!-- 7 -->
+<section class="slide activity" id="act7" data-title="Activity 7: This suggests that" aria-labelledby="act7-h">
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 id="act7-h" tabindex="-1">This suggests that <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Copy both. Suggests plus may.</p>
+<div class="exercise">
+<div class="qbox"><p style="margin:.2rem 0;"><strong>1. Join:</strong> This suggests that short regular training helps staff learn and stay fresh.</p><label for="a8-1">Copy it here to remember:</label><textarea id="a8-1" aria-label="Copy suggests line" placeholder="Write the suggests line here..."></textarea></div>
+<div class="qbox"><p style="margin:.2rem 0;"><strong>2. Limit:</strong> Long late sessions may cause tiredness, which is linked to lower scores.</p><label for="a8-2">Copy it here to remember:</label><textarea id="a8-2" aria-label="Copy may line" placeholder="Write the may line here..."></textarea></div>
+<button class="btn ghost" data-complete="act7">Mark complete</button>
+<div class="feedback" id="fb-act7" aria-live="polite"></div>
+<div class="mini-tip"><strong>Tip:</strong> Suggests is careful. Proves is too strong for 60 staff.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Copy both lines exactly. Check suggests with s, that with a full clause, may once. Your draft will reuse these two lines.</p></div></details>
+</section>
+
+<!-- 8 -->
+<section class="slide activity" id="act8" data-title="Activity 8: Careful for managers" aria-labelledby="act8-h">
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 id="act8-h" tabindex="-1">Careful for managers <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Good advice is careful. No big promises.</p>
+<div class="exercise">
+<div class="mcq" data-group="g8">
+<p class="stem">Which line is best?</p>
+<label><input type="radio" class="choice" name="g8" data-correct="false"> a) This proves all training must change now.</label>
+<label><input type="radio" class="choice" name="g8" data-correct="true"> b) This suggests short daily works better, 83 vs 70.</label>
+<label><input type="radio" class="choice" name="g8" data-correct="false"> c) Short daily always wins everywhere.</label>
+</div>
+<div class="mcq" data-group="g8b">
+<p class="stem">Which ending is careful?</p>
+<label><input type="radio" class="choice" name="g8b" data-correct="true"> a) Short daily may help staff learn.</label>
+<label><input type="radio" class="choice" name="g8b" data-correct="false"> b) Short daily will fix all work problems.</label>
+</div>
+<button class="btn" data-check="act8">Check</button>
+<button class="btn ghost" data-complete="act8">Mark complete</button>
+<div class="feedback" id="fb-act8" aria-live="polite"></div>
+<div class="mini-tip"><strong>Words to use:</strong> suggests, may, compared to. Avoid: prove, always, must change all.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>First: b. Second: a. Give numbers. Stay careful with suggests and may.</p></div></details>
+</section>
+
+<!-- 9 -->
+<section class="slide activity" id="act9" data-title="Activity 9: Formal and short" aria-labelledby="act9-h">
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 id="act9-h" tabindex="-1">Formal and short <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Which sounds work?</p>
+<div class="exercise">
+<div class="mcq" data-group="g9">
+<p class="stem">Best line for a manager?</p>
+<label><input type="radio" class="choice" name="g9" data-correct="true"> a) We could keep short daily sessions for the next team.</label>
+<label><input type="radio" class="choice" name="g9" data-correct="false"> b) Gonna keep stuff, a lot better.</label>
+</div>
+<button class="btn" data-check="act9">Check</button>
+<button class="btn ghost" data-complete="act9">Mark complete</button>
+<div class="feedback" id="fb-act9" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>a. Formal plus short: could plus sessions plus team. Gonna and stuff are not work words.</p></div></details>
+</section>
+
+<!-- 10 -->
+<section class="slide activity" id="act10" data-title="Activity 10: Useful phrases" aria-labelledby="act10-h">
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 id="act10-h" tabindex="-1">Useful phrases <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Bank: Overall, compared to, higher than, This suggests that, may, We could.</p>
+<div class="exercise">
+<div class="fill"><span class="lead">1.</span><input class="answer" data-accept="overall" aria-label="Phrase 1"><span class="tail">short daily won.</span></div>
+<div class="fill"><span class="lead">2. 83</span><input class="answer" data-accept="compared to" aria-label="Phrase 2"><span class="tail">70.</span></div>
+<div class="fill"><span class="lead">3.</span><input class="answer" data-accept="this suggests that" aria-label="Phrase 3"><span class="tail">short training helps.</span></div>
+<div class="fill"><span class="lead">4.</span><input class="answer" data-accept="we could" aria-label="Phrase 4"><span class="tail">keep short sessions.</span></div>
+<button class="btn" data-check="act10">Check</button>
+<button class="btn ghost" data-complete="act10">Mark complete</button>
+<div class="feedback" id="fb-act10" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>1. Overall. 2. compared to. 3. This suggests that. 4. We could. Check commas and spelling. Copy these into your draft.</p></div></details>
+</section>
+
+<!-- 11 -->
+<section class="slide activity" id="act11" data-title="Activity 11: Build one together" aria-labelledby="act11-h">
+<div class="act-head"><div class="badge" aria-hidden="true">11</div><h2 id="act11-h" tabindex="-1">Build one together <span class="done-flag">Done</span></h2><span class="tag">5 min</span></div>
+<p class="hint-line">Staff pilot. Same ODIR order. Do with your teacher.</p>
+<div class="exercise">
+<div class="qbox"><p style="margin:.2rem 0;">Chart: A 83, B 70, gap 13. Pilot: 60 staff, 2 weeks in March. Same skills test.</p></div>
+<div class="fill"><span class="lead">1. Overall,</span><input class="answer" data-accept="short daily|short daily sessions did clearly better" aria-label="Together 1"><span class="tail">did clearly better.</span></div>
+<div class="fill"><span class="lead">2. Group A scored 83,</span><input class="answer" data-accept="compared to" aria-label="Together 2"><span class="tail">70 for Group B.</span></div>
+<div class="fill"><span class="lead">3.</span><input class="answer" data-accept="this suggests that" aria-label="Together 3"><span class="tail">short training helps staff.</span></div>
+<div class="fill"><span class="lead">4.</span><input class="answer" data-accept="we could" aria-label="Together 4"><span class="tail">keep short sessions.</span></div>
+<button class="btn" data-check="act11">Check</button>
+<button class="btn ghost" data-complete="act11">Mark complete</button>
+<div class="feedback" id="fb-act11" aria-live="polite"></div>
+<div class="mini-tip"><strong>Say it first:</strong> Tell your teacher each line. Then type. Slow is good.</div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Model: Overall, short daily won. A scored 83, compared to 70. This suggests that short training helps. We could keep short sessions. Add full details in Activity 13.</p></div></details>
+</section>
+
+<!-- 12 -->
+<section class="slide activity" id="act12" data-title="Activity 12: Plan with chart table" aria-labelledby="act12-h">
+<div class="act-head"><div class="badge" aria-hidden="true">12</div><h2 id="act12-h" tabindex="-1">Plan with chart table <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Choose one ending. Copy its row. Each number has a job.</p>
+<div class="exercise">
+<div class="mcq" data-group="g12">
+<p class="stem">My ending, choose one:</p>
+<label><input type="radio" class="choice" name="g12" data-correct="true"> M) Morning focus: fresh mornings help learning (easiest)</label>
+<label><input type="radio" class="choice" name="g12" data-correct="true"> E) Evening tiredness: late nights harm focus (challenge)</label>
+</div>
+<div class="qbox"><p style="margin:.2rem 0;"><strong>Chart table, what each number means:</strong> Who: 60 staff joined the pilot, 30 in A, 30 in B. Time: 2 weeks in March. Groups: A did short 20 minute daily sessions, B did long 90 minute late sessions. Test: same final skills test. Result: A 83, B 70, gap 13 points.</p>
+<label for="a12-plan">My ending letter plus my 3 lines (overview, 2 numbers, meaning):</label><textarea id="a12-plan" aria-label="My ending and three lines" placeholder="e.g. M, Overall short daily won, 83 vs 70, fresh mornings help..."></textarea></div>
+<button class="btn ghost" data-complete="act12">Mark complete</button>
+<div class="feedback" id="fb-act12" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Both good. M is easiest. E uses the same numbers with a tiredness lens. Example M: M, Overall short daily won, 83 vs 70 gap 13, fresh mornings help. Example E: E, Overall long late lost, 83 vs 70, late harms focus. Keep the same 2 numbers in your draft.</p></div></details>
+</section>
+
+<!-- 13 -->
+<section class="slide activity" id="act13" data-title="Activity 13: Write your draft" aria-labelledby="act13-h">
+<div class="act-head"><div class="badge" aria-hidden="true">13</div><h2 id="act13-h" tabindex="-1">Write your draft <span class="timer">7 min</span> <span class="done-flag">Done</span></h2><span class="tag">Write alone</span></div>
+<p class="hint-line">130 to 150 words. Use Overview, Detail, Implication, Recommendation.</p>
+<div class="exercise">
+<label for="a13-draft">Your work commentary:</label>
+<textarea id="a13-draft" aria-label="Your work commentary draft" placeholder="Overall... Group A scored 83... This suggests that... We could..." style="min-height:150px;"></textarea>
+<div class="wordcount" id="wc13" aria-live="polite">Words: 0. Aim: 130 to 150.</div>
+<button class="btn ghost" data-complete="act13">Mark complete</button>
+<div class="feedback" id="fb-act13" aria-live="polite"></div>
+<div class="mini-tip"><strong>Frames to copy:</strong> Overall... compared to... higher than... This suggests that... may... We could...</div>
+</div>
+<details class="key"><summary>Answer key, models for Ending M and Ending E</summary><div class="key-body"><p>M model, about 140 words: Staff training pilot, March, 60 staff, two weeks. Overall, short daily sessions did clearly better than long late sessions. Group A did short 20 minute sessions each day and scored 83 on the final skills test. Group B did long 90 minute late sessions and scored 70. This means Group A scored 13 points higher than Group B, compared to the same test. This suggests that short regular training helps staff learn and stay fresh. Fresh morning sessions may keep attention high through the day. We could keep short daily sessions for the next team and check results again in one month.</p><p>E model, about 140 words: Staff training pilot, March, 60 staff, two weeks. Overall, long late sessions did clearly worse than short daily sessions. Group A scored 83 on the final skills test, compared to 70 for Group B. The gap is 13 points higher than Group B on the same test. This suggests that long late training may cause tiredness, which is linked to lower scores. Tired evening staff learn less and forget faster. We could move late sessions to short morning slots and check scores again in one month.</p></div></details>
+</section>
+
+<!-- 14 -->
+<section class="slide activity" id="act14" data-title="Activity 14: Check with colours" aria-labelledby="act14-h">
+<div class="act-head"><div class="badge" aria-hidden="true">14</div><h2 id="act14-h" tabindex="-1">Check with colours <span class="done-flag">Done</span></h2><span class="tag">3 min</span></div>
+<p class="hint-line">Tick each box. Fix one thing.</p>
+<div class="exercise">
+<div class="check-list">
+<label><input type="checkbox" aria-label="Check 1"> Overview first with no numbers.</label>
+<label><input type="checkbox" aria-label="Check 2"> Detail has 83 vs 70 plus gap 13 plus same test.</label>
+<label><input type="checkbox" aria-label="Check 3"> Implication has This suggests that plus may.</label>
+<label><input type="checkbox" aria-label="Check 4"> Recommendation has We could. Formal words only.</label>
+<label><input type="checkbox" aria-label="Check 5"> Length: 130 to 150 words.</label>
+</div>
+<label for="a14-fix">One fix I will make:</label>
+<textarea id="a14-fix" aria-label="One fix" placeholder="e.g. Change proves to suggests..."></textarea>
+<button class="btn ghost" data-complete="act14">Mark complete</button>
+<div class="feedback" id="fb-act14" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Good check: Overview yellow with no numbers, Detail blue, Implication green, Action orange. If overview has numbers, move them to Detail. Fix only one error today, add it to your error list.</p></div></details>
+</section>
+
+<!-- 15 -->
+<section class="slide activity" id="act15" data-title="Activity 15: Reflect and next step" aria-labelledby="act15-h">
+<div class="act-head"><div class="badge" aria-hidden="true">15</div><h2 id="act15-h" tabindex="-1">Reflect and next step <span class="done-flag">Done</span></h2><span class="tag">2 min</span></div>
+<p class="hint-line">Short. Honest. Then finish.</p>
+<div class="exercise">
+<div class="mcq" data-group="g15">
+<p class="stem">I can now add meaning with This suggests that:</p>
+<label><input type="radio" class="choice" name="g15" data-correct="true"> Yes, with my notes.</label>
+<label><input type="radio" class="choice" name="g15" data-correct="true"> Almost, I need more practice.</label>
+</div>
+<label for="a15-next">My one goal for Day 19:</label>
+<textarea id="a15-next" aria-label="My one goal" placeholder="e.g. Write a clear subject line..."></textarea>
+<div class="qbox"><strong>Homework, 15 to 20 min:</strong> Bring your draft to 180 words. OR rewrite one part with the correction. If tired, review your error list for 5 minutes. Work check: ask one person if your main point is clear.</div>
+<button class="btn" data-check="act15">Check</button>
+<button class="btn ghost" data-complete="act15">Mark complete</button>
+<div class="feedback" id="fb-act15" aria-live="polite"></div>
+</div>
+<details class="key"><summary>Answer key</summary><div class="key-body"><p>Both answers are good. Honest is best. Keep your commentary for Day 20. Day 20 uses the same ODIR plus findings. Well done.</p></div></details>
+</section>
+
+<!-- RESULTS -->
+<section class="slide" data-title="Results and certificate" aria-labelledby="res-h">
+<div class="results" id="results">
+<h2 id="res-h" tabindex="-1">Well done</h2>
+<p style="color:var(--muted);font-size:.92rem;margin:.2rem 0 .4rem;">Numbers plus meaning. Ready for work.</p>
+<div class="score-grid">
+<div class="score-box"><div class="n" id="scoreXp">0</div><div class="l">XP</div></div>
+<div class="score-box"><div class="n" id="scoreDone">0/15</div><div class="l">Done</div></div>
+<div class="score-box"><div class="n" id="scoreStreak">0</div><div class="l">Best streak</div></div>
+</div>
+</div>
+</section>
+
+</div><!-- /slides -->
+<div class="nav-inside" id="navInside" aria-label="Slide navigation"></div>
+</div><!-- /deck -->
+<div class="nav-slot nav-right" id="navRight"><button class="nav" id="nextBtn" aria-label="Go to next slide">Next</button></div>
+</div><!-- /deck-layout -->
+<div class="toc-row">
+<label for="tocSelect">Go to slide:</label>
+<select id="tocSelect" aria-label="Go to slide"></select>
+</div>
+<p class="hint-line" style="margin:.5rem 0 0;">Tip: arrow keys move slides when you are not typing. Your answers stay saved while you move.</p>
+</div><!-- /deck-shell -->
+</main>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<footer>Day 18 Charts for Work. 15 tasks. Essentials only.<p style="margin-top:.3rem;"><a href="../../index.html#b2-business" style="color:var(--accent)">All B2 Business lessons</a></p></footer>
+<div class="sr-only" aria-live="polite" id="slideLive"></div>
+<script>
+var LEARNER="Guest",xp=0,streak=0,best=0,done=0,totalActs=15;
+try{var _lrsL=JSON.parse(localStorage.getItem("lrs_learner")||"null");if(_lrsL&&_lrsL.name){LEARNER=_lrsL.name;}}catch(_e){}
+function norm(s){return (s||"").toLowerCase().trim().replace(/[.\s]+$/,"");}
+function setHud(){document.getElementById("xp").textContent=xp;document.getElementById("streak").textContent=streak;document.getElementById("doneCount").textContent=done;document.getElementById("progressFill").style.width=(done/totalActs*100)+"%";document.getElementById("progressBar").setAttribute("aria-valuenow",done);}
+var _loginStart=document.getElementById("loginStart");
+if(_loginStart){_loginStart.addEventListener("click",function(){var v=document.getElementById("loginName").value.trim();if(v){LEARNER=v;}document.getElementById("login").hidden=true;});}
+function markCorrect(el){el.classList.remove("wrong");el.classList.add("correct");var m=el.parentElement.querySelector(".mark");if(!m){m=document.createElement("span");m.className="mark";el.parentElement.appendChild(m);}m.textContent=" Correct";m.className="mark ok";}
+function markWrong(el){el.classList.remove("correct");el.classList.add("wrong");var m=el.parentElement.querySelector(".mark");if(!m){m=document.createElement("span");m.className="mark";el.parentElement.appendChild(m);}m.textContent=" Try again";m.className="mark no";}
+document.querySelectorAll("[data-check]").forEach(function(btn){btn.addEventListener("click",function(){var id=btn.getAttribute("data-check");var sec=document.getElementById(id);var okAll=true;sec.querySelectorAll("input.answer").forEach(function(inp){var acc=(inp.getAttribute("data-accept")||"").split("|").map(function(x){return x.trim().toLowerCase();});var v=norm(inp.value);var ok=acc.some(function(a){return v.indexOf(a)!==-1;});if(!inp.value.trim()){ok=false;}if(ok){markCorrect(inp);}else{markWrong(inp);okAll=false;}});sec.querySelectorAll(".mcq").forEach(function(m){var checked=m.querySelector("input:checked");m.querySelectorAll("label").forEach(function(l){l.classList.remove("correct","wrong");});if(!checked){okAll=false;return;}var lab=checked.closest("label");if(checked.getAttribute("data-correct")==="true"){lab.classList.add("correct");}else{lab.classList.add("wrong");okAll=false;}});var fb=document.getElementById("fb-"+id);if(fb){if(okAll){fb.textContent="Nice work. All correct here.";fb.className="feedback good";xp+=10;streak++;if(streak>best)best=streak;}else{fb.textContent="Good try. Check the red lines, fix, and press Check again.";fb.className="feedback bad";streak=0;}setHud();}});});
+document.querySelectorAll("[data-complete]").forEach(function(btn){btn.addEventListener("click",function(){var id=btn.getAttribute("data-complete");var sec=document.getElementById(id);if(!sec.classList.contains("complete")){sec.classList.add("complete");done++;setHud();var fb=document.getElementById("fb-"+id);if(fb&&!fb.textContent){fb.textContent="Saved. Move to the next activity.";fb.className="feedback";}if(done>=totalActs){document.getElementById("scoreXp").textContent=xp;document.getElementById("scoreDone").textContent=done+"/15";document.getElementById("scoreStreak").textContent=best;fireConfetti();if(typeof showSlide==="function"){showSlide(slides.length-1,true);}}}});});
+var draft=document.getElementById("a13-draft");if(draft){draft.addEventListener("input",function(){var w=draft.value.trim().split(/\s+/).filter(Boolean).length;if(!draft.value.trim())w=0;document.getElementById("wc13").textContent="Words: "+w+". Aim: 130 to 150.";});}
+function fireConfetti(){if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;var c=document.getElementById("confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;var p=[];for(var i=0;i<120;i++){p.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*4,col:i%2?"#ffd400":"#38e0c8",vy:2+Math.random()*3,vx:-1+Math.random()*2});}var t=0;(function anim(){x.clearRect(0,0,c.width,c.height);p.forEach(function(q){q.y+=q.vy;q.x+=q.vx;x.fillStyle=q.col;x.fillRect(q.x,q.y,q.r,q.r);});if(t++<180)requestAnimationFrame(anim);else x.clearRect(0,0,c.width,c.height);})();}
+setHud();
+var slides=Array.prototype.slice.call(document.querySelectorAll("#slides .slide"));
+var cur=0;
+var prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");
+var navLeft=document.getElementById("navLeft"),navRight=document.getElementById("navRight"),navInside=document.getElementById("navInside");
+var tocSelect=document.getElementById("tocSelect");
+var slideCount=document.getElementById("slideCount"),slideLive=document.getElementById("slideLive");
+slides.forEach(function(s,i){var t=s.getAttribute("data-title")||("Slide "+(i+1));var o=document.createElement("option");o.value=i;o.textContent=(i+1)+". "+t;tocSelect.appendChild(o);});
+function showSlide(n,focusHead){
+if(n<0)n=0;if(n>slides.length-1)n=slides.length-1;cur=n;
+slides.forEach(function(s,i){s.classList.toggle("active",i===cur);});
+prevBtn.disabled=(cur===0);nextBtn.disabled=(cur===slides.length-1);
+tocSelect.value=cur;
+slideCount.textContent="Slide "+(cur+1)+" of "+slides.length;
+var title=slides[cur].getAttribute("data-title")||("Slide "+(cur+1));
+slideLive.textContent=title;
+if(focusHead){var h=slides[cur].querySelector("h2");if(h){h.focus({preventScroll:true});}}
+document.getElementById("deck").scrollIntoView({block:"nearest"});
+}
+prevBtn.addEventListener("click",function(){showSlide(cur-1,true);});
+nextBtn.addEventListener("click",function(){showSlide(cur+1,true);});
+tocSelect.addEventListener("change",function(){showSlide(parseInt(tocSelect.value,10),true);});
+document.getElementById("startBtn").addEventListener("click",function(){showSlide(1,true);});
+document.addEventListener("keydown",function(e){
+var tag=(e.target&&e.target.tagName)||"";
+if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT")return;
+if(e.key==="ArrowRight"){showSlide(cur+1,true);}
+else if(e.key==="ArrowLeft"){showSlide(cur-1,true);}
+else if(e.key==="Home"){showSlide(0,true);}
+else if(e.key==="End"){showSlide(slides.length-1,true);}
+});
+var mq=window.matchMedia("(max-width: 760px)");
+function placeNav(){
+if(mq.matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}
+else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}
+}
+if(mq.addEventListener){mq.addEventListener("change",placeNav);}else if(mq.addListener){mq.addListener(placeNav);}
+placeNav();
+showSlide(0,false);
+var fsBtn=document.getElementById("fsBtn"),shell=document.getElementById("deckShell");
+function fsLabel(){
+var on=(document.fullscreenElement===shell);
+fsBtn.textContent=on?"Exit full screen":"Full screen";
+fsBtn.setAttribute("aria-pressed",on?"true":"false");
+fsBtn.setAttribute("aria-label",on?"Exit full screen for lesson slides":"Enter full screen for lesson slides");
+}
+if(!(document.fullscreenEnabled===false)&&shell.requestFullscreen){
+fsBtn.addEventListener("click",function(){
+if(document.fullscreenElement===shell){document.exitFullscreen();}
+else if(shell.requestFullscreen){shell.requestFullscreen();}
+});
+document.addEventListener("fullscreenchange",fsLabel);
+}else{fsBtn.hidden=true;}
+fsLabel();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Annisa Day 18 - precise verbs/objects via proxy (mirrors Day 17 deck)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    var v = VERBS[vKey];
+    window.LRS.send({ verb: v, object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act7:1,act12:1,act13:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId]) return;
+      if(sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('.answer,.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('.stem') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_marked_'+secId]){
+          completed['_marked_'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_marked_')!==0;}).length>=15){
+            sendPrecise('experienced', LESSON_ID, document.title);
+          }
+        }
+      }, 300);
+    });
+  });
+});
+</script>
+</body>
+</html>

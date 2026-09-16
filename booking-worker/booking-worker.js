@@ -406,6 +406,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
+  if (where.includes('day18') || where.includes('odir') || where.includes('chartswork') || where.includes('charts for work')) {
+    return 'ODIR WORK CHART COMMENTARY (130 to 150 words: Overview with zero numbers, Detail with 83 vs 70 plus gap 13 plus same test, '
+      + 'Implication with This suggests that plus may, Recommendation with We could). Required shape: overview first with no numbers, '
+      + 'two scores plus gap plus test name, suggests plus may meaning line, could action line, formal words only (no gonna, no stuff). '
+      + 'Check: does the overview contain numbers (must be zero)? Are 83, 70 and gap 13 present with the test named? '
+      + 'Is there a suggests plus may meaning and a We could action? Is it 130 to 150 words?';
+  }
   if (where.includes('day17') || where.includes('lit-review') || where.includes('literature') || where.includes('theme first') || where.includes('group sources')) {
     return 'LIT REVIEW THEME PARAGRAPH (120 to 150 words, theme first, Lee plus Smith under it, Together link, In short close). '
       + 'Required shape: theme sentence (One clear theme ... is ...), Lee (2023) with present finds plus past studied plus numbers, '
