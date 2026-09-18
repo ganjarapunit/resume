@@ -356,6 +356,11 @@
       { file: 'complex-clauses-b2-shirley', act: 'act10', fields: ['a10-1', 'a10-2', 'a10-3', 'a10-4', 'a10-5', 'a10-6'] },
       { file: 'adverbial-wh-clauses', act: 'act14', fields: ['a14-3', 'a14-4', 'a14-5'] },
       { file: 'adverbial-wh-clauses', act: 'act15', fields: ['a15-draft'] },
+      { file: 'lesson-18', act: 'act10', fields: ['a10input'], input: true },
+      { file: 'lesson-18', act: 'act13', fields: ['a13input'], input: true },
+      { file: 'lesson-18', act: 'act15', fields: ['a15q1', 'a15q2'] },
+      { file: 'lesson-18', act: 'act17', fields: ['a17input', 'a17q'] },
+      { file: 'lesson-18', act: 'act19', fields: ['a19input'], input: true },
       { file: 'lesson-17', act: 'act10', fields: ['a10input'], input: true },
       { file: 'lesson-17', act: 'act13', fields: ['a13input'], input: true },
       { file: 'lesson-17', act: 'act15', fields: ['a15q1', 'a15q2'] },
@@ -369,6 +374,7 @@
     ];
     function fileTag(){
       var f = location.pathname.toLowerCase();
+      if (f.indexOf('lesson-18') > -1) return 'lesson-18';
       if (f.indexOf('lesson-17') > -1) return 'lesson-17';
       if (f.indexOf('delta') > -1) return 'delta';
       if (f.indexOf('complex-clauses-b2-part2') > -1) return 'complex-clauses-b2-part2';

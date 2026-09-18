@@ -389,6 +389,14 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + '(no extra pronoun); C with statement order after tell me / know (no flip: where the rota is, not where is the rota). '
       + 'Check: is the linker right for A/B/C? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
   }
+  if (where.includes('lesson-18') || where.includes('objection') || where.includes('cheaper competitor') || where.includes('competitor is cheaper')) {
+    return 'OBJECTION: COMPETITOR IS CHEAPER (acknowledge price first, clarify scope like-for-like, total cost beats price, '
+      + 'conditional alternative If we adjusted). Required shape: acknowledge first (Thank you / I understand, never an instant discount), '
+      + 'clarify with open questions (Could you share / Could you clarify), like-for-like scope check, '
+      + 'soft conditional (If you needed ... would ...), hedged numbers (about / around / 15 percent), needs asked before any pitching. '
+      + 'Check: is the price acknowledged (not instantly discounted)? Is scope clarified like-for-like? '
+      + 'Is there a soft conditional? Are numbers hedged?';
+  }
   if (where.includes('pronunciation') || where.includes('sound clear') || where.includes('sound-clear') || where.includes('pausing') || where.includes('weak forms')) {
     return 'PRONUNCIATION FOR WORK (pause | at clause edges, stress CAPS on news words, rise to continue, fall to finish, on A/B/C clause sentences). '
       + 'Required shape: | marks at clause edges (never mid-phrase), CAPS on new and key words, small words quick and soft, '
