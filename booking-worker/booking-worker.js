@@ -389,6 +389,12 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + '(no extra pronoun); C with statement order after tell me / know (no flip: where the rota is, not where is the rota). '
       + 'Check: is the linker right for A/B/C? Is word order flipped after tell me (must be statement)? Is there although plus but or said me (must be zero)?';
   }
+  if (where.includes('lesson03') || where.includes('numbers-time') || where.includes('numbers and time')) {
+    return 'A1 NUMBERS AND TIME (say numbers seven eleven twelve twenty, ask What time is it, answer It is seven o clock, day Today is Monday). '
+      + 'Required shape: question with What plus time plus is plus it; answer with It is plus number plus o clock; '
+      + 'day with Today is plus Monday. Check: is the question word order What time is it (not Is what time)? '
+      + 'Is the answer It is seven o clock (not It seven)? Is the day Today is Monday?';
+  }
   if (where.includes('lesson-18') || where.includes('objection') || where.includes('cheaper competitor') || where.includes('competitor is cheaper')) {
     return 'OBJECTION: COMPETITOR IS CHEAPER (acknowledge price first, clarify scope like-for-like, total cost beats price, '
       + 'conditional alternative If we adjusted). Required shape: acknowledge first (Thank you / I understand, never an instant discount), '
