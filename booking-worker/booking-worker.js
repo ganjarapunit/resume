@@ -427,6 +427,21 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
+  if (where.includes('day20') || where.includes('annisa-day20') || where.includes('progress report') || where.includes('we plan to') || where.includes('this shows that')) {
+    return 'PROGRESS REPORT (120 to 150 words: Title, Summary with zero numbers, Findings with 83 vs 70 plus gap 13 plus same test, '
+      + 'Next steps with We plan to plus date). Required shape: title line, summary first with no numbers, '
+      + 'This shows that for the gap fact, This suggests that plus may for meaning, We plan to action with a date. '
+      + 'Check: does the summary contain numbers (must be zero)? Are 83, 70 and gap 13 present with the test named? '
+      + 'Is there a shows fact line, a suggests plus may meaning line, and a We plan to action? Is it 120 to 150 words?';
+  }
+  if (where.includes('day19') || where.includes('annisa-day19') || where.includes('professional email') || where.includes('best regards') || where.includes('just following up')) {
+    return 'PROFESSIONAL EMAIL (80 to 120 words: Subject with type plus topic plus date, Dear plus reason in line 1, '
+      + 'Detail with 83 vs 70 once, Ask with Could you please, Thanks plus Best regards close). '
+      + 'Required shape: subject first with type and date, I am writing to reason, one 83 vs 70 detail, '
+      + 'Could you please ask, Thanks for plus Best regards close, short and formal only. '
+      + 'Check: is there a subject with type and date? Is the reason in line 1 with I am writing to? '
+      + 'Is 83 vs 70 present once? Is there a Could you please ask and a Thanks plus Best regards close? Is it 80 to 120 words?';
+  }
   if (where.includes('day18') || where.includes('odir') || where.includes('chartswork') || where.includes('charts for work')) {
     return 'ODIR WORK CHART COMMENTARY (130 to 150 words: Overview with zero numbers, Detail with 83 vs 70 plus gap 13 plus same test, '
       + 'Implication with This suggests that plus may, Recommendation with We could). Required shape: overview first with no numbers, '
