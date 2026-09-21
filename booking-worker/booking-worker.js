@@ -427,6 +427,20 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
+  if (where.includes('day22') || where.includes('annisa-day22') || where.includes('cv') || where.includes('cover letter')) {
+    return 'CV AND COVER LETTER (3 bullets with Ran plus proof: Ran sessions for 30 staff, Tracked 83 vs 70 plus gap 13, Wrote replies in one week; '
+      + 'opening with I am writing to apply for plus Training Assistant plus I would be glad). Required shape: each bullet starts with Ran/Tracked/Reported/Wrote plus a number, '
+      + 'I am writing to apply for with the exact role, I would be glad close. '
+      + 'Check: does each bullet start with Ran/Tracked/Reported/Wrote and contain a number (30, 83, 70, 13, one week)? '
+      + 'Is the letter opening I am writing to apply for with Training Assistant present? Is the I would be glad close present?';
+  }
+  if (where.includes('day21') || where.includes('annisa-day21') || where.includes('proposal') || where.includes('get a yes')) {
+    return 'PROPOSAL GET A YES (100 to 130 words: Problem with late low scores, Solution with I propose that, Benefit with 83 vs 70, Risk with While, Ask with Could you please approve plus June). '
+      + 'Required shape: problem first with The problem is, I propose that solution, This will help benefit with 83 vs 70, '
+      + 'one While risk line, Could you please approve for June close. '
+      + 'Check: is The problem is present? Is I propose that present? Is 83 vs 70 present in the benefit? '
+      + 'Is there a While risk line? Is Could you please approve for June present? Is it 100 to 130 words?';
+  }
   if (where.includes('day20') || where.includes('annisa-day20') || where.includes('progress report') || where.includes('we plan to') || where.includes('this shows that')) {
     return 'PROGRESS REPORT (120 to 150 words: Title, Summary with zero numbers, Findings with 83 vs 70 plus gap 13 plus same test, '
       + 'Next steps with We plan to plus date). Required shape: title line, summary first with no numbers, '
