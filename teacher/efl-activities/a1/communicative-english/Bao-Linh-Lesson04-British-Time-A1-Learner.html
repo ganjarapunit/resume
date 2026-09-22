@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4: British Time Bao and Linh Interactive</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:4.77%; background:var(--accent)}
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.role{display:grid; gap:.8rem; margin:.8rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.role div{background:#0c1628; border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; font-size:clamp(1.1rem,3vw,1.3rem)}
+.role strong{color:var(--accent)}
+.dots{display:flex; gap:.7rem; margin:.8rem 0; flex-wrap:wrap}
+.dot{flex:1 1 8rem; min-height:56px; font-size:1.05rem; font-weight:800; border-radius:12px; border:2px solid var(--border); background:#0c1628; color:var(--ink); cursor:pointer; padding:.6rem}
+.dot[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b}
+.choice{display:block; width:100%; text-align:left; margin:.5rem 0; min-height:56px; font-size:clamp(1.05rem,3vw,1.25rem); font-weight:700; border-radius:12px; cursor:pointer; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.7rem 1rem}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.wordbank{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.wordbank button{min-height:52px; font-size:1.15rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.55rem .95rem; cursor:pointer}
+.dlg-bank{display:flex; flex-direction:column; gap:.6rem; margin:.7rem 0}
+.dlg-item{min-height:56px; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; text-align:left; border-radius:12px; border:2px solid var(--border); background:#0c1628; color:var(--ink); padding:.7rem 1rem; cursor:grab}
+.dlg-item.sel{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.dlg-item.placed{display:none}
+.drop-list{list-style:none; padding:0; margin:.7rem 0; display:flex; flex-direction:column; gap:.6rem}
+.drop-box{min-height:60px; border:2px dashed var(--border); border-radius:12px; padding:.6rem .8rem; display:flex; gap:.8rem; align-items:center; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; background:#0c1628}
+.drop-box.over{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.drop-box.filled{border-style:solid; border-color:var(--accent-2)}
+.boxnum{flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
+.boxhint{color:var(--muted); font-weight:400}
+.drop-box.filled .boxhint{color:var(--ink); font-weight:700}
+.answer-line{background:#0c1628; border:1px dashed var(--border); border-radius:10px; min-height:3.2em; padding:.7rem 1rem; font-size:1.3rem; font-weight:800}
+.gap{font-size:clamp(1.15rem,3.4vw,1.4rem); background:#0c1628; border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; margin:.6rem 0}
+.gap input{font-size:1.15rem; font-weight:800; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:8px; padding:.35rem .6rem; min-width:7rem; max-width:10rem; margin:0 .25rem}
+.gap input.correct{border-color:var(--good)}
+.gap input.wrong{border-color:var(--bad)}
+.rec-row{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.rec-row button{flex:1 1 9rem; min-height:52px; font-size:1rem; font-weight:800; border-radius:10px; cursor:pointer; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem}
+.rec-row button:disabled{opacity:.4; cursor:not-allowed}
+.rec-row button.danger{border-color:var(--bad)}
+audio.rec-play{width:100%; margin-top:.5rem}
+.checklist{list-style:none; padding:0; margin:.8rem 0}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+details.key{margin:.8rem 0; background:#0c1628; border:1px solid var(--border); border-radius:12px; padding:.7rem 1rem}
+details.key summary{min-height:48px; font-weight:800; font-size:1.05rem; cursor:pointer; color:var(--accent); display:flex; align-items:center}
+details.key p{margin:.4rem 0; font-size:1.05rem}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:#0c1628}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+.target, .card .big, .role div, .drop-box, .gap, .answer-line{overflow-wrap:break-word}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .gap{padding:.75rem .8rem}
+  .gap input{min-width:5.2rem; max-width:8.5rem; margin:.15rem .2rem}
+  .drop-box{padding:.55rem .6rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+  .boxnum{width:2rem; height:2rem; font-size:1.05rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to lesson</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>Lesson 4: British Time. Bao and Linh</h1>
+        <p class="sub">Together on one screen. Speak aloud. 60 minutes.</p>
+      </div>
+      <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 21</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1" id="progressBar"><div id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Lesson slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+
+          <section class="slide active" role="group" aria-roledescription="slide" aria-label="1 of 21 Hello">
+            <span class="eyebrow">Hello!</span>
+            <h2 tabindex="-1">British Time</h2>
+            <p class="lead">Today you can:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">🕒</div><div class="big">half past</div><div class="small">HALF past SE-ven</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🕟</div><div class="big">quarter to</div><div class="small">QUAR-ter to NINE</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🗓️</div><div class="big">Say day</div><div class="small">to-DAY is MON-day</div></div>
+            </div>
+            <p class="instruction">Together. Speak aloud.</p>
+            <div class="target" style="text-align:center">Hello! We are Bao and Linh.</div>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="2 of 21 Activity 1">
+            <span class="eyebrow teal">Activity 1 of 20 . Hello again</span>
+            <h2 tabindex="-1">Hello again 👋</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target">What TIME is it? It's SE-ven o'CLOCK.</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="What time is it?" data-voice="male">Listen: Bao</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's seven o'clock." data-voice="female">Listen: Linh</button>
+            </div>
+            <p class="instruction">Say. Tap 1, 2, 3.</p>
+            <div class="dots" role="group" aria-label="Say three times">
+              <button class="dot" type="button" aria-pressed="false">Say 1</button>
+              <button class="dot" type="button" aria-pressed="false">Say 2</button>
+              <button class="dot" type="button" aria-pressed="false">Say 3</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>What time is it? It's seven o'clock.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="3 of 21 Activity 2">
+            <span class="eyebrow teal">Activity 2 of 20 . Words 1</span>
+            <h2 tabindex="-1">HALF, PAST, TO</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="cards">
+              <div class="card"><div class="big">HALF</div><div class="small">half past</div><button class="speak-btn" type="button" data-say="half. Half past seven." data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">PAST</div><div class="small">half past</div><button class="speak-btn" type="button" data-say="past. Half past seven." data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">TO</div><div class="small">quarter to</div><button class="speak-btn" type="button" data-say="to. Quarter to nine." data-voice="male">Listen</button></div>
+            </div>
+            <p class="instruction">Bao: HALF, TO. Linh: PAST.</p>
+            <details class="key"><summary>Check</summary><p>HALF. PAST. TO. Half past seven. Quarter to nine.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="4 of 21 Activity 3">
+            <span class="eyebrow teal">Activity 3 of 20 . Words 2</span>
+            <h2 tabindex="-1">QUAR-ter, o'CLOCK, TIME</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">🕟</div><div class="big">QUAR-ter</div><div class="small">15 minutes</div><button class="speak-btn" type="button" data-say="quarter. Quarter to nine." data-voice="female">Listen</button></div>
+              <div class="card"><div class="icon" aria-hidden="true">🕐</div><div class="big">o'CLOCK</div><div class="small">seven o'clock</div><button class="speak-btn" type="button" data-say="o'clock. Seven o'clock." data-voice="male">Listen</button></div>
+              <div class="card"><div class="icon" aria-hidden="true">🕖</div><div class="big">TIME</div><div class="small">What TIME?</div><button class="speak-btn" type="button" data-say="time. What time is it?" data-voice="female">Listen</button></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>QUAR-ter. o'CLOCK. TIME. Quarter to nine. Seven o'clock. What time is it?</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="5 of 21 Activity 4">
+            <span class="eyebrow">Activity 4 of 20 . Say</span>
+            <h2 tabindex="-1">HALF. QUAR-ter.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target" style="text-align:center">HALF. QUAR-ter.</div>
+            <div class="target" style="text-align:center">PAST. TO.</div>
+            <button class="speak-btn" type="button" data-say="Half. Quarter. Past. To." data-voice="female">Listen</button>
+            <p class="instruction">Say. Tap 1, 2, 3.</p>
+            <div class="dots" role="group" aria-label="Say three times">
+              <button class="dot" type="button" aria-pressed="false">Say 1</button>
+              <button class="dot" type="button" aria-pressed="false">Say 2</button>
+              <button class="dot" type="button" aria-pressed="false">Say 3</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>Half. Quarter. Past. To.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="6 of 21 Activity 5">
+            <span class="eyebrow teal">Activity 5 of 20 . Ask</span>
+            <h2 tabindex="-1">What TIME is it?</h2>
+            <p class="instruction">Listen. Ask.</p>
+            <div class="target" style="text-align:center">What TIME is it?</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="What time is it?" data-voice="male">Listen: Bao asks</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="What time is it?" data-voice="female">Listen: Linh asks</button>
+            </div>
+            <p class="instruction">Bao asks. Linh asks.</p>
+            <details class="key"><summary>Check</summary><p>What time is it?</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="7 of 21 Activity 6">
+            <span class="eyebrow">Activity 6 of 20 . Say</span>
+            <h2 tabindex="-1">What TIME is it?</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target" style="text-align:center">What TIME is it?</div>
+            <button class="speak-btn" type="button" data-say="What time is it?" data-voice="male">Listen</button>
+            <p class="instruction">Say. Tap 1, 2, 3.</p>
+            <div class="dots" role="group" aria-label="Say three times">
+              <button class="dot" type="button" aria-pressed="false">Say 1</button>
+              <button class="dot" type="button" aria-pressed="false">Say 2</button>
+              <button class="dot" type="button" aria-pressed="false">Say 3</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>What time is it?</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="8 of 21 Activity 7">
+            <span class="eyebrow teal">Activity 7 of 20 . Answer 1</span>
+            <h2 tabindex="-1">It's HALF past SE-ven.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target">It's HALF past SE-ven.</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's half past seven." data-voice="male">Listen: Bao</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's half past seven." data-voice="female">Listen: Linh</button>
+            </div>
+            <details class="key"><summary>Check</summary><p>It's half past seven.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="9 of 21 Activity 8">
+            <span class="eyebrow">Activity 8 of 20 . Say</span>
+            <h2 tabindex="-1">It's HALF past SE-ven.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target" style="text-align:center">It's HALF past SE-ven.</div>
+            <button class="speak-btn" type="button" data-say="It's half past seven." data-voice="female">Listen</button>
+            <p class="instruction">Say. Tap 1, 2, 3.</p>
+            <div class="dots" role="group" aria-label="Say three times">
+              <button class="dot" type="button" aria-pressed="false">Say 1</button>
+              <button class="dot" type="button" aria-pressed="false">Say 2</button>
+              <button class="dot" type="button" aria-pressed="false">Say 3</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>It's half past seven.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="10 of 21 Activity 9">
+            <span class="eyebrow teal">Activity 9 of 20 . Answer 2</span>
+            <h2 tabindex="-1">It's QUAR-ter to NINE.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target">It's QUAR-ter to NINE.</div>
+            <div class="target">It's QUAR-ter past EIGHT.</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's quarter to nine." data-voice="male">Listen: Bao</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's quarter past eight." data-voice="female">Listen: Linh</button>
+            </div>
+            <details class="key"><summary>Check</summary><p>It's quarter to nine. It's quarter past eight.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="11 of 21 Activity 10">
+            <span class="eyebrow">Activity 10 of 20 . Say</span>
+            <h2 tabindex="-1">PAST. TO.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target">It's HALF past SE-ven.</div>
+            <div class="target">It's QUAR-ter to NINE.</div>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's half past seven." data-voice="male">Listen: Bao says PAST</button>
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-say="It's quarter to nine." data-voice="female">Listen: Linh says TO</button>
+            </div>
+            <p class="instruction">Bao says PAST. Linh says TO. Swap.</p>
+            <details class="key"><summary>Check</summary><p>It's half past seven. It's quarter to nine.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="12 of 21 Activity 11">
+            <span class="eyebrow">Activity 11 of 20 . Check</span>
+            <h2 tabindex="-1">Hear. Which? 👂</h2>
+            <p class="instruction">Listen. Which?</p>
+            <button class="speak-btn" type="button" data-say="It's half past seven." data-voice="female">Play</button>
+            <button class="choice" type="button" data-correct="false">What time is it?</button>
+            <button class="choice" type="button" data-correct="true">It's half past seven.</button>
+            <div class="feedback" id="quizFb" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>It's half past seven.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="13 of 21 Activity 12">
+            <span class="eyebrow">Activity 12 of 20 . Build 1</span>
+            <h2 tabindex="-1">Build: ask</h2>
+            <p class="instruction">Tap in order. Say.</p>
+            <div class="wordbank" role="group" aria-label="Word bank">
+              <button type="button" data-w="it?">it?</button>
+              <button type="button" data-w="What">What</button>
+              <button type="button" data-w="TIME">TIME</button>
+              <button type="button" data-w="is">is</button>
+            </div>
+            <div class="answer-line" id="builtLine" aria-live="polite">Tap words...</div>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearWords">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkWords">Check</button>
+            </div>
+            <div class="feedback" id="buildFb" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>What TIME is it?</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="14 of 21 Activity 13">
+            <span class="eyebrow">Activity 13 of 20 . Build 2</span>
+            <h2 tabindex="-1">Build: answer</h2>
+            <p class="instruction">Tap in order. Say.</p>
+            <div class="wordbank" role="group" aria-label="Word bank 2">
+              <button type="button" data-w2="seven.">seven.</button>
+              <button type="button" data-w2="past">past</button>
+              <button type="button" data-w2="It's">It's</button>
+              <button type="button" data-w2="HALF">HALF</button>
+            </div>
+            <div class="answer-line" id="builtLine2" aria-live="polite">Tap words...</div>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearWords2">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkWords2">Check</button>
+            </div>
+            <div class="feedback" id="buildFb2" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>It's HALF past seven.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="15 of 21 Activity 14">
+            <span class="eyebrow">Activity 14 of 20 . Order</span>
+            <h2 tabindex="-1">Order: our talk</h2>
+            <p class="instruction">Drag to boxes 1 to 4. Say.</p>
+            <div class="dlg-bank" id="dlgBank" role="group" aria-label="Talk lines. Drag one to a box.">
+              <button type="button" class="dlg-item" draggable="true" data-d="3" data-t="It's QUAR-ter to NINE.">It's QUAR-ter to NINE.</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="1" data-t="What TIME is it?">What TIME is it?</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="4" data-t="See you!">See you!</button>
+              <button type="button" class="dlg-item" draggable="true" data-d="2" data-t="It's HALF past SE-ven.">It's HALF past SE-ven.</button>
+            </div>
+            <ol class="drop-list" id="dlgBoxes" aria-label="Boxes 1 to 4. Drop one line in each.">
+              <li class="drop-box" data-box="1" tabindex="0" aria-label="Box 1. Empty."><span class="boxnum" aria-hidden="true">1</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="2" tabindex="0" aria-label="Box 2. Empty."><span class="boxnum" aria-hidden="true">2</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="3" tabindex="0" aria-label="Box 3. Empty."><span class="boxnum" aria-hidden="true">3</span><span class="boxhint">Drop here</span></li>
+              <li class="drop-box" data-box="4" tabindex="0" aria-label="Box 4. Empty."><span class="boxnum" aria-hidden="true">4</span><span class="boxhint">Drop here</span></li>
+            </ol>
+            <div style="display:flex; gap:.6rem; margin-top:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="clearDlg">Clear</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkDlg">Check</button>
+            </div>
+            <div class="feedback" id="dlgFb" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>1 What TIME is it? 2 It's HALF past SE-ven. 3 It's QUAR-ter to NINE. 4 See you!</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="16 of 21 Activity 15">
+            <span class="eyebrow">Activity 15 of 20 . Say</span>
+            <h2 tabindex="-1">Ask. Answer.</h2>
+            <p class="instruction">Listen. Say.</p>
+            <div class="target">What TIME is it?</div>
+            <div class="target">It's HALF past SE-ven.</div>
+            <button class="speak-btn" type="button" data-say="What time is it? It's half past seven." data-voice="male">Play both</button>
+            <p class="instruction">Bao asks. Linh answers. Swap.</p>
+            <details class="key"><summary>Check</summary><p>What time is it? It's half past seven.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="17 of 21 Activity 16">
+            <span class="eyebrow">Activity 16 of 20 . Together</span>
+            <h2 tabindex="-1">Ask Bao. Ask Linh. 🗣️</h2>
+            <p class="instruction">Ask. Answer. Swap.</p>
+            <div class="role">
+              <div><strong>A:</strong><br>What TIME is it?</div>
+              <div><strong>B:</strong><br>It's HALF past SE-ven.</div>
+            </div>
+            <div class="role">
+              <div><strong>A:</strong><br>It's QUAR-ter to NINE.</div>
+              <div><strong>B:</strong><br>See you!</div>
+            </div>
+            <p class="instruction">Listen one line. Then say.</p>
+            <div class="lines" role="group" aria-label="Time dialogue lines">
+              <button class="speak-btn" type="button" data-say="What time is it?" data-voice="male">1 A: What...</button>
+              <button class="speak-btn" type="button" data-say="It's half past seven." data-voice="female">2 B: It's...</button>
+              <button class="speak-btn" type="button" data-say="It's quarter to nine." data-voice="male">3 A: It's...</button>
+              <button class="speak-btn" type="button" data-say="See you!" data-voice="female">4 B: See...</button>
+            </div>
+            <p class="instruction">Now Linh asks. Bao answers.</p>
+            <div style="display:flex; gap:.7rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 10rem" type="button" data-playall="1">Play all in order</button>
+            </div>
+            <details class="key"><summary>Check</summary><p>A asks. B answers. Then swap. What TIME is it? It's HALF past SE-ven. It's QUAR-ter to NINE. See you!</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="18 of 21 Activity 17">
+            <span class="eyebrow">Activity 17 of 20 . Fill</span>
+            <h2 tabindex="-1">Fill: one word ✏️</h2>
+            <p class="instruction">Say. Write. Check.</p>
+            <div class="gap">1. What <input type="text" inputmode="text" autocomplete="off" data-answer="time" aria-label="Blank 1"> is it? It's half <input type="text" inputmode="text" autocomplete="off" data-answer="past" aria-label="Blank 2"> seven.</div>
+            <div class="gap">2. It's <input type="text" inputmode="text" autocomplete="off" data-answer="quarter" aria-label="Blank 3"> to nine. It's seven <input type="text" inputmode="text" autocomplete="off" data-answer="o'clock" aria-label="Blank 4">.</div>
+            <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="What time is it? It's half past seven. It's quarter to nine. It's seven o'clock." data-voice="female">Play</button>
+              <button class="speak-btn" style="flex:1 1 9rem" type="button" id="checkGap">Check</button>
+            </div>
+            <div class="feedback" id="gapFb" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>1 TIME, past. 2 QUAR-ter, o'CLOCK.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="19 of 21 Activity 18">
+            <span class="eyebrow">Activity 18 of 20 . Phone</span>
+            <h2 tabindex="-1">Point. Ask. 📱</h2>
+            <p class="instruction">Open phone. Point. Ask.</p>
+            <div class="target" style="text-align:center">📱 My phone says HALF past SE-ven.</div>
+            <div class="target">What TIME is it? It's HALF past SE-ven. It's QUAR-ter to NINE.</div>
+            <p class="instruction">Ask 5 times. Swap.</p>
+            <div class="dots" role="group" aria-label="Ask five times">
+              <button class="dot" type="button" aria-pressed="false">Ask 1</button>
+              <button class="dot" type="button" aria-pressed="false">Ask 2</button>
+              <button class="dot" type="button" aria-pressed="false">Ask 3</button>
+              <button class="dot" type="button" aria-pressed="false">Ask 4</button>
+              <button class="dot" type="button" aria-pressed="false">Ask 5</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+            <details class="key"><summary>Check</summary><p>Look at your phone. Ask five times. Answer: It's half past seven. It's quarter to nine.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="20 of 21 Activity 19">
+            <span class="eyebrow">Activity 19 of 20 . Record</span>
+            <h2 tabindex="-1">Record: Bao + Linh 🎙️</h2>
+            <p class="instruction">Each one. Say. Listen. Again.</p>
+            <div class="role">
+              <div>
+                <strong>Bao says:</strong><br>What TIME is it? It's HALF past SE-ven.
+                <div class="rec-row" role="group" aria-label="Bao voice recorder">
+                  <button type="button" id="recBtnBao">Record</button>
+                  <button type="button" id="stopBtnBao" class="danger" disabled>Stop</button>
+                  <button type="button" id="playRecBtnBao" disabled>Play mine</button>
+                </div>
+                <audio class="rec-play" id="recAudioBao" controls aria-label="Bao recording"></audio>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecBao" disabled>Save Bao</button>
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="What time is it? It's half past seven." data-voice="male">Play model</button>
+                </div>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="aiFbBao">Instant AI feedback</button>
+                </div>
+                <div class="feedback" id="aiFbBoxBao" role="status" aria-live="polite"></div>
+                <div class="feedback" id="recFbBao" aria-live="polite">Bao: only on this device.</div>
+              </div>
+              <div>
+                <strong>Linh says:</strong><br>It's QUAR-ter to NINE. See you!
+                <div class="rec-row" role="group" aria-label="Linh voice recorder">
+                  <button type="button" id="recBtnLinh">Record</button>
+                  <button type="button" id="stopBtnLinh" class="danger" disabled>Stop</button>
+                  <button type="button" id="playRecBtnLinh" disabled>Play mine</button>
+                </div>
+                <audio class="rec-play" id="recAudioLinh" controls aria-label="Linh recording"></audio>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="dlRecLinh" disabled>Save Linh</button>
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" data-say="It's quarter to nine. See you!" data-voice="female">Play model</button>
+                </div>
+                <div style="display:flex; gap:.6rem; flex-wrap:wrap">
+                  <button class="speak-btn" style="flex:1 1 9rem" type="button" id="aiFbLinh">Instant AI feedback</button>
+                </div>
+                <div class="feedback" id="aiFbBoxLinh" role="status" aria-live="polite"></div>
+                <div class="feedback" id="recFbLinh" aria-live="polite">Linh: only on this device.</div>
+              </div>
+            </div>
+            <div class="feedback" aria-live="polite">Recordings stay on this device. Only the AI-feedback copy is sent, when you tap the button.</div>
+            <details class="key"><summary>Check</summary><p>Bao: What time is it? It's half past seven. Linh: It's quarter to nine. See you!</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="21 of 21 Activity 20">
+            <span class="eyebrow">Activity 20 of 20 . Done 🎉</span>
+            <h2 tabindex="-1">We did it!</h2>
+            <p class="instruction">Tick. I can say:</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox"> What time is it?</label></li>
+              <li><label><input type="checkbox"> It's half past seven.</label></li>
+              <li><label><input type="checkbox"> It's quarter to nine.</label></li>
+              <li><label><input type="checkbox"> Ask the time on my phone.</label></li>
+            </ul>
+            <div class="target" style="text-align:center">Tonight: ask, look, say. Only English!</div>
+            <details class="key"><summary>Check</summary><p>All four lines. Say each one to your teacher.</p></details>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 21</div>
+        <div class="bottom-nav" aria-label="Lesson navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Arrows on keyboard work. Listen buttons use the best natural voice on your device. Bao is male voice. Linh is female voice. Best in full screen.</p>
+  <p><a href="../../index.html#a1-communicative" style="color:var(--accent)">All A1 Communicative lessons</a> | <a href="Bao-Linh-Lesson04-British-Time-Clocks-A1-Learner.html" style="color:var(--accent)">25 Clocks drill</a></p>
+</footer>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  var VOICES=[];
+  function loadVoices(){ try{ VOICES = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }catch(e){ VOICES=[]; } }
+  if('speechSynthesis' in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+  function scoreVoice(v, prefer){
+    var name=((v.name||'')+' '+(v.lang||'')).toLowerCase();
+    var s=0;
+    var lang=(v.lang||'').toLowerCase();
+    if(lang.indexOf('en-gb')===0) s+=80;
+    else if(lang.indexOf('en-gb')>-1 || name.indexOf('british')>-1 || name.indexOf('uk english')>-1 || name.indexOf('england')>-1) s+=70;
+    else if(lang.indexOf('en-us')===0) s+=15;
+    else if(lang.indexOf('en_')===0 || lang.indexOf('en-')===0) s+=10;
+    if(name.indexOf('natural')>-1) s+=45;
+    if(name.indexOf('online')>-1) s+=30;
+    if(name.indexOf('neural')>-1) s+=35;
+    if(name.indexOf('google uk english')>-1) s+=50;
+    else if(name.indexOf('google')>-1) s+=8;
+    if(name.indexOf('sonia')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s+=35;
+    if(name.indexOf('compact')>-1 || name.indexOf('mobile')>-1) s-=20;
+    if(prefer==='female'){
+      if(name.indexOf('female')>-1) s+=30;
+      if(name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1 || name.indexOf('female')>-1 || name.indexOf('google uk english female')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('karen')>-1 || name.indexOf('zira')>-1 || name.indexOf('moira')>-1 || name.indexOf('tessa')>-1) s+=10;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('alex')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s-=40;
+    } else if(prefer==='male'){
+      if(name.indexOf('male')>-1 && name.indexOf('female')===-1) s+=30;
+      if(name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1 || name.indexOf('male')>-1 || name.indexOf('google uk english male')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('zira')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1) s-=40;
+    }
+    return s;
+  }
+  function pickVoice(prefer){
+    if(!VOICES.length) loadVoices();
+    if(!VOICES.length) return null;
+    var best=null, bestScore=-999;
+    for(var i=0;i<VOICES.length;i++){
+      var sc=scoreVoice(VOICES[i], prefer);
+      if(sc>bestScore){ bestScore=sc; best=VOICES[i]; }
+    }
+    return best;
+  }
+  function speak(t, prefer, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t);
+      u.lang='en-GB';
+      u.volume=1;
+      if(prefer==='male'){ u.rate=0.96; u.pitch=0.9; }
+      else { u.rate=0.97; u.pitch=1.1; }
+      var v=pickVoice(prefer);
+      if(v) u.voice=v;
+      if(btn){
+        btn.classList.add('speaking');
+        u.onend=function(){ btn.classList.remove('speaking'); };
+        u.onerror=function(){ btn.classList.remove('speaking'); };
+      }
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
+    });
+  });
+  function speakSequence(items, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      if(btn) btn.classList.add('speaking');
+      items.forEach(function(it, i){
+        var u=new SpeechSynthesisUtterance(it.text);
+        u.lang='en-GB'; u.volume=1;
+        if(it.voice==='male'){ u.rate=0.96; u.pitch=0.9; }
+        else { u.rate=0.97; u.pitch=1.1; }
+        var v=pickVoice(it.voice);
+        if(v) u.voice=v;
+        if(i===items.length-1 && btn){
+          u.onend=function(){ btn.classList.remove('speaking'); };
+          u.onerror=function(){ btn.classList.remove('speaking'); };
+        }
+        window.speechSynthesis.speak(u);
+      });
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-playall]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var slide=b.closest('.slide');
+      var lineBtns=slide ? slide.querySelectorAll('.lines [data-say]') : [];
+      var items=[];
+      lineBtns.forEach(function(lb){ items.push({text: lb.getAttribute('data-say'), voice: lb.getAttribute('data-voice')||'female'}); });
+      if(items.length) speakSequence(items, b);
+    });
+  });
+
+  document.querySelectorAll('.slide').forEach(function(sl){
+    var dots=sl.querySelectorAll('.dot');
+    var fb=sl.querySelector('.feedback');
+    if(!dots.length || sl.querySelector('.wordbank')) return;
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        var on=d.getAttribute('aria-pressed')==='true';
+        d.setAttribute('aria-pressed', String(!on));
+        var done=sl.querySelectorAll('.dot[aria-pressed="true"]').length;
+        if(fb){
+          if(done===dots.length){ fb.textContent='Great! 3 times!'; fb.className='feedback ok'; }
+          else if(done===0){ fb.textContent=''; fb.className='feedback'; }
+          else { fb.textContent=done+' of '+dots.length+'. Again!'; fb.className='feedback'; }
+        }
+      });
+    });
+  });
+
+  var choices=document.querySelectorAll('.choice');
+  var qfb=document.getElementById('quizFb');
+  choices.forEach(function(c){
+    c.addEventListener('click', function(){
+      var ok=c.getAttribute('data-correct')==='true';
+      choices.forEach(function(x){ x.style.borderColor=''; });
+      if(ok){ c.style.borderColor='#38e0c8'; qfb.textContent='Correct! Well done!'; qfb.className='feedback ok'; }
+      else { c.style.borderColor='#ff8a8a'; qfb.textContent='Try again. Tap Play.'; qfb.className='feedback no'; }
+    });
+  });
+
+  var built=[];
+  var line=document.getElementById('builtLine');
+  var bfb=document.getElementById('buildFb');
+  function renderBuilt(){ line.textContent = built.length ? built.join(' ') : 'Tap words...'; }
+  document.querySelectorAll('.wordbank button[data-w]').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(built.length<4){ built.push(b.getAttribute('data-w')); renderBuilt(); bfb.textContent=''; bfb.className='feedback'; }
+    });
+  });
+  document.getElementById('clearWords').addEventListener('click', function(){ built=[]; renderBuilt(); bfb.textContent=''; bfb.className='feedback'; });
+  document.getElementById('checkWords').addEventListener('click', function(){
+    var s=built.join(' ');
+    if(s==='What TIME is it?'){ bfb.textContent='Correct! Ask!'; bfb.className='feedback ok'; }
+    else { bfb.textContent='Try again. What...?'; bfb.className='feedback no'; }
+  });
+
+  var built2=[];
+  var line2=document.getElementById('builtLine2');
+  var bfb2=document.getElementById('buildFb2');
+  function renderBuilt2(){ line2.textContent = built2.length ? built2.join(' ') : 'Tap words...'; }
+  document.querySelectorAll('button[data-w2]').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(built2.length<4){ built2.push(b.getAttribute('data-w2')); renderBuilt2(); bfb2.textContent=''; bfb2.className='feedback'; }
+    });
+  });
+  document.getElementById('clearWords2').addEventListener('click', function(){ built2=[]; renderBuilt2(); bfb2.textContent=''; bfb2.className='feedback'; });
+  document.getElementById('checkWords2').addEventListener('click', function(){
+    var s=built2.join(' ');
+    if(s==="It's HALF past seven."){ bfb2.textContent='Correct! Say it!'; bfb2.className='feedback ok'; }
+    else { bfb2.textContent="Try again. It's...?"; bfb2.className='feedback no'; }
+  });
+
+  (function(){
+    var bank=document.getElementById('dlgBank');
+    var boxes=document.querySelectorAll('#dlgBoxes .drop-box');
+    var fb=document.getElementById('dlgFb');
+    if(!bank) return;
+    var held=null;
+    function clearFb(){ fb.textContent=''; fb.className='feedback'; }
+    function labelBox(box){
+      var n=box.getAttribute('data-box');
+      var d=box.getAttribute('data-filled');
+      box.setAttribute('aria-label', d ? ('Box '+n+'. '+box.querySelector('.boxhint').textContent+'. Tap to take back.') : ('Box '+n+'. Empty.'));
+    }
+    function selectItem(btn){
+      document.querySelectorAll('.dlg-item.sel').forEach(function(x){ x.classList.remove('sel'); });
+      if(btn && !btn.classList.contains('placed')){ btn.classList.add('sel'); held=btn; }
+      else held=null;
+    }
+    function sendBack(d){
+      var btn=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+      if(btn) btn.classList.remove('placed');
+      if(held===btn) held=null;
+    }
+    function placeInBox(box, d, text){
+      var prev=box.getAttribute('data-filled');
+      if(prev) sendBack(prev);
+      box.setAttribute('data-filled', d);
+      box.classList.add('filled');
+      box.querySelector('.boxhint').textContent=text;
+      var btn=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+      if(btn){ btn.classList.add('placed'); btn.classList.remove('sel'); }
+      if(held && held.getAttribute('data-d')===d) held=null;
+      labelBox(box); clearFb();
+    }
+    function takeBack(box){
+      var d=box.getAttribute('data-filled');
+      if(!d) return;
+      box.removeAttribute('data-filled');
+      box.classList.remove('filled');
+      box.querySelector('.boxhint').textContent='Drop here';
+      sendBack(d); labelBox(box); clearFb();
+    }
+    bank.querySelectorAll('.dlg-item').forEach(function(btn){
+      btn.addEventListener('click', function(){ selectItem(btn); });
+      btn.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectItem(btn); }
+      });
+      btn.addEventListener('dragstart', function(e){
+        held=btn;
+        try{ e.dataTransfer.setData('text/plain', btn.getAttribute('data-d')); e.dataTransfer.effectAllowed='move'; }catch(err){}
+      });
+      btn.addEventListener('dragend', function(){ held=null; });
+    });
+    boxes.forEach(function(box){
+      box.addEventListener('dragover', function(e){ e.preventDefault(); box.classList.add('over'); });
+      box.addEventListener('dragleave', function(){ box.classList.remove('over'); });
+      box.addEventListener('drop', function(e){
+        e.preventDefault(); box.classList.remove('over');
+        var d=null, text='';
+        try{ d=e.dataTransfer.getData('text/plain'); }catch(err){}
+        if(!d && held) d=held.getAttribute('data-d');
+        if(!d) return;
+        var src=bank.querySelector('.dlg-item[data-d="'+d+'"]');
+        if(src) text=src.textContent;
+        if(d && text) placeInBox(box, d, text);
+      });
+      function activate(){
+        if(held){ placeInBox(box, held.getAttribute('data-d'), held.textContent); }
+        else takeBack(box);
+      }
+      box.addEventListener('click', activate);
+      box.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); }
+      });
+      labelBox(box);
+    });
+    document.getElementById('clearDlg').addEventListener('click', function(){
+      boxes.forEach(function(box){
+        box.removeAttribute('data-filled');
+        box.classList.remove('filled');
+        box.querySelector('.boxhint').textContent='Drop here';
+        labelBox(box);
+      });
+      bank.querySelectorAll('.dlg-item.placed').forEach(function(x){ x.classList.remove('placed'); });
+      held=null; fb.textContent=''; fb.className='feedback';
+    });
+    document.getElementById('checkDlg').addEventListener('click', function(){
+      var seq=[];
+      boxes.forEach(function(box){ seq.push(box.getAttribute('data-filled')||'0'); });
+      if(seq.join(',')==='1,2,3,4'){ fb.textContent='Correct! Now say it together!'; fb.className='feedback ok'; }
+      else { fb.textContent='Try again. Box 1: What...?'; fb.className='feedback no'; }
+    });
+  })();
+
+  function normGap(v){ return (v||'').toLowerCase().trim().replace(/\s+/g,' '); }
+  document.getElementById('checkGap').addEventListener('click', function(){
+    var inputs=document.querySelectorAll('input[data-answer]');
+    var allOk=true, firstBad=null;
+    inputs.forEach(function(inp){
+      var ok = normGap(inp.value)===normGap(inp.getAttribute('data-answer'));
+      inp.classList.toggle('correct', ok);
+      inp.classList.toggle('wrong', !ok);
+      inp.setAttribute('aria-invalid', String(!ok));
+      if(!ok){ allOk=false; if(!firstBad) firstBad=inp; }
+    });
+    var fb=document.getElementById('gapFb');
+    if(allOk){ fb.textContent='Correct! Say all lines!'; fb.className='feedback ok'; }
+    else { fb.textContent='Try again. Tap Play. Fix red.'; fb.className='feedback no'; if(firstBad) firstBad.focus(); }
+  });
+
+  function setupRecorder(ids, fileName, prompt){
+    var recBtn=document.getElementById(ids.rec);
+    var stopBtn=document.getElementById(ids.stop);
+    var playBtn=document.getElementById(ids.play);
+    var audio=document.getElementById(ids.audio);
+    var dl=document.getElementById(ids.dl);
+    var fb=document.getElementById(ids.fb);
+    if(!recBtn) return;
+    var mr=null, chunks=[], stream=null, url='';
+    function say(m, ok){
+      fb.textContent=m;
+      fb.className = ok===true ? 'feedback ok' : (ok===false ? 'feedback no' : 'feedback');
+    }
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder==='undefined'){
+      say('Mic not ready here. Say aloud together.', false);
+      recBtn.disabled=true;
+      return;
+    }
+    recBtn.addEventListener('click', function(){
+      navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
+        stream=s; chunks=[];
+        try{ mr=new MediaRecorder(s); }catch(e){ say('Record blocked. Say aloud together.', false); return; }
+        mr.ondataavailable=function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+        mr.onstop=function(){
+          try{
+            var blob=new Blob(chunks, {type: mr.mimeType || 'audio/webm'});
+            if(!window.__recBlobs) window.__recBlobs={};
+            window.__recBlobs[ids.rec]=blob;
+            if(url) URL.revokeObjectURL(url);
+            url=URL.createObjectURL(blob);
+            audio.src=url;
+            playBtn.disabled=false;
+            dl.disabled=false;
+            dl.onclick=function(){
+              var a=document.createElement('a');
+              a.href=url; a.download=fileName;
+              document.body.appendChild(a); a.click(); a.remove();
+            };
+            say('Done. Tap Play mine. Only on this device.', true);
+          }catch(e){ say('Saved. Tap Play mine.', true); }
+          if(stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream=null; }
+        };
+        mr.start();
+        recBtn.disabled=true; stopBtn.disabled=false; playBtn.disabled=true;
+        say(prompt);
+      }).catch(function(){ say('Mic blocked. Allow mic, or say aloud together.', false); });
+    });
+    stopBtn.addEventListener('click', function(){
+      if(mr && mr.state!=='inactive') mr.stop();
+      recBtn.disabled=false; stopBtn.disabled=true;
+    });
+    playBtn.addEventListener('click', function(){ if(audio.src) audio.play(); });
+  }
+  setupRecorder({rec:'recBtnBao', stop:'stopBtnBao', play:'playRecBtnBao', audio:'recAudioBao', dl:'dlRecBao', fb:'recFbBao'}, 'bao-half-past.webm', 'Bao, now say your lines!');
+  setupRecorder({rec:'recBtnLinh', stop:'stopBtnLinh', play:'playRecBtnLinh', audio:'recAudioLinh', dl:'dlRecLinh', fb:'recFbLinh'}, 'linh-quarter-to.webm', 'Linh, now say your lines!');
+
+  function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+</script>
+<script>
+// Lightweight LRS hooks for Lesson 4 British Time (mirrors Lesson 3 tracking in xapi-include.js).
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var done=false;
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(s){
+    var h=s.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (s.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(s){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(s), 'slide');
+      if(slides.indexOf(s)===slides.length-1 && !done){
+        done=true;
+        if(window.LRS && window.LRS.completed) window.LRS.completed({});
+      }
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  }, 500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s, {attributes:true, attributeFilter:['class']}); });
+  }
+  function hook(id, name){
+    var b=document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed(name, 'question'); }catch(e){}
+    });
+  }
+  hook('checkWords', 'Word build check: ask What TIME is it');
+  hook('checkWords2', "Word build check: answer It's HALF past");
+  hook('checkDlg', 'Dialogue order check: our talk');
+  hook('checkGap', 'Gap fill check: time, past, quarter, nine, seven');
+  document.querySelectorAll('.choice').forEach(function(c){
+    c.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed('Listen and choose: '+(c.textContent.trim().replace(/\s+/g,' ').substring(0,60)), 'question'); }catch(e){}
+    });
+  });
+  ['recBtnBao','recBtnLinh'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      try{ var l=L(); if(l) l.itemAccessed('Voice record: '+id, 'audio'); }catch(e){}
+    });
+  });
+})();
+</script>
+<script>
+// Instant AI feedback on voice recordings: convert to 16k mono WAV, score via /api/speech-feedback.
+function blobToWavB64(blob){
+  return blob.arrayBuffer().then(function(buf){
+    var AC=window.AudioContext||window.webkitAudioContext;
+    var ac=new AC();
+    return ac.decodeAudioData(buf).then(function(audio){
+      var targetRate=16000;
+      var ch=audio.getChannelData(0);
+      var ratio=audio.sampleRate/targetRate;
+      var len=Math.floor(ch.length/ratio);
+      var out=new Int16Array(len);
+      for(var i=0;i<len;i++){
+        var v=ch[Math.floor(i*ratio)]||0;
+        v=Math.max(-1,Math.min(1,v));
+        out[i]=v<0?v*0x8000:v*0x7FFF;
+      }
+      var dataLen=out.length*2;
+      var buffer=new ArrayBuffer(44+dataLen);
+      var vw=new DataView(buffer);
+      function ws(o,s){ for(var k=0;k<s.length;k++) vw.setUint8(o+k,s.charCodeAt(k)); }
+      ws(0,'RIFF'); vw.setUint32(4,36+dataLen,true); ws(8,'WAVE'); ws(12,'fmt ');
+      vw.setUint32(16,16,true); vw.setUint16(20,1,true); vw.setUint16(22,1,true);
+      vw.setUint32(24,targetRate,true); vw.setUint32(28,targetRate*2,true);
+      vw.setUint16(32,2,true); vw.setUint16(34,16,true); ws(36,'data');
+      vw.setUint32(40,dataLen,true);
+      for(var j=0;j<out.length;j++) vw.setInt16(44+j*2,out[j],true);
+      var bytes=new Uint8Array(buffer);
+      var bin='';
+      var CH=0x8000;
+      for(var p=0;p<bytes.length;p+=CH){ bin+=String.fromCharCode.apply(null,bytes.subarray(p,p+CH)); }
+      var b64=btoa(bin);
+      try{ ac.close(); }catch(e){}
+      return b64;
+    });
+  });
+}
+function aiSpeechFeedback(who, blobKey, expected, btnId, boxId, actId){
+  var btn=document.getElementById(btnId), box=document.getElementById(boxId);
+  if(!btn||!box) return;
+  function say(m, cls){ box.textContent=m; box.className='feedback'+(cls?' '+cls:''); }
+  var blob=(window.__recBlobs||{})[blobKey];
+  if(!blob){ say('Record first, then tap Instant AI feedback.', 'no'); return; }
+  btn.disabled=true; say('Listening...');
+  blobToWavB64(blob).then(function(b64){
+    return fetch('https://punitganjara.com/api/speech-feedback', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ lesson: location.pathname, lessonTitle: document.title,
+        activityId: actId||'slide-19-record', activityTitle:'Record: '+who,
+        who: who, expectedText: expected, audio: b64, mimeType:'audio/wav' })
+    }).then(function(r){ return r.json().catch(function(){ return {ok:false}; }); });
+  }).then(function(j){
+    if(j && j.ok && j.feedback){ say(j.feedback, 'ok'); }
+    else { say((j&&j.error)||'The AI checker is busy. Try again in a minute.', 'no'); }
+    btn.disabled=false;
+  }).catch(function(){
+    say('No connection. Check internet and try again.', 'no');
+    btn.disabled=false;
+  });
+  try{ if(window.LRS && window.LRS.itemAccessed) window.LRS.itemAccessed('AI speech feedback: '+who, 'audio'); }catch(e){}
+}
+document.getElementById('aiFbBao').addEventListener('click', function(){ aiSpeechFeedback('Bao','recBtnBao',"What time is it? It's half past seven.",'aiFbBao','aiFbBoxBao','slide-19-record'); });
+document.getElementById('aiFbLinh').addEventListener('click', function(){ aiSpeechFeedback('Linh','recBtnLinh',"It's quarter to nine. See you!",'aiFbLinh','aiFbBoxLinh','slide-19-record'); });
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+</body>
+</html>
