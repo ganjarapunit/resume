@@ -77,7 +77,6 @@ body{
 }
 .speak-btn:hover{background:#143333}
 .speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
-.check-btn{border-color:var(--accent); background:var(--accent); color:#111}
 .row-actions{display:grid; gap:.7rem; grid-template-columns:1fr 1fr; margin:.7rem 0}
 .clock-stage{display:flex; justify-content:center; margin:.6rem 0 .2rem}
 .clock{width:min(100%,340px); height:auto; display:block; filter:drop-shadow(0 8px 18px rgba(0,0,0,.5))}
@@ -173,11 +172,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's seven o'clock." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans1">Check</button>
-            </div>
-            <div class="answer-box" id="ans1" hidden>
-              <span class="stressed">SE-ven o'CLOCK</span>
-              <span class="plain">It's seven o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>SE-ven o'CLOCK <span class="plain-in-key">. It's seven o'clock.</span></p></details>
           </section>
@@ -190,11 +184,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's eight o'clock." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans2">Check</button>
-            </div>
-            <div class="answer-box" id="ans2" hidden>
-              <span class="stressed">EIGHT o'CLOCK</span>
-              <span class="plain">It's eight o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>EIGHT o'CLOCK <span class="plain-in-key">. It's eight o'clock.</span></p></details>
           </section>
@@ -207,11 +196,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's nine o'clock." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans3">Check</button>
-            </div>
-            <div class="answer-box" id="ans3" hidden>
-              <span class="stressed">NINE o'CLOCK</span>
-              <span class="plain">It's nine o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>NINE o'CLOCK <span class="plain-in-key">. It's nine o'clock.</span></p></details>
           </section>
@@ -224,11 +208,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's twelve o'clock." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans4">Check</button>
-            </div>
-            <div class="answer-box" id="ans4" hidden>
-              <span class="stressed">TWELVE o'CLOCK</span>
-              <span class="plain">It's twelve o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>TWELVE o'CLOCK <span class="plain-in-key">. It's twelve o'clock.</span></p></details>
           </section>
@@ -241,11 +220,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's three o'clock." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans5">Check</button>
-            </div>
-            <div class="answer-box" id="ans5" hidden>
-              <span class="stressed">THREE o'CLOCK</span>
-              <span class="plain">It's three o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>THREE o'CLOCK <span class="plain-in-key">. It's three o'clock.</span></p></details>
           </section>
@@ -258,11 +232,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's six o'clock." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans6">Check</button>
-            </div>
-            <div class="answer-box" id="ans6" hidden>
-              <span class="stressed">SIX o'CLOCK</span>
-              <span class="plain">It's six o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>SIX o'CLOCK <span class="plain-in-key">. It's six o'clock.</span></p></details>
           </section>
@@ -275,11 +244,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's four o'clock." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans7">Check</button>
-            </div>
-            <div class="answer-box" id="ans7" hidden>
-              <span class="stressed">FOUR o'CLOCK</span>
-              <span class="plain">It's four o'clock.</span>
             </div>
             <details class="key"><summary>Check</summary><p>FOUR o'CLOCK <span class="plain-in-key">. It's four o'clock.</span></p></details>
           </section>
@@ -292,11 +256,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past seven." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans8">Check</button>
-            </div>
-            <div class="answer-box" id="ans8" hidden>
-              <span class="stressed">HALF past SE-ven</span>
-              <span class="plain">It's half past seven.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past SE-ven <span class="plain-in-key">. It's half past seven.</span></p></details>
           </section>
@@ -309,11 +268,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past eight." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans9">Check</button>
-            </div>
-            <div class="answer-box" id="ans9" hidden>
-              <span class="stressed">HALF past EIGHT</span>
-              <span class="plain">It's half past eight.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past EIGHT <span class="plain-in-key">. It's half past eight.</span></p></details>
           </section>
@@ -326,11 +280,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past nine." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans10">Check</button>
-            </div>
-            <div class="answer-box" id="ans10" hidden>
-              <span class="stressed">HALF past NINE</span>
-              <span class="plain">It's half past nine.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past NINE <span class="plain-in-key">. It's half past nine.</span></p></details>
           </section>
@@ -343,11 +292,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past two." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans11">Check</button>
-            </div>
-            <div class="answer-box" id="ans11" hidden>
-              <span class="stressed">HALF past TWO</span>
-              <span class="plain">It's half past two.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past TWO <span class="plain-in-key">. It's half past two.</span></p></details>
           </section>
@@ -360,11 +304,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past five." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans12">Check</button>
-            </div>
-            <div class="answer-box" id="ans12" hidden>
-              <span class="stressed">HALF past FIVE</span>
-              <span class="plain">It's half past five.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past FIVE <span class="plain-in-key">. It's half past five.</span></p></details>
           </section>
@@ -377,11 +316,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's half past ten." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans13">Check</button>
-            </div>
-            <div class="answer-box" id="ans13" hidden>
-              <span class="stressed">HALF past TEN</span>
-              <span class="plain">It's half past ten.</span>
             </div>
             <details class="key"><summary>Check</summary><p>HALF past TEN <span class="plain-in-key">. It's half past ten.</span></p></details>
           </section>
@@ -394,11 +328,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past eight." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans14">Check</button>
-            </div>
-            <div class="answer-box" id="ans14" hidden>
-              <span class="stressed">QUAR-ter past EIGHT</span>
-              <span class="plain">It's quarter past eight.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past EIGHT <span class="plain-in-key">. It's quarter past eight.</span></p></details>
           </section>
@@ -411,11 +340,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past nine." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans15">Check</button>
-            </div>
-            <div class="answer-box" id="ans15" hidden>
-              <span class="stressed">QUAR-ter past NINE</span>
-              <span class="plain">It's quarter past nine.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past NINE <span class="plain-in-key">. It's quarter past nine.</span></p></details>
           </section>
@@ -428,11 +352,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past three." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans16">Check</button>
-            </div>
-            <div class="answer-box" id="ans16" hidden>
-              <span class="stressed">QUAR-ter past THREE</span>
-              <span class="plain">It's quarter past three.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past THREE <span class="plain-in-key">. It's quarter past three.</span></p></details>
           </section>
@@ -445,11 +364,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past five." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans17">Check</button>
-            </div>
-            <div class="answer-box" id="ans17" hidden>
-              <span class="stressed">QUAR-ter past FIVE</span>
-              <span class="plain">It's quarter past five.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past FIVE <span class="plain-in-key">. It's quarter past five.</span></p></details>
           </section>
@@ -462,11 +376,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past ten." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans18">Check</button>
-            </div>
-            <div class="answer-box" id="ans18" hidden>
-              <span class="stressed">QUAR-ter past TEN</span>
-              <span class="plain">It's quarter past ten.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past TEN <span class="plain-in-key">. It's quarter past ten.</span></p></details>
           </section>
@@ -479,11 +388,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter past one." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans19">Check</button>
-            </div>
-            <div class="answer-box" id="ans19" hidden>
-              <span class="stressed">QUAR-ter past ONE</span>
-              <span class="plain">It's quarter past one.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter past ONE <span class="plain-in-key">. It's quarter past one.</span></p></details>
           </section>
@@ -496,11 +400,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to nine." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans20">Check</button>
-            </div>
-            <div class="answer-box" id="ans20" hidden>
-              <span class="stressed">QUAR-ter to NINE</span>
-              <span class="plain">It's quarter to nine.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to NINE <span class="plain-in-key">. It's quarter to nine.</span></p></details>
           </section>
@@ -513,11 +412,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to ten." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans21">Check</button>
-            </div>
-            <div class="answer-box" id="ans21" hidden>
-              <span class="stressed">QUAR-ter to TEN</span>
-              <span class="plain">It's quarter to ten.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to TEN <span class="plain-in-key">. It's quarter to ten.</span></p></details>
           </section>
@@ -530,11 +424,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to four." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans22">Check</button>
-            </div>
-            <div class="answer-box" id="ans22" hidden>
-              <span class="stressed">QUAR-ter to FOUR</span>
-              <span class="plain">It's quarter to four.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to FOUR <span class="plain-in-key">. It's quarter to four.</span></p></details>
           </section>
@@ -547,11 +436,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to six." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans23">Check</button>
-            </div>
-            <div class="answer-box" id="ans23" hidden>
-              <span class="stressed">QUAR-ter to SIX</span>
-              <span class="plain">It's quarter to six.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to SIX <span class="plain-in-key">. It's quarter to six.</span></p></details>
           </section>
@@ -564,11 +448,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to eleven." data-voice="female">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans24">Check</button>
-            </div>
-            <div class="answer-box" id="ans24" hidden>
-              <span class="stressed">QUAR-ter to ELE-ven</span>
-              <span class="plain">It's quarter to eleven.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to ELE-ven <span class="plain-in-key">. It's quarter to eleven.</span></p></details>
           </section>
@@ -581,11 +460,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
             <p class="instruction">Look. Say. Then check.</p>
             <div class="row-actions">
               <button class="speak-btn" type="button" data-say="It's quarter to one." data-voice="male">Listen</button>
-              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="ans25">Check</button>
-            </div>
-            <div class="answer-box" id="ans25" hidden>
-              <span class="stressed">QUAR-ter to ONE</span>
-              <span class="plain">It's quarter to one.</span>
             </div>
             <details class="key"><summary>Check</summary><p>QUAR-ter to ONE <span class="plain-in-key">. It's quarter to one.</span></p></details>
           </section>
@@ -765,16 +639,6 @@ footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5
     b.addEventListener('click', function(){
       document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
       speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
-    });
-  });
-
-  document.querySelectorAll('.check-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var box=document.getElementById(btn.getAttribute('aria-controls'));
-      var open=btn.getAttribute('aria-expanded')==='true';
-      btn.setAttribute('aria-expanded', String(!open));
-      box.hidden=open;
-      btn.textContent=open ? 'Check' : 'Hide';
     });
   });
 
