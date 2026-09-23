@@ -427,12 +427,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
-  if (where.includes('day22') || where.includes('annisa-day22') || where.includes('cv') || where.includes('cover letter')) {
-    return 'CV AND COVER LETTER (3 bullets with Ran plus proof: Ran sessions for 30 staff, Tracked 83 vs 70 plus gap 13, Wrote replies in one week; '
-      + 'opening with I am writing to apply for plus Training Assistant plus I would be glad). Required shape: each bullet starts with Ran/Tracked/Reported/Wrote plus a number, '
-      + 'I am writing to apply for with the exact role, I would be glad close. '
-      + 'Check: does each bullet start with Ran/Tracked/Reported/Wrote and contain a number (30, 83, 70, 13, one week)? '
-      + 'Is the letter opening I am writing to apply for with Training Assistant present? Is the I would be glad close present?';
+    if (where.includes('day22') || where.includes('annisa-day22') || where.includes('junior process engineer') || where.includes('pertamina') || where.includes('k3') || where.includes('maria jones')) {
+    return 'CV AND COVER LETTER: JUNIOR PROCESS ENGINEER (3 bullets with Audited plus 30 days Pertamina audit, Trained 14 assistants plus 90 students, Mentored/Reported with numbers like 20 percent; '
+      + 'opening with I am writing to apply for the Junior Process Engineer role plus 30-day audit plus K3 certificate plus I would be glad; about 110 words total for 3 separate bullets plus 1 separate opening). '
+      + 'Required shape: each bullet starts with Audited/Trained/Reported/Mentored plus a number (30 days, 90+, 20 percent, K3), '
+      + 'opening has the exact role plus proof, I would be glad close. '
+      + 'Check: does each bullet start with Audited/Trained/Reported/Mentored and contain a number (30 days, 90+, 20 percent, K3)? '
+      + 'Is the opening I am writing to apply for the Junior Process Engineer role with proof present? Is the I would be glad close present? Is it about 110 words?';
   }
   if (where.includes('day21') || where.includes('annisa-day21') || where.includes('proposal') || where.includes('get a yes')) {
     return 'PROPOSAL GET A YES (100 to 130 words: Problem with late low scores, Solution with I propose that, Benefit with 83 vs 70, Risk with While, Ask with Could you please approve plus June). '
