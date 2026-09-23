@@ -427,7 +427,15 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
-    if (where.includes('day22') || where.includes('annisa-day22') || where.includes('junior process engineer') || where.includes('pertamina') || where.includes('k3') || where.includes('maria jones')) {
+    if (where.includes('day23') || where.includes('annisa-day23') || where.includes('statement of purpose') || where.includes('this program will help')) {
+    return 'STATEMENT OF PURPOSE (about 110 words: Hook with one moment, Journey with past steps, Proof with 30 days Pertamina audit plus 90 students plus K3, '
+      + 'Goals with I plan to plus will, Program with This program will help plus one program name). '
+      + 'Required shape: hook first with one moment, journey in past tense, proof with numbers (30 days, 90+, K3), '
+      + 'I plan to goals with will, This program will help close with one named program, honest voice only (no big adjectives, no childhood story). '
+      + 'Check: is there a one-moment hook (not a life story)? Is the journey past tense? Are 30 days, 90+ and K3 present as proof? '
+      + 'Is there I plan to plus will goals and a This program will help close with a program name? Is it about 110 words?';
+  }
+  if (where.includes('day22') || where.includes('annisa-day22') || where.includes('junior process engineer') || where.includes('pertamina') || where.includes('k3') || where.includes('maria jones')) {
     return 'CV AND COVER LETTER: JUNIOR PROCESS ENGINEER (3 bullets with Audited plus 30 days Pertamina audit, Trained 14 assistants plus 90 students, Mentored/Reported with numbers like 20 percent; '
       + 'opening with I am writing to apply for the Junior Process Engineer role plus 30-day audit plus K3 certificate plus I would be glad; about 110 words total for 3 separate bullets plus 1 separate opening). '
       + 'Required shape: each bullet starts with Audited/Trained/Reported/Mentored plus a number (30 days, 90+, 20 percent, K3), '
