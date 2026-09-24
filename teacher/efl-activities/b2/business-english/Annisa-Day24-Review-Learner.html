@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 24 Review Writing Interactive</title>
+<style>
+:root{--bg:#080c12;--surface:#121a24;--surface-2:#192534;--deep:#05080d;--ink:#f6f8fb;--muted:#c3ceda;--accent:#ffd166;--accent-2:#5ee6c1;--good:#5ee6c1;--bad:#ff9b9b;--border:#6f7f93;--focus:#ffd166;--warn:#ffd166}
+*{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(145deg,#0d1622 0,#080c12 48%,#10161e 100%);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+[hidden]{display:none!important}
+a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+a.skip:focus{left:.5rem;top:.5rem;width:auto;height:auto;background:var(--accent);color:#071018;padding:.6rem .85rem;z-index:50;border:3px solid #fff;font-weight:bold}
+a{color:var(--accent)}
+a:visited{color:var(--accent-2)}
+button,input,textarea,select{font:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.hud{position:sticky;top:0;z-index:30;background:rgba(8,12,18,.96);border-bottom:2px solid var(--border);padding:.55rem .9rem;backdrop-filter:blur(10px)}
+.hud-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.stat{background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:.28rem .7rem;font-weight:800;font-size:.88rem;white-space:nowrap}
+.progress-wrap{flex:1 1 240px;min-width:210px}
+.progress-label{display:flex;justify-content:space-between;gap:1rem;font-size:.82rem;color:var(--muted);margin-bottom:.2rem}
+.progress-track{height:12px;background:var(--deep);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--accent-2);transition:width .35s ease}
+.save-status{font-size:.78rem;color:var(--muted)}
+.hero{max-width:1180px;margin:0 auto;padding:1.1rem 1rem .5rem;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);gap:1rem;align-items:end}
+.hero h1{font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.08;margin:0;color:#fff;letter-spacing:-.03em}
+.hero p{color:var(--muted);margin:.4rem 0 0;max-width:720px}
+.hero-meta{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
+.pill{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.22rem .7rem;font-size:.8rem;font-weight:800;color:var(--accent)}
+main{max-width:1180px;margin:0 auto;padding:.3rem 1rem 1.5rem}
+.deck-shell{background:rgba(18,26,36,.94);border:1px solid var(--border);border-top:4px solid var(--accent);padding:.8rem;margin:.4rem 0 0;box-shadow:0 18px 45px rgba(0,0,0,.28)}
+.deck-shell:fullscreen{background:var(--bg);border:0;padding:1rem;overflow:auto}
+.deck-topbar{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-bottom:.65rem}
+.slide-count{font-weight:900;color:var(--accent);font-size:.9rem}
+.deck-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{position:sticky;top:40vh;display:flex}
+.nav-left{justify-content:flex-end}
+.nav-right{justify-content:flex-start}
+.nav{width:100px;min-height:62px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:6px;font-weight:900;padding:.55rem .7rem;cursor:pointer}
+.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.nav:disabled{opacity:.38;cursor:not-allowed}
+.deck{min-width:0;background:var(--surface);border:1px solid var(--border);padding:clamp(.85rem,2.5vw,1.4rem);min-height:560px}
+.slide{min-width:0;animation:arrive .28s ease-out}
+@keyframes arrive{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.slide h2{font-size:clamp(1.3rem,3vw,2rem);line-height:1.18;margin:0;color:#fff;letter-spacing:-.02em}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.act-head{display:flex;align-items:flex-start;gap:.75rem}
+.badge{width:44px;height:44px;flex:none;display:grid;place-items:center;background:var(--accent);color:#071018;border-radius:6px;font-size:1.1rem;font-weight:900}
+.act-head h2{flex:1}
+.tag{display:inline-block;background:var(--deep);border:1px solid var(--border);border-radius:999px;padding:.18rem .65rem;color:var(--accent-2);font-size:.77rem;font-weight:800;white-space:nowrap}
+.done-flag{display:none;margin-left:.4rem;color:var(--good);font-size:.78rem;letter-spacing:.04em}
+.activity.complete .done-flag{display:inline}
+.hint{color:var(--muted);font-size:.95rem;margin:.45rem 0 .8rem}
+.exercise{background:var(--deep);border:1px solid var(--border);border-left:4px solid var(--accent-2);padding:clamp(.8rem,2.5vw,1.15rem)}
+fieldset{margin:.6rem 0;padding:.75rem;border:2px solid var(--border);border-radius:6px;min-width:0}
+legend{font-weight:900;padding:0 .35rem;color:#fff}
+.stem{font-weight:800;margin:.1rem 0 .5rem}
+.choice-list{display:grid;gap:.45rem}
+.choice{display:grid;grid-template-columns:1.25rem 1fr auto;gap:.55rem;align-items:start;background:var(--surface);border:2px solid var(--border);padding:.55rem .65rem;cursor:pointer}
+.choice:hover{border-color:#a7b6c8}
+.choice input{width:1.1rem;height:1.1rem;margin:.18rem 0 0;accent-color:var(--accent-2)}
+.choice.correct{border-color:var(--good)}
+.choice.wrong{border-color:var(--bad)}
+.item-mark{font-size:.78rem;font-weight:900;align-self:center;white-space:nowrap}
+.item-mark.ok{color:var(--good)}
+.item-mark.no{color:var(--bad)}
+.short-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.7fr);gap:.6rem;align-items:end;margin:.55rem 0}
+label{display:block;font-weight:800;font-size:.91rem;margin-bottom:.25rem}
+input[type=text],textarea,select{width:100%;background:#0b1119;color:#fff;border:2px solid var(--border);border-radius:5px;padding:.52rem .62rem}
+textarea{resize:vertical;min-height:105px;line-height:1.55}
+textarea:focus,input[type=text]:focus,select:focus{border-color:var(--focus)}
+select{min-height:48px}
+.inline-mark{font-size:.78rem;font-weight:900;margin-left:.4rem}
+.inline-mark.ok{color:var(--good)}
+.inline-mark.no{color:var(--bad)}
+.answer.correct,.answer-select.correct{border-color:var(--good)}
+.answer.wrong,.answer-select.wrong{border-color:var(--bad)}
+.btn{background:var(--accent);color:#071018;border:2px solid #fff;border-radius:5px;padding:.55rem .9rem;min-height:48px;font-weight:900;cursor:pointer;margin:.65rem .35rem 0 0}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.btn.secondary{background:var(--surface-2);color:var(--ink);border-color:var(--border)}
+.btn:disabled{opacity:.48;cursor:not-allowed}
+.feedback{margin-top:.7rem;border:1px solid var(--border);background:var(--surface-2);padding:.6rem .75rem;border-radius:5px;font-size:.9rem;min-height:1.2em}
+.feedback.good{border-color:var(--good)}
+.feedback.bad{border-color:var(--bad)}
+.answer-key{margin-top:.75rem;border:2px solid var(--good);background:#07241c;color:#e5fff7;border-radius:6px}
+.answer-key summary{cursor:pointer;min-height:46px;padding:.55rem .75rem;color:var(--good);font-weight:900}
+.answer-key .key-body{border-top:1px solid #2f725f;padding:.65rem .8rem;font-size:.9rem}
+.answer-key p{margin:.35rem 0}
+.note{border-left:4px solid var(--accent);background:var(--surface-2);padding:.65rem .75rem;margin:.7rem 0;font-size:.88rem;color:var(--muted)}
+.cover-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:1rem;margin-top:1rem}
+.cover-main{background:var(--deep);border:1px solid var(--border);padding:clamp(1rem,3vw,1.6rem)}
+.cover-side{border-top:4px solid var(--accent-2);background:var(--surface-2);padding:1rem}
+.move-list{display:grid;gap:.45rem;margin:.75rem 0}
+.move-list span{border-left:4px solid var(--accent);background:var(--surface);padding:.5rem .65rem;font-weight:800}
+.cover-side ol{margin:.4rem 0;padding-left:1.2rem}
+.plan-template{font-family:Consolas,"Courier New",monospace;white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);padding:.7rem;font-size:.86rem;line-height:1.55}
+.word-count{margin-top:.35rem;color:var(--warn);font-weight:900;font-size:.84rem}
+.checklist{display:grid;gap:.4rem;margin:.6rem 0}
+.check-item{display:grid;grid-template-columns:1.2rem 1fr;gap:.55rem;background:var(--surface);border:1px solid var(--border);padding:.5rem .6rem;cursor:pointer}
+.check-item input{width:1.1rem;height:1.1rem;margin:.1rem 0 0;accent-color:var(--accent-2)}
+.nav-inside{display:none;margin-top:1rem}
+.toc-row{display:flex;gap:.7rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:.75rem;background:var(--surface);border:1px solid var(--border);padding:.6rem .7rem}
+.toc-row label{margin:0;white-space:nowrap}
+.toc-row select{max-width:min(100%,580px);margin:0}
+.keyboard-tip{color:var(--muted);font-size:.8rem;margin:.55rem 0 0}
+.results{border-top:5px solid var(--accent);background:var(--deep);padding:clamp(1rem,4vw,2rem);text-align:center}
+.results h2{color:var(--accent)}
+.score-grid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:.7rem;margin:1rem 0}
+.score-box{background:var(--surface);border:1px solid var(--border);padding:.7rem}
+.score-box strong{display:block;color:var(--accent-2);font-size:1.7rem}
+.result-copy{margin:1rem auto 0;max-width:680px;text-align:left;background:var(--surface);border:1px solid var(--border);padding:.75rem;white-space:pre-wrap;font-size:.86rem}
+footer{text-align:center;padding:1.2rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.8rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:760px){
+html{font-size:17px}
+.hero{grid-template-columns:1fr;padding-top:.8rem}
+.hero-meta{justify-content:flex-start}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.nav-inside .nav{width:100%;min-height:52px}
+.deck{min-height:0;padding:.8rem}
+.cover-grid{grid-template-columns:1fr}
+.short-row{grid-template-columns:1fr}
+.save-status{width:100%}
+}
+@media (max-width:480px){
+main{padding-left:.55rem;padding-right:.55rem}
+.deck-shell{padding:.5rem}
+.hud{padding:.45rem .55rem}
+.hud-inner{gap:.4rem}
+.progress-wrap{order:3;flex-basis:100%;min-width:100%}
+.btn{width:100%;margin-right:0}
+.nav-inside{grid-template-columns:1fr}
+.choice{grid-template-columns:1.1rem 1fr}
+.item-mark{grid-column:2}
+.score-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to lesson slides</a>
+<section class="hud" aria-label="Lesson progress">
+<div class="hud-inner">
+<div class="stat">XP <span id="xpValue">0</span></div>
+<div class="stat">Streak <span id="streakValue">0</span></div>
+<div class="progress-wrap">
+<div class="progress-label"><span id="doneLabel">0 of 15 complete</span><span id="progressPercent">0%</span></div>
+<div id="progressBar" class="progress-track" role="progressbar" aria-label="Activities complete" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
+</div>
+<div id="saveStatus" class="save-status" role="status" aria-live="polite">Answers save on this device</div>
+</div>
+</section>
+<header class="hero">
+<div>
+<h1>Day 24: Review Writing</h1>
+<p>Write a fair review with good points, weak points, evidence, and a clear recommendation.</p>
+</div>
+<div class="hero-meta" aria-label="Lesson details"><span class="pill">40 to 45 min</span><span class="pill">One to one</span><span class="pill">About 250 words</span></div>
+</header>
+<main id="main">
+<section class="deck-shell" id="deckShell" aria-label="Lesson presentation">
+<div class="deck-topbar">
+<div id="slideCount" class="slide-count" aria-live="polite">Slide 1 of 17</div>
+<div class="deck-actions"><button id="fullscreenBtn" class="btn secondary" type="button" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button></div>
+</div>
+<div id="slideLive" class="sr-only" aria-live="polite"></div>
+<div class="deck-layout">
+<div class="nav-slot nav-left" id="navLeft"><button id="prevBtn" class="nav" type="button" aria-label="Go to previous slide">Back</button></div>
+<section id="deck" class="deck" role="region" aria-roledescription="carousel" aria-label="Day 24 lesson slides">
+<div id="slides">
+<section class="slide active" data-title="Cover: Day 24 Review Writing" aria-labelledby="coverTitle">
+<div class="cover-grid">
+<div class="cover-main">
+<h2 id="coverTitle" tabindex="-1">A fair review helps a reader choose.</h2>
+<p>Today you will review a product, service, or course. Your voice stays plain and honest, just like Day 23.</p>
+<div class="move-list" aria-label="Review moves"><span>1. Name the topic</span><span>2. Give a good point with evidence</span><span>3. Give a weak point with evidence</span><span>4. Make a balanced judgment</span><span>5. Recommend it to a named reader</span></div>
+<p class="hint">Use your real experience. Do not invent a weakness. Your answers save on this device.</p>
+<button id="startBtn" class="btn" type="button">Start lesson</button>
+</div>
+<aside class="cover-side" aria-label="Lesson map">
+<h3>Our plan</h3>
+<ol><li>Notice the moves</li><li>Use proof</li><li>Build together</li><li>Write alone</li><li>Check and revise</li></ol>
+<p><strong>Target:</strong> about 250 words</p>
+<p><strong>Keyboard:</strong> use Left and Right Arrow keys when you are not typing.</p>
+</aside>
+</div>
+</section>
+<section class="slide activity" id="act1" data-title="Activity 1: Review or report" aria-labelledby="act1Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 id="act1Title" tabindex="-1">Review or report? <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">A review describes your experience and gives a judgment.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a1q1"><legend>1. What is the main purpose of a review?</legend><div class="choice-list">
+<label class="choice" for="a1q1a"><input id="a1q1a" type="radio" name="a1q1" value="a" data-correct="false" data-save><span>To give neutral facts only.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a1q1b"><input id="a1q1b" type="radio" name="a1q1" value="b" data-correct="true" data-save><span>To describe an experience and give a personal judgment.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a1q2"><legend>2. Which is a strong review?</legend><div class="choice-list">
+<label class="choice" for="a1q2a"><input id="a1q2a" type="radio" name="a1q2" value="a" data-correct="false" data-save><span>It praises one side and attacks the other.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a1q2b"><input id="a1q2b" type="radio" name="a1q2" value="b" data-correct="true" data-save><span>It gives good and weak points with evidence.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act1">Check answers</button><button class="btn secondary" type="button" data-complete="act1">Mark complete</button>
+<div id="fb-act1" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act1" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. b.</strong> A review describes something the writer experienced and gives a personal judgment.</p><p><strong>2. b.</strong> A fair review includes good and weak points supported by evidence.</p></div></details>
+</section>
+<section class="slide activity" id="act2" data-title="Activity 2: Reader and purpose" aria-labelledby="act2Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 id="act2Title" tabindex="-1">Choose your reader <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Keep one reader in your mind.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a2q1"><legend>1. Who is reading this review?</legend><div class="choice-list">
+<label class="choice" for="a2q1a"><input id="a2q1a" type="radio" name="a2q1" value="a" data-correct="true" data-save><span>First-year process engineering students choosing a practice course.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a2q1b"><input id="a2q1b" type="radio" name="a2q1" value="b" data-correct="false" data-save><span>A company safety inspector checking a whole plant.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a2q2"><legend>2. What decision should the review help?</legend><div class="choice-list">
+<label class="choice" for="a2q2a"><input id="a2q2a" type="radio" name="a2q2" value="a" data-correct="true" data-save><span>Should I choose this course?</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a2q2b"><input id="a2q2b" type="radio" name="a2q2" value="b" data-correct="false" data-save><span>How did the whole plant perform?</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act2">Check answers</button><button class="btn secondary" type="button" data-complete="act2">Mark complete</button>
+<div id="fb-act2" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act2" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. a.</strong> The reader is a student choosing a learning option.</p><p><strong>2. a.</strong> The review helps the reader make a fair choice.</p></div></details>
+</section>
+<section class="slide activity" id="act3" data-title="Activity 3: Map the moves" aria-labelledby="act3Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 id="act3Title" tabindex="-1">Map the review moves <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Choose the job of each part. This is original practice material.</p>
+<div class="exercise">
+<div class="note"><p><strong>1.</strong> Process Data Lab gave me useful practice with real data, although its feedback was slow.</p></div>
+<label for="a3s1">Part 1</label><select id="a3s1" class="answer-select" data-correct="intro" data-save><option value="">Choose one</option><option value="intro">Introduction and verdict</option><option value="good">Good point and evidence</option><option value="weak">Weak point and effect</option><option value="recommendation">Recommendation and audience</option></select><span id="a3m1" class="inline-mark" aria-live="polite"></span>
+<div class="note"><p><strong>2.</strong> The reporting task helped me turn 30 days of heat-exchanger data into a clear report.</p></div>
+<label for="a3s2">Part 2</label><select id="a3s2" class="answer-select" data-correct="good" data-save><option value="">Choose one</option><option value="intro">Introduction and verdict</option><option value="good">Good point and evidence</option><option value="weak">Weak point and effect</option><option value="recommendation">Recommendation and audience</option></select><span id="a3m2" class="inline-mark" aria-live="polite"></span>
+<div class="note"><p><strong>3.</strong> The self-study parts needed careful planning, so learners with little free time may struggle.</p></div>
+<label for="a3s3">Part 3</label><select id="a3s3" class="answer-select" data-correct="weak" data-save><option value="">Choose one</option><option value="intro">Introduction and verdict</option><option value="good">Good point and evidence</option><option value="weak">Weak point and effect</option><option value="recommendation">Recommendation and audience</option></select><span id="a3m3" class="inline-mark" aria-live="polite"></span>
+<div class="note"><p><strong>4.</strong> I recommend it to independent learners, but not to people who mainly want daily support.</p></div>
+<label for="a3s4">Part 4</label><select id="a3s4" class="answer-select" data-correct="recommendation" data-save><option value="">Choose one</option><option value="intro">Introduction and verdict</option><option value="good">Good point and evidence</option><option value="weak">Weak point and effect</option><option value="recommendation">Recommendation and audience</option></select><span id="a3m4" class="inline-mark" aria-live="polite"></span>
+<button class="btn" type="button" data-check="act3">Check answers</button><button class="btn secondary" type="button" data-complete="act3">Mark complete</button>
+<div id="fb-act3" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act3" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. Introduction and verdict</p><p>2. Good point and evidence</p><p>3. Weak point and effect</p><p>4. Recommendation and audience</p></div></details>
+</section>
+<section class="slide activity" id="act4" data-title="Activity 4: Write a useful title" aria-labelledby="act4Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 id="act4Title" tabindex="-1">Choose a useful title <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Name the topic and show a fair judgment.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a4title"><legend>Which title works best?</legend><div class="choice-list">
+<label class="choice" for="a4ta"><input id="a4ta" type="radio" name="a4title" value="a" data-correct="false" data-save><span>Best course ever!</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a4tb"><input id="a4tb" type="radio" name="a4title" value="b" data-correct="true" data-save><span>Process Data Lab: useful practice, but slow feedback</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a4tc"><input id="a4tc" type="radio" name="a4title" value="c" data-correct="false" data-save><span>Don't waste your time on this course</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a4Reason">What two clues help?</label><textarea id="a4Reason" data-save placeholder="It names... and it shows..."></textarea>
+<button class="btn" type="button" data-check="act4">Check answers</button><button class="btn secondary" type="button" data-complete="act4">Mark complete</button>
+<div id="fb-act4" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act4" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> Process Data Lab: useful practice, but slow feedback.</p><p>The two clues are the course name and the balanced judgment.</p></div></details>
+</section>
+<section class="slide activity" id="act5" data-title="Activity 5: Claims need evidence" aria-labelledby="act5Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 id="act5Title" tabindex="-1">Connect proof to the claim <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">A number is useful only when it proves something.</p>
+<div class="exercise">
+<div class="note"><strong>Claim:</strong> The course has practical value.</div>
+<fieldset class="mcq" data-group="a5a"><legend>1. 30 days of plant data became a clear report. This proves:</legend><div class="choice-list">
+<label class="choice" for="a5aa"><input id="a5aa" type="radio" name="a5a" value="a" data-correct="true" data-save><span>Experience</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5ab"><input id="a5ab" type="radio" name="a5a" value="b" data-correct="false" data-save><span>Reach</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5ac"><input id="a5ac" type="radio" name="a5a" value="c" data-correct="false" data-save><span>Outcome</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a5b"><legend>2. I later trained 90+ students. This proves:</legend><div class="choice-list">
+<label class="choice" for="a5ba"><input id="a5ba" type="radio" name="a5b" value="a" data-correct="false" data-save><span>Experience</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5bb"><input id="a5bb" type="radio" name="a5b" value="b" data-correct="true" data-save><span>Reach</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5bc"><input id="a5bc" type="radio" name="a5b" value="c" data-correct="false" data-save><span>Outcome</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a5c"><legend>3. I mentored 10 teams, and 20% won national funding. This proves:</legend><div class="choice-list">
+<label class="choice" for="a5ca"><input id="a5ca" type="radio" name="a5c" value="a" data-correct="false" data-save><span>Experience</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5cb"><input id="a5cb" type="radio" name="a5c" value="b" data-correct="false" data-save><span>Reach</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5cc"><input id="a5cc" type="radio" name="a5c" value="c" data-correct="true" data-save><span>Outcome</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act5">Check answers</button><button class="btn secondary" type="button" data-complete="act5">Mark complete</button>
+<div id="fb-act5" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act5" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. Experience: 30 days of real plant data became a report.</p><p>2. Reach: 90+ students were trained.</p><p>3. Outcome: 10 teams were mentored, and 20% won national funding.</p><p>Use only the numbers that fit your real review target.</p></div></details>
+</section>
+<section class="slide activity" id="act6" data-title="Activity 6: Write a fair weak point" aria-labelledby="act6Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 id="act6Title" tabindex="-1">Make the weak point fair <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Do not invent a problem. Use what you really know.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a6weak"><legend>Which weak point is fair and specific?</legend><div class="choice-list">
+<label class="choice" for="a6wa"><input id="a6wa" type="radio" name="a6weak" value="a" data-correct="false" data-save><span>The course is rubbish, although I learned a lot.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a6wb"><input id="a6wb" type="radio" name="a6weak" value="b" data-correct="true" data-save><span>The self-study parts need planning, so learners with little free time may struggle.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a6wc"><input id="a6wc" type="radio" name="a6weak" value="c" data-correct="false" data-save><span>I did not like it.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a6Own">Write one real limitation for your reader</label><textarea id="a6Own" data-save placeholder="It may not suit readers who need..."></textarea>
+<button class="btn" type="button" data-check="act6">Check answer</button><button class="btn secondary" type="button" data-complete="act6">Mark complete</button>
+<div id="fb-act6" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act6" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It names the issue, explains the effect, and limits it to a reader group.</p><p>Model: The self-study parts require planning, so learners with busy schedules may struggle.</p><p>Do not use this as a fact unless it is true for your chosen review.</p></div></details>
+</section>
+<section class="slide activity" id="act7" data-title="Activity 7: Use your plain voice" aria-labelledby="act7Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 id="act7Title" tabindex="-1">Use your plain voice <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Replace showy words with clear verbs.</p>
+<div class="exercise">
+<div class="note">Showy: This revolutionary course transforms learners into world-class engineers.</div>
+<label for="a7Plain">Rewrite it in plain English</label><textarea id="a7Plain" data-save placeholder="This course helped me... because..."></textarea>
+<p class="hint">Frame: This course helped me ___ because ___.</p>
+<button class="btn secondary" type="button" data-complete="act7">Save rewrite and show key</button>
+<div id="fb-act7" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act7" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>Model: This course helped me improve my process engineering skills because the reporting task turned 30 days of plant data into a clear report.</p><p>Your own facts are valid. Use plain verbs and a real reason.</p></div></details>
+</section>
+<section class="slide activity" id="act8" data-title="Activity 8: Balance the judgment" aria-labelledby="act8Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 id="act8Title" tabindex="-1">Balance both sides <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Use contrast, not a change from praise to attack.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a8a"><legend>1. Which connector adds contrast after a good point?</legend><div class="choice-list">
+<label class="choice" for="a8aa"><input id="a8aa" type="radio" name="a8a" value="a" data-correct="false" data-save><span>Moreover</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a8ab"><input id="a8ab" type="radio" name="a8a" value="b" data-correct="true" data-save><span>However</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a8b"><legend>2. Which pair is balanced and useful?</legend><div class="choice-list">
+<label class="choice" for="a8ba"><input id="a8ba" type="radio" name="a8b" value="a" data-correct="false" data-save><span>Amazing but rubbish</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a8bb"><input id="a8bb" type="radio" name="a8b" value="b" data-correct="true" data-save><span>Useful for independent learners, but too slow for people needing quick support</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a8Frame">Now complete the frame</label><textarea id="a8Frame" data-save placeholder="Although the course is..., it may not suit... because..."></textarea>
+<button class="btn" type="button" data-check="act8">Check answers</button><button class="btn secondary" type="button" data-complete="act8">Mark complete</button>
+<div id="fb-act8" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act8" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. <strong>However.</strong></p><p>2. <strong>b.</strong> It gives a benefit and a limit for different readers.</p><p>Model: Although the course is useful for independent practice, it may not suit learners who need daily teacher support because feedback can feel slow.</p></div></details>
+</section>
+<section class="slide activity" id="act9" data-title="Activity 9: Recommend for a reader" aria-labelledby="act9Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 id="act9Title" tabindex="-1">Recommend for a named reader <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Say who should choose it and who may not.</p>
+<div class="exercise">
+<label for="a9Yes">1. I recommend this to ___ because ___.</label><textarea id="a9Yes" data-save placeholder="Name the reader and give one reason."></textarea>
+<label for="a9No">2. It may not suit ___ who needs ___.</label><textarea id="a9No" data-save placeholder="Name the reader and the need."></textarea>
+<button class="btn secondary" type="button" data-complete="act9">Save recommendation and show key</button>
+<div id="fb-act9" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act9" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>Model 1: I recommend the course to independent learners because the tasks connect process data with professional reports.</p><p>Model 2: It may not suit students who need daily teacher support because the self-study and feedback schedule require more independence.</p><p>Your reader and reasons can change. Everyone is too broad.</p></div></details>
+</section>
+<section class="slide activity" id="act10" data-title="Activity 10: Review voice or report voice" aria-labelledby="act10Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 id="act10Title" tabindex="-1">Review voice or report voice? <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Facts become evidence when you explain why they matter.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a10a"><legend>1. Which sentence belongs in a review?</legend><div class="choice-list">
+<label class="choice" for="a10aa"><input id="a10aa" type="radio" name="a10a" value="a" data-correct="false" data-save><span>The report has method, findings, and recommendations.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a10ab"><input id="a10ab" type="radio" name="a10a" value="b" data-correct="true" data-save><span>In my opinion, the reporting task was useful because it helped me turn 30 days of data into a clear report.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a10b"><legend>2. Which detail adds a useful judgment?</legend><div class="choice-list">
+<label class="choice" for="a10ba"><input id="a10ba" type="radio" name="a10b" value="a" data-correct="false" data-save><span>The course has 8 modules.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a10bb"><input id="a10bb" type="radio" name="a10b" value="b" data-correct="true" data-save><span>It helped me turn 30 days of data into a clear report.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act10">Check answers</button><button class="btn secondary" type="button" data-complete="act10">Mark complete</button>
+<div id="fb-act10" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act10" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. b.</strong> It describes the writer's experience and gives a personal judgment.</p><p><strong>2. b.</strong> It connects 30 days of data to a useful result.</p><p>Eight modules is a fact, but it does not explain the value to this writer.</p></div></details>
+</section>
+<section class="slide activity" id="act11" data-title="Activity 11: Benefits and risks" aria-labelledby="act11Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">11</div><h2 id="act11Title" tabindex="-1">Add a benefit and a risk <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Proposal: add one fixed online feedback clinic each week.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a11a"><legend>Possible benefit?</legend><div class="choice-list">
+<label class="choice" for="a11aa"><input id="a11aa" type="radio" name="a11a" value="a" data-correct="true" data-save><span>Learners can ask questions and receive clearer corrections sooner.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a11ab"><input id="a11ab" type="radio" name="a11a" value="b" data-correct="false" data-save><span>Everyone will become dependent.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a11b"><legend>Possible risk?</legend><div class="choice-list">
+<label class="choice" for="a11ba"><input id="a11ba" type="radio" name="a11b" value="a" data-correct="false" data-save><span>The course will become too popular.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a11bb"><input id="a11bb" type="radio" name="a11b" value="b" data-correct="true" data-save><span>The clinic time may not fit learners with shift work.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act11">Check answers</button><button class="btn secondary" type="button" data-complete="act11">Mark complete</button>
+<div id="fb-act11" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act11" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. a.</strong> The clinic can improve questions and corrections.</p><p><strong>2. b.</strong> The fixed time may not fit shift workers.</p><p>Model: The clinic would improve the course for independent learners, but the time may exclude shift workers.</p></div></details>
+</section>
+<section class="slide activity" id="act12" data-title="Activity 12: Plan in six boxes" aria-labelledby="act12Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">12</div><h2 id="act12Title" tabindex="-1">Plan in six boxes <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Write one short line for each box.</p>
+<div class="exercise">
+<div class="plan-template">1. Title: topic + balanced judgment
+2. Experience: what I used or did
+3. Good: specific point + evidence
+4. Weak: real limit + effect
+5. Judgment: worth it for whom?
+6. Recommendation: choose it + named reader + reason</div>
+<label for="a12Plan">My six-line plan</label><textarea id="a12Plan" data-save style="min-height:210px" placeholder="1. Title...&#10;2. Experience...&#10;3. Good...&#10;4. Weak...&#10;5. Judgment...&#10;6. Recommendation..."></textarea>
+<button class="btn secondary" type="button" data-complete="act12">Save plan and show key</button>
+<div id="fb-act12" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act12" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><div class="plan-template">1. Process Data Lab: useful practice, but slow feedback.
+2. Used a 30-day heat-exchanger audit to practise professional reporting.
+3. Reporting task + 30 days of real data.
+4. Self-study needs planning + effect on learners with little free time.
+5. Practical value is strong, but support is not ideal for every learner.
+6. Recommend to independent learners; not to people needing daily support.</div><p>Your real target can replace the practice case. Keep the same reader.</p></div></details>
+</section>
+<section class="slide activity" id="act13" data-title="Activity 13: Build one paragraph" aria-labelledby="act13Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">13</div><h2 id="act13Title" tabindex="-1">Build one paragraph together <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">4 min</span></div>
+<p class="hint">Say your answer to your teacher before you type.</p>
+<div class="exercise">
+<div class="note">The strongest feature was the ___ because it helped me turn ___ into a clear report. However, ___ was slow, so I recommend it to ___ who value realistic tasks.</div>
+<label for="a13a">1. Best feature</label><input id="a13a" class="answer" type="text" data-accept="reporting task|writing report" data-mark-for="a13m1" data-save autocomplete="off"><span id="a13m1" class="inline-mark" aria-live="polite"></span>
+<label for="a13b">2. Evidence</label><input id="a13b" class="answer" type="text" data-accept="30 days of plant data|30 days" data-mark-for="a13m2" data-save autocomplete="off"><span id="a13m2" class="inline-mark" aria-live="polite"></span>
+<label for="a13c">3. Weak point</label><input id="a13c" class="answer" type="text" data-accept="weekly feedback|feedback" data-mark-for="a13m3" data-save autocomplete="off"><span id="a13m3" class="inline-mark" aria-live="polite"></span>
+<label for="a13d">4. Reader</label><input id="a13d" class="answer" type="text" data-accept="independent learners|self directed learners" data-mark-for="a13m4" data-save autocomplete="off"><span id="a13m4" class="inline-mark" aria-live="polite"></span>
+<button class="btn" type="button" data-check="act13">Check answers</button><button class="btn secondary" type="button" data-complete="act13">Mark complete</button>
+<div id="fb-act13" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act13" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. reporting task</p><p>2. 30 days of plant data</p><p>3. weekly feedback</p><p>4. independent learners</p><p>Use a different weak point only if it is true for your real review.</p></div></details>
+</section>
+<section class="slide activity" id="act14" data-title="Activity 14: Write the review" aria-labelledby="act14Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">14</div><h2 id="act14Title" tabindex="-1">Write the review <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">7 min</span></div>
+<p class="hint">Aim for 250 words. Use 200 to 300 for this lesson.</p>
+<div class="exercise">
+<label for="a14Draft">Title and review</label><textarea id="a14Draft" data-save style="min-height:330px" placeholder="Title...&#10;&#10;My experience...&#10;&#10;The strongest good point is... because...&#10;&#10;However,...&#10;&#10;Overall, I recommend this to... because..."></textarea>
+<div id="wc14" class="word-count" aria-live="polite">Words: 0. Target: 250.</div>
+<button id="reviewCheckBtn" class="btn" type="button">Check length</button><button class="btn secondary" type="button" data-complete="act14">Save review and complete</button>
+<div id="fb-act14" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act14" hidden><summary>Original 248-word practice model, available after your attempt</summary><div class="key-body"><p><strong>Process Data Lab: useful practice, but slow feedback</strong></p><p>I took the Process Data Lab as a process engineering student, and I expected another set of slides. Instead, the reporting task connected class work with a real plant problem. I audited heat-exchanger fouling over 30 days at Pertamina RU IV and had to turn the readings into a short report for senior engineers. This was useful because it trained me to separate evidence from assumptions.</p><p>The strongest feature was the link between data and communication. In the same course, I later helped train 90+ students, while mentoring 10 teams led to national funding for 20%. Those numbers do not show that the course is perfect, but they do show that its practical tasks can have a wider effect. The exercises were realistic, and the reporting checklist helped me organise a clear method, findings, and recommendation.</p><p>However, the course was not ideal for everyone. The self-study parts required careful planning, and feedback was not always available when I needed it. This was a weak point for me because I prefer quick questions and clear corrections. A fixed weekly response time, or a short online clinic, would make the course more accessible.</p><p>Overall, I recommend the Process Data Lab to independent learners who want practice with real data and professional reports. I would not recommend it to someone who mainly wants daily teacher support. The course has solid practical value, but a clearer feedback system would make it a stronger choice.</p><p>This is original practice material, not a claim about a real external course.</p></div></details>
+</section>
+<section class="slide activity" id="act15" data-title="Activity 15: Edit, judge, reflect" aria-labelledby="act15Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">15</div><h2 id="act15Title" tabindex="-1">Edit, judge, reflect <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Select at least four checks. Make one clear edit.</p>
+<div class="exercise">
+<div class="checklist">
+<label class="check-item" for="a15c1"><input id="a15c1" type="checkbox" data-save><span>My title names the topic.</span></label>
+<label class="check-item" for="a15c2"><input id="a15c2" type="checkbox" data-save><span>My good point is specific.</span></label>
+<label class="check-item" for="a15c3"><input id="a15c3" type="checkbox" data-save><span>My weak point is real and fair.</span></label>
+<label class="check-item" for="a15c4"><input id="a15c4" type="checkbox" data-save><span>My evidence supports both sides.</span></label>
+<label class="check-item" for="a15c5"><input id="a15c5" type="checkbox" data-save><span>My judgment is balanced.</span></label>
+<label class="check-item" for="a15c6"><input id="a15c6" type="checkbox" data-save><span>My recommendation names a reader.</span></label>
+</div>
+<label for="a15Edit">My one edit: KEEP, CUT, or CHANGE ___ because ___.</label><textarea id="a15Edit" data-save placeholder="I will change... because..."></textarea>
+<button class="btn secondary" type="button" data-complete="act15">Finish review</button>
+<div id="fb-act15" class="feedback" aria-live="polite"></div>
+<div class="note"><strong>Home, 15 to 20 min:</strong> Finish to 250 words. Cut any number that does not prove a point. Ask one trusted reader who should choose it.</div>
+</div>
+<details class="answer-key" data-key-for="act15" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>All six moves should be present.</p><p>Example edit: The course is useful becomes The reporting task was useful because it helped me turn 30 days of plant data into a clear report.</p><p>Save your final review as Day 24 Review v1.</p></div></details>
+</section>
+<section class="slide" id="results" data-title="Results and saved review" aria-labelledby="resultsTitle" role="group" aria-roledescription="slide" hidden>
+<div class="results">
+<h2 id="resultsTitle" tabindex="-1">Your review progress</h2>
+<p id="resultMessage">Complete all 15 activities to finish the lesson.</p>
+<div class="score-grid">
+<div class="score-box"><strong id="resultXp">0</strong><span>XP earned</span></div>
+<div class="score-box"><strong id="resultDone">0/15</strong><span>Activities complete</span></div>
+<div class="score-box"><strong id="resultStreak">0</strong><span>Best streak</span></div>
+</div>
+<p>Your final review is saved in Activity 14. You can copy it here.</p>
+<button id="copyReviewBtn" class="btn" type="button">Copy my review</button>
+<div id="copyReviewStatus" class="feedback" aria-live="polite"></div>
+<div id="savedReview" class="result-copy" aria-label="Your saved review"></div>
+</div>
+</section>
+</div>
+<nav id="navInside" class="nav-inside" aria-label="Slide navigation below content"></nav>
+</section>
+<div class="nav-slot nav-right" id="navRight"><button id="nextBtn" class="nav" type="button" aria-label="Go to next slide">Next</button></div>
+</div>
+<div class="toc-row"><label for="tocSelect">Go to slide</label><select id="tocSelect"></select></div>
+<p class="keyboard-tip">Use Back and Next. On a keyboard, use the Left and Right Arrow keys when you are not typing.</p>
+</section>
+</main>
+<footer>Day 24 Review Writing. 15 tasks. Essentials only.<p style="margin-top:.3rem;"><a href="../../index.html#b2-business" style="color:var(--accent)">All B2 Business lessons</a></p><p>Teaching criteria: <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b1/restaurant-review">British Council LearnEnglish, A restaurant review</a> and <a href="https://www.cambridgeenglish.org/Images/167893-cambridge-english-b2-first-writing-overview.pdf">Cambridge English, B2 First Writing Overview</a>. The model review is original practice material.</footer>
+<script>
+var STORAGE_KEY="annisaDay24ReviewV1";
+var TOTAL=15;
+var LEARNER="Guest";
+try{var _lrsL=JSON.parse(localStorage.getItem("lrs_learner")||"null");if(_lrsL&&_lrsL.name){LEARNER=_lrsL.name;}}catch(_e){}
+var state={answers:{},done:{},revealed:{},scored:{},xp:0,streak:0,best:0,current:0};
+var slides=Array.prototype.slice.call(document.querySelectorAll("#slides .slide"));
+var activities=Array.prototype.slice.call(document.querySelectorAll(".slide.activity"));
+var controls=Array.prototype.slice.call(document.querySelectorAll("[data-save]"));
+var current=0;
+var saveTimer;
+try{var saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(saved&&typeof saved==="object"){state.answers=saved.answers||{};state.done=saved.done||{};state.revealed=saved.revealed||{};state.scored=saved.scored||{};state.xp=Number(saved.xp)||0;state.streak=Number(saved.streak)||0;state.best=Number(saved.best)||0;state.current=Number(saved.current)||0;}}catch(error){}
+function countWords(text){var clean=(text||"").trim();return clean?clean.split(/\s+/).length:0;}
+function normalise(text){return (text||"").toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9+%']+/g," ").replace(/\s+/g," ").trim();}
+function captureAnswers(){state.answers={};controls.forEach(function(control){state.answers[control.id]=(control.type==="radio"||control.type==="checkbox")?control.checked:control.value;});}
+function persist(){captureAnswers();state.current=current;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));document.getElementById("saveStatus").textContent="Saved on this device";}catch(error){document.getElementById("saveStatus").textContent="Saved for this visit only";}}
+function queueSave(){document.getElementById("saveStatus").textContent="Saving...";clearTimeout(saveTimer);saveTimer=setTimeout(persist,250);}
+function restoreAnswers(){controls.forEach(function(control){if(!Object.prototype.hasOwnProperty.call(state.answers,control.id))return;if(control.type==="radio"||control.type==="checkbox"){control.checked=Boolean(state.answers[control.id]);}else{control.value=state.answers[control.id];}});}
+function setFeedback(id,message,type){var box=document.getElementById("fb-"+id);if(!box)return;box.textContent=message;box.className="feedback"+(type?" "+type:"");}
+function setHud(){var done=Object.keys(state.done).filter(function(id){return state.done[id];}).length;var percent=Math.round(done/TOTAL*100);document.getElementById("xpValue").textContent=state.xp;document.getElementById("streakValue").textContent=state.streak;document.getElementById("doneLabel").textContent=done+" of "+TOTAL+" complete";document.getElementById("progressPercent").textContent=percent+"%";document.getElementById("progressFill").style.width=percent+"%";document.getElementById("progressBar").setAttribute("aria-valuenow",String(done));document.getElementById("resultXp").textContent=state.xp;document.getElementById("resultDone").textContent=done+"/"+TOTAL;document.getElementById("resultStreak").textContent=state.best;document.getElementById("resultsTitle").textContent=done===TOTAL?"Review ready. Well done.":"Your review progress";document.getElementById("resultMessage").textContent=done===TOTAL?"You judged evidence fairly and made a recommendation for a real reader.":"Complete all 15 activities to finish the lesson.";}
+function awardActivity(id){if(!state.scored[id]){state.scored[id]=true;state.xp+=10;state.streak+=1;state.best=Math.max(state.best,state.streak);}}
+function unlockKey(id){state.revealed[id]=true;var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=false;}
+function controlHasResponse(control){if(control.type==="checkbox")return control.checked;return Boolean(control.value.trim());}
+function activityHasResponse(id){var section=document.getElementById(id);if(!section)return false;var radioGroups={};var complete=true;section.querySelectorAll("[data-save]").forEach(function(control){if(control.type==="radio"){if(!Object.prototype.hasOwnProperty.call(radioGroups,control.name))radioGroups[control.name]=false;if(control.checked)radioGroups[control.name]=true;}else if(!controlHasResponse(control)){complete=false;}});return complete&&Object.keys(radioGroups).every(function(name){return radioGroups[name];});}
+function markText(control,message,type){control.classList.remove("correct","wrong");control.classList.add(type==="ok"?"correct":"wrong");control.setAttribute("aria-invalid",type==="ok"?"false":"true");var mark=document.getElementById(control.getAttribute("data-mark-for"));if(mark){mark.textContent=message;mark.className="inline-mark "+type;}}
+function markChoiceLabels(group){group.querySelectorAll("label.choice").forEach(function(label){label.classList.remove("correct","wrong");var mark=label.querySelector(".item-mark");if(mark){mark.textContent="";mark.className="item-mark";}});var selected=group.querySelector("input:checked");if(!selected)return false;var selectedLabel=selected.closest("label");if(selected.getAttribute("data-correct")==="true"){selectedLabel.classList.add("correct");selectedLabel.querySelector(".item-mark").textContent="Correct";selectedLabel.querySelector(".item-mark").className="item-mark ok";return true;}selectedLabel.classList.add("wrong");selectedLabel.querySelector(".item-mark").textContent="Try again";selectedLabel.querySelector(".item-mark").className="item-mark no";var correct=group.querySelector('input[data-correct="true"]');if(correct){var correctLabel=correct.closest("label");correctLabel.classList.add("correct");correctLabel.querySelector(".item-mark").textContent="Correct answer";correctLabel.querySelector(".item-mark").className="item-mark ok";}return false;}
+function checkActivity(id){var section=document.getElementById(id);if(!section)return;if(!activityHasResponse(id)){setFeedback(id,"Finish every box before you check. Your answers are saved.","bad");return;}unlockKey(id);var ok=true;var graded=false;section.querySelectorAll("input.answer[data-accept]").forEach(function(input){graded=true;var value=normalise(input.value);var accepted=(input.getAttribute("data-accept")||"").split("|").map(normalise);var correct=accepted.some(function(item){return value===item;});markText(input,correct?"Correct":"Try again",correct?"ok":"no");if(!correct)ok=false;});section.querySelectorAll("select.answer-select[data-correct]").forEach(function(select){graded=true;var correct=select.value===select.getAttribute("data-correct");select.classList.remove("correct","wrong");select.classList.add(correct?"correct":"wrong");select.setAttribute("aria-invalid",correct?"false":"true");var mark=document.getElementById("a3m"+(select.id.charAt(select.id.length-1)));if(mark){mark.textContent=correct?"Correct":"Try again";mark.className="inline-mark "+(correct?"ok":"no");}if(!correct)ok=false;});section.querySelectorAll(".mcq").forEach(function(group){graded=true;if(!markChoiceLabels(group))ok=false;});if(graded&&ok){awardActivity(id);setFeedback(id,"Correct. Strong choices.","good");}else if(graded){state.streak=0;setFeedback(id,"Some answers need another try. Your key is unlocked.","bad");}else{setFeedback(id,"Your work is saved and the key is unlocked. Use Mark complete when you are ready.","");}setHud();persist();}
+function completionMessage(id){
+ if(id==="act4"){return countWords(document.getElementById("a4Reason").value)>=4?"":"Give at least four words of title clues.";}
+ if(id==="act6"){return countWords(document.getElementById("a6Own").value)>=5?"":"Write one real limitation in at least five words.";}
+ if(id==="act7"){return countWords(document.getElementById("a7Plain").value)>=5?"":"Write at least five words in plain English.";}
+ if(id==="act8"){return countWords(document.getElementById("a8Frame").value)>=6?"":"Complete the balance frame in at least six words.";}
+ if(id==="act9"){if(countWords(document.getElementById("a9Yes").value)<4)return "Complete the first recommendation with a reader and reason.";if(countWords(document.getElementById("a9No").value)<4)return "Complete the second sentence with a reader and need.";return "";}
+ if(id==="act12"){var plan=document.getElementById("a12Plan").value;var lines=plan.split(/\n+/).map(function(line){return line.trim();}).filter(Boolean);if(lines.length<6)return "Write one line for each of the six boxes.";if(countWords(plan)<18)return "Add a little more detail to the six-box plan.";return "";}
+ if(id==="act14"){var words=countWords(document.getElementById("a14Draft").value);if(words<200)return "Add "+(200-words)+" more words before you complete this lesson review.";if(words>300)return "Cut at least "+(words-300)+" words before you complete.";return "";}
+ if(id==="act15"){var checked=sectionCheckedCount();if(checked<4)return "Select at least four checks.";if(countWords(document.getElementById("a15Edit").value)<5)return "Write your one edit in at least five words.";return "";}
+ return activityHasResponse(id)?"":"Complete every box before you mark this activity complete.";
+}
+function sectionCheckedCount(){return Array.prototype.slice.call(document.querySelectorAll('#act15 input[type="checkbox"]')).filter(function(input){return input.checked;}).length;}
+function markComplete(id){var section=document.getElementById(id);if(!section)return;if(state.done[id]){setFeedback(id,"Already complete. You can still edit your answers.","");return;}var problem=completionMessage(id);if(problem){setFeedback(id,problem,"bad");return;}section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");state.done[id]=true;unlockKey(id);awardActivity(id);var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}setFeedback(id,"Complete. Your key is unlocked and your work is saved.","good");setHud();persist();if(Object.keys(state.done).filter(function(key){return state.done[key];}).length===TOTAL){showSlide(slides.length-1,true);}}
+function updateWordCount(){var draft=document.getElementById("a14Draft");var words=countWords(draft.value);var message="Words: "+words+". Target: 250.";if(words>=200&&words<220)message+=" Short but usable. Add one detail if you can.";else if(words>=220&&words<280)message+=" On target.";else if(words>=280&&words<=300)message+=" A little long. Try cutting about "+(words-250)+" words.";else if(words>300)message+=" Cut at least "+(words-300)+" words.";else message+=" Aim for about 250.";document.getElementById("wc14").textContent=message;}
+function checkReviewLength(){var words=countWords(document.getElementById("a14Draft").value);if(words===0){setFeedback("act14","Write a title and review first.","bad");return;}if(words<200){setFeedback("act14","Keep going. You need "+(200-words)+" more words for this lesson. Your key stays locked until the review is long enough to compare.","bad");persist();return;}unlockKey("act14");if(words<=300){setFeedback("act14",words>=220&&words<280?"On target for about 250 words. Your key is unlocked.":"Your length works for this lesson. Your key is unlocked.","good");}else{setFeedback("act14","Your draft is long. Cut at least "+(words-300)+" words. Your key is unlocked.","bad");}persist();}
+function updateSavedReview(){document.getElementById("savedReview").textContent=document.getElementById("a14Draft").value.trim()||"Your review will appear here after you write it.";}
+function fallbackCopyText(text){var area=document.createElement("textarea");area.value=text;area.setAttribute("readonly","");area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();}
+function copyReview(){var text=document.getElementById("a14Draft").value;if(!text.trim()){document.getElementById("copyReviewStatus").textContent="Write your review in Activity 14 first.";return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){document.getElementById("copyReviewStatus").textContent="Review copied.";}).catch(function(){fallbackCopyText(text);document.getElementById("copyReviewStatus").textContent="Review copied.";});}else{fallbackCopyText(text);document.getElementById("copyReviewStatus").textContent="Review copied.";}}
+function restoreProgress(){activities.forEach(function(section){var id=section.id;if(state.done[id]){section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}}if(state.revealed[id]){var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=false;}});setHud();}
+var prevBtn=document.getElementById("prevBtn");
+var nextBtn=document.getElementById("nextBtn");
+var navLeft=document.getElementById("navLeft");
+var navRight=document.getElementById("navRight");
+var navInside=document.getElementById("navInside");
+var tocSelect=document.getElementById("tocSelect");
+var slideCount=document.getElementById("slideCount");
+var slideLive=document.getElementById("slideLive");
+slides.forEach(function(slide,index){var option=document.createElement("option");option.value=String(index);option.textContent=String(index+1)+". "+(slide.getAttribute("data-title")||"Slide");tocSelect.appendChild(option);});
+function showSlide(index,focusHeading){var next=Math.max(0,Math.min(slides.length-1,index));current=next;slides.forEach(function(slide,index){var active=index===current;slide.hidden=!active;slide.classList.toggle("active",active);slide.setAttribute("aria-hidden",active?"false":"true");});prevBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;tocSelect.value=String(current);slideCount.textContent="Slide "+(current+1)+" of "+slides.length;var title=slides[current].getAttribute("data-title")||("Slide "+(current+1));slideLive.textContent=title;if(current===slides.length-1)updateSavedReview();if(focusHeading){var heading=slides[current].querySelector("h2");if(heading)heading.focus({preventScroll:true});}queueSave();}
+function placeNavigation(){if(window.matchMedia("(max-width: 760px)").matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}}
+controls.forEach(function(control){control.addEventListener("input",queueSave);control.addEventListener("change",queueSave);});
+document.querySelectorAll("[data-check]").forEach(function(button){button.addEventListener("click",function(){checkActivity(button.getAttribute("data-check"));});});
+document.querySelectorAll("[data-complete]").forEach(function(button){button.addEventListener("click",function(){markComplete(button.getAttribute("data-complete"));});});
+document.getElementById("reviewCheckBtn").addEventListener("click",checkReviewLength);
+document.getElementById("a14Draft").addEventListener("input",function(){updateWordCount();updateSavedReview();});
+document.getElementById("copyReviewBtn").addEventListener("click",copyReview);
+prevBtn.addEventListener("click",function(){showSlide(current-1,true);});
+nextBtn.addEventListener("click",function(){showSlide(current+1,true);});
+tocSelect.addEventListener("change",function(){showSlide(Number(tocSelect.value),true);});
+document.getElementById("startBtn").addEventListener("click",function(){showSlide(1,true);});
+document.addEventListener("keydown",function(event){if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey)return;var target=event.target;if(target&&(target.isContentEditable||(typeof target.closest==="function"&&target.closest("input,textarea,select,button,summary,a"))))return;if(event.key==="ArrowRight"||event.key==="PageDown"){event.preventDefault();showSlide(current+1,true);}else if(event.key==="ArrowLeft"||event.key==="PageUp"){event.preventDefault();showSlide(current-1,true);}else if(event.key==="Home"){event.preventDefault();showSlide(0,true);}else if(event.key==="End"){event.preventDefault();showSlide(slides.length-1,true);}});
+var media=window.matchMedia("(max-width: 760px)");
+function navigationChange(){placeNavigation();}if(media.addEventListener){media.addEventListener("change",navigationChange);}else if(media.addListener){media.addListener(navigationChange);}
+var fullscreenBtn=document.getElementById("fullscreenBtn");
+var deckShell=document.getElementById("deckShell");
+function fullscreenLabel(){var active=document.fullscreenElement===deckShell;fullscreenBtn.textContent=active?"Exit full screen":"Full screen";fullscreenBtn.setAttribute("aria-pressed",active?"true":"false");fullscreenBtn.setAttribute("aria-label",active?"Exit full screen for lesson slides":"Enter full screen for lesson slides");}
+if(document.fullscreenEnabled===false||!deckShell.requestFullscreen){fullscreenBtn.hidden=true;}else{fullscreenBtn.addEventListener("click",function(){if(document.fullscreenElement===deckShell){if(document.exitFullscreen)document.exitFullscreen();}else if(deckShell.requestFullscreen){deckShell.requestFullscreen();}});document.addEventListener("fullscreenchange",fullscreenLabel);}
+restoreAnswers();restoreProgress();updateWordCount();updateSavedReview();placeNavigation();showSlide(Math.max(0,Math.min(slides.length-1,state.current)),false);fullscreenLabel();persist();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Annisa Day 24 - granular LRS via proxy (mirrors Day 23 deck)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    window.LRS.send({ verb: VERBS[vKey], object: { objectType:'Activity', id: objId, definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act4:1,act6:1,act7:1,act8:1,act9:1,act12:1,act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId] || sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('input.answer,select.answer-select,.mcq').forEach(function(item){
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('legend') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.id) name=item.id;
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_m'+secId]){ completed['_m'+secId]=true; sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers'); }
+        if(!completed[secId]){
+          completed[secId]=true;
+          if(Object.keys(completed).filter(function(k){return k.indexOf('_m')!==0;}).length>=15){ sendPrecise('experienced', LESSON_ID, document.title); }
+        }
+      }, 400);
+    });
+  });
+});
+</script>
+</body>
+</html>

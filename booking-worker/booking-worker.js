@@ -427,7 +427,14 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
-    if (where.includes('day23') || where.includes('annisa-day23') || where.includes('statement of purpose') || where.includes('this program will help')) {
+    if (where.includes('day24') || where.includes('annisa-day24') || where.includes('review writing') || where.includes('fair review') || where.includes('process data lab')) {
+    return 'REVIEW WRITING (200 to 300 words, target 250: Title, Experience, Good point plus evidence, Weak point plus effect, Balanced judgment, Recommendation to a named reader). '
+      + 'Required shape: title names the topic, first person experience (I took / I used / I audited), one good point with evidence, one real weak point with its effect, '
+      + 'However for the weak point, balanced judgment (useful but / strong value but), I recommend this to NAMED READER because for the recommendation. '
+      + 'Check: is the title specific? Is the experience first person with a real detail? Are both good and weak points supported with evidence or effect? '
+      + 'Is the weak point fair and real? Is the judgment balanced? Does the recommendation name a reader and give a reason? Is it 200 to 300 words?';
+  }
+  if (where.includes('day23') || where.includes('annisa-day23') || where.includes('statement of purpose') || where.includes('this program will help')) {
     return 'STATEMENT OF PURPOSE (about 110 words: Hook with one moment, Journey with past steps, Proof with 30 days Pertamina audit plus 90 students plus K3, '
       + 'Goals with I plan to plus will, Program with This program will help plus one program name). '
       + 'Required shape: hook first with one moment, journey in past tense, proof with numbers (30 days, 90+, K3), '
