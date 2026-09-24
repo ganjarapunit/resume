@@ -153,7 +153,7 @@ button.btn{width:100%;margin-right:0}
 <div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
 <div class="progress-wrap">
 <div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
-<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 </div>
 </div>
@@ -202,7 +202,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">A busy manager first asks:</p>
 <label><input type="radio" class="choice" name="g1" data-correct="false"> a) Show me every number in the chart.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="true"> b) So what does this mean for us.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g1" data-correct="false"> c) Which exact numbers are in each bar.</label></div>
 <button class="btn" data-check="act1">Check</button>
 <button class="btn ghost" data-complete="act1">Mark complete</button>
 <div class="feedback" id="fb-act1" aria-live="polite"></div>
@@ -234,7 +235,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Which group won?</p>
 <label><input type="radio" class="choice" name="g2" data-correct="true"> a) Group A, short daily, 83.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> b) Group B, long late, 70.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g2" data-correct="false"> c) Both groups scored the same.</label></div>
 <button class="btn" data-check="act2">Check</button>
 <button class="btn ghost" data-complete="act2">Mark complete</button>
 <div class="feedback" id="fb-act2" aria-live="polite"></div>
@@ -251,7 +253,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best overview?</p>
 <label><input type="radio" class="choice" name="g3" data-correct="true"> a) Overall, short daily sessions did clearly better.</label>
 <label><input type="radio" class="choice" name="g3" data-correct="false"> b) Group A scored 83 and Group B scored 70 in March with 60 staff.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g3" data-correct="false"> c) In March, 60 staff did the pilot, with 30 in each group.</label></div>
 <button class="btn" data-check="act3">Check</button>
 <button class="btn ghost" data-complete="act3">Mark complete</button>
 <div class="feedback" id="fb-act3" aria-live="polite"></div>
@@ -298,7 +301,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Which is meaning for the manager?</p>
 <label><input type="radio" class="choice" name="g6" data-correct="false"> a) Group A scored 83, Group B scored 70.</label>
 <label><input type="radio" class="choice" name="g6" data-correct="true"> b) Short daily training helps staff learn and stay fresh.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g6" data-correct="false"> c) Group A trained in the morning and Group B at night.</label></div>
 <button class="btn" data-check="act6">Check</button>
 <button class="btn ghost" data-complete="act6">Mark complete</button>
 <div class="feedback" id="fb-act6" aria-live="polite"></div>
@@ -327,15 +331,16 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g8">
 <p class="stem">Which line is best?</p>
-<label><input type="radio" class="choice" name="g8" data-correct="false"> a) This proves all training must change now.</label>
 <label><input type="radio" class="choice" name="g8" data-correct="true"> b) This suggests short daily works better, 83 vs 70.</label>
+<label><input type="radio" class="choice" name="g8" data-correct="false"> a) This proves all training must change now.</label>
 <label><input type="radio" class="choice" name="g8" data-correct="false"> c) Short daily always wins everywhere.</label>
 </div>
 <div class="mcq" data-group="g8b">
 <p class="stem">Which ending is careful?</p>
-<label><input type="radio" class="choice" name="g8b" data-correct="true"> a) Short daily may help staff learn.</label>
 <label><input type="radio" class="choice" name="g8b" data-correct="false"> b) Short daily will fix all work problems.</label>
-</div>
+<label><input type="radio" class="choice" name="g8b" data-correct="true"> a) Short daily may help staff learn.</label>
+
+<label><input type="radio" class="choice" name="g8b" data-correct="false"> c) Short daily always wins everywhere.</label></div>
 <button class="btn" data-check="act8">Check</button>
 <button class="btn ghost" data-complete="act8">Mark complete</button>
 <div class="feedback" id="fb-act8" aria-live="polite"></div>
@@ -353,7 +358,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best line for a manager?</p>
 <label><input type="radio" class="choice" name="g9" data-correct="true"> a) We could keep short daily sessions for the next team.</label>
 <label><input type="radio" class="choice" name="g9" data-correct="false"> b) Gonna keep stuff, a lot better.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g9" data-correct="false"> c) We might keep the long late sessions.</label></div>
 <button class="btn" data-check="act9">Check</button>
 <button class="btn ghost" data-complete="act9">Mark complete</button>
 <div class="feedback" id="fb-act9" aria-live="polite"></div>

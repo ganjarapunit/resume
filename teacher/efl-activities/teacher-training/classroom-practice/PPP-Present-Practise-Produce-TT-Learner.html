@@ -195,7 +195,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 </head>
 <body>
 <a class="skip" href="#deck">Skip to slides</a>
-<p style="max-width:1100px;margin:0 auto;padding:14px 20px 0;font-size:15px;font-weight:700"><a href="../../#teacher-training">&larr; Back to Teacher Training</a></p>
+<header class="site-head"><p style="max-width:1100px;margin:0 auto;padding:14px 20px 0;font-size:15px;font-weight:700"><a href="../../#teacher-training">&larr; Back to Teacher Training</a></p>
 <div class="topbar">
 <div class="brand">
 <span class="badge">CELTA Input</span>
@@ -207,6 +207,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <div class="progress" aria-hidden="true"><div id="bar"></div></div>
 <div class="meta"><span id="slideno" aria-live="polite">Slide 1 of 17</span><span>Use Left and Right keys. Press Full screen to project.</span></div>
 </div>
+</header>
 
 <main id="stage">
 <!-- Fullscreen target starts here -->
@@ -544,6 +545,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 </main>
 
 <!-- Toolbar is OUTSIDE #deck. This keeps Next and Back outside fullscreen, as requested. -->
+<aside class="deck-controls-region" aria-label="Slide controls and help">
 <div id="toolbar" role="toolbar" aria-label="Slide controls">
 <div class="navgroup">
 <button id="prevBtn" type="button" aria-label="Previous slide">Back</button>
@@ -556,6 +558,7 @@ kbd{background:#000;border:1px solid var(--line);border-bottom-width:3px;border-
 <div class="help">
 <p><strong>How to use:</strong> Click Next and Back, or use <kbd>Left</kbd> <kbd>Right</kbd> <kbd>Home</kbd> <kbd>End</kbd>. Full screen shows slides only. Controls stay outside fullscreen. In fullscreen use keys, press <kbd>Esc</kbd> to exit. Design: high contrast, one idea per slide, large text, keyboard access. Mayer principles used: segmenting, signaling, coherence, redundancy.</p>
 </div>
+</aside>
 
 <script>
 (function(){

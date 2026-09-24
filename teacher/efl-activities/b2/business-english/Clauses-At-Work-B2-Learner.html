@@ -90,13 +90,14 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <body>
 <div id="app">
 <a class="skip" href="#slide-view">Skip to slide</a>
-<div class="hud" role="region" aria-label="Progress">
+<header class="hud" aria-label="Progress">
 <span><strong>XP:</strong> <span id="xp">0</span></span>
 <span><strong>Streak:</strong> <span id="streak">0</span></span>
 <span><strong>Done:</strong> <span id="done">0</span>/15</span>
 <span class="bar" aria-hidden="true"><span class="fill" id="fill"></span></span>
 <button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
-</div>
+</header>
+<main id="lessonMain">
 <div class="toolbar">
 <span id="counter" aria-hidden="true"><strong>Slide 1 of 17</strong></span>
 <label for="jump">Go to slide:</label>
@@ -148,15 +149,18 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <section class="slide activity" id="act2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 17: Activity 2" hidden>
 <h2 tabindex="-1">Activity 2. Which sounds better at work?</h2>
 <p class="meta">Choose a or b.</p>
-<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Meeting at 10. Be there. b) When the meeting starts at 10, please be there.</p>
+<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Meeting at 10. Be there. b) When the meeting starts at 10, please be there. c) When the meeting starts at 10, but please be there.</p>
 <label class="row"><input type="radio" class="choice" name="g2a" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the file. You sent yesterday. b) I need the file that you sent yesterday.</p>
+<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2a"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the file. You sent yesterday. b) I need the file that you sent yesterday. c) I need the file you sent yesterday.</p>
 <label class="row"><input type="radio" class="choice" name="g2b" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the key? Tell me. b) Can you tell me where the key is?</p>
+<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2b"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the key? Tell me. b) Can you tell me where the key is? c) Can you tell me what the key is?</p>
 <label class="row"><input type="radio" class="choice" name="g2c" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2c"> c</label></div></div>
 <p><button class="btn" data-check="act2">Check</button> <button class="btn ghost" data-complete="act2">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><ol><li>b, when clause gives time.</li><li>b, that points to the right file.</li><li>b, polite noun clause.</li></ol></details>
 </section>
@@ -208,19 +212,24 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 4. Adverbial: choose the right ending <span class="tag adv">A</span></h2>
 <div class="q"><div class="mcq" data-group="g4_1"><p><b>1.</b> I left early because ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_1" data-correct="true"> my son was sick</label>
-<label class="row"><input type="radio" class="choice" name="g4_1"> you arrive at the office</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_1"> you arrive at the office</label>
+<label class="row"><input type="radio" class="choice" name="g4_1"> there were no mistakes</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_2"><p><b>2.</b> Call me when ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_2" data-correct="true"> you arrive at the office</label>
-<label class="row"><input type="radio" class="choice" name="g4_2"> there were no mistakes</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_2"> there were no mistakes</label>
+<label class="row"><input type="radio" class="choice" name="g4_2"> my son was sick</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_3"><p><b>3.</b> If the customer waits, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_3" data-correct="true"> offer water and a chair</label>
-<label class="row"><input type="radio" class="choice" name="g4_3"> my son was sick</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_3"> my son was sick</label>
+<label class="row"><input type="radio" class="choice" name="g4_3"> we finished with a smile</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_4"><p><b>4.</b> Although the day was long, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_4" data-correct="true"> we finished with a smile</label>
-<label class="row"><input type="radio" class="choice" name="g4_4"> offer water and a chair</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_4"> offer water and a chair</label>
+<label class="row"><input type="radio" class="choice" name="g4_4"> my son was sick</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_5"><p><b>5.</b> We checked twice so that ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_5" data-correct="true"> there were no mistakes</label>
-<label class="row"><input type="radio" class="choice" name="g4_5"> we finished with a smile</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_5"> we finished with a smile</label>
+<label class="row"><input type="radio" class="choice" name="g4_5"> offer water and a chair</label></div></div>
 <p><button class="btn" data-check="act4">Check</button> <button class="btn ghost" data-complete="act4">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>1 my son was sick. 2 you arrive at the office. 3 offer water and a chair. 4 we finished with a smile. 5 there were no mistakes.</p></details>
 </section>
@@ -315,21 +324,27 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 11. Fix the chat: choose the right line</h2>
 <div class="q"><div class="mcq" data-group="g11_1"><p><b>1.</b> Although it was busy, but we helped all clients.</p>
 <label class="row"><input type="radio" class="choice" name="g11_1" data-correct="true"> Although it was busy, we helped all clients.</label>
-<label class="row"><input type="radio" class="choice" name="g11_1"> Although it was busy, but we helped all clients.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although it was busy, but we helped all clients.</label>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although it was busy, so we helped all clients.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_2"><p><b>2.</b> The driver which brought the boxes is waiting.</p>
 <label class="row"><input type="radio" class="choice" name="g11_2" data-correct="true"> The driver who brought the boxes is waiting.</label>
-<label class="row"><input type="radio" class="choice" name="g11_2"> The driver which brought the boxes is waiting.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The driver which brought the boxes is waiting.</label>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The driver who's brought the boxes is waiting.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_3"><p><b>3.</b> Do you know where is the new rota?</p>
 <label class="row"><input type="radio" class="choice" name="g11_3" data-correct="true"> Do you know where the new rota is?</label>
-<label class="row"><input type="radio" class="choice" name="g11_3"> Do you know where is the new rota?</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Do you know where is the new rota?</label>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Do you know what the new rota is?</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_4"><p><b>4.</b> The room where we eat it is small.</p>
 <label class="row"><input type="radio" class="choice" name="g11_4" data-correct="true"> The room where we eat is small.</label>
-<label class="row"><input type="radio" class="choice" name="g11_4"> The room where we eat it is small.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The room where we eat it is small.</label>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The room which we eat is small.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_5"><p><b>5.</b> She said me that she will be late.</p>
 <label class="row"><input type="radio" class="choice" name="g11_5" data-correct="true"> She told me that she will be late.</label>
-<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that she will be late.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that she will be late.</label>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said that me she will be late.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_6"><p><b>6.</b> If you will see Lan, tell her I called.</p>
 <label class="row"><input type="radio" class="choice" name="g11_6" data-correct="true"> If you see Lan, tell her I called.</label>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If you will see Lan, tell her I called.</label>
 <label class="row"><input type="radio" class="choice" name="g11_6"> If you will see Lan, tell her I called.</label></div></div>
 <p><button class="btn" data-check="act11">Check</button> <button class="btn ghost" data-complete="act11">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options are right. 1: no but with although. 2: who for people. 3: statement order. 4: drop extra it. 5: told me, not said me. 6: if plus present.</p></details>
@@ -339,16 +354,20 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 12. Meetings: choose the natural reply</h2>
 <div class="q"><div class="mcq" data-group="g12_1"><p><b>1.</b> Boss: The file is late.</p>
 <label class="row"><input type="radio" class="choice" name="g12_1" data-correct="true"> I know that the net was down. I will send it now.</label>
-<label class="row"><input type="radio" class="choice" name="g12_1"> I know.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I know.</label>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I know. I send it now.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_2"><p><b>2.</b> Client: Where is my order?</p>
 <label class="row"><input type="radio" class="choice" name="g12_2" data-correct="true"> Can you tell me your name so that I can check?</label>
-<label class="row"><input type="radio" class="choice" name="g12_2"> What is your name? Tell me.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_2"> What is your name? Tell me.</label>
+<label class="row"><input type="radio" class="choice" name="g12_2"> Name? Tell me.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_3"><p><b>3.</b> You need help.</p>
 <label class="row"><input type="radio" class="choice" name="g12_3" data-correct="true"> The task which you gave me is hard. Can you show me?</label>
+<label class="row"><input type="radio" class="choice" name="g12_3"> Task hard. Help.</label>
 <label class="row"><input type="radio" class="choice" name="g12_3"> Task hard. Help.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_4"><p><b>4.</b> Plan change.</p>
 <label class="row"><input type="radio" class="choice" name="g12_4" data-correct="true"> If we start at 9, we can finish by 12.</label>
-<label class="row"><input type="radio" class="choice" name="g12_4"> If we will start at 9, we finish.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_4"> If we will start at 9, we finish.</label>
+<label class="row"><input type="radio" class="choice" name="g12_4"> If we will start at 9, we can finish by 12.</label></div></div>
 <p><button class="btn" data-check="act12">Check</button> <button class="btn ghost" data-complete="act12">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options. They are fuller, politer, and use the clause correctly.</p></details>
 </section>
@@ -401,6 +420,7 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 </div>
 <button class="nav-side" id="nextSide" aria-label="Go to next slide">Next</button>
 </div>
+</main>
 <footer><p>Student deck, B1. Same 15 activities as the teacher pack. Tip: say each checked sentence aloud once.</p></footer>
 </div>
 <canvas id="conf" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;display:none"></canvas>

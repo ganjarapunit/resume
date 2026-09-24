@@ -136,19 +136,21 @@
   // ---- Name/email gate ----
   function injectStyle() {
     var css = '#lrs-gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;' +
-      'background:rgba(5,12,24,.82);padding:20px;font-family:system-ui,"Segoe UI",Arial,sans-serif}' +
-      '#lrs-gate .card{max-width:380px;width:100%;background:#fff;color:#07142b;border-radius:14px;padding:24px;' +
-      'box-shadow:0 10px 40px rgba(0,0,0,.35)}' +
-      '#lrs-gate h2{margin:0 0 6px;font-size:1.2rem}' +
-      '#lrs-gate p.sub{margin:0 0 14px;font-size:.92rem;color:#3a4a63;line-height:1.45}' +
-      '#lrs-gate label{display:block;font-weight:600;font-size:.85rem;margin:12px 0 4px}' +
-      '#lrs-gate .opt{font-weight:400;color:#3a4a63}' +
-      '#lrs-gate input{width:100%;padding:10px 12px;border:2px solid #c3d0e3;border-radius:8px;font-size:1rem;box-sizing:border-box}' +
+      'background:rgba(5,12,24,.92);padding:20px;font-family:system-ui,"Segoe UI",Arial,sans-serif}' +
+      '#lrs-gate .card{max-width:380px;width:100%;background:#ffffff;color:#0b1b33;border-radius:14px;padding:24px;' +
+      'box-shadow:0 10px 40px rgba(0,0,0,.35);font-size:16px;line-height:1.5}' +
+      '#lrs-gate h2{margin:0 0 6px;font-size:1.25rem;color:#0b1b33;font-weight:800}' +
+      '#lrs-gate p.sub{margin:0 0 14px;font-size:.95rem;color:#33475f;line-height:1.5}' +
+      '#lrs-gate label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 4px;color:#0b1b33}' +
+      '#lrs-gate .opt{font-weight:400;color:#33475f}' +
+      '#lrs-gate input{width:100%;padding:10px 12px;border:2px solid #64748b;border-radius:8px;font-size:1rem;' +
+      'box-sizing:border-box;background:#ffffff;color:#0b1b33;min-height:44px}' +
       '#lrs-gate input:focus-visible{outline:3px solid #0b3d91;outline-offset:1px;border-color:#0b3d91}' +
       '#lrs-gate button{margin-top:18px;width:100%;padding:11px 14px;border:0;border-radius:8px;background:#0b3d91;' +
-      'color:#fff;font-weight:700;font-size:1rem;cursor:pointer}' +
+      'color:#ffffff;font-weight:700;font-size:1rem;cursor:pointer;min-height:44px}' +
       '#lrs-gate button:hover{background:#072c69}' +
-      '#lrs-gate .err{color:#b00020;font-size:.85rem;margin:8px 0 0;font-weight:600}';
+      '#lrs-gate .err{color:#9a0015;font-size:.88rem;margin:8px 0 0;font-weight:600}' +
+      '#lrs-gate *,#lrs-gate *::before,#lrs-gate *::after{box-sizing:border-box}';
     var s = document.createElement('style');
     s.textContent = css;
     document.head.appendChild(s);
@@ -167,11 +169,11 @@
         '<p class="sub">Enter your name so your teacher knows who accessed this lesson. Email is optional.</p>' +
         '<form id="lrs-gate-form" novalidate>' +
           '<label for="lrs-name">Your name <span aria-hidden="true">*</span></label>' +
-          '<input id="lrs-name" name="name" autocomplete="name" required>' +
+          '<input id="lrs-name" name="name" autocomplete="name" required aria-describedby="lrs-gate-err">' +
           '<label for="lrs-email">Your email <span class="opt">(optional)</span></label>' +
-          '<input id="lrs-email" name="email" type="email" autocomplete="email">' +
+          '<input id="lrs-email" name="email" type="email" autocomplete="email" inputmode="email">' +
           '<button type="submit">Start lesson</button>' +
-          '<p class="err" id="lrs-gate-err" hidden>Please enter your name.</p>' +
+          '<p class="err" id="lrs-gate-err" role="alert" hidden>Please enter your name.</p>' +
         '</form>' +
       '</div>';
     document.body.appendChild(gate);
@@ -181,11 +183,27 @@
     var emailEl = gate.querySelector('#lrs-email');
     var errEl = gate.querySelector('#lrs-gate-err');
     nameEl.focus();
+    nameEl.addEventListener('input', function () {
+      if (nameEl.value.trim()) { errEl.hidden = true; nameEl.removeAttribute('aria-invalid'); }
+    });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = nameEl.value.trim();
       var email = emailEl.value.trim();
-      if (!name) { errEl.hidden = false; nameEl.focus(); return; }
+      if (!name) {
+        errEl.hidden = false;
+        nameEl.setAttribute('aria-invalid', 'true');
+        nameEl.focus();
+        return;
+      }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.hidden = false;
+        errEl.textContent = 'Please enter a valid email address, or leave it blank.';
+        emailEl.setAttribute('aria-invalid', 'true');
+        emailEl.focus();
+        return;
+      }
+      errEl.textContent = 'Please enter your name.';
       try { localStorage.setItem(LS_LEARNER, JSON.stringify({ name: name, email: email })); } catch (e2) {}
       gate.parentNode.removeChild(gate);
       document.body.style.overflow = '';

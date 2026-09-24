@@ -163,13 +163,14 @@ button.btn{min-height:48px}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to lesson content</a>
 <div class="top-mini" role="banner" aria-label="Lesson title">
   <span class="lesson-id">Lesson 18 - B1+ to B2 - 40 min</span>
   <h1>Objections: Competitor Is Cheaper</h1>
   <div class="mini-progress" aria-hidden="true"><i id="progressBar"></i></div>
   <span id="progressText" style="font-size:.7rem;font-weight:800;color:var(--muted);white-space:nowrap">0%</span>
 </div>
+<header class="deck-head">
+<a class="skip" href="#lessonMain">Skip to lesson content</a>
 <div id="deckToolbar" role="toolbar" aria-label="Slide deck controls">
   <div class="tb-group">
     <button class="btn secondary" id="deckToggle" type="button" aria-pressed="true">Show all</button>
@@ -181,11 +182,13 @@ button.btn{min-height:48px}
   </div>
   <p id="deckKeysHint">Tip: use Back and Next, arrow keys, or dots. Full screen keeps slides large. On wide screens Back and Next sit outside the slide. On small screens they sit below the slide, never over the content.</p>
 </div>
+</header>
+<main id="lessonMain">
 <div id="deckOuter">
   <button id="prevOuter" class="deckNavOuter" type="button" aria-label="Previous slide">&#8592;<span aria-hidden="true"> Back</span></button>
   <div id="deckStage" aria-roledescription="slide deck" aria-label="Lesson 18 slide deck. Use Next and Back to move.">
     <div id="fsBar"><span id="fsCounter">Slide 1 of 21</span><span>Press Esc to exit. Arrow keys move slides.</span><button class="btn secondary" id="fsExit" type="button">Exit full screen</button></div>
-<main id="main">
+<div id="deckContent" role="region" aria-label="Lesson activities">
   <nav class="card toc" id="toc" aria-label="Lesson overview">
     <h2>20 activities - tap to jump (40 min)</h2>
     <div class="toc-grid" id="tocGrid"></div>
@@ -580,6 +583,7 @@ button.btn{min-height:48px}
     <div style="color:var(--okfg);font-weight:800">You finished all 20 activities – great work!</div>
     <div style="margin-top:6px;color:var(--muted2)">Review your 5 phrases and speak them once more before the next lesson. Progress is saved automatically.</div>
   </footer>
+</div>
 </main>
     <div id="deckInnerNav" aria-label="Slide navigation inside slide area">
       <button class="btn secondary" id="prevInner" type="button" aria-label="Previous slide">&#8592; Back</button>

@@ -80,13 +80,14 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <body>
 <div id="app">
 <a class="skip" href="#slide-view">Skip to slide</a>
-<div class="hud" role="region" aria-label="Progress">
+<header class="hud" aria-label="Progress">
 <span><strong>XP:</strong> <span id="xp">0</span></span>
 <span><strong>Streak:</strong> <span id="streak">0</span></span>
 <span><strong>Done:</strong> <span id="done">0</span>/15</span>
 <span class="bar" aria-hidden="true"><span class="fill" id="fill"></span></span>
 <button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
-</div>
+</header>
+<main id="lessonMain">
 <div class="toolbar">
 <span id="counter" aria-hidden="true"><strong>Slide 1 of 17</strong></span>
 <label for="jump">Go to slide:</label>
@@ -138,15 +139,18 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <section class="slide" id="act2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 17: Activity 2" hidden>
 <h2 tabindex="-1">Activity 2. Which sounds better on a trip?</h2>
 <p class="meta">Choose a or b.</p>
-<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Flight late. Wait here. b) As soon as the gate opens, please go straight there.</p>
+<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Flight late. Wait here. b) As soon as the gate opens, please go straight there. c) As soon as the gate opens, but please go straight there.</p>
 <label class="row"><input type="radio" class="choice" name="g2a" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I want the hotel. It has a pool. b) I want a hotel that has a pool and is near the metro.</p>
+<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2a"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I want the hotel. It has a pool. b) I want a hotel that has a pool and is near the metro. c) I want a hotel has a pool and is near the metro.</p>
 <label class="row"><input type="radio" class="choice" name="g2b" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is passport control? Tell me. b) Could you tell me where passport control is?</p>
+<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2b"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is passport control? Tell me. b) Could you tell me where passport control is? c) Could you tell me what passport control is?</p>
 <label class="row"><input type="radio" class="choice" name="g2c" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2c"> c</label></div></div>
 <p><button class="btn" data-check="act2">Check</button> <button class="btn ghost" data-complete="act2">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><ol><li>b, as soon as gives exact timing.</li><li>b, that picks the right hotel.</li><li>b, polished noun clause.</li></ol></details>
 </section>
@@ -198,19 +202,24 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 4. Adverbial: choose the right ending <span class="tag adv">A</span></h2>
 <div class="q"><div class="mcq" data-group="g4_1"><p><b>1.</b> Even though the queue was huge, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_1" data-correct="true"> staff stayed calm and friendly</label>
-<label class="row"><input type="radio" class="choice" name="g4_1"> your phone loses signal</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_1"> your phone loses signal</label>
+<label class="row"><input type="radio" class="choice" name="g4_1"> you need to check the gate number twice</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_2"><p><b>2.</b> Take a screenshot of the booking in case ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_2" data-correct="true"> your phone loses signal</label>
-<label class="row"><input type="radio" class="choice" name="g4_2"> staff stayed calm and friendly</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_2"> staff stayed calm and friendly</label>
+<label class="row"><input type="radio" class="choice" name="g4_2"> the gate number changes twice</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_3"><p><b>3.</b> Unless you check in online, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_3" data-correct="true"> you may wait an hour at the desk</label>
+<label class="row"><input type="radio" class="choice" name="g4_3"> the high speed one cost twice as much</label>
 <label class="row"><input type="radio" class="choice" name="g4_3"> the high speed one cost twice as much</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_4"><p><b>4.</b> The night train was cheap, whereas ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_4" data-correct="true"> the high speed one cost twice as much</label>
+<label class="row"><input type="radio" class="choice" name="g4_4"> you may wait an hour at the desk</label>
 <label class="row"><input type="radio" class="choice" name="g4_4"> you may wait an hour at the desk</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_5"><p><b>5.</b> Call the hotel as soon as ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_5" data-correct="true"> you land so they hold the room</label>
-<label class="row"><input type="radio" class="choice" name="g4_5"> the high speed one cost twice as much</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_5"> the high speed one cost twice as much</label>
+<label class="row"><input type="radio" class="choice" name="g4_5"> the room is full tonight</label></div></div>
 <p><button class="btn" data-check="act4">Check</button> <button class="btn ghost" data-complete="act4">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>1 staff stayed calm and friendly. 2 your phone loses signal. 3 you may wait an hour at the desk. 4 the high speed one cost twice as much. 5 you land so they hold the room.</p></details>
 </section>
@@ -265,19 +274,24 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 9. doubt, explain, decide <span class="tag noun">C</span></h2>
 <div class="q"><div class="mcq" data-group="g9_1"><p><b>1.</b> I doubt ___ the last ferry still runs.</p>
 <label class="row"><input type="radio" class="choice" name="g9_1" data-correct="true"> whether</label>
-<label class="row"><input type="radio" class="choice" name="g9_1"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_1"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_1"> how</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_2"><p><b>2.</b> She explained ___ we had to rebook.</p>
 <label class="row"><input type="radio" class="choice" name="g9_2" data-correct="true"> why</label>
-<label class="row"><input type="radio" class="choice" name="g9_2"> what</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_2"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_2"> that</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_3"><p><b>3.</b> I cannot decide ___ to take the night bus or wait.</p>
 <label class="row"><input type="radio" class="choice" name="g9_3" data-correct="true"> whether</label>
-<label class="row"><input type="radio" class="choice" name="g9_3"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_3"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_3"> what</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_4"><p><b>4.</b> He claims ___ the view from that hostel is the best in town.</p>
 <label class="row"><input type="radio" class="choice" name="g9_4" data-correct="true"> that</label>
-<label class="row"><input type="radio" class="choice" name="g9_4"> whether</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_4"> whether</label>
+<label class="row"><input type="radio" class="choice" name="g9_4"> how</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_5"><p><b>5.</b> Nobody told us ___ the taxi would cost.</p>
 <label class="row"><input type="radio" class="choice" name="g9_5" data-correct="true"> how much</label>
-<label class="row"><input type="radio" class="choice" name="g9_5"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_5"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_5"> whether</label></div></div>
 <p><button class="btn" data-check="act9">Check</button> <button class="btn ghost" data-complete="act9">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>1 whether. 2 why. 3 whether. 4 that. 5 how much.</p></details>
 </section>
@@ -299,22 +313,28 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 11. Fix the chat: choose the right line</h2>
 <div class="q"><div class="mcq" data-group="g11_1"><p><b>1.</b> Even though it was crowded, but the staff were kind.</p>
 <label class="row"><input type="radio" class="choice" name="g11_1" data-correct="true"> Even though it was crowded, the staff were kind.</label>
-<label class="row"><input type="radio" class="choice" name="g11_1"> Even though it was crowded, but the staff were kind.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Even though it was crowded, but the staff were kind.</label>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Even though it was crowded, so the staff were kind.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_2"><p><b>2.</b> The woman who's bag was lost stayed calm.</p>
 <label class="row"><input type="radio" class="choice" name="g11_2" data-correct="true"> The woman whose bag was lost stayed calm.</label>
-<label class="row"><input type="radio" class="choice" name="g11_2"> The woman who's bag was lost stayed calm.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The woman who's bag was lost stayed calm.</label>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The woman which bag was lost stayed calm.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_3"><p><b>3.</b> Could you tell me where is the taxi rank?</p>
 <label class="row"><input type="radio" class="choice" name="g11_3" data-correct="true"> Could you tell me where the taxi rank is?</label>
-<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me where is the taxi rank?</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me where is the taxi rank?</label>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me what the taxi rank is?</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_4"><p><b>4.</b> The hotel where we stayed there had a rooftop pool.</p>
 <label class="row"><input type="radio" class="choice" name="g11_4" data-correct="true"> The hotel where we stayed had a rooftop pool.</label>
-<label class="row"><input type="radio" class="choice" name="g11_4"> The hotel where we stayed there had a rooftop pool.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The hotel where we stayed there had a rooftop pool.</label>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The hotel which we stayed had a rooftop pool.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_5"><p><b>5.</b> He said me that the tour was full.</p>
 <label class="row"><input type="radio" class="choice" name="g11_5" data-correct="true"> He told me that the tour was full.</label>
-<label class="row"><input type="radio" class="choice" name="g11_5"> He said me that the tour was full.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_5"> He said me that the tour was full.</label>
+<label class="row"><input type="radio" class="choice" name="g11_5"> He said that me the tour was full.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_6"><p><b>6.</b> If the fog will not lift, we miss our connection.</p>
 <label class="row"><input type="radio" class="choice" name="g11_6" data-correct="true"> If the fog does not lift, we will miss our connection.</label>
-<label class="row"><input type="radio" class="choice" name="g11_6"> If the fog will not lift, we miss our connection.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If the fog will not lift, we miss our connection.</label>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If the fog will not lift, we will miss our connection.</label></div></div>
 <p><button class="btn" data-check="act11">Check</button> <button class="btn ghost" data-complete="act11">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options are right. 1: no but with even though. 2: whose for owning. 3: statement order. 4: drop extra there. 5: told me, not said me. 6: if plus present, will in the main clause.</p></details>
 </section>
@@ -323,16 +343,20 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 12. Travel desk: choose the natural reply</h2>
 <div class="q"><div class="mcq" data-group="g12_1"><p><b>1.</b> Guest: Our room is noisy.</p>
 <label class="row"><input type="radio" class="choice" name="g12_1" data-correct="true"> I understand that the street is loud. I will move you upstairs.</label>
-<label class="row"><input type="radio" class="choice" name="g12_1"> I understand.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I understand.</label>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I know. I move you upstairs.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_2"><p><b>2.</b> Traveller: Where is my bus?</p>
 <label class="row"><input type="radio" class="choice" name="g12_2" data-correct="true"> Can you show me your ticket so that I can check the stand?</label>
-<label class="row"><input type="radio" class="choice" name="g12_2"> Ticket? Show me.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_2"> Ticket? Show me.</label>
+<label class="row"><input type="radio" class="choice" name="g12_2"> Where bus? Show ticket.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_3"><p><b>3.</b> You need help with a map.</p>
 <label class="row"><input type="radio" class="choice" name="g12_3" data-correct="true"> The map which you gave me is out of date. Could you mark the route?</label>
-<label class="row"><input type="radio" class="choice" name="g12_3"> Map old. Help.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_3"> Map old. Help.</label>
+<label class="row"><input type="radio" class="choice" name="g12_3"> This map is old. Mark it.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_4"><p><b>4.</b> Plan for the ferry.</p>
 <label class="row"><input type="radio" class="choice" name="g12_4" data-correct="true"> Unless we leave by eight, we will miss the ferry.</label>
-<label class="row"><input type="radio" class="choice" name="g12_4"> Unless we will leave by eight, we miss.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_4"> Unless we will leave by eight, we miss.</label>
+<label class="row"><input type="radio" class="choice" name="g12_4"> Unless we leave eight, we miss the ferry.</label></div></div>
 <p><button class="btn" data-check="act12">Check</button> <button class="btn ghost" data-complete="act12">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options. They are fuller, politer, and use the clause correctly.</p></details>
 </section>
@@ -386,6 +410,7 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 </div>
 <button class="nav-side" id="nextSide" aria-label="Go to next slide">Next</button>
 </div>
+</main>
 <footer><p>Travel deck, B2. 15 activities. Tip: say each checked sentence aloud once.</p><p><a href="../../index.html#b2-communicative" style="color:var(--accent)">All B2 Communicative lessons</a></p></footer>
 </div>
 <canvas id="conf" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;display:none"></canvas>

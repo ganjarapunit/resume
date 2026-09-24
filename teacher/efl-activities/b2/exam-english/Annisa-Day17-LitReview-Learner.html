@@ -148,7 +148,7 @@ button.btn{width:100%;margin-right:0}
 <div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
 <div class="progress-wrap">
 <div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
-<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 </div>
 </div>
@@ -198,7 +198,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">A good small review is:</p>
 <label><input type="radio" class="choice" name="g1" data-correct="false"> a) Lee says X. Smith says Y. No link.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="true"> b) Theme first, then Lee plus Smith under it, then Together.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g1" data-correct="false"> c) A topic sentence that repeats the section title.</label></div>
 <button class="btn" data-check="act1">Check</button>
 <button class="btn ghost" data-complete="act1">Mark complete</button>
 <div class="feedback" id="fb-act1" aria-live="polite"></div>
@@ -220,7 +221,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">What is the theme?</p>
 <label><input type="radio" class="choice" name="g2" data-correct="true"> a) Habit strength.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> b) Weather.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g2" data-correct="false"> c) A quotation from Lee (2023).</label></div>
 <button class="btn" data-check="act2">Check</button>
 <button class="btn ghost" data-complete="act2">Mark complete</button>
 <div class="feedback" id="fb-act2" aria-live="polite"></div>
@@ -237,7 +239,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Which start is good?</p>
 <label><input type="radio" class="choice" name="g3" data-correct="true"> a) One clear theme in homework research is habits.</label>
 <label><input type="radio" class="choice" name="g3" data-correct="false"> b) Lee studied 60 students for two weeks.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g3" data-correct="false"> c) A contrast marked by however.</label></div>
 <button class="btn" data-check="act3">Check</button>
 <button class="btn ghost" data-complete="act3">Mark complete</button>
 <div class="feedback" id="fb-act3" aria-live="polite"></div>
@@ -253,14 +256,16 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g4">
 <p class="stem">My theme is habits. Best frame:</p>
-<label><input type="radio" class="choice" name="g4" data-correct="true"> a) One clear theme in homework research is habits.</label>
 <label><input type="radio" class="choice" name="g4" data-correct="false"> b) Lee and Smith are good writers.</label>
-</div>
+<label><input type="radio" class="choice" name="g4" data-correct="true"> a) One clear theme in homework research is habits.</label>
+
+<label><input type="radio" class="choice" name="g4" data-correct="false"> c) A second opinion, with no link.</label></div>
 <div class="mcq" data-group="g4b">
 <p class="stem">My theme is focus. Best frame:</p>
-<label><input type="radio" class="choice" name="g4b" data-correct="true"> a) One clear theme in homework research is focus.</label>
 <label><input type="radio" class="choice" name="g4b" data-correct="false"> b) I like focus very much.</label>
-</div>
+<label><input type="radio" class="choice" name="g4b" data-correct="true"> a) One clear theme in homework research is focus.</label>
+
+<label><input type="radio" class="choice" name="g4b" data-correct="false"> c) Focus matters very much to me.</label></div>
 <button class="btn" data-check="act4">Check</button>
 <button class="btn ghost" data-complete="act4">Mark complete</button>
 <div class="feedback" id="fb-act4" aria-live="polite"></div>
@@ -338,18 +343,18 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g9a">
 <p class="stem">1. Lee ___ that tasks help. The paper still says it now.</p>
-<label><input type="radio" class="choice" name="g9a" data-correct="true"> finds (present)</label>
 <label><input type="radio" class="choice" name="g9a" data-correct="false"> found only yesterday</label>
+<label><input type="radio" class="choice" name="g9a" data-correct="true"> finds (present)</label>
 </div>
 <div class="mcq" data-group="g9b">
 <p class="stem">2. Sixty students ___ for two weeks. It happened before.</p>
-<label><input type="radio" class="choice" name="g9b" data-correct="false"> study</label>
 <label><input type="radio" class="choice" name="g9b" data-correct="true"> studied</label>
+<label><input type="radio" class="choice" name="g9b" data-correct="false"> study</label>
 </div>
 <div class="mcq" data-group="g9c">
 <p class="stem">3. Smith ___ that late work harms focus. The paper still says it now.</p>
-<label><input type="radio" class="choice" name="g9c" data-correct="true"> adds (present)</label>
 <label><input type="radio" class="choice" name="g9c" data-correct="false"> added only yesterday</label>
+<label><input type="radio" class="choice" name="g9c" data-correct="true"> adds (present)</label>
 </div>
 <button class="btn" data-check="act9">Check</button>
 <button class="btn ghost" data-complete="act9">Mark complete</button>

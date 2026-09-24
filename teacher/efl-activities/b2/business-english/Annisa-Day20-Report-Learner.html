@@ -148,7 +148,7 @@ button.btn{width:100%;margin-right:0}
 <div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
 <div class="progress-wrap">
 <div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
-<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 </div>
 </div>
@@ -197,7 +197,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">A manager scans a report first by:</p>
 <label><input type="radio" class="choice" name="g1" data-correct="false"> a) A long story from start to end.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="true"> b) Headings plus summary.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g1" data-correct="false"> c) A long story from start to end, with no headings.</label></div>
 <button class="btn" data-check="act1">Check</button>
 <button class="btn ghost" data-complete="act1">Mark complete</button>
 <div class="feedback" id="fb-act1" aria-live="polite"></div>
@@ -221,7 +222,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Where are the numbers?</p>
 <label><input type="radio" class="choice" name="g2" data-correct="true"> a) In findings.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> b) In summary.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g2" data-correct="false"> c) In the title.</label></div>
 <button class="btn" data-check="act2">Check</button>
 <button class="btn ghost" data-complete="act2">Mark complete</button>
 <div class="feedback" id="fb-act2" aria-live="polite"></div>
@@ -238,7 +240,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best summary?</p>
 <label><input type="radio" class="choice" name="g3" data-correct="true"> a) Overall, short daily sessions did clearly better in our pilot.</label>
 <label><input type="radio" class="choice" name="g3" data-correct="false"> b) Group A scored 83, Group B scored 70, gap 13, March, 60 staff.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g3" data-correct="false"> c) Overall, Group A scored 83 and Group B scored 70 in the pilot.</label></div>
 <button class="btn" data-check="act3">Check</button>
 <button class="btn ghost" data-complete="act3">Mark complete</button>
 <div class="feedback" id="fb-act3" aria-live="polite"></div>
@@ -283,14 +286,16 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g6a">
 <p class="stem">1. The counted gap takes:</p>
-<label><input type="radio" class="choice" name="g6a" data-correct="true"> This shows that A scored 13 points higher.</label>
 <label><input type="radio" class="choice" name="g6a" data-correct="false"> This suggests that A scored 13 points higher.</label>
-</div>
+<label><input type="radio" class="choice" name="g6a" data-correct="true"> This shows that A scored 13 points higher.</label>
+
+<label><input type="radio" class="choice" name="g6a" data-correct="false"> c) Group A is 13 points higher than Group B.</label></div>
 <div class="mcq" data-group="g6b">
 <p class="stem">2. What it means takes:</p>
-<label><input type="radio" class="choice" name="g6b" data-correct="false"> This shows that training helps.</label>
 <label><input type="radio" class="choice" name="g6b" data-correct="true"> This suggests that training helps.</label>
-</div>
+<label><input type="radio" class="choice" name="g6b" data-correct="false"> This shows that training helps.</label>
+
+<label><input type="radio" class="choice" name="g6b" data-correct="false"> c) Training is 13 points higher than before.</label></div>
 <button class="btn" data-check="act6">Check</button>
 <button class="btn ghost" data-complete="act6">Mark complete</button>
 <div class="feedback" id="fb-act6" aria-live="polite"></div>
@@ -333,7 +338,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best line?</p>
 <label><input type="radio" class="choice" name="g9" data-correct="true"> a) Group A scored 13 points higher than Group B.</label>
 <label><input type="radio" class="choice" name="g9" data-correct="false"> b) Stuff was a lot better.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g9" data-correct="false"> c) Staff worked better this month.</label></div>
 <button class="btn" data-check="act9">Check</button>
 <button class="btn ghost" data-complete="act9">Mark complete</button>
 <div class="feedback" id="fb-act9" aria-live="polite"></div>

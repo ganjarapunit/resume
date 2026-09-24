@@ -80,13 +80,14 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <body>
 <div id="app">
 <a class="skip" href="#slide-view">Skip to slide</a>
-<div class="hud" role="region" aria-label="Progress">
+<header class="hud" aria-label="Progress">
 <span><strong>XP:</strong> <span id="xp">0</span></span>
 <span><strong>Streak:</strong> <span id="streak">0</span></span>
 <span><strong>Done:</strong> <span id="done">0</span>/15</span>
 <span class="bar" aria-hidden="true"><span class="fill" id="fill"></span></span>
 <button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
-</div>
+</header>
+<main id="lessonMain">
 <div class="toolbar">
 <span id="counter" aria-hidden="true"><strong>Slide 1 of 17</strong></span>
 <label for="jump">Go to slide:</label>
@@ -138,15 +139,18 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <section class="slide" id="act2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 17: Activity 2" hidden>
 <h2 tabindex="-1">Activity 2. Which sounds better at the clinic?</h2>
 <p class="meta">Choose a or b.</p>
-<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Sick. Stay home. b) If your fever stays above 38, please call the clinic.</p>
+<div class="q"><div class="mcq" data-group="g2a"><p><b>1.</b> a) Sick. Stay home. b) If your fever stays above 38, please call the clinic. c) If your fever stays above 38, but please call the clinic.</p>
 <label class="row"><input type="radio" class="choice" name="g2a" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the tablets. Doctor gave them. b) I need the tablets that the doctor prescribed yesterday.</p>
+<label class="row"><input type="radio" class="choice" name="g2a" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2a"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2b"><p><b>2.</b> a) I need the tablets. Doctor gave them. b) I need the tablets that the doctor prescribed yesterday. c) I need the tablets that doctor prescribed.</p>
 <label class="row"><input type="radio" class="choice" name="g2b" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label></div></div>
-<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the pharmacy? Tell me. b) Could you tell me where the pharmacy is?</p>
+<label class="row"><input type="radio" class="choice" name="g2b" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2b"> c</label></div></div>
+<div class="q"><div class="mcq" data-group="g2c"><p><b>3.</b> a) Where is the pharmacy? Tell me. b) Could you tell me where the pharmacy is? c) Could you tell me what the pharmacy is?</p>
 <label class="row"><input type="radio" class="choice" name="g2c" value="a"> a</label>
-<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g2c" value="b" data-correct="true"> b</label>
+<label class="row"><input type="radio" class="choice" value="c" name="g2c"> c</label></div></div>
 <p><button class="btn" data-check="act2">Check</button> <button class="btn ghost" data-complete="act2">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><ol><li>b, if gives the exact condition.</li><li>b, that picks the right tablets.</li><li>b, polished noun clause.</li></ol></details>
 </section>
@@ -198,18 +202,23 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 4. Adverbial: choose the right ending <span class="tag adv">A</span></h2>
 <div class="q"><div class="mcq" data-group="g4_1"><p><b>1.</b> Even though the waiting room was full, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_1" data-correct="true"> the nurse called each name with a smile</label>
-<label class="row"><input type="radio" class="choice" name="g4_1"> the chemist asks to see it</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g4_1"> the chemist asks to see it</label>
+<label class="row"><input type="radio" class="choice" name="g4_1"> the late clinic is usually quiet</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_2"><p><b>2.</b> Keep the prescription in case ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_2" data-correct="true"> the chemist asks to see it</label>
+<label class="row"><input type="radio" class="choice" name="g4_2"> the nurse called each name with a smile</label>
 <label class="row"><input type="radio" class="choice" name="g4_2"> the nurse called each name with a smile</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_3"><p><b>3.</b> Unless you finish the course, ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_3" data-correct="true"> the infection may come back</label>
+<label class="row"><input type="radio" class="choice" name="g4_3"> the late clinic is usually quiet</label>
 <label class="row"><input type="radio" class="choice" name="g4_3"> the late clinic is usually quiet</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_4"><p><b>4.</b> The morning surgery fills fast, whereas ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_4" data-correct="true"> the late clinic is usually quiet</label>
+<label class="row"><input type="radio" class="choice" name="g4_4"> the infection may come back</label>
 <label class="row"><input type="radio" class="choice" name="g4_4"> the infection may come back</label></div></div>
 <div class="q"><div class="mcq" data-group="g4_5"><p><b>5.</b> Drink water as soon as ...</p>
 <label class="row"><input type="radio" class="choice" name="g4_5" data-correct="true"> you take the tablets so they work faster</label>
+<label class="row"><input type="radio" class="choice" name="g4_5"> the late clinic is usually quiet</label>
 <label class="row"><input type="radio" class="choice" name="g4_5"> the late clinic is usually quiet</label></div></div>
 <p><button class="btn" data-check="act4">Check</button> <button class="btn ghost" data-complete="act4">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>1 the nurse called each name with a smile. 2 the chemist asks to see it. 3 the infection may come back. 4 the late clinic is usually quiet. 5 you take the tablets so they work faster.</p></details>
@@ -265,19 +274,24 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 9. doubt, explain, decide <span class="tag noun">C</span></h2>
 <div class="q"><div class="mcq" data-group="g9_1"><p><b>1.</b> I doubt ___ this rash needs antibiotics.</p>
 <label class="row"><input type="radio" class="choice" name="g9_1" data-correct="true"> whether</label>
-<label class="row"><input type="radio" class="choice" name="g9_1"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_1"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_1"> how</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_2"><p><b>2.</b> She explained ___ I must finish all the tablets.</p>
 <label class="row"><input type="radio" class="choice" name="g9_2" data-correct="true"> why</label>
-<label class="row"><input type="radio" class="choice" name="g9_2"> what</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_2"> what</label>
+<label class="row"><input type="radio" class="choice" name="g9_2"> that</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_3"><p><b>3.</b> I cannot decide ___ to book the morning slot or the evening one.</p>
 <label class="row"><input type="radio" class="choice" name="g9_3" data-correct="true"> whether</label>
-<label class="row"><input type="radio" class="choice" name="g9_3"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_3"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_3"> what</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_4"><p><b>4.</b> He claims ___ rest matters more than vitamins.</p>
 <label class="row"><input type="radio" class="choice" name="g9_4" data-correct="true"> that</label>
-<label class="row"><input type="radio" class="choice" name="g9_4"> whether</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_4"> whether</label>
+<label class="row"><input type="radio" class="choice" name="g9_4"> how</label></div></div>
 <div class="q"><div class="mcq" data-group="g9_5"><p><b>5.</b> Nobody told us ___ the blood test would cost.</p>
 <label class="row"><input type="radio" class="choice" name="g9_5" data-correct="true"> how much</label>
-<label class="row"><input type="radio" class="choice" name="g9_5"> that</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g9_5"> that</label>
+<label class="row"><input type="radio" class="choice" name="g9_5"> whether</label></div></div>
 <p><button class="btn" data-check="act9">Check</button> <button class="btn ghost" data-complete="act9">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>1 whether. 2 why. 3 whether. 4 that. 5 how much.</p></details>
 </section>
@@ -299,22 +313,28 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 11. Fix the chat: choose the right line</h2>
 <div class="q"><div class="mcq" data-group="g11_1"><p><b>1.</b> Although I felt dizzy, but I finished the shift.</p>
 <label class="row"><input type="radio" class="choice" name="g11_1" data-correct="true"> Although I felt dizzy, I finished the shift.</label>
-<label class="row"><input type="radio" class="choice" name="g11_1"> Although I felt dizzy, but I finished the shift.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although I felt dizzy, but I finished the shift.</label>
+<label class="row"><input type="radio" class="choice" name="g11_1"> Although I felt dizzy, so I finished the shift.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_2"><p><b>2.</b> The nurse who's advice helped me works nights.</p>
 <label class="row"><input type="radio" class="choice" name="g11_2" data-correct="true"> The nurse whose advice helped me works nights.</label>
-<label class="row"><input type="radio" class="choice" name="g11_2"> The nurse who's advice helped me works nights.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The nurse who's advice helped me works nights.</label>
+<label class="row"><input type="radio" class="choice" name="g11_2"> The nurse which advice helped me works nights.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_3"><p><b>3.</b> Could you tell me where is casualty?</p>
 <label class="row"><input type="radio" class="choice" name="g11_3" data-correct="true"> Could you tell me where casualty is?</label>
-<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me where is casualty?</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me where is casualty?</label>
+<label class="row"><input type="radio" class="choice" name="g11_3"> Could you tell me what casualty is?</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_4"><p><b>4.</b> The ward where we waited there was freezing.</p>
 <label class="row"><input type="radio" class="choice" name="g11_4" data-correct="true"> The ward where we waited was freezing.</label>
-<label class="row"><input type="radio" class="choice" name="g11_4"> The ward where we waited there was freezing.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The ward where we waited there was freezing.</label>
+<label class="row"><input type="radio" class="choice" name="g11_4"> The ward which we waited was freezing.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_5"><p><b>5.</b> She said me that my pressure was high.</p>
 <label class="row"><input type="radio" class="choice" name="g11_5" data-correct="true"> She told me that my pressure was high.</label>
-<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that my pressure was high.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said me that my pressure was high.</label>
+<label class="row"><input type="radio" class="choice" name="g11_5"> She said that me my pressure was high.</label></div></div>
 <div class="q"><div class="mcq" data-group="g11_6"><p><b>6.</b> If the fever will not drop, we call the doctor.</p>
 <label class="row"><input type="radio" class="choice" name="g11_6" data-correct="true"> If the fever does not drop, we will call the doctor.</label>
-<label class="row"><input type="radio" class="choice" name="g11_6"> If the fever will not drop, we call the doctor.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If the fever will not drop, we call the doctor.</label>
+<label class="row"><input type="radio" class="choice" name="g11_6"> If the fever will not drop, we will call the doctor.</label></div></div>
 <p><button class="btn" data-check="act11">Check</button> <button class="btn ghost" data-complete="act11">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options are right. 1: no but with although. 2: whose for owning. 3: statement order. 4: drop extra there. 5: told me, not said me. 6: if plus present, will in the main clause.</p></details>
 </section>
@@ -323,16 +343,20 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 <h2 tabindex="-1">Activity 12. Clinic desk: choose the natural reply</h2>
 <div class="q"><div class="mcq" data-group="g12_1"><p><b>1.</b> Patient: I feel worse.</p>
 <label class="row"><input type="radio" class="choice" name="g12_1" data-correct="true"> I understand that the cough is keeping you up. I will book you in today.</label>
-<label class="row"><input type="radio" class="choice" name="g12_1"> I understand.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I understand.</label>
+<label class="row"><input type="radio" class="choice" name="g12_1"> I know. I book you today.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_2"><p><b>2.</b> Visitor: Where is X-ray?</p>
 <label class="row"><input type="radio" class="choice" name="g12_2" data-correct="true"> Can you show me your slip so that I can point you right?</label>
+<label class="row"><input type="radio" class="choice" name="g12_2"> Slip? Show me.</label>
 <label class="row"><input type="radio" class="choice" name="g12_2"> Slip? Show me.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_3"><p><b>3.</b> You need help with instructions.</p>
 <label class="row"><input type="radio" class="choice" name="g12_3" data-correct="true"> The instructions which you gave me are unclear. Could you go over them?</label>
+<label class="row"><input type="radio" class="choice" name="g12_3"> Paper unclear. Explain.</label>
 <label class="row"><input type="radio" class="choice" name="g12_3"> Paper unclear. Explain.</label></div></div>
 <div class="q"><div class="mcq" data-group="g12_4"><p><b>4.</b> Advice for a strain.</p>
 <label class="row"><input type="radio" class="choice" name="g12_4" data-correct="true"> Unless you rest this week, the strain will linger.</label>
-<label class="row"><input type="radio" class="choice" name="g12_4"> Unless you will rest, it lingers.</label></div></div>
+<label class="row"><input type="radio" class="choice" name="g12_4"> Unless you will rest, it lingers.</label>
+<label class="row"><input type="radio" class="choice" name="g12_4"> Unless you rest, the strain will linger.</label></div></div>
 <p><button class="btn" data-check="act12">Check</button> <button class="btn ghost" data-complete="act12">Mark complete</button> <span class="feedback" aria-live="polite"></span></p>
 <details class="key"><summary>Answer key. Select to open.</summary><p>All first options. They are fuller, kinder, and use the clause correctly.</p></details>
 </section>
@@ -386,6 +410,7 @@ footer{color:var(--muted);font-size:.93rem;border-top:2px solid var(--border);pa
 </div>
 <button class="nav-side" id="nextSide" aria-label="Go to next slide">Next</button>
 </div>
+</main>
 <footer><p>Health deck, B2. 15 activities. Tip: say each checked sentence aloud once.</p><p><a href="../../index.html#b2-communicative" style="color:var(--accent)">All B2 Communicative lessons</a></p></footer>
 </div>
 <canvas id="conf" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;display:none"></canvas>

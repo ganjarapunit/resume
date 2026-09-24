@@ -159,7 +159,7 @@ button.btn{width:100%;margin-right:0}
 <div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
 <div class="progress-wrap">
 <div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
-<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 </div>
 </div>
@@ -207,15 +207,16 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g1">
 <p class="stem">1. An abstract is:</p>
-<label><input type="radio" class="choice" name="g1" data-correct="false"> a) A long story about your life.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="true"> b) A short summary of a study, 100 to 150 words.</label>
+<label><input type="radio" class="choice" name="g1" data-correct="false"> a) A long story about your life.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="false"> c) An email to a teacher.</label>
 </div>
 <div class="mcq" data-group="g1b">
 <p class="stem">2. Where do we put an abstract?</p>
-<label><input type="radio" class="choice" name="g1b" data-correct="true"> a) At the start of a paper, before the main text.</label>
 <label><input type="radio" class="choice" name="g1b" data-correct="false"> b) At the end, after the references.</label>
-</div>
+<label><input type="radio" class="choice" name="g1b" data-correct="true"> a) At the start of a paper, before the main text.</label>
+
+<label><input type="radio" class="choice" name="g1b" data-correct="false"> c) In the middle, after the first result.</label></div>
 <button class="btn" data-check="act1">Check</button>
 <button class="btn ghost" data-complete="act1">Mark complete</button>
 <div class="feedback" id="fb-act1" aria-live="polite"></div>
@@ -239,9 +240,9 @@ button.btn{width:100%;margin-right:0}
 </div>
 <div class="mcq" data-group="g2">
 <p class="stem">What helped habits?</p>
-<label><input type="radio" class="choice" name="g2" data-correct="true"> a) Short daily tasks, 20 minutes each day.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> b) Long late tasks, 90 minutes at night.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> c) No homework at all.</label>
+<label><input type="radio" class="choice" name="g2" data-correct="true"> a) Short daily tasks, 20 minutes each day.</label>
 </div>
 <button class="btn" data-check="act2">Check</button>
 <button class="btn ghost" data-complete="act2">Mark complete</button>
@@ -307,15 +308,16 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g6">
 <p class="stem">Which sentence is best? Same careful rule as Day 13.</p>
-<label><input type="radio" class="choice" name="g6" data-correct="false"> a) Short tasks prove all students will focus forever.</label>
 <label><input type="radio" class="choice" name="g6" data-correct="true"> b) Results show that Group A scored 18 percent higher than Group B.</label>
+<label><input type="radio" class="choice" name="g6" data-correct="false"> a) Short tasks prove all students will focus forever.</label>
 <label><input type="radio" class="choice" name="g6" data-correct="false"> c) Short tasks are perfect and always work.</label>
 </div>
 <div class="mcq" data-group="g6b">
 <p class="stem">Which ending is careful?</p>
-<label><input type="radio" class="choice" name="g6b" data-correct="true"> a) Short homework may build stronger habits.</label>
 <label><input type="radio" class="choice" name="g6b" data-correct="false"> b) Short homework will fix every problem.</label>
-</div>
+<label><input type="radio" class="choice" name="g6b" data-correct="true"> a) Short homework may build stronger habits.</label>
+
+<label><input type="radio" class="choice" name="g6b" data-correct="false"> c) Short homework always works.</label></div>
 <button class="btn" data-check="act6">Check</button>
 <button class="btn ghost" data-complete="act6">Mark complete</button>
 <div class="feedback" id="fb-act6" aria-live="polite"></div>
@@ -363,18 +365,18 @@ button.btn{width:100%;margin-right:0}
 <div class="exercise">
 <div class="mcq" data-group="g9a">
 <p class="stem">1. Background: Many students ___ tired after long hours.</p>
-<label><input type="radio" class="choice" name="g9a" data-correct="true"> feel (present, general truth)</label>
 <label><input type="radio" class="choice" name="g9a" data-correct="false"> felt (past, only yesterday)</label>
+<label><input type="radio" class="choice" name="g9a" data-correct="true"> feel (present, general truth)</label>
 </div>
 <div class="mcq" data-group="g9b">
 <p class="stem">2. Method: Sixty students ___ the study in March.</p>
-<label><input type="radio" class="choice" name="g9b" data-correct="false"> join</label>
 <label><input type="radio" class="choice" name="g9b" data-correct="true"> joined</label>
+<label><input type="radio" class="choice" name="g9b" data-correct="false"> join</label>
 </div>
 <div class="mcq" data-group="g9c">
 <p class="stem">3. Conclusion: Short homework ___ build habits.</p>
-<label><input type="radio" class="choice" name="g9c" data-correct="true"> may (careful, present, like Day 13)</label>
 <label><input type="radio" class="choice" name="g9c" data-correct="false"> improved yesterday only</label>
+<label><input type="radio" class="choice" name="g9c" data-correct="true"> may (careful, present, like Day 13)</label>
 </div>
 <button class="btn" data-check="act9">Check</button>
 <button class="btn ghost" data-complete="act9">Mark complete</button>

@@ -171,8 +171,8 @@ button.btn:hover:not(:disabled){filter:brightness(1.05)}
     <p class="desc">Tap one word on the left, then its match on the right. Green means correct pair. Try to beat 60 seconds.</p>
     <div class="interactive">
       <div class="match-grid">
-        <div class="match-col" id="a3left" role="listbox" aria-label="Words"></div>
-        <div class="match-col" id="a3right" role="listbox" aria-label="Definitions"></div>
+        <div class="match-col" id="a3left" role="group" aria-label="Words"></div>
+        <div class="match-col" id="a3right" role="group" aria-label="Definitions"></div>
       </div>
       <div class="controls">
         <button class="btn" onclick="checkA3()">Check all</button>
@@ -204,7 +204,7 @@ button.btn:hover:not(:disabled){filter:brightness(1.05)}
         <button class="btn secondary" onclick="prevA5()">Prev</button>
         <button class="btn secondary" onclick="nextA5()">Next</button>
       </div>
-      <div class="sentence-box" id="a5answer" tabindex="0" aria-label="Your sentence - tap to remove last word" onclick="undoA5()" role="button"></div>
+      <button type="button" class="sentence-box" id="a5answer" aria-label="Your sentence. Activate to remove the last word." onclick="undoA5()"></button>
       <div class="word-chips" id="a5chips" style="margin-top:10px"></div>
       <div class="controls">
         <button class="btn" onclick="checkA5()">Check</button>
@@ -242,7 +242,7 @@ button.btn:hover:not(:disabled){filter:brightness(1.05)}
     <div class="meta-line"><span><b>Goal:</b> add soft hedging so you sound professional, not pushy</span></div>
     <p class="desc">Tap the hedging chips to build the professional sentence. Start with From our perspective.</p>
     <div class="interactive">
-      <div class="sentence-box" id="a7box" style="min-height:56px"></div>
+      <div class="sentence-box" id="a7box" style="min-height:56px" role="group" aria-label="Your built opener"></div>
       <div class="word-chips" id="a7chips" style="margin-top:10px"></div>
       <div class="controls">
         <button class="btn" onclick="checkA7()">Check</button>
@@ -413,10 +413,10 @@ button.btn:hover:not(:disabled){filter:brightness(1.05)}
     <p class="desc">Follow the 4 steps, tap start to begin the 90 second timer. Try to use each signpost out loud. The checklist ticks when you say the keywords.</p>
     <div class="interactive">
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">
-        <div class="check" id="a16c1"><input type="checkbox" disabled><span>To summarize</span></div>
-        <div class="check" id="a16c2"><input type="checkbox" disabled><span>like for like</span></div>
-        <div class="check" id="a16c3"><input type="checkbox" disabled><span>real value is</span></div>
-        <div class="check" id="a16c4"><input type="checkbox" disabled><span>Would it be helpful</span></div>
+        <div class="check" id="a16c1"><input type="checkbox" disabled id="a16i1"><label for="a16i1">To summarize</label></div>
+        <div class="check" id="a16c2"><input type="checkbox" disabled id="a16i2"><label for="a16i2">like for like</label></div>
+        <div class="check" id="a16c3"><input type="checkbox" disabled id="a16i3"><label for="a16i3">real value is</label></div>
+        <div class="check" id="a16c4"><input type="checkbox" disabled id="a16i4"><label for="a16i4">Would it be helpful</label></div>
       </div>
       <div style="background:#0B1220;border:1px solid var(--border);border-radius:10px;padding:12px">
         <div style="color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:800">Structure - say each line, then expand</div>
@@ -628,7 +628,7 @@ function buildToc(){
 const a1correct=['align','over budget','clarify scope','total cost','compare','conditional alternative','next steps'];
 let a1order=[];
 function renderA1(){ const c=document.getElementById('a1list'); c.innerHTML=''; a1order.forEach((txt,i)=>{
-  const row=document.createElement('div'); row.className='order-item'; row.draggable=true; row.dataset.idx=i; row.tabIndex=0;
+  const row=document.createElement('div'); row.className='order-item';row.setAttribute('role','listitem'); row.draggable=true; row.dataset.idx=i; row.tabIndex=0;
   row.innerHTML='<span class="drag" aria-hidden="true">≡</span><span style="flex:1;font-weight:700">'+(i+1)+'. '+txt+'</span><button class="btn secondary" style="padding:6px 8px" aria-label="Move up" onclick="moveA1('+i+',-1)">↑</button><button class="btn secondary" style="padding:6px 8px" aria-label="Move down" onclick="moveA1('+i+',1)">↓</button>';
   row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',i); row.style.opacity=.5});
   row.addEventListener('dragend',()=>row.style.opacity=1);
@@ -657,10 +657,10 @@ const vocab=[
 ];
 let a2flipped=new Set();
 function renderA2(){ const grid=document.getElementById('a2grid'); grid.innerHTML=''; vocab.forEach((v,i)=>{
-  const card=document.createElement('div'); card.className='flip'; card.tabIndex=0; card.setAttribute('role','button'); card.setAttribute('aria-label','Flip '+v.w);
-  card.innerHTML='<div class="flip-inner"><div class="flip-face flip-front"><div><div style="font-weight:900;font-size:1.05rem">'+v.w+'</div><div style="color:var(--muted);font-size:.75rem;margin-top:4px">'+v.pos+'</div><div style="margin-top:8px;color:var(--accent2);font-size:.78rem;font-weight:800">Tap to flip</div></div></div><div class="flip-face flip-back"><div><div style="font-weight:800">'+v.def+'</div><div style="margin-top:6px;font-size:.84rem">'+v.ex+'</div><button class="btn ghost" style="margin-top:8px;padding:6px 8px" onclick="event.stopPropagation();speak(\''+v.w.replace(/'/g,"\\'")+'. '+v.ex.replace(/'/g,"\\'")+'\')">Play</button></div></div></div>';
-  const toggle=()=>{ card.classList.toggle('flipped'); if(card.classList.contains('flipped')) a2flipped.add(i); else a2flipped.delete(i); updateA2(); };
-  card.addEventListener('click',toggle); card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+  const card=document.createElement('div'); card.className='flip'; card.setAttribute('role','group'); card.setAttribute('aria-label','Flashcard: '+v.w);
+  card.innerHTML='<div class="flip-inner"><div class="flip-face flip-front"><div><div style="font-weight:900;font-size:1.05rem">'+v.w+'</div><div style="color:var(--muted);font-size:.75rem;margin-top:4px">'+v.pos+'</div><button class="btn ghost" type="button" data-flip-toggle aria-expanded="false" style="margin-top:8px;padding:5px 9px;min-height:40px;font-size:.78rem;font-weight:800">Show definition</button></div></div><div class="flip-face flip-back"><div><div style="font-weight:800">'+v.def+'</div><div style="margin-top:6px;font-size:.84rem">'+v.ex+'</div><button class="btn ghost" style="margin-top:8px;padding:6px 8px" onclick="event.stopPropagation();speak(\''+v.w.replace(/'/g,"\\'")+'. '+v.ex.replace(/'/g,"\\'")+'\')">Play</button></div></div></div>';
+  const toggle=()=>{ card.classList.toggle('flipped'); const on=card.classList.contains('flipped'); const b=card.querySelector('[data-flip-toggle]'); if(b){b.setAttribute('aria-expanded',String(on)); b.textContent=on?'Hide definition':'Show definition';} if(on) a2flipped.add(i); else a2flipped.delete(i); updateA2(); };
+  card.addEventListener('click',e=>{ if(e.target.closest('[data-flip-toggle]')) toggle(); });
   grid.appendChild(card);
 }); updateA2(); buildA2list();}
 function updateA2(){ document.getElementById('a2count').textContent=a2flipped.size+'/10 flipped'; if(a2flipped.size>=10){ document.getElementById('a2check').style.display='block'; nextA2q(); markDone('act2');} }
@@ -787,7 +787,7 @@ const a6data=[
 let a6order=[];
 function renderA6(){ const c=document.getElementById('a6list'); c.innerHTML=''; a6order.forEach((k,i)=>{
   const d=a6data.find(x=>x.k===k);
-  const row=document.createElement('div'); row.className='order-item'; row.draggable=true; row.dataset.k=k;
+  const row=document.createElement('div'); row.className='order-item';row.setAttribute('role','listitem'); row.draggable=true; row.dataset.k=k;
   row.innerHTML='<span class="drag" aria-hidden="true">≡</span><span style="min-width:28px;height:28px;display:grid;place-items:center;background:'+(d.speaker==='You'?'var(--accent)':'var(--head)')+';color:'+(d.speaker==='You'?'#000':'var(--accent2)')+';border-radius:50%;font-weight:900;font-size:.75rem">'+d.k+'</span><div style="flex:1"><div style="font-size:.78rem;color:var(--muted);font-weight:800">'+d.speaker+'</div><div style="font-size:.88rem">'+d.text+'</div></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn secondary" style="padding:4px 6px" onclick="moveA6(\''+k+'\',-1)" aria-label="Move up">↑</button><button class="btn secondary" style="padding:4px 6px" onclick="moveA6(\''+k+'\',1)" aria-label="Move down">↓</button></div>';
   row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',k); row.style.opacity=.5});
   row.addEventListener('dragend',()=>row.style.opacity=1);
@@ -855,7 +855,7 @@ function renderA9(){
   const box=document.getElementById('a9box'); box.innerHTML='';
   a9sentences.forEach((s,i)=>{
     const row=document.createElement('div'); row.style.cssText='background:#0E1424;border:1px solid var(--border);border-radius:10px;padding:10px';
-    row.innerHTML='<div style="font-weight:700;margin-bottom:6px">Sentence '+(i+1)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span>'+s.pre+'</span><select id="a9s'+i+'" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option>'+s.opts.map(o=>'<option>'+o+'</option>').join('')+'</select><span style="flex:1">'+s.post+'</span></div><button class="btn ghost" style="margin-top:6px;padding:6px 8px" onclick="speak(\''+s.correct+' '+s.post.replace(/'/g,"\\'")+'\')">Play</button>';
+    row.innerHTML='<div style="font-weight:700;margin-bottom:6px" id="a9lab'+i+'">Sentence '+(i+1)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span>'+s.pre+'</span><select id="a9s'+i+'" aria-labelledby="a9lab'+i+'" style="background:#111A2A;border:1px solid var(--border2);color:var(--accent);padding:6px 8px;border-radius:6px;font-weight:700"><option value="">- choose -</option>'+s.opts.map(o=>'<option>'+o+'</option>').join('')+'</select><span style="flex:1">'+s.post+'</span></div><button class="btn ghost" style="margin-top:6px;padding:6px 8px" onclick="speak(\''+s.correct+' '+s.post.replace(/'/g,"\\'")+'\')">Play</button>';
     box.appendChild(row);
   });
   const c=document.createElement('div'); c.className='controls'; c.innerHTML='<button class="btn" onclick="checkA9()">Check linkers</button>';

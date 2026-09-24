@@ -148,7 +148,7 @@ button.btn{width:100%;margin-right:0}
 <div class="stat" aria-label="Streak">Streak <span id="streak">0</span></div>
 <div class="progress-wrap">
 <div class="progress-label"><span id="doneCount">0</span> of 15 done</div>
-<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 </div>
 </div>
@@ -199,7 +199,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">A manager opens first:</p>
 <label><input type="radio" class="choice" name="g1" data-correct="false"> a) Chat with emoji, no subject.</label>
 <label><input type="radio" class="choice" name="g1" data-correct="true"> b) Clear subject with topic and date.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g1" data-correct="false"> c) Long subject with the whole message inside it.</label></div>
 <button class="btn" data-check="act1">Check</button>
 <button class="btn ghost" data-complete="act1">Mark complete</button>
 <div class="feedback" id="fb-act1" aria-live="polite"></div>
@@ -228,7 +229,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Which emails ask for action?</p>
 <label><input type="radio" class="choice" name="g2" data-correct="true"> a) All three, each ends with Could you please.</label>
 <label><input type="radio" class="choice" name="g2" data-correct="false"> b) None of them.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g2" data-correct="false"> c) Only the first one.</label></div>
 <button class="btn" data-check="act2">Check</button>
 <button class="btn ghost" data-complete="act2">Mark complete</button>
 <div class="feedback" id="fb-act2" aria-live="polite"></div>
@@ -245,7 +247,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best subject?</p>
 <label><input type="radio" class="choice" name="g3" data-correct="true"> a) Request: keep short daily training, June.</label>
 <label><input type="radio" class="choice" name="g3" data-correct="false"> b) Help!!!</label>
-</div>
+
+<label><input type="radio" class="choice" name="g3" data-correct="false"> c) Subject: Question about the plan.</label></div>
 <button class="btn" data-check="act3">Check</button>
 <button class="btn ghost" data-complete="act3">Mark complete</button>
 <div class="feedback" id="fb-act3" aria-live="polite"></div>
@@ -294,7 +297,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Which complaint is calm?</p>
 <label><input type="radio" class="choice" name="g6" data-correct="false"> a) You never help. The room is terrible.</label>
 <label><input type="radio" class="choice" name="g6" data-correct="true"> b) The room was noisy on 2 June. Could we please move late sessions.</label>
-</div>
+
+<label><input type="radio" class="choice" name="g6" data-correct="false"> c) The room is always terrible. Move everything now.</label></div>
 <div class="fill"><span class="lead">Calm rule: fact with date plus</span><input class="answer" data-accept="could we|request" aria-label="Calm rule"><span class="tail">, no blame.</span></div>
 <button class="btn" data-check="act6">Check</button>
 <button class="btn ghost" data-complete="act6">Mark complete</button>
@@ -341,7 +345,8 @@ button.btn{width:100%;margin-right:0}
 <p class="stem">Best close?</p>
 <label><input type="radio" class="choice" name="g9" data-correct="true"> Thanks for your help. Best regards.</label>
 <label><input type="radio" class="choice" name="g9" data-correct="false"> Thx, bye!!!</label>
-</div>
+
+<label><input type="radio" class="choice" name="g9" data-correct="false"> c) Kind regards.</label></div>
 <button class="btn" data-check="act9">Check</button>
 <button class="btn ghost" data-complete="act9">Mark complete</button>
 <div class="feedback" id="fb-act9" aria-live="polite"></div>

@@ -85,15 +85,16 @@ footer{color:var(--muted);font-size:1rem;margin-top:1rem}
 </style>
 </head>
 <body>
-<a class="skip" href="#deck">Skip to slides</a>
 <div class="page">
-<div class="topbar">
+<header class="topbar">
+<a class="skip" href="#lessonMain">Skip to slides</a>
 <h1>Sound Clear at Work: Pausing, Stress, Intonation</h1>
 <div class="controls">
 <span class="counter" id="counter" aria-live="polite">Slide 1 of 18</span>
 <button class="btn ghost" id="fsBtn" aria-pressed="false">Full screen</button>
 </div>
-</div>
+</header>
+<main id="lessonMain">
 <div class="progress" aria-hidden="true"><div id="bar"></div></div>
 <p class="hint">Use Back and Next. You can also use left and right arrow keys. On big screens the Back and Next buttons sit outside the slide. On small screens they sit below the slide, never on top of your text. Keys: <span class="kbd">|</span> pause, <span class="kbd">CAPS</span> stress, <span class="kbd">↗</span> continue, <span class="kbd">↘</span> finish.</p>
 
@@ -148,6 +149,7 @@ footer{color:var(--muted);font-size:1rem;margin-top:1rem}
 </div>
 <button class="outer-nav" id="nextOuter" aria-label="Next slide">Next</button>
 </div>
+</main>
 <footer>B2 . Sound Clear at Work . 15 activities . High contrast, keyboard friendly.<p style="margin-top:.4rem;"><a href="../../index.html#b2-communicative">All B2 Communicative lessons</a></p></footer>
 </div>
 <script>
