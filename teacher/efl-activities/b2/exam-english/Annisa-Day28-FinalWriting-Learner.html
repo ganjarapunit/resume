@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 28 Final Writing Interactive</title>
+<style>
+:root{--bg:#080c12;--surface:#121a24;--surface-2:#192534;--deep:#05080d;--ink:#f6f8fb;--muted:#c3ceda;--accent:#ffd166;--accent-2:#5ee6c1;--good:#5ee6c1;--bad:#ff9b9b;--border:#6f7f93;--focus:#ffd166;--warn:#ffd166}
+*{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{margin:0;max-width:100%;overflow-x:hidden;background:linear-gradient(145deg,#0d1622 0,#080c12 48%,#10161e 100%);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+[hidden]{display:none!important}
+a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+a.skip:focus{left:.5rem;top:.5rem;width:auto;height:auto;background:var(--accent);color:#071018;padding:.6rem .85rem;z-index:50;border:3px solid #fff;font-weight:bold}
+a{color:var(--accent)}
+a:visited{color:var(--accent-2)}
+button,input,textarea,select{font:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.hud{position:sticky;top:0;z-index:30;background:rgba(8,12,18,.96);border-bottom:2px solid var(--border);padding:.55rem .9rem;backdrop-filter:blur(10px)}
+.hud-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.stat{background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:.28rem .7rem;font-weight:800;font-size:.88rem;white-space:nowrap}
+.progress-wrap{flex:1 1 240px;min-width:210px}
+.progress-label{display:flex;justify-content:space-between;gap:1rem;font-size:.82rem;color:var(--muted);margin-bottom:.2rem}
+.progress-track{height:12px;background:var(--deep);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--accent-2);transition:width .35s ease}
+.save-status{font-size:.78rem;color:var(--muted)}
+.hero{max-width:1180px;margin:0 auto;padding:1.1rem 1rem .5rem;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);gap:1rem;align-items:end}
+.hero h1{font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.08;margin:0;color:#fff;letter-spacing:-.03em}
+.hero .topic{color:var(--accent-2);font-weight:800;margin:.45rem 0 0}
+.hero p{color:var(--muted);margin:.4rem 0 0;max-width:720px}
+.hero-meta{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
+.pill{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.22rem .7rem;font-size:.8rem;font-weight:800;color:var(--accent)}
+main{max-width:1180px;margin:0 auto;padding:.3rem 1rem 1.5rem}
+.deck-shell{width:100%;max-width:100%;background:rgba(18,26,36,.94);border:1px solid var(--border);border-top:4px solid var(--accent);padding:.8rem;margin:.4rem 0 0;box-shadow:0 18px 45px rgba(0,0,0,.28)}
+.deck-shell:fullscreen{background:var(--bg);border:0;padding:1rem;overflow:auto}
+.deck-topbar{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-bottom:.65rem}
+.slide-count{font-weight:900;color:var(--accent);font-size:.9rem}
+.deck-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.path-tracker{display:flex;gap:.45rem;flex-wrap:wrap;background:var(--deep);border:1px solid var(--border);padding:.5rem;margin:.15rem 0 .65rem;font-size:.8rem}
+.tracker-item{border:1px solid var(--border);background:var(--surface);padding:.25rem .55rem;font-weight:800}
+.tracker-item strong{color:var(--accent-2)}
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{position:sticky;top:40vh;display:flex}
+.nav-left{justify-content:flex-end}
+.nav-right{justify-content:flex-start}
+.nav{width:100px;min-width:0;min-height:62px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:6px;font-weight:900;padding:.55rem .7rem;cursor:pointer}
+.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.nav:disabled{opacity:.38;cursor:not-allowed}
+.deck{min-width:0;max-width:100%;background:var(--surface);border:1px solid var(--border);padding:clamp(.85rem,2.5vw,1.4rem);min-height:560px;overflow-wrap:anywhere}
+.slide{min-width:0;animation:arrive .28s ease-out}
+@keyframes arrive{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.slide h2{font-size:clamp(1.3rem,3vw,2rem);line-height:1.18;margin:0;color:#fff;letter-spacing:-.02em}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.act-head{display:flex;align-items:flex-start;gap:.75rem}
+.badge{width:44px;height:44px;flex:none;display:grid;place-items:center;background:var(--accent);color:#071018;border-radius:6px;font-size:1.1rem;font-weight:900}
+.act-head h2{flex:1 1 auto;min-width:0}
+.tag{display:inline-block;background:var(--deep);border:1px solid var(--border);border-radius:999px;padding:.18rem .65rem;color:var(--accent-2);font-size:.77rem;font-weight:800;white-space:nowrap}
+.done-flag{display:none;margin-left:.4rem;color:var(--good);font-size:.78rem;letter-spacing:.04em}
+.activity.complete .done-flag{display:inline}
+.hint{color:var(--muted);font-size:.95rem;margin:.45rem 0 .8rem}
+.exercise{background:var(--deep);border:1px solid var(--border);border-left:4px solid var(--accent-2);padding:clamp(.8rem,2.5vw,1.15rem)}
+fieldset{margin:.6rem 0;padding:.75rem;border:2px solid var(--border);border-radius:6px;min-width:0}
+legend{font-weight:900;padding:0 .35rem;color:#fff}
+.choice-list{display:grid;gap:.45rem}
+.choice{display:grid;grid-template-columns:1.25rem 1fr auto;gap:.55rem;align-items:start;background:var(--surface);border:2px solid var(--border);padding:.55rem .65rem;cursor:pointer}
+.choice:hover{border-color:#a7b6c8}
+.choice input{width:1.1rem;height:1.1rem;margin:.18rem 0 0;accent-color:var(--accent-2)}
+.choice.correct{border-color:var(--good)}
+.choice.wrong{border-color:var(--bad)}
+.item-mark{font-size:.78rem;font-weight:900;align-self:center;white-space:nowrap}
+.item-mark.ok{color:var(--good)}
+.item-mark.no{color:var(--bad)}
+label{display:block;font-weight:800;font-size:.91rem;margin-bottom:.25rem}
+input[type=text],textarea,select{width:100%;max-width:100%;background:#0b1119;color:#fff;border:2px solid var(--border);border-radius:5px;padding:.52rem .62rem}
+textarea{resize:vertical;min-height:105px;line-height:1.55}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--focus)}
+select{min-height:48px}
+.inline-mark{display:inline-block;font-size:.78rem;font-weight:900;margin-left:.4rem}
+.inline-mark.ok{color:var(--good)}
+.inline-mark.no{color:var(--bad)}
+.answer-select.correct{border-color:var(--good)}
+.answer-select.wrong{border-color:var(--bad)}
+.btn{background:var(--accent);color:#071018;border:2px solid #fff;border-radius:5px;padding:.55rem .9rem;min-height:48px;font-weight:900;cursor:pointer;margin:.65rem .35rem 0 0}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.btn.secondary{background:var(--surface-2);color:var(--ink);border-color:var(--border)}
+.btn.timer-btn{min-width:92px;margin:.2rem .3rem .2rem 0}
+.btn:disabled{opacity:.48;cursor:not-allowed}
+.feedback{margin-top:.7rem;border:1px solid var(--border);background:var(--surface-2);padding:.6rem .75rem;border-radius:5px;font-size:.9rem;min-height:1.2em}
+.feedback.good{border-color:var(--good)}
+.feedback.bad{border-color:var(--bad)}
+.answer-key{margin-top:.75rem;border:2px solid var(--good);background:#07241c;color:#e5fff7;border-radius:6px}
+.answer-key summary{cursor:pointer;min-height:46px;padding:.55rem .75rem;color:var(--good);font-weight:900}
+.answer-key .key-body{border-top:1px solid #2f725f;padding:.65rem .8rem;font-size:.9rem}
+.answer-key p{margin:.35rem 0}
+.answer-key h3{color:var(--accent-2);margin:.5rem 0}
+.note{border-left:4px solid var(--accent);background:var(--surface-2);padding:.65rem .75rem;margin:.7rem 0;font-size:.88rem;color:var(--muted)}
+.note.warning{border-left-color:var(--bad);color:#ffe5e5;background:#2a1418}
+.source-links{font-size:.84rem}
+.cover-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:1rem;margin-top:1rem}
+.cover-main{background:var(--deep);border:1px solid var(--border);padding:clamp(1rem,3vw,1.6rem)}
+.cover-side{border-top:4px solid var(--accent-2);background:var(--surface-2);padding:1rem}
+.move-list{display:grid;gap:.45rem;margin:.75rem 0}
+.move-list span{border-left:4px solid var(--accent);background:var(--surface);padding:.5rem .65rem;font-weight:800}
+.cover-side ol{margin:.4rem 0;padding-left:1.2rem}
+.path-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin-top:1rem}
+.path-card{background:var(--surface);border:2px solid var(--border);padding:.65rem;font-size:.88rem}
+.path-card strong{display:block;color:var(--accent);margin-bottom:.25rem}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.form-grid .wide{grid-column:1 / -1}
+.prompt-box{background:var(--surface);border:2px solid var(--accent);padding:.75rem;margin:.55rem 0}
+.prompt-box h3{color:var(--accent);margin:.1rem 0 .3rem}
+.plan-template{font-family:Consolas,"Courier New",monospace;white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);padding:.7rem;font-size:.86rem;line-height:1.55}
+.timer-panel{background:var(--surface);border:2px solid var(--accent);padding:.8rem;margin:.6rem 0}
+.timer-panel.running{border-color:var(--accent-2)}
+.timer-panel.finished{border-color:var(--bad)}
+.timer-display{font-size:clamp(2.4rem,8vw,4.5rem);line-height:1;font-weight:900;color:var(--accent);text-align:center;font-variant-numeric:tabular-nums}
+.timer-status{text-align:center;margin:.45rem 0;color:var(--muted);font-weight:800;min-height:1.4em}
+.timer-actions{display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap}
+.timer-warning{font-size:.86rem;color:var(--muted);text-align:center;margin:.55rem 0 0}
+.checkpoints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin-top:.65rem}
+.checkpoint{background:var(--deep);border:1px solid var(--border);padding:.5rem;font-size:.8rem}
+.checkpoint strong{display:block;color:var(--accent-2)}
+.word-count{margin-top:.35rem;color:var(--warn);font-weight:900;font-size:.84rem}
+.checklist{display:grid;gap:.4rem;margin:.6rem 0}
+.check-item{display:grid;grid-template-columns:1.2rem 1fr;gap:.55rem;background:var(--surface);border:1px solid var(--border);padding:.5rem .6rem;cursor:pointer}
+.check-item input{width:1.1rem;height:1.1rem;margin:.1rem 0 0;accent-color:var(--accent-2)}
+.model-copy{background:#0b3328;border:1px solid #3a8c73;padding:.7rem;margin:.6rem 0}
+.nav-inside{display:none;margin-top:1rem;min-width:0}
+.toc-row{display:flex;gap:.7rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:.75rem;background:var(--surface);border:1px solid var(--border);padding:.6rem .7rem}
+.toc-row label{margin:0;white-space:nowrap}
+.toc-row select{max-width:min(100%,580px);margin:0}
+.keyboard-tip{color:var(--muted);font-size:.8rem;margin:.55rem 0 0}
+.results{border-top:5px solid var(--accent);background:var(--deep);padding:clamp(1rem,4vw,2rem);text-align:center}
+.results h2{color:var(--accent)}
+.score-grid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:.7rem;margin:1rem 0}
+.score-box{background:var(--surface);border:1px solid var(--border);padding:.7rem}
+.score-box strong{display:block;color:var(--accent-2);font-size:1.7rem}
+.result-summary{margin:.8rem auto;max-width:760px;background:var(--surface);border:1px solid var(--border);padding:.8rem;text-align:left}
+.result-copy{margin:1rem auto 0;max-width:760px;text-align:left;background:var(--surface);border:1px solid var(--border);padding:.75rem;white-space:pre-wrap;font-size:.86rem}
+.next-action{margin:.8rem auto 0;max-width:760px;background:#07241c;border:2px solid var(--good);padding:.8rem;text-align:left}
+footer{text-align:center;padding:1.2rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.8rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:760px){
+html{font-size:17px}
+.hero{grid-template-columns:1fr;padding-top:.8rem}
+.hero-meta{justify-content:flex-start}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.45rem}
+.nav-inside .nav{width:100%;min-height:52px;padding:.5rem .3rem}
+.deck{min-height:0;padding:.8rem}
+.cover-grid{grid-template-columns:1fr}
+.path-cards{grid-template-columns:1fr}
+.form-grid{grid-template-columns:1fr}
+.form-grid .wide{grid-column:auto}
+.save-status{width:100%}
+}
+@media (max-width:480px){
+html{font-size:16px}
+main{padding-left:.45rem;padding-right:.45rem}
+.deck-shell{padding:.4rem}
+.hud{padding:.45rem .5rem}
+.hud-inner{gap:.35rem}
+.progress-wrap{order:3;flex-basis:100%;min-width:100%}
+.btn{width:100%;margin-right:0}
+.timer-actions .btn{width:auto;flex:1 1 28%}
+.choice{grid-template-columns:1.1rem minmax(0,1fr)}
+.item-mark{grid-column:2}
+.exercise{padding:.65rem}
+fieldset{padding:.6rem}
+.score-grid{grid-template-columns:1fr}
+.nav-inside{gap:.3rem}
+.nav{font-size:.9rem}
+.path-tracker{font-size:.75rem}
+.tracker-item{flex:1 1 100%}
+.checkpoints{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to lesson slides</a>
+<section class="hud" aria-label="Lesson progress">
+<div class="hud-inner">
+<div class="stat">XP <span id="xpValue">0</span></div>
+<div class="stat">Streak <span id="streakValue">0</span></div>
+<div class="progress-wrap">
+<div class="progress-label"><span id="doneLabel">0 of 15 complete</span><span id="progressPercent">0%</span></div>
+<div id="progressBar" class="progress-track" role="progressbar" aria-label="Activities complete" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
+</div>
+<div id="saveStatus" class="save-status" role="status" aria-live="polite">Answers save on this device</div>
+</div>
+</section>
+<header class="hero">
+<div>
+<h1>Day 28: Final Writing</h1>
+<p class="topic">The learner's choice: IELTS Task 2, report section, or blog or opinion text.</p>
+<p>Choose one path, plan briefly, write alone for a genuine 40-minute block, and save a formative portfolio draft.</p>
+</div>
+<div class="hero-meta" aria-label="Lesson details"><span class="pill">40:00 core block</span><span class="pill">One to one</span><span class="pill">Formative</span></div>
+</header>
+<main id="main">
+<div class="deck-layout">
+<div class="nav-slot nav-left" id="navLeft"><button id="prevBtn" class="nav" type="button" aria-label="Go to previous slide">Back</button></div>
+<section class="deck-shell" id="deckShell" aria-label="Lesson presentation">
+<div class="deck-topbar">
+<div id="slideCount" class="slide-count" aria-live="polite">Slide 1 of 17</div>
+<div class="deck-actions"><button id="fullscreenBtn" class="btn secondary" type="button" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button></div>
+</div>
+<div id="slideLive" class="sr-only" aria-live="polite"></div>
+<div class="path-tracker" aria-label="Final writing tracker">
+<div class="tracker-item">Path <strong id="trackerPath">Not chosen</strong></div>
+<div class="tracker-item">Target <strong id="trackerTarget">Choose Activity 1</strong></div>
+<div class="tracker-item">Words <strong id="trackerWords">0</strong></div>
+<div class="tracker-item">Timer <strong id="trackerTimer">40:00</strong></div>
+</div>
+<section id="deck" class="deck" role="region" aria-roledescription="carousel" aria-label="Day 28 lesson slides">
+<div id="slides">
+<section class="slide active" data-title="Cover: Day 28 final writing" aria-labelledby="coverTitle">
+<div class="cover-grid">
+<div class="cover-main">
+<h2 id="coverTitle" tabindex="-1">Choose your task. Then write independently.</h2>
+<p class="topic">One path only. One genuine 40:00 block. One formative draft.</p>
+<div class="path-cards" aria-label="Final task choices">
+<div class="path-card"><strong>IELTS Task 2</strong>250 words. Formal response with reasons and relevant examples.</div>
+<div class="path-card"><strong>Report section</strong>200 to 250 words. Purpose, evidence, and recommendation for a named reader.</div>
+<div class="path-card"><strong>Blog or opinion</strong>220 to 280 words. Public position, personal evidence, one limitation, and takeaway.</div>
+</div>
+<div class="note warning"><strong>Formative, not high stakes.</strong> The 40-minute draft will be discussed on Day 29. The task is designed to build independence, not to pressure you beyond the requested block.</div>
+<button id="startBtn" class="btn" type="button">Choose my path</button>
+</div>
+<section class="cover-side" aria-label="Study sources">
+<h3>Study sources</h3>
+<p class="source-links"><a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic">British Council IELTS practice</a>, <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/report-working-abroad">report guide</a>, <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/opinion-essay">opinion guide</a>, and <a href="https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/metacognition">EEF metacognition</a>.</p>
+<p>All prompts and models in this deck are original practice material, not real exam responses.</p>
+</section>
+</div>
+</section>
+<section class="slide activity" id="act1" data-title="Activity 1: Choose one path" aria-labelledby="act1Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 id="act1Title" tabindex="-1">Choose exactly one path <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">Preflight</span></div>
+<p class="hint">Choose the task you want to perform today.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="taskPath"><legend>My final writing path</legend><div class="choice-list">
+<label class="choice" for="pathIELTS"><input id="pathIELTS" type="radio" name="taskPath" value="ielts" data-correct="true" data-save><span><strong>IELTS Task 2.</strong> 250 words in 40:00.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="pathReport"><input id="pathReport" type="radio" name="taskPath" value="report" data-correct="true" data-save><span><strong>Report section.</strong> 200 to 250 words in 40:00.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="pathBlog"><input id="pathBlog" type="radio" name="taskPath" value="blog" data-correct="true" data-save><span><strong>Blog or opinion.</strong> 220 to 280 words in 40:00.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="pathReason">My reason in 5 to 12 words</label><textarea id="pathReason" data-save placeholder="This path helps me..."></textarea>
+<button class="btn" type="button" data-check="act1">Check choice</button><button class="btn secondary" type="button" data-complete="act1">Mark complete</button>
+<div id="fb-act1" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act1" hidden><summary>Answer key, available after your choice</summary><div class="key-body"><p>All three paths are valid. Choose the one that matches your current portfolio goal.</p><p>IELTS transfers exam argument skills. Report develops professional clarity. Blog develops public voice.</p></div></details>
+</section>
+<section class="slide activity" id="act2" data-title="Activity 2: Read task and audience" aria-labelledby="act2Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 id="act2Title" tabindex="-1">Read task and audience <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">Read once. Identify the real writing job.</p>
+<div class="exercise">
+<div class="prompt-box" aria-live="polite"><h3 id="activePromptTitle">Choose Activity 1 first</h3><p id="activePrompt">Your task prompt will appear here.</p></div>
+<div class="form-grid">
+<div><label for="taskReader">Reader</label><input id="taskReader" type="text" data-save autocomplete="off"></div>
+<div><label for="taskPurpose">Purpose</label><input id="taskPurpose" type="text" data-save autocomplete="off"></div>
+<div><label for="taskQuestion">Main question or decision</label><input id="taskQuestion" type="text" data-save autocomplete="off"></div>
+<div><label for="taskConstraint">Word and time rule</label><input id="taskConstraint" type="text" data-save autocomplete="off"></div>
+<div class="wide"><label for="taskUnderstanding">My understanding in one sentence</label><textarea id="taskUnderstanding" data-save placeholder="The reader needs me to..."></textarea></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act2">Save task analysis</button>
+<div id="fb-act2" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act2" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p id="keyTaskAnalysis">Choose a path in Activity 1 before using the model analysis.</p></div></details>
+</section>
+<section class="slide activity" id="act3" data-title="Activity 3: Identify success criteria" aria-labelledby="act3Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 id="act3Title" tabindex="-1">Identify success criteria <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">Choose three checks that matter most for this path.</p>
+<div class="exercise">
+<div class="note" id="activeCriteria" aria-live="polite">Choose a path to load the criteria.</div>
+<div class="form-grid">
+<div><label for="criterion1">My first check</label><input id="criterion1" type="text" data-save autocomplete="off"></div>
+<div><label for="criterion2">My second check</label><input id="criterion2" type="text" data-save autocomplete="off"></div>
+<div><label for="criterion3">My third check</label><input id="criterion3" type="text" data-save autocomplete="off"></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act3">Save success criteria</button>
+<div id="fb-act3" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act3" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p id="keyCriteria">IELTS prioritises task response, position, reasons, examples, and organisation. Report prioritises purpose, evidence, objective findings, and recommendation. Blog prioritises position, personal evidence, one limitation, and takeaway.</p><p>Do not make grammar the first check unless accuracy is the only current goal.</p></div></details>
+</section>
+<section class="slide activity" id="act4" data-title="Activity 4: Choose relevant evidence" aria-labelledby="act4Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 id="act4Title" tabindex="-1">Choose relevant evidence <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">One or two details are enough. Use only what proves your point.</p>
+<div class="exercise">
+<div class="form-grid">
+<div><label for="evidenceChoice">My evidence item 1</label><input id="evidenceChoice" type="text" data-save autocomplete="off" placeholder="30-day audit, K3, portfolio revision..."></div>
+<div><label for="evidenceChoice2">My evidence item 2, optional</label><input id="evidenceChoice2" type="text" data-save autocomplete="off" placeholder="90+, 10 teams, 20%..."></div>
+<div class="wide"><label for="evidenceLink">How item 1 proves the main point</label><textarea id="evidenceLink" data-save placeholder="This matters because..."></textarea></div>
+<div class="wide"><label for="evidenceLink2">How item 2 proves the main point</label><textarea id="evidenceLink2" data-save placeholder="Or explain why I will not use it."></textarea></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act4">Save evidence choices</button>
+<div id="fb-act4" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act4" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>There is no single correct evidence set. The audit and K3 can support safety, risk interpretation, or technical reporting. Training, mentoring, and funding figures can support communication or leadership when the link is clear. A portfolio before and after can prove growth or revision.</p><p>Relevance beats quantity. Do not use an item just to make the response sound impressive.</p></div></details>
+</section>
+<section class="slide activity" id="act5" data-title="Activity 5: Make a five-minute plan" aria-labelledby="act5Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 id="act5Title" tabindex="-1">Make a five-minute plan <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">5 minutes</span></div>
+<p class="hint">Plan the route, not every sentence.</p>
+<div class="exercise">
+<div class="plan-template" id="activePlanGuide" aria-live="polite">Choose a path to load the planning guide.</div>
+<div class="form-grid">
+<div class="wide"><label for="planMain">1. Main answer, position, or purpose</label><input id="planMain" type="text" data-save autocomplete="off"></div>
+<div><label for="planPoint1">2. First reason or finding</label><input id="planPoint1" type="text" data-save autocomplete="off"></div>
+<div><label for="planEvidence">3. Evidence</label><input id="planEvidence" type="text" data-save autocomplete="off"></div>
+<div><label for="planPoint2">4. Second reason or finding</label><input id="planPoint2" type="text" data-save autocomplete="off"></div>
+<div class="wide"><label for="planFinal">5. Recommendation, conclusion, or takeaway</label><input id="planFinal" type="text" data-save autocomplete="off"></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act5">Stop planning and save</button>
+<div id="fb-act5" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act5" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>A useful plan names one main answer, two developed points or findings, relevant evidence, and a clear final move.</p><p>IELTS: position, two reasons, examples, conclusion. Report: purpose, two evidence points, recommendation. Blog: position, experience, limitation, takeaway.</p></div></details>
+</section>
+<section class="slide activity" id="act6" data-title="Activity 6: Organise paragraphs" aria-labelledby="act6Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 id="act6Title" tabindex="-1">Organise paragraphs <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">Use the process-genre structure, not a mixed template.</p>
+<div class="exercise">
+<label for="pathStructure">Best structure for my path</label><select id="pathStructure" class="answer-select" data-correct="" data-mark-for="a6mark" data-save><option value="">Choose one</option><option value="ielts">Position | reason + example | reason + example | conclusion</option><option value="report">Purpose + evidence | finding + meaning | recommendation</option><option value="blog">Hook + position | experience + reason | limitation + response | takeaway</option></select><span id="a6mark" class="inline-mark" aria-live="polite"></span>
+<label for="structureReason">Why this structure fits the reader</label><textarea id="structureReason" data-save placeholder="Each section..."></textarea>
+<button class="btn" type="button" data-check="act6">Check structure</button><button class="btn secondary" type="button" data-complete="act6">Mark complete</button>
+<div id="fb-act6" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act6" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>IELTS: position, two developed reasons with examples, conclusion.</p><p>Report: purpose and evidence, findings, recommendation.</p><p>Blog: hook and position, personal evidence, limitation and response, takeaway.</p><p>A short report section may use three paragraphs. Do not add a new recommendation in an IELTS conclusion.</p></div></details>
+</section>
+<section class="slide activity" id="act7" data-title="Activity 7: Retrieve language moves" aria-labelledby="act7Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 id="act7Title" tabindex="-1">Retrieve your strongest moves <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">No new lesson. Recall what already works.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="moveSet"><legend>Which set should Annisa use?</legend><div class="choice-list">
+<label class="choice" for="moveA"><input id="moveA" type="radio" name="moveSet" value="a" data-correct="false" data-save><span>List every process fact, use one voice for every genre, and avoid limitations.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="moveB"><input id="moveB" type="radio" name="moveSet" value="b" data-correct="true" data-save><span>State the main point, connect evidence to a reason, admit a real limitation, and end clearly.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="moveRecall">The strongest move I will use in this path</label><textarea id="moveRecall" data-save placeholder="I will use... because..."></textarea>
+<button class="btn" type="button" data-check="act7">Check retrieval</button><button class="btn secondary" type="button" data-complete="act7">Mark complete</button>
+<div id="fb-act7" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act7" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> These moves transfer across Annisa's strongest texts.</p><p>Not every path needs equal space for every move. A formal report may not need a limitation. A blog or argument usually benefits from one.</p></div></details>
+</section>
+<section class="slide activity" id="act8" data-title="Activity 8: Set self-monitoring points" aria-labelledby="act8Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 id="act8Title" tabindex="-1">Plan silent self-checks <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">1 minute</span></div>
+<p class="hint">Look, check, continue. The teacher will not interrupt.</p>
+<div class="exercise">
+<div class="form-grid">
+<div><label for="monitor20">At 20:00 I will check</label><input id="monitor20" type="text" data-save value="Am I answering the chosen task?"></div>
+<div><label for="monitor10">At 10:00 I will check</label><input id="monitor10" type="text" data-save value="Do I have a clear main point and enough evidence?"></div>
+<div><label for="monitor5">At 05:00 I will check</label><input id="monitor5" type="text" data-save value="Is the order clear? What must I cut or add?"></div>
+<div class="wide"><label for="pauseRule">I will pause only for</label><input id="pauseRule" type="text" data-save value="health, access, or task wording"></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act8">Save self-monitoring plan</button>
+<div id="fb-act8" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act8" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>At 20 minutes, check task response and main point. At 10 minutes, check evidence and order. At 5 minutes, stop adding new ideas and prepare to save.</p><p>These are silent self-checks. Pause only for health, access, or genuine task wording confusion. The teacher does not ask for content during the block.</p></div></details>
+</section>
+<section class="slide activity" id="act9" data-title="Activity 9: Complete preflight" aria-labelledby="act9Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 id="act9Title" tabindex="-1">Complete preflight <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">Final check</span></div>
+<p class="hint">Resolve access and task questions now.</p>
+<div class="exercise">
+<div class="checklist">
+<label class="check-item" for="a9c1"><input id="a9c1" type="checkbox" data-save><span>I chose one path.</span></label>
+<label class="check-item" for="a9c2"><input id="a9c2" type="checkbox" data-save><span>I understand the prompt and reader.</span></label>
+<label class="check-item" for="a9c3"><input id="a9c3" type="checkbox" data-save><span>I know the word range.</span></label>
+<label class="check-item" for="a9c4"><input id="a9c4" type="checkbox" data-save><span>My five-minute plan is saved.</span></label>
+<label class="check-item" for="a9c5"><input id="a9c5" type="checkbox" data-save><span>My writing area is open.</span></label>
+<label class="check-item" for="a9c6"><input id="a9c6" type="checkbox" data-save><span>Notifications are silenced.</span></label>
+<label class="check-item" for="a9c7"><input id="a9c7" type="checkbox" data-save><span>I know the teacher will remain silent.</span></label>
+</div>
+<button class="btn secondary" type="button" data-complete="act9">Ready for writing</button>
+<div id="fb-act9" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act9" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>All seven items should be ready before Start.</p><p>The only permitted interruption after Start is health, access, or task wording clarification. If the task is clear, begin.</p></div></details>
+</section>
+<section class="slide activity" id="act10" data-title="Activity 10: Agree on writing rules" aria-labelledby="act10Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 id="act10Title" tabindex="-1">Agree on the writing block <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">Final protocol</span></div>
+<p class="hint">Read the protocol before starting.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="blockRule"><legend>Which statement is correct?</legend><div class="choice-list">
+<label class="choice" for="ruleA"><input id="ruleA" type="radio" name="blockRule" value="a" data-correct="false" data-save><span>The teacher will correct my writing and open models during the countdown.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="ruleB"><input id="ruleB" type="radio" name="blockRule" value="b" data-correct="true" data-save><span>I write alone, keys stay locked, and the teacher stays silent except for health, access, or task wording.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="ruleC"><input id="ruleC" type="radio" name="blockRule" value="c" data-correct="false" data-save><span>I must finish a polished final copy in 40 minutes with no saving time.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="formativeNote">One sentence that helps me feel ready</label><textarea id="formativeNote" data-save placeholder="This is formative because..."></textarea>
+<button class="btn" type="button" data-check="act10">Check rule</button><button class="btn secondary" type="button" data-complete="act10">Mark complete</button>
+<div id="fb-act10" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act10" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> The block is independent and formative.</p><p>The teacher stays silent except for health, access, or task wording. No models or keys appear while the timer runs. Day 29 is the feedback conversation.</p></div></details>
+</section>
+<section class="slide activity" id="act11" data-title="Activity 11: Write independently for 40 minutes" aria-labelledby="act11Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">11</div><h2 id="act11Title" tabindex="-1">Write independently for 40:00 <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">Core block</span></div>
+<p class="hint">The teacher will remain silent. Use only silent self-checks.</p>
+<div class="exercise">
+<div class="note warning"><strong>Independent writing warning:</strong> Start begins a real 40-minute block. All answer keys will be hidden while it runs. Pause only for health, access, or task wording.</div>
+<div id="timerPanel" class="timer-panel" aria-label="Independent writing timer">
+<div id="timerDisplay" class="timer-display" role="timer" aria-live="off" aria-label="40 minutes remaining">40:00</div>
+<div id="timerStatus" class="timer-status" role="status" aria-live="polite">Ready. Choose a path and finish preflight before Start.</div>
+<div class="timer-actions">
+<button id="timerStart" class="btn timer-btn" type="button" aria-pressed="false">Start</button>
+<button id="timerPause" class="btn timer-btn secondary" type="button" disabled>Pause</button>
+<button id="timerReset" class="btn timer-btn secondary" type="button">Reset</button>
+</div>
+<p class="timer-warning">Timer status: <span id="timerStateText">Ready</span>. Formative portfolio draft.</p>
+<div class="checkpoints" aria-label="Silent self-check prompts"><div class="checkpoint"><strong>20:00</strong>Task and main point</div><div class="checkpoint"><strong>10:00</strong>Evidence and order</div><div class="checkpoint"><strong>05:00</strong>Cut, finish, save</div></div>
+</div>
+<label for="finalDraft">My final writing draft</label><textarea id="finalDraft" data-save style="min-height:430px" placeholder="Start writing when the timer begins."></textarea>
+<div id="wcFinal" class="word-count" aria-live="polite">Words: 0. Choose a path to load the target.</div>
+<button class="btn" type="button" data-check="act11">Compare after the block</button><button class="btn secondary" type="button" data-complete="act11">Finish writing block</button>
+<div id="fb-act11" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act11" hidden><summary>Original path model, available after the attempt and timer stop</summary><div class="key-body">
+<div id="modelIELTS" class="model-copy" hidden><h3>IELTS model, 250 words</h3><p>Some universities treat safety as a separate topic near the end of an engineering degree. I strongly disagree. Safety should be a core thread in every engineering programme because engineers create systems that affect people, equipment, and the environment. First, safety gives students a reason to question technical data. During a 30-day heat-exchanger audit at Pertamina RU IV, I learned that a number is not only a result. It can be a warning. If students connect this habit to their maths, chemistry, and design work, they will understand why accurate data matters and why assumptions must be checked. Second, early safety teaching can improve professional judgement. A K3 safety certificate is useful, but a list of rules is not enough. Students should practise identifying hazards, explaining risk, and proposing safer design changes. These skills help them communicate with engineers and supervisors later in their careers. Some people may argue that safety reduces time available for technical design. This concern has some validity, since engineering degrees already cover a wide range of subjects. However, safety does not need to be a separate long course. It can be taught through lab decisions, case studies, design reviews, and equipment problems. In this approach, students practise technical content while learning to consider people and consequences. Therefore, universities should make safety a core part of every engineering degree. The goal is not to produce more rules to memorise. It is to train engineers who see risk, ask questions, and design systems responsibly from the beginning.</p></div>
+<div id="modelReport" class="model-copy" hidden><h3>Report model, 209 words</h3><p>Recommendations for Process Engineering Training Manager. Purpose: This report recommends a practical reporting session for process engineers. Evidence base: a 30-day heat-exchanger fouling audit at Pertamina RU IV, a K3 safety certificate, later training with more than 90 students, and mentoring of 10 teams. The audit showed that strong technical work also needs clear communication. Data from a 30-day period had to be explained to senior engineers, with uncertainty and safety implications made visible. Training students to connect evidence to a decision can therefore improve communication and confidence in technical teams. The recommended session has three parts. First, learners will identify the purpose and named reader. Second, they will separate measurements from assumptions and connect each finding to relevant safety or process evidence. Third, they will write one recommendation that states the action, responsible role, and timing. I recommend one 60-minute workshop followed by one reviewed sample report. This format is short enough for a busy engineering team, but it gives learners a complete writing cycle: purpose, evidence, judgement, and action. The K3 certificate can support safety questions, while the audit and mentoring experience provide authentic process context. The training manager should pilot the session with one group, collect the strongest report, and revise unclear instructions before wider use.</p></div>
+<div id="modelBlog" class="model-copy" hidden><h3>Blog model, 275 words</h3><p>Engineering students spend months solving technical problems, but many leave university with little practice explaining those problems to other people. I believe process engineering programmes should include more authentic technical writing. A report is not an exercise placed after the design work. It is part of the design work. During a 30-day heat-exchanger fouling audit at Pertamina RU IV, I had to turn operating readings into a short report for senior engineers. The calculations mattered, but the reader also needed to know the purpose, the limits of the data, the safety implications, and the recommended next step. This experience changed how I saw writing. Clear language helped me check my own reasoning. If an explanation is weak, the underlying thinking may also be weak. Writing also helps engineers work with others. As a lab assistant, I later trained more than 90 students, and mentoring 10 teams showed me how many decisions depend on clear instructions and shared evidence. Strong technical work has little value if another engineer cannot act on it. One concern is time. Adding separate writing lessons could reduce design or laboratory practice. That risk is real, but the answer is not to ignore communication. Writing can be taught through the existing work: one report section, one design explanation, one peer review, and one revision. These micro-tasks use the same evidence the students already produce. Process engineering education should not treat writing as an optional skill. Engineers create systems that affect people, equipment, and the environment. They need to explain those systems with enough clarity for others to act safely. Teach technical writing throughout the degree, and the whole engineering team becomes stronger.</p></div>
+<p>All models are original practice material, not real exam responses or public learner work. Compare only after writing and feedback on Annisa's own draft.</p>
+</div></details>
+</section>
+<section class="slide activity" id="act12" data-title="Activity 12: Save and stop" aria-labelledby="act12Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">12</div><h2 id="act12Title" tabindex="-1">Save the formative draft <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">After block</span></div>
+<p class="hint">Stop. Save. Do not rewrite yet.</p>
+<div class="exercise">
+<div class="form-grid">
+<div><label for="savedFileName">File name</label><input id="savedFileName" type="text" data-save value="Day 28 Final Draft v1"></div>
+<div><label for="savedPath">Chosen path</label><input id="savedPath" type="text" data-save></div>
+<div><label for="savedWordCount">Word count</label><input id="savedWordCount" type="text" data-save></div>
+<div><label for="savedStopTime">Time used or stopped at</label><input id="savedStopTime" type="text" data-save></div>
+<div class="wide"><label for="savedUncertainty">One uncertainty for Day 29</label><textarea id="savedUncertainty" data-save placeholder="I am not sure..."></textarea></div>
+</div>
+<button class="btn secondary" type="button" data-complete="act12">Save and stop</button>
+<div id="fb-act12" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act12" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>Save the complete first draft before comparison or correction. Record the chosen path, word count, stopping point, and one uncertainty.</p><p>If the word range is missed, record the gap. Do not force a second 40-minute block today.</p></div></details>
+</section>
+<section class="slide activity" id="act13" data-title="Activity 13: Self-check the draft" aria-labelledby="act13Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">13</div><h2 id="act13Title" tabindex="-1">Self-check the draft <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">After block</span></div>
+<p class="hint">Check what is present. Record what is not.</p>
+<div class="exercise">
+<div class="checklist">
+<label class="check-item" for="a13c1"><input id="a13c1" type="checkbox" data-save><span>I answered the chosen prompt.</span></label>
+<label class="check-item" for="a13c2"><input id="a13c2" type="checkbox" data-save><span>My main point is clear early.</span></label>
+<label class="check-item" for="a13c3"><input id="a13c3" type="checkbox" data-save><span>My evidence is relevant.</span></label>
+<label class="check-item" for="a13c4"><input id="a13c4" type="checkbox" data-save><span>Each paragraph has one job.</span></label>
+<label class="check-item" for="a13c5"><input id="a13c5" type="checkbox" data-save><span>The style fits the chosen path.</span></label>
+<label class="check-item" for="a13c6"><input id="a13c6" type="checkbox" data-save><span>The word count fits the path.</span></label>
+<label class="check-item" for="a13c7"><input id="a13c7" type="checkbox" data-save><span>I recorded one uncertainty.</span></label>
+</div>
+<label for="checkStrength">One strength</label><input id="checkStrength" type="text" data-save autocomplete="off">
+<label for="checkQuestion">One question for Day 29</label><textarea id="checkQuestion" data-save placeholder="I want feedback on..."></textarea>
+<button class="btn secondary" type="button" data-complete="act13">Save self-check</button>
+<div id="fb-act13" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act13" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>Use path criteria before grammar. A strong self-check identifies one strength and one real question.</p><p>If a box is false, record the gap. The next action is one edit, not a complete rewrite.</p></div></details>
+</section>
+<section class="slide activity" id="act14" data-title="Activity 14: Choose one edit" aria-labelledby="act14Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">14</div><h2 id="act14Title" tabindex="-1">Choose one high-value edit <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">After block</span></div>
+<p class="hint">One sentence or paragraph. One reason.</p>
+<div class="exercise">
+<label for="editType">Best edit for this draft</label><select id="editType" data-save><option value="">Choose one</option><option value="main-early">Move the main point earlier</option><option value="evidence-link">Add one relevant evidence link</option><option value="cut-detail">Remove one irrelevant detail</option><option value="recommendation">Make the recommendation clearer</option><option value="language">Fix one repeated language problem</option></select>
+<label for="editBefore">Original sentence or paragraph</label><textarea id="editBefore" data-save></textarea>
+<label for="editAfter">My improved version</label><textarea id="editAfter" data-save></textarea>
+<label for="editWhy">Why this helps the chosen task</label><textarea id="editWhy" data-save></textarea>
+<button class="btn secondary" type="button" data-complete="act14">Save one edit</button>
+<div id="fb-act14" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act14" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>The best edit depends on the draft. It should improve task response, evidence, organisation, or reader clarity.</p><p>Do not choose a comma correction if the reader cannot find the main point. Keep the rest unchanged for Day 29 feedback.</p></div></details>
+</section>
+<section class="slide activity" id="act15" data-title="Activity 15: Hand off to Day 29" aria-labelledby="act15Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">15</div><h2 id="act15Title" tabindex="-1">Hand off to Day 29 <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">Feedback next</span></div>
+<p class="hint">Save the draft and the question you want answered first.</p>
+<div class="exercise">
+<div class="checklist">
+<label class="check-item" for="a15c1"><input id="a15c1" type="checkbox" data-save><span>Chosen path saved.</span></label>
+<label class="check-item" for="a15c2"><input id="a15c2" type="checkbox" data-save><span>Prompt saved.</span></label>
+<label class="check-item" for="a15c3"><input id="a15c3" type="checkbox" data-save><span>Day 28 Final Draft v1 saved.</span></label>
+<label class="check-item" for="a15c4"><input id="a15c4" type="checkbox" data-save><span>Word count and stopping time saved.</span></label>
+<label class="check-item" for="a15c5"><input id="a15c5" type="checkbox" data-save><span>Self-check and one edit saved.</span></label>
+<label class="check-item" for="a15c6"><input id="a15c6" type="checkbox" data-save><span>One uncertainty saved.</span></label>
+</div>
+<label for="day29Priority">The first question I want answered on Day 29</label><textarea id="day29Priority" data-save placeholder="What does the reader need me to improve first?"></textarea>
+<button class="btn secondary" type="button" data-complete="act15">Finish and hand off</button>
+<div id="fb-act15" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act15" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>Day 29 needs the complete draft and process evidence, not only the polished edit.</p><p>Feedback should start with reader effect, then task response, organisation, evidence, and language. The live block is formative and remains valuable even if one criterion is not yet strong.</p></div></details>
+</section>
+<section class="slide" id="results" data-title="Results and saved final draft" aria-labelledby="resultsTitle" role="group" aria-roledescription="slide" hidden>
+<div class="results">
+<h2 id="resultsTitle" tabindex="-1">Your final writing progress</h2>
+<p id="resultMessage">Complete all 15 activities to finish the lesson.</p>
+<div class="score-grid">
+<div class="score-box"><strong id="resultXp">0</strong><span>XP earned</span></div>
+<div class="score-box"><strong id="resultDone">0/15</strong><span>Activities complete</span></div>
+<div class="score-box"><strong id="resultStreak">0</strong><span>Best streak</span></div>
+</div>
+<div class="result-summary"><p><strong>Chosen path:</strong> <span id="resultPath">Not chosen</span></p><p><strong>Prompt:</strong> <span id="resultPrompt">Not chosen</span></p><p><strong>Draft words:</strong> <span id="resultWords">0</span></p><p><strong>Day 29 next step:</strong> <span id="resultFeedback">Not chosen</span></p></div>
+<button id="copyDraftBtn" class="btn" type="button">Copy final draft</button>
+<div id="copyDraftStatus" class="feedback" aria-live="polite"></div>
+<div id="savedFinalDraft" class="result-copy" aria-label="Your saved final draft"></div>
+</div>
+</section>
+</div>
+<nav id="navInside" class="nav-inside" aria-label="Slide navigation below content"></nav>
+</section>
+<div class="toc-row"><label for="tocSelect">Go to slide</label><select id="tocSelect"></select></div>
+<p class="keyboard-tip">Use Back and Next. On a keyboard, use the Left and Right Arrow keys when you are not typing.</p>
+</section>
+<div class="nav-slot nav-right" id="navRight"><button id="nextBtn" class="nav" type="button" aria-label="Go to next slide">Next</button></div>
+</div>
+</main>
+<footer>Day 28 Final Writing. 15 tasks. Essentials only.<p style="margin-top:.3rem;"><a href="../../index.html#b2-exam" style="color:var(--accent)">All B2 Exam-oriented lessons</a></p><p>Study sources: <a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-english-practice-tests/writing/academic">British Council IELTS</a>, <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/report-working-abroad">British Council report guide</a>, <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/opinion-essay">British Council opinion guide</a>, and <a href="https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/metacognition">EEF metacognition</a>. Prompts and models are original practice material.</footer>
+<script>
+var STORAGE_KEY="day28FinalWritingV1";
+var TOTAL=15;
+var state={answers:{},done:{},revealed:{},scored:{},passed:{},xp:0,streak:0,best:0,current:0,timer:{remaining:2400,running:false,endAt:null,started:false,checkpoints:{}}};
+var slides=Array.prototype.slice.call(document.querySelectorAll("#slides .slide"));
+var activities=Array.prototype.slice.call(document.querySelectorAll(".slide.activity"));
+var controls=Array.prototype.slice.call(document.querySelectorAll("[data-save]"));
+var current=0;
+var saveTimer;
+var timerRunning=false;
+var timerInterval=null;
+var paths={
+ ielts:{label:"IELTS Task 2",target:"250 words",min:250,max:300,constraint:"250-word target, official minimum 250, 40:00",prompt:"Some people believe that safety should be a core part of every engineering degree, while others think it should remain a separate specialist subject. To what extent do you agree or disagree? Give reasons and include relevant examples from your own knowledge or experience.",reader:"IELTS examiner",purpose:"Answer an argument question with a clear position, developed reasons, and relevant examples",question:"To what extent do you agree or disagree?",criteria:"IELTS success: clear position, two developed reasons, relevant examples, coherent paragraphs, formal task response, 250-word target.",planGuide:"IELTS plan: position | reason + example | reason + example | conclusion. Address the exact question.",structure:"ielts"},
+ report:{label:"Report section",target:"200 to 250 words",min:200,max:250,constraint:"200 to 250 words, 40:00",prompt:"Write a report section for the Process Engineering Training Manager. Recommend one practical technical writing session for process engineers. Use relevant evidence from your experience. Include purpose, evidence, and a clear recommendation for the named reader.",reader:"Process Engineering Training Manager",purpose:"Use evidence to recommend a practical training action the manager can approve or reject",question:"What should the manager do, and why?",criteria:"Report success: clear purpose, relevant evidence, objective findings, a practical recommendation, formal reader-focused style, 200 to 250 words.",planGuide:"Report plan: purpose + evidence | finding + meaning | recommendation. Keep the voice mostly objective.",structure:"report"},
+ blog:{label:"Blog or opinion text",target:"220 to 280 words",min:220,max:280,constraint:"220 to 280 words, 40:00",prompt:"Process engineering programmes should include more authentic technical writing. Write a public opinion blog for an engineering audience. State your position, use personal evidence, acknowledge one limitation, and end with a clear takeaway.",reader:"Public engineering reader",purpose:"Present a clear public argument that helps readers consider authentic technical writing",question:"Why should process engineering programmes include more real writing?",criteria:"Blog success: clear public position, personal evidence with reason, one fair limitation and response, natural voice, clear takeaway, 220 to 280 words.",planGuide:"Blog plan: hook + position | experience + reason | limitation + response | takeaway. Keep Annisa's real voice.",structure:"blog"}
+};
+try{var saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(saved&&typeof saved==="object"){state.answers=saved.answers||{};state.done=saved.done||{};state.revealed=saved.revealed||{};state.scored=saved.scored||{};state.passed=saved.passed||{};state.xp=Number(saved.xp)||0;state.streak=Number(saved.streak)||0;state.best=Number(saved.best)||0;state.current=Number(saved.current)||0;state.timer=Object.assign({remaining:2400,running:false,endAt:null,started:false,checkpoints:{}},saved.timer||{});}}catch(error){}
+function countWords(text){var clean=(text||"").trim();return clean?clean.split(/\s+/).length:0;}
+function selectedPath(){var input=document.querySelector('input[name="taskPath"]:checked');return input?input.value:"";}
+function pathConfig(){return paths[selectedPath()]||null;}
+function captureAnswers(){state.answers={};controls.forEach(function(control){state.answers[control.id]=(control.type==="radio"||control.type==="checkbox")?control.checked:control.value;});}
+function persist(){captureAnswers();state.current=current;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));document.getElementById("saveStatus").textContent="Saved on this device";}catch(error){document.getElementById("saveStatus").textContent="Saved for this visit only";}}
+function queueSave(){document.getElementById("saveStatus").textContent="Saving...";clearTimeout(saveTimer);saveTimer=setTimeout(persist,250);}
+function restoreAnswers(){controls.forEach(function(control){if(!Object.prototype.hasOwnProperty.call(state.answers,control.id))return;if(control.type==="radio"||control.type==="checkbox"){control.checked=Boolean(state.answers[control.id]);}else{control.value=state.answers[control.id];}});}
+function setFeedback(id,message,type){var box=document.getElementById("fb-"+id);if(!box)return;box.textContent=message;box.className="feedback"+(type?" "+type:"");}
+function setHud(){var done=Object.keys(state.done).filter(function(id){return state.done[id];}).length;var percent=Math.round(done/TOTAL*100);document.getElementById("xpValue").textContent=state.xp;document.getElementById("streakValue").textContent=state.streak;document.getElementById("doneLabel").textContent=done+" of "+TOTAL+" complete";document.getElementById("progressPercent").textContent=percent+"%";document.getElementById("progressFill").style.width=percent+"%";document.getElementById("progressBar").setAttribute("aria-valuenow",String(done));document.getElementById("resultXp").textContent=state.xp;document.getElementById("resultDone").textContent=done+"/"+TOTAL;document.getElementById("resultStreak").textContent=state.best;document.getElementById("resultsTitle").textContent=done===TOTAL?"Final draft saved, Annisa":"Your final writing progress";document.getElementById("resultMessage").textContent=done===TOTAL?"Your formative draft and Day 29 feedback question are saved.":"Complete all 15 activities to finish the lesson.";}
+function awardActivity(id,success){if(success){state.passed[id]=true;}if(!state.scored[id]){state.scored[id]=true;state.xp+=10;if(success){state.streak+=1;state.best=Math.max(state.best,state.streak);}}}
+function updateAllKeyVisibility(){document.querySelectorAll("details.answer-key").forEach(function(key){var id=key.getAttribute("data-key-for");key.hidden=timerRunning||!state.revealed[id];});}
+function unlockKey(id){state.revealed[id]=true;var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=timerRunning;updateAllKeyVisibility();}
+function controlHasResponse(control){if(control.type==="checkbox")return control.checked;return Boolean(control.value.trim());}
+function activityHasResponse(id){var section=document.getElementById(id);if(!section)return false;var radioGroups={};var complete=true;section.querySelectorAll("[data-save]").forEach(function(control){if(control.type==="radio"){if(!Object.prototype.hasOwnProperty.call(radioGroups,control.name))radioGroups[control.name]=false;if(control.checked)radioGroups[control.name]=true;}else if(!controlHasResponse(control)){complete=false;}});return complete&&Object.keys(radioGroups).every(function(name){return radioGroups[name];});}
+function markSelect(select,message,type){select.classList.remove("correct","wrong");select.classList.add(type==="ok"?"correct":"wrong");select.setAttribute("aria-invalid",type==="ok"?"false":"true");var mark=document.getElementById(select.getAttribute("data-mark-for"));if(mark){mark.textContent=message;mark.className="inline-mark "+type;}}
+function markChoiceLabels(group){group.querySelectorAll("label.choice").forEach(function(label){label.classList.remove("correct","wrong");var mark=label.querySelector(".item-mark");if(mark){mark.textContent="";mark.className="item-mark";}});var selected=group.querySelector("input:checked");if(!selected)return false;var selectedLabel=selected.closest("label");if(selected.getAttribute("data-correct")==="true"){selectedLabel.classList.add("correct");selectedLabel.querySelector(".item-mark").textContent="Correct";selectedLabel.querySelector(".item-mark").className="item-mark ok";return true;}selectedLabel.classList.add("wrong");selectedLabel.querySelector(".item-mark").textContent="Try again";selectedLabel.querySelector(".item-mark").className="item-mark no";var correct=group.querySelector('input[data-correct="true"]');if(correct){var correctLabel=correct.closest("label");correctLabel.classList.add("correct");correctLabel.querySelector(".item-mark").textContent="Correct answer";correctLabel.querySelector(".item-mark").className="item-mark ok";}return false;}
+function checkActivity(id){var section=document.getElementById(id);if(!section)return;if(timerRunning){setFeedback(id,"Answer keys stay locked during the independent 40-minute block. Stop or pause the timer before checking.","bad");return;}if(!activityHasResponse(id)){setFeedback(id,"Finish every box before you check. Your answers are saved.","bad");return;}if(id==="act11"){var words=countWords(document.getElementById("finalDraft").value);if(!state.timer.started||words===0){setFeedback(id,"Write a draft and start the timer before comparing.","bad");return;}}var ok=true;var graded=false;section.querySelectorAll("select[data-correct]").forEach(function(select){if(!select.getAttribute("data-correct"))return;graded=true;var correct=select.value===select.getAttribute("data-correct");markSelect(select,correct?"Correct":"Try again",correct?"ok":"no");if(!correct)ok=false;});section.querySelectorAll(".mcq").forEach(function(group){graded=true;if(!markChoiceLabels(group))ok=false;});if(ok){awardActivity(id,true);unlockKey(id);setFeedback(id,"Correct. Your saved work is ready for the next step.","good");}else if(graded){state.streak=0;unlockKey(id);setFeedback(id,"Some choices need another try. Your key is unlocked.","bad");}else{unlockKey(id);setFeedback(id,"Your key is unlocked. Continue to the next activity.","");}setHud();persist();}
+function completionMessage(id){
+ if(id==="act1"){return selectedPath()&&countWords(document.getElementById("pathReason").value)>=5?"":"Choose one path and explain why in at least five words.";}
+ if(id==="act2"){var ids2=["taskReader","taskPurpose","taskQuestion","taskConstraint"];for(var a=0;a<ids2.length;a++){if(countWords(document.getElementById(ids2[a]).value)<2)return "Complete reader, purpose, question, and constraint.";}if(countWords(document.getElementById("taskUnderstanding").value)<6)return "Write one sentence explaining the task.";return "";}
+ if(id==="act3"){var ids3=["criterion1","criterion2","criterion3"];for(var b=0;b<ids3.length;b++){if(countWords(document.getElementById(ids3[b]).value)<2)return "Write three success checks.";}return "";}
+ if(id==="act4"){if(countWords(document.getElementById("evidenceChoice").value)<2)return "Choose at least one evidence item.";if(countWords(document.getElementById("evidenceLink").value)<6)return "Explain how the evidence proves your point.";if(document.getElementById("evidenceChoice2").value.trim()&&countWords(document.getElementById("evidenceLink2").value)<4)return "Explain item 2 or remove it.";return "";}
+ if(id==="act5"){var ids5=["planMain","planPoint1","planEvidence","planPoint2","planFinal"];for(var c=0;c<ids5.length;c++){if(countWords(document.getElementById(ids5[c]).value)<2)return "Complete all five plan parts, then stop planning.";}return "";}
+ if(id==="act6"){if(!document.getElementById("pathStructure").value)return "Choose a paragraph structure.";if(countWords(document.getElementById("structureReason").value)<5)return "Explain why the structure fits the reader.";return "";}
+ if(id==="act7"){return countWords(document.getElementById("moveRecall").value)>=5?"":"Name one move you will use in this path.";}
+ if(id==="act8"){var ids8=["monitor20","monitor10","monitor5","pauseRule"];for(var d=0;d<ids8.length;d++){if(countWords(document.getElementById(ids8[d]).value)<3)return "Complete the self-monitoring plan.";}return "";}
+ if(id==="act9"){if(sectionCheckedCount("act9")<7)return "Confirm all seven preflight items.";return "";}
+ if(id==="act10"){return countWords(document.getElementById("formativeNote").value)>=5?"":"Write one sentence that helps you feel ready.";}
+ if(id==="act11"){if(!state.timer.started)return "Start the 40-minute timer before finishing the block.";if(timerRunning)return "Pause or finish the timer before marking the block complete.";if(countWords(document.getElementById("finalDraft").value)===0)return "Save at least part of your independent draft.";return "";}
+ if(id==="act12"){var config=pathConfig();if(!config)return "Choose a path in Activity 1.";var savedWords=countWords(document.getElementById("finalDraft").value);if(savedWords<config.min)return "Your draft has "+savedWords+" words. The "+config.label+" range starts at "+config.min+".";if(savedWords>config.max)return "Your draft has "+savedWords+" words. Cut to the "+config.label+" range of "+config.min+" to "+config.max+" before saving this path.";if(countWords(document.getElementById("savedFileName").value)<3)return "Name the saved file.";if(countWords(document.getElementById("savedWordCount").value)<1)return "Record the draft word count.";if(countWords(document.getElementById("savedStopTime").value)<3)return "Record the time used or stopped at.";if(countWords(document.getElementById("savedUncertainty").value)<5)return "Name one uncertainty for Day 29.";return "";}
+ if(id==="act13"){if(sectionCheckedCount("act13")<5)return "Select at least five checks and record the gaps.";if(countWords(document.getElementById("checkStrength").value)<3)return "Name one real strength.";if(countWords(document.getElementById("checkQuestion").value)<5)return "Name one question for Day 29.";return "";}
+ if(id==="act14"){if(!document.getElementById("editType").value)return "Choose one high-value edit.";if(countWords(document.getElementById("editBefore").value)<4)return "Save the original sentence or paragraph.";if(countWords(document.getElementById("editAfter").value)<4)return "Write the improved version.";if(countWords(document.getElementById("editWhy").value)<5)return "Explain why the edit helps the task.";return "";}
+ if(id==="act15"){if(sectionCheckedCount("act15")<6)return "Save all six handoff items.";if(countWords(document.getElementById("day29Priority").value)<5)return "Write the first question for Day 29.";return "";}
+ return activityHasResponse(id)?"":"Complete every box before you mark this activity complete.";
+}
+function sectionCheckedCount(id){return Array.prototype.slice.call(document.querySelectorAll('#'+id+' input[type="checkbox"]')).filter(function(input){return input.checked;}).length;}
+function markComplete(id){var section=document.getElementById(id);if(!section)return;if(state.done[id]){setFeedback(id,"Already complete. You can still edit your answers.","");return;}var problem=completionMessage(id);if(problem){setFeedback(id,problem,"bad");return;}section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");state.done[id]=true;unlockKey(id);var hasGraded=Boolean(section.querySelector(".mcq"))||id==="act6";var completionSuccess=!hasGraded||Boolean(state.passed[id]);awardActivity(id,completionSuccess);if(id==="act11"){document.querySelectorAll('input[name="taskPath"]').forEach(function(input){input.disabled=true;});}var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}setFeedback(id,"Complete. Your key is unlocked and your work is saved.","good");setHud();updateTracker();updateResults();persist();if(Object.keys(state.done).filter(function(key){return state.done[key];}).length===TOTAL){showSlide(slides.length-1,true);}}
+function formatTime(seconds){seconds=Math.max(0,Math.floor(seconds));var minutes=Math.floor(seconds/60);var rest=seconds%60;return String(minutes).padStart(2,"0")+":"+String(rest).padStart(2,"0");}
+function updateTimerDisplay(){var time=formatTime(state.timer.remaining);document.getElementById("timerDisplay").textContent=time;document.getElementById("timerDisplay").setAttribute("aria-label",Math.floor(state.timer.remaining/60)+" minutes "+(state.timer.remaining%60)+" seconds remaining");document.getElementById("trackerTimer").textContent=time;}
+function updateTimerUI(){var panel=document.getElementById("timerPanel");panel.classList.toggle("running",timerRunning);panel.classList.toggle("finished",!timerRunning&&state.timer.started&&state.timer.remaining<=0);document.getElementById("timerStart").disabled=timerRunning;document.getElementById("timerPause").disabled=!timerRunning;document.getElementById("timerStart").setAttribute("aria-pressed",timerRunning?"true":"false");updateTimerDisplay();}
+function lockKeys(){updateAllKeyVisibility();}
+function startTimer(){if(timerRunning)return;if(!selectedPath()){setFeedback("act11","Choose one path before Start.","bad");return;}if(!state.done.act9){setFeedback("act11","Complete the Activity 9 preflight before Start.","bad");return;}if(state.timer.remaining<=0)state.timer.remaining=2400;state.timer.started=true;state.timer.running=true;state.timer.endAt=Date.now()+state.timer.remaining*1000;state.timer.checkpoints=state.timer.checkpoints||{};timerRunning=true;document.getElementById("timerStatus").textContent="Running. Independent writing. All answer keys are locked.";document.getElementById("timerStateText").textContent="Running";updateTimerUI();lockKeys();clearInterval(timerInterval);timerInterval=setInterval(timerTick,250);persist();}
+function timerTick(){if(!timerRunning)return;state.timer.remaining=Math.max(0,Math.ceil((state.timer.endAt-Date.now())/1000));var checkpoints=[[1200,"20 minute check: task and main point"],[600,"10 minute check: evidence and order"],[300,"5 minute check: cut new ideas and prepare to save"]];checkpoints.forEach(function(item){if(state.timer.remaining<=item[0]&&!state.timer.checkpoints[item[0]]){state.timer.checkpoints[item[0]]=true;document.getElementById("timerStatus").textContent=item[1]+". Then continue.";}});updateTimerDisplay();if(state.timer.remaining<=0){clearInterval(timerInterval);timerRunning=false;state.timer.running=false;state.timer.endAt=null;state.timer.remaining=0;document.getElementById("timerPanel").classList.add("finished");document.getElementById("timerStatus").textContent="Time finished. Stop writing and save the draft.";document.getElementById("timerStateText").textContent="Finished";document.getElementById("savedStopTime").value="40:00";updateTimerUI();lockKeys();persist();}}
+function pauseTimer(){if(!timerRunning)return;state.timer.remaining=Math.max(0,Math.ceil((state.timer.endAt-Date.now())/1000));state.timer.running=false;state.timer.endAt=null;timerRunning=false;clearInterval(timerInterval);document.getElementById("timerStatus").textContent="Paused at "+formatTime(state.timer.remaining)+". Resume when ready.";document.getElementById("timerStateText").textContent="Paused";updateTimerUI();lockKeys();persist();}
+function resetTimer(){clearInterval(timerInterval);timerRunning=false;state.timer={remaining:2400,running:false,endAt:null,started:false,checkpoints:{}};document.getElementById("timerPanel").classList.remove("finished");document.getElementById("timerStatus").textContent="Ready. Reset to 40:00.";document.getElementById("timerStateText").textContent="Ready";updateTimerUI();lockKeys();persist();}
+function restoreTimer(){if(!state.timer)state.timer={remaining:2400,running:false,endAt:null,started:false,checkpoints:{}};if(state.timer.running&&state.timer.endAt){state.timer.remaining=Math.max(0,Math.ceil((state.timer.endAt-Date.now())/1000));if(state.timer.remaining>0){timerRunning=true;document.getElementById("timerStatus").textContent="Running after reload. Independent writing. All answer keys are locked.";document.getElementById("timerStateText").textContent="Running";updateTimerUI();lockKeys();timerInterval=setInterval(timerTick,250);}else{timerRunning=false;state.timer.running=false;state.timer.remaining=0;document.getElementById("timerStatus").textContent="Time finished. Save the draft.";document.getElementById("timerStateText").textContent="Finished";updateTimerUI();lockKeys();}}else{updateTimerUI();}}
+function updateWordCount(){var words=countWords(document.getElementById("finalDraft").value);var config=pathConfig();var message="Words: "+words+". ";if(!config){message+="Choose a path to load the target.";}else if(words<config.min){message+="Target: "+config.target+". Add "+(config.min-words)+" before saving.";}else if(words<=config.max){message+="Target: "+config.target+". On target.";}else{message+="Target: "+config.target+". Cut "+(words-config.max)+" words.";}document.getElementById("wcFinal").textContent=message;document.getElementById("savedWordCount").value=String(words);updateTracker();}
+function applyPath(){var key=selectedPath();var config=pathConfig();if(!config){document.getElementById("activePromptTitle").textContent="Choose Activity 1 first";document.getElementById("activePrompt").textContent="Your task prompt will appear here.";document.getElementById("activeCriteria").textContent="Choose a path to load the criteria.";document.getElementById("activePlanGuide").textContent="Choose a path to load the planning guide.";document.getElementById("pathStructure").setAttribute("data-correct","");["modelIELTS","modelReport","modelBlog"].forEach(function(id){document.getElementById(id).hidden=true;});updateWordCount();return;}document.getElementById("activePromptTitle").textContent=config.label+" prompt";document.getElementById("activePrompt").textContent=config.prompt;document.getElementById("activeCriteria").textContent=config.criteria;document.getElementById("activePlanGuide").textContent=config.planGuide;document.getElementById("pathStructure").setAttribute("data-correct",config.structure);document.getElementById("trackerPath").textContent=config.label;document.getElementById("trackerTarget").textContent=config.target;var modelIds={ielts:"modelIELTS",report:"modelReport",blog:"modelBlog"};["modelIELTS","modelReport","modelBlog"].forEach(function(id){document.getElementById(id).hidden=id!==modelIds[key];});document.getElementById("savedPath").value=config.label;updateWordCount();updateResults();}
+function updateTracker(){var config=pathConfig();document.getElementById("trackerPath").textContent=config?config.label:"Not chosen";document.getElementById("trackerTarget").textContent=config?config.target:"Choose Activity 1";document.getElementById("trackerWords").textContent=String(countWords(document.getElementById("finalDraft").value));document.getElementById("trackerTimer").textContent=formatTime(state.timer.remaining);}
+function updateResults(){var config=pathConfig();var words=countWords(document.getElementById("finalDraft").value);document.getElementById("resultPath").textContent=config?config.label:"Not chosen";document.getElementById("resultPrompt").textContent=config?config.prompt:"Not chosen";document.getElementById("resultWords").textContent=String(words);document.getElementById("resultFeedback").textContent=document.getElementById("day29Priority").value.trim()||"Review reader effect, task response, organisation, evidence, and language.";document.getElementById("savedFinalDraft").textContent=document.getElementById("finalDraft").value.trim()||"Your final draft will appear here after you write it.";}
+function fallbackCopyText(text){var area=document.createElement("textarea");area.value=text;area.setAttribute("readonly","");area.style.position="absolute";area.style.left="-9999px";document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();}
+function copyFinalDraft(){var text=document.getElementById("finalDraft").value;if(!text.trim()){document.getElementById("copyDraftStatus").textContent="Write the final draft first.";return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){document.getElementById("copyDraftStatus").textContent="Final draft copied.";}).catch(function(){fallbackCopyText(text);document.getElementById("copyDraftStatus").textContent="Final draft copied.";});}else{fallbackCopyText(text);document.getElementById("copyDraftStatus").textContent="Final draft copied.";}}
+function restoreProgress(){activities.forEach(function(section){var id=section.id;if(state.done[id]){section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}}if(state.revealed[id]&&!timerRunning){var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=false;}});if(state.done.act11){document.querySelectorAll('input[name="taskPath"]').forEach(function(input){input.disabled=true;});}setHud();}
+var prevBtn=document.getElementById("prevBtn");
+var nextBtn=document.getElementById("nextBtn");
+var navLeft=document.getElementById("navLeft");
+var navRight=document.getElementById("navRight");
+var navInside=document.getElementById("navInside");
+var tocSelect=document.getElementById("tocSelect");
+var slideCount=document.getElementById("slideCount");
+var slideLive=document.getElementById("slideLive");
+slides.forEach(function(slide,index){var option=document.createElement("option");option.value=String(index);option.textContent=String(index+1)+". "+(slide.getAttribute("data-title")||"Slide");tocSelect.appendChild(option);});
+function showSlide(index,focusHeading){var next=Math.max(0,Math.min(slides.length-1,index));current=next;slides.forEach(function(slide,index){var active=index===current;slide.hidden=!active;slide.classList.toggle("active",active);slide.setAttribute("aria-hidden",active?"false":"true");});prevBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;tocSelect.value=String(current);slideCount.textContent="Slide "+(current+1)+" of "+slides.length;var title=slides[current].getAttribute("data-title")||("Slide "+(current+1));slideLive.textContent=title;if(current===slides.length-1)updateResults();if(focusHeading){var heading=slides[current].querySelector("h2");if(heading)heading.focus({preventScroll:true});}queueSave();}
+var mobileMedia=window.matchMedia("(max-width: 760px)");
+function placeNavigation(){if(mobileMedia.matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}}
+function navigationChange(){placeNavigation();}
+controls.forEach(function(control){control.addEventListener("input",function(){applyPath();updateWordCount();updateResults();queueSave();});control.addEventListener("change",function(){applyPath();updateWordCount();updateResults();queueSave();});});
+document.querySelectorAll("[data-check]").forEach(function(button){button.addEventListener("click",function(){checkActivity(button.getAttribute("data-check"));});});
+document.querySelectorAll("[data-complete]").forEach(function(button){button.addEventListener("click",function(){markComplete(button.getAttribute("data-complete"));});});
+document.getElementById("timerStart").addEventListener("click",startTimer);
+document.getElementById("timerPause").addEventListener("click",pauseTimer);
+document.getElementById("timerReset").addEventListener("click",resetTimer);
+document.getElementById("copyDraftBtn").addEventListener("click",copyFinalDraft);
+prevBtn.addEventListener("click",function(){showSlide(current-1,true);});
+nextBtn.addEventListener("click",function(){showSlide(current+1,true);});
+tocSelect.addEventListener("change",function(){showSlide(Number(tocSelect.value),true);});
+document.getElementById("startBtn").addEventListener("click",function(){showSlide(1,true);});
+document.addEventListener("keydown",function(event){if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey)return;var target=event.target;if(target&&(target.isContentEditable||(typeof target.closest==="function"&&target.closest("input,textarea,select,button,summary,a"))))return;if(event.key==="ArrowRight"||event.key==="PageDown"){event.preventDefault();showSlide(current+1,true);}else if(event.key==="ArrowLeft"||event.key==="PageUp"){event.preventDefault();showSlide(current-1,true);}else if(event.key==="Home"){event.preventDefault();showSlide(0,true);}else if(event.key==="End"){event.preventDefault();showSlide(slides.length-1,true);}});
+if(mobileMedia.addEventListener){mobileMedia.addEventListener("change",navigationChange);}else if(mobileMedia.addListener){mobileMedia.addListener(navigationChange);}
+var fullscreenBtn=document.getElementById("fullscreenBtn");
+var deckShell=document.getElementById("deckShell");
+function fullscreenLabel(){var active=document.fullscreenElement===deckShell;fullscreenBtn.textContent=active?"Exit full screen":"Full screen";fullscreenBtn.setAttribute("aria-pressed",active?"true":"false");fullscreenBtn.setAttribute("aria-label",active?"Exit full screen for lesson slides":"Enter full screen for lesson slides");}
+if(document.fullscreenEnabled===false||!deckShell.requestFullscreen){fullscreenBtn.hidden=true;}else{fullscreenBtn.addEventListener("click",function(){if(document.fullscreenElement===deckShell){if(document.exitFullscreen)document.exitFullscreen();}else if(deckShell.requestFullscreen){deckShell.requestFullscreen();}});document.addEventListener("fullscreenchange",fullscreenLabel);}
+window.addEventListener("beforeunload",persist);
+restoreAnswers();applyPath();restoreTimer();restoreProgress();updateWordCount();updateResults();updateTracker();placeNavigation();showSlide(Math.max(0,Math.min(slides.length-1,state.current)),false);fullscreenLabel();persist();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Annisa Day 28 - granular LRS via proxy (mirrors Day 24 deck)
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    completed: vb('http://adlnet.gov/expapi/verbs/completed', 'completed')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({
+      verb: verb,
+      object: {
+        objectType: 'Activity',
+        id: objId,
+        definition: { name: { 'en-US': objName }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson') }
+      }
+    });
+  }
+  var OPEN_ACTS = {act2:1,act3:1,act4:1,act5:1,act8:1,act9:1,act12:1,act13:1,act14:1,act15:1};
+  var sentChecks = {};
+  document.querySelectorAll('[data-check]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-check');
+      if (OPEN_ACTS[id] || sentChecks[id]) return;
+      sentChecks[id] = true;
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      var n = 0;
+      sec.querySelectorAll('input[type=text], textarea, select, .mcq').forEach(function (item) {
+        n++;
+        var name = 'Item ' + n;
+        var stem = item.querySelector ? item.querySelector('legend, .stem') : null;
+        if (stem) name = stem.textContent.trim().replace(/\s+/g, ' ').substring(0, 80);
+        else if (item.id) name = item.id;
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + id + '/item-' + n, id + ': ' + name, 'question');
+      });
+    });
+  });
+  var doneActs = {};
+  document.querySelectorAll('[data-complete]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-complete');
+      setTimeout(function () {
+        var sec = document.getElementById(id);
+        if (!sec || !sec.classList.contains('complete')) return;
+        if (OPEN_ACTS[id] && !doneActs['_m' + id]) {
+          doneActs['_m' + id] = true;
+          sendPrecise(VERBS.marked, LESSON_ID + '/' + id, id + ' open answers', 'activity');
+        }
+        if (!doneActs[id]) {
+          doneActs[id] = true;
+          var real = Object.keys(doneActs).filter(function (k) { return k.indexOf('_m') !== 0; }).length;
+          if (real >= 15) sendPrecise(VERBS.completed, LESSON_ID, document.title, 'lesson');
+        }
+      }, 400);
+    });
+  });
+});
+</script>
+
+</body>
+</html>

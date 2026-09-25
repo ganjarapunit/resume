@@ -295,6 +295,8 @@
       { file: 'workplace-all-tenses', act: 'slide-15', fields: ['a15-script'] },
       { file: 'annisa-day26', act: 'act11', fields: ['a11Draft'] },
       { file: 'annisa-day26', act: 'act14', fields: ['a14Letter'] },
+      { file: 'annisa-day28', act: 'act11', fields: ['finalDraft'] },
+      { file: 'annisa-day27', act: 'act13', fields: ['improvedText'] },
       { file: 'annisa-day25', act: 'act14', fields: ['a14Draft'] },
       { file: 'annisa-day24', act: 'act14', fields: ['a14Draft'] },
       { file: 'annisa-day23', act: 'act13', fields: ['a13-draft'] },
@@ -415,6 +417,8 @@
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
       if (f.indexOf('workplace-all-tenses') > -1) return 'workplace-all-tenses';
       if (f.indexOf('annisa-day26') > -1) return 'annisa-day26';
+      if (f.indexOf('annisa-day28') > -1) return 'annisa-day28';
+      if (f.indexOf('annisa-day27') > -1) return 'annisa-day27';
       if (f.indexOf('annisa-day25') > -1) return 'annisa-day25';
       if (f.indexOf('annisa-day24') > -1) return 'annisa-day24';
       if (f.indexOf('annisa-day23') > -1) return 'annisa-day23';

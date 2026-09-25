@@ -436,7 +436,21 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
-    if (where.includes('day26') || where.includes('annisa-day26') || where.includes('reflection') || where.includes('future me')) {
+    if (where.includes('annisa-day28') || where.includes('day28') || where.includes('final writing')) {
+    return 'FINAL WRITING (full exam response: clear task answer, position or recommendation, relevant evidence from the portfolio, organised paragraphs, accurate language, plus one honest self-check edit). '
+      + 'Required shape: a direct opening that answers the task, body paragraphs each with one point and evidence, a final position or recommendation, '
+      + 'and one revision that improves accuracy or cohesion. Formal academic register, no copied sentences, no invented evidence. '
+      + 'Check: does the first sentence answer the actual task question? Is each paragraph one clear point with evidence? '
+      + 'Is the register academic throughout? Is the final edit explained rather than just made?';
+  }
+  if (where.includes('annisa-day27') || where.includes('day27') || where.includes('portfolio')) {
+    return 'PORTFOLIO SELECTION AND REVISION (choose five texts with evidence, diagnose one reader problem, revise one section, record the next action). '
+      + 'Required shape: every selection justified with a specific strength or weakness, a diagnosis that names the reader problem in one sentence, '
+      + 'a revision that fixes that exact problem, and one next action for the next piece of writing. Honest self-assessment, not perfection. '
+      + 'Check: is each selected text justified with evidence rather than preference? Does the diagnosis name a real reader problem? '
+      + 'Does the revision visibly fix that problem? Is the next action specific and doable?';
+  }
+  if (where.includes('day26') || where.includes('annisa-day26') || where.includes('reflection') || where.includes('future me')) {
     return 'REFLECTION (three parts: what I learned with evidence, what changed in my writing, what I will do next; plus an optional 100 to 130 word letter to future me). '
       + 'Required shape: past tense for what was done (learned, wrote, corrected), a specific example or score as evidence, one honest next action. '
       + 'No vague claims like I learned a lot, no listing every task, no blame. '
