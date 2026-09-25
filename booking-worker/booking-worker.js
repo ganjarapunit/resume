@@ -427,7 +427,21 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'micro-teach script with name it + show it + check them in 2 lines; reader kit with keep + teach-first + reusable phrase. '
       + 'Check: is there Because plus proof? Does the script name, show and check? Is the kit complete (keep + teach + phrase)?';
   }
-    if (where.includes('day24') || where.includes('annisa-day24') || where.includes('review writing') || where.includes('fair review') || where.includes('process data lab')) {
+    if (where.includes('day26') || where.includes('annisa-day26') || where.includes('reflection') || where.includes('future me')) {
+    return 'REFLECTION (three parts: what I learned with evidence, what changed in my writing, what I will do next; plus an optional 100 to 130 word letter to future me). '
+      + 'Required shape: past tense for what was done (learned, wrote, corrected), a specific example or score as evidence, one honest next action. '
+      + 'No vague claims like I learned a lot, no listing every task, no blame. '
+      + 'Check: is there a concrete piece of evidence (a score, a sentence you rewrote, a task you finished)? Is the next action small and doable? '
+      + 'Is the voice honest rather than self-critical or boastful?';
+  }
+  if (where.includes('day25') || where.includes('annisa-day25') || where.includes('blog') || where.includes('opinion text')) {
+    return 'BLOG OR OPINION TEXT (180 to 220 words: Title, Hook, clear position with I believe, supporting evidence, one real limitation, conclusion). '
+      + 'Required shape: title that states the topic, a hook in one or two sentences, a clear opinion signpost (In my opinion / I believe), '
+      + 'at least one piece of evidence or example, one fair limitation or counter-view, and a closing sentence. Balanced tone, not one-sided propaganda. '
+      + 'Check: is the position stated clearly and early? Is there real evidence rather than only opinion words? Is there a limitation or counter-argument? '
+      + 'Is it 180 to 220 words?';
+  }
+  if (where.includes('day24') || where.includes('annisa-day24') || where.includes('review writing') || where.includes('fair review') || where.includes('process data lab')) {
     return 'REVIEW WRITING (200 to 300 words, target 250: Title, Experience, Good point plus evidence, Weak point plus effect, Balanced judgment, Recommendation to a named reader). '
       + 'Required shape: title names the topic, first person experience (I took / I used / I audited), one good point with evidence, one real weak point with its effect, '
       + 'However for the weak point, balanced judgment (useful but / strong value but), I recommend this to NAMED READER because for the recommendation. '

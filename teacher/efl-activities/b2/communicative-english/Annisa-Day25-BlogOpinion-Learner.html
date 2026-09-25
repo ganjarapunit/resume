@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 25 Blog or Opinion Interactive</title>
+<style>
+:root{--bg:#080c12;--surface:#121a24;--surface-2:#192534;--deep:#05080d;--ink:#f6f8fb;--muted:#c3ceda;--accent:#ffd166;--accent-2:#5ee6c1;--good:#5ee6c1;--bad:#ff9b9b;--border:#6f7f93;--focus:#ffd166;--warn:#ffd166}
+*{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{margin:0;max-width:100%;overflow-x:hidden;background:linear-gradient(145deg,#0d1622 0,#080c12 48%,#10161e 100%);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Verdana,Arial,sans-serif;line-height:1.65}
+[hidden]{display:none!important}
+a.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+a.skip:focus{left:.5rem;top:.5rem;width:auto;height:auto;background:var(--accent);color:#071018;padding:.6rem .85rem;z-index:50;border:3px solid #fff;font-weight:bold}
+a{color:var(--accent)}
+a:visited{color:var(--accent-2)}
+button,input,textarea,select{font:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.hud{position:sticky;top:0;z-index:30;background:rgba(8,12,18,.96);border-bottom:2px solid var(--border);padding:.55rem .9rem;backdrop-filter:blur(10px)}
+.hud-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.stat{background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:.28rem .7rem;font-weight:800;font-size:.88rem;white-space:nowrap}
+.progress-wrap{flex:1 1 240px;min-width:210px}
+.progress-label{display:flex;justify-content:space-between;gap:1rem;font-size:.82rem;color:var(--muted);margin-bottom:.2rem}
+.progress-track{height:12px;background:var(--deep);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--accent-2);transition:width .35s ease}
+.save-status{font-size:.78rem;color:var(--muted)}
+.hero{max-width:1180px;margin:0 auto;padding:1.1rem 1rem .5rem;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);gap:1rem;align-items:end}
+.hero h1{font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.08;margin:0;color:#fff;letter-spacing:-.03em}
+.hero .topic{color:var(--accent-2);font-weight:800;margin:.45rem 0 0}
+.hero p{color:var(--muted);margin:.4rem 0 0;max-width:720px}
+.hero-meta{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
+.pill{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.22rem .7rem;font-size:.8rem;font-weight:800;color:var(--accent)}
+main{max-width:1180px;margin:0 auto;padding:.3rem 1rem 1.5rem}
+.deck-shell{width:100%;max-width:100%;background:rgba(18,26,36,.94);border:1px solid var(--border);border-top:4px solid var(--accent);padding:.8rem;margin:.4rem 0 0;box-shadow:0 18px 45px rgba(0,0,0,.28)}
+.deck-shell:fullscreen{background:var(--bg);border:0;padding:1rem;overflow:auto}
+.deck-topbar{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-bottom:.65rem}
+.slide-count{font-weight:900;color:var(--accent);font-size:.9rem}
+.deck-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{position:sticky;top:40vh;display:flex}
+.nav-left{justify-content:flex-end}
+.nav-right{justify-content:flex-start}
+.nav{width:100px;min-width:0;min-height:62px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:6px;font-weight:900;padding:.55rem .7rem;cursor:pointer}
+.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.nav:disabled{opacity:.38;cursor:not-allowed}
+.deck{min-width:0;max-width:100%;background:var(--surface);border:1px solid var(--border);padding:clamp(.85rem,2.5vw,1.4rem);min-height:560px;overflow-wrap:anywhere}
+.slide{min-width:0;animation:arrive .28s ease-out}
+@keyframes arrive{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.slide h2{font-size:clamp(1.3rem,3vw,2rem);line-height:1.18;margin:0;color:#fff;letter-spacing:-.02em}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.act-head{display:flex;align-items:flex-start;gap:.75rem}
+.badge{width:44px;height:44px;flex:none;display:grid;place-items:center;background:var(--accent);color:#071018;border-radius:6px;font-size:1.1rem;font-weight:900}
+.act-head h2{flex:1 1 auto;min-width:0}
+.tag{display:inline-block;background:var(--deep);border:1px solid var(--border);border-radius:999px;padding:.18rem .65rem;color:var(--accent-2);font-size:.77rem;font-weight:800;white-space:nowrap}
+.done-flag{display:none;margin-left:.4rem;color:var(--good);font-size:.78rem;letter-spacing:.04em}
+.activity.complete .done-flag{display:inline}
+.hint{color:var(--muted);font-size:.95rem;margin:.45rem 0 .8rem}
+.exercise{background:var(--deep);border:1px solid var(--border);border-left:4px solid var(--accent-2);padding:clamp(.8rem,2.5vw,1.15rem)}
+fieldset{margin:.6rem 0;padding:.75rem;border:2px solid var(--border);border-radius:6px;min-width:0}
+legend{font-weight:900;padding:0 .35rem;color:#fff}
+.choice-list{display:grid;gap:.45rem}
+.choice{display:grid;grid-template-columns:1.25rem 1fr auto;gap:.55rem;align-items:start;background:var(--surface);border:2px solid var(--border);padding:.55rem .65rem;cursor:pointer}
+.choice:hover{border-color:#a7b6c8}
+.choice input{width:1.1rem;height:1.1rem;margin:.18rem 0 0;accent-color:var(--accent-2)}
+.choice.correct{border-color:var(--good)}
+.choice.wrong{border-color:var(--bad)}
+.item-mark{font-size:.78rem;font-weight:900;align-self:center;white-space:nowrap}
+.item-mark.ok{color:var(--good)}
+.item-mark.no{color:var(--bad)}
+label{display:block;font-weight:800;font-size:.91rem;margin-bottom:.25rem}
+input[type=text],textarea,select{width:100%;max-width:100%;background:#0b1119;color:#fff;border:2px solid var(--border);border-radius:5px;padding:.52rem .62rem}
+textarea{resize:vertical;min-height:105px;line-height:1.55}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--focus)}
+select{min-height:48px}
+.inline-mark{display:inline-block;font-size:.78rem;font-weight:900;margin-left:.4rem}
+.inline-mark.ok{color:var(--good)}
+.inline-mark.no{color:var(--bad)}
+.answer.correct,.answer-select.correct{border-color:var(--good)}
+.answer.wrong,.answer-select.wrong{border-color:var(--bad)}
+.btn{background:var(--accent);color:#071018;border:2px solid #fff;border-radius:5px;padding:.55rem .9rem;min-height:48px;font-weight:900;cursor:pointer;margin:.65rem .35rem 0 0}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.btn.secondary{background:var(--surface-2);color:var(--ink);border-color:var(--border)}
+.btn:disabled{opacity:.48;cursor:not-allowed}
+.feedback{margin-top:.7rem;border:1px solid var(--border);background:var(--surface-2);padding:.6rem .75rem;border-radius:5px;font-size:.9rem;min-height:1.2em}
+.feedback.good{border-color:var(--good)}
+.feedback.bad{border-color:var(--bad)}
+.answer-key{margin-top:.75rem;border:2px solid var(--good);background:#07241c;color:#e5fff7;border-radius:6px}
+.answer-key summary{cursor:pointer;min-height:46px;padding:.55rem .75rem;color:var(--good);font-weight:900}
+.answer-key .key-body{border-top:1px solid #2f725f;padding:.65rem .8rem;font-size:.9rem}
+.answer-key p{margin:.35rem 0}
+.note{border-left:4px solid var(--accent);background:var(--surface-2);padding:.65rem .75rem;margin:.7rem 0;font-size:.88rem;color:var(--muted)}
+.source-links{font-size:.84rem}
+.cover-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:1rem;margin-top:1rem}
+.cover-main{background:var(--deep);border:1px solid var(--border);padding:clamp(1rem,3vw,1.6rem)}
+.cover-side{border-top:4px solid var(--accent-2);background:var(--surface-2);padding:1rem}
+.move-list{display:grid;gap:.45rem;margin:.75rem 0}
+.move-list span{border-left:4px solid var(--accent);background:var(--surface);padding:.5rem .65rem;font-weight:800}
+.cover-side ol{margin:.4rem 0;padding-left:1.2rem}
+.plan-template{font-family:Consolas,"Courier New",monospace;white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);padding:.7rem;font-size:.86rem;line-height:1.55}
+.word-count{margin-top:.35rem;color:var(--warn);font-weight:900;font-size:.84rem}
+.checklist{display:grid;gap:.4rem;margin:.6rem 0}
+.check-item{display:grid;grid-template-columns:1.2rem 1fr;gap:.55rem;background:var(--surface);border:1px solid var(--border);padding:.5rem .6rem;cursor:pointer}
+.check-item input{width:1.1rem;height:1.1rem;margin:.1rem 0 0;accent-color:var(--accent-2)}
+.nav-inside{display:none;margin-top:1rem;min-width:0}
+.toc-row{display:flex;gap:.7rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:.75rem;background:var(--surface);border:1px solid var(--border);padding:.6rem .7rem}
+.toc-row label{margin:0;white-space:nowrap}
+.toc-row select{max-width:min(100%,580px);margin:0}
+.keyboard-tip{color:var(--muted);font-size:.8rem;margin:.55rem 0 0}
+.results{border-top:5px solid var(--accent);background:var(--deep);padding:clamp(1rem,4vw,2rem);text-align:center}
+.results h2{color:var(--accent)}
+.score-grid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:.7rem;margin:1rem 0}
+.score-box{background:var(--surface);border:1px solid var(--border);padding:.7rem}
+.score-box strong{display:block;color:var(--accent-2);font-size:1.7rem}
+.result-copy{margin:1rem auto 0;max-width:680px;text-align:left;background:var(--surface);border:1px solid var(--border);padding:.75rem;white-space:pre-wrap;font-size:.86rem}
+footer{text-align:center;padding:1.2rem 1rem;color:var(--muted);border-top:1px solid var(--border);font-size:.8rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:760px){
+html{font-size:17px}
+.hero{grid-template-columns:1fr;padding-top:.8rem}
+.hero-meta{justify-content:flex-start}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.45rem}
+.nav-inside .nav{width:100%;min-height:52px;padding:.5rem .3rem}
+.deck{min-height:0;padding:.8rem}
+.cover-grid{grid-template-columns:1fr}
+.save-status{width:100%}
+}
+@media (max-width:480px){
+html{font-size:16px}
+main{padding-left:.45rem;padding-right:.45rem}
+.deck-shell{padding:.4rem}
+.hud{padding:.45rem .5rem}
+.hud-inner{gap:.35rem}
+.progress-wrap{order:3;flex-basis:100%;min-width:100%}
+.btn{width:100%;margin-right:0}
+.choice{grid-template-columns:1.1rem minmax(0,1fr)}
+.item-mark{grid-column:2}
+.exercise{padding:.65rem}
+fieldset{padding:.6rem}
+.score-grid{grid-template-columns:1fr}
+.nav-inside{gap:.3rem}
+.nav{font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#deck">Skip to lesson slides</a>
+<section class="hud" aria-label="Lesson progress">
+<div class="hud-inner">
+<div class="stat">XP <span id="xpValue">0</span></div>
+<div class="stat">Streak <span id="streakValue">0</span></div>
+<div class="progress-wrap">
+<div class="progress-label"><span id="doneLabel">0 of 15 complete</span><span id="progressPercent">0%</span></div>
+<div id="progressBar" class="progress-track" role="progressbar" aria-label="Activities complete" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
+</div>
+<div id="saveStatus" class="save-status" role="status" aria-live="polite">Answers save on this device</div>
+</div>
+</section>
+<header class="hero">
+<div>
+<h1>Day 25: Blog or Opinion Text</h1>
+<p class="topic">Should safety be a core part of every engineering degree?</p>
+<p>Write a clear public argument with your own evidence, one fair limitation, and a strong takeaway.</p>
+</div>
+<div class="hero-meta" aria-label="Lesson details"><span class="pill">40 to 45 min</span><span class="pill">One to one</span><span class="pill">180 to 220 words</span></div>
+</header>
+<main id="main">
+<section class="deck-shell" id="deckShell" aria-label="Lesson presentation">
+<div class="deck-topbar">
+<div id="slideCount" class="slide-count" aria-live="polite">Slide 1 of 17</div>
+<div class="deck-actions"><button id="fullscreenBtn" class="btn secondary" type="button" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button></div>
+</div>
+<div id="slideLive" class="sr-only" aria-live="polite"></div>
+<div class="deck-layout">
+<div class="nav-slot nav-left" id="navLeft"><button id="prevBtn" class="nav" type="button" aria-label="Go to previous slide">Back</button></div>
+<section id="deck" class="deck" role="region" aria-roledescription="carousel" aria-label="Day 25 lesson slides">
+<div id="slides">
+<section class="slide active" data-title="Cover: Should safety be core" aria-labelledby="coverTitle">
+<div class="cover-grid">
+<div class="cover-main">
+<h2 id="coverTitle" tabindex="-1">Make a public case for safety.</h2>
+<p class="topic">Should safety be a core part of every engineering degree?</p>
+<p>Your position is yes. Use your Pertamina audit and K3 learning only where they prove the point.</p>
+<div class="move-list" aria-label="Blog opinion moves"><span>1. Hook and clear position</span><span>2. Personal evidence and reason</span><span>3. Fair counterargument and response</span><span>4. Takeaway ending</span></div>
+<p class="hint">In class: 180 to 220 words. Safe extension: 250 words with one useful reason, not filler.</p>
+<button id="startBtn" class="btn" type="button">Start lesson</button>
+</div>
+<section class="cover-side" aria-label="Lesson map">
+<h3>Our plan</h3>
+<ol><li>Notice the moves</li><li>Use proof and reasons</li><li>Balance one limitation</li><li>Write alone</li><li>Publication check</li></ol>
+<p class="source-links"><strong>Study sources:</strong> <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/opinion-essay">British Council</a>, <a href="https://www.cambridgeenglish.org/Images/581163-b2-first-for-schools-preparing-for-exam-success-self-study-writing-activities-part-1.pdf">Cambridge English</a>, and <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/establishing_arguments/organizing_your_argument.html">Purdue OWL</a>.</p>
+</section>
+</div>
+</section>
+<section class="slide activity" id="act1" data-title="Activity 1: From review to public opinion" aria-labelledby="act1Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 id="act1Title" tabindex="-1">From review to public opinion <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">A review judges one thing. A blog argues a wider point.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a1q1"><legend>1. Which is a public opinion?</legend><div class="choice-list">
+<label class="choice" for="a1q1a"><input id="a1q1a" type="radio" name="a1q1" value="a" data-correct="false" data-save><span>The course has 8 modules.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a1q1b"><input id="a1q1b" type="radio" name="a1q1" value="b" data-correct="true" data-save><span>Safety should be core in every engineering degree.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a1q1a"><input id="a1q1a" type="radio" name="a1q1" value="a" data-correct="false" data-save> Safety incidents are reported every year.</label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a1q2"><legend>2. What does the blog add?</legend><div class="choice-list">
+<label class="choice" for="a1q2a"><input id="a1q2a" type="radio" name="a1q2" value="a" data-correct="false" data-save><span>Only a star rating.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a1q2b"><input id="a1q2b" type="radio" name="a1q2" value="b" data-correct="true" data-save><span>A clear position, reasons, and a fair limit.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a1q2a"><input id="a1q2a" type="radio" name="a1q2" value="a" data-correct="false" data-save> A list of steps with no opinion.</label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act1">Check answers</button><button class="btn secondary" type="button" data-complete="act1">Mark complete</button>
+<div id="fb-act1" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act1" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. b.</strong> The blog makes a claim about engineering education.</p><p><strong>2. b.</strong> A public opinion needs a position, reasons, and fair balance.</p></div></details>
+</section>
+<section class="slide activity" id="act2" data-title="Activity 2: Reader and purpose" aria-labelledby="act2Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 id="act2Title" tabindex="-1">Reader and purpose <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Write for one public reader.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a2q1"><legend>1. Who is the main reader?</legend><div class="choice-list">
+<label class="choice" for="a2q1a"><input id="a2q1a" type="radio" name="a2q1" value="a" data-correct="true" data-save><span>First-year engineering students.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a2q1b"><input id="a2q1b" type="radio" name="a2q1" value="b" data-correct="false" data-save><span>Safety inspectors reading a plant report.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a2q1b"><input id="a2q1b" type="radio" name="a2q1" value="b" data-correct="false" data-save> The university finance office.</label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a2q2"><legend>2. What should the blog do?</legend><div class="choice-list">
+<label class="choice" for="a2q2a"><input id="a2q2a" type="radio" name="a2q2" value="a" data-correct="true" data-save><span>Give a clear position and persuade with relevant reasons.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a2q2b"><input id="a2q2b" type="radio" name="a2q2" value="b" data-correct="false" data-save><span>List every fact about one 30-day audit.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a2q2b"><input id="a2q2b" type="radio" name="a2q2" value="b" data-correct="false" data-save> Answer a single question from one audit.</label>
+</div></fieldset>
+<label for="a2Reader">My reader in 3 to 6 words</label><input id="a2Reader" type="text" data-save autocomplete="off" placeholder="First-year engineering students...">
+<button class="btn" type="button" data-check="act2">Check answers</button><button class="btn secondary" type="button" data-complete="act2">Mark complete</button>
+<div id="fb-act2" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act2" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. a.</strong> First-year engineering students.</p><p><strong>2. a.</strong> Give a clear position and support it with relevant reasons.</p><p>Reader model: first-year engineering students choosing a degree.</p></div></details>
+</section>
+<section class="slide activity" id="act3" data-title="Activity 3: Notice the genre moves" aria-labelledby="act3Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 id="act3Title" tabindex="-1">Notice the genre moves <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Choose the job of each part.</p>
+<div class="exercise">
+<div class="note"><strong>Source moves:</strong> British Council recommends planning, a clear position, both sides, linked ideas, and a conclusion from main ideas. Purdue OWL adds claim, data, reasoning, counterclaim, and response.</div>
+<label for="a3s1">1. Safety should be core in every engineering degree.</label><select id="a3s1" class="answer-select" data-correct="position" data-mark-for="a3m1" data-save><option value="">Choose one</option><option value="position">Position</option><option value="evidence">Evidence</option><option value="counter">Counterargument</option><option value="takeaway">Takeaway</option></select><span id="a3m1" class="inline-mark" aria-live="polite"></span>
+<label for="a3s2">2. During my 30-day audit, safety changed how I read the data.</label><select id="a3s2" class="answer-select" data-correct="evidence" data-mark-for="a3m2" data-save><option value="">Choose one</option><option value="position">Position</option><option value="evidence">Evidence</option><option value="counter">Counterargument</option><option value="takeaway">Takeaway</option></select><span id="a3m2" class="inline-mark" aria-live="polite"></span>
+<label for="a3s3">3. Limited degree time is a real concern.</label><select id="a3s3" class="answer-select" data-correct="counter" data-mark-for="a3m3" data-save><option value="">Choose one</option><option value="position">Position</option><option value="evidence">Evidence</option><option value="counter">Counterargument</option><option value="takeaway">Takeaway</option></select><span id="a3m3" class="inline-mark" aria-live="polite"></span>
+<label for="a3s4">4. Teach safety as engineering thinking, not a final box.</label><select id="a3s4" class="answer-select" data-correct="takeaway" data-mark-for="a3m4" data-save><option value="">Choose one</option><option value="position">Position</option><option value="evidence">Evidence</option><option value="counter">Counterargument</option><option value="takeaway">Takeaway</option></select><span id="a3m4" class="inline-mark" aria-live="polite"></span>
+<button class="btn" type="button" data-check="act3">Check answers</button><button class="btn secondary" type="button" data-complete="act3">Mark complete</button>
+<div id="fb-act3" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act3" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. Position</p><p>2. Evidence</p><p>3. Counterargument</p><p>4. Takeaway</p><p>The reasoning sentence explains why the evidence supports the position.</p></div></details>
+</section>
+<section class="slide activity" id="act4" data-title="Activity 4: Strong opening" aria-labelledby="act4Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 id="act4Title" tabindex="-1">Write a strong opening <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Catch attention and answer the topic quickly.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a4open"><legend>Which opening works best?</legend><div class="choice-list">
+<label class="choice" for="a4oa"><input id="a4oa" type="radio" name="a4open" value="a" data-correct="false" data-save><span>Safety is sometimes interesting.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a4ob"><input id="a4ob" type="radio" name="a4open" value="b" data-correct="true" data-save><span>At Pertamina RU IV, one safety question changed how I read a process report. I believe safety should be core in every engineering degree.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a4oc"><input id="a4oc" type="radio" name="a4open" value="c" data-correct="false" data-save><span>You must agree with me.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a4Own">My opening, 12 to 25 words</label><textarea id="a4Own" data-save placeholder="When... I learned... I believe..."></textarea>
+<button class="btn" type="button" data-check="act4">Check answer</button><button class="btn secondary" type="button" data-complete="act4">Mark complete</button>
+<div id="fb-act4" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act4" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It uses a specific moment and gives the position.</p><p>Model: When a process number became a safety question for me at Pertamina RU IV, I understood why safety belongs in every engineering degree.</p><p>Your wording is valid if it contains a hook and a clear answer to the topic.</p></div></details>
+</section>
+<section class="slide activity" id="act5" data-title="Activity 5: Clear position" aria-labelledby="act5Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 id="act5Title" tabindex="-1">State a clear position <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Make one sentence that a reader could disagree with.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a5thesis"><legend>Which thesis is clearest?</legend><div class="choice-list">
+<label class="choice" for="a5ta"><input id="a5ta" type="radio" name="a5thesis" value="a" data-correct="false" data-save><span>Safety is important.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5tb"><input id="a5tb" type="radio" name="a5thesis" value="b" data-correct="true" data-save><span>Every engineering degree should make safety a core thread, not a separate final topic.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a5tc"><input id="a5tc" type="radio" name="a5thesis" value="c" data-correct="false" data-save><span>Maybe safety matters sometimes.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a5Frame">My frame: I believe ___ because ___.</label><textarea id="a5Frame" data-save placeholder="I believe safety should... because..."></textarea>
+<button class="btn" type="button" data-check="act5">Check answer</button><button class="btn secondary" type="button" data-complete="act5">Mark complete</button>
+<div id="fb-act5" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act5" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It is specific and arguable.</p><p>Model: I believe safety should be part of every engineering degree because engineers make decisions that affect people and equipment.</p></div></details>
+</section>
+<section class="slide activity" id="act6" data-title="Activity 6: Choose relevant evidence" aria-labelledby="act6Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 id="act6Title" tabindex="-1">Choose relevant evidence <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Use proof that fits this claim, not every number you own.</p>
+<div class="exercise">
+<div class="note"><strong>Claim:</strong> Safety should be a core part of every engineering degree.</div>
+<fieldset class="mcq" data-group="a6set"><legend>1. Which evidence set is directly relevant?</legend><div class="choice-list">
+<label class="choice" for="a6sa"><input id="a6sa" type="radio" name="a6set" value="a" data-correct="true" data-save><span>A 30-day audit at Pertamina RU IV and a K3 safety certificate.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a6sb"><input id="a6sb" type="radio" name="a6set" value="b" data-correct="false" data-save><span>90+ students, 10 teams, and 20% national funding.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a6sb"><input id="a6sb" type="radio" name="a6set" value="b" data-correct="false" data-save> A summary of the 30-day audit with no safety link.</label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a6num"><legend>2. Which number can you use from that set?</legend><div class="choice-list">
+<label class="choice" for="a6na"><input id="a6na" type="radio" name="a6num" value="a" data-correct="true" data-save><span>30 days</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a6nb"><input id="a6nb" type="radio" name="a6num" value="b" data-correct="false" data-save><span>90+</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a6nc"><input id="a6nc" type="radio" name="a6num" value="c" data-correct="false" data-save><span>20%</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a6Reason">This detail connects to safety because ___.</label><textarea id="a6Reason" data-save placeholder="It shows..."></textarea>
+<button class="btn" type="button" data-check="act6">Check answers</button><button class="btn secondary" type="button" data-complete="act6">Mark complete</button>
+<div id="fb-act6" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act6" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. a.</strong> The audit and K3 certificate connect directly to safety learning.</p><p><strong>2. a.</strong> The 30-day number shows sustained real engineering work.</p><p>90+, 10 teams, and 20% are not needed unless you can connect them clearly to safety.</p></div></details>
+</section>
+<section class="slide activity" id="act7" data-title="Activity 7: Evidence needs a reason" aria-labelledby="act7Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 id="act7Title" tabindex="-1">Explain why the evidence matters <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Data is what happened. The reason is why it supports your claim.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a7bridge"><legend>Which version includes the reasoning bridge?</legend><div class="choice-list">
+<label class="choice" for="a7ba"><input id="a7ba" type="radio" name="a7bridge" value="a" data-correct="false" data-save><span>I have an audit and certificate, so safety should be core.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a7bb"><input id="a7bb" type="radio" name="a7bridge" value="b" data-correct="true" data-save><span>They showed that safety changes how I interpret data and ask questions, so it belongs in engineering learning.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a7ba"><input id="a7ba" type="radio" name="a7bridge" value="a" data-correct="false" data-save> I have an audit, so safety matters, therefore it is important.</label>
+</div></fieldset>
+<label for="a7Reason">This matters because ___.</label><textarea id="a7Reason" data-save placeholder="Future engineers need to..."></textarea>
+<button class="btn" type="button" data-check="act7">Check answer</button><button class="btn secondary" type="button" data-complete="act7">Mark complete</button>
+<div id="fb-act7" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act7" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It explains how the personal evidence supports the claim.</p><p>Model: This matters because future engineers must notice risk while they are still learning design.</p></div></details>
+</section>
+<section class="slide activity" id="act8" data-title="Activity 8: Build an evidence paragraph" aria-labelledby="act8Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 id="act8Title" tabindex="-1">Build an evidence paragraph <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">4 min</span></div>
+<p class="hint">Say each answer to your teacher before you type.</p>
+<div class="exercise">
+<div class="note">During a ___ at ___, I learned that ___. This matters because ___.</div>
+<label for="a8a">1. Audit</label><input id="a8a" class="answer" type="text" data-accept="30 day heat exchanger audit|30 day audit" data-mark-for="a8m1" data-save autocomplete="off"><span id="a8m1" class="inline-mark" aria-live="polite"></span>
+<label for="a8b">2. Place</label><input id="a8b" class="answer" type="text" data-accept="pertamina ru iv|pertamina" data-mark-for="a8m2" data-save autocomplete="off"><span id="a8m2" class="inline-mark" aria-live="polite"></span>
+<label for="a8c">3. Learning</label><input id="a8c" class="answer" type="text" data-accept="a number can be a warning|number can be a warning" data-mark-for="a8m3" data-save autocomplete="off"><span id="a8m3" class="inline-mark" aria-live="polite"></span>
+<label for="a8d">4. Wider meaning</label><input id="a8d" class="answer" type="text" data-accept="engineers make decisions that affect people and equipment|engineers affect people and equipment" data-mark-for="a8m4" data-save autocomplete="off"><span id="a8m4" class="inline-mark" aria-live="polite"></span>
+<button class="btn" type="button" data-check="act8">Check answers</button><button class="btn secondary" type="button" data-complete="act8">Mark complete</button>
+<div id="fb-act8" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act8" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>1. 30-day heat-exchanger audit</p><p>2. Pertamina RU IV</p><p>3. A number can be a warning, not just a result</p><p>4. Engineers make decisions that affect people and equipment</p><p>Exact wording can change if the evidence and reason stay clear.</p></div></details>
+</section>
+<section class="slide activity" id="act9" data-title="Activity 9: Make a fair counterargument" aria-labelledby="act9Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 id="act9Title" tabindex="-1">Make a fair counterargument <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Give the other side a real point, not an insult.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a9counter"><legend>Which limitation is fair?</legend><div class="choice-list">
+<label class="choice" for="a9ca"><input id="a9ca" type="radio" name="a9counter" value="a" data-correct="false" data-save><span>Anyone who disagrees is careless.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a9cb"><input id="a9cb" type="radio" name="a9counter" value="b" data-correct="true" data-save><span>Limited degree time could reduce time for technical design.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a9cc"><input id="a9cc" type="radio" name="a9counter" value="c" data-correct="false" data-save><span>Safety is boring.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a9Why">Why can this limitation be true?</label><textarea id="a9Why" data-save placeholder="Engineering degrees already cover..."></textarea>
+<button class="btn" type="button" data-check="act9">Check answer</button><button class="btn secondary" type="button" data-complete="act9">Mark complete</button>
+<div id="fb-act9" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act9" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It identifies a real curriculum tradeoff.</p><p>Model reason: Engineering degrees already cover many technical subjects, so extra content can reduce time for design work.</p><p>Label: counterargument to the claim.</p></div></details>
+</section>
+<section class="slide activity" id="act10" data-title="Activity 10: Respond and qualify" aria-labelledby="act10Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 id="act10Title" tabindex="-1">Respond and qualify <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Accept the valid part, then protect your main point.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a10reply"><legend>Which response is strongest?</legend><div class="choice-list">
+<label class="choice" for="a10ra"><input id="a10ra" type="radio" name="a10reply" value="a" data-correct="false" data-save><span>The objection is false.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a10rb"><input id="a10rb" type="radio" name="a10reply" value="b" data-correct="true" data-save><span>The time concern is real, so safety should use cases, labs, and design reviews instead of a long extra rule list.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a10rc"><input id="a10rc" type="radio" name="a10reply" value="c" data-correct="false" data-save><span>Ignore the objection.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a10Frame">That is true, but ___.</label><textarea id="a10Frame" data-save placeholder="Safety can be taught through..."></textarea>
+<button class="btn" type="button" data-check="act10">Check answer</button><button class="btn secondary" type="button" data-complete="act10">Mark complete</button>
+<div id="fb-act10" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act10" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>b.</strong> It accepts the time concern and offers a practical solution.</p><p>Model: That is true, but safety does not need a long extra rule list. It can be built into real cases, lab decisions, and design reviews.</p></div></details>
+</section>
+<section class="slide activity" id="act11" data-title="Activity 11: Choose a compact structure" aria-labelledby="act11Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">11</div><h2 id="act11Title" tabindex="-1">Choose a compact structure <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Use four short sections for a 200-word argument.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a11structure"><legend>Which structure is best?</legend><div class="choice-list">
+<label class="choice" for="a11sa"><input id="a11sa" type="radio" name="a11structure" value="a" data-correct="true" data-save><span>Opening and position | evidence and reason | counterargument and response | takeaway</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a11sb"><input id="a11sb" type="radio" name="a11structure" value="b" data-correct="false" data-save><span>Eight facts with no position</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a11sc"><input id="a11sc" type="radio" name="a11structure" value="c" data-correct="false" data-save><span>A review of one course with one rating</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a11Plan">Four short notes, one line for each section</label><textarea id="a11Plan" data-save style="min-height:170px" placeholder="Opening...&#10;Evidence...&#10;Counter...&#10;Takeaway..."></textarea>
+<button class="btn" type="button" data-check="act11">Check answer</button><button class="btn secondary" type="button" data-complete="act11">Mark complete</button>
+<div id="fb-act11" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act11" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>a.</strong> It fits a full public argument into about 200 words.</p><div class="plan-template">Safety belongs in every engineering degree.
+Pertamina 30-day audit and K3 changed how I read risk.
+Limited time is real, so integrate safety into cases and design.
+Teach safety as engineering thinking, not an administrative box.</div></div></details>
+</section>
+<section class="slide activity" id="act12" data-title="Activity 12: Link ideas smoothly" aria-labelledby="act12Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">12</div><h2 id="act12Title" tabindex="-1">Link ideas smoothly <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">2 min</span></div>
+<p class="hint">Each sentence should move the argument forward.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a12a"><legend>1. Which sentence moves experience to the wider point?</legend><div class="choice-list">
+<label class="choice" for="a12aa"><input id="a12aa" type="radio" name="a12a" value="a" data-correct="true" data-save><span>This experience shows why safety belongs in engineering learning.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a12ab"><input id="a12ab" type="radio" name="a12a" value="b" data-correct="false" data-save><span>In addition, I bought a new notebook.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a12ab"><input id="a12ab" type="radio" name="a12a" value="b" data-correct="false" data-save> This experience was interesting for me.</label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a12b"><legend>2. Which sentence responds to a fair limitation?</legend><div class="choice-list">
+<label class="choice" for="a12ba"><input id="a12ba" type="radio" name="a12b" value="a" data-correct="true" data-save><span>That is true, but safety can be taught through cases and design reviews.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a12bb"><input id="a12bb" type="radio" name="a12b" value="b" data-correct="false" data-save><span>Moreover, the weather was hot.</span><span class="item-mark" aria-hidden="true"></span></label>
+
+<label class="choice" for="a12bb"><input id="a12bb" type="radio" name="a12b" value="b" data-correct="false" data-save> That is true, and there is nothing else to add.</label>
+</div></fieldset>
+<button class="btn" type="button" data-check="act12">Check answers</button><button class="btn secondary" type="button" data-complete="act12">Mark complete</button>
+<div id="fb-act12" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act12" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. a.</strong> It connects personal experience to the general claim.</p><p><strong>2. a.</strong> It accepts the limitation and adds a reasoned response.</p></div></details>
+</section>
+<section class="slide activity" id="act13" data-title="Activity 13: Strong ending and takeaway" aria-labelledby="act13Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">13</div><h2 id="act13Title" tabindex="-1">End with one takeaway <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Do not add new evidence at the end.</p>
+<div class="exercise">
+<fieldset class="mcq" data-group="a13end"><legend>1. Which ending gives a useful takeaway?</legend><div class="choice-list">
+<label class="choice" for="a13ea"><input id="a13ea" type="radio" name="a13end" value="a" data-correct="false" data-save><span>In conclusion, safety is safety.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a13eb"><input id="a13eb" type="radio" name="a13end" value="b" data-correct="true" data-save><span>Teach safety as part of engineering thinking, not as a final administrative box.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a13ec"><input id="a13ec" type="radio" name="a13end" value="c" data-correct="false" data-save><span>A new accident statistic proves that every engineer should be afraid.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<fieldset class="mcq" data-group="a13risk"><legend>2. Why is ending c risky?</legend><div class="choice-list">
+<label class="choice" for="a13ra"><input id="a13ra" type="radio" name="a13risk" value="a" data-correct="true" data-save><span>It adds new evidence too late.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a13rb"><input id="a13rb" type="radio" name="a13risk" value="b" data-correct="false" data-save><span>It is too short.</span><span class="item-mark" aria-hidden="true"></span></label>
+<label class="choice" for="a13rc"><input id="a13rc" type="radio" name="a13risk" value="c" data-correct="false" data-save><span>It does not contain an opinion.</span><span class="item-mark" aria-hidden="true"></span></label>
+</div></fieldset>
+<label for="a13Take">My takeaway, 5 to 12 words</label><textarea id="a13Take" data-save placeholder="Teach safety..."></textarea>
+<button class="btn" type="button" data-check="act13">Check answers</button><button class="btn secondary" type="button" data-complete="act13">Mark complete</button>
+<div id="fb-act13" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act13" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p><strong>1. b.</strong> It gives a memorable action based on the main argument.</p><p><strong>2. a.</strong> The new statistic arrives too late and is not supported in the body.</p><p>Model takeaway: Make safety a core part of engineering thinking, not a final box.</p></div></details>
+</section>
+<section class="slide activity" id="act14" data-title="Activity 14: Write the blog" aria-labelledby="act14Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">14</div><h2 id="act14Title" tabindex="-1">Write the blog <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">7 min</span></div>
+<p class="hint">Plan for 1 minute. Write for 6 minutes.</p>
+<div class="exercise">
+<label for="a14Draft">Title and blog</label><textarea id="a14Draft" data-save style="min-height:360px" placeholder="Title...&#10;&#10;Hook and position...&#10;&#10;During my experience... This matters because...&#10;&#10;One objection... That is true, but...&#10;&#10;Takeaway..."></textarea>
+<div id="wc14" class="word-count" aria-live="polite">Words: 0. Target: 180 to 220.</div>
+<button id="blogCheckBtn" class="btn" type="button">Check length</button><button class="btn secondary" type="button" data-complete="act14">Save blog and complete</button>
+<div id="fb-act14" class="feedback" aria-live="polite"></div>
+</div>
+<details class="answer-key" data-key-for="act14" hidden><summary>Original 213-word practice model, available after your attempt</summary><div class="key-body"><p><strong>Safety Belongs in Every Engineering Degree</strong></p><p>Safety should be a core part of every engineering degree, not an optional extra. During a 30-day heat-exchanger audit at Pertamina RU IV, I learned that a small operating problem can affect people, equipment, and the wider plant. The technical report mattered, but so did knowing the K3 safety rules and asking the right questions. Safety changed how I interpreted the data. A number was not just a result; it could be a warning.</p><p>This experience leads to a wider argument. Students need to understand risk while they are learning design, not only after they enter industry. If safety is separate from maths and design, they may see it as paperwork. A core safety thread would connect each subject to three questions: what could go wrong, who could be harmed, and how can the design reduce that risk?</p><p>One objection is that degrees already have limited time. Adding more content could reduce technical design work. That is true. The answer is not another long list of rules. Safety should be taught through real cases, lab decisions, and design reviews, using knowledge students already study.</p><p>Safety belongs at the centre of engineering education because engineers create systems that affect real people. Teach safety as part of engineering thinking, not as a final administrative box.</p><p>This is original practice material, not a real published blog.</p></div></details>
+</section>
+<section class="slide activity" id="act15" data-title="Activity 15: Publication check" aria-labelledby="act15Title" role="group" aria-roledescription="slide" hidden>
+<div class="act-head"><div class="badge" aria-hidden="true">15</div><h2 id="act15Title" tabindex="-1">Publication check <span class="done-flag" aria-hidden="true">Complete</span></h2><span class="tag">3 min</span></div>
+<p class="hint">Select at least seven checks. Make one clear edit.</p>
+<div class="exercise">
+<div class="checklist">
+<label class="check-item" for="a15c1"><input id="a15c1" type="checkbox" data-save><span>My opening catches attention.</span></label>
+<label class="check-item" for="a15c2"><input id="a15c2" type="checkbox" data-save><span>My position answers the topic clearly.</span></label>
+<label class="check-item" for="a15c3"><input id="a15c3" type="checkbox" data-save><span>My evidence is personal and relevant.</span></label>
+<label class="check-item" for="a15c4"><input id="a15c4" type="checkbox" data-save><span>I explain why the evidence matters.</span></label>
+<label class="check-item" for="a15c5"><input id="a15c5" type="checkbox" data-save><span>My counterargument is fair.</span></label>
+<label class="check-item" for="a15c6"><input id="a15c6" type="checkbox" data-save><span>My response accepts or qualifies the point.</span></label>
+<label class="check-item" for="a15c7"><input id="a15c7" type="checkbox" data-save><span>My ending gives one takeaway.</span></label>
+<label class="check-item" for="a15c8"><input id="a15c8" type="checkbox" data-save><span>The length is 180 to 220, or I have a careful plan for 250.</span></label>
+</div>
+<label for="a15Edit">My one edit: KEEP, CUT, or CHANGE ___ because ___.</label><textarea id="a15Edit" data-save placeholder="I will change... because..."></textarea>
+<button class="btn secondary" type="button" data-complete="act15">Finish publication check</button>
+<div id="fb-act15" class="feedback" aria-live="polite"></div>
+<div class="note"><strong>Home, 15 to 20 min:</strong> Edit or extend to 250 words with one useful reason, not filler. Ask one reader to state the position, evidence, and takeaway.</div>
+</div>
+<details class="answer-key" data-key-for="act15" hidden><summary>Answer key, available after your attempt</summary><div class="key-body"><p>All eight checks should be present before publication.</p><p>Example edit: Safety is important becomes Safety belongs in every engineering degree because engineers create systems that affect real people.</p><p>Save the final text as Day 25 Blog Opinion v1.</p></div></details>
+</section>
+<section class="slide" id="results" data-title="Results and saved blog" aria-labelledby="resultsTitle" role="group" aria-roledescription="slide" hidden>
+<div class="results">
+<h2 id="resultsTitle" tabindex="-1">Your blog progress</h2>
+<p id="resultMessage">Complete all 15 activities to finish the lesson.</p>
+<div class="score-grid">
+<div class="score-box"><strong id="resultXp">0</strong><span>XP earned</span></div>
+<div class="score-box"><strong id="resultDone">0/15</strong><span>Activities complete</span></div>
+<div class="score-box"><strong id="resultStreak">0</strong><span>Best streak</span></div>
+</div>
+<p>Your final blog is saved in Activity 14. You can copy it here.</p>
+<button id="copyBlogBtn" class="btn" type="button">Copy my blog</button>
+<div id="copyBlogStatus" class="feedback" aria-live="polite"></div>
+<div id="savedBlog" class="result-copy" aria-label="Your saved blog"></div>
+</div>
+</section>
+</div>
+<nav id="navInside" class="nav-inside" aria-label="Slide navigation below content"></nav>
+</section>
+<div class="nav-slot nav-right" id="navRight"><button id="nextBtn" class="nav" type="button" aria-label="Go to next slide">Next</button></div>
+</div>
+<div class="toc-row"><label for="tocSelect">Go to slide</label><select id="tocSelect"></select></div>
+<p class="keyboard-tip">Use Back and Next. On a keyboard, use the Left and Right Arrow keys when you are not typing.</p>
+</section>
+</main>
+<footer>Day 25 Blog or Opinion Text. 15 tasks. Essentials only.<p style="margin-top:.3rem;"><a href="../../index.html#b2-communicative" style="color:var(--accent)">All B2 Communicative lessons</a></p><p>Study sources: <a href="https://learnenglish.britishcouncil.org/free-resources/writing/b2/opinion-essay">British Council LearnEnglish</a>, <a href="https://www.cambridgeenglish.org/Images/581163-b2-first-for-schools-preparing-for-exam-success-self-study-writing-activities-part-1.pdf">Cambridge English</a>, and <a href="https://owl.purdue.edu/owl/general_writing/academic_writing/establishing_arguments/organizing_your_argument.html">Purdue OWL</a>. The model blog is original practice material.</footer>
+<script>
+var STORAGE_KEY="day25BlogOpinionV1";
+var TOTAL=15;
+var LEARNER="Guest";
+try{var _lrsL=JSON.parse(localStorage.getItem("lrs_learner")||"null");if(_lrsL&&_lrsL.name){LEARNER=_lrsL.name;}}catch(_e){}
+var state={answers:{},done:{},revealed:{},scored:{},passed:{},xp:0,streak:0,best:0,current:0};
+var slides=Array.prototype.slice.call(document.querySelectorAll("#slides .slide"));
+var activities=Array.prototype.slice.call(document.querySelectorAll(".slide.activity"));
+var controls=Array.prototype.slice.call(document.querySelectorAll("[data-save]"));
+var current=0;
+var saveTimer;
+try{var saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(saved&&typeof saved==="object"){state.answers=saved.answers||{};state.done=saved.done||{};state.revealed=saved.revealed||{};state.scored=saved.scored||{};state.passed=saved.passed||{};state.xp=Number(saved.xp)||0;state.streak=Number(saved.streak)||0;state.best=Number(saved.best)||0;state.current=Number(saved.current)||0;}}catch(error){}
+function countWords(text){var clean=(text||"").trim();return clean?clean.split(/\s+/).length:0;}
+function normalise(text){return (text||"").toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9+%']+/g," ").replace(/\s+/g," ").trim();}
+function captureAnswers(){state.answers={};controls.forEach(function(control){state.answers[control.id]=(control.type==="radio"||control.type==="checkbox")?control.checked:control.value;});}
+function persist(){captureAnswers();state.current=current;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));document.getElementById("saveStatus").textContent="Saved on this device";}catch(error){document.getElementById("saveStatus").textContent="Saved for this visit only";}}
+function queueSave(){document.getElementById("saveStatus").textContent="Saving...";clearTimeout(saveTimer);saveTimer=setTimeout(persist,250);}
+function restoreAnswers(){controls.forEach(function(control){if(!Object.prototype.hasOwnProperty.call(state.answers,control.id))return;if(control.type==="radio"||control.type==="checkbox"){control.checked=Boolean(state.answers[control.id]);}else{control.value=state.answers[control.id];}});}
+function setFeedback(id,message,type){var box=document.getElementById("fb-"+id);if(!box)return;box.textContent=message;box.className="feedback"+(type?" "+type:"");}
+function setHud(){var done=Object.keys(state.done).filter(function(id){return state.done[id];}).length;var percent=Math.round(done/TOTAL*100);document.getElementById("xpValue").textContent=state.xp;document.getElementById("streakValue").textContent=state.streak;document.getElementById("doneLabel").textContent=done+" of "+TOTAL+" complete";document.getElementById("progressPercent").textContent=percent+"%";document.getElementById("progressFill").style.width=percent+"%";document.getElementById("progressBar").setAttribute("aria-valuenow",String(done));document.getElementById("resultXp").textContent=state.xp;document.getElementById("resultDone").textContent=done+"/"+TOTAL;document.getElementById("resultStreak").textContent=state.best;document.getElementById("resultsTitle").textContent=done===TOTAL?"Blog ready. Well done.":"Your blog progress";document.getElementById("resultMessage").textContent=done===TOTAL?"You made a clear public case with personal evidence and a fair limitation.":"Complete all 15 activities to finish the lesson.";}
+function awardActivity(id,success){if(success){state.passed[id]=true;}if(!state.scored[id]){state.scored[id]=true;state.xp+=10;if(success){state.streak+=1;state.best=Math.max(state.best,state.streak);}}}
+function unlockKey(id){state.revealed[id]=true;var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=false;}
+function controlHasResponse(control){if(control.type==="checkbox")return control.checked;return Boolean(control.value.trim());}
+function activityHasResponse(id){var section=document.getElementById(id);if(!section)return false;var radioGroups={};var complete=true;section.querySelectorAll("[data-save]").forEach(function(control){if(control.type==="radio"){if(!Object.prototype.hasOwnProperty.call(radioGroups,control.name))radioGroups[control.name]=false;if(control.checked)radioGroups[control.name]=true;}else if(!controlHasResponse(control)){complete=false;}});return complete&&Object.keys(radioGroups).every(function(name){return radioGroups[name];});}
+function markText(control,message,type){control.classList.remove("correct","wrong");control.classList.add(type==="ok"?"correct":"wrong");control.setAttribute("aria-invalid",type==="ok"?"false":"true");var mark=document.getElementById(control.getAttribute("data-mark-for"));if(mark){mark.textContent=message;mark.className="inline-mark "+type;}}
+function markSelect(select,message,type){select.classList.remove("correct","wrong");select.classList.add(type==="ok"?"correct":"wrong");select.setAttribute("aria-invalid",type==="ok"?"false":"true");var mark=document.getElementById(select.getAttribute("data-mark-for"));if(mark){mark.textContent=message;mark.className="inline-mark "+type;}}
+function markChoiceLabels(group){group.querySelectorAll("label.choice").forEach(function(label){label.classList.remove("correct","wrong");var mark=label.querySelector(".item-mark");if(mark){mark.textContent="";mark.className="item-mark";}});var selected=group.querySelector("input:checked");if(!selected)return false;var selectedLabel=selected.closest("label");if(selected.getAttribute("data-correct")==="true"){selectedLabel.classList.add("correct");selectedLabel.querySelector(".item-mark").textContent="Correct";selectedLabel.querySelector(".item-mark").className="item-mark ok";return true;}selectedLabel.classList.add("wrong");selectedLabel.querySelector(".item-mark").textContent="Try again";selectedLabel.querySelector(".item-mark").className="item-mark no";var correct=group.querySelector('input[data-correct="true"]');if(correct){var correctLabel=correct.closest("label");correctLabel.classList.add("correct");correctLabel.querySelector(".item-mark").textContent="Correct answer";correctLabel.querySelector(".item-mark").className="item-mark ok";}return false;}
+function checkActivity(id){var section=document.getElementById(id);if(!section)return;if(!activityHasResponse(id)){setFeedback(id,"Finish every box before you check. Your answers are saved.","bad");return;}unlockKey(id);var ok=true;var graded=false;section.querySelectorAll("input.answer[data-accept]").forEach(function(input){graded=true;var value=normalise(input.value);var accepted=(input.getAttribute("data-accept")||"").split("|").map(normalise);var correct=accepted.some(function(item){return value===item;});markText(input,correct?"Correct":"Try again",correct?"ok":"no");if(!correct)ok=false;});section.querySelectorAll("select.answer-select[data-correct]").forEach(function(select){graded=true;var correct=select.value===select.getAttribute("data-correct");markSelect(select,correct?"Correct":"Try again",correct?"ok":"no");if(!correct)ok=false;});section.querySelectorAll(".mcq").forEach(function(group){graded=true;if(!markChoiceLabels(group))ok=false;});if(graded&&ok){awardActivity(id,true);setFeedback(id,"Correct. Strong argument choices.","good");}else if(graded){state.streak=0;setFeedback(id,"Some choices need another try. Your key is unlocked.","bad");}else{setFeedback(id,"Your work is saved and the key is unlocked. Use Mark complete when you are ready.","");}setHud();persist();}
+function completionMessage(id){
+ if(id==="act2"){return countWords(document.getElementById("a2Reader").value)>=3?"":"Describe your reader in at least three words.";}
+ if(id==="act4"){return countWords(document.getElementById("a4Own").value)>=12?"":"Write an opening with at least 12 words.";}
+ if(id==="act5"){return countWords(document.getElementById("a5Frame").value)>=8?"":"Complete your position frame with at least eight words.";}
+ if(id==="act6"){return countWords(document.getElementById("a6Reason").value)>=6?"":"Explain the link to safety in at least six words.";}
+ if(id==="act7"){return countWords(document.getElementById("a7Reason").value)>=6?"":"Explain why the evidence matters in at least six words.";}
+ if(id==="act9"){return countWords(document.getElementById("a9Why").value)>=6?"":"Explain the limitation in at least six words.";}
+ if(id==="act10"){return countWords(document.getElementById("a10Frame").value)>=6?"":"Complete the response in at least six words.";}
+ if(id==="act11"){var plan=document.getElementById("a11Plan").value;var lines=plan.split(/\n+/).map(function(line){return line.trim();}).filter(Boolean);if(lines.length<4)return "Write one short line for each of the four sections.";if(countWords(plan)<12)return "Add a little more detail to the four notes.";return "";}
+ if(id==="act13"){return countWords(document.getElementById("a13Take").value)>=5?"":"Write a takeaway in at least five words.";}
+ if(id==="act14"){var words=countWords(document.getElementById("a14Draft").value);if(words<180)return "Add "+(180-words)+" more words before you complete this lesson blog.";if(words>250)return "Cut at least "+(words-250)+" words before you complete.";return "";}
+ if(id==="act15"){var checked=sectionCheckedCount();if(checked<7)return "Select at least seven publication checks.";if(countWords(document.getElementById("a15Edit").value)<5)return "Write your one edit in at least five words.";return "";}
+ return activityHasResponse(id)?"":"Complete every box before you mark this activity complete.";
+}
+function sectionCheckedCount(){return Array.prototype.slice.call(document.querySelectorAll('#act15 input[type="checkbox"]')).filter(function(input){return input.checked;}).length;}
+function markComplete(id){var section=document.getElementById(id);if(!section)return;if(state.done[id]){setFeedback(id,"Already complete. You can still edit your answers.","");return;}var problem=completionMessage(id);if(problem){setFeedback(id,problem,"bad");return;}section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");state.done[id]=true;unlockKey(id);var completionSuccess=id==="act14"||id==="act15"||Boolean(state.passed[id]);awardActivity(id,completionSuccess);var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}setFeedback(id,"Complete. Your key is unlocked and your work is saved.","good");setHud();persist();if(Object.keys(state.done).filter(function(key){return state.done[key];}).length===TOTAL){showSlide(slides.length-1,true);}}
+function updateWordCount(){var draft=document.getElementById("a14Draft");var words=countWords(draft.value);var message="Words: "+words+". Target: 180 to 220.";if(words<180)message+=" Add "+(180-words)+" more words.";else if(words<=220)message+=" On target.";else if(words<=250)message+=" Strong extension. Check that the extra reason is useful.";else message+=" Cut at least "+(words-250)+" words.";document.getElementById("wc14").textContent=message;}
+function checkBlogLength(){var words=countWords(document.getElementById("a14Draft").value);if(words===0){setFeedback("act14","Write a title and blog first.","bad");return;}if(words<180){setFeedback("act14","Keep going. You need "+(180-words)+" more words. Your key stays locked until the draft is long enough to compare.","bad");persist();return;}unlockKey("act14");if(words<=220){setFeedback("act14",words>=180?"On target. Your key is unlocked.":"Your length works. Your key is unlocked.","good");}else if(words<=250){setFeedback("act14","This is a useful extension if the added reason is relevant. Your key is unlocked.","good");}else{setFeedback("act14","Your draft is long. Cut at least "+(words-250)+" words. Your key is unlocked.","bad");}persist();}
+function updateSavedBlog(){document.getElementById("savedBlog").textContent=document.getElementById("a14Draft").value.trim()||"Your blog will appear here after you write it.";}
+function fallbackCopyText(text){var area=document.createElement("textarea");area.value=text;area.setAttribute("readonly","");area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();}
+function copyBlog(){var text=document.getElementById("a14Draft").value;if(!text.trim()){document.getElementById("copyBlogStatus").textContent="Write your blog in Activity 14 first.";return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){document.getElementById("copyBlogStatus").textContent="Blog copied.";}).catch(function(){fallbackCopyText(text);document.getElementById("copyBlogStatus").textContent="Blog copied.";});}else{fallbackCopyText(text);document.getElementById("copyBlogStatus").textContent="Blog copied.";}}
+function restoreProgress(){activities.forEach(function(section){var id=section.id;if(state.done[id]){section.classList.add("complete");var flag=section.querySelector(".done-flag");if(flag)flag.setAttribute("aria-hidden","false");var button=section.querySelector('[data-complete="'+id+'"]');if(button){button.disabled=true;button.textContent="Completed";}}if(state.revealed[id]){var key=document.querySelector('[data-key-for="'+id+'"]');if(key)key.hidden=false;}});setHud();}
+var prevBtn=document.getElementById("prevBtn");
+var nextBtn=document.getElementById("nextBtn");
+var navLeft=document.getElementById("navLeft");
+var navRight=document.getElementById("navRight");
+var navInside=document.getElementById("navInside");
+var tocSelect=document.getElementById("tocSelect");
+var slideCount=document.getElementById("slideCount");
+var slideLive=document.getElementById("slideLive");
+slides.forEach(function(slide,index){var option=document.createElement("option");option.value=String(index);option.textContent=String(index+1)+". "+(slide.getAttribute("data-title")||"Slide");tocSelect.appendChild(option);});
+function showSlide(index,focusHeading){var next=Math.max(0,Math.min(slides.length-1,index));current=next;slides.forEach(function(slide,index){var active=index===current;slide.hidden=!active;slide.classList.toggle("active",active);slide.setAttribute("aria-hidden",active?"false":"true");});prevBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;tocSelect.value=String(current);slideCount.textContent="Slide "+(current+1)+" of "+slides.length;var title=slides[current].getAttribute("data-title")||("Slide "+(current+1));slideLive.textContent=title;if(current===slides.length-1)updateSavedBlog();if(focusHeading){var heading=slides[current].querySelector("h2");if(heading)heading.focus({preventScroll:true});}queueSave();}
+var mobileMedia=window.matchMedia("(max-width: 760px)");
+function placeNavigation(){if(mobileMedia.matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}}
+function navigationChange(){placeNavigation();}
+controls.forEach(function(control){control.addEventListener("input",queueSave);control.addEventListener("change",queueSave);});
+document.querySelectorAll("[data-check]").forEach(function(button){button.addEventListener("click",function(){checkActivity(button.getAttribute("data-check"));});});
+document.querySelectorAll("[data-complete]").forEach(function(button){button.addEventListener("click",function(){markComplete(button.getAttribute("data-complete"));});});
+document.getElementById("blogCheckBtn").addEventListener("click",checkBlogLength);
+document.getElementById("a14Draft").addEventListener("input",function(){updateWordCount();updateSavedBlog();});
+document.getElementById("copyBlogBtn").addEventListener("click",copyBlog);
+prevBtn.addEventListener("click",function(){showSlide(current-1,true);});
+nextBtn.addEventListener("click",function(){showSlide(current+1,true);});
+tocSelect.addEventListener("change",function(){showSlide(Number(tocSelect.value),true);});
+document.getElementById("startBtn").addEventListener("click",function(){showSlide(1,true);});
+document.addEventListener("keydown",function(event){if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey)return;var target=event.target;if(target&&(target.isContentEditable||(typeof target.closest==="function"&&target.closest("input,textarea,select,button,summary,a"))))return;if(event.key==="ArrowRight"||event.key==="PageDown"){event.preventDefault();showSlide(current+1,true);}else if(event.key==="ArrowLeft"||event.key==="PageUp"){event.preventDefault();showSlide(current-1,true);}else if(event.key==="Home"){event.preventDefault();showSlide(0,true);}else if(event.key==="End"){event.preventDefault();showSlide(slides.length-1,true);}});
+if(mobileMedia.addEventListener){mobileMedia.addEventListener("change",navigationChange);}else if(mobileMedia.addListener){mobileMedia.addListener(navigationChange);}
+var fullscreenBtn=document.getElementById("fullscreenBtn");
+var deckShell=document.getElementById("deckShell");
+function fullscreenLabel(){var active=document.fullscreenElement===deckShell;fullscreenBtn.textContent=active?"Exit full screen":"Full screen";fullscreenBtn.setAttribute("aria-pressed",active?"true":"false");fullscreenBtn.setAttribute("aria-label",active?"Exit full screen for lesson slides":"Enter full screen for lesson slides");}
+if(document.fullscreenEnabled===false||!deckShell.requestFullscreen){fullscreenBtn.hidden=true;}else{fullscreenBtn.addEventListener("click",function(){if(document.fullscreenElement===deckShell){if(document.exitFullscreen)document.exitFullscreen();}else if(deckShell.requestFullscreen){deckShell.requestFullscreen();}});document.addEventListener("fullscreenchange",fullscreenLabel);}
+restoreAnswers();restoreProgress();updateWordCount();updateSavedBlog();placeNavigation();showSlide(Math.max(0,Math.min(slides.length-1,state.current)),false);fullscreenLabel();persist();
+</script><script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Annisa Day 25 Blog or Opinion - granular LRS via proxy (mirrors Day 24 deck)
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.LRS || !window.LRS.send) return;
+  var HOME='https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, disp){ return {id:id, display:{'en-US':disp}}; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched','launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered','answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete','marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced','experienced')
+  };
+  function sendPrecise(vKey, objId, objName){
+    window.LRS.send({ verb: VERBS[vKey], object: { objectType:'Activity', id: objId,
+      definition:{ name:{'en-US': objName}, type:'http://adlnet.gov/expapi/activities/lesson' } } });
+  }
+  var OPEN_ACTS={act14:1,act15:1};
+  var sentChecks={};
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-check');
+      if(OPEN_ACTS[secId] || sentChecks[secId]) return;
+      sentChecks[secId]=true;
+      var sec=document.getElementById(secId); if(!sec) return;
+      var n=0;
+      sec.querySelectorAll('input.answer,select.answer-select,input[type=text],.mcq').forEach(function(item){
+        if(item.id==='certLearnerName') return;
+        n++;
+        var name='Item '+n;
+        var stem=item.querySelector ? item.querySelector('legend') : null;
+        if(stem) name=stem.textContent.trim().replace(/\s+/g,' ').substring(0,80);
+        else if(item.getAttribute('aria-label')) name=item.getAttribute('aria-label');
+        else if(item.id) name=item.id;
+        sendPrecise('answered', LESSON_ID+'/'+secId+'/item-'+n, secId+': '+name);
+      });
+    });
+  });
+  var completed={};
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var secId=btn.getAttribute('data-complete');
+      setTimeout(function(){
+        var sec=document.getElementById(secId);
+        if(!sec || !sec.classList.contains('complete')) return;
+        if(OPEN_ACTS[secId] && !completed['_m'+secId]){
+          completed['_m'+secId]=true;
+          sendPrecise('marked', LESSON_ID+'/'+secId, secId+' open answers');
+        }
+        if(!completed[secId]){
+          completed[secId]=true;
+          var real=Object.keys(completed).filter(function(k){return k.indexOf('_m')!==0;}).length;
+          if(real>=15) sendPrecise('experienced', LESSON_ID, document.title);
+        }
+      }, 400);
+    });
+  });
+});
+</script>
+</body>
+</html>
