@@ -403,6 +403,15 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'Check: is the price acknowledged (not instantly discounted)? Is scope clarified like-for-like? '
       + 'Is there a soft conditional? Are numbers hedged?';
   }
+  if (where.includes('workplace-all-tenses') || where.includes('all-tenses pronunciation') || where.includes('workplace updates') || where.includes('clear workplace updates')) {
+    return 'B2 WORKPLACE ALL-TENSES PRONUNCIATION (spoken and written workplace updates using the right tense for the time frame). '
+      + 'Required tense map: facts and routines = present simple; happening now or around now = present continuous; finished time with a stated past time = past simple; '
+      + 'started in the past and still continuing = present perfect continuous; finished before another past point = past perfect; '
+      + 'a planned future arrangement = will; an action in progress at a future time = future continuous; a result completed by a future time = future perfect; '
+      + 'duration up to a future point = future perfect continuous. Sentence endings stay calm and professional, with a clear falling finish. '
+      + 'Check: does each sentence match its time frame (now, finished, started, until, planned, by a future point)? Is the auxiliary correct for the continuous forms? '
+      + 'Is the third-person singular -s present? Is the sentence a natural workplace update, not a textbook example?';
+  }
   if (where.includes('pronunciation') || where.includes('sound clear') || where.includes('sound-clear') || where.includes('pausing') || where.includes('weak forms')) {
     return 'PRONUNCIATION FOR WORK (pause | at clause edges, stress CAPS on news words, rise to continue, fall to finish, on A/B/C clause sentences). '
       + 'Required shape: | marks at clause edges (never mid-phrase), CAPS on new and key words, small words quick and soft, '

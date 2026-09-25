@@ -289,6 +289,10 @@
     // --- Explicit Submit buttons: only for REAL writing tasks (not warm-ups, speak-notes, reflections, goals, single-sentence drills) ---
     // Allowlist by file + activity + field. Multi-part drafts (story chains, 90-sec sets, thesis pairs) share one button per activity.
     var REAL_WRITING = [
+      { file: 'workplace-all-tenses', act: 'slide-7', fields: ['a7-results'] },
+      { file: 'workplace-all-tenses', act: 'slide-11', fields: ['a11-one', 'a11-two', 'a11-three'] },
+      { file: 'workplace-all-tenses', act: 'slide-13', fields: ['a13-one', 'a13-two', 'a13-three'] },
+      { file: 'workplace-all-tenses', act: 'slide-15', fields: ['a15-script'] },
       { file: 'annisa-day26', act: 'act11', fields: ['a11Draft'] },
       { file: 'annisa-day26', act: 'act14', fields: ['a14Letter'] },
       { file: 'annisa-day25', act: 'act14', fields: ['a14Draft'] },
@@ -409,6 +413,7 @@
       if (f.indexOf('adverbial-wh-clauses') > -1) return 'adverbial-wh-clauses';
       if (f.indexOf('conditionals-review') > -1) return 'conditionals-review';
       if (f.indexOf('listening-skills-interview') > -1) return 'listening-skills-interview';
+      if (f.indexOf('workplace-all-tenses') > -1) return 'workplace-all-tenses';
       if (f.indexOf('annisa-day26') > -1) return 'annisa-day26';
       if (f.indexOf('annisa-day25') > -1) return 'annisa-day25';
       if (f.indexOf('annisa-day24') > -1) return 'annisa-day24';

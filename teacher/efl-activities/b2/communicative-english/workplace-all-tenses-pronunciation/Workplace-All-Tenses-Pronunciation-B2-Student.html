@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Workplace All Tenses Pronunciation (B2) Interactive</title>
+  <noscript>
+    <style>
+      body { overflow: auto; }
+      .presentation, .slide-stage { display: block; height: auto; overflow: visible; }
+      .slide, .slide[hidden] { display: block !important; min-height: 0; overflow: visible; }
+      .deck-toolbar, .deck-nav, .mobile-nav, .skip-link { display: none !important; }
+    </style>
+  </noscript>
+  <style>
+    :root {
+      --bg: #05090f;
+      --surface: #111b27;
+      --surface-2: #19283a;
+      --surface-3: #26384d;
+      --ink: #ffffff;
+      --muted: #d5e0eb;
+      --accent: #ffd166;
+      --accent-ink: #101010;
+      --cyan: #79e8ff;
+      --good: #a4f4d5;
+      --good-bg: #123a32;
+      --bad: #ffb7b7;
+      --bad-bg: #492129;
+      --border: #71869e;
+      --focus: #ffd166;
+      --nav-height: 4.75rem;
+      --radius: 0.7rem;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Aptos, "Segoe UI Variable", "Trebuchet MS", sans-serif;
+      font-size: clamp(1rem, 1.2vw, 1.12rem);
+      line-height: 1.55;
+    }
+    button, input, select, textarea { font: inherit; }
+    button, select { touch-action: manipulation; }
+    a { color: var(--cyan); text-underline-offset: 0.2em; }
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: 0.5rem;
+      left: 0.5rem;
+      z-index: 1000;
+      transform: translateY(-160%);
+      min-height: 2.75rem;
+      padding: 0.7rem 1rem;
+      border: 2px solid var(--ink);
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 850;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .no-js-note {
+      margin: 0;
+      padding: calc(1rem + env(safe-area-inset-top)) 1rem 1rem;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 800;
+    }
+    .presentation {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) calc(var(--nav-height) + env(safe-area-inset-bottom));
+      width: 100vw;
+      height: 100dvh;
+      min-height: 100dvh;
+      background: var(--bg);
+    }
+    .presentation:fullscreen {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+    }
+    .presentation.focus-mode {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .deck-toolbar {
+      display: grid;
+      grid-template-columns: minmax(12rem, 1fr) minmax(14rem, 30rem) auto;
+      gap: 1rem;
+      align-items: center;
+      min-height: 4.5rem;
+      padding: calc(0.65rem + env(safe-area-inset-top)) calc(clamp(1rem, 2.5vw, 2rem) + env(safe-area-inset-right)) 0.65rem calc(clamp(1rem, 2.5vw, 2rem) + env(safe-area-inset-left));
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .brand strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      line-height: 1.2;
+    }
+    .brand span { color: var(--muted); font-size: 0.85rem; }
+    .progress-wrap { display: grid; gap: 0.25rem; }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .progress-track {
+      display: block;
+      width: 100%;
+      height: 0.65rem;
+      overflow: hidden;
+      appearance: none;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: var(--bg);
+    }
+    .progress-track::-webkit-progress-bar { background: var(--bg); }
+    .progress-track::-webkit-progress-value { background: var(--accent); }
+    .progress-track::-moz-progress-bar { background: var(--accent); }
+    .toolbar-button, .nav-button, .check-button, .record-button {
+      min-height: 3rem;
+      border: 2px solid transparent;
+      border-radius: 0.45rem;
+      cursor: pointer;
+      font-weight: 850;
+    }
+    .toolbar-button {
+      min-width: 10.5rem;
+      padding: 0.6rem 0.9rem;
+      color: var(--ink);
+      background: var(--surface-3);
+      border-color: var(--ink);
+    }
+    .slide-stage {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .slide-stage:fullscreen,
+    .slide-stage.focus-mode {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+    }
+    .slide-stage.focus-mode {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      overflow: hidden;
+    }
+    .slide {
+      grid-row: 1;
+      min-width: 0;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: calc(clamp(1rem, 3.5vw, 3rem) + env(safe-area-inset-top)) calc(clamp(1rem, 3.5vw, 3rem) + env(safe-area-inset-right)) calc(clamp(2rem, 5vw, 4rem) + env(safe-area-inset-bottom)) calc(clamp(1rem, 3.5vw, 3rem) + env(safe-area-inset-left));
+      scrollbar-gutter: stable;
+    }
+    .slide[hidden] { display: none; }
+    .slide-inner {
+      width: min(100%, 72rem);
+      margin-inline: auto;
+    }
+    .slide-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: 0.2rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--surface);
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+    .pill.accent { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+    h1, h2, h3 {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.12;
+    }
+    h1 {
+      max-width: 16ch;
+      margin: 0;
+      font-size: clamp(2.45rem, 7vw, 6.4rem);
+      letter-spacing: -0.04em;
+    }
+    h2 {
+      max-width: 21ch;
+      margin: 0;
+      font-size: clamp(1.9rem, 5vw, 4.2rem);
+      letter-spacing: -0.025em;
+    }
+    h3 { margin: 0 0 0.65rem; font-size: 1.2rem; }
+    p, li, label, summary { overflow-wrap: anywhere; }
+    p { max-width: 72ch; }
+    .lead {
+      max-width: 58ch;
+      margin: 1.25rem 0 0;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2.2vw, 1.4rem);
+    }
+    .accent-line {
+      width: min(12rem, 35vw);
+      height: 0.35rem;
+      margin: 1.5rem 0;
+      background: var(--accent);
+    }
+    .intro-grid, .task-grid, .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .intro-grid { margin-top: 1.5rem; }
+    .card {
+      min-width: 0;
+      padding: clamp(1rem, 2.3vw, 1.5rem);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .card.featured { border-left: 0.4rem solid var(--accent); }
+    .card h2, .card h3 { margin-top: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.2rem; line-height: 1.15; }
+    .plain-list { margin: 0; padding-left: 1.25rem; }
+    .plain-list li + li { margin-top: 0.5rem; }
+    .instruction {
+      margin: 1.2rem 0;
+      padding: 0.8rem 1rem;
+      border-left: 0.35rem solid var(--cyan);
+      background: var(--surface-2);
+      font-size: 1.08em;
+      font-weight: 720;
+    }
+    .audio-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.8rem 1rem;
+      align-items: center;
+      margin: 1rem 0;
+      padding: 0.85rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .audio-card p { margin: 0; }
+    audio {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-height: 3rem;
+    }
+    .transcript {
+      grid-column: 1 / -1;
+      margin: 0;
+      border-color: var(--border);
+      background: var(--bg);
+    }
+    .transcript summary { min-height: 2.75rem; color: var(--cyan); }
+    .transcript p { margin: 0; padding: 0 0.8rem 0.8rem; color: var(--muted); }
+    .task-grid { margin-top: 1rem; }
+    .response {
+      min-width: 0;
+      margin: 0;
+      padding: 0.85rem;
+      border: 1px solid var(--border);
+      border-left: 0.3rem solid var(--surface-3);
+      border-radius: 0.45rem;
+      background: var(--surface);
+    }
+    .response.correct {
+      border-color: var(--good);
+      border-left-color: var(--good);
+      background: var(--good-bg);
+    }
+    .response.wrong {
+      border-color: var(--bad);
+      border-left-color: var(--bad);
+      background: var(--bad-bg);
+    }
+    .response + .response { margin-top: 0.7rem; }
+    .spaced-lg { margin-top: 1rem; }
+    .response legend, .response > label:first-child {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      min-height: 3rem;
+      padding: 0.65rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 0.35rem;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    textarea { min-height: 7rem; resize: vertical; }
+    input[type="text"]::placeholder, textarea::placeholder { color: #aebdcc; opacity: 1; }
+    .radio-list { display: grid; gap: 0.45rem; }
+    .radio-option {
+      display: grid;
+      grid-template-columns: 1.4rem minmax(0, 1fr);
+      gap: 0.65rem;
+      align-items: start;
+      min-height: 3rem;
+      padding: 0.55rem;
+      border: 1px solid transparent;
+      border-radius: 0.35rem;
+      cursor: pointer;
+    }
+    .radio-option:hover { background: var(--surface-2); }
+    .radio-option input {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin: 0.2rem 0 0;
+      accent-color: var(--accent);
+    }
+    .check-mark {
+      display: block;
+      min-height: 1.4rem;
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+    .response.correct .check-mark { color: var(--good); }
+    .response.wrong .check-mark { color: var(--bad); }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    .check-button, .record-button {
+      padding: 0.65rem 1rem;
+      color: var(--accent-ink);
+      background: var(--accent);
+    }
+    .feedback {
+      min-height: 1.6rem;
+      margin: 0.75rem 0 0;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .feedback.success { color: var(--good); }
+    details {
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    summary {
+      min-height: 3.2rem;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 850;
+    }
+    summary:hover { background: var(--surface-2); }
+    .answer-body {
+      padding: 0 1rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .answer-body > :first-child { margin-top: 1rem; }
+    .answer-note {
+      padding: 0.8rem;
+      border-left: 0.3rem solid var(--good);
+      background: var(--good-bg);
+    }
+    .audio-transcript { color: var(--muted); font-size: 0.93rem; }
+    .deck-nav {
+      display: grid;
+      grid-template-columns: minmax(7rem, 1fr) minmax(12rem, auto) minmax(7rem, 1fr);
+      gap: 1rem;
+      align-items: center;
+      min-height: var(--nav-height);
+      padding: 0.7rem calc(clamp(1rem, 3vw, 2.5rem) + env(safe-area-inset-right)) calc(0.7rem + env(safe-area-inset-bottom)) calc(clamp(1rem, 3vw, 2.5rem) + env(safe-area-inset-left));
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .nav-button {
+      min-width: 7rem;
+      min-height: 3.25rem;
+      padding: 0.65rem 1rem;
+      color: var(--ink);
+      background: var(--surface-3);
+      border-color: var(--ink);
+    }
+    .nav-button.next {
+      justify-self: end;
+      color: var(--accent-ink);
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .nav-button:disabled {
+      color: #aab7c4;
+      background: #202c39;
+      border-color: #607184;
+      cursor: not-allowed;
+    }
+    .nav-status { text-align: center; color: var(--muted); font-size: 0.92rem; }
+    .mobile-nav { display: none; }
+    @media (min-width: 761px) {
+      .slide-stage:fullscreen { grid-template-rows: minmax(0, 1fr) auto; }
+      .slide-stage:fullscreen .mobile-nav { display: grid; grid-row: 2; }
+    }
+    .record-panel {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .record-panel audio { display: none; }
+    .record-panel audio.available { display: block; }
+    .can-do {
+      max-width: 24ch;
+      margin: 1.5rem 0;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.1;
+    }
+    @media (max-width: 760px) {
+      :root { --nav-height: 4.9rem; }
+      .presentation { grid-template-rows: auto minmax(0, 1fr); }
+      .deck-toolbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 0.6rem;
+        min-height: 4rem;
+        padding: calc(0.5rem + env(safe-area-inset-top)) calc(0.75rem + env(safe-area-inset-right)) 0.5rem calc(0.75rem + env(safe-area-inset-left));
+      }
+      .brand span { display: none; }
+      .progress-wrap { grid-column: 1 / -1; grid-row: 2; }
+      .toolbar-button { min-width: 3.5rem; width: 3.5rem; padding: 0.45rem; overflow: visible; white-space: nowrap; text-indent: 0; font-size: 0.85rem; }
+      .toolbar-button::before { content: none; }
+      .slide-stage { grid-template-rows: minmax(0, 1fr) auto; }
+      .slide { padding: calc(1rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left)); }
+      .desktop-nav { display: none; }
+      .mobile-nav { display: grid; grid-row: 2; }
+      .intro-grid, .task-grid, .two-col { grid-template-columns: 1fr; }
+      .audio-card { grid-template-columns: 1fr; }
+      .nav-button { min-width: 5.2rem; }
+      .nav-status { font-size: 0.82rem; }
+    }
+    @media (max-width: 420px) {
+      body { font-size: 1rem; }
+      .slide-meta { gap: 0.35rem; }
+      .pill { font-size: 0.8rem; }
+      h2 { font-size: 1.8rem; }
+      .deck-nav, .mobile-nav { gap: 0.45rem; padding: 0.55rem calc(0.55rem + env(safe-area-inset-right)) calc(0.55rem + env(safe-area-inset-bottom)) calc(0.55rem + env(safe-area-inset-left)); }
+      .nav-status { display: none; }
+      .deck-nav, .mobile-nav { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); }
+      .nav-button { width: 100%; min-width: 0; padding: 0.5rem 0.25rem; white-space: normal; overflow-wrap: anywhere; }
+      .nav-status { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    }
+    @media print {
+      :root {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface-2: #ffffff;
+        --surface-3: #ffffff;
+        --ink: #111111;
+        --muted: #222222;
+        --accent: #000000;
+        --accent-ink: #ffffff;
+        --cyan: #000000;
+        --good: #000000;
+        --good-bg: #ffffff;
+        --bad: #000000;
+        --bad-bg: #ffffff;
+        --border: #555555;
+      }
+      body { overflow: visible; background: #ffffff; color: #111111; }
+      .presentation { display: block; height: auto; }
+      .deck-toolbar, .deck-nav, .mobile-nav, .skip-link, .check-button, .record-button, .toolbar-button, audio { display: none !important; }
+      .slide-stage { display: block; overflow: visible; }
+      .slide, .slide[hidden] { display: block !important; min-height: 0; overflow: visible; page-break-after: always; }
+      .card, .response, details, .transcript, input, select, textarea { border-color: #555555; background: #ffffff; color: #111111; }
+      .pill { color: #111111; border-color: #555555; }
+      .pill.accent { color: #ffffff; background: #000000; border-color: #000000; }
+      .feedback, .audio-transcript, .check-mark { color: #111111; }
+      input::placeholder, textarea::placeholder { color: #555555; opacity: 1; }
+      .progress-track::-webkit-progress-value { background: #000000; }
+      .progress-track::-moz-progress-bar { background: #000000; }
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <p class="no-js-note">JavaScript is off. All lesson views are shown below, but checking, recording, and slide controls are unavailable.</p>
+  </noscript>
+  <a class="skip-link" href="#slide-stage">Skip to lesson</a>
+  <div class="presentation" id="presentation">
+    <header class="deck-toolbar">
+      <div class="brand">
+        <strong>Clear Workplace Updates</strong>
+        <span>B2 pronunciation, British English</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta"><span id="slide-label">Welcome</span><span id="slide-count">1 / 17</span></div>
+        <progress class="progress-track" id="progress-bar" value="1" max="17" aria-label="Lesson progress">1 of 17</progress>
+      </div>
+      <button class="toolbar-button" id="fullscreen-button" type="button" aria-pressed="false">Enter full screen</button>
+    </header>
+
+    <main class="slide-stage" id="slide-stage" tabindex="-1" aria-label="Lesson slides">
+      <section class="slide" id="slide-0" data-title="Welcome" aria-labelledby="slide-0-title">
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">B2</span><span class="pill">60 minutes</span><span class="pill">15 activities</span></div>
+          <h1 id="slide-0-title" tabindex="-1">Clear workplace updates</h1>
+          <p class="lead">Say what happened, what matters now, and what comes next. Make the important words easy to hear.</p>
+          <div class="accent-line" aria-hidden="true"></div>
+          <div class="intro-grid">
+            <section class="card featured" aria-labelledby="aim-title">
+              <h2 id="aim-title">Your goal</h2>
+              <p>Give a 60-second update that a manager can follow easily.</p>
+            </section>
+            <section class="card" aria-labelledby="method-title">
+              <h2 id="method-title">How to work</h2>
+              <p>Listen or read. Make your first attempt. Check. Then open the answer key.</p>
+            </section>
+          </div>
+          <div class="audio-card">
+            <div><strong>Lesson audio</strong><p>British English neural voice</p></div>
+            <span class="pill">7 sec</span>
+            <audio controls preload="none" src="assets/audio/00-course-intro.mp3" aria-label="Audio introduction to the workplace pronunciation lesson" aria-describedby="transcript-0"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of audio</summary><p id="transcript-0">In this lesson, you will listen for tense meaning, stress, rhythm, and intonation in workplace updates.</p></details>
+          </div>
+          <p class="lead">Use the controls below. On a keyboard, use the left and right arrow keys when focus is outside a control.</p>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-1" data-title="Listen for the message" aria-labelledby="slide-1-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 1 of 15</span><span class="pill">3 min</span><span class="pill">Message stress</span></div>
+          <h2 id="slide-1-title" tabindex="-1">Which delivery day stands out?</h2>
+          <p class="lead">Listen twice. Then choose the version that corrects the delivery day.</p>
+          <div class="audio-card">
+            <div><strong>Two updates</strong><p>Listen for the stressed time word.</p></div>
+            <span class="pill">British voice</span>
+            <audio controls preload="none" src="assets/audio/01-message-stress.mp3" aria-label="Two British English versions of a delivery update" aria-describedby="transcript-1"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the listening task</summary><p id="transcript-1">Strong stress is shown in capitals. Version one: We'll send the report on Friday. Version two: Actually, we'll send the report on MONDAY.</p></details>
+          </div>
+          <fieldset class="response" id="a1-response">
+            <legend>Your choice</legend>
+            <div class="radio-list">
+              <label class="radio-option"><input type="radio" id="a1-one" name="a1-focus" value="one" aria-label="Version one"><span>Version one</span></label>
+              <label class="radio-option"><input type="radio" id="a1-two" name="a1-focus" value="two" data-answer="two" aria-label="Version two"><span>Version two</span></label>
+            </div>
+            <span class="check-mark" aria-live="polite"></span>
+          </fieldset>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-1">Check my choice</button></div>
+          <p class="feedback" id="feedback-1" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <p class="answer-note"><strong>Version two.</strong> “Actually” signals the correction, and the strongest stress falls on <strong>MON-day</strong>.</p>
+              <p>Use the contraction <strong>we'll</strong>. Keep a falling tone for a settled update.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> Strong stress is shown in capitals. Version one: We'll send the report on Friday. Version two: Actually, we'll send the report on MONDAY.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-2" data-title="Choose the handover" aria-labelledby="slide-2-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 2 of 15</span><span class="pill">4 min</span><span class="pill">Final endings</span></div>
+          <h2 id="slide-2-title" tabindex="-1">Choose the responsibility handover</h2>
+          <p class="lead">Choose one form in each line. Then read the four jobs aloud.</p>
+          <div class="task-grid">
+            <div class="card">
+              <p><strong>1.</strong> Leo ________ the loading screen. <em>watch | watches | is watching</em></p>
+              <p><strong>2.</strong> Priya ________ invoices before noon. <em>review | reviews | is reviewing</em></p>
+              <p><strong>3.</strong> The supervisor ________ the alarm system. <em>check | checks | is checking</em></p>
+              <p><strong>4.</strong> Our safety officer ________ the risk register. <em>manage | manages | is managing</em></p>
+            </div>
+            <div>
+              <div class="response">
+                <label for="a2-watches">Line 1: Leo ________ the loading screen</label>
+                <select id="a2-watches" data-answer="watches"><option value="">Choose</option><option value="watch">watch</option><option value="watches">watches</option><option value="is watching">is watching</option></select>
+                <span class="check-mark" id="a2-watches-mark" aria-live="polite"></span>
+              </div>
+              <div class="response">
+                <label for="a2-reviews">Line 2: Priya ________ invoices before noon</label>
+                <select id="a2-reviews" data-answer="reviews"><option value="">Choose</option><option value="review">review</option><option value="reviews">reviews</option><option value="is reviewing">is reviewing</option></select>
+                <span class="check-mark" id="a2-reviews-mark" aria-live="polite"></span>
+              </div>
+              <div class="response">
+                <label for="a2-checks">Line 3: The supervisor ________ the alarm system</label>
+                <select id="a2-checks" data-answer="checks"><option value="">Choose</option><option value="check">check</option><option value="checks">checks</option><option value="is checking">is checking</option></select>
+                <span class="check-mark" id="a2-checks-mark" aria-live="polite"></span>
+              </div>
+              <div class="response">
+                <label for="a2-manages">Line 4: The safety officer ________ the risk register</label>
+                <select id="a2-manages" data-answer="manages"><option value="">Choose</option><option value="manage">manage</option><option value="manages">manages</option><option value="is managing">is managing</option></select>
+                <span class="check-mark" id="a2-manages-mark" aria-live="polite"></span>
+              </div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for three final sounds</strong><p>Then compare /s/, /z/, and /ɪz/.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/02-present-simple.mp3" aria-label="Four British English model sentences with third-person endings" aria-describedby="transcript-2"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-2">The supervisor checks the schedule. The coach organises the session. The receptionist watches the entrance. The manager approves each request.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-2">Check my answers</button></div>
+          <p class="feedback" id="feedback-2" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>Leo <strong>watches</strong> the loading screen.</li><li>Priya <strong>reviews</strong> invoices before noon.</li><li>The supervisor <strong>checks</strong> the alarm system.</li><li>Our safety officer <strong>manages</strong> the risk register.</li></ol>
+              <p class="answer-note"><em>Watches</em> and <em>manages</em> end /ɪz/. <em>Reviews</em> ends /z/. <em>Checks</em> ends /s/, often [ts] in careful speech.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> The supervisor checks the schedule. The coach organises the session. The receptionist watches the entrance. The manager approves each request.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-3" data-title="What is happening now?" aria-labelledby="slide-3-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 3 of 15</span><span class="pill">4 min</span><span class="pill">Live action</span></div>
+          <h2 id="slide-3-title" tabindex="-1">What is happening now?</h2>
+          <p class="lead">It is 10:05. Choose the action happening now. Then say the full update.</p>
+          <div class="task-grid">
+            <div class="card">
+              <p><strong>1.</strong> The analyst ________ the sales data. <em>check | is checking | checked</em></p>
+              <p><strong>2.</strong> Ben ________ the delivery date. <em>confirm | is confirming | confirmed</em></p>
+              <p><strong>3.</strong> We ________ the new dashboard. <em>test | are testing | tested</em></p>
+            </div>
+            <div>
+              <div class="response"><label for="a3-one">Line 1: The analyst ________ the sales data</label><select id="a3-one" data-answer="is checking"><option value="">Choose</option><option value="check">check</option><option value="is checking">is checking</option><option value="checked">checked</option></select><span class="check-mark" id="a3-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a3-two">Line 2: Ben ________ the delivery date</label><select id="a3-two" data-answer="is confirming"><option value="">Choose</option><option value="confirm">confirm</option><option value="is confirming">is confirming</option><option value="confirmed">confirmed</option></select><span class="check-mark" id="a3-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a3-three">Line 3: We ________ the new dashboard</label><select id="a3-three" data-answer="are testing"><option value="">Choose</option><option value="test">test</option><option value="are testing">are testing</option><option value="tested">tested</option></select><span class="check-mark" id="a3-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for rhythm</strong><p>Stress the activity, not the auxiliary.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/03-present-continuous.mp3" aria-label="British English model of a live work update" aria-describedby="transcript-3"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-3">Right now, the support team is answering calls and updating the service board.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-3">Check my answers</button></div>
+          <p class="feedback" id="feedback-3" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>The analyst <strong>is checking</strong> the sales data.</li><li>Ben <strong>is confirming</strong> the delivery date.</li><li>We <strong>are testing</strong> the new dashboard.</li></ol>
+              <p class="answer-note">Say line 3 as <strong>we're testing</strong>. Keep the main stress on <em>testing</em>.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> Right now, the support team is answering calls and updating the service board.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-4" data-title="Complete the incident log" aria-labelledby="slide-4-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 4 of 15</span><span class="pill">4 min</span><span class="pill">Finished events</span></div>
+          <h2 id="slide-4-title" tabindex="-1">Complete yesterday's incident log</h2>
+          <p class="lead">Each event is complete. Choose the matching action. Then read the log as one update.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> At 10:15, the printer ________. <em>stop | stopped | has stopped</em></p><p><strong>2.</strong> Yesterday, the team ________ the urgent file. <em>send | sent | have sent</em></p><p><strong>3.</strong> At 09:00, we ________ the loading bay. <em>check | checked | have checked</em></p></div>
+            <div>
+              <div class="response"><label for="a4-one">Log entry 1: At 10:15, the printer ________</label><select id="a4-one" data-answer="stopped"><option value="">Choose</option><option value="stop">stop</option><option value="stopped">stopped</option><option value="has stopped">has stopped</option></select><span class="check-mark" id="a4-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a4-two">Log entry 2: Yesterday, the team ________ the urgent file</label><select id="a4-two" data-answer="sent"><option value="">Choose</option><option value="send">send</option><option value="sent">sent</option><option value="have sent">have sent</option></select><span class="check-mark" id="a4-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a4-three">Log entry 3: At 09:00, we ________ the loading bay</label><select id="a4-three" data-answer="checked"><option value="">Choose</option><option value="check">check</option><option value="checked">checked</option><option value="have checked">have checked</option></select><span class="check-mark" id="a4-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the final sound</strong><p>Then read the log as one update.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/04-past-simple.mp3" aria-label="British English model with a regular past-tense ending" aria-describedby="transcript-4"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-4">Yesterday, the facilities team checked every door before the building opened.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-4">Check my answers</button></div>
+          <p class="feedback" id="feedback-4" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>The printer <strong>stopped</strong> at 10:15.</li><li>The team <strong>sent</strong> the urgent file yesterday.</li><li>We <strong>checked</strong> the loading bay at 09:00.</li></ol>
+              <p class="answer-note"><em>Stopped</em> and <em>checked</em> end /t/. <em>Sent</em> is /sent/.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> Yesterday, the facilities team checked every door before the building opened.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-5" data-title="What was already happening?" aria-labelledby="slide-5-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 5 of 15</span><span class="pill">4 min</span><span class="pill">Interruption</span></div>
+          <h2 id="slide-5-title" tabindex="-1">What was already happening?</h2>
+          <p class="lead">Choose the action that was already under way. Then read each report aloud.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> While I ________ the quote, the client called. <em>prepare | was preparing | prepared</em></p><p><strong>2.</strong> The team ________ the budget when IT called. <em>review | was reviewing | were reviewing</em></p><p><strong>3.</strong> She ________ to a supplier when the alarm sounded. <em>speak | spoke | was speaking</em></p></div>
+            <div>
+              <div class="response"><label for="a5-one">Report 1: While I ________ the quote</label><select id="a5-one" data-answer="was preparing"><option value="">Choose</option><option value="prepare">prepare</option><option value="was preparing">was preparing</option><option value="prepared">prepared</option></select><span class="check-mark" id="a5-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a5-two">Report 2: The team ________ the budget</label><select id="a5-two" data-answer="was reviewing|were reviewing"><option value="">Choose</option><option value="review">review</option><option value="was reviewing">was reviewing</option><option value="were reviewing">were reviewing</option><option value="reviewed">reviewed</option></select><span class="check-mark" id="a5-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a5-three">Report 3: She ________ to a supplier</label><select id="a5-three" data-answer="was speaking"><option value="">Choose</option><option value="speak">speak</option><option value="spoke">spoke</option><option value="was speaking">was speaking</option></select><span class="check-mark" id="a5-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for two thought groups</strong><p>Make the interrupting event clearer.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/05-past-continuous.mp3" aria-label="British English model contrasting background and interrupting action" aria-describedby="transcript-5"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-5">I was updating the rota when the client called with a question.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-5">Check my answers</button></div>
+          <p class="feedback" id="feedback-5" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>While I <strong>was preparing</strong> the quote, the client called.</li><li>The team <strong>were reviewing</strong> the budget when IT called.</li><li>She <strong>was speaking</strong> to a supplier when the alarm sounded.</li></ol>
+              <p class="answer-note">Pause lightly before <em>when</em>. Make the interrupting event more prominent.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> I was updating the rota when the client called with a question.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-6" data-title="What matters now?" aria-labelledby="slide-6-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 6 of 15</span><span class="pill">4 min</span><span class="pill">Current result</span></div>
+          <h2 id="slide-6-title" tabindex="-1">What matters now?</h2>
+          <p class="lead">Choose the result that matters now. Then say each result aloud.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> Access works now. IT ________ it. <em>restored | has restored | had restored</em></p><p><strong>2.</strong> The quote is on my screen now. We ________ it. <em>received | have received | had received</em></p><p><strong>3.</strong> We can start today. The client ________ the price. <em>approved | has approved | had approved</em></p><p><strong>4.</strong> No action is needed now. She ________ the audit. <em>finished | has finished | had finished</em></p></div>
+            <div>
+              <div class="response"><label for="a6-one">Status 1: Access works now. IT ________ it</label><select id="a6-one" data-answer="has restored"><option value="">Choose</option><option value="restored">restored</option><option value="has restored">has restored</option><option value="had restored">had restored</option></select><span class="check-mark" id="a6-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a6-two">Status 2: The quote is on screen. We ________ it</label><select id="a6-two" data-answer="have received"><option value="">Choose</option><option value="received">received</option><option value="have received">have received</option><option value="had received">had received</option></select><span class="check-mark" id="a6-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a6-three">Status 3: Work can start today. The client ________ the price</label><select id="a6-three" data-answer="has approved"><option value="">Choose</option><option value="approved">approved</option><option value="has approved">has approved</option><option value="had approved">had approved</option></select><span class="check-mark" id="a6-three-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a6-four">Status 4: No action is needed. She ________ the audit</label><select id="a6-four" data-answer="has finished"><option value="">Choose</option><option value="finished">finished</option><option value="has finished">has finished</option><option value="had finished">had finished</option></select><span class="check-mark" id="a6-four-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the result word</strong><p>The auxiliary can be light.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/06-present-perfect.mp3" aria-label="British English model of a current-result update" aria-describedby="transcript-6"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-6">We've just approved the revised price, so the team can begin tomorrow.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-6">Check my answers</button></div>
+          <p class="feedback" id="feedback-6" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>IT <strong>has restored</strong> access to the shared drive.</li><li>We <strong>have received</strong> the revised quote.</li><li>The client <strong>has approved</strong> the price.</li><li>She <strong>has finished</strong> the audit.</li></ol>
+              <p class="answer-note">Natural forms include <strong>we've received</strong> and <strong>she's finished</strong>. Stress the result word.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> We've just approved the revised price, so the team can begin tomorrow.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-7" data-title="Show the work in progress" aria-labelledby="slide-7-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 7 of 15</span><span class="pill">4 min</span><span class="pill">Work in progress</span></div>
+          <h2 id="slide-7-title" tabindex="-1">Show the work in progress</h2>
+          <p class="lead">Choose the process linked to the present. Then say one result for each item.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> We ________ the report since 09:00. <em>have worked | have been working | had been working</em></p><p><strong>2.</strong> She ________ applications all morning. <em>has reviewed | has been reviewing | had been reviewing</em></p><p><strong>3.</strong> They ________ the system for two hours. <em>have tested | have been testing | had been testing</em></p></div>
+            <div>
+              <div class="response"><label for="a7-one">Process 1: We ________ the report since 09:00</label><select id="a7-one" data-answer="have been working"><option value="">Choose</option><option value="have worked">have worked</option><option value="have been working">have been working</option><option value="had been working">had been working</option></select><span class="check-mark" id="a7-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a7-two">Process 2: She ________ applications all morning</label><select id="a7-two" data-answer="has been reviewing"><option value="">Choose</option><option value="has reviewed">has reviewed</option><option value="has been reviewing">has been reviewing</option><option value="had been reviewing">had been reviewing</option></select><span class="check-mark" id="a7-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a7-three">Process 3: They ________ the system for two hours</label><select id="a7-three" data-answer="have been testing"><option value="">Choose</option><option value="have tested">have tested</option><option value="have been testing">have been testing</option><option value="had been testing">had been testing</option></select><span class="check-mark" id="a7-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="response spaced-lg">
+            <label for="a7-results">Your three spoken result clauses</label>
+            <textarea id="a7-results" data-open-response="true" placeholder="Result 1. Result 2. Result 3."></textarea>
+            <span class="check-mark" aria-live="polite"></span>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the change</strong><p>Stress the result more than the process.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/07-present-perfect-continuous.mp3" aria-label="British English model linking sustained work to a result" aria-describedby="transcript-7"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-7">I've been reviewing applications since nine, and I've found three strong candidates.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-7">Check and save my attempt</button></div>
+          <p class="feedback" id="feedback-7" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>We <strong>have been working</strong> on the report since 09:00.</li><li>She <strong>has been reviewing</strong> applications all morning.</li><li>They <strong>have been testing</strong> the system for two hours.</li></ol>
+              <p class="answer-note"><strong>Possible results:</strong> We've just finished the first draft. She has shortlisted three candidates. They've found a login error.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> I've been reviewing applications since nine, and I've found three strong candidates.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-8" data-title="Put the earlier event first" aria-labelledby="slide-8-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 8 of 15</span><span class="pill">4 min</span><span class="pill">Earlier event</span></div>
+          <h2 id="slide-8-title" tabindex="-1">Put the earlier event first</h2>
+          <p class="lead">Choose the event that was already true. Then read the time frames as separate groups.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> By 09:30, the client ________ the budget, so the team started. <em>approved | had approved | will approve</em></p><p><strong>2.</strong> The manager called after we ________ the quote. <em>submitted | had submitted | will submit</em></p><p><strong>3.</strong> I couldn't open the file because IT ________ it in the old folder. <em>saved | had saved | will save</em></p></div>
+            <div>
+              <div class="response"><label for="a8-one">Audit note 1: By 09:30, the client ________ the budget</label><select id="a8-one" data-answer="had approved"><option value="">Choose</option><option value="approved">approved</option><option value="had approved">had approved</option><option value="will approve">will approve</option></select><span class="check-mark" id="a8-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a8-two">Audit note 2: Before the manager called, we ________ the quote</label><select id="a8-two" data-answer="had submitted"><option value="">Choose</option><option value="submitted">submitted</option><option value="had submitted">had submitted</option><option value="will submit">will submit</option></select><span class="check-mark" id="a8-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a8-three">Audit note 3: Before access failed, IT ________ the file</label><select id="a8-three" data-answer="had saved"><option value="">Choose</option><option value="saved">saved</option><option value="had saved">had saved</option><option value="will save">will save</option></select><span class="check-mark" id="a8-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the earlier frame</strong><p>Pause between the two time frames.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/08-past-perfect.mp3" aria-label="British English model of an earlier workplace event" aria-describedby="transcript-8"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-8">By the time the manager called, the client had already approved the budget.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-8">Check my answers</button></div>
+          <p class="feedback" id="feedback-8" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>By 09:30, the client <strong>had approved</strong> the budget, so the team started.</li><li>The manager called after we <strong>had submitted</strong> the quote.</li><li>I couldn't open the file because IT <strong>had saved</strong> it in the old folder.</li></ol>
+              <p class="answer-note">Reduce unstressed <em>had</em> when natural. Keep the earlier and later events in separate thought groups.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> By the time the manager called, the client had already approved the budget.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-9" data-title="Explain the earlier duration" aria-labelledby="slide-9-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 9 of 15</span><span class="pill">4 min</span><span class="pill">Earlier duration</span></div>
+          <h2 id="slide-9-title" tabindex="-1">Explain what continued before the interruption</h2>
+          <p class="lead">Choose the action that continued before the later event. Then read each explanation aloud with the duration clear.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> They ________ the migration for nine hours when the error appeared. <em>were working | had been working | have been working</em></p><p><strong>2.</strong> The customer ________ for a replacement for three hours before we offered a refund. <em>was waiting | had been waiting | has been waiting</em></p><p><strong>3.</strong> I ________ to contact the supplier all morning before they replied. <em>was trying | had been trying | have been trying</em></p></div>
+            <div>
+              <div class="response"><label for="a9-one">Incident 1: Before the error, they ________ the migration</label><select id="a9-one" data-answer="had been working"><option value="">Choose</option><option value="were working">were working</option><option value="had been working">had been working</option><option value="have been working">have been working</option></select><span class="check-mark" id="a9-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a9-two">Incident 2: Before the refund, the customer ________ for a replacement</label><select id="a9-two" data-answer="had been waiting"><option value="">Choose</option><option value="was waiting">was waiting</option><option value="had been waiting">had been waiting</option><option value="has been waiting">has been waiting</option></select><span class="check-mark" id="a9-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a9-three">Incident 3: Before the reply, I ________ to contact the supplier</label><select id="a9-three" data-answer="had been trying"><option value="">Choose</option><option value="was trying">was trying</option><option value="had been trying">had been trying</option><option value="have been trying">have been trying</option></select><span class="check-mark" id="a9-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the reduction</strong><p>Keep the duration prominent.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/09-past-perfect-continuous.mp3" aria-label="British English model of an earlier duration before an incident" aria-describedby="transcript-9"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-9">The support team had been testing the new system for two hours when the error appeared.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-9">Check my answers</button></div>
+          <p class="feedback" id="feedback-9" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>They <strong>had been working</strong> on the migration for nine hours when the error appeared.</li><li>The customer <strong>had been waiting</strong> for a replacement for three hours before we offered a refund.</li><li>I <strong>had been trying</strong> to contact the supplier all morning before they replied.</li></ol>
+              <p class="answer-note">Natural reduction: <strong>they'd been WORK-ing</strong>. Link the auxiliary smoothly to the main verb.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> The support team had been testing the new system for two hours when the error appeared.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-10" data-title="Match the plan to the moment" aria-labelledby="slide-10-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 10 of 15</span><span class="pill">4 min</span><span class="pill">Future plan</span></div>
+          <h2 id="slide-10-title" tabindex="-1">Match the plan to the moment</h2>
+          <p class="lead">Choose the form that fits each moment. Then say each full update aloud.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> A manager asks now: “Can you send the revised file?”</p><p><strong>2.</strong> A plan was agreed yesterday: “Call the supplier after your shift.”</p><p><strong>3.</strong> Calendar: “Client demo, 10:00 tomorrow. Presenter: Maya.”</p></div>
+            <div>
+              <div class="response"><label for="a10-one">Moment 1: A manager asks now to send the revised file</label><select id="a10-one" data-answer="will"><option value="">Choose</option><option value="will">will</option><option value="going to">going to</option><option value="present continuous">present continuous</option></select><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a10-two">Moment 2: A plan was agreed yesterday to call the supplier</label><select id="a10-two" data-answer="going to"><option value="">Choose</option><option value="will">will</option><option value="going to">going to</option><option value="present continuous">present continuous</option></select><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a10-three">Moment 3: Maya is the presenter at tomorrow's 10:00 client demo</label><select id="a10-three" data-answer="present continuous"><option value="">Choose</option><option value="will">will</option><option value="going to">going to</option><option value="present continuous">present continuous</option></select><span class="check-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for natural contractions</strong><p>Use a calm falling tone.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/10-future-forms.mp3" aria-label="British English models of a decision, an intention, and a fixed arrangement" aria-describedby="transcript-10"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-10">I'll call you after this meeting. I'm going to see the new starter at two. I'm meeting the supplier at four.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-10">Check my answers</button></div>
+          <p class="feedback" id="feedback-10" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>I <strong>'ll send</strong> the file within ten minutes.</li><li>I <strong>'m going to call</strong> the supplier after my shift.</li><li>Maya <strong>is presenting</strong> at the demo tomorrow at ten.</li></ol>
+              <p class="answer-note">Spontaneous decision: <em>will</em>. Earlier intention: <em>going to</em>. Fixed arrangement: present continuous.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> I'll call you after this meeting. I'm going to see the new starter at two. I'm meeting the supplier at four.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-11" data-title="At the future clock" aria-labelledby="slide-11-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 11 of 15</span><span class="pill">4 min</span><span class="pill">At 09:00 tomorrow</span></div>
+          <h2 id="slide-11-title" tabindex="-1">At the future clock</h2>
+          <p class="lead">What will you be doing at exactly 09:00 tomorrow?</p>
+          <div class="task-grid">
+            <div class="card"><ol><li>Present the results to the leadership team.</li><li>Train the new team members.</li><li>Lead the supplier call.</li></ol><p>Start with the time clue in each sentence.</p></div>
+            <div>
+              <div class="response"><label for="a11-one">Sentence 1: Present the results to the leadership team at 09:00</label><textarea id="a11-one" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a11-two">Sentence 2: Train the new team members at 09:00</label><textarea id="a11-two" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a11-three">Sentence 3: Lead the supplier call at 09:00</label><textarea id="a11-three" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the time-first rhythm</strong><p>Then say your three sentences aloud.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/11-future-continuous.mp3" aria-label="British English model placing an activity at a future time" aria-describedby="transcript-11"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-11">At nine tomorrow, I'll be presenting the results to the leadership team.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-11">Save my attempt</button></div>
+          <p class="feedback" id="feedback-11" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>At nine tomorrow, <strong>I'll be presenting</strong> the results to the leadership team.</li><li>At nine tomorrow, <strong>I'll be training</strong> the new team members.</li><li>At nine tomorrow, <strong>I'll be leading</strong> the supplier call.</li></ol>
+              <p class="answer-note">Rhythm: <strong>At nine tomorrow | I'll be preSENT-ing...</strong> Keep the action verb clear.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> At nine tomorrow, I'll be presenting the results to the leadership team.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-12" data-title="What will be true by the deadline?" aria-labelledby="slide-12-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 12 of 15</span><span class="pill">4 min</span><span class="pill">Deadline</span></div>
+          <h2 id="slide-12-title" tabindex="-1">What will be true by the deadline?</h2>
+          <p class="lead">Choose what will be true at each deadline. Then say each commitment aloud.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> By Wednesday, we ________ the supplier audit. <em>complete | will complete | will have completed</em></p><p><strong>2.</strong> By 12:00, the client ________ the service agreement. <em>sign | will sign | will have signed</em></p><p><strong>3.</strong> By Monday, IT ________ the security update. <em>deploy | will deploy | will have deployed</em></p></div>
+            <div>
+              <div class="response"><label for="a12-one">Commitment 1: By Wednesday, we ________ the supplier audit</label><select id="a12-one" data-answer="will have completed"><option value="">Choose</option><option value="complete">complete</option><option value="will complete">will complete</option><option value="will have completed">will have completed</option></select><span class="check-mark" id="a12-one-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a12-two">Commitment 2: By 12:00, the client ________ the service agreement</label><select id="a12-two" data-answer="will have signed"><option value="">Choose</option><option value="sign">sign</option><option value="will sign">will sign</option><option value="will have signed">will have signed</option></select><span class="check-mark" id="a12-two-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a12-three">Commitment 3: By Monday, IT ________ the security update</label><select id="a12-three" data-answer="will have deployed"><option value="">Choose</option><option value="deploy">deploy</option><option value="will deploy">will deploy</option><option value="will have deployed">will have deployed</option></select><span class="check-mark" id="a12-three-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the outcome</strong><p>Keep the checkpoint clear.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/12-future-perfect.mp3" aria-label="British English model of a completed outcome at a future deadline" aria-describedby="transcript-12"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-12">By Friday, we'll have completed the first review of the supplier data.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-12">Check my answers</button></div>
+          <p class="feedback" id="feedback-12" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>By Wednesday, we <strong>will have completed</strong> the supplier audit.</li><li>By 12:00, the client <strong>will have signed</strong> the service agreement.</li><li>By Monday, IT <strong>will have deployed</strong> the security update.</li></ol>
+              <p class="answer-note">Word stress: <em>com-PLETED</em>, <em>SIGNED</em>, <em>de-PLOYED</em>.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> By Friday, we'll have completed the first review of the supplier data.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-13" data-title="How long will the work continue?" aria-labelledby="slide-13-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 13 of 15</span><span class="pill">4 min</span><span class="pill">Future duration</span></div>
+          <h2 id="slide-13-title" tabindex="-1">How long will the work continue?</h2>
+          <p class="lead">Report the process at each checkpoint. Include the duration.</p>
+          <div class="task-grid">
+            <div class="card"><p><strong>1.</strong> Testing starts at 08:00. Checkpoint: 17:00 the same day.</p><p><strong>2.</strong> Campaign starts Monday at 09:00. Checkpoint: Friday at 09:00.</p><p><strong>3.</strong> Employee starts this January. Checkpoint: next January.</p></div>
+            <div>
+              <div class="response"><label for="a13-one">Checkpoint 1: Testing from 08:00 to 17:00</label><textarea id="a13-one" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a13-two">Checkpoint 2: Campaign from Monday 09:00 to Friday 09:00</label><textarea id="a13-two" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+              <div class="response"><label for="a13-three">Checkpoint 3: Employee from this January to next January</label><textarea id="a13-three" data-open-response="true"></textarea><span class="check-mark" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="audio-card">
+            <div><strong>Listen for the duration group</strong><p>Checkpoint | process | duration</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/13-future-perfect-continuous.mp3" aria-label="British English model of work continuing to a future point" aria-describedby="transcript-13"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the model audio</summary><p id="transcript-13">By six o'clock, we will have been working on the report for eight hours.</p></details>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-13">Save my attempt</button></div>
+          <p class="feedback" id="feedback-13" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>By five, we <strong>'ll have been testing</strong> the app for nine hours.</li><li>By Friday, we <strong>'ll have been running</strong> the campaign for four days.</li><li>By next January, she <strong>will have been working</strong> here for one year.</li></ol>
+              <p class="answer-note">Rhythm: <strong>By five | we'll have been | TEST-ing the APP | for NINE HOURS.</strong></p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> By six o'clock, we will have been working on the report for eight hours.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-14" data-title="Listen for the speaker's intention" aria-labelledby="slide-14-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 14 of 15</span><span class="pill">4 min</span><span class="pill">Four updates</span></div>
+          <h2 id="slide-14-title" tabindex="-1">Listen for the speaker's intention</h2>
+          <p class="lead">Listen twice. Match each question to an update number.</p>
+          <div class="audio-card">
+            <div><strong>Four workplace updates</strong><p>Use the text alternative below if needed.</p></div>
+            <span class="pill">20 sec</span>
+            <audio controls preload="none" src="assets/audio/14-integrated-listening.mp3" aria-label="Four British English workplace updates using different tenses and a conditional" aria-describedby="transcript-14"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the listening task</summary><p id="transcript-14">Strong stress is shown in capitals. Slashes mark thought-group boundaries. Update one: I was preparing the quote / when the CLIENT called. Update two: We've JUST approved the revised PRICE. Update three: By FIVE, we will have completed the first test. Update four: If the server FAILS, / we'll move the team to the backup SITE.</p></details>
+          </div>
+          <div class="task-grid">
+            <div class="response"><label for="a14-one">Which update gives the strongest stress to the interruption?</label><select id="a14-one" data-answer="one"><option value="">Choose</option><option value="one">Update one</option><option value="two">Update two</option><option value="three">Update three</option><option value="four">Update four</option></select><span class="check-mark" id="a14-one-mark" aria-live="polite"></span></div>
+            <div class="response"><label for="a14-two">Which update stresses the word “just”?</label><select id="a14-two" data-answer="two"><option value="">Choose</option><option value="one">Update one</option><option value="two">Update two</option><option value="three">Update three</option><option value="four">Update four</option></select><span class="check-mark" aria-live="polite"></span></div>
+            <div class="response"><label for="a14-three">Which update stresses the deadline time?</label><select id="a14-three" data-answer="three"><option value="">Choose</option><option value="one">Update one</option><option value="two">Update two</option><option value="three">Update three</option><option value="four">Update four</option></select><span class="check-mark" aria-live="polite"></span></div>
+            <div class="response"><label for="a14-four">Which update groups the condition before the response?</label><select id="a14-four" data-answer="four"><option value="">Choose</option><option value="one">Update one</option><option value="two">Update two</option><option value="three">Update three</option><option value="four">Update four</option></select><span class="check-mark" aria-live="polite"></span></div>
+          </div>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-14">Check my answers</button></div>
+          <p class="feedback" id="feedback-14" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <ol><li>Update <strong>one</strong>.</li><li>Update <strong>two</strong>.</li><li>Update <strong>three</strong>.</li><li>Update <strong>four</strong>.</li></ol>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> Strong stress is shown in capitals. Slashes mark thought-group boundaries. Update one: I was preparing the quote / when the CLIENT called. Update two: We've JUST approved the revised PRICE. Update three: By FIVE, we will have completed the first test. Update four: If the server FAILS, / we'll move the team to the backup SITE.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-15" data-title="Give a clear project update" aria-labelledby="slide-15-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Activity 15 of 15</span><span class="pill">5 min</span><span class="pill">Final update</span></div>
+          <h2 id="slide-15-title" tabindex="-1">Give a clear project update</h2>
+          <p class="lead">Use a real or imagined workplace issue. Speak for 60 seconds.</p>
+          <div class="instruction">Include one finished event, one thing that matters now, one earlier event, and one next step or deadline.</div>
+          <div class="audio-card">
+            <div><strong>Final update prompt</strong><p>Listen before you plan.</p></div>
+            <span class="pill">Model</span>
+            <audio controls preload="none" src="assets/audio/15-final-update.mp3" aria-label="Audio instructions for the final workplace project update" aria-describedby="transcript-15"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the final prompt audio</summary><p id="transcript-15">For the final update, explain what has finished, what matters now, what happened earlier, and what will happen next.</p></details>
+          </div>
+          <div class="task-grid">
+            <div class="card">
+              <h3>Plan in four short notes</h3>
+              <ol><li>Finished:</li><li>Now:</li><li>Earlier:</li><li>Next:</li></ol>
+              <p><strong>Challenge:</strong> add one earlier ongoing action and one future ongoing process.</p>
+            </div>
+            <div class="response">
+              <label for="a15-script">Your update notes</label>
+              <textarea id="a15-script" rows="8" data-open-response="true" placeholder="One short note for each time frame."></textarea>
+              <span class="check-mark" aria-live="polite"></span>
+            </div>
+          </div>
+          <section class="record-panel" aria-labelledby="record-title">
+            <h3 id="record-title">Record your update</h3>
+            <p>Recording is optional. You can also speak to your teacher or use another recording app.</p>
+            <div class="actions">
+              <button class="record-button" type="button" id="record-start">Start recording</button>
+              <button class="record-button" type="button" id="record-stop" disabled>Stop and play</button>
+            </div>
+            <p id="record-status" role="status" aria-live="polite">Recorder ready.</p>
+            <audio id="recording-playback" controls aria-label="Playback of your recorded project update"></audio>
+          </section>
+          <div class="actions"><button class="check-button" type="button" data-check="slide-15">Save my attempt</button></div>
+          <p class="feedback" id="feedback-15" role="status" aria-live="polite"></p>
+          <details>
+            <summary>Answer key: open after your first attempt</summary>
+            <div class="answer-body">
+              <div class="answer-note"><strong>Natural model</strong><p>At eight o'clock, I was still checking the old inventory when the supplier called. We had been rolling out the new system since seven, so the latest file was not yet available. At ten, IT restored access. Since then, I have been checking the new stock list. We were preparing the budget when the urgent audit arrived, but the client approved the extra time yesterday. Tomorrow at nine, I'm meeting the supplier. By Friday, we will have completed the first review. If the delay happens again, I'll contact the backup supplier.</p></div>
+              <p><strong>Optional challenge:</strong> “What had already been happening when the problem first appeared?” “What will have been happening by Friday?”</p>
+              <p>Use the forms that sound natural. Do not force every tense into one turn.</p>
+              <p class="audio-transcript"><strong>Audio transcript:</strong> For the final update, explain what has finished, what matters now, what happened earlier, and what will happen next.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-16" data-title="Lesson complete" aria-labelledby="slide-16-title" hidden>
+        <div class="slide-inner">
+          <div class="slide-meta"><span class="pill accent">Lesson complete</span><span class="pill">Next review</span></div>
+          <h2 id="slide-16-title" tabindex="-1">You made the time reference clear.</h2>
+          <p class="can-do">I can give a clear workplace update.</p>
+          <div class="intro-grid">
+            <section class="card featured"><h3>Review next time</h3><p>Say one sentence with a current result, one earlier event, and one deadline. No notes.</p></section>
+            <section class="card"><h3>Then review again</h3><p>Repeat the same task with a new workplace issue 24 to 48 hours later, then after about one week.</p></section>
+          </div>
+          <div class="audio-card">
+            <div><strong>Final retrieval prompt</strong><p>Use your own workplace context.</p></div>
+            <span class="pill">Ready</span>
+            <audio controls preload="none" src="assets/audio/15-final-update.mp3" aria-label="Final workplace update instruction" aria-describedby="transcript-16"></audio>
+            <details class="transcript"><summary>Text alternative, use instead of the final prompt audio</summary><p id="transcript-16">For the final update, explain what has finished, what matters now, what happened earlier, and what will happen next.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <nav class="mobile-nav deck-nav" aria-label="Mobile slide navigation">
+        <button class="nav-button back" type="button" data-direction="back" disabled>Back</button>
+        <button class="nav-button" id="mobile-fullscreen-button" type="button" aria-pressed="false">Full screen</button>
+        <button class="nav-button next" type="button" data-direction="next">Next</button>
+      </nav>
+    </main>
+
+    <nav class="desktop-nav deck-nav" aria-label="Slide navigation">
+      <button class="nav-button back" type="button" data-direction="back" disabled>Back</button>
+      <div class="nav-status" id="nav-status">Welcome · use left and right arrow keys</div>
+      <button class="nav-button next" type="button" data-direction="next">Next</button>
+    </nav>
+  </div>
+
+  <div class="sr-only" id="slide-announcer" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const presentation = document.getElementById('presentation');
+    const stage = document.getElementById('slide-stage');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const backButtons = Array.from(document.querySelectorAll('[data-direction="back"]'));
+    const nextButtons = Array.from(document.querySelectorAll('[data-direction="next"]'));
+    const progressBar = document.getElementById('progress-bar');
+    const slideLabel = document.getElementById('slide-label');
+    const slideCount = document.getElementById('slide-count');
+    const navStatus = document.getElementById('nav-status');
+    const announcer = document.getElementById('slide-announcer');
+    const fullscreenButton = document.getElementById('fullscreen-button');
+    const mobileFullscreenButton = document.getElementById('mobile-fullscreen-button');
+    const smallScreen = window.matchMedia('(max-width: 760px)');
+    let currentSlide = 0;
+
+    function updateNavigation() {
+      backButtons.forEach((button) => { button.disabled = currentSlide === 0; });
+      nextButtons.forEach((button) => { button.disabled = currentSlide === slides.length - 1; });
+      const current = slides[currentSlide];
+      const activity = currentSlide >= 1 && currentSlide <= 15 ? `Activity ${currentSlide} of 15 · ` : '';
+      navStatus.textContent = `${activity}${current.dataset.title}`;
+      slideLabel.textContent = current.dataset.title;
+      slideCount.textContent = `${currentSlide + 1} / ${slides.length}`;
+      progressBar.max = slides.length;
+      progressBar.value = currentSlide + 1;
+      progressBar.textContent = `${currentSlide + 1} of ${slides.length}`;
+    }
+
+    function showSlide(index, moveFocus = true) {
+      const nextIndex = Math.max(0, Math.min(index, slides.length - 1));
+      const outgoing = slides[currentSlide];
+      outgoing.querySelectorAll('audio').forEach((audio) => audio.pause());
+      if (currentSlide === 15 && nextIndex !== 15 && typeof stopActiveRecording === 'function') stopActiveRecording();
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === nextIndex;
+        slide.hidden = !active;
+        slide.setAttribute('aria-hidden', String(!active));
+        slide.inert = !active;
+      });
+      currentSlide = nextIndex;
+      const current = slides[currentSlide];
+      current.scrollTop = 0;
+      updateNavigation();
+      if (moveFocus) {
+        const heading = current.querySelector('h1, h2');
+        heading.focus({ preventScroll: true });
+      }
+      const activityContext = currentSlide >= 1 && currentSlide <= 15 ? `Activity ${currentSlide} of 15. ` : '';
+      announcer.textContent = `${activityContext}${currentSlide + 1} of ${slides.length}. ${current.dataset.title}`;
+    }
+
+    function moveSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    backButtons.forEach((button) => button.addEventListener('click', () => moveSlide(-1)));
+    nextButtons.forEach((button) => button.addEventListener('click', () => moveSlide(1)));
+
+    document.addEventListener('keydown', (event) => {
+      const interactive = event.target.closest('input, textarea, select, button, audio, summary, a');
+      if (interactive) return;
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+        event.preventDefault();
+        moveSlide(1);
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        moveSlide(-1);
+      }
+      if (event.key === 'Home') {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === 'End') {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    function activeFullscreenTarget() {
+      return smallScreen.matches ? stage : presentation;
+    }
+
+    function focusModeActive() {
+      return stage.classList.contains('focus-mode') || presentation.classList.contains('focus-mode');
+    }
+
+    function syncFullscreenButton() {
+      const active = Boolean(document.fullscreenElement) || focusModeActive();
+      const fallback = focusModeActive() && !document.fullscreenElement;
+      fullscreenButton.setAttribute('aria-pressed', String(active));
+      fullscreenButton.setAttribute('aria-label', active ? 'Exit full screen' : 'Enter full screen');
+      fullscreenButton.textContent = smallScreen.matches ? active ? 'Exit' : 'Full' : fallback ? 'Exit focus view' : active ? 'Exit full screen' : 'Enter full screen';
+      mobileFullscreenButton.setAttribute('aria-pressed', String(active));
+      mobileFullscreenButton.setAttribute('aria-label', active ? 'Exit full screen' : 'Enter full screen');
+      mobileFullscreenButton.textContent = fallback ? 'Exit view' : active ? 'Exit' : 'Full screen';
+    }
+
+    async function toggleFullscreen() {
+      const target = activeFullscreenTarget();
+      if (focusModeActive()) {
+        stage.classList.remove('focus-mode');
+        presentation.classList.remove('focus-mode');
+        syncFullscreenButton();
+        return;
+      }
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else if (target.requestFullscreen) {
+          await target.requestFullscreen();
+        } else {
+          target.classList.add('focus-mode');
+          announcer.textContent = 'Full screen is unavailable. Focus view opened.';
+        }
+      } catch (error) {
+        target.classList.add('focus-mode');
+        announcer.textContent = 'Full screen is unavailable. Focus view opened.';
+      }
+      syncFullscreenButton();
+    }
+
+    fullscreenButton.addEventListener('click', toggleFullscreen);
+    mobileFullscreenButton.addEventListener('click', toggleFullscreen);
+
+    document.addEventListener('fullscreenchange', syncFullscreenButton);
+    smallScreen.addEventListener('change', syncFullscreenButton);
+
+    function normalise(value) {
+      return value
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/[.,!?;:]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function acceptedAnswers(element) {
+      return element.dataset.answer.split('|').map(normalise);
+    }
+
+    function ensureMarkId(container) {
+      const mark = container.querySelector('.check-mark');
+      if (mark && !mark.id) mark.id = `mark-${Math.random().toString(36).slice(2, 9)}`;
+      return mark;
+    }
+
+    function markResponse(container, correct, empty = false) {
+      container.classList.remove('correct', 'wrong');
+      container.classList.add(correct ? 'correct' : 'wrong');
+      const mark = ensureMarkId(container);
+      mark.textContent = correct ? 'Correct' : empty ? 'Answer needed' : 'Try again';
+    }
+
+    function resetResponse(container) {
+      container.classList.remove('correct', 'wrong');
+      const mark = ensureMarkId(container);
+      if (mark) mark.textContent = '';
+    }
+
+    function describeWithMark(element, mark) {
+      if (!element || !mark) return;
+      const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      ids.add(mark.id);
+      element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+    }
+
+    function checkAnswers(slide, feedback) {
+      const graded = Array.from(slide.querySelectorAll('input[type="text"][data-answer], select[data-answer], textarea[data-answer]'));
+      const radioGroups = new Map();
+      slide.querySelectorAll('input[type="radio"][name]').forEach((radio) => {
+        if (!radioGroups.has(radio.name)) radioGroups.set(radio.name, []);
+        radioGroups.get(radio.name).push(radio);
+      });
+
+      graded.forEach((element) => {
+        const container = element.closest('.response');
+        const mark = resetResponse(container) || ensureMarkId(container);
+        describeWithMark(element, mark);
+        element.removeAttribute('aria-invalid');
+      });
+      radioGroups.forEach((radios) => {
+        const container = radios[0].closest('.response');
+        const mark = ensureMarkId(container);
+        resetResponse(container);
+        radios.forEach((radio) => {
+          radio.removeAttribute('aria-invalid');
+          describeWithMark(radio, mark);
+        });
+      });
+
+      let correctCount = 0;
+      graded.forEach((element) => {
+        const container = element.closest('.response');
+        const value = normalise(element.value);
+        const correct = value.length > 0 && acceptedAnswers(element).includes(value);
+        markResponse(container, correct, value.length === 0);
+        if (correct) {
+          correctCount += 1;
+        } else {
+          element.setAttribute('aria-invalid', 'true');
+        }
+      });
+
+      radioGroups.forEach((radios) => {
+        const container = radios[0].closest('.response');
+        const selected = radios.find((radio) => radio.checked);
+        const correct = Boolean(selected && selected.hasAttribute('data-answer'));
+        markResponse(container, correct, !selected);
+        if (correct) correctCount += 1;
+        if (!correct && selected) selected.setAttribute('aria-invalid', 'true');
+      });
+
+      const total = graded.length + radioGroups.size;
+      feedback.textContent = `${correctCount} of ${total} correct. ${correctCount === total ? 'Open the answer key when ready.' : 'Try again, or open the answer key after your attempt.'}`;
+      feedback.classList.toggle('success', correctCount === total);
+      slide.dataset.attempted = 'true';
+    }
+
+    document.querySelectorAll('[data-check]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const slide = document.getElementById(button.dataset.check);
+        const feedback = slide.querySelector('.feedback');
+        const openResponses = Array.from(slide.querySelectorAll('[data-open-response="true"]'));
+        openResponses.forEach((response) => {
+          const container = response.closest('.response');
+          const hasText = response.value.trim().length > 0;
+          const mark = ensureMarkId(container);
+          describeWithMark(response, mark);
+          resetResponse(container);
+          if (hasText) {
+            container.classList.add('correct');
+            container.querySelector('.check-mark').textContent = 'Saved';
+          }
+        });
+        if (slide.querySelector('[data-answer]')) {
+          checkAnswers(slide, feedback);
+        } else {
+          const completed = openResponses.filter((response) => response.value.trim().length > 0).length;
+          feedback.textContent = completed === openResponses.length ? 'Attempt saved. Compare it with the model when ready.' : `${completed} of ${openResponses.length} notes added.`;
+          feedback.classList.toggle('success', completed === openResponses.length);
+          slide.dataset.attempted = 'true';
+        }
+      });
+    });
+
+    const recordStart = document.getElementById('record-start');
+    const recordStop = document.getElementById('record-stop');
+    const recordStatus = document.getElementById('record-status');
+    const recordingPlayback = document.getElementById('recording-playback');
+    let mediaRecorder = null;
+    let mediaStream = null;
+    let audioChunks = [];
+
+    function stopMediaTracks() {
+      if (mediaStream) mediaStream.getTracks().forEach((track) => track.stop());
+    }
+
+    function stopActiveRecording() {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      } else {
+        stopMediaTracks();
+      }
+      recordStart.disabled = false;
+      recordStop.disabled = true;
+    }
+
+    recordStart.addEventListener('click', async () => {
+      if (!navigator.mediaDevices || !window.MediaRecorder) {
+        recordStatus.textContent = 'Recording is not supported here. Use another recording app or speak to your teacher.';
+        return;
+      }
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        mediaRecorder = new MediaRecorder(mediaStream);
+        mediaRecorder.addEventListener('dataavailable', (event) => {
+          if (event.data.size > 0) audioChunks.push(event.data);
+        });
+        mediaRecorder.addEventListener('stop', () => {
+          const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+          if (recordingPlayback.src) URL.revokeObjectURL(recordingPlayback.src);
+          recordingPlayback.src = URL.createObjectURL(blob);
+          recordingPlayback.classList.add('available');
+          recordStatus.textContent = 'Recording saved for this page. Use the audio controls to play it.';
+          stopMediaTracks();
+        });
+        mediaRecorder.start();
+        recordStart.disabled = true;
+        recordStop.disabled = false;
+        recordStatus.textContent = 'Recording. Speak your update now.';
+      } catch (error) {
+        stopMediaTracks();
+        recordStart.disabled = false;
+        recordStop.disabled = true;
+        recordStatus.textContent = 'Microphone access was not available. You can still complete the speaking task.';
+      }
+    });
+
+    recordStop.addEventListener('click', stopActiveRecording);
+    window.addEventListener('pagehide', stopActiveRecording);
+
+    let detailsOpenedForPrint = [];
+    window.addEventListener('beforeprint', () => {
+      detailsOpenedForPrint = Array.from(document.querySelectorAll('details:not([open])'));
+      detailsOpenedForPrint.forEach((detail) => { detail.open = true; });
+    });
+    window.addEventListener('afterprint', () => {
+      detailsOpenedForPrint.forEach((detail) => { detail.open = false; });
+      detailsOpenedForPrint = [];
+    });
+
+    slides.forEach((slide, index) => { slide.inert = index !== 0; });
+    showSlide(0, false);
+    syncFullscreenButton();
+  </script>
+<footer class="page-footer"><p>B2 . Workplace All Tenses Pronunciation . 15 activities . High contrast, keyboard friendly.</p><p><a href="../../../index.html#b2-communicative">All B2 Communicative lessons</a></p></footer>
+<script src="../../../xapi-include.js?v=6" defer></script>
+<script>
+// B2 Workplace All-Tenses Pronunciation: granular LRS + model-audio tracking
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    listened: vb(HOME + '/expapi/verbs/listened', 'listened to'),
+    completed: vb('http://adlnet.gov/expapi/verbs/completed', 'completed')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({
+      verb: verb,
+      object: {
+        objectType: 'Activity',
+        id: objId,
+        definition: {
+          name: { 'en-US': objName },
+          type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson')
+        }
+      }
+    });
+  }
+  var OPEN_ACTS = { 'slide-7': 1, 'slide-11': 1, 'slide-13': 1, 'slide-15': 1 };
+  var sentChecks = {};
+  document.querySelectorAll('[data-check]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-check');
+      if (OPEN_ACTS[id] || sentChecks[id]) return;
+      sentChecks[id] = true;
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      var n = 0;
+      sec.querySelectorAll('select, input[type="text"], .mcq, .choice-list').forEach(function (item) {
+        n++;
+        var name = 'Item ' + n;
+        var stem = item.querySelector ? item.querySelector('.stem, legend, .prompt') : null;
+        if (stem) name = stem.textContent.trim().replace(/\s+/g, ' ').substring(0, 80);
+        else if (item.id) name = item.id;
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + id + '/item-' + n, id + ': ' + name, 'question');
+      });
+    });
+  });
+  var doneActs = {};
+  document.querySelectorAll('[data-complete]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-complete');
+      setTimeout(function () {
+        var sec = document.getElementById(id);
+        if (!sec || !sec.classList.contains('complete')) return;
+        if (OPEN_ACTS[id] && !doneActs['_m' + id]) {
+          doneActs['_m' + id] = true;
+          sendPrecise(VERBS.marked, LESSON_ID + '/' + id, id + ' open answers', 'activity');
+        }
+        if (!doneActs[id]) {
+          doneActs[id] = true;
+          var real = Object.keys(doneActs).filter(function (k) { return k.indexOf('_m') !== 0; }).length;
+          if (real >= 15) sendPrecise(VERBS.completed, LESSON_ID, document.title, 'lesson');
+        }
+      }, 400);
+    });
+  });
+  // Model audio: one 'listened to' per clip, with the clip name.
+  var playedAudio = {};
+  document.querySelectorAll('audio[src]').forEach(function (a) {
+    a.addEventListener('play', function () {
+      var src = (a.getAttribute('src') || '').split('/').pop();
+      if (playedAudio[src]) return;
+      playedAudio[src] = true;
+      var sec = a.closest('.slide');
+      var name = (a.getAttribute('aria-label') || src).substring(0, 80);
+      sendPrecise(VERBS.listened, LESSON_ID + '/audio/' + src,
+        (sec ? sec.id + ': ' : '') + name, 'audio');
+    });
+  });
+  // Answer keys: viewed when opened.
+  document.querySelectorAll('details').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (!d.open) return;
+      var sec = d.closest('.slide');
+      var sum = d.querySelector('summary');
+      sendPrecise(VERBS.answered, LESSON_ID + '/' + (sec ? sec.id : 'page') + '/key',
+        'Answer key opened: ' + (sum ? sum.textContent.trim().substring(0, 60) : 'key'), 'assessment');
+    });
+  });
+});
+</script>
+</body>
+</html>
