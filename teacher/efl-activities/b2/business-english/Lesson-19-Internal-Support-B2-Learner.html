@@ -45,6 +45,14 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
 #deckNavRow{display:grid;gap:12px;align-items:stretch;margin-top:12px}
 .deckNavOuter{display:none}
 #deckStage{min-width:0;max-width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:14px;overflow:hidden}
+/* Collapsible top bar: the control row always shows, the rest can collapse so
+   the slide gets the full height in full screen. */
+#tbControl{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin:0 0 .45rem}
+#tbSlim{font-weight:800;color:var(--accent);font-size:.9rem}
+#tbToggle{white-space:nowrap}
+#deckToolbar.collapsed{padding-top:.4rem;padding-bottom:.4rem}
+#deckToolbar.collapsed #tbBody{display:none}
+#deckToolbar.collapsed #tbControl{margin:0}
 #fsBar{display:none;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 14px;background:var(--head);border-bottom:1px solid var(--border2);color:var(--muted2);font-size:.82rem}
 #fsCounter{font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
 main{padding:clamp(12px,2.4vw,24px);min-width:0}
@@ -192,6 +200,11 @@ main{padding:10px}
 
 <div id="deckShell">
   <header id="deckToolbar">
+    <div id="tbControl">
+      <span id="tbSlim" hidden>Slide <strong id="tbSlimNum">1</strong> of <strong id="tbSlimTotal">16</strong></span>
+      <button class="btn sec" id="tbToggle" type="button" aria-expanded="true" aria-controls="tbBody">Hide top bar</button>
+    </div>
+    <div id="tbBody">
     <div class="tb-line1">
       <div>
         <p class="tb-lesson">Lesson 19, Month 3, lesson 5, 40 minutes, B1 plus to B2</p>
@@ -207,6 +220,7 @@ main{padding:10px}
       </div>
     </div>
     <p class="tb-hint"><b>Move:</b> Back and Next buttons, arrow keys, Home and End, swipe, or the numbered buttons. <b>Full screen:</b> on a large screen Back and Next stay outside the slide area beside it. On a small screen they move inside the full screen, below the content, so they never cover the task.</p>
+    </div>
   </header>
 
   <div id="deckNavRow">
@@ -737,6 +751,10 @@ function show(i, moveFocus){
   el('fsCounter').textContent = label(cur);
   el('deckLive').textContent = text;
   paintDots();
+  var _slimN = document.getElementById('tbSlimNum');
+  var _slimT = document.getElementById('tbSlimTotal');
+  if(_slimN) _slimN.textContent = String(cur + 1);
+  if(_slimT) _slimT.textContent = String(SLIDES.length);
   var atStart = cur === 0, atEnd = cur === SLIDES.length-1;
   [el('prevOuter'), el('prevInner')].forEach(function(b){ if(b) b.disabled = atStart; });
   [el('nextOuter'), el('nextInner')].forEach(function(b){ if(b) b.disabled = atEnd; });
@@ -1130,6 +1148,40 @@ function initDeck(){
     var n = el(id);
     if(n) n.setAttribute('data-done','1');
   });
+  /* Collapsible top bar */
+  var TB_KEY = 'l19tb';
+  var tbBody = document.getElementById('tbBody');
+  var tbToggle = document.getElementById('tbToggle');
+  var tbSlim = document.getElementById('tbSlim');
+  var tbSlimNum = document.getElementById('tbSlimNum');
+  var tbSlimTotal = document.getElementById('tbSlimTotal');
+  var tbCollapsed = false;
+  try { tbCollapsed = localStorage.getItem(TB_KEY) === '1'; } catch (e) {}
+  function paintTopbar(){
+    if(!tbToggle) return;
+    document.getElementById('deckToolbar').classList.toggle('collapsed', tbCollapsed);
+    tbToggle.setAttribute('aria-expanded', tbCollapsed ? 'false' : 'true');
+    tbToggle.textContent = tbCollapsed ? 'Show top bar' : 'Hide top bar';
+    if(tbSlim) tbSlim.hidden = !tbCollapsed;
+    if(tbBody) tbBody.hidden = tbCollapsed;
+    try { localStorage.setItem(TB_KEY, tbCollapsed ? '1' : '0'); } catch (e) {}
+  }
+  if(tbToggle){
+    tbToggle.addEventListener('click', function(){
+      tbCollapsed = !tbCollapsed;
+      paintTopbar();
+    });
+    /* keyboard shortcut: T toggles the top bar */
+    document.addEventListener('keydown', function(e){
+      if(e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      var t = e.target;
+      if(t && (t.isContentEditable || (typeof t.closest === 'function' && t.closest('input,textarea,select,button,summary,a')))) return;
+      if(e.key === 't' || e.key === 'T'){ e.preventDefault(); tbCollapsed = !tbCollapsed; paintTopbar(); }
+    });
+  }
+  paintTopbar();
+  if(tbSlimNum) tbSlimNum.textContent = String(cur + 1);
+  if(tbSlimTotal) tbSlimTotal.textContent = String(SLIDES.length);
   el('prevOuter').addEventListener('click', prev);
   el('nextOuter').addEventListener('click', next);
   el('prevInner').addEventListener('click', prev);
