@@ -395,6 +395,13 @@ function pickFeedbackRubric(lesson, activityId, activityTitle) {
       + 'day with Today is plus Monday. Check: is the question word order What time is it (not Is what time)? '
       + 'Is the answer It is seven o clock (not It seven)? Is the day Today is Monday?';
   }
+  if (where.includes('lesson-19') || where.includes('internal support') || where.includes('ask a colleague') || where.includes('weber case')) {
+    return 'INTERNAL SUPPORT ASK (ask a colleague for help on pricing and options, without over-apologising or over-promising). '
+      + 'Required shape: open with the context, name the specific gap or question, give the numbers that matter (83 vs 70, gap 13, 250 kVA, 15 percent), '
+      + 'ask one clear question, and close with a confirmed next step. Warm and collegial, never pushy, never vague. '
+      + 'Check: is the ask specific rather than general? Are the numbers included? Is there exactly one clear question? '
+      + 'Is the next step confirmed with a time or owner? Is the tone colleague-to-colleague, not apologetic or aggressive?';
+  }
   if (where.includes('lesson-18') || where.includes('objection') || where.includes('cheaper competitor') || where.includes('competitor is cheaper')) {
     return 'OBJECTION: COMPETITOR IS CHEAPER (acknowledge price first, clarify scope like-for-like, total cost beats price, '
       + 'conditional alternative If we adjusted). Required shape: acknowledge first (Thank you / I understand, never an instant discount), '

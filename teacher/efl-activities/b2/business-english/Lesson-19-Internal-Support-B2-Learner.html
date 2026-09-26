@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internal Support: Ask a Colleague for Help (B2) Interactive</title>
+<meta name="description" content="B1 plus to B2 learner deck, 15 speaking activities, asking a colleague for pricing help. High contrast, WCAG 2.1 AA, works on phone, tablet and desktop.">
+<style>
+:root{
+--bg:#000000;--fg:#ffffff;--card:#080C14;--card2:#0E1424;--head:#0B1220;--deep:#060A14;
+--border:#1E2A3A;--border2:#2A3D57;--muted:#A9B7C9;--muted2:#CBD5E1;
+--accent:#FFD400;--accent2:#38E0C8;--accent3:#7AD1FF;
+--okbg:#001F14;--okbd:#00E676;--okfg:#EAFFF5;
+--badbg:#1A0A0A;--badbd:#FF8A8A;--badfg:#FFE4E4;
+--warn:#FFB84D;--warnbg:#1A1200;--role:#C27CFF;--focus:3px solid var(--accent)
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:17px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:var(--focus);outline-offset:2px}
+a{color:var(--accent2);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip,.skip:hover{text-decoration:none}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;padding:12px 16px;font-weight:800;border-radius:0 0 8px 0;z-index:999}
+.skip:focus{left:8px;top:8px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+#deckShell{max-width:1180px;margin:0 auto;padding:clamp(8px,2vw,16px)}
+#deckToolbar{display:grid;gap:10px;padding:clamp(10px,2vw,14px);background:var(--card);border:1.5px solid var(--border2);border-radius:14px}
+.tb-line1{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:baseline;justify-content:space-between}
+.tb-lesson{margin:0;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+#deckToolbar h1{margin:0;font-size:clamp(1rem,2.4vw,1.25rem);line-height:1.3;color:var(--accent);font-weight:800;letter-spacing:-.01em;max-width:60ch}
+#deckCounter{margin:0;font-weight:800;color:var(--accent2);font-size:.9rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tb-line2{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+#deckDots{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
+#deckDots button{width:32px;height:32px;min-width:32px;min-height:32px;border-radius:9px;border:1.5px solid var(--border2);background:var(--card2);color:var(--muted2);font-size:.72rem;font-weight:800;cursor:pointer;padding:0}
+#deckDots button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#000}
+#deckDots button.done{border-color:var(--okbd);color:var(--okfg)}
+#deckDots button.done[aria-current="true"]{color:#000}
+.tb-actions{display:flex;gap:8px;flex-wrap:wrap}
+.tb-hint{margin:0;color:var(--muted);font-size:.8rem}
+.tb-hint b{color:var(--muted2)}
+
+#deckNavRow{display:grid;gap:12px;align-items:stretch;margin-top:12px}
+.deckNavOuter{display:none}
+#deckStage{min-width:0;max-width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:14px;overflow:hidden}
+#fsBar{display:none;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 14px;background:var(--head);border-bottom:1px solid var(--border2);color:var(--muted2);font-size:.82rem}
+#fsCounter{font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+main{padding:clamp(12px,2.4vw,24px);min-width:0}
+#deckInnerNav{display:none;gap:10px;align-items:stretch;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;background:var(--card);border-top:1.5px solid var(--border2)}
+#deckInnerNav .btn{flex:1 1 8rem;min-height:48px}
+#innerCounter{align-self:center;font-weight:800;color:var(--accent);font-size:.86rem;font-variant-numeric:tabular-nums}
+
+body.deck main{max-width:none;margin:0;padding:clamp(12px,2.4vw,24px)}
+body:not(.deck) main{padding:clamp(12px,3vw,28px)}
+/* Deck mode: the page never scrolls, only the slide area does. Nav and toolbar stay reachable. */
+body.deck #deckShell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+body.deck #deckNavRow{flex:1 1 auto;min-height:0}
+body.deck #deckStage{min-height:0;display:flex;flex-direction:column}
+body.deck main{flex:1 1 auto;min-height:0;overflow:auto}
+body.deck #fsBar,body.deck #deckInnerNav{flex:0 0 auto}
+body.deck #fsBar[style],body.deck #deckInnerNav[style]{flex:0 0 auto}
+body:not(.deck) #deckInnerNav{display:flex}
+
+.slide{background:var(--card);border:1.5px solid var(--border2);border-radius:16px;padding:clamp(12px,2.4vw,22px)}
+body.deck .slide{display:none}
+body.deck .slide.current{display:block}
+.slide-head{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.slide-head .num{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 8px;border-radius:9px;background:var(--accent);color:#000;font-weight:900;font-size:.9rem}
+.slide-head h2{margin:0;font-size:clamp(1.05rem,2.6vw,1.35rem);line-height:1.28;color:var(--fg);font-weight:800;flex:1 1 14rem;min-width:0;overflow-wrap:anywhere}
+.tag{font-size:.66rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1.5px solid var(--border2);white-space:nowrap;color:var(--muted2)}
+.tag.review{color:var(--warn);border-color:var(--warn);background:var(--warnbg)}
+.tag.core{color:var(--accent2);border-color:var(--accent2);background:rgba(56,224,200,.09)}
+.tag.role{color:var(--role);border-color:var(--role);background:rgba(194,124,255,.09)}
+.tag.extra{color:var(--accent3);border-color:var(--accent3);background:rgba(122,209,255,.09)}
+.goal{margin:8px 0 12px;padding:9px 12px;background:var(--head);border-left:4px solid var(--accent2);border-radius:0 10px 10px 0;color:var(--muted2);font-size:.92rem}
+.goal b{color:var(--accent2);text-transform:uppercase;letter-spacing:.05em;font-size:.76rem}
+.do{margin:0 0 12px;color:var(--fg);font-size:.98rem}
+.do b{color:var(--accent)}
+.note{margin:0 0 12px;color:var(--muted);font-size:.84rem}
+.panel{background:var(--deep);border:1.5px solid var(--border2);border-radius:12px;padding:clamp(10px,2vw,14px);margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pick{width:100%;text-align:left;background:var(--card2);border:1.5px solid var(--border2);color:var(--fg);padding:11px 12px;border-radius:10px;cursor:pointer;font-size:.92rem;min-height:48px;font-family:inherit}
+.pick:hover{border-color:var(--accent3)}
+.pick.sel{border-color:var(--accent);background:rgba(255,212,0,.14)}
+.pick.matched{border-color:var(--okbd);background:rgba(0,230,118,.14);color:var(--okfg)}
+.pick.wrong{border-color:var(--badbd);background:rgba(255,138,138,.12)}
+.btn{background:var(--accent);color:#000;border:none;padding:12px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:.9rem;min-height:48px;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.sec{background:var(--card2);color:var(--fg);border:1.5px solid var(--border2)}
+.btn.ghost{background:transparent;color:var(--accent2);border:1.5px solid var(--border2)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.9rem;display:none}
+.fb.ok{display:block;background:var(--okbg);border:1.5px solid var(--okbd);color:var(--okfg)}
+.fb.no{display:block;background:var(--badbg);border:1.5px solid var(--badbd);color:var(--badfg)}
+.fb.info{display:block;background:#0A1424;border:1.5px solid var(--accent3);color:#DCEBFF}
+.prompt{border:1.5px solid var(--border2);border-radius:12px;background:var(--card2);padding:12px;margin:0 0 10px}
+.prompt .pnum{color:var(--accent);font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.prompt p{margin:6px 0 0;color:var(--muted2);font-size:.94rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--card2);border:1.5px solid var(--border2);color:var(--fg);padding:9px 12px;border-radius:999px;cursor:pointer;font-size:.9rem;min-height:44px;font-family:inherit}
+.chip:hover{border-color:var(--accent3)}
+.chip.used{opacity:.35;cursor:default}
+.chip.extra{border-style:dashed;border-color:var(--warn);color:var(--warn)}
+.sentbox{min-height:52px;background:var(--head);border:1.5px dashed var(--border2);border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px;color:var(--muted);font-size:.9rem}
+.sentbox.filled{border-style:solid;border-color:var(--okbd);background:rgba(0,230,118,.07)}
+.sentbox span.tok{background:var(--card2);border:1.5px solid var(--border2);border-radius:999px;padding:5px 10px}
+.order-list{display:grid;gap:8px}
+.order-item{display:flex;gap:10px;align-items:flex-start;background:var(--card2);border:1.5px solid var(--border2);border-radius:12px;padding:10px 12px}
+.order-item .grip{color:var(--muted);cursor:grab;font-size:1.05rem;line-height:1.4}
+.order-item .txt{flex:1;min-width:0;font-size:.92rem}
+.order-item .who{display:block;color:var(--accent3);font-size:.76rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.order-item .mv{display:flex;gap:4px;flex-direction:column}
+.order-item .mv button{background:var(--head);border:1.5px solid var(--border2);color:var(--fg);border-radius:8px;width:36px;height:32px;cursor:pointer;font-size:.9rem;font-family:inherit}
+.field{display:flex;flex-direction:column;gap:6px;margin:0 0 10px}
+.field label{color:var(--muted2);font-size:.88rem;font-weight:700}
+input[type=text],textarea,select{width:100%;background:var(--head);border:1.5px solid var(--border2);color:var(--fg);padding:11px 12px;border-radius:10px;font-size:.95rem;font-family:inherit;min-height:48px}
+textarea{min-height:80px;resize:vertical}
+select{min-height:48px}
+.checks{display:grid;gap:8px;margin:0 0 12px}
+.check{display:flex;gap:10px;align-items:flex-start;background:var(--head);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:.92rem;color:var(--muted2);cursor:pointer;min-height:48px}
+.check input{accent-color:var(--okbd);width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.check.done{border-color:var(--okbd);color:var(--okfg)}
+details.key{background:var(--okbg);border:1.5px solid var(--okbd);border-radius:12px;margin:12px 0 0}
+details.key summary{cursor:pointer;padding:12px 14px;font-weight:800;color:var(--okbd);font-size:.9rem;list-style:none;display:flex;gap:8px;align-items:center;min-height:48px}
+details.key summary::-webkit-details-marker{display:none}
+details.key summary::before{content:"?";display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--okbd);color:#002414;font-weight:900;font-size:.8rem;flex-shrink:0}
+details.key[open] summary{border-bottom:1.5px solid rgba(0,230,118,.4)}
+.keybody{padding:12px 14px;color:var(--okfg);font-size:.93rem}
+.keybody p{margin:6px 0}
+.keybody ol,.keybody ul{margin:6px 0 6px 18px;padding:0}
+.keybody li{margin:5px 0}
+.keybody .lbl{font-weight:800;color:var(--okbd)}
+.say{display:grid;gap:8px;margin:0 0 12px}
+.sayrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card2);border:1.5px solid var(--border2);border-radius:10px;padding:10px 12px}
+.sayrow .t{flex:1;min-width:9rem;font-weight:700;font-size:.95rem;overflow-wrap:anywhere}
+.sayrow .b{background:var(--head);border:1.5px solid var(--border2);color:var(--accent2);border-radius:8px;padding:9px 12px;min-height:44px;cursor:pointer;font-weight:800;font-family:inherit}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;color:var(--accent);font-size:1.1rem}
+.steps{display:grid;gap:8px;margin:0 0 12px}
+.step{display:flex;gap:10px;align-items:flex-start;background:var(--head);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:.92rem;color:var(--muted2)}
+.step .n{color:var(--accent);font-weight:900;flex-shrink:0}
+.step.done{border-color:var(--okbd);color:var(--okfg)}
+.hw{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+.wrapup{margin-top:14px;padding:12px;background:var(--card);border:1.5px solid var(--okbd);border-radius:14px;color:var(--okfg);font-size:.9rem}
+.wrapup h3{margin:0 0 6px;color:var(--okbd);font-size:.95rem}
+ul.plain{margin:8px 0 0 18px;padding:0;color:var(--muted2);font-size:.92rem}
+ul.plain li{margin:4px 0}
+
+/* Large screens: Back and Next sit outside the full screen frame, flanking the stage */
+@media(min-width:1000px){
+#deckNavRow{grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr)}
+.deckNavOuter{display:inline-flex;align-items:center;justify-content:center;gap:6px;align-self:center;position:sticky;top:calc(50vh - 34px);min-width:72px;min-height:68px;padding:14px 12px;border-radius:14px;border:1.5px solid var(--border2);background:var(--card2);color:var(--fg);font-weight:800;cursor:pointer;font-size:.95rem;font-family:inherit}
+.deckNavOuter:hover:not(:disabled){border-color:var(--accent)}
+.deckNavOuter:disabled{opacity:.35;cursor:not-allowed}
+#deckShell:fullscreen,#deckShell:-webkit-full-screen{padding:clamp(8px,1.6vw,20px);background:#000;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+#deckShell:fullscreen #deckNavRow,#deckShell:-webkit-full-screen #deckNavRow{grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr);flex:1 1 auto;min-height:0}
+#deckShell:fullscreen #fsBar,#deckShell:-webkit-full-screen #fsBar{display:flex}
+#deckShell:fullscreen #deckInnerNav,#deckShell:-webkit-full-screen #deckInnerNav{display:none}
+}
+/* Small screens and devices without room outside: Back and Next live inside the full screen, below the content */
+@media(max-width:999px){
+#deckNavRow{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#deckInnerNav{display:flex}
+#deckStage:fullscreen,#deckStage:-webkit-full-screen{border:none;border-radius:0;background:#000;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+#deckStage:fullscreen #fsBar,#deckStage:-webkit-full-screen #fsBar{display:flex}
+#deckStage:fullscreen main,#deckStage:-webkit-full-screen main{flex:1 1 auto;min-height:0;overflow:auto}
+#deckStage:fullscreen #deckInnerNav,#deckStage:-webkit-full-screen #deckInnerNav{display:flex}
+}
+@media(max-width:760px){
+html,body{font-size:16px}
+.grid2,.grid3,.hw{grid-template-columns:1fr}
+#deckToolbar h1{font-size:1rem}
+}
+@media(max-width:420px){
+html,body{font-size:15.5px}
+main{padding:10px}
+.slide{padding:10px}
+#deckInnerNav{flex-direction:column}
+#deckInnerNav .btn{width:100%}
+.order-item{flex-wrap:wrap}
+.order-item .mv{flex-direction:row;width:100%;justify-content:flex-end}
+.tb-line1{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+@media print{#deckToolbar,#deckNavRow,#deckInnerNav,.controls{display:none}.slide{page-break-after:always;border:none}details.key{display:block}details.key>summary{display:none}}
+</style>
+</head>
+<body class="deck">
+<a class="skip" href="#deckStage">Skip to the lesson</a>
+
+<div id="deckShell">
+  <header id="deckToolbar">
+    <div class="tb-line1">
+      <div>
+        <p class="tb-lesson">Lesson 19, Month 3, lesson 5, 40 minutes, B1 plus to B2</p>
+        <h1>Internal support: ask a colleague for help with pricing and options</h1>
+      </div>
+      <p id="deckCounter" role="status" aria-live="polite">Slide 1 of 16</p>
+    </div>
+    <div class="tb-line2">
+      <div id="deckDots" role="group" aria-label="Go to slide"></div>
+      <div class="tb-actions">
+        <button class="btn sec" id="viewBtn" type="button" aria-pressed="true">All slides</button>
+        <button class="btn" id="fsBtn" type="button" aria-pressed="false">Enter full screen</button>
+      </div>
+    </div>
+    <p class="tb-hint"><b>Move:</b> Back and Next buttons, arrow keys, Home and End, swipe, or the numbered buttons. <b>Full screen:</b> on a large screen Back and Next stay outside the slide area beside it. On a small screen they move inside the full screen, below the content, so they never cover the task.</p>
+  </header>
+
+  <div id="deckNavRow">
+    <button id="prevOuter" class="deckNavOuter" type="button" aria-label="Previous slide"><span aria-hidden="true">&#8592;</span> Back</button>
+    <div id="deckStage">
+      <div id="fsBar">
+        <span id="fsCounter">Slide 1 of 16</span>
+        <span>Esc leaves full screen. Arrow keys or swipe move slides.</span>
+        <button class="btn sec" id="fsExit" type="button">Exit full screen</button>
+      </div>
+
+      <main id="main">
+
+        <section class="slide" id="intro" data-short="Start">
+          <div class="slide-head"><span class="num">0</span><h2>Before you start</h2><span class="tag review">Start</span></div>
+          <p class="goal"><b>Objective</b> Know the goal of the lesson and how to run the deck.</p>
+          <p class="do">Say this at the start of the lesson:</p>
+          <div class="panel">
+            <p style="margin:0">Today I would like to practise a real business situation. Please correct me directly and help me sound more natural and professional. At the end, please give me five useful phrases and three things to improve.</p>
+          </div>
+          <p class="do"><b>Topic field for the EF app:</b></p>
+          <div class="panel"><p style="margin:0">Internal support: ask my colleague for help with pricing and options.</p></div>
+          <p class="do">The same case runs through Lessons 16 to 19: customer Weber, 250 kVA, a competitor that is about 15 percent cheaper, and delivery in ten weeks. Today you stop talking to the customer and ask a colleague for help.</p>
+          <div class="grid2">
+            <div class="panel" style="margin:0">
+              <p style="margin:0 0 6px;font-weight:800;color:var(--accent2)">How the 40 minutes work</p>
+              <ul class="plain">
+                <li>Warm up and words, about 12 minutes</li>
+                <li>Build and order, about 12 minutes</li>
+                <li>Role play, about 5 minutes</li>
+                <li>Update and full task, about 8 minutes</li>
+                <li>Phrases, corrections, homework, about 3 minutes</li>
+              </ul>
+            </div>
+            <div class="panel" style="margin:0">
+              <p style="margin:0 0 6px;font-weight:800;color:var(--accent2)">How to use the answer keys</p>
+              <ul class="plain">
+                <li>Try the task first, out loud if you can</li>
+                <li>Open the answer key only after you have committed to an answer</li>
+                <li>Say the model sentence, then make your own version</li>
+                <li>No timer is required anywhere in this lesson</li>
+              </ul>
+            </div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p>There is no right answer on this slide. The only requirement is that you can say the four step frame from memory by the end of the lesson:</p>
+              <p><span class="lbl">Frame:</span> acknowledge, clarify, request, confirm.</p>
+              <p>Open every green answer key only after you have tried. That order is what makes the correction stick.</p>
+            </div>
+          </details>
+          <div class="controls"><button class="btn done-btn" data-done="intro" type="button">Mark this slide as done</button></div>
+        </section>
+
+        <section class="slide" id="act1" data-short="Warm up">
+          <div class="slide-head"><span class="num">01</span><h2>Warm up, five questions from Lessons 16 to 18</h2><span class="tag review">Review</span></div>
+          <p class="goal"><b>Objective</b> Speak five high value questions from earlier lessons without reading.</p>
+          <p class="do"><b>Do:</b> read each prompt, then say one sentence out loud. Tick it when you have said it.</p>
+          <div class="checks" id="a1checks"></div>
+          <div class="fb" id="a1fb" role="status" aria-live="polite"></div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <ol>
+                <li>Could you walk me through the competitor scope so we compare like for like?</li>
+                <li>What are your key decision criteria apart from price?</li>
+                <li>I understand your objection on price. Could you share the competitor offer?</li>
+                <li>When you consider total cost of ownership, our scope justifies the price.</li>
+                <li>Who is the decision maker for final price approval?</li>
+              </ol>
+              <p><span class="lbl">Keep the softener.</span> Could you, would you and may I are what make these professional. Without them you sound like an order.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act2" data-short="Words A">
+          <div class="slide-head"><span class="num">02</span><h2>Words for asking for help, set A</h2><span class="tag core">Core 1</span></div>
+          <p class="goal"><b>Objective</b> Match five support and pricing words to their meanings and reject two that are not needed.</p>
+          <p class="do"><b>Do:</b> tap a word, then tap its meaning. Two meanings belong to the next slide, not this one.</p>
+          <div class="panel">
+            <div class="grid2">
+              <div class="checks" id="a2left" role="group" aria-label="Words"></div>
+              <div class="checks" id="a2right" role="group" aria-label="Meanings"></div>
+            </div>
+            <p class="note" id="a2score" style="margin:10px 0 0">Matched: 0 of 5</p>
+            <div class="fb" id="a2fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p>1 internal support = D, help from a colleague or another department<br>2 pricing request = E, a formal ask for prices or options<br>3 quote = A, the official price you send to a customer<br>4 lead time = B, how long production or delivery takes<br>5 escalate = C, to pass a case to someone with more authority</p>
+              <p><span class="lbl">Not used here:</span> F, the money left after cost, and G, permission to reduce the price. Both come back in Activity 3.</p>
+              <p><span class="lbl">Say them:</span> Could you give me some internal support with this pricing request? What is the lead time on that quote? If it is not possible, could we escalate it?</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act3" data-short="Words B">
+          <div class="slide-head"><span class="num">03</span><h2>Words for pricing and approval, set B</h2><span class="tag core">Core 2</span></div>
+          <p class="goal"><b>Objective</b> Match five pricing and approval words to their meanings and reject two that are not needed.</p>
+          <p class="do"><b>Do:</b> same task, harder set. Two meanings are traps.</p>
+          <div class="panel">
+            <div class="grid2">
+              <div class="checks" id="a3left" role="group" aria-label="Words"></div>
+              <div class="checks" id="a3right" role="group" aria-label="Meanings"></div>
+            </div>
+            <p class="note" id="a3score" style="margin:10px 0 0">Matched: 0 of 5</p>
+            <div class="fb" id="a3fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p>6 discount approval = K, permission to reduce the price<br>7 margin = L, the difference between price and cost, before profit<br>8 internal policy = H, the company rules on pricing<br>9 clarify expectations = I, to agree clearly what a colleague should do<br>10 next steps = J, what happens after this call</p>
+              <p><span class="lbl">Not used here:</span> M, a visit to check a site before a quote, and N, a written summary of a customer meeting.</p>
+              <p><span class="lbl">Check the idea:</span> cost 60,000, customer pays 80,000. The margin is 20,000 before internal costs. Discount approval means someone with the authority to say yes.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act4" data-short="Say it">
+          <div class="slide-head"><span class="num">04</span><h2>Quick say, stress and flow</h2><span class="tag core">Core 3</span></div>
+          <p class="goal"><b>Objective</b> Say the five key phrases with clear stress and smooth linking.</p>
+          <p class="do"><b>Do:</b> tap play, listen, then say it yourself. Tick each one.</p>
+          <div class="say" id="a4rows"></div>
+          <div class="fb" id="a4fb" role="status" aria-live="polite"></div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p>1 INternal SUPport, stress on the first and last content word<br>2 a QUOTE for 250 KVA, say two hundred fifty kilovolt amps, not the letters<br>3 DIScount APproval, strong stress on DIS<br>4 the MARgin situATion, stress moves to the second noun<br>5 LEAD time, two content words, short and flat</p>
+              <p><span class="lbl">Linking to practise:</span> I need INternal supPORT. Could you check the MARgin situaTION?</p>
+              <p><span class="lbl">Why it matters:</span> approval and margin are the two words colleagues mishear most often, and a misunderstood approval becomes a commercial problem.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act5" data-short="Register">
+          <div class="slide-head"><span class="num">05</span><h2>Which version would you send?</h2><span class="tag core">Core 4</span></div>
+          <p class="goal"><b>Objective</b> Choose the professional version of five internal requests and say why the other one fails.</p>
+          <p class="do"><b>Do:</b> tap your choice, then explain the reason out loud before opening the key.</p>
+          <div id="a5list" class="checks"></div>
+          <div class="fb" id="a5fb" role="status" aria-live="polite"></div>
+          <details class="key">
+            <summary>Answer key and reasons</summary>
+            <div class="keybody">
+              <ol>
+                <li>B, a deadline and a softener turn a demand into a request</li>
+                <li>A, the conditional makes it a question, the bare imperative sounds like an order</li>
+                <li>B, it names the reason, so the colleague understands the priority</li>
+                <li>A, would you mind is the polite conditional, you must is an instruction to a peer</li>
+                <li>A, it sets a date and asks a clear question</li>
+              </ol>
+              <p><span class="lbl">The point:</span> the wrong options are not ungrammatical, they are socially wrong. That matters more at B2 than another tense rule.</p>
+              <p><span class="lbl">Your turn:</span> rewrite 3A so it keeps the urgency and loses the bluntness. Model: I need the margin situation for a customer call today, could you send it before three?</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act6" data-short="Build">
+          <div class="slide-head"><span class="num">06</span><h2>Build the sentence, one extra word is a trap</h2><span class="tag core">Core 5</span></div>
+          <p class="goal"><b>Objective</b> Build five correct internal sentences and reject one extra word in each.</p>
+          <p class="do"><b>Do:</b> tap the words in order. Tap the box to undo the last word. The dashed word is the trap.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px">Sentence <b id="a6idx">1 of 5</b></p>
+            <div class="sentbox" id="a6box" role="button" tabindex="0" aria-label="Your sentence, activate to remove the last word"></div>
+            <div class="chips" id="a6chips"></div>
+            <div class="controls">
+              <button class="btn" id="a6check" type="button">Check</button>
+              <button class="btn sec" id="a6clear" type="button">Clear</button>
+              <button class="btn ghost" id="a6hint" type="button">First word</button>
+              <button class="btn sec" id="a6prev" type="button">Back</button>
+              <button class="btn sec" id="a6next" type="button">Next</button>
+            </div>
+            <div class="fb" id="a6fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <ol>
+                <li>Could you send me a quote for 250 kVA by Thursday?</li>
+                <li>We need discount approval before we can confirm the price.</li>
+                <li>Could you check the internal policy on margin for this case?</li>
+                <li>Delivery in ten weeks is fixed, so could you check the lead time?</li>
+                <li>If the request is not possible, we can escalate it internally.</li>
+              </ol>
+              <p><span class="lbl">Why the traps fail:</span> urgent and quickly add pressure and sound like commands, guarantee and warranty promise something you cannot confirm yet, and putting customer into sentence 3 changes who the question is about.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act7" data-short="Frame">
+          <div class="slide-head"><span class="num">07</span><h2>The four step frame for any internal ask</h2><span class="tag core">Core 6</span></div>
+          <p class="goal"><b>Objective</b> Use the frame acknowledge, clarify, request, confirm, and reject one line that does not belong.</p>
+          <p class="do"><b>Do part 1:</b> put the four steps in order. <b>Do part 2:</b> choose the line that does not belong in a professional ask.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px">Part 1, order the steps</p>
+            <div class="order-list" id="a7list" role="list" aria-label="Order the four steps"></div>
+            <div class="controls">
+              <button class="btn" id="a7check" type="button">Check order</button>
+              <button class="btn sec" id="a7shuffle" type="button">Shuffle</button>
+            </div>
+            <div class="fb" id="a7fb" role="status" aria-live="polite"></div>
+          </div>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px">Part 2, which one does not belong?</p>
+            <div class="checks" id="a7odd" role="group" aria-label="Which line does not belong"></div>
+            <div class="fb" id="a7oddfb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p><span class="lbl">Part 1 order:</span> 1, 2, 3, 4, which is acknowledge, clarify, request, confirm.</p>
+              <p><span class="lbl">Part 2:</span> the line Anna, I need the numbers now, so stop asking me questions. It is an order, it is aggressive, and it attacks the colleague instead of the problem. The other three are normal professional moves, and escalating is a legitimate last step when nothing else works.</p>
+              <p><span class="lbl">Say it in one breath:</span> Thanks for the update on the Weber case. Could you clarify what you need from me? Could you send me a quote for 250 kVA by Thursday? So the quote arrives Thursday and the approval on Friday. Is that right?</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act8" data-short="Call order">
+          <div class="slide-head"><span class="num">08</span><h2>Full internal call, put the eight turns in order</h2><span class="tag core">Core 7</span></div>
+          <p class="goal"><b>Objective</b> Sequence a realistic internal call and read it with natural turn taking.</p>
+          <p class="do"><b>Do:</b> order the turns, check, then read it aloud. Second time, no reading.</p>
+          <div class="panel">
+            <div class="order-list" id="a8list" role="list" aria-label="Order the call turns"></div>
+            <div class="controls">
+              <button class="btn" id="a8check" type="button">Check order</button>
+              <button class="btn sec" id="a8shuffle" type="button">Shuffle</button>
+            </div>
+            <div class="fb" id="a8fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and structure</summary>
+            <div class="keybody">
+              <p>Order: A, B, C, D, E, F, G, H.</p>
+              <p><span class="lbl">Structure to name out loud:</span> open with a request, the colleague checks for more, the student gives the commercial reason, the colleague asks for the number, the student gives it, both agree a date, the student confirms. The reason comes before the number, which is why turn D exists.</p>
+              <p><span class="lbl">Second read:</span> retell the call in five sentences of your own words. That is the retrieval step that turns the frame into a habit.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act9" data-short="Write to speak">
+          <div class="slide-head"><span class="num">09</span><h2>Written notes into spoken English</h2><span class="tag extra">Extension</span></div>
+          <p class="goal"><b>Objective</b> Convert informal written notes into professional spoken sentences.</p>
+          <p class="do"><b>Do:</b> read the note, then build what you would actually say. The leftover text is a trap.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px">Note <b id="a9idx">1 of 4</b></p>
+            <div class="prompt" id="a9note"></div>
+            <div class="sentbox" id="a9box" role="button" tabindex="0" aria-label="Your sentence, activate to remove the last word"></div>
+            <div class="chips" id="a9chips"></div>
+            <div class="controls">
+              <button class="btn" id="a9check" type="button">Check</button>
+              <button class="btn sec" id="a9clear" type="button">Clear</button>
+              <button class="btn sec" id="a9prev" type="button">Back</button>
+              <button class="btn sec" id="a9next" type="button">Next</button>
+            </div>
+            <div class="fb" id="a9fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <ol>
+                <li>Could you send me a quote for 250 kVA as soon as possible?</li>
+                <li>Could we get discount approval for the Weber case?</li>
+                <li>Could you share the margin situation for this case?</li>
+                <li>Thanks, that is clear. I will update the customer on Friday.</li>
+              </ol>
+              <p><span class="lbl">Why it matters:</span> chat shorthand is written language, so it has to be translated before it is spoken. This is the email speaking skill from Month 1, lesson 6, used in the other direction.</p>
+              <p><span class="lbl">Item 4 is the hard one:</span> thank you is fine on a call, but a professional close gives a next step instead of ending politely and doing nothing.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act10" data-short="Spot the gap">
+          <div class="slide-head"><span class="num">10</span><h2>Spot the gap, three questions that unblock the case</h2><span class="tag extra">Speaking</span></div>
+          <p class="goal"><b>Objective</b> Ask the three questions that unblock a stalled pricing case.</p>
+          <p class="do"><b>Do:</b> choose the opener that fits each gap, then say the whole question out loud.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px"><b>Known:</b> customer Weber, 250 kVA, competitor 15 percent cheaper, delivery in 10 weeks, quote needed this week.</p>
+            <div class="checks" id="a10list" role="group" aria-label="Choose the question opener"></div>
+            <div class="fb" id="a10fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p>1 margin and discount we could justify. 2 who signs off internally. 3 what the internal policy says about a 15 percent gap.</p>
+              <p><span class="lbl">Full models:</span><br>Could you share the margin situation and the discount we could still justify?<br>Who signs off internally on the price for this case?<br>What does the internal policy say about a gap of 15 percent?</p>
+              <p><span class="lbl">Also acceptable:</span> any three questions that name the missing item and use could you, what does, who or when. Correct the form, not the order.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act11" data-short="Numbers">
+          <div class="slide-head"><span class="num">11</span><h2>Say the numbers politely</h2><span class="tag extra">Extension</span></div>
+          <p class="goal"><b>Objective</b> Say four internal numbers with units and hedging.</p>
+          <p class="do"><b>Do:</b> type a question for each number. Add about, around, approximately or could you confirm.</p>
+          <div id="a11list" class="checks"></div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <ul>
+                <li>Could you confirm the scope is 250 kVA for the quote?</li>
+                <li>Is the competitor about 15 percent cheaper for the same scope?</li>
+                <li>Could you confirm the target is around 80,000 euros?</li>
+                <li>Is the lead time about ten weeks, including commissioning?</li>
+              </ul>
+              <p><span class="lbl">Say, do not spell:</span> two hundred fifty kilovolt amps, fifteen percent, eighty thousand euros, ten weeks. Percent never takes an s in English.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act12" data-short="Listening">
+          <div class="slide-head"><span class="num">12</span><h2>Fast internal briefing, summarise and ask</h2><span class="tag extra">Extension</span></div>
+          <p class="goal"><b>Objective</b> Summarise fast spoken information in one sentence and ask one useful question.</p>
+          <p class="do"><b>Do:</b> listen at normal speed, then listen faster. Then summarise and ask. The transcript is below if you need it.</p>
+          <div class="panel">
+            <div class="controls" style="margin:0 0 10px">
+              <button class="btn" id="a12play" type="button">Play normal</button>
+              <button class="btn sec" id="a12fast" type="button">Play fast</button>
+              <label for="a12rate" style="color:var(--muted2);font-size:.86rem;font-weight:700">Speed <input type="range" id="a12rate" min="0.8" max="1.4" step="0.1" value="1" style="min-height:auto;width:130px;vertical-align:middle"></label>
+              <span id="a12ratev" style="color:var(--accent2);font-weight:800">1.0x</span>
+            </div>
+            <div class="field">
+              <label for="a12sum">Your summary, one sentence</label>
+              <textarea id="a12sum" placeholder="If I understood correctly, you mean ..."></textarea>
+            </div>
+            <div class="field">
+              <label for="a12q">One question you still need answered</label>
+              <input type="text" id="a12q" placeholder="Could you confirm ...">
+            </div>
+            <div class="controls"><button class="btn" id="a12check" type="button">Check my answer</button></div>
+            <div class="fb" id="a12fb" role="status" aria-live="polite"></div>
+            <details class="key" style="margin-top:12px">
+              <summary>Transcript of the briefing</summary>
+              <div class="keybody">
+                <p>We have the Weber case for 250 kVA. The competitor is about 15 percent cheaper for the same power, but their warranty is narrower. The customer needs delivery within ten weeks. No discount is approved yet. Please send the quote by Thursday and the approval on Friday, because the customer decides next week.</p>
+              </div>
+            </details>
+          </div>
+          <details class="key">
+            <summary>Answer key and models</summary>
+            <div class="keybody">
+              <p><span class="lbl">Model summary:</span> If I understood correctly, the competitor is about 15 percent cheaper for the same 250 kVA, warranty is the real difference, nothing is approved yet, and the customer decides next week. Is that right?</p>
+              <p><span class="lbl">Model question:</span> Could you confirm who signs off internally if the gap stays at 15 percent?</p>
+              <p><span class="lbl">If you struggled:</span> ask for the audio again more slowly. Do not ask a third time at the same speed, the goal is tolerance for real pace.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act13" data-short="Role play">
+          <div class="slide-head"><span class="num">13</span><h2>Role play, the internal support call</h2><span class="tag role">Core 8</span><span class="tag role">5 min</span></div>
+          <p class="goal"><b>Objective</b> Run a full internal support call using at least five target words without notes.</p>
+          <p class="do"><b>Do:</b> run the call in order, then tick the words you actually used. No reading.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px"><b>Case:</b> Weber, 250 kVA, competitor 15 percent cheaper, ten weeks lead time. <b>Anna</b> is busy and will ask: what exactly do you need?</p>
+            <div class="steps">
+              <div class="step"><span class="n">1</span><span>Open and acknowledge. Say why you are calling.</span></div>
+              <div class="step"><span class="n">2</span><span>Ask what Anna needs from you, then answer precisely.</span></div>
+              <div class="step"><span class="n">3</span><span>State the request with numbers: 250 kVA, 15 percent, around 80,000 euros.</span></div>
+              <div class="step"><span class="n">4</span><span>Handle the obstacle. If it is not possible, propose escalation.</span></div>
+              <div class="step"><span class="n">5</span><span>Close by confirming the dates in a question.</span></div>
+            </div>
+            <p class="note" style="margin:12px 0 6px"><b>Tick the words you used:</b></p>
+            <div class="checks" id="a13checks"></div>
+            <div class="fb" id="a13fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and model run</summary>
+            <div class="keybody">
+              <p>You: Thanks for taking the call, Anna. Before I ask for anything, could you clarify what you need from me?<br>Anna: Give me the case, the number and the date you need it.<br>You: Weber needs 250 kVA with full warranty. The competitor is about 15 percent cheaper, so I need a pricing request and discount approval. My target is around 80,000 euros and I need the quote by Thursday.<br>Anna: Then I need the margin situation before I can approve anything.<br>You: Understood. Could you check the internal policy on margin and tell me what is possible? If the request is not possible, could we escalate it internally?<br>Anna: Send me the details and I will come back to you on Friday.<br>You: So the quote on Thursday and your answer on Friday. Is that right?</p>
+              <p><span class="lbl">Pass mark:</span> five or more target words, and the closing question. Tick the exact word you said, not the idea you meant.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act14" data-short="Update">
+          <div class="slide-head"><span class="num">14</span><h2>Sixty second internal update</h2><span class="tag extra">Production</span></div>
+          <p class="goal"><b>Objective</b> Give a structured 60 second internal update with four signposts and no notes.</p>
+          <p class="do"><b>Do:</b> speak for 60 to 90 seconds. The timer is optional. Type a keyword to tick a signpost.</p>
+          <div class="panel">
+            <div class="steps" id="a14steps">
+              <div class="step" id="a14s1"><span class="n">1</span><span>Context: this is the case ...</span></div>
+              <div class="step" id="a14s2"><span class="n">2</span><span>What the customer says: ...</span></div>
+              <div class="step" id="a14s3"><span class="n">3</span><span>What I need internally: ...</span></div>
+              <div class="step" id="a14s4"><span class="n">4</span><span>Next steps: ...</span></div>
+            </div>
+            <div class="controls" style="align-items:center">
+              <span class="timer" id="a14timer">01:00</span>
+              <button class="btn" id="a14start" type="button">Start 60 seconds, optional</button>
+              <button class="btn sec" id="a14reset" type="button">Reset</button>
+            </div>
+            <div class="field" style="margin:12px 0 0">
+              <label for="a14keys">Keywords you said, for example: Weber, 250 kVA, 15 percent, Thursday</label>
+              <input type="text" id="a14keys" placeholder="Weber 250 kVA fifteen percent Thursday">
+            </div>
+            <div class="controls"><button class="btn sec" id="a14tick" type="button">Tick signposts</button></div>
+            <div class="fb" id="a14fb" role="status" aria-live="polite"></div>
+          </div>
+          <details class="key">
+            <summary>Answer key and model</summary>
+            <div class="keybody">
+              <p>This is the Weber case for 250 kVA with full warranty. The customer says a competitor is about 15 percent cheaper for the same power, and their warranty is narrower. Delivery in ten weeks is fixed on our side. What I need internally is a quote by Thursday, a margin situation, and discount approval if policy allows. My next steps are to send the full specification today, confirm the lead time, and come back to the customer on Friday with two options.</p>
+              <p><span class="lbl">Listen for:</span> the three numbers, 250 kVA, 15 percent, ten weeks, and the two dates, Thursday and Friday. If the numbers are missing, that is the single fix to give.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="slide" id="act15" data-short="Full task">
+          <div class="slide-head"><span class="num">15</span><h2>Full internal ask under time pressure</h2><span class="tag role">Task</span></div>
+          <p class="goal"><b>Objective</b> Complete a full internal ask with the frame, the numbers and a confirmed next step, then save your takeaways.</p>
+          <p class="do"><b>Situation:</b> Anna is in a meeting. Her colleague says: I cannot approve a discount, the policy is not clear to me.</p>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px">Speak for up to 3 minutes. Tick each point when you have included it.</p>
+            <div class="checks" id="a15checks" role="group" aria-label="Task checklist"></div>
+            <div class="fb" id="a15fb" role="status" aria-live="polite"></div>
+          </div>
+          <div class="panel">
+            <p class="note" style="margin:0 0 8px"><b>Homework, choose one:</b></p>
+            <div class="hw" id="a15hw">
+              <button class="pick" type="button" data-hw="A"><b>A</b> Record 60 seconds asking Anna for help on the Weber case, use five target words.</button>
+              <button class="pick" type="button" data-hw="B"><b>B</b> Write the four step frame from memory, then say it aloud twice.</button>
+              <button class="pick" type="button" data-hw="C"><b>C</b> Write an internal message to Anna with the request, the numbers and a date.</button>
+            </div>
+            <div class="fb" id="a15hwfb" role="status" aria-live="polite"></div>
+          </div>
+          <div class="wrapup">
+            <h3>Save these after the lesson</h3>
+            <p>5 corrected sentences, 5 new words, 5 business phrases, 3 errors to avoid. Write them in your notebook, not only in this file.</p>
+          </div>
+          <details class="key">
+            <summary>Answer key, what a complete answer contains</summary>
+            <div class="keybody">
+              <ul>
+                <li>Acknowledges the problem without blaming the colleague.</li>
+                <li>Separates what Anna cannot do from what she can do, for example the quote or the lead time.</li>
+                <li>Repeats the numbers: 250 kVA, about 15 percent, around 80,000 euros, ten weeks.</li>
+                <li>Gives a real next step with a date and a named owner, not a general promise.</li>
+                <li>Confirms the date by asking a question, so the other person has to answer.</li>
+              </ul>
+              <p><span class="lbl">Five phrases to keep:</span><br>1 Could you send me a quote for 250 kVA by Thursday?<br>2 I need discount approval for the Weber case. Could we check the margin situation?<br>3 Could you clarify what you need from me to move this forward?<br>4 If this is not possible, could we escalate it internally?<br>5 So the quote arrives Thursday and the approval on Friday. Is that right?</p>
+              <p><span class="lbl">Three corrections to avoid:</span><br>1 Give me a price, then Could you send me a quote by Thursday?<br>2 I need the margin now, then Could you share the margin situation?<br>3 If not possible, I will escalate you, then If this is not possible, could we escalate it internally?</p>
+            </div>
+          </details>
+        </section>
+
+      </main>
+
+      <nav id="deckInnerNav" aria-label="Slide navigation">
+        <button class="btn sec" id="prevInner" type="button" aria-label="Previous slide"><span aria-hidden="true">&#8592;</span> Back</button>
+        <span id="innerCounter" role="status" aria-live="polite">Slide 1 of 16</span>
+        <button class="btn" id="nextInner" type="button" aria-label="Next slide">Next <span aria-hidden="true">&#8594;</span></button>
+      </nav>
+    </div>
+    <button id="nextOuter" class="deckNavOuter" type="button" aria-label="Next slide">Next <span aria-hidden="true">&#8594;</span></button>
+  </div>
+</div>
+<p id="deckLive" class="sr-only" aria-live="polite"></p>
+
+<script>
+var SLIDES = ['intro','act1','act2','act3','act4','act5','act6','act7','act8','act9','act10','act11','act12','act13','act14','act15'];
+var KEY = 'l19done';
+var cur = 0;
+
+function el(id){ return document.getElementById(id); }
+function shuffled(list){
+  var a = list.slice();
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function fb(id, kind, text){
+  var n = el(id);
+  if(!n) return;
+  n.className = 'fb ' + kind;
+  n.textContent = text;
+}
+function buzz(ok){ try{ if(navigator.vibrate) navigator.vibrate(ok?25:[25,60,25]); }catch(e){} }
+function doneIds(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; }
+}
+function saveDone(){
+  var ids = [];
+  SLIDES.forEach(function(id){ if(el(id) && el(id).hasAttribute('data-done')) ids.push(id); });
+  try{ localStorage.setItem(KEY, JSON.stringify(ids)); }catch(e){}
+}
+function markDone(id){
+  var n = el(id);
+  if(!n || n.hasAttribute('data-done')) return;
+  n.setAttribute('data-done','1');
+  saveDone();
+  paintDots();
+}
+function paintDots(){
+  var box = el('deckDots');
+  if(!box) return;
+  Array.prototype.forEach.call(box.children, function(b, i){
+    if(i === cur) b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current');
+    if(SLIDES[i] && el(SLIDES[i]) && el(SLIDES[i]).hasAttribute('data-done')) b.classList.add('done');
+  });
+}
+function label(i){ return 'Slide ' + (i+1) + ' of ' + SLIDES.length; }
+function titleOf(i){
+  var s = el(SLIDES[i]);
+  if(!s) return '';
+  var h = s.querySelector('h2');
+  return h ? h.textContent.replace(/\s+/g,' ').trim() : (s.getAttribute('data-short') || '');
+}
+function isDeck(){ return document.body.classList.contains('deck'); }
+function ensureDeck(){
+  if(!isDeck()){
+    document.body.classList.add('deck');
+    var b = el('viewBtn');
+    b.textContent = 'All slides';
+    b.setAttribute('aria-pressed','true');
+  }
+}
+function show(i, moveFocus){
+  if(i < 0) i = 0;
+  if(i > SLIDES.length-1) i = SLIDES.length-1;
+  cur = i;
+  ensureDeck();
+  SLIDES.forEach(function(id, k){
+    var s = el(id);
+    if(!s) return;
+    if(k === cur) s.classList.add('current'); else s.classList.remove('current');
+  });
+  var text = label(cur) + ': ' + titleOf(cur);
+  el('deckCounter').textContent = label(cur);
+  el('innerCounter').textContent = label(cur);
+  el('fsCounter').textContent = label(cur);
+  el('deckLive').textContent = text;
+  paintDots();
+  var atStart = cur === 0, atEnd = cur === SLIDES.length-1;
+  [el('prevOuter'), el('prevInner')].forEach(function(b){ if(b) b.disabled = atStart; });
+  [el('nextOuter'), el('nextInner')].forEach(function(b){ if(b) b.disabled = atEnd; });
+  var scroller = document.querySelector('main');
+  if(scroller && scroller.scrollTop !== undefined) scroller.scrollTop = 0;
+  var fs = document.fullscreenElement || document.webkitFullscreenElement;
+  if(fs && fs.scrollTop !== undefined) fs.scrollTop = 0;
+  if(moveFocus !== false){
+    var h = el(SLIDES[cur]).querySelector('h2');
+    if(h){
+      if(!h.hasAttribute('tabindex')) h.setAttribute('tabindex','-1');
+      try{ h.focus({preventScroll:true}); }catch(e){ h.focus(); }
+    }
+  }
+}
+function next(){ show(cur+1); }
+function prev(){ show(cur-1); }
+
+function makeChecklist(boxId, items, threshold, fbId, slideId){
+  var box = el(boxId);
+  if(!box) return function(){ return false; };
+  box.innerHTML = '';
+  items.forEach(function(t){
+    var lab = document.createElement('label');
+    lab.className = 'check';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    var span = document.createElement('span');
+    span.textContent = t;
+    lab.appendChild(cb);
+    lab.appendChild(span);
+    cb.addEventListener('change', function(){
+      lab.classList.toggle('done', cb.checked);
+      var n = box.querySelectorAll('input:checked').length;
+      if(n >= threshold){
+        fb(fbId, 'ok', 'Good. ' + n + ' of ' + items.length + ' ticked. Now say it out loud.');
+        if(slideId) markDone(slideId);
+        buzz(true);
+      }
+    });
+    box.appendChild(lab);
+  });
+}
+
+function makeMatch(cfg){
+  var left = el(cfg.left), right = el(cfg.right);
+  var selL = null, selR = null, matched = 0;
+  left.innerHTML = ''; right.innerHTML = '';
+  cfg.words.forEach(function(w, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick';
+    b.dataset.key = String(i+1);
+    b.textContent = (i+1) + '. ' + w;
+    b.addEventListener('click', function(){ choose('L', String(i+1)); });
+    left.appendChild(b);
+  });
+  shuffled(cfg.defs).forEach(function(d){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick';
+    b.dataset.key = d.k;
+    b.textContent = d.k + '. ' + d.t;
+    b.addEventListener('click', function(){ choose('R', d.k); });
+    right.appendChild(b);
+  });
+  function find(root, key){
+    return root.querySelector('.pick[data-key="' + key + '"]');
+  }
+  function clearSel(){
+    [left, right].forEach(function(r){
+      Array.prototype.forEach.call(r.querySelectorAll('.pick.sel'), function(n){ n.classList.remove('sel'); });
+    });
+  }
+  function choose(side, key){
+    if(side === 'L'){ selL = key; } else { selR = key; }
+    clearSel();
+    var cur1 = side === 'L' ? find(left, selL) : find(right, selR);
+    if(cur1) cur1.classList.add('sel');
+    if(selL === null || selR === null) return;
+    var lb = find(left, selL), rb = find(right, selR);
+    var index = parseInt(selL, 10) - 1;
+    if(cfg.map[index] === selR){
+      lb.classList.remove('sel'); rb.classList.remove('sel');
+      lb.classList.add('matched'); rb.classList.add('matched');
+      lb.disabled = true; rb.disabled = true;
+      matched++;
+      el(cfg.score).textContent = 'Matched: ' + matched + ' of ' + cfg.words.length;
+      if(matched === cfg.words.length){
+        fb(cfg.fb, 'ok', cfg.okMsg);
+        markDone(cfg.slide);
+        buzz(true);
+      } else {
+        buzz(true);
+      }
+    } else {
+      rb.classList.add('wrong');
+      buzz(false);
+      setTimeout(function(){ rb.classList.remove('wrong'); }, 700);
+    }
+    selL = null; selR = null;
+  }
+}
+
+function makeOrder(cfg){
+  var box = el(cfg.list);
+  var order = [];
+  function paint(){
+    box.innerHTML = '';
+    order.forEach(function(k, i){
+      var it = cfg.items.filter(function(x){ return x.k === k; })[0];
+      var row = document.createElement('div');
+      row.className = 'order-item';
+      row.draggable = true;
+      row.innerHTML = '<span class="grip" aria-hidden="true">&#8801;</span><span class="txt">' +
+        (it.who ? '<span class="who">' + it.who + '</span>' : '') + it.t + '</span>' +
+        '<span class="mv"><button type="button" aria-label="Move up" data-move="up">&#8593;</button>' +
+        '<button type="button" aria-label="Move down" data-move="down">&#8595;</button></span>';
+      var mv = row.querySelectorAll('button');
+      mv[0].addEventListener('click', function(){ move(k, -1); });
+      mv[1].addEventListener('click', function(){ move(k, 1); });
+      row.addEventListener('dragstart', function(e){ e.dataTransfer.setData('text/plain', k); row.style.opacity = '.5'; });
+      row.addEventListener('dragend', function(){ row.style.opacity = ''; });
+      row.addEventListener('dragover', function(e){ e.preventDefault(); });
+      row.addEventListener('drop', function(e){
+        e.preventDefault();
+        var from = e.dataTransfer.getData('text/plain');
+        var to = order.indexOf(k);
+        var fi = order.indexOf(from);
+        order.splice(fi, 1);
+        order.splice(to, 0, from);
+        paint();
+      });
+      box.appendChild(row);
+    });
+  }
+  function move(k, dir){
+    var i = order.indexOf(k), j = i + dir;
+    if(j < 0 || j >= order.length) return;
+    var t = order[i]; order[i] = order[j]; order[j] = t;
+    paint();
+  }
+  function check(){
+    var okAll = true;
+    cfg.correct.forEach(function(k, i){ if(order[i] !== k) okAll = false; });
+    if(okAll){
+      fb(cfg.fb, 'ok', cfg.okMsg);
+      markDone(cfg.slide);
+      buzz(true);
+    } else {
+      fb(cfg.fb, 'no', cfg.hint);
+      buzz(false);
+    }
+  }
+  function reset(){
+    order = shuffled(cfg.items.map(function(x){ return x.k; }));
+    paint();
+    fb(cfg.fb, 'info', '');
+  }
+  reset();
+  el(cfg.check).addEventListener('click', check);
+  el(cfg.shuffle).addEventListener('click', reset);
+}
+
+function makeBuild(cfg){
+  var i = 0, built = [];
+  function paintChips(){
+    var box = el(cfg.chips);
+    box.innerHTML = '';
+    shuffled(cfg.items[i].all).forEach(function(w){
+      var isExtra = cfg.items[i].extra.indexOf(w) >= 0;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip' + (isExtra ? ' extra' : '');
+      b.textContent = w;
+      b.addEventListener('click', function(){
+        if(b.classList.contains('used')) return;
+        built.push(w);
+        b.classList.add('used');
+        b.disabled = true;
+        paintBox();
+      });
+      box.appendChild(b);
+    });
+  }
+  function paintBox(){
+    var box = el(cfg.box);
+    if(!built.length){
+      box.className = 'sentbox';
+      box.textContent = 'Tap the words below. Tap here to undo the last word.';
+      return;
+    }
+    box.className = 'sentbox filled';
+    box.innerHTML = '';
+    built.forEach(function(w){
+      var s = document.createElement('span');
+      s.className = 'tok';
+      s.textContent = w;
+      box.appendChild(s);
+    });
+  }
+  function load(n){
+    i = n;
+    if(i < 0) i = 0;
+    if(i > cfg.items.length-1) i = cfg.items.length-1;
+    built = [];
+    el(cfg.idx).textContent = (i+1) + ' of ' + cfg.items.length;
+    if(cfg.note) el(cfg.note).textContent = cfg.items[i].note;
+    paintChips();
+    paintBox();
+    el(cfg.prev).disabled = i === 0;
+    el(cfg.next).disabled = i === cfg.items.length-1;
+  }
+  el(cfg.box).addEventListener('click', function(){
+    if(!built.length) return;
+    var last = built.pop();
+    var chips = el(cfg.chips).querySelectorAll('.chip');
+    for(var n = 0; n < chips.length; n++){
+      if(chips[n].textContent === last && chips[n].classList.contains('used')){
+        chips[n].classList.remove('used');
+        chips[n].disabled = false;
+        break;
+      }
+    }
+    paintBox();
+  });
+  el(cfg.box).addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el(cfg.box).click(); }
+  });
+  el(cfg.check).addEventListener('click', function(){
+    var target = cfg.items[i].target;
+    var attempt = built.join(' ');
+    if(attempt === target){
+      cfg.solved[i] = true;
+      fb(cfg.fb, 'ok', 'Correct. Say it out loud before you continue.');
+      markDone(cfg.slide);
+      buzz(true);
+    } else {
+      var usedExtra = cfg.items[i].extra.filter(function(w){ return built.indexOf(w) >= 0; });
+      if(usedExtra.length){
+        fb(cfg.fb, 'no', 'Not yet. You used the dashed word ' + usedExtra.join(', ') + '. Try again without it.');
+      } else if(built.length === 0){
+        fb(cfg.fb, 'info', 'Build the sentence first.');
+      } else {
+        fb(cfg.fb, 'no', 'Not yet. Check the word order, it starts with ' + target.split(' ')[0] + '.');
+      }
+      buzz(false);
+    }
+  });
+  el(cfg.clear).addEventListener('click', function(){ built = []; paintChips(); paintBox(); });
+  el(cfg.prev).addEventListener('click', function(){ load(i-1); });
+  el(cfg.next).addEventListener('click', function(){ load(i+1); });
+  if(cfg.hint) el(cfg.hint).addEventListener('click', function(){
+    fb(cfg.fb, 'info', 'The first word is ' + cfg.items[i].target.split(' ')[0] + '.');
+  });
+  load(0);
+}
+
+function makeSingleChoice(cfg){
+  var box = el(cfg.box);
+  box.innerHTML = '';
+  cfg.options.forEach(function(o){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick';
+    b.textContent = o.k + '. ' + o.t;
+    b.addEventListener('click', function(){
+      Array.prototype.forEach.call(box.querySelectorAll('.pick'), function(n){ n.classList.remove('matched','wrong','sel'); });
+      if(o.k === cfg.correct){
+        b.classList.add('matched');
+        fb(cfg.fb, 'ok', 'Correct choice. Now say why the other three are wrong.');
+        if(cfg.slide) markDone(cfg.slide);
+        buzz(true);
+      } else {
+        b.classList.add('wrong');
+        fb(cfg.fb, 'no', 'Not that one. Look for the line that is an order, or that attacks the person.');
+        buzz(false);
+      }
+    });
+    box.appendChild(b);
+  });
+}
+
+function makePickPair(cfg){
+  var box = el(cfg.list);
+  box.innerHTML = '';
+  var solved = 0;
+  cfg.pairs.forEach(function(p, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'prompt';
+    wrap.innerHTML = '<span class="pnum">Pair ' + (i+1) + '</span><div class="grid2" style="margin-top:8px"></div><div class="fb"></div>';
+    var grid = wrap.querySelector('.grid2');
+    var fbx = wrap.querySelector('.fb');
+    [['A', p.a], ['B', p.b]].forEach(function(pair){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pick';
+      b.textContent = pair[0] + '. ' + pair[1];
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(grid.querySelectorAll('.pick'), function(n){ n.classList.remove('matched','wrong'); });
+        if(pair[0] === p.correct){
+          b.classList.add('matched');
+          fbx.className = 'fb ok';
+          fbx.textContent = 'Good choice. Say the reason out loud before you check the key.';
+          solved++;
+          buzz(true);
+          if(solved === cfg.pairs.length){ markDone(cfg.slide); fb(cfg.fb, 'ok', 'All five decided. Now open the key and check your reasons.'); }
+        } else {
+          b.classList.add('wrong');
+          fbx.className = 'fb no';
+          fbx.textContent = 'That one would sound like an order to a colleague. Try again.';
+          buzz(false);
+        }
+      });
+      grid.appendChild(b);
+    });
+    box.appendChild(wrap);
+  });
+}
+
+/* Best available English voice: prefers en-GB, then quality markers.
+   getVoices() is empty on first paint in most browsers, so the list is
+   re-read on voiceschanged and the winner is cached. */
+var VOICE_PICK = null;
+function voiceScore(v){
+  var name = ((v && v.name) || '').toLowerCase();
+  var lang = ((v && v.lang) || '').toLowerCase();
+  var s = 0;
+  if(lang === 'en-gb') s += 60;
+  else if(lang.indexOf('en-gb') === 0) s += 55;
+  else if(lang.indexOf('en') === 0) s += 20;
+  else return -1;
+  if(name.indexOf('natural') > -1) s += 45;
+  if(name.indexOf('neural') > -1) s += 40;
+  if(name.indexOf('premium') > -1) s += 32;
+  if(name.indexOf('enhanced') > -1) s += 26;
+  if(name.indexOf('google') > -1) s += 24;
+  if(name.indexOf('online') > -1) s += 20;
+  if(name.indexOf('british') > -1 || name.indexOf(' uk ') > -1) s += 18;
+  if(name.indexOf('sonia') > -1 || name.indexOf('daniel') > -1 ||
+     name.indexOf('libby') > -1 || name.indexOf('arthur') > -1 ||
+     name.indexOf('jenny') > -1 || name.indexOf('guy') > -1 ||
+     name.indexOf('aria') > -1 || name.indexOf('ryan') > -1) s += 12;
+  if(name.indexOf('compact') > -1 || name.indexOf('mobile') > -1) s -= 30;
+  if(name.indexOf('espeak') > -1 || name.indexOf('legacy') > -1) s -= 40;
+  if(v && v.localService === false) s += 8;
+  if(v && v.default) s += 2;
+  return s;
+}
+function pickBestVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  var voices = [];
+  try { voices = speechSynthesis.getVoices() || []; } catch(e) { voices = []; }
+  var best = null, bestScore = -1;
+  for(var i = 0; i < voices.length; i++){
+    var sc = voiceScore(voices[i]);
+    if(sc > bestScore){ bestScore = sc; best = voices[i]; }
+  }
+  VOICE_PICK = bestScore > 0 ? best : VOICE_PICK;
+  return VOICE_PICK;
+}
+if('speechSynthesis' in window){
+  pickBestVoice();
+  try { speechSynthesis.addEventListener('voiceschanged', pickBestVoice); }
+  catch(e) { try { speechSynthesis.onvoiceschanged = pickBestVoice; } catch(e2){} }
+}
+function speak(text, rate){
+  if(!('speechSynthesis' in window)) return;
+  var u = new SpeechSynthesisUtterance(text);
+  var pick = VOICE_PICK || pickBestVoice();
+  if(pick) u.voice = pick;
+  u.lang = pick ? pick.lang : 'en-GB';
+  u.rate = rate || 0.95;
+  u.pitch = 1;
+  u.volume = 1;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+function initDeck(){
+  var dots = el('deckDots');
+  SLIDES.forEach(function(id, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = String(i+1);
+    b.setAttribute('aria-label', 'Go to ' + label(i) + ': ' + titleOf(i));
+    b.addEventListener('click', function(){ show(i); });
+    dots.appendChild(b);
+  });
+  doneIds().forEach(function(id){
+    var n = el(id);
+    if(n) n.setAttribute('data-done','1');
+  });
+  el('prevOuter').addEventListener('click', prev);
+  el('nextOuter').addEventListener('click', next);
+  el('prevInner').addEventListener('click', prev);
+  el('nextInner').addEventListener('click', next);
+  el('viewBtn').addEventListener('click', function(){
+    if(isDeck()){
+      document.body.classList.remove('deck');
+      SLIDES.forEach(function(id){ var n = el(id); if(n) n.classList.remove('current'); });
+      this.textContent = 'Deck view';
+      this.setAttribute('aria-pressed','false');
+      el('deckLive').textContent = 'All slides view.';
+    } else {
+      ensureDeck();
+      show(cur);
+    }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.done-btn'), function(b){
+    b.addEventListener('click', function(){
+      markDone(this.getAttribute('data-done'));
+      this.textContent = 'Done';
+      this.disabled = true;
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey || e.altKey || e.metaKey) return;
+    var t = e.target;
+    var tag = t && t.tagName ? t.tagName.toLowerCase() : '';
+    if(t && (t.isContentEditable || tag === 'input' || tag === 'textarea' || tag === 'select')) return;
+    if(e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); next(); }
+    else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); prev(); }
+    else if(e.key === 'Home'){ e.preventDefault(); show(0); }
+    else if(e.key === 'End'){ e.preventDefault(); show(SLIDES.length-1); }
+  });
+  var stage = el('deckStage');
+  var tx = null;
+  stage.addEventListener('touchstart', function(e){
+    if(e.touches.length === 1) tx = e.touches[0].clientX;
+  }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if(tx === null) return;
+    var t = e.target;
+    var tag = t && t.tagName ? t.tagName.toLowerCase() : '';
+    if(t && t.closest && t.closest('input,textarea,select,.order-item')){ tx = null; return; }
+    var dx = e.changedTouches[0].clientX - tx;
+    tx = null;
+    if(tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if(Math.abs(dx) < 60) return;
+    if(dx < 0) next(); else prev();
+  }, {passive:true});
+  var wide = window.matchMedia('(min-width: 1000px)');
+  function fsTarget(){ return wide.matches ? el('deckShell') : el('deckStage'); }
+  function syncFs(){
+    var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    var b = el('fsBtn');
+    b.textContent = on ? 'Exit full screen' : 'Enter full screen';
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+  function goFs(target){
+    if(target.requestFullscreen){
+      var p = target.requestFullscreen();
+      if(p && p.catch) p.catch(function(){ el('deckLive').textContent = 'Full screen was blocked. Arrow keys still move slides.'; });
+    } else if(target.webkitRequestFullscreen){
+      target.webkitRequestFullscreen();
+    } else {
+      el('deckLive').textContent = 'Full screen is not supported here. Use the slide buttons.';
+    }
+  }
+  function toggleFs(){
+    var on = document.fullscreenElement || document.webkitFullscreenElement;
+    if(on){
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    } else {
+      goFs(fsTarget());
+    }
+  }
+  el('fsBtn').addEventListener('click', toggleFs);
+  el('fsExit').addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', syncFs);
+  document.addEventListener('webkitfullscreenchange', syncFs);
+  document.body.classList.add('deck');
+  var start = 0;
+  if(location.hash){
+    var k = SLIDES.indexOf(location.hash.slice(1));
+    if(k >= 0) start = k;
+  }
+  if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  show(start, false);
+  window.scrollTo(0, 0);
+  syncFs();
+}
+
+function initActivities(){
+  makeChecklist('a1checks', [
+    'Ask to compare the scope fairly, Lesson 16',
+    'Ask for the decision criteria apart from price, Lesson 17',
+    'Acknowledge a price objection and ask for the offer, Lesson 18',
+    'Mention total cost of ownership, Lesson 16',
+    'Ask who the decision maker is, Lesson 17'
+  ], 4, 'a1fb', 'act1');
+
+  makeMatch({
+    left:'a2left', right:'a2right', score:'a2score', fb:'a2fb', slide:'act2',
+    words:['internal support','pricing request','quote','lead time','escalate'],
+    map:['D','E','A','B','C'],
+    defs:[
+      {k:'A',t:'the official price you send to a customer'},
+      {k:'B',t:'how long production or delivery takes'},
+      {k:'C',t:'to pass a case to someone with more authority'},
+      {k:'D',t:'help from a colleague or another department'},
+      {k:'E',t:'a formal ask for prices or options'},
+      {k:'F',t:'the money left after cost, before profit'},
+      {k:'G',t:'permission to reduce the price'}
+    ],
+    okMsg:'All five matched. Two meanings were traps, they belong to Activity 3.'
+  });
+
+  makeMatch({
+    left:'a3left', right:'a3right', score:'a3score', fb:'a3fb', slide:'act3',
+    words:['discount approval','margin','internal policy','clarify expectations','next steps'],
+    map:['K','L','H','I','J'],
+    defs:[
+      {k:'H',t:'the company rules on pricing'},
+      {k:'I',t:'to agree clearly what a colleague should do'},
+      {k:'J',t:'what happens after this call'},
+      {k:'K',t:'permission to reduce the price'},
+      {k:'L',t:'the difference between price and cost, before profit'},
+      {k:'M',t:'a visit to check a site before a quote'},
+      {k:'N',t:'a written summary of a customer meeting'}
+    ],
+    okMsg:'All five matched, and two traps rejected.'
+  });
+
+  var phrases = [
+    {t:'INternal SUPport', s:'INternal SUPport'},
+    {t:'a QUOTE for 250 KVA', s:'a QUOTE for two hundred fifty KVA'},
+    {t:'DIScount APproval', s:'DIScount APproval'},
+    {t:'the MARgin situation', s:'the MARgin situATion'},
+    {t:'LEAD time', s:'LEAD time'}
+  ];
+  var rows = el('a4rows');
+  rows.innerHTML = '';
+  phrases.forEach(function(p){
+    var row = document.createElement('div');
+    row.className = 'sayrow';
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'b';
+    b.textContent = 'Play';
+    b.setAttribute('aria-label', 'Play ' + p.t);
+    b.addEventListener('click', function(){ speak(p.s, 0.85); });
+    var t = document.createElement('span');
+    t.className = 't';
+    t.textContent = p.t;
+    var lab = document.createElement('label');
+    lab.className = 'check';
+    lab.style.border = 'none';
+    lab.style.background = 'transparent';
+    lab.style.padding = '0';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    var sp = document.createElement('span');
+    sp.textContent = 'I said it';
+    lab.appendChild(cb); lab.appendChild(sp);
+    cb.addEventListener('change', function(){
+      lab.classList.toggle('done', cb.checked);
+      var n = rows.querySelectorAll('input:checked').length;
+      if(n >= 4){
+        fb('a4fb','ok','Four of five said with clear stress. Now say all five in one breath.');
+        markDone('act4');
+        buzz(true);
+      }
+    });
+    row.appendChild(b); row.appendChild(t); row.appendChild(lab);
+    rows.appendChild(row);
+  });
+
+  makePickPair({
+    list:'a5list', fb:'a5fb', slide:'act5',
+    pairs:[
+      {a:'Anna, give me a price for 250 kVA.', b:'Could you send me a price for 250 kVA by Thursday?', correct:'B'},
+      {a:'Could you escalate this if it is not possible?', b:'Escalate this if it is not possible.', correct:'A'},
+      {a:'I need the margin numbers now, please.', b:'Could you share the margin situation? I need it for a call today.', correct:'B'},
+      {a:'Would you mind checking the internal policy on discounts?', b:'You must check the internal policy on discounts.', correct:'A'},
+      {a:'Could you clarify what you need from me before Friday?', b:'Tell me what you need.', correct:'A'}
+    ]
+  });
+
+  makeBuild({
+    box:'a6box', chips:'a6chips', idx:'a6idx', fb:'a6fb', check:'a6check', clear:'a6clear',
+    prev:'a6prev', next:'a6next', hint:'a6hint', slide:'act6',
+    items:[
+      {target:'Could you send me a quote for 250 kVA by Thursday?', extra:['urgent'],
+       all:['Could','you','send','me','a','quote','for','250','kVA','by','Thursday?','urgent']},
+      {target:'We need discount approval before we can confirm the price.', extra:['guarantee'],
+       all:['We','need','discount','approval','before','we','can','confirm','the','price.','guarantee']},
+      {target:'Could you check the internal policy on margin for this case?', extra:['customer'],
+       all:['Could','you','check','the','internal','policy','on','margin','for','this','case?','customer']},
+      {target:'Delivery in ten weeks is fixed, so could you check the lead time?', extra:['warranty'],
+       all:['Delivery','in','ten','weeks','is','fixed,','so','could','you','check','the','lead','time?','warranty']},
+      {target:'If the request is not possible, we can escalate it internally.', extra:['quickly'],
+       all:['If','the','request','is','not','possible,','we','can','escalate','it','internally.','quickly']}
+    ],
+    solved:[]
+  });
+
+  makeOrder({
+    list:'a7list', check:'a7check', shuffle:'a7shuffle', fb:'a7fb', slide:'act7',
+    items:[
+      {k:'1',t:'Thanks for the update on the Weber case.'},
+      {k:'2',t:'Could you clarify what you need from me?'},
+      {k:'3',t:'Could you send me a quote for 250 kVA by Thursday?'},
+      {k:'4',t:'So the quote arrives Thursday and the approval on Friday. Is that right?'}
+    ],
+    correct:['1','2','3','4'],
+    okMsg:'Correct order. Now say all four steps in one breath, then do part 2.',
+    hint:'Not yet. Start with the thank you line and end with the confirmation question.'
+  });
+  makeSingleChoice({
+    box:'a7odd', fb:'a7oddfb', slide:'',
+    options:[
+      {k:'a',t:'Could we escalate it to your manager if it is not possible?'},
+      {k:'b',t:'Could you clarify what you need from me by Thursday?'},
+      {k:'c',t:'Anna, I need the numbers now, so stop asking me questions.'},
+      {k:'d',t:'So the quote arrives Thursday and the approval on Friday. Is that right?'}
+    ],
+    correct:'c'
+  });
+
+  makeOrder({
+    list:'a8list', check:'a8check', shuffle:'a8shuffle', fb:'a8fb', slide:'act8',
+    items:[
+      {k:'A',who:'Anna',t:'What do you need from me today?'},
+      {k:'B',who:'You',t:'Thanks for taking the call. Could you send me a quote for 250 kVA with full warranty by Thursday?'},
+      {k:'C',who:'Anna',t:'The quote is easy. Is there anything else?'},
+      {k:'D',who:'You',t:'Yes. The customer says a competitor is 15 percent cheaper, so I need discount approval and the margin situation.'},
+      {k:'E',who:'Anna',t:'Discount approval depends on the margin. What is your target?'},
+      {k:'F',who:'You',t:'Our target is around 80,000 euros. Could you check the internal policy and tell me what is possible?'},
+      {k:'G',who:'Anna',t:'I will check the policy and come back to you on Friday.'},
+      {k:'H',who:'You',t:'That helps a lot. So I will have the quote on Thursday and the approval on Friday. Is that right?'}
+    ],
+    correct:['A','B','C','D','E','F','G','H'],
+    okMsg:'Correct order. Read it aloud with Anna, then read it again from memory.',
+    hint:'Not yet. Start with Anna asking what you need, and end with your confirmation question.'
+  });
+
+  makeBuild({
+    box:'a9box', chips:'a9chips', idx:'a9idx', fb:'a9fb', check:'a9check', clear:'a9clear',
+    prev:'a9prev', next:'a9next', note:'a9note', slide:'act9',
+    items:[
+      {note:'Written note: pls send q for 250 kva asap', target:'Could you send me a quote for 250 kVA as soon as possible?', extra:['pls'],
+       all:['Could','you','send','me','a','quote','for','250','kVA','as','soon','as','possible?','pls']},
+      {note:'Written note: need disc approval, Weber case', target:'Could we get discount approval for the Weber case?', extra:['thx'],
+       all:['Could','we','get','discount','approval','for','the','Weber','case?','thx']},
+      {note:'Written note: margin?', target:'Could you share the margin situation for this case?', extra:['and?'],
+       all:['Could','you','share','the','margin','situation','for','this','case?','and?']},
+      {note:'Written note: ok thx will do', target:'Thanks, that is clear. I will update the customer on Friday.', extra:['np'],
+       all:['Thanks,','that','is','clear.','I','will','update','the','customer','on','Friday.','np']}
+    ],
+    solved:[]
+  });
+
+  var gaps = [
+    {gap:'Margin: we do not know what discount we could justify.',
+     opts:['Could you share','What does','Who'], post:' the margin situation and the discount we could still justify?'},
+    {gap:'Sign off: we do not know who approves the price internally.',
+     opts:['Could you share','What does','Who'], post:' signs off internally on the price for this case?'},
+    {gap:'Policy: we do not know what is allowed at a 15 percent gap.',
+     opts:['Could you share','What does','Who'], post:' the internal policy say about a gap of 15 percent?'}
+  ];
+  var gapBox = el('a10list');
+  gapBox.innerHTML = '';
+  gaps.forEach(function(g, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'prompt';
+    var sel = document.createElement('select');
+    sel.id = 'a10sel' + i;
+    sel.setAttribute('aria-label', 'Choose the opener for question ' + (i+1));
+    var ph = document.createElement('option');
+    ph.value = '';
+    ph.textContent = 'Choose the opener';
+    sel.appendChild(ph);
+    g.opts.forEach(function(o){
+      var op = document.createElement('option');
+      op.value = o;
+      op.textContent = o;
+      sel.appendChild(op);
+    });
+    var txt = document.createElement('p');
+    txt.textContent = g.gap;
+    var tail = document.createElement('p');
+    tail.style.color = 'var(--accent2)';
+    tail.textContent = g.post;
+    wrap.innerHTML = '<span class="pnum">Question ' + (i+1) + '</span>';
+    wrap.appendChild(txt);
+    wrap.appendChild(sel);
+    wrap.appendChild(tail);
+    gapBox.appendChild(wrap);
+  });
+  gapBox.addEventListener('change', function(){
+    var want = ['Could you share','Who','What does'];
+    var n = 0;
+    for(var k = 0; k < 3; k++){
+      if(el('a10sel' + k) && el('a10sel' + k).value === want[k]) n++;
+    }
+    if(n === 3){
+      fb('a10fb','ok','All three openers fit. Now say each full question out loud, then open the key.');
+      markDone('act10');
+      buzz(true);
+    } else {
+      fb('a10fb','info','Choose an opener for each of the three questions. Matched so far: ' + n + ' of 3.');
+    }
+  });
+
+  var nums = [
+    {n:'250 kVA', model:'Could you confirm the scope is 250 kVA for the quote?', hints:['about','around','approximately','confirm']},
+    {n:'15 percent cheaper', model:'Is the competitor about 15 percent cheaper for the same scope?', hints:['about','around','approximately','percent']},
+    {n:'around 80,000 euros', model:'Could you confirm the target is around 80,000 euros?', hints:['about','around','approximately','confirm']},
+    {n:'ten weeks lead time', model:'Is the lead time about ten weeks, including commissioning?', hints:['about','around','approximately','confirm']}
+  ];
+  var numBox = el('a11list');
+  numBox.innerHTML = '';
+  var numOk = {};
+  nums.forEach(function(item, i){ numOk[i] = false; });
+  nums.forEach(function(item, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'prompt';
+    wrap.innerHTML = '<span class="pnum">Number ' + (i+1) + '</span><p>' + item.n + '</p>';
+    var row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.gap = '8px';
+    row.style.flexWrap = 'wrap';
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.id = 'a11in' + i;
+    inp.placeholder = 'Type your question...';
+    inp.style.flex = '1 1 14rem';
+    inp.setAttribute('aria-label', 'Your question for number ' + (i+1));
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn';
+    btn.textContent = 'Check';
+    btn.addEventListener('click', function(){
+      var v = inp.value.toLowerCase();
+      var out = document.getElementById('a11fb' + i);
+      if(v.length < 8){
+        out.className = 'fb no';
+        out.textContent = 'Type a full question.';
+        buzz(false);
+        return;
+      }
+      var hedged = item.hints.some(function(h){ return v.indexOf(h) >= 0; });
+      if(!hedged){
+        out.className = 'fb no';
+        out.textContent = 'Add a softener: about, around, approximately or could you confirm.';
+        buzz(false);
+        return;
+      }
+      out.className = 'fb ok';
+      out.textContent = 'Good. Say it out loud, then compare with the model in the key.';
+      buzz(true);
+      numOk[i] = true;
+      var passed = Object.keys(numOk).filter(function(k){ return numOk[k]; }).length;
+      if(passed >= 3) markDone('act11');
+    });
+    row.appendChild(inp);
+    row.appendChild(btn);
+    wrap.appendChild(row);
+    var out = document.createElement('div');
+    out.className = 'fb';
+    out.id = 'a11fb' + i;
+    out.setAttribute('role','status');
+    wrap.appendChild(out);
+    numBox.appendChild(wrap);
+  });
+
+  var brief = 'We have the Weber case for 250 kVA. The competitor is about 15 percent cheaper for the same power, but their warranty is narrower. The customer needs delivery within ten weeks. No discount is approved yet. Please send the quote by Thursday and the approval on Friday, because the customer decides next week.';
+  el('a12play').addEventListener('click', function(){ speak(brief, parseFloat(el('a12rate').value)); });
+  el('a12fast').addEventListener('click', function(){ speak(brief, 1.25); });
+  el('a12rate').addEventListener('input', function(){ el('a12ratev').textContent = parseFloat(this.value).toFixed(1) + 'x'; });
+  el('a12check').addEventListener('click', function(){
+    var s = el('a12sum').value.toLowerCase();
+    var q = el('a12q').value.toLowerCase();
+    if(s.length < 12){
+      fb('a12fb','no','Write one sentence summary first, start with If I understood correctly.');
+      buzz(false);
+      return;
+    }
+    var hasFrame = s.indexOf('if i understood correctly') >= 0 || s.indexOf('if i understand correctly') >= 0;
+    var hasFact = s.indexOf('15') >= 0 || s.indexOf('fifteen') >= 0;
+    var hasQ = q.indexOf('?') >= 0 || q.indexOf('could you') >= 0 || q.indexOf('who') >= 0 || q.indexOf('what') >= 0;
+    if(hasFrame && hasFact && hasQ){
+      fb('a12fb','ok','Complete. You summarised the numbers and asked a real question.');
+      markDone('act12');
+      buzz(true);
+    } else if(hasFrame && hasFact){
+      fb('a12fb','info','Summary works. Now add the question you still need answered.');
+    } else {
+      fb('a12fb','no','Include the opener If I understood correctly and the 15 percent gap.');
+      buzz(false);
+    }
+  });
+
+  makeChecklist('a13checks', [
+    'internal support', 'pricing request', 'discount approval', 'margin',
+    'internal policy', 'lead time', 'clarify expectations', 'escalate', 'next steps'
+  ], 5, 'a13fb', 'act13');
+
+  var timerId = null, left = 60;
+  function paintTimer(){
+    var m = Math.floor(left/60), s = left % 60;
+    el('a14timer').textContent = (m<10?'0':'') + m + ':' + (s<10?'0':'') + s;
+  }
+  el('a14start').addEventListener('click', function(){
+    var b = this;
+    if(timerId){
+      clearInterval(timerId); timerId = null;
+      b.textContent = 'Start 60 seconds, optional';
+      return;
+    }
+    b.textContent = 'Stop';
+    timerId = setInterval(function(){
+      left--;
+      paintTimer();
+      if(left <= 0){
+        clearInterval(timerId); timerId = null;
+        b.textContent = 'Start 60 seconds, optional';
+        el('a14timer').textContent = '01:00';
+        markDone('act14');
+        fb('a14fb','ok','Time is up. Stop the clock, count what you said, then open the key.');
+      }
+    }, 1000);
+  });
+  el('a14reset').addEventListener('click', function(){
+    if(timerId){ clearInterval(timerId); timerId = null; }
+    left = 60;
+    paintTimer();
+    el('a14start').textContent = 'Start 60 seconds, optional';
+  });
+  el('a14tick').addEventListener('click', function(){
+    var v = el('a14keys').value.toLowerCase();
+    var found = 0;
+    if(v.indexOf('case') >= 0 || v.indexOf('weber') >= 0){ el('a14s1').classList.add('done'); found++; }
+    if(v.indexOf('15') >= 0 || v.indexOf('fifteen') >= 0 || v.indexOf('cheaper') >= 0){ el('a14s2').classList.add('done'); found++; }
+    if(v.indexOf('quote') >= 0 || v.indexOf('approval') >= 0 || v.indexOf('margin') >= 0 || v.indexOf('need') >= 0){ el('a14s3').classList.add('done'); found++; }
+    if(v.indexOf('thursday') >= 0 || v.indexOf('friday') >= 0 || v.indexOf('next step') >= 0 || v.indexOf('today') >= 0){ el('a14s4').classList.add('done'); found++; }
+    if(found >= 3){
+      fb('a14fb','ok','Three of four signposts detected. Add the missing one on your next attempt.');
+      markDone('act14');
+      buzz(true);
+    } else {
+      fb('a14fb','info','Keywords detected: ' + found + ' of 4. Type the words you actually said.');
+    }
+  });
+
+  makeChecklist('a15checks', [
+    'I acknowledged the problem without blaming my colleague',
+    'I separated what Anna cannot do from what she can do',
+    'I repeated the numbers: 250 kVA, 15 percent, 80,000 euros, ten weeks',
+    'I gave a next step with a date and a named owner',
+    'I confirmed the date by asking a question'
+  ], 4, 'a15fb', 'act15');
+  Array.prototype.forEach.call(el('a15hw').querySelectorAll('button'), function(b){
+    b.addEventListener('click', function(){
+      Array.prototype.forEach.call(el('a15hw').querySelectorAll('button'), function(n){ n.classList.remove('matched'); });
+      this.classList.add('matched');
+      fb('a15hwfb','ok','Homework ' + this.getAttribute('data-hw') + ' chosen. Do it within 24 hours, then bring it to the next lesson.');
+      markDone('act15');
+      buzz(true);
+    });
+  });
+}
+
+initActivities();
+initDeck();
+</script>
+<footer style="padding:16px;border-top:2px solid var(--accent);color:var(--muted);font-size:.82rem;margin-top:24px;background:#080808;border-radius:12px;text-align:center">Lesson 19 Internal Support. 15 activities. High contrast, keyboard friendly.<p style="margin-top:.4rem"><a href="../../index.html#b2-business" style="color:var(--accent2)">All B2 Business lessons</a></p></footer>
+<script src="../../xapi-include.js?v=6" defer></script>
+<script>
+// Christian Lesson 19 - granular LRS via proxy (mirrors Lesson 18 deck)
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched: vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered: vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked: vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced', 'experienced'),
+    listened: vb(HOME + '/expapi/verbs/listened', 'listened to')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({
+      verb: verb,
+      object: {
+        objectType: 'Activity',
+        id: objId,
+        definition: { name: { 'en-US': objName }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson') }
+      }
+    });
+  }
+  var SLIDES = ['intro', 'act1', 'act2', 'act3', 'act4', 'act5', 'act6', 'act7',
+                'act8', 'act9', 'act10', 'act11', 'act12', 'act13', 'act14', 'act15'];
+  var CHECK_ACTS = { act6: 1, act7: 1, act8: 1, act9: 1, act12: 1 };
+  var sentChecks = {};
+  // per-item answered on the five auto-checked acts
+  Object.keys(CHECK_ACTS).forEach(function (act) {
+    var sec = document.getElementById(act);
+    if (!sec) return;
+    var btn = sec.querySelector('#' + act.replace('act', 'a') + 'check');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (sentChecks[act]) return;
+      sentChecks[act] = true;
+      var n = 0;
+      sec.querySelectorAll('input.answer, select, .checks [type=checkbox], .choices label').forEach(function (item) {
+        n++;
+        var name = 'Item ' + n;
+        if (item.getAttribute('aria-label')) name = item.getAttribute('aria-label').substring(0, 70);
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + act + '/item-' + n, act + ': ' + name, 'question');
+      });
+    });
+  });
+  // marked-as-complete whenever a slide gains data-done
+  var marked = {};
+  var slides = SLIDES.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  var checkDone = function (sec) {
+    if (!sec || !sec.hasAttribute || !sec.hasAttribute('data-done')) return;
+    var id = sec.id;
+    if (marked[id]) return;
+    marked[id] = true;
+    var real = Object.keys(marked).filter(function (k) { return k !== 'intro'; }).length;
+    sendPrecise(VERBS.marked, LESSON_ID + '/' + id, id + ' completed', 'activity');
+    if (real >= 15) sendPrecise(VERBS.experienced, LESSON_ID, document.title, 'lesson');
+  };
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function (muts) {
+      muts.forEach(function (m) { if (m.target && m.target.id) checkDone(m.target); });
+      slides.forEach(checkDone);
+    });
+    slides.forEach(function (s) { mo.observe(s, { attributes: true, attributeFilter: ['data-done'] }); });
+  }
+  slides.forEach(checkDone);
+  // listening actions
+  ['a12play', 'a12fast', 'a14start'].forEach(function (id) {
+    var b = document.getElementById(id);
+    if (!b) return;
+    b.addEventListener('click', function () {
+      var sec = b.closest('.slide');
+      sendPrecise(VERBS.listened, LESSON_ID + '/' + (sec ? sec.id : 'page') + '/' + id,
+        (sec ? sec.id + ': ' : '') + b.textContent.trim().substring(0, 40), 'audio');
+    });
+  });
+  // answer keys opened
+  document.querySelectorAll('details.key').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (!d.open) return;
+      var sec = d.closest('.slide');
+      var sum = d.querySelector('summary');
+      sendPrecise(VERBS.answered, LESSON_ID + '/' + (sec ? sec.id : 'page') + '/key',
+        'Answer key opened: ' + (sum ? sum.textContent.trim().substring(0, 50) : 'key'), 'assessment');
+    });
+  });
+});
+</script>
+</body>
+</html>
