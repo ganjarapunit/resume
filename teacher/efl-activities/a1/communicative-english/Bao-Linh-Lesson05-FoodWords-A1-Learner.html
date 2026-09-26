@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Words A1 25 Pictures Interactive</title>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b; --card:#0c1628;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:5%; background:var(--accent)}
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.role{display:grid; gap:.8rem; margin:.8rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.role div{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; font-size:clamp(1.1rem,3vw,1.3rem)}
+.role strong{color:var(--accent)}
+.dots{display:flex; gap:.7rem; margin:.8rem 0; flex-wrap:wrap}
+.dot{flex:1 1 8rem; min-height:56px; font-size:1.05rem; font-weight:800; border-radius:12px; border:2px solid var(--border); background:var(--card); color:var(--ink); cursor:pointer; padding:.6rem}
+.dot[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b}
+.choice{display:block; width:100%; text-align:left; margin:.5rem 0; min-height:56px; font-size:clamp(1.05rem,3vw,1.25rem); font-weight:700; border-radius:12px; cursor:pointer; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.7rem 1rem}
+.choice.is-correct{border-color:var(--good); background:#0f2f2b}
+.choice.is-try{border-color:var(--bad)}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.wordbank button{min-height:52px; font-size:1.15rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.55rem .95rem; cursor:pointer}
+.dlg-item{min-height:56px; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; text-align:left; border-radius:12px; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.7rem 1rem; cursor:grab}
+.dlg-item.sel{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.dlg-item.placed{display:none}
+.drop-list{list-style:none; padding:0; margin:.7rem 0; display:flex; flex-direction:column; gap:.6rem}
+.drop-box{min-height:60px; border:2px dashed var(--border); border-radius:12px; padding:.6rem .8rem; display:flex; gap:.8rem; align-items:center; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; background:var(--card)}
+.drop-box.over{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.drop-box.filled{border-style:solid; border-color:var(--accent-2)}
+.boxnum{flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
+.boxhint{color:var(--muted); font-weight:400}
+.drop-box.filled .boxhint{color:var(--ink); font-weight:700}
+.answer-line{background:var(--card); border:1px dashed var(--border); border-radius:10px; min-height:3.2em; padding:.7rem 1rem; font-size:1.3rem; font-weight:800; overflow-wrap:break-word}
+.gap input{font-size:1.15rem; font-weight:800; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:8px; padding:.35rem .6rem; min-width:7rem; max-width:10rem; margin:0 .25rem}
+.gap input.correct{border-color:var(--good)}
+.gap input.wrong{border-color:var(--bad)}
+.rec-row button{flex:1 1 9rem; min-height:52px; font-size:1rem; font-weight:800; border-radius:10px; cursor:pointer; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem}
+.rec-row button:disabled{opacity:.4; cursor:not-allowed}
+.rec-row button.danger{border-color:var(--bad)}
+audio.rec-play{width:100%; margin-top:.5rem}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer; overflow-wrap:break-word}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+details.key{margin:.8rem 0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem 1rem}
+details.key summary{min-height:48px; font-weight:800; font-size:1.05rem; cursor:pointer; color:var(--accent); display:flex; align-items:center}
+details.key p{margin:.4rem 0; font-size:1.05rem; overflow-wrap:break-word}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:var(--card)}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+.target, .card .big, .role div, .drop-box, .gap, .answer-line{overflow-wrap:break-word}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .gap{padding:.75rem .8rem}
+  .gap input{min-width:5.2rem; max-width:8.5rem; margin:.15rem .2rem}
+  .drop-box{padding:.55rem .6rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+  .boxnum{width:2rem; height:2rem; font-size:1.05rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+
+.pic-stage{display:flex; justify-content:center; align-items:center; margin:.4rem 0 .2rem; min-height:120px}
+img.food{
+  display:block; max-width:100%; height:auto;
+  border-radius:14px; border:2px solid var(--border);
+  background:#0c1628; object-fit:contain;
+  box-shadow:0 10px 22px rgba(0,0,0,.55);
+}
+.row-actions{display:grid; gap:.7rem; grid-template-columns:1fr 1fr; margin:.7rem 0}
+.check-btn{border-color:var(--accent); background:var(--accent); color:#111}
+.answer-box{
+  width:100%; background:var(--card); border:1px solid var(--border); border-radius:12px;
+  padding:.85rem 1rem; text-align:center; display:flex; flex-direction:column; gap:.25rem; margin:.6rem 0;
+  overflow-wrap:break-word;
+}
+.answer-box .word{font-weight:800; font-size:clamp(1.5rem,4.5vw,2.1rem); color:var(--accent); letter-spacing:.5px}
+.answer-box .plain{color:var(--muted); font-size:1.05rem}
+.plain-in-key{color:var(--muted)}
+@media (max-width:23.75rem){
+  .row-actions{grid-template-columns:1fr}
+}
+</style>
+
+<style id="alignment-normalisation">
+/* ===== alignment normalisation (deck) =====
+   Rule: the message is centred, controls and lists stay left. Pictures always centred. */
+#fsRoot, #fsRoot .viewport{text-align:center}
+.slide{text-align:center}
+.slide h1, .slide h2, .slide h3, .slide .lead, .slide .instruction,
+.slide .target, .slide .eyebrow, .slide .feedback{text-align:center}
+.slide .cards, .slide .card, .slide .card-item, .slide .role, .slide .role div,
+.slide .gap, .slide .answer-line, .slide .answer-box, .slide .rec-row{text-align:center}
+.slide .choice, .slide .speak-btn, .slide .dot, .slide .wordbank button,
+.slide .dlg-item, .slide .rec-row button, .slide .bottom-nav button,
+.slide .side-nav button{text-align:center}
+/* pictures: always centred, never wider than the card, never distorted */
+/* keep .cards and .role as their own grids; only true wrappers become flex */
+.pic-stage, .clock-stage, .lines, .rec-row{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center; width:100%;
+}
+.slide .cards, .slide .role{justify-items:center; align-items:stretch}
+.slide .cards > *, .slide .role > *{justify-self:center; width:100%}
+img.food{width:min(100%,620px); height:auto}
+.slide img, .slide svg, img.food, svg.clock, .pic-stage > *, .clock-stage > *{
+  display:block; margin-inline:auto; max-width:100%; height:auto; vertical-align:middle;
+}
+.slide .card{text-align:center}
+/* left-aligned by design: checkboxes, drag slots, disclosure controls, data answers */
+.slide .checklist, .slide .checklist li, .slide .checklist label{text-align:left}
+.slide .drop-box, .slide .drop-box .boxhint, .slide .dlg-answer{text-align:left}
+.slide details.key summary{text-align:left; display:flex; align-items:center; gap:.5rem}
+.slide details.key p, .slide details.key ol, .slide details.key ul{text-align:center}
+.slide details.key li{text-align:center}
+footer.foot{text-align:center}
+@media (max-width:23.75rem){
+  .slide .cards, .slide .role{justify-content:center}
+  .slide img, .slide svg{max-width:100%}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to words</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>Food Words A1: 25 Pictures</h1>
+        <p class="sub">Look. Say the word. 25 food and drink words.</p>
+      </div>
+      <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 27</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Word progress" aria-valuemin="1" aria-valuemax="27" aria-valuenow="1" id="progressBar"><div id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Word slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+
+          <section class="slide active" role="group" aria-roledescription="slide" aria-label="1 of 27 Hello">
+            <span class="eyebrow">Hello!</span>
+            <h2 tabindex="-1">Food Words</h2>
+            <p class="lead">Today you can say:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">🍜</div><div class="big">Food</div><div class="small">rice, fish, soup . 9 words</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🍎</div><div class="big">Fruit</div><div class="small">apple, banana . 4 words</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🥒</div><div class="big">Veg</div><div class="small">carrot, tomato . 4 words</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🍰</div><div class="big">Sweets</div><div class="small">cake, ice cream . 2 words</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🥤</div><div class="big">Drink</div><div class="small">water, tea, coffee . 5 words</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">🥢</div><div class="big">Table</div><div class="small">chopsticks . 1 words</div></div>
+            </div>
+            <p class="instruction">Look. Say the word. 25 pictures.</p>
+            <div class="target" style="text-align:center">Hello! We are Bao and Linh.</div>
+            <details class="key"><summary>Check</summary><p>25 words in 6 groups: food, fruit, vegetables, sweets, drinks, and table things.</p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="2 of 27 rice">
+            <span class="eyebrow teal">Food . 1 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/rice__0.jpg" alt="A white bowl of cooked white rice" width="453" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="rice" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w1">Check</button>
+            </div>
+            <div class="answer-box" id="w1" hidden>
+              <span class="word">RICE</span>
+              <span class="plain">I want RICE.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>RICE</strong> <span class="plain-in-key">. I want RICE.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="3 of 27 noodles">
+            <span class="eyebrow teal">Food . 2 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/noodles__0.jpg" alt="A bowl of noodles with chopsticks and a spoon" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="noodles" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w2">Check</button>
+            </div>
+            <div class="answer-box" id="w2" hidden>
+              <span class="word">NOO-dles</span>
+              <span class="plain">I want NOO-dles.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>NOO-dles</strong> <span class="plain-in-key">. I want NOO-dles.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="4 of 27 bread">
+            <span class="eyebrow teal">Food . 3 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/bread__2.jpg" alt="A sliced loaf of brown bread" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="bread" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w3">Check</button>
+            </div>
+            <div class="answer-box" id="w3" hidden>
+              <span class="word">BREAD</span>
+              <span class="plain">I want BREAD.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>BREAD</strong> <span class="plain-in-key">. I want BREAD.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="5 of 27 egg">
+            <span class="eyebrow teal">Food . 4 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/egg__0.jpg" alt="A white plate of boiled eggs" width="400" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="egg" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w4">Check</button>
+            </div>
+            <div class="answer-box" id="w4" hidden>
+              <span class="word">EGG</span>
+              <span class="plain">I want an EGG.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>EGG</strong> <span class="plain-in-key">. I want an EGG.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="6 of 27 fish">
+            <span class="eyebrow teal">Food . 5 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/fish__g00.jpg" alt="A grilled fish fillet on a plate with salad and lemon" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="fish" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w5">Check</button>
+            </div>
+            <div class="answer-box" id="w5" hidden>
+              <span class="word">FISH</span>
+              <span class="plain">I want FISH.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>FISH</strong> <span class="plain-in-key">. I want FISH.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="7 of 27 chicken">
+            <span class="eyebrow teal">Food . 6 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/chicken__f3.jpg" alt="Crispy fried chicken pieces in a box" width="300" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="chicken" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w6">Check</button>
+            </div>
+            <div class="answer-box" id="w6" hidden>
+              <span class="word">CHICK-en</span>
+              <span class="plain">I want CHICK-en.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>CHICK-en</strong> <span class="plain-in-key">. I want CHICK-en.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="8 of 27 beef">
+            <span class="eyebrow teal">Food . 7 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/beef__0.jpg" alt="Slices of cooked beef on a plate" width="442" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="beef" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w7">Check</button>
+            </div>
+            <div class="answer-box" id="w7" hidden>
+              <span class="word">BEEF</span>
+              <span class="plain">I want BEEF.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>BEEF</strong> <span class="plain-in-key">. I want BEEF.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="9 of 27 soup">
+            <span class="eyebrow teal">Food . 8 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/soup__1.jpg" alt="A bowl of thick soup with a spoon" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="soup" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w8">Check</button>
+            </div>
+            <div class="answer-box" id="w8" hidden>
+              <span class="word">SOUP</span>
+              <span class="plain">I want SOUP.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>SOUP</strong> <span class="plain-in-key">. I want SOUP.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="10 of 27 salad">
+            <span class="eyebrow teal">Food . 9 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/salad__f1.jpg" alt="A bowl of salad with green leaves and dressing" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="salad" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w9">Check</button>
+            </div>
+            <div class="answer-box" id="w9" hidden>
+              <span class="word">SAL-ad</span>
+              <span class="plain">I want SAL-ad.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>SAL-ad</strong> <span class="plain-in-key">. I want SAL-ad.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="11 of 27 cake">
+            <span class="eyebrow teal">Sweets . 10 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/cake__0.jpg" alt="A slice of cake with cream on a plate" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="cake" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w10">Check</button>
+            </div>
+            <div class="answer-box" id="w10" hidden>
+              <span class="word">CAKE</span>
+              <span class="plain">I like CAKE.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>CAKE</strong> <span class="plain-in-key">. I like CAKE.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="12 of 27 ice cream">
+            <span class="eyebrow teal">Sweets . 11 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/ice_cream__0.jpg" alt="A scoop of ice cream in a bowl" width="525" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="ice cream" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w11">Check</button>
+            </div>
+            <div class="answer-box" id="w11" hidden>
+              <span class="word">ICE CREAM</span>
+              <span class="plain">I like ICE CREAM.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>ICE CREAM</strong> <span class="plain-in-key">. I like ICE CREAM.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="13 of 27 apple">
+            <span class="eyebrow teal">Fruit . 12 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/apple__g01.jpg" alt="Three red apples growing on a tree" width="320" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="apple" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w12">Check</button>
+            </div>
+            <div class="answer-box" id="w12" hidden>
+              <span class="word">AP-ple</span>
+              <span class="plain">I like AP-ple.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>AP-ple</strong> <span class="plain-in-key">. I like AP-ple.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="14 of 27 banana">
+            <span class="eyebrow teal">Fruit . 13 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/banana__c1.jpg" alt="A single yellow banana on a white background" width="320" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="banana" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w13">Check</button>
+            </div>
+            <div class="answer-box" id="w13" hidden>
+              <span class="word">ba-NA-na</span>
+              <span class="plain">I like ba-NA-na.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>ba-NA-na</strong> <span class="plain-in-key">. I like ba-NA-na.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="15 of 27 orange">
+            <span class="eyebrow teal">Fruit . 14 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/orange__0.jpg" alt="Oranges in a glass bowl on a white background" width="457" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="orange" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w14">Check</button>
+            </div>
+            <div class="answer-box" id="w14" hidden>
+              <span class="word">OR-ange</span>
+              <span class="plain">I like OR-ange.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>OR-ange</strong> <span class="plain-in-key">. I like OR-ange.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="16 of 27 strawberry">
+            <span class="eyebrow teal">Fruit . 15 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/strawberry__1.jpg" alt="Boxes of fresh red strawberries" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="strawberry" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w15">Check</button>
+            </div>
+            <div class="answer-box" id="w15" hidden>
+              <span class="word">STRAW-berry</span>
+              <span class="plain">I like STRAW-berry.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>STRAW-berry</strong> <span class="plain-in-key">. I like STRAW-berry.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="17 of 27 carrot">
+            <span class="eyebrow teal">Veg . 16 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/carrot__g11.jpg" alt="Fresh orange carrots on a white background" width="620" height="326">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="carrot" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w16">Check</button>
+            </div>
+            <div class="answer-box" id="w16" hidden>
+              <span class="word">CAR-rot</span>
+              <span class="plain">I like CAR-rot.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>CAR-rot</strong> <span class="plain-in-key">. I like CAR-rot.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="18 of 27 potato">
+            <span class="eyebrow teal">Veg . 17 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/potato__0.jpg" alt="A pile of brown potatoes" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="potato" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w17">Check</button>
+            </div>
+            <div class="answer-box" id="w17" hidden>
+              <span class="word">po-TA-to</span>
+              <span class="plain">I like po-TA-to.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>po-TA-to</strong> <span class="plain-in-key">. I like po-TA-to.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="19 of 27 tomato">
+            <span class="eyebrow teal">Veg . 18 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/tomato__0.jpg" alt="A red tomato and a cut half tomato on white" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="tomato" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w18">Check</button>
+            </div>
+            <div class="answer-box" id="w18" hidden>
+              <span class="word">to-MA-to</span>
+              <span class="plain">I like to-MA-to.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>to-MA-to</strong> <span class="plain-in-key">. I like to-MA-to.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="20 of 27 onion">
+            <span class="eyebrow teal">Veg . 19 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/onion__f1.jpg" alt="A golden onion on a white background" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="onion" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w19">Check</button>
+            </div>
+            <div class="answer-box" id="w19" hidden>
+              <span class="word">ON-ion</span>
+              <span class="plain">I like ON-ion.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>ON-ion</strong> <span class="plain-in-key">. I like ON-ion.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="21 of 27 water">
+            <span class="eyebrow teal">Drink . 20 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/water__1.jpg" alt="A clear glass of water on a wooden table" width="273" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="water" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w20">Check</button>
+            </div>
+            <div class="answer-box" id="w20" hidden>
+              <span class="word">WA-ter</span>
+              <span class="plain">I want WA-ter.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>WA-ter</strong> <span class="plain-in-key">. I want WA-ter.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="22 of 27 milk">
+            <span class="eyebrow teal">Drink . 21 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/milk__c0.jpg" alt="A glass of milk on a wooden table" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="milk" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w21">Check</button>
+            </div>
+            <div class="answer-box" id="w21" hidden>
+              <span class="word">MILK</span>
+              <span class="plain">I want MILK.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>MILK</strong> <span class="plain-in-key">. I want MILK.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="23 of 27 juice">
+            <span class="eyebrow teal">Drink . 22 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/juice__2.jpg" alt="A glass of orange juice" width="300" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="juice" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w22">Check</button>
+            </div>
+            <div class="answer-box" id="w22" hidden>
+              <span class="word">JUICE</span>
+              <span class="plain">I want JUICE.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>JUICE</strong> <span class="plain-in-key">. I want JUICE.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="24 of 27 tea">
+            <span class="eyebrow teal">Drink . 23 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/tea__g01.jpg" alt="A white teapot with a bamboo handle and a white teacup" width="343" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="tea" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w23">Check</button>
+            </div>
+            <div class="answer-box" id="w23" hidden>
+              <span class="word">TEA</span>
+              <span class="plain">I want TEA.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>TEA</strong> <span class="plain-in-key">. I want TEA.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="25 of 27 coffee">
+            <span class="eyebrow teal">Drink . 24 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/coffee__0.jpg" alt="A cup of coffee with thick milk foam dusted with cocoa" width="600" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="coffee" data-voice="female">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w24">Check</button>
+            </div>
+            <div class="answer-box" id="w24" hidden>
+              <span class="word">COF-fee</span>
+              <span class="plain">I want COF-fee.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>COF-fee</strong> <span class="plain-in-key">. I want COF-fee.</span></p></details>
+          </section>
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="26 of 27 chopsticks">
+            <span class="eyebrow teal">Table . 25 of 25</span>
+            <h2 tabindex="-1">What is this?</h2>
+            <div class="pic-stage">
+              <img class="food" src="food_images/chopsticks__2.jpg" alt="Chopsticks resting on a plate of noodles" width="533" height="400">
+            </div>
+            <p class="instruction">Look. Say the word.</p>
+            <div class="row-actions">
+              <button class="speak-btn" type="button" data-say="chopsticks" data-voice="male">Listen</button>
+              <button class="speak-btn check-btn" type="button" aria-expanded="false" aria-controls="w25">Check</button>
+            </div>
+            <div class="answer-box" id="w25" hidden>
+              <span class="word">CHOP-sticks</span>
+              <span class="plain">I want CHOP-sticks.</span>
+            </div>
+            <details class="key"><summary>Check</summary><p><strong>CHOP-sticks</strong> <span class="plain-in-key">. I want CHOP-sticks.</span></p></details>
+          </section>
+
+          <section class="slide" role="group" aria-roledescription="slide" aria-label="27 of 27 Done">
+            <span class="eyebrow">Done</span>
+            <h2 tabindex="-1">We did it!</h2>
+            <p class="instruction">Tick what you can say:</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox"> I want RICE. I want WA-ter.</label></li>
+              <li><label><input type="checkbox"> I like COF-fee. I like TEA.</label></li>
+              <li><label><input type="checkbox"> I want FISH. I want CHICK-en.</label></li>
+              <li><label><input type="checkbox"> I like AP-ple. I like ba-NA-na.</label></li>
+              <li><label><input type="checkbox"> I like CAR-rot. I like to-MA-to.</label></li>
+            </ul>
+            <div class="target" style="text-align:center">Tonight: look, say, point. Only English!</div>
+            <details class="key">
+              <summary>Check all 25 words</summary>
+              <ul>
+<li>RICE</li>
+<li>NOO-dles</li>
+<li>BREAD</li>
+<li>EGG</li>
+<li>FISH</li>
+<li>CHICK-en</li>
+<li>BEEF</li>
+<li>SOUP</li>
+<li>SAL-ad</li>
+<li>CAKE</li>
+<li>ICE CREAM</li>
+<li>AP-ple</li>
+<li>ba-NA-na</li>
+<li>OR-ange</li>
+<li>STRAW-berry</li>
+<li>CAR-rot</li>
+<li>po-TA-to</li>
+<li>to-MA-to</li>
+<li>ON-ion</li>
+<li>WA-ter</li>
+<li>MILK</li>
+<li>JUICE</li>
+<li>TEA</li>
+<li>COF-fee</li>
+<li>CHOP-sticks</li>
+              </ul>
+            </details>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 27</div>
+        <div class="bottom-nav" aria-label="Word navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Arrows on keyboard work. Listen buttons use the best British voice on your device. Bao is male voice. Linh is female voice. Pictures from Wikimedia Commons. Best in full screen.</p>
+</footer>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  var VOICES=[];
+  function loadVoices(){ try{ VOICES = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }catch(e){ VOICES=[]; } }
+  if('speechSynthesis' in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+  function scoreVoice(v, prefer){
+    var name=((v.name||'')+' '+(v.lang||'')).toLowerCase();
+    var s=0;
+    var lang=(v.lang||'').toLowerCase();
+    if(lang.indexOf('en-gb')===0) s+=80;
+    else if(lang.indexOf('en-gb')>-1 || name.indexOf('british')>-1 || name.indexOf('uk english')>-1 || name.indexOf('england')>-1) s+=70;
+    else if(lang.indexOf('en-us')===0) s+=15;
+    else if(lang.indexOf('en_')===0 || lang.indexOf('en-')===0) s+=10;
+    if(name.indexOf('natural')>-1) s+=45;
+    if(name.indexOf('online')>-1) s+=30;
+    if(name.indexOf('neural')>-1) s+=35;
+    if(name.indexOf('google uk english')>-1) s+=50;
+    else if(name.indexOf('google')>-1) s+=8;
+    if(name.indexOf('sonia')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s+=35;
+    if(name.indexOf('compact')>-1 || name.indexOf('mobile')>-1) s-=20;
+    if(prefer==='female'){
+      if(name.indexOf('female')>-1) s+=30;
+      if(name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1 || name.indexOf('google uk english female')>-1) s+=30;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('alex')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s-=40;
+    } else if(prefer==='male'){
+      if(name.indexOf('male')>-1 && name.indexOf('female')===-1) s+=30;
+      if(name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1 || name.indexOf('google uk english male')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1) s-=40;
+    }
+    return s;
+  }
+  function pickVoice(prefer){
+    if(!VOICES.length) loadVoices();
+    if(!VOICES.length) return null;
+    var best=null, bestScore=-999;
+    for(var i=0;i<VOICES.length;i++){
+      var sc=scoreVoice(VOICES[i], prefer);
+      if(sc>bestScore){ bestScore=sc; best=VOICES[i]; }
+    }
+    return best;
+  }
+  function speak(t, prefer, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t);
+      u.lang='en-GB';
+      u.volume=1;
+      if(prefer==='male'){ u.rate=0.96; u.pitch=0.9; }
+      else { u.rate=0.97; u.pitch=1.1; }
+      var v=pickVoice(prefer);
+      if(v) u.voice=v;
+      if(btn){
+        btn.classList.add('speaking');
+        u.onend=function(){ btn.classList.remove('speaking'); };
+        u.onerror=function(){ btn.classList.remove('speaking'); };
+      }
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
+    });
+  });
+  function speakSequence(items, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      if(btn) btn.classList.add('speaking');
+      items.forEach(function(it, i){
+        var u=new SpeechSynthesisUtterance(it.text);
+        u.lang='en-GB'; u.volume=1;
+        if(it.voice==='male'){ u.rate=0.96; u.pitch=0.9; }
+        else { u.rate=0.97; u.pitch=1.1; }
+        var v=pickVoice(it.voice);
+        if(v) u.voice=v;
+        if(i===items.length-1 && btn){
+          u.onend=function(){ btn.classList.remove('speaking'); };
+          u.onerror=function(){ btn.classList.remove('speaking'); };
+        }
+        window.speechSynthesis.speak(u);
+      });
+    }catch(e){}
+  }
+
+  document.querySelectorAll('.slide').forEach(function(sl){
+    var dots=sl.querySelectorAll('.dot');
+    var fb=sl.querySelector('.feedback');
+    if(!dots.length || sl.querySelector('.wordbank')) return;
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        var on=d.getAttribute('aria-pressed')==='true';
+        d.setAttribute('aria-pressed', String(!on));
+        var done=sl.querySelectorAll('.dot[aria-pressed="true"]').length;
+        if(fb){
+          if(done===dots.length){ fb.textContent='Great! All done!'; fb.className='feedback ok'; }
+          else if(done===0){ fb.textContent=''; fb.className='feedback'; }
+          else { fb.textContent=done+' of '+dots.length+'. Keep going!'; fb.className='feedback'; }
+        }
+      });
+    });
+  });
+
+
+
+
+  function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+
+  document.querySelectorAll('.check-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box=document.getElementById(btn.getAttribute('aria-controls'));
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded', String(!open));
+      box.hidden=open;
+      btn.textContent=open ? 'Check' : 'Hide';
+    });
+  });
+</script>
+<script>
+/* 25 Food Words picture deck - LRS only (no writing, so no Submit/AI) */
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var HOME='https://punitganjara.com';
+  var LESSON_ID=HOME+location.pathname.split('#')[0];
+  var seen={};
+  function send(name,type){
+    try{
+      window.LRS.send({ verb:{id:HOME+'/expapi/verbs/accessed',display:{'en-US':'accessed'}},
+        object:{objectType:'Activity',id:LESSON_ID+'/'+name,
+          definition:{name:{'en-US':name},type:'http://adlnet.gov/expapi/activities/'+(type||'vocabulary')}} });
+    }catch(e){}
+  }
+  function label(s){
+    var h=s.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (s.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(s){
+    if(seen[s.id]) return;
+    seen[s.id]=true;
+    send(label(s),'slide');
+    if(slides.indexOf(s)===slides.length-1){
+      try{ window.LRS && window.LRS.completed && window.LRS.completed({}); }catch(e){}
+    }
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if((window.LRS && window.LRS.send) || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur) viewed(cur);
+    }
+  },500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(s){ mo.observe(s,{attributes:true,attributeFilter:['class']}); });
+  }
+  /* each picture word counts as vocabulary seen */
+  document.querySelectorAll('img.food').forEach(function(img){
+    img.addEventListener('load', function(){
+      var s=img.closest('.slide');
+      if(!s || seen['img:'+img.getAttribute('src')]) return;
+      seen['img:'+img.getAttribute('src')]=true;
+      send('Vocabulary picture seen: '+(img.getAttribute('alt')||'').substring(0,60),'vocabulary');
+    }, {once:true});
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=6" defer></script>
+</body>
+</html>

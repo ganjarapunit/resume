@@ -1,0 +1,29 @@
+{
+ "keep": {
+  "rice": "rice__0.jpg",
+  "noodles": "noodles__0.jpg",
+  "bread": "bread__2.jpg",
+  "egg": "egg__0.jpg",
+  "fish": "fish__g00.jpg",
+  "chicken": "chicken__f3.jpg",
+  "beef": "beef__0.jpg",
+  "soup": "soup__1.jpg",
+  "salad": "salad__f1.jpg",
+  "cake": "cake__0.jpg",
+  "ice cream": "ice_cream__0.jpg",
+  "apple": "apple__g01.jpg",
+  "banana": "banana__c1.jpg",
+  "orange": "orange__0.jpg",
+  "strawberry": "strawberry__1.jpg",
+  "carrot": "carrot__g11.jpg",
+  "potato": "potato__0.jpg",
+  "tomato": "tomato__0.jpg",
+  "onion": "onion__f1.jpg",
+  "water": "water__1.jpg",
+  "milk": "milk__c0.jpg",
+  "juice": "juice__2.jpg",
+  "tea": "tea__g01.jpg",
+  "coffee": "coffee__0.jpg",
+  "chopsticks": "chopsticks__2.jpg"
+ }
+}
