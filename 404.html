@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | Punit Ganjara</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #f1f5f9; color: #0f172a; padding: 24px; text-align: center;
+  }
+  [data-theme="dark"] body { background: #0b1120; color: #e2e8f0; }
+  .wrap { max-width: 560px; }
+  .code { font-size: clamp(4rem, 18vw, 8rem); font-weight: 800; line-height: 1; margin: 0 0 .25rem; letter-spacing: -.03em; }
+  [data-theme="dark"] .code { color: #3b82f6; }
+  h1 { font-size: clamp(1.25rem, 4vw, 1.75rem); margin: 0 0 .5rem; }
+  p { margin: 0 0 1.5rem; line-height: 1.6; color: #475569; }
+  [data-theme="dark"] p { color: #94a3b8; }
+  a.btn {
+    display: inline-block; padding: .7rem 1.4rem; border-radius: 10px;
+    background: #1d4ed8; color: #fff; text-decoration: none; font-weight: 600;
+  }
+  a.btn:hover { background: #1e40af; }
+  nav { margin-top: 1.75rem; display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+  nav a { color: inherit; opacity: .8; }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="code">404</p>
+    <h1>Page not found</h1>
+    <p>That link is broken or the page has moved. Try the portfolio home page, or pick up where you left off below.</p>
+    <a class="btn" href="/">Back to home</a>
+    <nav>
+      <a href="/teacher/efl-activities/">EFL Activities</a>
+      <a href="/interactive-quiz/">Interactive Quiz</a>
+      <a href="/ielts-masterclass/">IELTS Masterclass</a>
+      <a href="/wcag-report/">WCAG Report</a>
+    </nav>
+  </main>
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) html.setAttribute('data-theme', saved);
+      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches) html.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</body>
+</html>

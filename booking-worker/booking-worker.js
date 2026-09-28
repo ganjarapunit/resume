@@ -3,7 +3,7 @@ export default {
     const allowedOrigins = [
       'https://punitganjara.com',
       'https://www.punitganjara.com',
-      'https://ganjarapunit.github.io'
+      'https://punitganjara.com'
     ];
     const origin = request.headers.get('Origin');
     const allowOrigin = allowedOrigins.includes(origin) ? origin : 'https://punitganjara.com';

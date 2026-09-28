@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punit Ganjara | Interactive Portfolio</title>
-    <link rel="canonical" href="https://ganjarapunit.github.io/resume/ielts-masterclass/portfolio_index">
+    <link rel="canonical" href="https://punitganjara.com/ielts-masterclass/portfolio_index">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body, html { 
@@ -173,7 +173,7 @@
             <h1>Punit Ganjara</h1>
             <p>Learning Experience Designer</p>
             
-            <a href="../h5p" target="_blank" rel="noopener noreferrer">Interactive Resume</a>
+            <a href="../h5p.html" target="_blank" rel="noopener noreferrer">Interactive Resume</a>
             <a href="./" target="_blank" rel="noopener noreferrer">IELTS Speaking Masterclass</a>
             <a href="../interactive-quiz/" target="_blank" rel="noopener noreferrer">Interactive Quiz</a>
             <a href="../wcag-report/" target="_blank" rel="noopener noreferrer">WCAG Accessibility Report</a>
@@ -184,7 +184,7 @@
         </main>
     </div>
 
-    <script src="main.bundle.js"></script>
+    <script src="../main.bundle.js"></script>
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -195,9 +195,9 @@
 
         const el = document.getElementById('h5p-container');
         const options = {
-            h5pJsonPath: './activity-data', 
-            frameJs: './frame.bundle.js',
-            frameCss: './styles/h5p.css',
+            h5pJsonPath: '../activity-data',
+            frameJs: '../frame.bundle.js',
+            frameCss: '../styles/h5p.css',
             start_at_end: true 
         };
         new H5PStandalone.H5P(el, options);

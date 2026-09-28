@@ -37,7 +37,7 @@
   var LRS_USERNAME = 'e6437770-3130-4514-8b43-522464737f29';
   var LRS_PASSWORD = '4abefa78-163e-4b76-b767-c4adaaaa883f';
   var BASIC_AUTH   = 'Basic ' + btoa(LRS_USERNAME + ':' + LRS_PASSWORD);
-  var ACTIVITY_ID  = 'https://ganjarapunit.github.io/resume/adapt-lxd-frameworks';
+  var ACTIVITY_ID  = 'https://punitganjara.com/adapt-lxd-frameworks';
   var ACTIVITY_NAME = 'LXD Design Frameworks & Evaluation Standards';
   var ACTIVITY_DESC = 'Interactive branching scenario exploring real-world LXD decisions: project scoping, framework selection, learner analysis, evaluation strategy, and ROI.';
 
@@ -51,7 +51,7 @@
   function resolveActor() {
     var name = null;
     var accountName = null;
-    var homePage = window.location.origin || 'https://ganjarapunit.github.io';
+    var homePage = window.location.origin || 'https://punitganjara.com';
 
     // ── Attempt 1: Learner-entered name from localStorage overlay ──
     // MUST come before SCORM API attempts because SCORM_API_wrapper.js

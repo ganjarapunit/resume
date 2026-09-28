@@ -5,7 +5,7 @@
   var LRS_USERNAME = 'e6437770-3130-4514-8b43-522464737f29';
   var LRS_PASSWORD = '4abefa78-163e-4b76-b767-c4adaaaa883f';
   var BASIC_AUTH = 'Basic ' + btoa(LRS_USERNAME + ':' + LRS_PASSWORD);
-  var ACTIVITY_ID = 'https://ganjarapunit.github.io/resume/adapt-course';
+  var ACTIVITY_ID = 'https://punitganjara.com/adapt-course';
   var ACTIVITY_NAME = 'Adapt Framework Mini Course';
 
   // Additional xAPI verbs for granular tracking
