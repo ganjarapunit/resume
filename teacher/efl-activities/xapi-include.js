@@ -404,7 +404,8 @@
       { file: 'listening-skills-interview', act: 'act7', fields: ['sp7'] },
       { file: 'listening-skills-interview', act: 'act8', fields: ['sp8'] },
       { file: 'listening-skills-interview', act: 'act9', fields: ['sp9'] },
-      { file: 'delta', act: 'a10', fields: ['writeBox'] }
+      { file: 'delta', act: 'a10', fields: ['writeBox'] },
+      { file: 'lesson06-cafe', act: 'slide-16-act15-mycafe', fields: ['menuItem1', 'menuPrice1', 'menuItem2', 'menuPrice2', 'menuItem3', 'menuPrice3'], input: true }
     ];
     function fileTag(){
       var f = location.pathname.toLowerCase();
@@ -452,6 +453,8 @@
       if (f.indexOf('annisa-day04') > -1) return 'annisa-day04';
       if (f.indexOf('annisa-day03') > -1) return 'annisa-day03';
       if (f.indexOf('annisa-day02') > -1) return 'annisa-day02';
+      if (f.indexOf('lesson06-atthecafe') > -1) return 'lesson06-cafe';
+      if (f.indexOf('lesson06-cafepractice') > -1) return 'lesson06-cafepractice';
       return '';
     }
     function fieldLabel(container, ta){
