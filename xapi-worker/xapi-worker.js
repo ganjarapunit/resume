@@ -3,7 +3,9 @@ export default {
     const allowedOrigins = [
       'https://punitganjara.com',
       'https://www.punitganjara.com',
-      'https://punitganjara.com'
+      // Lessons hosted in Moodle send their statements from here. Without this
+      // the browser blocks the POST and the deck records nothing, silently.
+      'https://lms.punitganjara.com'
     ];
     const origin = request.headers.get('Origin');
     const allowOrigin = allowedOrigins.includes(origin) ? origin : 'https://punitganjara.com';

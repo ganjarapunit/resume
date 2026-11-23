@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Martian: A Book Review (B1) Interactive</title>
+<meta name="description" content="B1 reading lesson: a book review of The Martian. 10 activities with prediction, gist, detail, vocabulary, grammar, skim and scan, speaking and discussion.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/b1/communicative-english/The-Martian-Book-Review-B1-Learner.html">
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b; --card:#0c1628;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:5%; background:var(--accent)}
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.role{display:grid; gap:.8rem; margin:.8rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.role div{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; font-size:clamp(1.1rem,3vw,1.3rem)}
+.role strong{color:var(--accent)}
+.dots{display:flex; gap:.7rem; margin:.8rem 0; flex-wrap:wrap}
+.dot{flex:1 1 8rem; min-height:56px; font-size:1.05rem; font-weight:800; border-radius:12px; border:2px solid var(--border); background:var(--card); color:var(--ink); cursor:pointer; padding:.6rem}
+.dot[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b}
+.choice{display:block; width:100%; text-align:left; margin:.5rem 0; min-height:56px; font-size:clamp(1.05rem,3vw,1.25rem); font-weight:700; border-radius:12px; cursor:pointer; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.7rem 1rem}
+.choice.is-correct{border-color:var(--good); background:#0f2f2b}
+.choice.is-try{border-color:var(--bad)}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.wordbank{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.wordbank button{min-height:52px; font-size:1.15rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.55rem .95rem; cursor:pointer}
+.dlg-bank{display:flex; flex-direction:column; gap:.6rem; margin:.7rem 0}
+.dlg-item{min-height:56px; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; text-align:left; border-radius:12px; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.7rem 1rem; cursor:grab}
+.dlg-item.sel{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.dlg-item.placed{display:none}
+.drop-list{list-style:none; padding:0; margin:.7rem 0; display:flex; flex-direction:column; gap:.6rem}
+.drop-box{min-height:60px; border:2px dashed var(--border); border-radius:12px; padding:.6rem .8rem; display:flex; gap:.8rem; align-items:center; font-size:clamp(1.02rem,3vw,1.2rem); font-weight:700; background:var(--card)}
+.drop-box.over{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.drop-box.filled{border-style:solid; border-color:var(--accent-2)}
+.boxnum{flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
+.boxhint{color:var(--muted); font-weight:400}
+.drop-box.filled .boxhint{color:var(--ink); font-weight:700}
+.answer-line{background:var(--card); border:1px dashed var(--border); border-radius:10px; min-height:3.2em; padding:.7rem 1rem; font-size:1.3rem; font-weight:800; overflow-wrap:break-word}
+.gap{font-size:clamp(1.15rem,3.4vw,1.4rem); background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; margin:.6rem 0}
+.gap input{font-size:1.15rem; font-weight:800; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:8px; padding:.35rem .6rem; min-width:7rem; max-width:10rem; margin:0 .25rem}
+.gap input.correct{border-color:var(--good)}
+.gap input.wrong{border-color:var(--bad)}
+.rec-row{display:flex; gap:.6rem; flex-wrap:wrap; margin:.7rem 0}
+.rec-row button{flex:1 1 9rem; min-height:52px; font-size:1rem; font-weight:800; border-radius:10px; cursor:pointer; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem}
+.rec-row button:disabled{opacity:.4; cursor:not-allowed}
+.rec-row button.danger{border-color:var(--bad)}
+audio.rec-play{width:100%; margin-top:.5rem}
+.checklist{list-style:none; padding:0; margin:.8rem 0}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer; overflow-wrap:break-word}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+details.key{margin:.8rem 0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem 1rem}
+details.key summary{min-height:48px; font-weight:800; font-size:1.05rem; cursor:pointer; color:var(--accent); display:flex; align-items:center}
+details.key p{margin:.4rem 0; font-size:1.05rem; overflow-wrap:break-word}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:var(--card)}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+.target, .card .big, .role div, .drop-box, .gap, .answer-line{overflow-wrap:break-word}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .gap{padding:.75rem .8rem}
+  .gap input{min-width:5.2rem; max-width:8.5rem; margin:.15rem .2rem}
+  .drop-box{padding:.55rem .6rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+  .boxnum{width:2rem; height:2rem; font-size:1.05rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+</style>
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  line-height:1.6;
+}
+a { color:var(--accent-2); }
+h1, h2, h3 { line-height:1.3; }
+.skip-link {
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--accent);
+  color:#111;
+  padding:10px 16px;
+  z-index:200;
+}
+.skip-link:focus {
+  left:10px;
+  top:10px;
+}
+:focus-visible {
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+}
+.hud {
+  position:fixed;
+  top:0; left:0; right:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--surface);
+  border-bottom:2px solid var(--border);
+  padding:10px 16px;
+  z-index:50;
+}
+.hud-title {
+  font-weight:800;
+  color:var(--accent);
+  font-size:1.05em;
+}
+.hud-stats {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+#xp { color:var(--accent-2); font-weight:700; }
+#streak { color:var(--muted); }
+.progress {
+  width:170px;
+  height:10px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:99px;
+  overflow:hidden;
+}
+.progress span {
+  display:block;
+  height:100%;
+  width:0;
+  background:var(--accent-2);
+  transition:width 0.3s ease;
+}
+#progress-text { color:var(--muted); font-size:0.85em; }
+.login-overlay {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.88);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:80;
+}
+.login-overlay[hidden] { display:none; }
+.login-card {
+  background:var(--surface);
+  border:2px solid var(--accent);
+  border-radius:12px;
+  padding:24px;
+  max-width:430px;
+  text-align:center;
+}
+.login-card h2 { color:var(--accent); }
+.login-card label { display:block; margin:10px 0 4px; font-weight:700; }
+.login-card input {
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--ink);
+}
+.login-note { color:var(--muted); min-height:1em; }
+main {
+  max-width:920px;
+  margin:0 auto;
+  padding:96px 16px 60px;
+}
+main h1 {
+  color:var(--accent);
+  font-size:1.6em;
+}
+.intro {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:6px solid var(--accent-2);
+  border-radius:10px;
+  padding:16px 18px;
+}
+.intro h2 { color:var(--accent); font-size:1.1em; }
+.study-list { margin:8px 0 0; padding-left:22px; }
+.study-list li { margin:4px 0; }
+.activity {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  margin:0 0 30px;
+}
+.activity h2 {
+  color:var(--accent);
+  font-size:1.3em;
+  margin-top:0;
+}
+.item {
+  background:var(--surface-2);
+  border-left:4px solid var(--accent-2);
+  border-radius:8px;
+  padding:12px 14px;
+  margin:14px 0;
+}
+.item-question { font-weight:700; margin:0 0 10px; }
+.reading-text {
+  background:var(--surface-2);
+  border-radius:10px;
+  padding:16px;
+  margin:14px 0;
+  font-size:1.02em;
+}
+.reading-text p { margin:0 0 12px; }
+.reading-text .answer {
+  display:inline-block;
+  width:70%;
+  margin:4px 0;
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#1b2b47;
+  color:var(--ink);
+}
+.mcq .choice {
+  display:block;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--bg);
+  padding:10px 12px;
+  margin:8px 0;
+  cursor:pointer;
+}
+.mcq .choice:has(input:checked) { border-color:var(--accent-2); }
+.choice input { margin-right:10px; }
+.choice.correct { border-color:var(--accent-2); background:#123c35; }
+.choice.wrong { border-color:var(--bad); }
+.vocab-list { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+.vocab-list span {
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:99px;
+  padding:5px 12px;
+}
+.controls {
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.controls .btn { margin:0; }
+.feedback { min-height:1.4em; color:var(--muted); }
+.feedback.good { color:var(--good); }
+.feedback.bad { color:var(--bad); }
+.reveal {
+  background:var(--surface-2);
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+  padding:12px 14px;
+  margin:14px 0;
+}
+.reveal[hidden] { display:none; }
+.controls .btn.ghost {
+  background:transparent;
+  color:var(--accent);
+  border:2px solid var(--accent);
+}
+.certificate {
+  background:linear-gradient(160deg, #1c2a44, #101c30);
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:30px;
+  text-align:center;
+}
+.certificate h2 { color:var(--accent); }
+.certificate p { font-size:1.15em; }
+.site-footer {
+  color:var(--muted);
+  text-align:center;
+  padding:30px 16px;
+  border-top:1px solid var(--border);
+  margin-top:40px;
+  font-size:0.9em;
+}
+#confetti {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  display:none;
+  z-index:90;
+}
+#confetti.on { display:block; }
+#final { display:none; }
+#final.show { display:block; }
+@media (max-width:620px) {
+  .hud { padding:8px 10px; }
+  .hud-stats { gap:8px; }
+  .progress { width:110px; }
+  .activity { padding:14px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  * { transition:none !important; animation:none !important; }
+}
+@media print {
+  .hud, .login-overlay, .reveal, .feedback { display:none !important; }
+  #final { display:block !important; }
+  .certificate { display:block !important; }
+}
+</style>
+<style id="deck-shell-css">
+/* deck shell layered over the lesson's own activity CSS */
+/* The British Council attribution is the licence condition for using their
+   text, so it is pinned inside the deck as a slim always-visible bar. */
+.deck-foot{flex:0 0 auto;margin:0;padding:.4rem clamp(.9rem,3vw,1.5rem) .5rem;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.72rem;line-height:1.5}
+.deck-foot p{margin:.1rem 0}
+.deck-foot a{color:var(--accent);font-weight:700}
+#fsRoot .pill{display:inline-flex;align-items:center;gap:.3rem;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.2rem .6rem;font-size:.9rem;font-weight:700;color:var(--muted)}
+#fsRoot{overflow:hidden}
+@media (min-width:56.26rem){
+  /* Desktop: a definite-height flex chain from #fsRoot down to .viewport, so
+     the slide area is exactly the leftover height and is the only scroller.
+     Every link needs min-height:0, and the card must NOT use height:100%:
+     that resolves against an indefinite parent and silently becomes auto,
+     which is what made the card overflow the shell and get clipped with
+     no way to scroll it. */
+  #fsRoot{height:100vh;height:100dvh;min-height:0}
+  #fsRoot main{flex:1 1 auto;min-height:0;overflow:hidden}
+  #fsRoot .deck-layout{flex:1 1 auto;min-height:0}
+  #fsRoot .deck-card{flex:1 1 auto;min-height:0;height:auto}
+  #fsRoot .viewport{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overscroll-behavior:contain}
+}
+@media (max-width:56.25rem){
+  /* small screens: the page scrolls as normal, nav docks at the bottom */
+  #fsRoot{height:auto;min-height:100vh;overflow:visible}
+  #fsRoot main{flex:0 0 auto;min-height:0;overflow:visible}
+  #fsRoot .deck-layout{min-height:0}
+  #fsRoot .deck-card{height:auto;min-height:0}
+  #fsRoot .viewport{max-height:none;overflow:visible}
+}
+#fsRoot .slide .activity,#fsRoot .slide .intro{border:0;background:transparent;padding:0;margin:0}
+#fsRoot .slide h1{font-size:clamp(1.5rem,4vw,2rem)}
+#fsRoot .slide .reading-text{max-height:none}
+
+/* The source page capped <main> at 920px, padded it for its old scrolling
+   layout, and left it display:block. display:block makes .deck-layout's
+   flex:1 inert, so the deck never fills the screen and leaves a gap.
+   Make main a flex column that grows, in both normal and full screen. */
+#fsRoot main{
+  max-width:none; width:100%; margin:0; padding:0;
+  display:flex; flex-direction:column;
+  flex:1 1 auto; min-height:0;
+}
+#fsRoot main h1{display:none}
+@media (min-width:56.26rem){
+  #fsRoot main{min-height:0}
+  .deck-card{height:100%}
+  .viewport{flex:1 1 auto;min-height:0}
+}
+
+/* ===== FULL SCREEN: fill the whole screen, no page scroll =====
+   In full screen the shell becomes a fixed-height flex column and the
+   slide viewport is the only thing that scrolls. Every width cap from the
+   normal layout is lifted so the slide is not squeezed into a narrow
+   centred column on a large display. */
+#fsRoot:fullscreen,
+#fsRoot:-webkit-full-screen{
+  height:100vh; height:100dvh; min-height:0;
+  overflow:hidden; padding:0;
+  display:flex; flex-direction:column;
+}
+#fsRoot:fullscreen .topbar,
+#fsRoot:-webkit-full-screen .topbar{
+  max-width:none; flex:0 0 auto; padding:.5rem clamp(.75rem,2vw,1.5rem) .35rem;
+}
+#fsRoot:fullscreen .deck-layout,
+#fsRoot:-webkit-full-screen .deck-layout{
+  max-width:none; width:100%; margin:0 auto; padding:0 clamp(.75rem,2vw,1.5rem);
+  flex:1 1 auto; min-height:0; gap:clamp(.5rem,1.5vw,1.5rem);
+}
+#fsRoot:fullscreen .deck-card,
+#fsRoot:-webkit-full-screen .deck-card{
+  max-width:none; width:100%; min-height:0; height:100%;
+  border-radius:14px;
+}
+#fsRoot:fullscreen .slide,
+#fsRoot:-webkit-full-screen .slide{
+  max-width:none; width:100%;
+  padding:clamp(1rem,2.2vw,2.2rem) clamp(1rem,2.4vw,2.4rem);
+}
+#fsRoot:fullscreen .viewport,
+#fsRoot:-webkit-full-screen .viewport{
+  flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; overscroll-behavior:contain;
+  padding:clamp(.9rem,1.8vw,1.8rem) clamp(1rem,2.2vw,2.2rem) .5rem;
+}
+#fsRoot:fullscreen .counter,
+#fsRoot:-webkit-full-screen .counter{flex:0 0 auto;padding:.15rem 0 .25rem}
+/* give the slide room to breathe on a big screen */
+#fsRoot:fullscreen .viewport .item,
+#fsRoot:-webkit-full-screen .viewport .item{max-width:64rem;margin-inline:auto}
+#fsRoot:fullscreen .viewport .reading-text,
+#fsRoot:-webkit-full-screen .viewport .reading-text{max-width:70rem;margin-inline:auto}
+#fsRoot:fullscreen .viewport .certificate,
+#fsRoot:-webkit-full-screen .viewport .certificate{max-width:46rem;margin-inline:auto}
+/* scale the reading content with the screen so it never looks cramped */
+#fsRoot:fullscreen .viewport,
+#fsRoot:-webkit-full-screen .viewport{font-size:clamp(17px,.42vw + 13px,23px)}
+#fsRoot:fullscreen .viewport .activity h2,
+#fsRoot:-webkit-full-screen .viewport .activity h2{font-size:clamp(1.3rem,1.6vw,2rem)}
+</style>
+<style id="gap-styling">
+/* Activity 2: five sentences were removed from the prose. The learner has to
+   put the missing words back, so the blanks must read as gaps in the text
+   rather than as a wide form field, and the post-check note must read as
+   feedback rather than as more of the paragraph. */
+.gap-brief{
+  background:var(--surface-2); border:1px solid var(--border); border-left:4px solid var(--accent);
+  border-radius:10px; padding:.7rem .9rem; margin:.6rem 0 .9rem;
+  font-size:clamp(.95rem,2.4vw,1.05rem); line-height:1.55; text-align:left;
+}
+.gap-brief b{color:var(--accent)}
+.gap{
+  display:inline-block; vertical-align:baseline; position:relative;
+  margin:0 .15rem; white-space:nowrap;
+}
+.gap::before{
+  content:attr(data-n);
+  position:absolute; left:-.05em; top:-.75em;
+  font-size:.62rem; font-weight:800; line-height:1;
+  color:var(--bg); background:var(--accent-2);
+  border-radius:999px; min-width:1.15em; height:1.15em;
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:0 .2em; pointer-events:none;
+}
+.gap .gapinput{
+  display:inline-block; vertical-align:baseline;
+  width:12ch; min-width:12ch; max-width:20ch;
+  margin:0; padding:.1rem .4rem;
+  font-size:.92em; line-height:1.4;
+  border:none; border-bottom:2px dashed var(--accent-2);
+  border-radius:4px 4px 0 0; background:rgba(56,224,200,.07);
+  color:var(--ink); font-weight:700;
+}
+.gap .gapinput::placeholder{color:var(--muted); opacity:.75; font-weight:400}
+.gap .gapinput:focus{border-bottom-style:solid; background:rgba(56,224,200,.16); outline:2px solid var(--focus); outline-offset:2px}
+.gap .gapinput.correct{border-bottom-color:var(--good); background:rgba(56,224,200,.16)}
+.gap .gapinput.wrong{border-bottom-color:var(--bad); background:rgba(255,138,138,.14)}
+/* the note the lesson's own script injects after a wrong answer */
+.reading-text .mark{
+  display:inline-block; vertical-align:middle;
+  margin:.35rem 0; padding:.25rem .6rem;
+  border-radius:8px; font-size:.82em; font-weight:700; line-height:1.5;
+  background:rgba(255,138,138,.14); border:1px solid var(--bad); color:var(--ink);
+  white-space:normal; max-width:100%;
+}
+.reading-text .mark:empty{display:none}
+</style></head>
+<body>
+<a class="skip-link" href="#main">Skip to lesson</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>The Martian: A Book Review</h1>
+        <p class="sub">B1 reading. One slide at a time. 60 minutes.</p>
+      </div>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <span class="pill" id="xp">0 XP</span>
+        <span class="pill" id="streak">Streak: 0</span>
+        <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 12</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1" id="progressBar"><div id="progressFill"></div></div>
+      <div class="progress-label" style="margin-top:.4rem"><span>Activities done</span><span id="progress-text">0 of 10 activities</span></div>
+      <div class="progress" aria-hidden="true" style="height:8px"><span id="progress" style="display:block;height:100%;width:0%;background:var(--accent-2)"></span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Lesson slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+
+          <section class="slide active" id="slide-01-intro" data-act-id="intro" data-short="About" role="group" aria-roledescription="slide" aria-label="1 of 12: About">
+            <div class="intro" id="intro">
+
+    <h2>About this lesson</h2>
+    <p>This is a reading lesson for learners at B1 level. Read the article, then study the language in the activities. Every activity gives you instant feedback.</p>
+    <p>You will study these language areas:</p>
+    <ul class="study-list">
+      <li>Useful words in the text</li>
+      <li>Passive voice and present perfect</li>
+      <li>The structure "not only ... but also"</li>
+      <li>Useful phrases, including "on the edge of your seat"</li>
+      <li>Reading strategies: skim and scan</li>
+    </ul>
+    <p>Source: a reading text from the British Council LearnEnglish website. It is free to use for teaching.</p>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-02-act1" data-act-id="act1" data-short="Predict" role="group" aria-roledescription="slide" aria-label="2 of 12: Predict">
+            <div class="activity" id="act1" aria-labelledby="h-act1">
+
+    <h2 id="h-act1">Activity 1: Predict the text</h2>
+    <p>Look at the title and the first line of the text. Guess what the text is about. Then read the text in Activity 2.</p>
+    <div class="item">
+      <p class="item-question">What kind of text is this?</p>
+      <div class="mcq" data-act="act1" data-group="g1">
+        <label class="choice">
+          <input type="radio" name="g1" data-correct="true"> A review of a book
+        </label>
+        <label class="choice">
+          <input type="radio" name="g1"> An email
+        </label>
+        <label class="choice">
+          <input type="radio" name="g1"> A travel guide
+        </label>
+        <label class="choice">
+          <input type="radio" name="g1"> A poster
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">What is the story about?</p>
+      <div class="mcq" data-act="act1" data-group="g2">
+        <label class="choice">
+          <input type="radio" name="g2" data-correct="true"> A journey to Mars
+        </label>
+        <label class="choice">
+          <input type="radio" name="g2"> A school project
+        </label>
+        <label class="choice">
+          <input type="radio" name="g2"> A holiday in London
+        </label>
+        <label class="choice">
+          <input type="radio" name="g2"> A boxing match
+        </label>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act1">Check activity 1</button>
+      <button class="btn ghost" type="button" data-complete="act1">Mark activity 1 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-03-act2" data-act-id="act2" data-short="Gist" role="group" aria-roledescription="slide" aria-label="3 of 12: Gist">
+            <div class="activity" id="act2" aria-labelledby="h-act2">
+
+    <h2 id="h-act2">Activity 2: Read for gist</h2>
+    <p>Read the text below. Do the first reading of the article. Then answer the questions about the main points.</p>
+    <p class="gap-brief"><b>Five sentences have been taken out of this text.</b> Read for meaning first, then put the missing words back into gaps 1 to 5. One or two words is enough, you do not need the whole sentence. Tap Check when you have finished, then answer the question below.</p>
+      <div class="reading-text" id="text-gist">
+      <p><em>The Martian</em> tells the story of Mark Watney, an astronaut on the Ares 3 mission to Mars. After a terrible storm almost destroys the ship and the base, the crew of his ship believe he is dead. <span class="gap" data-n="1"><input id="f2b" class="answer gapinput" type="text" data-act="act2" data-accept="believed|thought" data-model="He is believed to be dead." placeholder="write the missing words" aria-label="Gap 1: write the missing words from the text"></span> Alone on the red planet, he has to survive until the next mission to Mars arrives.</p>
+      <p>While this novel is fiction, in some ways it feels like non-fiction. It is very scientific and packed with details about survival on Mars. Watney is a botanist and engineer, and he begins to grow food and produce water in his artificial camp. How does he do this? <span class="gap" data-n="2"><input id="f2c" class="answer gapinput" type="text" data-act="act2" data-accept="science" data-model="He uses science and clever machines." placeholder="write the missing words" aria-label="Gap 2: write the missing words from the text"></span> </p>
+      <p>The author is Andy Weir, and this is his first published book. In it he has created a realistic character. There is a lot of humour in the story, and the reader can identify with the emotions (although no one can really imagine what it's like to be on Mars). Watney admits at the beginning that he is in deep trouble, but he never gives up. <span class="gap" data-n="3"><input id="f2d" class="answer gapinput" type="text" data-act="act2" data-accept="finds a way|never gives up" data-model="He always finds a way." placeholder="write the missing words" aria-label="Gap 3: write the missing words from the text"></span> Instead, what <em>The Martian</em> gives us is a realistic look at an intelligent person alone on a planet and trying to survive.</p>
+      <p>The majority of the plot takes place on Mars and is written in the form of Watney's journal entries. <span class="gap" data-n="4"><input id="f2e" class="answer gapinput" type="text" data-act="act2" data-accept="every day" data-model="He writes every day." placeholder="write the missing words" aria-label="Gap 4: write the missing words from the text"></span> Unfortunately, the other characters in the book (his fellow crew members, the scientists at NASA on Earth) do not get much development and so they often feel one-dimensional.</p>
+      <p>I should also mention that the book is thrilling to read. You will be on the edge of your seat until the very end. <span class="gap" data-n="5"><input id="f2f" class="answer gapinput" type="text" data-act="act2" data-accept="exciting" data-model="It is exciting for all ages." placeholder="write the missing words" aria-label="Gap 5: write the missing words from the text"></span> It's good not only for space travel fans and scientists but for anyone who is looking for a unique and exciting story. <em>The Martian</em> was so popular that it was made into a film starring Matt Damon in 2015, but I recommend reading the book first.</p>
+    </div>
+    <div class="item">
+      <p class="item-question">Answer the questions about the main points.</p>
+      <label for="f2a">The main person is called</label>
+      <input id="f2a" class="answer" type="text" data-act="act2" data-accept="mark watney" data-model="Mark Watney">
+      <div class="mcq" data-act="act2" data-group="g3">
+        <p class="item-question">Where does the story happen?</p>
+        <label class="choice">
+          <input type="radio" name="g3" data-correct="true"> On Mars
+        </label>
+        <label class="choice">
+          <input type="radio" name="g3"> In London
+        </label>
+        <label class="choice">
+          <input type="radio" name="g3"> In New York
+        </label>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act2">Check activity 2</button>
+      <button class="btn ghost" type="button" data-complete="act2">Mark activity 2 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-04-act3" data-act-id="act3" data-short="Detail" role="group" aria-roledescription="slide" aria-label="4 of 12: Detail">
+            <div class="activity" id="act3" aria-labelledby="h-act3">
+
+    <h2 id="h-act3">Activity 3: Read for detail</h2>
+    <p>Read the whole text again. This time you look for details. Answer by choosing True or False.</p>
+    <div class="reading-text" id="text-detail">
+      <p><em>The Martian</em> tells the story of Mark Watney, an astronaut on the Ares 3 mission to Mars. After a terrible storm almost destroys the ship and the base, the crew of his ship believe he is dead. He is believed to be dead. Alone on the red planet, he has to survive until the next mission to Mars arrives.</p>
+      <p>While this novel is fiction, in some ways it feels like non-fiction. It is very scientific and packed with details about survival on Mars. Watney is a botanist and engineer, and he begins to grow food and produce water in his artificial camp. How does he do this? He uses science and clever machines.</p>
+      <p>The author is Andy Weir, and this is his first published book. In it he has created a realistic character. There is a lot of humour in the story, and the reader can identify with the emotions (although no one can really imagine what it's like to be on Mars). Watney admits at the beginning that he is in deep trouble, but he never gives up. He always finds a way. Instead, what <em>The Martian</em> gives us is a realistic look at an intelligent person alone on a planet and trying to survive.</p>
+      <p>The majority of the plot takes place on Mars and is written in the form of Watney's journal entries. He writes every day. Unfortunately, the other characters in the book (his fellow crew members, the scientists at NASA on Earth) do not get much development and so they often feel one-dimensional.</p>
+      <p>I should also mention that the book is thrilling to read. You will be on the edge of your seat until the very end. It is exciting for all ages. It's good not only for space travel fans and scientists but for anyone who is looking for a unique and exciting story. <em>The Martian</em> was so popular that it was made into a film starring Matt Damon in 2015, but I recommend reading the book first.</p>
+    </div>
+    <div class="item">
+      <p class="item-question">Read the sentences about the text. Choose True or False.</p>
+      <div class="mcq" data-act="act3" data-group="g4">
+        <p>Mark Watney is an astronaut.</p>
+        <label class="choice">
+          <input type="radio" name="g4" data-correct="true"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g4"> False
+        </label>
+      </div>
+      <div class="mcq" data-act="act3" data-group="g5">
+        <p>The crew knows that Mark Watney is alive.</p>
+        <label class="choice">
+          <input type="radio" name="g5"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g5" data-correct="true"> False
+        </label>
+      </div>
+      <div class="mcq" data-act="act3" data-group="g6">
+        <p>The other characters are well developed.</p>
+        <label class="choice">
+          <input type="radio" name="g6"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g6" data-correct="true"> False
+        </label>
+      </div>
+      <div class="mcq" data-act="act3" data-group="g7">
+        <p>The story is written as Watney's journal.</p>
+        <label class="choice">
+          <input type="radio" name="g7" data-correct="true"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g7"> False
+        </label>
+      </div>
+      <div class="mcq" data-act="act3" data-group="g8">
+        <p>NASA is a company in London.</p>
+        <label class="choice">
+          <input type="radio" name="g8"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g8" data-correct="true"> False
+        </label>
+      </div>
+      <div class="mcq" data-act="act3" data-group="g9">
+        <p>The book was made into a film.</p>
+        <label class="choice">
+          <input type="radio" name="g9" data-correct="true"> True
+        </label>
+        <label class="choice">
+          <input type="radio" name="g9"> False
+        </label>
+      </div>
+      <label for="f3a">The film was made in</label>
+      <input id="f3a" class="answer" type="text" data-act="act3" data-accept="2015" data-model="2015">
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act3">Check activity 3</button>
+      <button class="btn ghost" type="button" data-complete="act3">Mark activity 3 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-05-act4" data-act-id="act4" data-short="Words" role="group" aria-roledescription="slide" aria-label="5 of 12: Words">
+            <div class="activity" id="act4" aria-labelledby="h-act4">
+
+    <h2 id="h-act4">Activity 4: Useful words</h2>
+    <p>Read the sentences from the text. Choose the best word. Then check your answers.</p>
+    <p>The words you will meet are:</p>
+    <div class="vocab-list">
+      <span>thrilling</span>
+      <span>identify</span>
+      <span>unique</span>
+      <span>engineer</span>
+      <span>exciting</span>
+    </div>
+    <div class="item">
+      <p class="item-question">1. It is very ______.</p>
+      <div class="mcq" data-act="act4" data-group="g10">
+        <label class="choice">
+          <input type="radio" name="g10" data-correct="true"> thrilling
+        </label>
+        <label class="choice">
+          <input type="radio" name="g10"> difficult
+        </label>
+        <label class="choice">
+          <input type="radio" name="g10"> tired
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">2. The reader can ______ with the emotions.</p>
+      <div class="mcq" data-act="act4" data-group="g11">
+        <label class="choice">
+          <input type="radio" name="g11" data-correct="true"> identify
+        </label>
+        <label class="choice">
+          <input type="radio" name="g11"> forget
+        </label>
+        <label class="choice">
+          <input type="radio" name="g11"> hide
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">3. The story is ______. No other book is like it.</p>
+      <div class="mcq" data-act="act4" data-group="g12">
+        <label class="choice">
+          <input type="radio" name="g12" data-correct="true"> unique
+        </label>
+        <label class="choice">
+          <input type="radio" name="g12"> usual
+        </label>
+        <label class="choice">
+          <input type="radio" name="g12"> broken
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">4. Mark Watney is a botanist and a ______.</p>
+      <div class="mcq" data-act="act4" data-group="g13">
+        <label class="choice">
+          <input type="radio" name="g13" data-correct="true"> engineer
+        </label>
+        <label class="choice">
+          <input type="radio" name="g13"> driver
+        </label>
+        <label class="choice">
+          <input type="radio" name="g13"> farmer
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">5. You will feel excited. The book is very ______.</p>
+      <div class="mcq" data-act="act4" data-group="g14">
+        <label class="choice">
+          <input type="radio" name="g14" data-correct="true"> exciting
+        </label>
+        <label class="choice">
+          <input type="radio" name="g14"> expensive
+        </label>
+        <label class="choice">
+          <input type="radio" name="g14"> tired
+        </label>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act4">Check activity 4</button>
+      <button class="btn ghost" type="button" data-complete="act4">Mark activity 4 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-06-act5" data-act-id="act5" data-short="Grammar" role="group" aria-roledescription="slide" aria-label="6 of 12: Grammar">
+            <div class="activity" id="act5" aria-labelledby="h-act5">
+
+    <h2 id="h-act5">Activity 5: Grammar in the text</h2>
+    <p>Find the grammar in the text. Complete the sentences.</p>
+    <div class="item">
+      <p class="item-question">1. Find the passive sentences. Fill in the gaps.</p>
+      <label for="f5a">The plot ______ in the form of Watney's journal entries.</label>
+      <input id="f5a" class="answer" type="text" data-act="act5" data-accept="is written" data-model="is written">
+      <label for="f5b">The book ______ made into a film in 2015.</label>
+      <input id="f5b" class="answer" type="text" data-act="act5" data-accept="was made" data-model="was made">
+    </div>
+    <div class="item">
+      <p class="item-question">2. Complete the sentence with "not only".</p>
+      <label for="f5c">It's good ______ for space travel fans and scientists.</label>
+      <input id="f5c" class="answer" type="text" data-act="act5" data-accept="not only" data-model="not only">
+      <label for="f5d">It's good not only for space travel fans and scientists ______ anyone who is looking for a unique story.</label>
+      <input id="f5d" class="answer" type="text" data-act="act5" data-accept="but also" data-model="but also">
+    </div>
+    <div class="item">
+      <p class="item-question">3. Complete the sentence with the present perfect.</p>
+      <label for="f5e">Watney ______ a realistic character in his first book.</label>
+      <input id="f5e" class="answer" type="text" data-act="act5" data-accept="has created" data-model="has created">
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act5">Check activity 5</button>
+      <button class="btn ghost" type="button" data-complete="act5">Mark activity 5 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-07-act6" data-act-id="act6" data-short="Skim and scan" role="group" aria-roledescription="slide" aria-label="7 of 12: Skim and scan">
+            <div class="activity" id="act6" aria-labelledby="h-act6">
+
+    <h2 id="h-act6">Activity 6: Skim and scan</h2>
+    <p>Skim means read quickly. Scan means look for specific words. Use both skills to find information.</p>
+    <div class="item">
+      <p class="item-question">1. Skim. Read only the first paragraph and the last paragraph. What is the text mainly about? Talk to a partner about your answer.</p>
+    </div>
+    <div class="item">
+      <label for="f6a">The actor who starred in the film is</label>
+      <input id="f6a" class="answer" type="text" data-act="act6" data-accept="matt damon" data-model="Matt Damon">
+      <label for="f6b">The mission is called</label>
+      <input id="f6b" class="answer" type="text" data-act="act6" data-accept="ares 3" data-model="Ares 3">
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act6">Check activity 6</button>
+      <button class="btn ghost" type="button" data-complete="act6">Mark activity 6 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-08-act7" data-act-id="act7" data-short="Speaking" role="group" aria-roledescription="slide" aria-label="8 of 12: Speaking">
+            <div class="activity" id="act7" aria-labelledby="h-act7">
+
+    <h2 id="h-act7">Activity 7: Speaking practice</h2>
+    <p>Talk in pairs. Ask and answer this question:</p>
+    <p>What book would you recommend? Tell your partner about the book.</p>
+    <button class="btn ghost" type="button" data-reveal="model7">Show a model answer</button>
+    <div class="reveal" id="model7" hidden>
+      <p>I would recommend the book <em>The Alchemist</em> by Paulo Coelho. It is a famous story about a young man who travels to find a treasure. The language is simple, and the book teaches a good lesson about following your dreams. I think it is a great choice for learners.</p>
+    </div>
+    <div class="controls">
+      <button class="btn ghost" type="button" data-complete="act7">Mark activity 7 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-09-act8" data-act-id="act8" data-short="Describe" role="group" aria-roledescription="slide" aria-label="9 of 12: Describe">
+            <div class="activity" id="act8" aria-labelledby="h-act8">
+
+    <h2 id="h-act8">Activity 8: Describe Mark Watney</h2>
+    <p>Describe Mark Watney. Use these words: botanist, engineer, alone, never gives up, clever.</p>
+    <button class="btn ghost" type="button" data-reveal="model8">Show a model answer</button>
+    <div class="reveal" id="model8" hidden>
+      <p>Mark Watney is an astronaut and a botanist. He is alone on Mars. He is in deep trouble, but he never gives up. He finds clever ways to grow food and to produce water. I like his character because he is intelligent and optimistic.</p>
+    </div>
+    <div class="controls">
+      <button class="btn ghost" type="button" data-complete="act8">Mark activity 8 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-10-act9" data-act-id="act9" data-short="Discuss" role="group" aria-roledescription="slide" aria-label="10 of 12: Discuss">
+            <div class="activity" id="act9" aria-labelledby="h-act9">
+
+    <h2 id="h-act9">Activity 9: Discussion</h2>
+    <p>After you have finished reading, talk about this question:</p>
+    <p>Do you agree? The writer says this is a good book for everyone. Do you agree with the writer? Talk about your own opinion. Use these words: good, exciting, unique.</p>
+    <div class="controls">
+      <button class="btn ghost" type="button" data-complete="act9">Mark activity 9 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-11-act10" data-act-id="act10" data-short="Review" role="group" aria-roledescription="slide" aria-label="11 of 12: Review">
+            <div class="activity" id="act10" aria-labelledby="h-act10">
+
+    <h2 id="h-act10">Activity 10: Final review</h2>
+    <p>Review the lesson. Answer these three questions.</p>
+    <div class="item">
+      <p class="item-question">1. What does "on the edge of your seat" mean?</p>
+      <div class="mcq" data-act="act10" data-group="g15">
+        <label class="choice">
+          <input type="radio" name="g15" data-correct="true"> Excited
+        </label>
+        <label class="choice">
+          <input type="radio" name="g15"> Tired
+        </label>
+        <label class="choice">
+          <input type="radio" name="g15"> Afraid
+        </label>
+      </div>
+    </div>
+    <div class="item">
+      <p class="item-question">2. Complete the sentence with a passive verb.</p>
+      <label for="f10a">The ship ______ destroyed by the terrible storm.</label>
+      <input id="f10a" class="answer" type="text" data-act="act10" data-accept="was destroyed" data-model="was destroyed">
+    </div>
+    <div class="item">
+      <p class="item-question">3. Complete the sentence with "not only".</p>
+      <label for="f10b">It's good ______ for space travel fans and scientists.</label>
+      <input id="f10b" class="answer" type="text" data-act="act10" data-accept="not only" data-model="not only">
+    </div>
+    <div class="controls">
+      <button class="btn" type="button" data-check="act10">Check activity 10</button>
+      <button class="btn ghost" type="button" data-complete="act10">Mark activity 10 complete</button>
+      <div class="feedback" aria-live="polite" role="status"></div>
+    </div>
+            </div>
+          </section>
+
+          <section class="slide" id="slide-12-certificate" data-act-id="final" data-short="Certificate" role="group" aria-roledescription="slide" aria-label="12 of 12: Certificate">
+            <div id="final" aria-labelledby="h-final">
+
+    <h2 id="h-final">Certificate</h2>
+    <p id="final-message">Complete all ten activities to receive your certificate.</p>
+    <div class="certificate" id="certificate">
+      <h3 id="cert-name">Certificate</h3>
+      <p id="cert-name-paragraph">This certificate is for</p>
+      <p id="cert-learner" class="learner-name">a learner</p>
+      <p id="cert-detail">who completed all ten activities.<br>They earned <span id="cert-xp">0</span> XP and a streak of <span id="cert-streak">0</span> correct rounds.</p>
+      <p id="cert-date">Date: today</p>
+    </div>
+    <div class="controls">
+      <button class="btn ghost" type="button" id="print-certificate">Print certificate</button>
+    </div>
+            </div>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 12</div>
+        <div class="bottom-nav" aria-label="Lesson navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+
+
+<footer class="deck-foot"><p>The Martian: a book review, British Council LearnEnglish. Used for free, non-commercial educational purposes. All rights to the source belong to the British Council.</p><p><a href="../../index.html#b1-communicative">All B1 Communicative lessons</a> | <a href="Adverbial-Wh-Clauses-B1-B2-Shirley-Learner.html">Wh-Clauses for Daily Life</a></p></footer>
+  </div>
+
+
+
+<div id="confetti" class="confetti-canvas" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  var VOICES=[];
+  function loadVoices(){ try{ VOICES = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }catch(e){ VOICES=[]; } }
+  if('speechSynthesis' in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+  function scoreVoice(v, prefer){
+    var name=((v.name||'')+' '+(v.lang||'')).toLowerCase();
+    var s=0;
+    var lang=(v.lang||'').toLowerCase();
+    if(lang.indexOf('en-gb')===0) s+=80;
+    else if(lang.indexOf('en-gb')>-1 || name.indexOf('british')>-1 || name.indexOf('uk english')>-1 || name.indexOf('england')>-1) s+=70;
+    else if(lang.indexOf('en-us')===0) s+=15;
+    else if(lang.indexOf('en_')===0 || lang.indexOf('en-')===0) s+=10;
+    if(name.indexOf('natural')>-1) s+=45;
+    if(name.indexOf('online')>-1) s+=30;
+    if(name.indexOf('neural')>-1) s+=35;
+    if(name.indexOf('google uk english')>-1) s+=50;
+    else if(name.indexOf('google')>-1) s+=8;
+    if(name.indexOf('sonia')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s+=35;
+    if(name.indexOf('compact')>-1 || name.indexOf('mobile')>-1) s-=20;
+    if(prefer==='female'){
+      if(name.indexOf('female')>-1) s+=30;
+      if(name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1 || name.indexOf('google uk english female')>-1) s+=30;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('alex')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s-=40;
+    } else if(prefer==='male'){
+      if(name.indexOf('male')>-1 && name.indexOf('female')===-1) s+=30;
+      if(name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1 || name.indexOf('google uk english male')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1) s-=40;
+    }
+    return s;
+  }
+  function pickVoice(prefer){
+    if(!VOICES.length) loadVoices();
+    if(!VOICES.length) return null;
+    var best=null, bestScore=-999;
+    for(var i=0;i<VOICES.length;i++){
+      var sc=scoreVoice(VOICES[i], prefer);
+      if(sc>bestScore){ bestScore=sc; best=VOICES[i]; }
+    }
+    return best;
+  }
+  function speak(t, prefer, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t);
+      u.lang='en-GB';
+      u.volume=1;
+      if(prefer==='male'){ u.rate=0.96; u.pitch=0.9; }
+      else { u.rate=0.97; u.pitch=1.1; }
+      var v=pickVoice(prefer);
+      if(v) u.voice=v;
+      if(btn){
+        btn.classList.add('speaking');
+        u.onend=function(){ btn.classList.remove('speaking'); };
+        u.onerror=function(){ btn.classList.remove('speaking'); };
+      }
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
+    });
+  });
+  function speakSequence(items, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.speak-btn.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      if(btn) btn.classList.add('speaking');
+      items.forEach(function(it, i){
+        var u=new SpeechSynthesisUtterance(it.text);
+        u.lang='en-GB'; u.volume=1;
+        if(it.voice==='male'){ u.rate=0.96; u.pitch=0.9; }
+        else { u.rate=0.97; u.pitch=1.1; }
+        var v=pickVoice(it.voice);
+        if(v) u.voice=v;
+        if(i===items.length-1 && btn){
+          u.onend=function(){ btn.classList.remove('speaking'); };
+          u.onerror=function(){ btn.classList.remove('speaking'); };
+        }
+        window.speechSynthesis.speak(u);
+      });
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-playall]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var slide=b.closest('.slide');
+      var lineBtns=slide ? slide.querySelectorAll('.lines [data-say]') : [];
+      var items=[];
+      lineBtns.forEach(function(lb){ items.push({text: lb.getAttribute('data-say'), voice: lb.getAttribute('data-voice')||'female'}); });
+      if(items.length) speakSequence(items, b);
+    });
+  });
+
+  document.querySelectorAll('.slide').forEach(function(sl){
+    var dots=sl.querySelectorAll('.dot');
+    var fb=sl.querySelector('.feedback');
+    if(!dots.length || sl.querySelector('.wordbank')) return;
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        var on=d.getAttribute('aria-pressed')==='true';
+        d.setAttribute('aria-pressed', String(!on));
+        var done=sl.querySelectorAll('.dot[aria-pressed="true"]').length;
+        if(fb){
+          if(done===dots.length){ fb.textContent='Great! All done!'; fb.className='feedback ok'; }
+          else if(done===0){ fb.textContent=''; fb.className='feedback'; }
+          else { fb.textContent=done+' of '+dots.length+'. Keep going!'; fb.className='feedback'; }
+        }
+      });
+    });
+  });
+
+  
+  /* ---- full screen ---- */
+function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var TOTAL_ACTIVITIES = 10;
+  var state = { xp: 0, streak: 0, completed: [], awarded: {}, answered: {} };
+  var learnerName = (function(){ try { var l = JSON.parse(localStorage.getItem("lrs_learner") || "null"); return (l && l.name) ? l.name : "Learner"; } catch(e){ return "Learner"; } })();
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var VERBS = {
+    launched: ["http://adlnet.gov/expapi/verbs/launched", "launched"],
+    answered: ["http://adlnet.gov/expapi/verbs/answered", "answered"],
+    experienced: ["http://id.tincanapi.com/verb/experienced", "experienced"]
+  };
+  var LRS = { endpoint: "https://YOUR_LRS_ENDPOINT_HERE/xapi/", username: "", password: "" };
+
+  function normalize(value) {
+    var s = String(value).toLowerCase().trim();
+    s = s.replace(/\s+/g, " ");
+    s = s.replace(/[.!?,;:]+$/, "");
+    return s;
+  }
+  function acceptedTokens(input) {
+    var raw = input.getAttribute("data-accept") || "";
+    var parts = raw.split("|");
+    var tokens = [];
+    for (var i = 0; i < parts.length; i++) {
+      var t = parts[i].trim().toLowerCase();
+      if (t) { tokens.push(t); }
+    }
+    return tokens;
+  }
+  function isCorrect(input) {
+    var tokens = acceptedTokens(input);
+    if (!tokens.length) { return false; }
+    var norm = normalize(input.value);
+    for (var i = 0; i < tokens.length; i++) {
+      if (norm.indexOf(tokens[i]) !== -1) { return true; }
+    }
+    return false;
+  }
+  function markTextAnswer(input, ok) {
+    input.classList.remove("correct", "wrong");
+    if (ok) { input.classList.add("correct"); }
+    else { input.classList.add("wrong"); }
+    var parent = input.parentNode;
+    var old = parent.querySelector(".mark");
+    if (old) { old.remove(); }
+    var note = document.createElement("span");
+    note.className = "mark";
+    if (ok) {
+      note.textContent = "Correct";
+    } else {
+      note.textContent = "Not quite. The answer is: " + (input.getAttribute("data-model") || "");
+    }
+    parent.appendChild(note);
+  }
+  function checkRadioGroup(groupDiv, ok, correctRadio) {
+    var checked = groupDiv.querySelector('input[type="radio"]:checked');
+    groupDiv.querySelectorAll('label.choice').forEach(function (label) {
+      label.classList.remove("correct", "wrong");
+    });
+    if (ok && correctRadio) {
+      correctRadio.closest("label").classList.add("correct");
+    }
+    if (!ok && checked) {
+      checked.closest("label").classList.add("wrong");
+    }
+  }
+  function awardPoints(itemKey) {
+    if (state.awarded[itemKey]) { return; }
+    state.awarded[itemKey] = true;
+    state.xp = state.xp + 10;
+    sendStatement("answered", "question:" + itemKey);
+    updateHud();
+  }
+  function sendStatement(verbKey, objectName) {
+    if (!LRS.endpoint || LRS.endpoint.indexOf("YOUR_LRS") !== -1) { return; }
+    var verb = VERBS[verbKey];
+    if (!verb) { return; }
+    var stmt = {
+      actor: { objectType: "Agent", name: learnerName },
+      verb: { id: verb[0], display: { "en-US": verb[1] } },
+      object: { id: "the-martian-b1", definition: { name: { "en-US": objectName } } },
+      timestamp: new Date().toISOString(),
+      context: { contextActivities: { parent: [{ id: "the-martian-b1" }] } }
+    };
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", LRS.endpoint + "statements", true);
+      xhr.setRequestHeader("Authorization", "Basic " + btoa(LRS.username + ":" + LRS.password));
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("X-Experience-API-Version", "1.0.3");
+      xhr.send(JSON.stringify(stmt));
+    } catch (err) {
+      /* not configured, ignore */
+    }
+  }
+  function updateHud() {
+    document.getElementById("xp").textContent = state.xp + " XP";
+    document.getElementById("streak").textContent = "Streak: " + state.streak;
+    var done = state.completed.length;
+    var percent = Math.round((done / TOTAL_ACTIVITIES) * 100);
+    document.getElementById("progress").style.width = percent + "%";
+    document.getElementById("progress-text").textContent =
+      done + " of " + TOTAL_ACTIVITIES + " activities";
+  }
+  function markActivityComplete(activityId) {
+    if (state.completed.indexOf(activityId) !== -1) { return; }
+    state.completed.push(activityId);
+    updateHud();
+    if (state.completed.length === TOTAL_ACTIVITIES) {
+      sendStatement("experienced", "the-martian-b1");
+      showCertificate();
+    }
+  }
+  function checkActivity(activityId) {
+    var textInputs = document.querySelectorAll('.answer[data-act="' + activityId + '"]');
+    var groups = document.querySelectorAll('.mcq[data-act="' + activityId + '"]');
+    var allCorrect = true;
+    textInputs.forEach(function (input) {
+      var ok = isCorrect(input);
+      markTextAnswer(input, ok);
+      if (ok) {
+        awardPoints(input.id);
+      } else {
+        allCorrect = false;
+      }
+    });
+    groups.forEach(function (groupDiv) {
+      var radioName = groupDiv.getAttribute("data-group");
+      var checked = groupDiv.querySelector('input[type="radio"]:checked');
+      var correctRadio = groupDiv.querySelector('input[type="radio"][data-correct="true"]');
+      var ok = false;
+      if (checked && correctRadio) {
+        ok = checked === correctRadio;
+      }
+      checkRadioGroup(groupDiv, ok, correctRadio);
+      if (ok) {
+        awardPoints(radioName);
+      } else {
+        allCorrect = false;
+      }
+    });
+    var feedback = document.querySelector('.activity#' + activityId + ' .feedback');
+    if (allCorrect) {
+      state.streak = state.streak + 1;
+      feedback.textContent = "Well done. All answers are correct.";
+      feedback.className = "feedback good";
+    } else {
+      state.streak = 0;
+      feedback.textContent = "Some answers need another look. You can try again.";
+      feedback.className = "feedback bad";
+    }
+    updateHud();
+  }
+  function revealModel(modelId) {
+    var panel = document.getElementById(modelId);
+    if (!panel) { return; }
+    if (panel.hidden) {
+      panel.hidden = false;
+    } else {
+      panel.hidden = true;
+    }
+  }
+  function showCertificate() {
+    var final = document.getElementById("final");
+    final.classList.add("show");
+    document.getElementById("cert-learner").textContent = learnerName;
+    document.getElementById("cert-xp").textContent = state.xp;
+    document.getElementById("cert-streak").textContent = state.streak;
+    document.getElementById("cert-date").textContent = new Date().toLocaleDateString();
+  }
+  function fireConfetti() {
+    if (reducedMotion) { return; }
+    var canvas = document.getElementById("confetti");
+    if (!canvas) { return; }
+    var ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.classList.add("on");
+    var particles = [];
+    var colours = ["#ffd400", "#38e0c8", "#f5f9ff", "#ff8a8a"];
+    for (var i = 0; i < 90; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * 0.4,
+        w: 6 + Math.random() * 6,
+        h: 8 + Math.random() * 8,
+        vx: (Math.random() - 0.5) * 2,
+        vy: Math.random() * 2 + 1,
+        rot: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 10,
+        colour: colours[i % colours.length]
+      });
+    }
+    var step = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(function (p) {
+        p.x = p.x + p.vx;
+        p.y = p.y + p.vy;
+        p.rot = p.rot + p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.colour;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+      step = step + 1;
+      if (step < 120) {
+        window.requestAnimationFrame(draw);
+      } else {
+        canvas.classList.remove("on");
+      }
+    }
+    draw();
+  }
+  function wireButtons() {
+    var checkButtons = document.querySelectorAll('[data-check]');
+    checkButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var activityId = button.getAttribute("data-check");
+        checkActivity(activityId);
+      });
+    });
+    var completeButtons = document.querySelectorAll('[data-complete]');
+    completeButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var activityId = button.getAttribute("data-complete");
+        markActivityComplete(activityId);
+        var feedback = document.querySelector('.activity#' + activityId + ' .feedback');
+        if (feedback) {
+          feedback.textContent = "Activity complete. Well done.";
+          feedback.className = "feedback good";
+        }
+        updateHud();
+        if (state.completed.length === TOTAL_ACTIVITIES) {
+          fireConfetti();
+        }
+      });
+    });
+    var revealButtons = document.querySelectorAll('[data-reveal]');
+    revealButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        revealModel(button.getAttribute("data-reveal"));
+      });
+    });
+    var startButton = document.getElementById("start-lesson");
+    if (startButton) {
+      startButton.addEventListener("click", function () {
+        learnerName = document.getElementById("learner-name").value.trim() || learnerName;
+        document.getElementById("login-overlay").hidden = true;
+        sendStatement("launched", "the-martian-b1");
+      });
+    }
+    var printButton = document.getElementById("print-certificate");
+    if (printButton) {
+      printButton.addEventListener("click", function () {
+        window.print();
+      });
+    }
+  }
+  function init() {
+    updateHud();
+    wireButtons();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+// The Martian B1 - granular LRS via the shared proxy
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched:   vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered:   vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked:     vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    experienced:vb('http://id.tincanapi.com/verb/experienced', 'experienced'),
+    wrote:      vb('http://adlnet.gov/expapi/verbs/wrote', 'wrote'),
+    read:       vb('http://adlnet.gov/expapi/verbs/read', 'read')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({ verb: verb, object: {
+      objectType: 'Activity', id: objId,
+      definition: { name: { 'en-US': objName }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson') }
+    }});
+  }
+  var SLIDES = ["slide-01-intro","slide-02-act1","slide-03-act2","slide-04-act3","slide-05-act4","slide-06-act5","slide-07-act6","slide-08-act7","slide-09-act8","slide-10-act9","slide-11-act10","slide-12-certificate"];
+  var slides = SLIDES.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  function pad(act){ return String(act.replace('act', '')).padStart(2, '0'); }
+
+  var seen = {};
+  function viewed(sec) {
+    if (!sec || !sec.id || seen[sec.id]) return;
+    seen[sec.id] = true;
+    var h = sec.querySelector('h2');
+    var nm = sec.getAttribute('data-short') || (h ? h.textContent.trim() : sec.id);
+    sendPrecise(VERBS.launched, LESSON_ID + '/' + sec.id, 'Slide viewed: ' + nm.substring(0, 60), 'slide');
+  }
+  var tries = 0;
+  var poll = setInterval(function () {
+    tries++;
+    var cur = document.querySelector('.slide.active') || document.querySelector('.slide');
+    if (cur && window.LRS.send) { clearInterval(poll); viewed(cur); }
+    if (tries > 60) clearInterval(poll);
+  }, 500);
+  if (window.MutationObserver) {
+    var moView = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var el = m.target;
+        if (el && el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function (sec) { moView.observe(sec, { attributes: true, attributeFilter: ['class'] }); });
+  }
+
+  var sentChecks = {};
+  document.querySelectorAll('button[data-check]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var act = b.getAttribute('data-check');
+      if (sentChecks[act]) return;
+      sentChecks[act] = true;
+      var host = document.getElementById('slide-' + pad(act)) || document.getElementById(act);
+      if (!host) return;
+      var n = 0;
+      host.querySelectorAll('.mcq[data-act="' + act + '"], .answer[data-act="' + act + '"]').forEach(function (item) {
+        n++;
+        var stem = item.closest('.item');
+        var q = stem ? stem.querySelector('.item-question') : null;
+        var name = q ? q.textContent.trim().replace(/\s+/g, ' ').substring(0, 70) : 'Item ' + n;
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + (host.id || act) + '/q-' + n,
+          (host.getAttribute('data-short') || act) + ': ' + name, 'question');
+      });
+    }, true);
+  });
+
+  var marked = {};
+  document.querySelectorAll('button[data-complete]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var act = b.getAttribute('data-complete');
+      if (marked[act]) return;
+      marked[act] = true;
+      var sec = document.getElementById('slide-' + pad(act));
+      sendPrecise(VERBS.marked, LESSON_ID + '/' + (sec ? sec.id : act), (sec ? sec.getAttribute('data-short') : act) + ' completed', 'activity');
+      if (Object.keys(marked).length >= 10) sendPrecise(VERBS.experienced, LESSON_ID, document.title, 'lesson');
+    }, true);
+  });
+
+  ['text-gist', 'text-detail'].forEach(function (id) {
+    var box = document.getElementById(id);
+    if (!box) return;
+    var once = false;
+    box.addEventListener('click', function () {
+      if (once) return;
+      once = true;
+      var sec = box.closest('.slide');
+      sendPrecise(VERBS.read, LESSON_ID + '/' + (sec ? sec.id : id), (sec ? sec.getAttribute('data-short') : id) + ': reading text opened', 'text');
+    });
+  });
+
+  document.querySelectorAll('.answer').forEach(function (inp) {
+    var handler = function () {
+      if (!inp.value || !inp.value.trim()) return;
+      var sec = inp.closest('.slide');
+      sendPrecise(VERBS.wrote, LESSON_ID + '/' + (sec ? sec.id : 'answer') + '/' + inp.id,
+        (sec ? sec.getAttribute('data-short') : '') + ': ' + inp.id + ' answered', 'writing');
+    };
+    inp.addEventListener('change', handler);
+    inp.addEventListener('blur', handler);
+  });
+});
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>

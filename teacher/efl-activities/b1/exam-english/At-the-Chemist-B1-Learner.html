@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>At the Chemist (B1) Interactive</title>
+<meta name="description" content="B1 listening lesson: at the chemist with Shirley. Predict, match words, listen for gist and detail, use should, and role play the counter. 15 activities with instant AI feedback on the warmer.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/b1/exam-english/At-the-Chemist-B1-Learner.html">
+<style>
+:root{--bg:#070b14;--surface:#0e1a30;--surface2:#14263f;--ink:#f5f9ff;--muted:#b9c6d8;--accent:#ffd400;--accent2:#3ee6c4;--border:#2a3d57;--focus:#ffd400;--bad:#ff9a9a;--card:#0b1220;--shadow:0 20px 60px rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1200px 600px at 15% -10%,#16294a 0%,transparent 60%),radial-gradient(1000px 500px at 90% 0%,#0f2f3a 0%,transparent 55%),var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Arial,Helvetica,sans-serif;line-height:1.65;margin:0}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#000;padding:10px 16px;font-weight:bold;z-index:99;border-radius:0 0 8px 0}
+.skip:focus{left:8px;top:8px}
+#topbar{max-width:1000px;margin:14px auto 0;padding:12px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:rgba(14,26,48,.85);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(6px)}
+#topbar h1{font-size:1.05rem;margin:0;flex:1;min-width:200px;letter-spacing:.2px}
+.badge{background:linear-gradient(180deg,#ffe45e,#ffd400);color:#111;border-radius:999px;padding:3px 12px;font-weight:800;font-size:.78rem;letter-spacing:.4px;box-shadow:0 2px 10px rgba(255,212,0,.35)}
+.hud{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.hud b{color:var(--ink);background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:2px 10px}
+#progress{height:10px;background:#05080f;border:1px solid var(--border);border-radius:999px;overflow:hidden;max-width:1000px;margin:10px auto 0;width:calc(100% - 40px)}
+#progress div{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),#7df0d8);transition:width .4s ease}
+#stage{max-width:1000px;margin:14px auto 20px;background:linear-gradient(180deg,rgba(20,38,63,.95),rgba(11,18,32,.95));border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+#stageInner{display:flex;gap:14px;align-items:stretch}
+.navSide{background:linear-gradient(180deg,#1a3355,#122742);color:var(--ink);border:1px solid #3a557c;border-radius:14px;padding:14px 18px;font-weight:700;cursor:pointer;min-width:104px;align-self:center;min-height:180px;letter-spacing:.3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.navSide:hover{border-color:var(--accent)}
+.navSide:hover,.navSide:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+#slideWrap{flex:1;min-width:0;background:radial-gradient(800px 300px at 50% 0%,rgba(62,230,196,.08),transparent 60%),#04070d;border:1px solid #334d6e;border-radius:14px;padding:clamp(20px,3.5vmin,40px);min-height:min(62vh,440px);overflow-y:auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.6)}
+#stage:fullscreen,#stage:-webkit-full-screen,#stage.fs-on{max-width:none;width:100vw;height:100vh;height:100dvh;margin:0;border-radius:0;border:none;padding:clamp(10px,2vmin,24px);display:flex;flex-direction:column;background:linear-gradient(180deg,#0d1930,#070d18)}
+#stage:fullscreen #stageInner,#stage.fs-on #stageInner{flex:1;min-height:0}
+#stage:fullscreen #slideWrap,#stage.fs-on #slideWrap{flex:1;min-height:0;height:auto;max-height:none;font-size:clamp(1rem,1rem + 0.8vw,1.32rem);overflow-y:auto;padding:clamp(20px,5vmin,64px)}
+#stage:fullscreen .slide.active,#stage.fs-on .slide.active{min-height:100%;display:flex;flex-direction:column;justify-content:safe center}
+#stage:fullscreen .slide.active>* ,#stage.fs-on .slide.active>*{width:100%;max-width:780px;margin-left:auto;margin-right:auto}
+#stage:fullscreen .navSide,#stage.fs-on .navSide{align-self:center;min-height:32vh}
+#stage:fullscreen #navBottom,#stage.fs-on #navBottom{margin-bottom:0}
+#stage:fullscreen #counter,#stage.fs-on #counter{margin-bottom:0}
+.slide{display:none}
+.slide.active{display:block;max-width:780px;margin:0 auto;width:100%;animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide h2{margin:6px 0 8px;font-size:clamp(1.35rem,1.1rem + 1.4vw,1.9rem);line-height:1.25;letter-spacing:.2px}
+.slide h2::after{content:"";display:block;height:4px;width:64px;border-radius:999px;background:linear-gradient(90deg,var(--accent),transparent);margin-top:8px}
+.kicker{color:var(--accent);font-weight:800;letter-spacing:1.2px;text-transform:uppercase;font-size:.78rem;margin:0}
+.small{color:var(--muted);font-size:.92rem}
+.phase{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 12px;margin-right:8px;border:1px solid #3a557c;background:#0f2138;color:var(--accent2)}
+.phase.while{color:var(--accent)}
+.phase.after{color:#9ec5ff}
+.theory{border-left:3px solid var(--accent2);padding:6px 12px;color:var(--muted);font-size:.85rem;background:rgba(62,230,196,.06);border-radius:0 8px 8px 0;margin:10px 0}
+.opt{display:flex;gap:10px;align-items:flex-start;background:rgba(20,38,63,.7);border:1px solid #334d6e;border-radius:12px;padding:12px 14px;margin:10px 0;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.opt:hover{border-color:var(--accent);background:rgba(26,51,85,.8)}
+.opt input{accent-color:var(--accent);width:1.2em;height:1.2em;margin-top:.2em;flex:none}
+.opt.correct{border-color:var(--accent2);box-shadow:0 0 0 1px var(--accent2)}
+.opt.wrong{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+input[type=text]{width:100%;max-width:520px;padding:13px 14px;border-radius:10px;border:1px solid #3a557c;background:#fff;color:#111;font-size:1.02rem;margin:8px 0}
+input[type=text]:focus{outline:3px solid var(--focus);outline-offset:2px}
+label{display:block;margin-top:6px}
+.btn{background:linear-gradient(180deg,#ffe45e,#ffd400);color:#111;border:none;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer;font-size:1rem;margin:12px 8px 4px 0;letter-spacing:.2px;box-shadow:0 6px 18px rgba(255,212,0,.28)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);box-shadow:none}
+.btn:hover,.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn:active{transform:translateY(1px)}
+.feedback{min-height:1.6em;font-weight:700;margin-top:10px}
+.feedback.ok{color:var(--accent2)}
+.feedback.no{color:var(--bad)}
+details{background:rgba(20,38,63,.75);border:1px solid #334d6e;border-radius:12px;padding:12px 16px;margin-top:14px}
+summary{cursor:pointer;font-weight:800;color:var(--accent2);font-size:1rem}
+summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+audio{width:100%;margin-top:12px;filter:saturate(1.1)}
+.audioCard{background:rgba(255,212,0,.07);border:1px solid #6b5f00;border-radius:12px;padding:12px 14px;margin-top:10px}
+#navBottom{display:none;gap:12px;margin-top:12px}
+#navBottom button{flex:1;background:linear-gradient(180deg,#1a3355,#122742);color:var(--ink);border:1px solid #3a557c;border-radius:12px;padding:15px;font-weight:800;font-size:1rem;cursor:pointer}
+#counter{text-align:center;color:var(--muted);margin-top:10px;font-size:.9rem;letter-spacing:.3px}
+#listenBar{margin:12px 0 0;background:rgba(255,212,0,.07);border:1px solid #6b5f00;border-radius:12px;padding:10px 14px}
+#listenBar[hidden]{display:none}
+#listenBar p{margin:6px 0 0}
+#stat{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:3px 12px}
+@media(max-width:899px){
+#stageInner{flex-direction:column}
+.navSide{display:none}
+#navBottom{display:flex}
+#slideWrap{min-height:0;padding:18px}
+.opt{padding:14px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#slideWrap">Skip to slide</a>
+<div id="topbar">
+<h1>At the Chemist, B1 Listening <span class="badge">Shirley</span></h1>
+<div class="hud" aria-label="Progress summary"><b id="xp">0 XP</b><b id="streak">Streak 0</b></div>
+<span class="small" id="stat" aria-live="polite">Slide 1 of 18</span>
+<button class="btn" id="fsBtn" aria-label="Toggle full screen">Full screen</button>
+</div>
+<div id="progress" aria-hidden="true"><div id="bar"></div></div>
+
+<div id="stage">
+<div id="stageInner">
+<button class="navSide" id="prevD" aria-label="Previous slide">Back</button>
+<div id="slideWrap" role="group" aria-label="Lesson slides">
+
+<section class="slide active" id="slide-01-cover" aria-label="Cover">
+<p class="small">B1 Listening, 1 to 1, 45 min, Pre While Post</p>
+<h2>At the chemist</h2>
+<p>A short chemist dialogue. Sore throat, cough, lozenges, 7.49 pounds.</p>
+<p>Tap Next. Read first. Then listen. Answer as you go.</p>
+<p class="small">Audio: British Council LearnEnglish.</p>
+<button class="btn" data-next>Start</button>
+</section>
+
+<section class="slide" id="slide-02-howto" aria-label="How to use">
+<h2>How to use</h2>
+<ol>
+<li>Read Activities 1 to 3 first.</li>
+<li>On Activities 4 to 9, use the Listen bar under the slide. Play twice.</li>
+<li>Choose or type. Tap Check. Then open Answer key.</li>
+<li>Speak aloud for Activities 13 to 15.</li>
+</ol>
+</section>
+
+<section class="slide" id="slide-03-map" aria-label="Map">
+<h2>Our plan</h2>
+<p><strong>Before:</strong> predict, words. <strong>While:</strong> gist, detail. <strong>After:</strong> use, speak.</p>
+<p class="small">One task at a time. Short steps. No rush.</p>
+</section>
+
+<section class="slide" id="slide-04-act1" aria-label="Activity 1">
+<p class="small">Activity 1, Warmer</p>
+<h2>How are you today?</h2>
+<p>Choose one, then say it aloud: great, OK, tired, sick.</p>
+<p>Finish: Today I feel ___ because ___.</p>
+<input type="text" id="chemistFeel" aria-label="Today I feel blank because blank" placeholder="Today I feel tired because...">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>Any true sentence. Example: Today I feel OK because I slept well.</p></details>
+</section>
+
+<section class="slide" id="slide-05-act2" aria-label="Activity 2">
+<p class="small">Activity 2, Predict</p>
+<h2>What will we hear?</h2>
+<p>A chemist is a shop for medicine in the UK. Tick what you expect.</p>
+<div class="mcq">
+<label class="opt"><input type="radio" name="p2" data-correct="true"> symptoms and medicine choice</label>
+<label class="opt"><input type="radio" name="p2" data-correct="true"> price</label>
+<label class="opt"><input type="radio" name="p2"> car repair</label>
+<label class="opt"><input type="radio" name="p2"> football score</label>
+</div>
+<p class="small">Choose the two true ideas. Two options are correct. Select one, then Check, then try the other.</p>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="p2">Check</button>
+<details><summary>Answer key (try first)</summary><p>Symptoms, medicine choice and price. Not car repair or football.</p></details>
+</section>
+
+<section class="slide" id="slide-06-act3" aria-label="Activity 3">
+<p class="small">Activity 3, Words</p>
+<h2>Match the words</h2>
+<p>1 sore throat, 2 cough, 3 syrup, 4 lozenges, 5 prescription, 6 allergic</p>
+<label for="v3">Type the letter for syrup: a) liquid medicine b) car c) dog</label>
+<input type="text" id="v3" data-accept="a" placeholder="Type a, b or c">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>1 pain in the throat. 2 fast air from the throat. 3 a, liquid medicine. 4 small sweets for the throat. 5 paper from a doctor. 6 bad reaction to medicine.</p></details>
+</section>
+
+
+
+<section class="slide" id="slide-07-act4" aria-label="Activity 4">
+<p class="small">Activity 4, Gist</p>
+<h2>Why is he there?</h2>
+<div class="mcq">
+<label class="opt"><input type="radio" name="q4" data-correct="true"> His wife sent him. He needs medicine.</label>
+<label class="opt"><input type="radio" name="q4"> He works there.</label>
+<label class="opt"><input type="radio" name="q4"> He visits a friend.</label>
+</div>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q4">Check</button>
+<details><summary>Answer key (try first)</summary><p>His wife sent him. He needs medicine for his throat.</p></details>
+</section>
+
+<section class="slide" id="slide-08-act5" aria-label="Activity 5">
+<p class="small">Activity 5, Symptoms</p>
+<h2>What are his problems? Choose 2.</h2>
+<div class="mcq">
+<label class="opt"><input type="radio" name="q5a" data-correct="true"> sore throat</label>
+<label class="opt"><input type="radio" name="q5a" data-correct="true"> cough</label>
+<label class="opt"><input type="radio" name="q5a"> headache</label>
+<label class="opt"><input type="radio" name="q5a"> toothache</label>
+</div>
+<p class="small">Tip: he says no to headache. Select one true answer and Check, then find the second.</p>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q5a">Check</button>
+<details><summary>Answer key (try first)</summary><p>Sore throat and cough. No headache. No toothache.</p></details>
+</section>
+
+<section class="slide" id="slide-09-act6" aria-label="Activity 6">
+<p class="small">Activity 6, Choice</p>
+<h2>Syrup or lozenges?</h2>
+<div class="mcq">
+<label class="opt"><input type="radio" name="q6"> The syrup is cheaper.</label>
+<label class="opt"><input type="radio" name="q6" data-correct="true"> The syrup is more expensive. He takes the lozenges.</label>
+<label class="opt"><input type="radio" name="q6"> He takes both.</label>
+</div>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q6">Check</button>
+<details><summary>Answer key (try first)</summary><p>Both are good. Syrup costs more. He takes the lozenges.</p></details>
+</section>
+
+<section class="slide" id="slide-10-act7" aria-label="Activity 7">
+<p class="small">Activity 7, Dose</p>
+<h2>How much and when?</h2>
+<label for="d1">1 Take ___ lozenge (one / two).</label>
+<input type="text" id="d1" data-accept="one|1" placeholder="Type 1">
+<label for="d2">2 Every ___ hours (4 to 6 / 2 to 3).</label>
+<input type="text" id="d2" data-accept="four to six|4 to 6|4-6" placeholder="Type 2">
+<label for="d3">3 Take it ___ meals (before / after).</label>
+<input type="text" id="d3" data-accept="before" placeholder="Type 3">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>1 one. 2 four to six. 3 before. Line: Just one every four to six hours, before meal times.</p></details>
+</section>
+
+<section class="slide" id="slide-11-act8" aria-label="Activity 8">
+<p class="small">Activity 8, True or false</p>
+<h2>True or false?</h2>
+<label for="t1">1 He is allergic. T or F?</label>
+<input type="text" id="t1" data-accept="f|false" placeholder="T or F">
+<label for="t2">2 He can buy antibiotics now. T or F?</label>
+<input type="text" id="t2" data-accept="f|false" placeholder="T or F">
+<label for="t3">3 See a doctor if cough continues. T or F?</label>
+<input type="text" id="t3" data-accept="t|true" placeholder="T or F">
+<label for="t4">4 Price is 7.49 pounds. T or F?</label>
+<input type="text" id="t4" data-accept="t|true" placeholder="T or F">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>1 F, no allergy. 2 F, need a prescription. 3 T. 4 T.</p></details>
+</section>
+
+<section class="slide" id="slide-12-act9" aria-label="Activity 9">
+<p class="small">Activity 9, Language</p>
+<h2>What does the pharmacist say?</h2>
+<div class="mcq">
+<label class="opt"><input type="radio" name="q9" data-correct="true"> Do you have a headache too?</label>
+<label class="opt"><input type="radio" name="q9" data-correct="true"> Are you allergic to any medicine?</label>
+<label class="opt"><input type="radio" name="q9" data-correct="true"> Anything else?</label>
+<label class="opt"><input type="radio" name="q9"> Where is your car?</label>
+</div>
+<p class="small">Three are true. Check one at a time.</p>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q9">Check</button>
+<details><summary>Answer key (try first)</summary><p>Do you have a headache too? Are you allergic to any medicine? Anything else? Not the car.</p></details>
+</section>
+
+<section class="slide" id="slide-13-act10" aria-label="Activity 10">
+<p class="small">Activity 10, Use the words</p>
+<h2>Choose the verb</h2>
+<div class="mcq">
+<p>1 ___ lozenges.</p>
+<label class="opt"><input type="radio" name="q10a" data-correct="true"> take</label>
+<label class="opt"><input type="radio" name="q10a"> drive</label>
+<label class="opt"><input type="radio" name="q10a"> paint</label>
+</div>
+<div class="mcq">
+<p>2 ___ a prescription.</p>
+<label class="opt"><input type="radio" name="q10b" data-correct="true"> need</label>
+<label class="opt"><input type="radio" name="q10b"> cook</label>
+<label class="opt"><input type="radio" name="q10b"> wash</label>
+</div>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q10a">Check 1</button>
+<button class="btn" data-check-mcq="q10b">Check 2</button>
+<details><summary>Answer key (try first)</summary><p>1 take lozenges. 2 need a prescription. 3 see a doctor.</p></details>
+</section>
+
+<section class="slide" id="slide-14-act11" aria-label="Activity 11">
+<p class="small">Activity 11, Polite voice</p>
+<h2>Say it politely</h2>
+<p>Say aloud: Can I get some antibiotics too? How often should I take it?</p>
+<div class="mcq">
+<p>Which is soft?</p>
+<label class="opt"><input type="radio" name="q11"> Give me pills!</label>
+<label class="opt"><input type="radio" name="q11" data-correct="true"> Can I get some antibiotics too?</label>
+</div>
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-mcq="q11">Check</button>
+<details><summary>Answer key (try first)</summary><p>Can I get is soft. Stress get, often, take. Polite rise at end.</p></details>
+</section>
+
+<section class="slide" id="slide-15-act12" aria-label="Activity 12">
+<p class="small">Activity 12, Advice</p>
+<h2>Finish with should</h2>
+<label for="s1">1 You ___ see a doctor.</label>
+<input type="text" id="s1" data-accept="should" placeholder="Type">
+<label for="s2">2 You ___ take more than one.</label>
+<input type="text" id="s2" data-accept="should not|shouldn't" placeholder="Type">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>1 should. 2 should not. Should is advice, not a rule.</p></details>
+</section>
+
+<section class="slide" id="slide-16-act13" aria-label="Activity 13">
+<p class="small">Activity 13, Speak</p>
+<h2>You at the chemist</h2>
+<p>Say 6 lines aloud: hello, problem, ask for medicine, ask dose, ask price, thank.</p>
+<p>Start: Hello. I need something for ___.</p>
+<button class="btn" data-complete>Mark complete</button>
+<div class="feedback" aria-live="polite"></div>
+<details><summary>Answer key, model (speak first)</summary><p>Hello. I need something for a sore throat. I cannot stop coughing. Which is better? How often should I take it? How much is it? Thank you.</p></details>
+</section>
+
+<section class="slide" id="slide-17-act14" aria-label="Activity 14">
+<p class="small">Activity 14, Doctor</p>
+<h2>Tell the doctor</h2>
+<p>Say 3 sentences aloud. Use: I have... for 3 days. I took... It hurts when...</p>
+<button class="btn" data-complete>Mark complete</button>
+<div class="feedback" aria-live="polite"></div>
+<details><summary>Answer key, model (speak first)</summary><p>I have a cough for 3 days. I took lozenges every 5 hours. It hurts when I swallow.</p></details>
+</section>
+
+<section class="slide" id="slide-18-act15" aria-label="Activity 15">
+<p class="small">Activity 15, Takeaway</p>
+<h2>What can you say now?</h2>
+<label for="e1">Next time at the chemist I will say:</label>
+<input type="text" id="e1" data-accept="i need|how often|do i need|prescription|lozenge|syrup|cough|sore|doctor|chemist|please|thank" placeholder="Type your sentence">
+<div class="feedback" aria-live="polite"></div>
+<button class="btn" data-check-text>Check</button>
+<details><summary>Answer key (try first)</summary><p>Any clear sentence. Example: Next time I will say: I need something for a cold. Well done.</p></details>
+<p class="small">Audio: British Council LearnEnglish. Well done, Shirley.</p>
+</section>
+
+</div>
+<button class="navSide" id="nextD" aria-label="Next slide">Next</button>
+</div>
+<div id="listenBar" hidden>
+<audio controls preload="metadata" aria-label="Listening audio At the chemist"><source src="LE_listening_B1_At_the_chemist.mp3" type="audio/mpeg"></audio>
+<p class="small">Listen bar: play twice if you like. Pause between plays. If no sound, open the file LE_listening_B1_At_the_chemist.mp3 in the same folder.</p>
+</div>
+<div id="navBottom">
+<button id="prevM" aria-label="Previous slide">Back</button>
+<button id="nextM" aria-label="Next slide">Next</button>
+</div>
+<div id="counter" aria-live="polite">Slide 1 of 18</div>
+</div>
+<script>
+(function(){
+var slides=document.querySelectorAll('.slide');
+var idx=0, total=slides.length;
+var stat=document.getElementById('stat'), counter=document.getElementById('counter'), bar=document.getElementById('bar');
+function show(n){
+idx=Math.max(0,Math.min(total-1,n));
+slides.forEach(function(s,i){s.classList.toggle('active',i===idx);});
+var t='Slide '+(idx+1)+' of '+total;
+stat.textContent=t; counter.textContent=t;
+bar.style.width=((idx+1)/total*100)+'%';
+var wrap=document.getElementById('slideWrap'); if(wrap){wrap.scrollTop=0;}
+var active=slides[idx];
+var lb=document.getElementById('listenBar');
+if(lb){lb.hidden=!/Activity [4-9]\b/.test(active.getAttribute('aria-label')||'');}
+var f=active.querySelector('input,button,summary'); if(f){try{f.focus({preventScroll:true});}catch(e){}}
+}
+function next(){show(idx+1);} function prev(){show(idx-1);}
+['nextD','nextM'].forEach(function(id){var b=document.getElementById(id); if(b)b.addEventListener('click',next);});
+['prevD','prevM'].forEach(function(id){var b=document.getElementById(id); if(b)b.addEventListener('click',prev);});
+document.querySelectorAll('[data-next]').forEach(function(b){b.addEventListener('click',next);});
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev();});
+var fsBtn=document.getElementById('fsBtn'), stage=document.getElementById('stage'), slideWrap=document.getElementById('slideWrap');
+fsBtn.addEventListener('click',function(){
+if(!document.fullscreenElement){if(stage.requestFullscreen)stage.requestFullscreen();}
+else{if(document.exitFullscreen)document.exitFullscreen();}
+});
+function syncFs(){var on=!!document.fullscreenElement;stage.classList.toggle('fs-on',on);fsBtn.textContent=on?'Exit full screen':'Full screen';}
+document.addEventListener('fullscreenchange',syncFs);
+function norm(s){return (s||'').toLowerCase().trim().replace(/[.\s]+$/,'').replace(/\s+/g,' ');}
+document.querySelectorAll('[data-check-text]').forEach(function(btn){
+btn.addEventListener('click',function(){
+var slide=btn.closest('.slide'); var fb=slide.querySelector('.feedback');
+var inputs=slide.querySelectorAll('input[type=text]'); var allOk=true, anyEmpty=false;
+inputs.forEach(function(inp){
+var hasAcc=inp.hasAttribute('data-accept');
+var acc=(inp.getAttribute('data-accept')||'').split('|').map(norm);
+var v=norm(inp.value);
+if(!v){anyEmpty=true; allOk=false; inp.style.borderColor=''; return;}
+var ok=hasAcc?acc.some(function(a){return a&&v.indexOf(a)!==-1;}):true;
+inp.style.borderColor=ok?'#38e0c8':'#ff8a8a';
+inp.setAttribute('aria-invalid',ok?'false':'true');
+if(!ok)allOk=false;
+});
+if(anyEmpty){fb.textContent='Type your answer first.'; fb.className='feedback no'; return;}
+fb.textContent=allOk?'Correct. Well done.':'Try again. Check and retry.';
+fb.className='feedback '+(allOk?'ok':'no');
+});
+});
+document.querySelectorAll('[data-check-mcq]').forEach(function(btn){
+btn.addEventListener('click',function(){
+var slide=btn.closest('.slide'); var fb=slide.querySelector('.feedback');
+var name=btn.getAttribute('data-check-mcq');
+var checked=slide.querySelector('input[name="'+name+'"]:checked');
+if(!checked){fb.textContent='Choose one first.'; fb.className='feedback no'; return;}
+var ok=checked.hasAttribute('data-correct');
+slide.querySelectorAll('input[name="'+name+'"]').forEach(function(r){
+var lab=r.closest('.opt'); if(lab){lab.classList.remove('correct','wrong');}
+});
+var lab=checked.closest('.opt');
+if(lab){lab.classList.add(ok?'correct':'wrong');}
+if(ok){fb.textContent='Correct. Well done.'; fb.className='feedback ok';}
+else{fb.textContent='Try again. Listen once more.'; fb.className='feedback no';}
+});
+});
+document.querySelectorAll('[data-complete]').forEach(function(btn){
+btn.addEventListener('click',function(){
+var slide=btn.closest('.slide'); var fb=slide.querySelector('.feedback');
+fb.textContent='Done. Good speaking.'; fb.className='feedback ok';
+});
+});
+show(0);
+})();
+</script>
+<script>
+(function(){
+var map=[
+{n:"Activity 1",ph:"Before",cls:"",th:"Schema activation plus low affective filter. Personal talk warms up memory before listening."},
+{n:"Activity 2",ph:"Before",cls:"",th:"Prediction as metacognitive planning. Schema theory. You guess, then listen to verify."},
+{n:"Activity 3",ph:"Before",cls:"",th:"Pre training principle (Mayer) plus Cognitive Load Theory. Learn 6 words first, so listening feels lighter."},
+{n:"Activity 4",ph:"While",cls:"while",th:"Top down listening for gist. Global meaning first, details later."},
+{n:"Activity 5",ph:"While",cls:"while",th:"Selective attention. Listen for 2 symptoms. Monitor and ignore distractors."},
+{n:"Activity 6",ph:"While",cls:"while",th:"Detail plus inference. Bottom up decoding with real choice: syrup or lozenges."},
+{n:"Activity 7",ph:"While",cls:"while",th:"Retrieval practice. Short number gaps keep working memory clear."},
+{n:"Activity 8",ph:"While",cls:"while",th:"Verification and formative assessment. True or false checks rules and price."},
+{n:"Activity 9",ph:"While",cls:"while",th:"Noticing Hypothesis. Meet 3 useful pharmacist questions as chunks."},
+{n:"Activity 10",ph:"After",cls:"after",th:"Depth of processing. Use take, need and see in true collocations."},
+{n:"Activity 11",ph:"After",cls:"after",th:"Sociolinguistics plus intelligibility. Soft voice and clear stress for polite requests."},
+{n:"Activity 12",ph:"After",cls:"after",th:"Focus on form. Should for advice, learned inside the chemist story."},
+{n:"Activity 13",ph:"After",cls:"after",th:"Output Hypothesis plus ZPD. Scaffolded role play turns input into speech."},
+{n:"Activity 14",ph:"After",cls:"after",th:"Transfer and Bloom create. Tell the doctor in 3 clear sentences."},
+{n:"Activity 15",ph:"After",cls:"after",th:"Self assessment and autonomy. Set one goal you can use for real."}];
+document.querySelectorAll('.slide[aria-label]').forEach(function(s){
+var label=s.getAttribute('aria-label')||"";
+var item=map.find(function(m){return label.indexOf(m.n)===0;});
+if(!item)return;
+var h=s.querySelector('h2');
+if(h&&!s.querySelector('.phase')){
+var sp=document.createElement('span');
+sp.className=('phase '+item.cls).trim();
+sp.textContent=item.ph+' listening';
+h.parentNode.insertBefore(sp,h);
+}
+if(!s.querySelector('.theory')){
+var d=document.createElement('p');
+d.className='theory';
+d.textContent='Why this works: '+item.th;
+var det=s.querySelector('details');
+if(det)s.insertBefore(d,det);else s.appendChild(d);
+}
+});
+var mapSlide=document.querySelector('.slide[aria-label="Map"]');
+if(mapSlide&&!mapSlide.querySelector('.theory')){
+var t=document.createElement('p');
+t.className='theory';
+t.textContent='Design base: Pre While Post plus Engage Study Activate. CLT task first, form inside meaning. Mayer coherence and signaling, Sweller managed load, Bloom from remember to create, UDL choice of ear, eye and voice.';
+mapSlide.appendChild(t);
+}
+/* audio now lives in the shared Listen bar on Activities 4 to 9 */
+var xp=0,streak=0;
+var xpEl=document.getElementById('xp'),stEl=document.getElementById('streak');
+function render(){if(xpEl)xpEl.textContent=xp+' XP';if(stEl)stEl.textContent='Streak '+streak;}
+document.addEventListener('click',function(e){
+var b=e.target.closest('[data-check-text],[data-check-mcq],[data-complete]');
+if(!b)return;
+var slide=b.closest('.slide');
+setTimeout(function(){
+var fb=slide?slide.querySelector('.feedback'):null;
+var msg=fb?fb.textContent:'';
+if(/^(Correct|Done)/.test(msg)){xp+=10;streak+=1;}
+else{streak=0;}
+render();
+},150);
+});
+render();
+})();
+</script>
+<footer>
+  <p>At the Chemist, B1 Listening. 15 activities. Audio: British Council LearnEnglish, used for free, non-commercial educational purposes.</p>
+  <p><a href="../../index.html#b1-exam">All B1 Exam-oriented lessons</a> | <a href="Annisa-Day01-IELTS-Diagnostic-Learner.html">Day 1 IELTS Diagnostic</a> | <a href="Annisa-Day02-The-Overview-Learner.html">Day 2 The Overview</a></p>
+</footer>
+<script>
+/* At the Chemist B1 - granular LRS: per-slide views, per-activity answers, completion, listening */
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(sl){
+    var h=sl.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (sl.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(sl){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(sl),'slide');
+      if(slides.indexOf(sl)===slides.length-1 && l.completed) l.completed({});
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  },500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(sl){ mo.observe(sl,{attributes:true,attributeFilter:['class']}); });
+  }
+  // per-activity answers, once per activity
+  var sent={};
+  document.querySelectorAll('[data-check-text],[data-check-mcq]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var sl=b.closest('.slide');
+      var key=(sl?sl.id:'x')+':'+(b.getAttribute('data-check-text')!==null?'text':b.getAttribute('data-check-mcq'));
+      if(sent[key]) return;
+      sent[key]=true;
+      if(!sl) return;
+      var n=0;
+      sl.querySelectorAll('input[type=text]').forEach(function(inp){
+        n++;
+        var lab=sl.querySelector('label[for="'+inp.id+'"]');
+        var nm=inp.id||('field '+n);
+        if(lab) nm=lab.textContent.trim().substring(0,60);
+        try{ var l=L(); if(l) l.itemAccessed('Act: '+nm,'question'); }catch(e){}
+      });
+      sl.querySelectorAll('input[type=radio]').forEach(function(r){
+        if(!r.name||sent[key+r.name]) return;
+        sent[key+r.name]=true;
+        n++;
+        try{ var l=L(); if(l) l.itemAccessed('Act choice: '+r.name,'question'); }catch(e){}
+      });
+    },true);
+  });
+  // completion per activity
+  var marked={};
+  var totalComplete=document.querySelectorAll('[data-complete]').length;
+  document.querySelectorAll('[data-complete]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var sl=b.closest('.slide');
+      var id=sl?sl.id:'done';
+      if(marked[id]) return;
+      marked[id]=true;
+      try{
+        var l=L(); if(!l) return;
+        l.itemAccessed(label(sl)+' completed','activity');
+        if(Object.keys(marked).length>=totalComplete && l.completed) l.completed({});
+      }catch(e){}
+    },true);
+  });
+  // listening: model audio played
+  document.querySelectorAll('audio').forEach(function(aud){
+    aud.addEventListener('play',function(){
+      try{ var l=L(); if(l) l.itemAccessed('At the chemist: listening audio played','audio'); }catch(e){}
+    });
+  });
+  // the Act 1 warmer: free sentence the learner writes
+  var feel=document.getElementById('chemistFeel');
+  if(feel){
+    var hw=function(){
+      if(!feel.value.trim()) return;
+      try{ var l=L(); if(l) l.itemAccessed('Act 1 warmer sentence: '+(feel.value.trim().substring(0,40)),'writing'); }catch(e){}
+    };
+    feel.addEventListener('change',hw);
+    feel.addEventListener('blur',hw);
+  }
+})();
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>

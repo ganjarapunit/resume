@@ -801,7 +801,7 @@ footer.foot{text-align:center}
 <footer class="foot">
   <p>Arrows on keyboard work. Listen buttons use the best British voice on your device. Bao is male voice. Linh is female voice. Prices are practice only. Best in full screen.</p>
   <p>Recordings stay on this device. Only the copy you send for AI feedback leaves it, and the privacy note on the record slide explains this.</p>
-  <p><a href="../../index.html#a1-communicative" style="color:var(--accent)">All A1 Communicative lessons</a> | <a href="Bao-Linh-Lesson06-CafePractice-A1-Learner.html" style="color:var(--accent)">25 cafe pictures drill</a> | <a href="Bao-Linh-Lesson05-FoodAtHome-A1-Learner.html" style="color:var(--accent)">Lesson 5</a></p>
+  <p><a href="../../index.html#a1-communicative" style="color:var(--accent)">All A1 Communicative lessons</a> | <a href="Bao-Linh-Lesson06-CafePractice-A1-Learner.html" style="color:var(--accent)">25 cafe pictures drill</a> | <a href="Bao-Linh-Lesson05-FoodAtHome-A1-Learner.html" style="color:var(--accent)">Lesson 5</a> | <a href="Bao-Linh-Lesson07-AtTheMarket-A1-Learner.html" style="color:var(--accent)">Lesson 7</a></p>
 </footer>
 
 <script>
@@ -1113,9 +1113,17 @@ footer.foot{text-align:center}
       });
     });
     if(swap) swap.addEventListener('click', function(){
+      // Swap the name badge AND the inline speaker label inside each line,
+      // otherwise Bao asks a question but Linh still appears to answer it.
+      function flip(name){ return name.trim() === 'Bao' ? 'Linh' : 'Bao'; }
       root.querySelectorAll('[data-who]').forEach(function(w){
-        w.textContent = (w.textContent.trim() === 'Bao') ? 'Linh' : 'Bao';
+        w.textContent = flip(w.textContent);
       });
+      root.querySelectorAll('.line strong').forEach(function(st){
+        st.textContent = flip(st.textContent.replace(/\s*:\s*$/, '')) + ':';
+      });
+      root.querySelectorAll('.turn').forEach(function(t){ t.classList.remove('done'); });
+      refresh();
       if(status){ status.textContent = 'You changed. Say it again.'; status.className = 'feedback'; }
     });
     refresh();

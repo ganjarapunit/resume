@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="B2 English lesson on the auxiliary verbs is, do, can and could in workplace contexts.">
+<title>Is and Do, Can and Could at Work (B1) Interactive</title>
+<meta name="description" content="B1 business English learner deck: is and do, can and could at work. 15 activities with email repair, question building, tone and a 60 to 80 word email.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/b1/business-english/Is-Do-Can-Could-Workplace-B1-Learner.html">
+<style>
+/* ============================================================
+   TOKENS  (dark, high contrast)
+   All pairs verified at >= 4.5:1 for text, >= 3:1 for controls.
+   ============================================================ */
+:root{
+  --bg:#0a0a0a;
+  --surface:#0f1b2e;
+  --surface-2:#13233b;
+  --surface-3:#1b2e49;
+  --ink:#f5f9ff;          /* 18.74:1 on bg */
+  --muted:#b9c6d8;        /* 11.44:1 on bg, 9.97:1 on surface */
+  --accent:#ffd400;       /* 13.83:1 on bg */
+  --accent-2:#38e0c8;     /* 11.94:1 on bg */
+  --good:#38e0c8;
+  --bad:#ff8a8a;          /* 8.72:1 on bg */
+  --border:#2a3d57;       /* decorative only */
+  --border-strong:#4d6b95;/* 3.63:1 on bg, 3.17:1 on surface */
+  --focus:#ffd400;
+
+  --r:12px;
+  --r-sm:8px;
+  --tap:44px;             /* WCAG 2.5.5 / touch target */
+
+  --topbar-h:56px;
+  --nav-h:72px;
+
+  --pad:clamp(14px, 3vw, 28px);
+  --fs-body:clamp(15px, 0.42vw + 14px, 18px);
+  --fs-h1:clamp(1.5rem, 1.1vw + 1.15rem, 2.15rem);
+  --fs-h2:clamp(1.2rem, 0.7vw + 1rem, 1.7rem);
+  --fs-h3:clamp(1rem, 0.35vw + 0.92rem, 1.12rem);
+
+  --safe-b:env(safe-area-inset-bottom, 0px);
+  --safe-l:env(safe-area-inset-left, 0px);
+  --safe-r:env(safe-area-inset-right, 0px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font-size:var(--fs-body);
+  line-height:1.55;
+  overflow-x:hidden;
+  overscroll-behavior-y:none;
+}
+
+/* ============================================================
+   APP SHELL
+   Grid: topbar / stage / nav.  Rows are RESERVED, so the nav
+   can never overlay the slide content in any mode.
+   ============================================================ */
+#app{
+  height:100vh;
+  height:100dvh;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  grid-template-areas:"top" "stage" "nav";
+  max-width:1600px;
+  margin-inline:auto;
+  padding-left:var(--safe-l);
+  padding-right:var(--safe-r);
+}
+
+/* ---------- topbar ---------- */
+.topbar{
+  grid-area:top;
+  display:flex;align-items:center;gap:10px;
+  padding:8px var(--pad);
+  min-height:var(--topbar-h);
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1 1 auto}
+.brand h1{
+  margin:0;
+  font-size:.98rem;line-height:1.2;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand p{
+  margin:0;
+  font-size:.75rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.hud{display:flex;gap:6px;flex:0 0 auto}
+.pill{
+  background:var(--surface-2);
+  border:1px solid var(--border-strong);
+  border-radius:999px;
+  padding:4px 11px;
+  font-size:.78rem;color:var(--muted);
+  white-space:nowrap;
+}
+.pill b{color:var(--ink)}
+@media (max-width:700px){
+  .hud .pill.opt{display:none}
+}
+
+/* ---------- stage ---------- */
+#stage{
+  grid-area:stage;
+  position:relative;
+  min-height:0;
+  min-width:0;
+  overflow:hidden;
+}
+.deck{
+  height:100%;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+  padding:var(--pad);
+  scrollbar-color:var(--border-strong) var(--bg);
+  scrollbar-width:thin;
+}
+.deck::-webkit-scrollbar{width:10px}
+.deck::-webkit-scrollbar-track{background:var(--bg)}
+.deck::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:99px}
+
+.slide{
+  display:none;
+  max-width:1120px;
+  margin-inline:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:clamp(16px, 2.4vw, 30px);
+  animation:fade .28s ease both;
+}
+.slide.is-current{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.slide:focus{outline:none}
+.slide:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+
+.kicker{
+  margin:0 0 2px;
+  font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);
+}
+.slide h2{
+  margin:0 0 10px;
+  font-size:var(--fs-h2);line-height:1.2;
+  color:var(--accent);
+}
+.slide h3{font-size:var(--fs-h3);margin:18px 0 8px;color:var(--accent-2)}
+.lead{color:var(--muted);margin:0 0 12px}
+p{margin:10px 0}
+
+/* ---------- nav ---------- */
+#nav{
+  grid-area:nav;
+  display:flex;align-items:center;gap:10px;
+  padding:10px var(--pad);
+  padding-bottom:calc(10px + var(--safe-b));
+  min-height:var(--nav-h);
+  border-top:1px solid var(--border-strong);
+  background:var(--surface);
+}
+.nav-group{display:flex;align-items:center;gap:8px;min-width:0}
+.nav-mid{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;gap:5px;
+  min-width:0;
+}
+.counter{
+  font-size:.78rem;color:var(--muted);
+  text-align:center;white-space:nowrap;
+}
+.counter b{color:var(--ink)}
+.progress{
+  height:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border-strong);
+  border-radius:99px;overflow:hidden;
+}
+.progress i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent));
+  transition:width .3s ease;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  font:inherit;font-weight:600;
+  min-height:var(--tap);min-width:var(--tap);
+  padding:10px 18px;
+  border-radius:var(--r-sm);
+  border:2px solid transparent;
+  background:var(--surface-2);
+  color:var(--ink);
+  cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  white-space:nowrap;
+  transition:background .15s ease,border-color .15s ease;
+}
+.btn:hover{background:var(--surface-3)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
+.btn.primary:hover{background:#ffe14d;border-color:#ffe14d}
+.btn.accent2{background:var(--accent-2);color:#04120f;border-color:var(--accent-2)}
+.btn.accent2:hover{background:#4ff0d6;border-color:#4ff0d6}
+.btn.ghost{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn .ico{font-size:1.05em;line-height:1}
+.btn-label{display:inline}
+@media (max-width:520px){
+  .btn{padding:10px 14px}
+  .btn-label{display:none}
+  .btn.icon-only{min-width:var(--tap);padding:10px 12px}
+}
+
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+/* ============================================================
+   FORM CONTROLS
+   ============================================================ */
+.field{display:grid;gap:6px;margin:0 0 14px}
+.field > label,.q-label{font-weight:600;font-size:.95rem}
+.hint{color:var(--muted);font-size:.87rem}
+
+input[type=text],textarea,select{
+  font:inherit;font-size:1rem;
+  width:100%;
+  background:var(--bg);
+  color:var(--ink);
+  border:2px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  padding:11px 13px;
+  min-height:var(--tap);
+}
+textarea{resize:vertical;min-height:96px;line-height:1.5}
+select{
+  appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);
+  background-position:calc(100% - 19px) calc(50% + 2px),calc(100% - 13px) calc(50% + 2px);
+  background-size:6px 6px,6px 6px;
+  background-repeat:no-repeat;
+  padding-right:38px;
+}
+input[type=text]::placeholder,textarea::placeholder{color:#8494a8;opacity:1}
+input.correct,textarea.correct,select.correct{border-color:var(--good);background:rgba(56,224,200,.10)}
+input.wrong,textarea.wrong,select.wrong{border-color:var(--bad);background:rgba(255,138,138,.10)}
+
+.short{max-width:13ch}
+
+/* radio cards */
+.choices{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.choices label{
+  display:flex;gap:11px;align-items:flex-start;
+  border:2px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  padding:10px 13px;
+  background:var(--bg);
+  cursor:pointer;
+  min-height:var(--tap);
+}
+.choices label:hover{border-color:var(--accent-2);background:var(--surface-2)}
+.choices input{
+  flex:0 0 auto;
+  width:20px;height:20px;margin:2px 0 0;
+  accent-color:var(--accent-2);
+}
+.choices .opt{font-size:.95rem}
+.choices li.correct label{border-color:var(--good);background:rgba(56,224,200,.10)}
+.choices li.wrong label{border-color:var(--bad);background:rgba(255,138,138,.10)}
+.choices li.correct label::after{content:"Correct";color:var(--good);font-weight:700;font-size:.8rem;margin-left:auto;padding-left:10px}
+.choices li.wrong label::after{content:"Try again";color:var(--bad);font-weight:700;font-size:.8rem;margin-left:auto;padding-left:10px}
+
+/* cards */
+.cards{display:grid;gap:9px;margin:12px 0}
+.cards.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.card{
+  background:var(--bg);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  padding:12px 14px;
+}
+.card p{margin:0}
+.card .n{color:var(--accent-2);font-weight:700;margin-right:6px}
+
+/* email pane */
+.pane{
+  background:var(--bg);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  padding:14px 16px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-family:"Cascadia Code",Consolas,"Courier New",monospace;
+  font-size:.9rem;line-height:1.6;
+  margin:12px 0;
+}
+
+/* match grid */
+.match{display:grid;gap:10px;margin:12px 0}
+.match-row{
+  display:grid;
+  grid-template-columns:1fr minmax(150px,220px);
+  gap:10px;align-items:center;
+  background:var(--bg);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  padding:11px 13px;
+}
+@media (max-width:640px){
+  .match-row{grid-template-columns:1fr;gap:7px}
+}
+
+/* feedback */
+.fb{
+  margin-top:14px;
+  padding:12px 15px;
+  border:2px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  background:var(--surface-2);
+  font-size:.94rem;
+}
+.fb.ok{border-color:var(--good)}
+.fb.no{border-color:var(--bad)}
+.fb strong{display:block;margin-bottom:2px}
+.fb.ok strong{color:var(--good)}
+.fb.no strong{color:var(--bad)}
+.fb ul{margin:8px 0 0;padding-left:20px}
+
+/* model answer disclosure */
+details.model{
+  background:var(--surface-2);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r-sm);
+  margin-top:14px;
+}
+details.model>summary{
+  cursor:pointer;font-weight:600;color:var(--accent-2);
+  padding:12px 15px;
+  list-style:none;
+  display:flex;align-items:center;gap:9px;
+  min-height:var(--tap);
+}
+details.model>summary::-webkit-details-marker{display:none}
+details.model>summary::before{content:"\25B8";display:inline-block;transition:transform .18s}
+details.model[open]>summary::before{transform:rotate(90deg)}
+details.model>summary:hover{color:var(--accent)}
+.model-body{padding:0 15px 15px;border-top:1px solid var(--border-strong)}
+.model-body>*:first-child{margin-top:12px}
+.model-body ul{margin:8px 0;padding-left:20px}
+.model-body li{margin:4px 0}
+.model-body .pane{margin:10px 0}
+
+.qa{display:grid;gap:8px;margin:12px 0 0}
+.qa .row{
+  display:grid;grid-template-columns:auto 1fr;gap:9px;
+  font-family:"Cascadia Code",Consolas,monospace;font-size:.88rem;
+}
+.qa .row b{color:var(--accent-2);min-width:2.2ch}
+
+/* checklist */
+.checklist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
+.checklist li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:.94rem}
+.checklist li::before{content:"\2610";color:var(--accent);flex:0 0 auto;font-size:1.1em;line-height:1.3}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+
+/* ============================================================
+   FULLSCREEN BEHAVIOUR
+   Large screens : nav becomes a RIGHT RAIL docked outside the
+                   slide content box (grid column, never overlays).
+   Small screens : nav becomes a BOTTOM BAR inside the fullscreen
+                   viewport, in a reserved grid row (never overlays).
+   ============================================================ */
+#app:fullscreen,#app.pseudo-fs{
+  width:100%;height:100%;max-width:none;
+  background:var(--bg);
+}
+#app:fullscreen .topbar,#app.pseudo-fs .topbar{min-height:52px}
+
+@media (min-width:1024px){
+  #app:fullscreen,#app.pseudo-fs{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:"top top" "stage nav";
+  }
+  #app:fullscreen #nav,#app.pseudo-fs #nav{
+    border-top:none;
+    border-left:1px solid var(--border-strong);
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+    min-width:132px;
+    padding:16px 14px;
+    padding-right:calc(14px + var(--safe-r));
+  }
+  #app:fullscreen .nav-group,#app.pseudo-fs .nav-group{flex-direction:column;width:100%}
+  #app:fullscreen .nav-group .btn,#app.pseudo-fs .nav-group .btn{width:100%}
+  #app:fullscreen .nav-mid,#app.pseudo-fs .nav-mid{width:100%}
+  #app:fullscreen #nav .btn-label,#app.pseudo-fs #nav .btn-label{display:inline}
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--accent);color:#0a0a0a;
+  padding:12px 18px;font-weight:700;
+  border-radius:0 0 var(--r-sm) 0;
+}
+.skip:focus{left:0}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+.finale{text-align:center;padding:clamp(18px,4vw,40px) 0}
+.finale h2{color:var(--good);font-size:var(--fs-h1)}
+.recap{
+  display:grid;gap:9px;margin:18px 0;text-align:left;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));
+}
+.recap div{
+  background:var(--bg);border:1px solid var(--border-strong);
+  border-radius:var(--r-sm);padding:12px 14px;
+}
+.recap b{display:block;color:var(--accent);font-size:1.1rem;margin-bottom:3px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  .deck{scroll-behavior:auto}
+  #confetti{display:none}
+}
+@media (prefers-contrast:more){
+  :root{--border:#5c7796;--border-strong:#7d9ec2;--muted:#dbe4ef}
+}
+@media print{
+  body{overflow:visible}
+  #app{height:auto;display:block}
+  #stage,#nav,.topbar{display:none}
+  .slide{display:block !important;page-break-after:always;border:1px solid #000}
+}
+.deck-foot{max-width:1080px;margin:0 auto;padding:20px clamp(14px,3vw,28px) 32px;border-top:2px solid var(--line);text-align:center;color:var(--muted);font-size:.9rem;line-height:1.7}
+.deck-foot p{margin:.3rem 0}
+.deck-foot a{color:var(--accent);font-weight:700}
+/* narrow screens: the topbar HUD and the nav counter must not force
+   horizontal scroll, so let them wrap and shrink instead */
+@media (max-width:560px){
+  .topbar{flex-wrap:wrap}
+  .hud{flex:1 1 100%;order:3;flex-wrap:wrap}
+  #nav{flex-wrap:wrap}
+  .nav-mid{flex:1 1 100%;order:-1}
+  .counter{white-space:normal}
+  .slide{max-width:100%}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#stage">Skip to the current slide</a>
+
+<div id="app">
+
+  <!-- ================= TOPBAR ================= -->
+  <header class="topbar">
+    <div class="brand">
+      <h1>Is and Do, Can and Could at Work</h1>
+      <p>Level B2 &middot; Workplace English</p>
+    </div>
+    <div class="hud">
+      <span class="pill"><b id="hudDone">0</b>/15 done</span>
+      <span class="pill opt">Points <b id="hudXp">0</b></span>
+      <span class="pill opt">Streak <b id="hudStreak">0</b></span>
+    </div>
+    <button class="btn ghost" id="fsBtn" type="button" aria-pressed="false">
+      <span class="ico" aria-hidden="true">&#9974;</span>
+      <span class="btn-label" id="fsLabel">Full screen</span>
+    </button>
+  </header>
+
+  <!-- ================= STAGE ================= -->
+  <main id="stage">
+    <div class="deck" id="deck">
+
+      <!-- ---------- 0. INTRO ---------- -->
+      <section class="slide is-current" id="s0" data-title="Start here" role="group" aria-roledescription="slide" aria-label="Slide 1 of 18: Start here" tabindex="-1">
+        <p class="kicker">Lesson</p>
+        <h2>Four small words that do a lot of work</h2>
+        <p class="lead"><b>is</b>, <b>do</b>, <b>can</b> and <b>could</b>. You will use them to check, ask, request and suggest in real workplace situations.</p>
+
+        <div class="recap">
+          <div><b>is</b>now, this week, states</div>
+          <div><b>do</b>habits, facts, routines</div>
+          <div><b>can</b>ability, permission, availability</div>
+          <div><b>could</b>past, possibility, suggestion, polite request</div>
+        </div>
+
+        <h3>How this deck works</h3>
+        <ul class="checklist">
+          <li>Use <b>Next</b> and <b>Back</b>, the arrow keys, or swipe on a touch screen.</li>
+          <li>Press <b>Check answers</b> on any slide that has one. Your result appears straight away.</li>
+          <li>Every <b>Model answer</b> is folded shut. Try the task first, then open it.</li>
+          <li>Press <b>Full screen</b> for a distraction-free view. Press <b>Esc</b> to leave.</li>
+        </ul>
+
+        <div class="actions">
+          <button class="btn primary" data-goto="1" type="button">Start the lesson</button>
+        </div>
+      </section>
+
+      <!-- ---------- 1 ---------- -->
+      <section class="slide" id="s1" data-title="Monday morning" role="group" aria-roledescription="slide" aria-label="Slide 2 of 18: Monday morning" tabindex="-1">
+        <p class="kicker">Activity 1</p>
+        <h2>Monday morning</h2>
+        <p class="lead">Four messages land in your inbox on Monday morning. Read them and answer.</p>
+        <div class="cards">
+          <div class="card"><p><b>A.</b> Can you send me the Q3 figures before the 10:30 call?</p></div>
+          <div class="card"><p><b>B.</b> Is the report ready? I need it. Now.</p></div>
+          <div class="card"><p><b>C.</b> Could you let me know whether the figures are ready?</p></div>
+          <div class="card"><p><b>D.</b> Do you have the Q3 figures?</p></div>
+        </div>
+        <div class="field">
+          <label for="a1q1">Which would you answer first? Why?</label>
+          <textarea id="a1q1" rows="2" placeholder="I would answer C first because..."></textarea>
+        </div>
+        <div class="field">
+          <label for="a1q2">Which one would you rewrite? How would you rewrite it?</label>
+          <textarea id="a1q2" rows="3" placeholder="I would rewrite B. I would write..."></textarea>
+        </div>
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p>C is the strongest first choice, because it names the item, is polite, and asks for a clear yes or no answer.</p>
+          <p>B is the one most people want to rewrite. It has no deadline, no "please", and the full stop after "Now" sounds like a threat. One workable rewrite: "Could you let me know if the report is ready? I need it before 10:30."</p>
+          <p>There is no single right answer here. Saying why is what matters.</p>
+        </div></details>
+        <div class="actions">
+          <button class="btn accent2" data-complete="s1" type="button">Mark complete</button>
+        </div>
+      </section>
+
+      <!-- ---------- 2 ---------- -->
+      <section class="slide" id="s2" data-title="Spot the problem" role="group" aria-roledescription="slide" aria-label="Slide 3 of 18: Spot the problem" tabindex="-1">
+        <p class="kicker">Activity 2</p>
+        <h2>Spot the problem</h2>
+        <p class="lead">Six lines in this email thread have a problem with is, do, can or could. Write the correct version of each one.</p>
+        <div class="pane">Nadia: Hi Tom, do you have five minutes today?
+Tom: Sure. Are you be free at three?
+Nadia: Yes, I am. Where you want to meet?
+Tom: The meeting room on floor two. Do you can send me the draft first?
+Nadia: I'll send it now. Could you helping me check the numbers too?
+Tom: Of course. Do you need Priya there as well?
+Nadia: Yes, please. Could you ask her if she could join us?
+Tom: Sure. Last month I can't get into that room either.
+Nadia: Right, they changed the door code on Monday.
+Tom: Thanks. Do you have the new code?
+Nadia: Yes, I do. It's on the noticeboard.
+Tom: Are you sure it's working?
+Nadia: Yes, I do.</div>
+
+        <div class="field">
+          <label for="a2q1">1. Tom: "Are you be free at three?"</label>
+          <input type="text" id="a2q1" data-check="s2" data-accept="are you free" data-model="Are you free at three?">
+        </div>
+        <div class="field">
+          <label for="a2q2">2. Nadia: "Where you want to meet?"</label>
+          <input type="text" id="a2q2" data-check="s2" data-accept="where do you want to meet" data-model="Where do you want to meet?">
+        </div>
+        <div class="field">
+          <label for="a2q3">3. Tom: "Do you can send me the draft first?"</label>
+          <input type="text" id="a2q3" data-check="s2" data-accept="can you send me the draft" data-model="Can you send me the draft first?">
+        </div>
+        <div class="field">
+          <label for="a2q4">4. Nadia: "Could you helping me check the numbers too?"</label>
+          <input type="text" id="a2q4" data-check="s2" data-accept="could you help me" data-model="Could you help me check the numbers too?">
+        </div>
+        <div class="field">
+          <label for="a2q5">5. Tom: "Last month I can't get into that room either."</label>
+          <input type="text" id="a2q5" data-check="s2" data-accept="couldn't get into|could not get into" data-model="Last month I couldn't get into that room either.">
+        </div>
+
+        <fieldset style="border:0;padding:0;margin:0 0 14px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">6. Tom asks: "Are you sure it's working?" Which reply is correct?</legend>
+          <ul class="choices" data-group="a2q6">
+            <li><label><input type="radio" name="a2q6" value="a"><span class="opt">Yes, I do.</span></label></li>
+            <li><label><input type="radio" name="a2q6" value="b" data-correct="true"><span class="opt">Yes, I am.</span></label></li>
+            <li><label><input type="radio" name="a2q6" value="c"><span class="opt">Yes, it does.</span></label></li>
+          </ul>
+        </fieldset>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1.</b> Are you free at three? An auxiliary does not take be after it.</li>
+            <li><b>2.</b> Where do you want to meet? A present simple question needs do.</li>
+            <li><b>3.</b> Can you send me the draft first? One auxiliary per question.</li>
+            <li><b>4.</b> Could you help me check the numbers too? After could, use the base verb with no to.</li>
+            <li><b>5.</b> Last month I couldn't get into that room either. Past meaning needs could.</li>
+            <li><b>6.</b> Yes, I am. The short answer copies the auxiliary you were asked with.</li>
+          </ul>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s2" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s2" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s2" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 3 ---------- -->
+      <section class="slide" id="s3" data-title="Sort and notice" role="group" aria-roledescription="slide" aria-label="Slide 4 of 18: Sort and notice" tabindex="-1">
+        <p class="kicker">Activity 3</p>
+        <h2>Sort and notice</h2>
+        <p class="lead">Put these twelve sentences into four groups: is, do, can, could.</p>
+        <div class="cards two">
+          <div class="card"><p><span class="n">1.</span>Is the client happy with the plan?</p></div>
+          <div class="card"><p><span class="n">2.</span>Is she working from home this week?</p></div>
+          <div class="card"><p><span class="n">3.</span>Is the printer still broken?</p></div>
+          <div class="card"><p><span class="n">4.</span>Do you know the deadline?</p></div>
+          <div class="card"><p><span class="n">5.</span>Does the system save automatically?</p></div>
+          <div class="card"><p><span class="n">6.</span>I don't have the file.</p></div>
+          <div class="card"><p><span class="n">7.</span>Can you cover the meeting on Friday?</p></div>
+          <div class="card"><p><span class="n">8.</span>Can I take a day off next week?</p></div>
+          <div class="card"><p><span class="n">9.</span>She can join after 3pm.</p></div>
+          <div class="card"><p><span class="n">10.</span>Could we move the call to 2pm?</p></div>
+          <div class="card"><p><span class="n">11.</span>We could offer them a discount.</p></div>
+          <div class="card"><p><span class="n">12.</span>Yesterday I could hear a noise from the server room.</p></div>
+        </div>
+
+        <p class="lead" style="margin-top:18px">Now answer these four questions.</p>
+
+        <fieldset style="border:0;padding:0;margin:0 0 16px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">a) Which group asks about now, or about this week?</legend>
+          <ul class="choices" data-group="a3q1">
+            <li><label><input type="radio" name="a3q1" value="a" data-correct="true"><span class="opt">is</span></label></li>
+            <li><label><input type="radio" name="a3q1" value="b"><span class="opt">do</span></label></li>
+            <li><label><input type="radio" name="a3q1" value="c"><span class="opt">can</span></label></li>
+            <li><label><input type="radio" name="a3q1" value="d"><span class="opt">could</span></label></li>
+          </ul>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0 0 16px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">b) Which group asks about habits or facts?</legend>
+          <ul class="choices" data-group="a3q2">
+            <li><label><input type="radio" name="a3q2" value="a"><span class="opt">is</span></label></li>
+            <li><label><input type="radio" name="a3q2" value="b" data-correct="true"><span class="opt">do</span></label></li>
+            <li><label><input type="radio" name="a3q2" value="c"><span class="opt">can</span></label></li>
+            <li><label><input type="radio" name="a3q2" value="d"><span class="opt">could</span></label></li>
+          </ul>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0 0 16px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">c) Sentence 7 asks whether the colleague is free to do something. Sentence 10 does what?</legend>
+          <ul class="choices" data-group="a3q3">
+            <li><label><input type="radio" name="a3q3" value="a"><span class="opt">It asks for permission.</span></label></li>
+            <li><label><input type="radio" name="a3q3" value="b" data-correct="true"><span class="opt">It makes a suggestion.</span></label></li>
+            <li><label><input type="radio" name="a3q3" value="c"><span class="opt">It asks about the past.</span></label></li>
+            <li><label><input type="radio" name="a3q3" value="d"><span class="opt">It makes a promise.</span></label></li>
+          </ul>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0 0 16px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">d) Which sentence is about the past?</legend>
+          <ul class="choices" data-group="a3q4">
+            <li><label><input type="radio" name="a3q4" value="a"><span class="opt">Sentence 8</span></label></li>
+            <li><label><input type="radio" name="a3q4" value="b"><span class="opt">Sentence 10</span></label></li>
+            <li><label><input type="radio" name="a3q4" value="c"><span class="opt">Sentence 11</span></label></li>
+            <li><label><input type="radio" name="a3q4" value="d" data-correct="true"><span class="opt">Sentence 12</span></label></li>
+          </ul>
+        </fieldset>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p><b>is:</b> 1, 2, 3 &nbsp;&middot;&nbsp; <b>do:</b> 4, 5, 6 &nbsp;&middot;&nbsp; <b>can:</b> 7, 8, 9 &nbsp;&middot;&nbsp; <b>could:</b> 10, 11, 12</p>
+          <ul>
+            <li><b>a)</b> is. Present continuous for an action now, and be plus adjective for a state.</li>
+            <li><b>b)</b> do. Present simple for habits, routines and facts.</li>
+            <li><b>c)</b> 7 asks about ability or availability, so can is asking. 10 offers an alternative, so could is suggesting. could is softer and keeps the idea in the shared space.</li>
+            <li><b>d)</b> 12. Two signals: "yesterday", and could instead of can.</li>
+          </ul>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s3" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s3" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s3" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 4 ---------- -->
+      <section class="slide" id="s4" data-title="What is the job?" role="group" aria-roledescription="slide" aria-label="Slide 5 of 18: What is the job" tabindex="-1">
+        <p class="kicker">Activity 4</p>
+        <h2>What is the job?</h2>
+        <p class="lead">What job is each sentence doing? Choose the function for A to H.</p>
+
+        <div class="match">
+          <div class="match-row">
+            <p style="margin:0"><b>A.</b> Can you use the new CRM, or do you still need training?</p>
+            <select id="a4a" data-check="s4" data-accept="asking about ability" aria-label="Function for sentence A">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>B.</b> Could you send me the link when you get a chance?</p>
+            <select id="a4b" data-check="s4" data-accept="a polite request" aria-label="Function for sentence B">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>C.</b> Can I open the window?</p>
+            <select id="a4c" data-check="s4" data-accept="asking permission" aria-label="Function for sentence C">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>D.</b> We could run the workshop in March instead.</p>
+            <select id="a4d" data-check="s4" data-accept="a suggestion" aria-label="Function for sentence D">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>E.</b> Do you usually work late on Fridays?</p>
+            <select id="a4e" data-check="s4" data-accept="asking about a habit" aria-label="Function for sentence E">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>F.</b> Is the team ready for the audit?</p>
+            <select id="a4f" data-check="s4" data-accept="asking about now" aria-label="Function for sentence F">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>G.</b> Last year I couldn't present without notes.</p>
+            <select id="a4g" data-check="s4" data-accept="past ability" aria-label="Function for sentence G">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <p style="margin:0"><b>H.</b> The server looks fine, so it could be the network.</p>
+            <select id="a4h" data-check="s4" data-accept="a possibility in the present" aria-label="Function for sentence H">
+              <option value="">Choose...</option>
+              <option>asking about ability</option><option>a polite request</option>
+              <option>asking permission</option><option>a suggestion</option>
+              <option>asking about a habit</option><option>asking about now</option>
+              <option>past ability</option><option>a possibility in the present</option>
+            </select>
+          </div>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p>A ability &middot; B polite request &middot; C permission &middot; D suggestion &middot; E habit &middot; F now &middot; G past ability &middot; H possibility</p>
+          <p>Watch the traps. A looks like a request but it is about ability, because of the second half of the sentence. H looks like ability but it is possibility. D looks like possibility but "instead" makes it a proposal.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s4" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s4" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s4" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 5 ---------- -->
+      <section class="slide" id="s5" data-title="Build the question" role="group" aria-roledescription="slide" aria-label="Slide 6 of 18: Build the question" tabindex="-1">
+        <p class="kicker">Activity 5</p>
+        <h2>Build the question</h2>
+        <p class="lead">Put each jumble in order to make a question. Two of them have a word you do not need.</p>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="a5q1">1. you / do / where / want / to sit / the meeting (?)</label>
+            <input type="text" id="a5q1" data-check="s5" data-accept="where do you want to sit" data-model="Where do you want to sit?">
+          </div>
+          <div class="field">
+            <label for="a5q2">2. the report / is / finished / yet / tomorrow (?)</label>
+            <input type="text" id="a5q2" data-check="s5" data-accept="is the report finished yet" data-model="Is the report finished yet?">
+          </div>
+          <div class="field">
+            <label for="a5q3">3. she / can / join / the call / on Friday (?)</label>
+            <input type="text" id="a5q3" data-check="s5" data-accept="can she join the call on friday" data-model="Can she join the call on Friday?">
+          </div>
+          <div class="field">
+            <label for="a5q4">4. could / you / tell me / when / the deadline / is (?)</label>
+            <input type="text" id="a5q4" data-check="s5" data-accept="when the deadline is" data-model="Could you tell me when the deadline is?">
+          </div>
+          <div class="field">
+            <label for="a5q5">5. do / you / know / if / the client / signed (?)</label>
+            <input type="text" id="a5q5" data-check="s5" data-accept="do you know if the client signed" data-model="Do you know if the client signed?">
+          </div>
+          <div class="field">
+            <label for="a5q6">6. can / I / take / next Friday / off (?)</label>
+            <input type="text" id="a5q6" data-check="s5" data-accept="can i take next friday off" data-model="Can I take next Friday off?">
+          </div>
+          <div class="field">
+            <label for="a5q7">7. is / he / working / from home / today (?)</label>
+            <input type="text" id="a5q7" data-check="s5" data-accept="is he working from home today" data-model="Is he working from home today?">
+          </div>
+          <div class="field">
+            <label for="a5q8">8. could / we / move / the meeting / to Thursday (?)</label>
+            <input type="text" id="a5q8" data-check="s5" data-accept="could we move the meeting to thursday" data-model="Could we move the meeting to Thursday?">
+          </div>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <div class="qa">
+            <div class="row"><b>1.</b><span>Where do you want to sit? <i>("the meeting" is extra)</i></span></div>
+            <div class="row"><b>2.</b><span>Is the report finished yet? <i>("tomorrow" is extra)</i></span></div>
+            <div class="row"><b>3.</b><span>Can she join the call on Friday?</span></div>
+            <div class="row"><b>4.</b><span>Could you tell me when the deadline is?</span></div>
+            <div class="row"><b>5.</b><span>Do you know if the client signed?</span></div>
+            <div class="row"><b>6.</b><span>Can I take next Friday off?</span></div>
+            <div class="row"><b>7.</b><span>Is he working from home today?</span></div>
+            <div class="row"><b>8.</b><span>Could we move the meeting to Thursday?</span></div>
+          </div>
+          <p><b>Number 4 is the important one.</b> After a question word in an indirect question, the word order goes back to normal: "when the deadline is", not "when is the deadline".</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s5" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s5" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s5" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 6 ---------- -->
+      <section class="slide" id="s6" data-title="Short and sharp" role="group" aria-roledescription="slide" aria-label="Slide 7 of 18: Short and sharp" tabindex="-1">
+        <p class="kicker">Activity 6</p>
+        <h2>Short and sharp</h2>
+        <p class="lead">Choose the reply that matches each question's auxiliary.</p>
+
+        <div class="grid2">
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">1. Do you have the Q3 figures?</legend>
+            <ul class="choices" data-group="a6q1">
+              <li><label><input type="radio" name="a6q1" value="a" data-correct="true"><span class="opt">Yes, I do.</span></label></li>
+              <li><label><input type="radio" name="a6q1" value="b"><span class="opt">Yes, I am.</span></label></li>
+              <li><label><input type="radio" name="a6q1" value="c"><span class="opt">Yes, I can.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">2. Is the server working now?</legend>
+            <ul class="choices" data-group="a6q2">
+              <li><label><input type="radio" name="a6q2" value="a"><span class="opt">Yes, it does.</span></label></li>
+              <li><label><input type="radio" name="a6q2" value="b" data-correct="true"><span class="opt">Yes, it is.</span></label></li>
+              <li><label><input type="radio" name="a6q2" value="c"><span class="opt">Yes, it can.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">3. Can you speak to the client this afternoon?</legend>
+            <ul class="choices" data-group="a6q3">
+              <li><label><input type="radio" name="a6q3" value="a"><span class="opt">Yes, I do.</span></label></li>
+              <li><label><input type="radio" name="a6q3" value="b"><span class="opt">Yes, I am.</span></label></li>
+              <li><label><input type="radio" name="a6q3" value="c" data-correct="true"><span class="opt">Yes, I can.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">4. Are they ready to start?</legend>
+            <ul class="choices" data-group="a6q4">
+              <li><label><input type="radio" name="a6q4" value="a"><span class="opt">Yes, they do.</span></label></li>
+              <li><label><input type="radio" name="a6q4" value="b" data-correct="true"><span class="opt">Yes, they are.</span></label></li>
+              <li><label><input type="radio" name="a6q4" value="c"><span class="opt">Yes, they can.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">5. Does Priya know about the change?</legend>
+            <ul class="choices" data-group="a6q5">
+              <li><label><input type="radio" name="a6q5" value="a"><span class="opt">Yes, she is.</span></label></li>
+              <li><label><input type="radio" name="a6q5" value="b" data-correct="true"><span class="opt">Yes, she does.</span></label></li>
+              <li><label><input type="radio" name="a6q5" value="c"><span class="opt">Yes, she can.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">6. Could you finish the draft by Friday?</legend>
+            <ul class="choices" data-group="a6q6">
+              <li><label><input type="radio" name="a6q6" value="a"><span class="opt">Yes, I could.</span></label></li>
+              <li><label><input type="radio" name="a6q6" value="b" data-correct="true"><span class="opt">Yes, of course.</span></label></li>
+              <li><label><input type="radio" name="a6q6" value="c"><span class="opt">Yes, I do.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">7. Could you use this software last year?</legend>
+            <ul class="choices" data-group="a6q7">
+              <li><label><input type="radio" name="a6q7" value="a" data-correct="true"><span class="opt">Yes, I could.</span></label></li>
+              <li><label><input type="radio" name="a6q7" value="b"><span class="opt">Yes, I can.</span></label></li>
+              <li><label><input type="radio" name="a6q7" value="c"><span class="opt">Yes, I am.</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">8. Can I take next Friday off? (Your manager replies.)</legend>
+            <ul class="choices" data-group="a6q8">
+              <li><label><input type="radio" name="a6q8" value="a"><span class="opt">Yes, you could.</span></label></li>
+              <li><label><input type="radio" name="a6q8" value="b"><span class="opt">Yes, you are.</span></label></li>
+              <li><label><input type="radio" name="a6q8" value="c" data-correct="true"><span class="opt">Yes, you can.</span></label></li>
+            </ul>
+          </fieldset>
+        </div>
+
+        <div class="field" style="margin-top:18px">
+          <label for="a6why">Why are 6 and 7 different?</label>
+          <textarea id="a6why" rows="2" placeholder="In 6, could is making a request. In 7, could is..."></textarea>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p><b>1.</b> Yes, I do. &nbsp; <b>2.</b> Yes, it is. &nbsp; <b>3.</b> Yes, I can. &nbsp; <b>4.</b> Yes, they are. &nbsp; <b>5.</b> Yes, she does. &nbsp; <b>6.</b> Yes, of course. &nbsp; <b>7.</b> Yes, I could. &nbsp; <b>8.</b> Yes, you can.</p>
+          <p><b>The point in 6 and 7.</b> In 6, could is making a request, so you are agreeing to do it now. Replying "Yes, I could" sounds like you are talking about a past or imaginary situation, so it sounds distant. In 7, could is past ability, so "Yes, I could" is exactly right. Same word, two jobs, two answers.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s6" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s6" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s6" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 7 ---------- -->
+      <section class="slide" id="s7" data-title="Complete the email" role="group" aria-roledescription="slide" aria-label="Slide 8 of 18: Complete the email" tabindex="-1">
+        <p class="kicker">Activity 7</p>
+        <h2>Complete the email</h2>
+        <p class="lead">Complete Marco's email with one word for each gap.</p>
+        <div class="pane">Hi Lena,
+
+Sorry I missed your call. The training session (1) ___ still running, so my
+phone was on silent.
+
+(2) ___ you still need the figures today? If you (3) ___ wait until tomorrow
+morning, I'll send them first thing.
+
+(4) ___ I ask you to check the totals before I forward them? I (5) ___
+always spot errors when I'm rushed.
+
+Also, (6) ___ we move our review to Thursday morning? I (7) ___ make
+Thursday afternoon, so that works better for me.
+
+Let me know if that (8) ___ possible.
+
+Thanks,
+Marco</div>
+
+        <div class="grid2">
+          <div class="field"><label for="a7q1">1. The training session ___ still running.</label>
+            <input type="text" id="a7q1" class="short" data-check="s7" data-accept="is" data-exact="true" data-model="is"></div>
+          <div class="field"><label for="a7q2">2. ___ you still need the figures today?</label>
+            <input type="text" id="a7q2" class="short" data-check="s7" data-accept="do" data-exact="true" data-model="Do"></div>
+          <div class="field"><label for="a7q3">3. If you ___ wait until tomorrow morning.</label>
+            <input type="text" id="a7q3" class="short" data-check="s7" data-accept="can" data-exact="true" data-model="can"></div>
+          <div class="field"><label for="a7q4">4. ___ I ask you to check the totals?</label>
+            <input type="text" id="a7q4" class="short" data-check="s7" data-accept="could" data-exact="true" data-model="Could"></div>
+          <div class="field"><label for="a7q5">5. I ___ always spot errors when I'm rushed.</label>
+            <input type="text" id="a7q5" class="short" data-check="s7" data-accept="don't|dont" data-exact="true" data-model="don't"></div>
+          <div class="field"><label for="a7q6">6. ___ we move our review to Thursday morning?</label>
+            <input type="text" id="a7q6" class="short" data-check="s7" data-accept="could" data-exact="true" data-model="could"></div>
+          <div class="field"><label for="a7q7">7. I ___ make Thursday afternoon.</label>
+            <input type="text" id="a7q7" class="short" data-check="s7" data-accept="can't|cannot" data-exact="true" data-model="can't"></div>
+          <div class="field"><label for="a7q8">8. Let me know if that ___ possible.</label>
+            <input type="text" id="a7q8" class="short" data-check="s7" data-accept="is" data-exact="true" data-model="is"></div>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1. is</b> ongoing action now. An action in progress takes is, not do.</li>
+            <li><b>2. Do</b> present simple question to a colleague.</li>
+            <li><b>3. can</b> asking whether your colleague is able to wait.</li>
+            <li><b>4. Could</b> politeness. can would sound like a demand here.</li>
+            <li><b>5. don't</b> present simple negative, time marker "always".</li>
+            <li><b>6. could</b> suggestion, "we" keeps the decision shared.</li>
+            <li><b>7. can't</b> genuine inability, no past meaning and no politeness sought.</li>
+            <li><b>8. is</b> be plus adjective, so "do" is impossible here.</li>
+          </ul>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s7" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s7" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s7" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 8 ---------- -->
+      <section class="slide" id="s8" data-title="Then and now" role="group" aria-roledescription="slide" aria-label="Slide 9 of 18: Then and now" tabindex="-1">
+        <p class="kicker">Activity 8</p>
+        <h2>Then and now</h2>
+        <p class="lead">Complete with can, can't, could or couldn't. The time markers are your clue.</p>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="a8q1">1. I (a) ___ swim when I was four, but these days I (b) ___.</label>
+            <input type="text" id="a8q1" class="short" data-check="s8" data-accept="could" data-exact="true" data-model="could" aria-describedby="d8q1">
+            <input type="text" id="a8q1b" class="short" data-check="s8" data-accept="can't|cannot" data-exact="true" data-model="can't" aria-label="Second blank of sentence 1">
+          </div>
+          <div class="field">
+            <label for="a8q2">2. Right now I ___ access the shared drive. The password is wrong.</label>
+            <input type="text" id="a8q2" class="short" data-check="s8" data-accept="can't|cannot" data-exact="true" data-model="can't">
+          </div>
+          <div class="field">
+            <label for="a8q3">3. We ___ finish the project last quarter because we had no budget.</label>
+            <input type="text" id="a8q3" class="short" data-check="s8" data-accept="couldn't|could not" data-exact="true" data-model="couldn't">
+          </div>
+          <div class="field">
+            <label for="a8q4">4. She speaks three languages, so she ___ handle the Japanese client.</label>
+            <input type="text" id="a8q4" class="short" data-check="s8" data-accept="can" data-exact="true" data-model="can">
+          </div>
+          <div class="field">
+            <label for="a8q5">5. Two years ago I ___ work nights, but I'm too old for that now.</label>
+            <input type="text" id="a8q5" class="short" data-check="s8" data-accept="could" data-exact="true" data-model="could">
+          </div>
+          <div class="field">
+            <label for="a8q6">6. ___ you use this software last year? I need it for the training plan.</label>
+            <input type="text" id="a8q6" class="short" data-check="s8" data-accept="could" data-exact="true" data-model="Could">
+          </div>
+          <div class="field">
+            <label for="a8q7">7. I'm busy at 3, so I ___ join the call then. I ___ join at 4 instead.</label>
+            <input type="text" id="a8q7" class="short" data-check="s8" data-accept="can't|cannot" data-exact="true" data-model="can't">
+            <input type="text" id="a8q7b" class="short" data-check="s8" data-accept="can" data-exact="true" data-model="can" aria-label="Second blank of sentence 7">
+          </div>
+          <div class="field">
+            <label for="a8q8">8. I'm not sure why it failed. It ___ be the printer again.</label>
+            <input type="text" id="a8q8" class="short" data-check="s8" data-accept="could" data-exact="true" data-model="could">
+          </div>
+        </div>
+        <span class="sr" id="d8q1">Two blanks. The first is "could", the second is "can't".</span>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1. a) could  b) can't</b> "when I was four" is past; "these days" is now and the meaning is inability.</li>
+            <li><b>2. can't</b> "Right now" plus a specific present failure.</li>
+            <li><b>3. couldn't</b> "last quarter" is finished past.</li>
+            <li><b>4. can</b> present ability, inferred from present evidence.</li>
+            <li><b>5. could</b> "Two years ago" is past, even though the second half of the sentence is now.</li>
+            <li><b>6. Could</b> past ability in the question.</li>
+            <li><b>7. can't / can</b> same person, same day, two different slots. The time marker decides.</li>
+            <li><b>8. could</b> possibility, not ability. The speaker does not know, and could is the hedge that keeps you from sounding certain.</li>
+          </ul>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s8" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s8" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s8" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 9 ---------- -->
+      <section class="slide" id="s9" data-title="Tone it down" role="group" aria-roledescription="slide" aria-label="Slide 10 of 18: Tone it down" tabindex="-1">
+        <p class="kicker">Activity 9</p>
+        <h2>Tone it down</h2>
+        <p class="lead">Four people ask for the same report. Rank them 1 to 4, most direct to most polite.</p>
+        <div class="cards">
+          <div class="card"><p><b>A.</b> Send me the report.</p></div>
+          <div class="card"><p><b>B.</b> Can you send me the report?</p></div>
+          <div class="card"><p><b>C.</b> Could you send me the report when you have a moment?</p></div>
+          <div class="card"><p><b>D.</b> I was wondering if you could possibly send me the report at some point.</p></div>
+        </div>
+
+        <fieldset style="border:0;padding:0;margin:0 0 14px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">Which one fits a first email to a new client?</legend>
+          <ul class="choices" data-group="a9q1">
+            <li><label><input type="radio" name="a9q1" value="a"><span class="opt">A</span></label></li>
+            <li><label><input type="radio" name="a9q1" value="b"><span class="opt">B</span></label></li>
+            <li><label><input type="radio" name="a9q1" value="c" data-correct="true"><span class="opt">C or D</span></label></li>
+          </ul>
+        </fieldset>
+        <fieldset style="border:0;padding:0;margin:0 0 14px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">Which one fits a colleague sitting next to you?</legend>
+          <ul class="choices" data-group="a9q2">
+            <li><label><input type="radio" name="a9q2" value="a"><span class="opt">D</span></label></li>
+            <li><label><input type="radio" name="a9q2" value="b" data-correct="true"><span class="opt">B</span></label></li>
+            <li><label><input type="radio" name="a9q2" value="c"><span class="opt">A</span></label></li>
+          </ul>
+        </fieldset>
+
+        <div class="field">
+          <label for="a9e">Soften this with could: "Give me the password for the shared drive."</label>
+          <input type="text" id="a9e" data-check="s9" data-accept="could you" data-model="Could you send me the password for the shared drive?">
+        </div>
+        <div class="field">
+          <label for="a9f">Soften this with could: "I need the client's phone number. Tell me."</label>
+          <input type="text" id="a9f" data-check="s9" data-accept="could you tell|could i get|could you" data-model="Could you tell me the client's phone number, please?">
+        </div>
+        <div class="field">
+          <label for="a9g">Your line manager needs the file by 5pm. Ask.</label>
+          <textarea id="a9g" rows="2" placeholder="Could you send me the file by 5pm?"></textarea>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p><b>Ranking, most direct to most polite:</b> 1 = A, 2 = B, 3 = C, 4 = D</p>
+          <p>A new client: C or D. You do not know this person yet, so you keep distance. A colleague next to you: B. D to a colleague you talk to all day would sound sarcastic or oddly cold.</p>
+          <p><b>E.</b> Could you send me the password for the shared drive?<br><b>F.</b> Could you tell me the client's phone number, please?<br><b>Your own:</b> "Could you send me the file by 5pm?"</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s9" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s9" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s9" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 10 ---------- -->
+      <section class="slide" id="s10" data-title="Turn it around" role="group" aria-roledescription="slide" aria-label="Slide 11 of 18: Turn it around" tabindex="-1">
+        <p class="kicker">Activity 10</p>
+        <h2>Turn it around</h2>
+        <p class="lead">You want something. Ask for it. Write the question.</p>
+        <div class="grid2">
+          <div class="field"><label for="a10q1">1. You want to know where the meeting is. Ask a colleague.</label>
+            <input type="text" id="a10q1" data-check="s10" data-accept="where is the meeting|do you know where the meeting is" data-model="Where is the meeting?"></div>
+          <div class="field"><label for="a10q2">2. You want to know if the client has arrived. Ask a colleague.</label>
+            <input type="text" id="a10q2" data-check="s10" data-accept="has the client arrived|do you know if the client has arrived" data-model="Has the client arrived?"></div>
+          <div class="field"><label for="a10q3">3. You want a colleague to email you the minutes. Be polite.</label>
+            <input type="text" id="a10q3" data-check="s10" data-accept="could you" data-model="Could you email me the minutes?"></div>
+          <div class="field"><label for="a10q4">4. You want to know if the printer is fixed. Ask a colleague.</label>
+            <input type="text" id="a10q4" data-check="s10" data-accept="is the printer fixed|do you know if the printer is fixed" data-model="Is the printer fixed?"></div>
+          <div class="field"><label for="a10q5">5. You want permission to leave early on Friday. Ask your manager.</label>
+            <input type="text" id="a10q5" data-check="s10" data-accept="can i leave early on friday|could i leave early on friday" data-model="Can I leave early on Friday?"></div>
+          <div class="field"><label for="a10q6">6. You want to suggest moving the workshop to the afternoon.</label>
+            <input type="text" id="a10q6" data-check="s10" data-accept="could we move|shall we move|can we move" data-model="Could we move the workshop to the afternoon?"></div>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1.</b> Where is the meeting? / Do you know where the meeting is?</li>
+            <li><b>2.</b> Has the client arrived? / Do you know if the client has arrived?</li>
+            <li><b>3.</b> Could you email me the minutes? / Can you send me the minutes when you get a chance?</li>
+            <li><b>4.</b> Is the printer fixed? / Do you know if the printer is fixed?</li>
+            <li><b>5.</b> Can I leave early on Friday? / Could I leave early on Friday?</li>
+            <li><b>6.</b> Could we move the workshop to the afternoon?</li>
+          </ul>
+          <p>Direct and indirect versions both count. "Has the client arrived?" is a good option, because arrived pairs naturally with the present perfect.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s10" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s10" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s10" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 11 ---------- -->
+      <section class="slide" id="s11" data-title="Friday slot" role="group" aria-roledescription="slide" aria-label="Slide 12 of 18: Friday slot" tabindex="-1">
+        <p class="kicker">Activity 11</p>
+        <h2>Friday slot</h2>
+        <p class="lead">You need 45 minutes with your manager this week to plan the Q4 project. Anything not listed as free is busy. The working day is 08:00 to 18:00.</p>
+        <div class="grid2">
+          <div>
+            <h3 style="margin-top:0">Your diary</h3>
+            <div class="pane">Mon  9:00 to 10:30  client call.
+     Free from 14:00.
+Tue  Offsite training, all day.
+Wed  Interviews 9:00 to 12:00.
+     Free 13:00 to 15:00.
+     Review 15:00 to 16:00.
+Thu  Free 9:00 to 11:00.
+     Line manager 11:00 to 12:00.
+     Free 13:00 to 14:00.
+Fri  Free 8:00 to 10:00.</div>
+          </div>
+          <div>
+            <h3 style="margin-top:0">Your manager's diary</h3>
+            <div class="pane">Mon  In workshops 9:00 to 17:00.
+Tue  Free 10:00 to 12:00.
+     Free 15:00 to 16:00.
+Wed  Out of office until 14:00.
+     Free 14:00 to 17:00.
+Thu  Free 8:00 to 9:30.
+     Free 14:30 to 17:00.
+Fri  Free 9:00 to 12:00.</div>
+          </div>
+        </div>
+        <p class="lead">Find the slot, then agree the time. You must use one question with is or are, one with do or does, one with can or could, and one could suggestion.</p>
+        <div class="field">
+          <label for="a11q">Write what you would say to your manager.</label>
+          <textarea id="a11q" rows="5" placeholder="Are you free on Wednesday afternoon?"></textarea>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p><b>Working:</b> Wednesday 14:00 to 15:00, or Friday 09:00 to 10:00. Both diaries are free.</p>
+          <p><b>Why the others fail:</b> Monday, your manager is in workshops. Tuesday, you are at offsite training. Thursday 09:00 to 09:30 is only 30 minutes, and Thursday afternoon has no mutual window at all, because your manager is not free until 14:30.</p>
+          <p><b>A model exchange:</b></p>
+          <div class="pane">L: Are you free on Wednesday afternoon?
+T: Yes, I am. From one until three.
+L: I'm back in the office at two. Could we meet then?
+T: Two works for me. Could we make it forty-five minutes?
+L: Sure. Say two till quarter to three.
+T: Does that work for your calendar?
+L: It does. Thanks.</div>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn accent2" data-complete="s11" type="button">Mark complete</button>
+        </div>
+      </section>
+
+      <!-- ---------- 12 ---------- -->
+      <section class="slide" id="s12" data-title="The slipped deadline" role="group" aria-roledescription="slide" aria-label="Slide 13 of 18: The slipped deadline" tabindex="-1">
+        <p class="kicker">Activity 12</p>
+        <h2>The slipped deadline</h2>
+        <p class="lead">You are two days late on a project for your biggest client. You have fifteen minutes with your manager. Your three options:</p>
+        <div class="cards">
+          <div class="card"><p>1. Ask the team to work the weekend.</p></div>
+          <div class="card"><p>2. Tell the client now and deliver the core part on the original date.</p></div>
+          <div class="card"><p>3. Ask the client for two extra days.</p></div>
+        </div>
+        <p class="lead">Prepare each option in one sentence. Then choose one and say it.</p>
+        <div class="field">
+          <label for="a12q">Write your three sentences, then your choice.</label>
+          <textarea id="a12q" rows="5" placeholder="Could we ask the team to come in on Saturday?"></textarea>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <p><b>1.</b> "Could we ask the team to come in on Saturday?"<br>
+             <b>2.</b> "Could we tell the client today and give them the core part on Friday?"<br>
+             <b>3.</b> "Could we ask the client for two extra days?"</p>
+          <p>The commonly strongest answer is option 2, because clients forgive a delay far more easily than they forgive finding out late. If you picked option 1, think about this: everyone already worked a long week, and that may not be your call to make.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn accent2" data-complete="s12" type="button">Mark complete</button>
+        </div>
+      </section>
+
+      <!-- ---------- 13 ---------- -->
+      <section class="slide" id="s13" data-title="Write the email" role="group" aria-roledescription="slide" aria-label="Slide 14 of 18: Write the email" tabindex="-1">
+        <p class="kicker">Activity 13</p>
+        <h2>Write the email</h2>
+        <p class="lead">Write 60 to 80 words to your line manager. Ask to move your one-to-one from Tuesday to a different day. Ask for a 20-minute slot. Mention one thing that has gone well.</p>
+        <div class="field">
+          <label for="a13q">Your email</label>
+          <textarea id="a13q" rows="10" placeholder="Hi Maria, ..."></textarea>
+        </div>
+        <p class="lead" style="margin-top:16px">Then check yourself.</p>
+        <ul class="checklist">
+          <li>Did I use all four auxiliaries?</li>
+          <li>Is every question in the right word order?</li>
+          <li>Is one question with could for politeness?</li>
+          <li>Have I avoided one auxiliary plus another?</li>
+        </ul>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <div class="pane">Hi Maria,
+
+I hope you're well. I wanted to ask whether we could move our one-to-one on
+Tuesday. Something has come up with the client, and I'm not sure I can give
+you my full attention that day.
+
+Does Thursday afternoon work better for you? If so, could I book twenty
+minutes, any time from two onwards?
+
+One thing worth mentioning: the new intake process is working well. The
+team are much faster at it now.
+
+Thanks,
+Punit</div>
+          <p>It uses all four auxiliaries: could (could move, could I book), can (I can give), does (Does Thursday afternoon work) and is (is working well).</p>
+          <p>If you wrote "Would Tuesday work for you?", that is a fine alternative too. The goal is choice, not one right form.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn accent2" data-complete="s13" type="button">Mark complete</button>
+        </div>
+      </section>
+
+      <!-- ---------- 14 ---------- -->
+      <section class="slide" id="s14" data-title="Which is better?" role="group" aria-roledescription="slide" aria-label="Slide 15 of 18: Which is better" tabindex="-1">
+        <p class="kicker">Activity 14</p>
+        <h2>Which is better?</h2>
+        <p class="lead">Two people want the same thing in the same office. Which line works better?</p>
+
+        <fieldset style="border:0;padding:0;margin:0 0 18px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">1. To a client you have never worked with:</legend>
+          <ul class="choices" data-group="a14q1">
+            <li><label><input type="radio" name="a14q1" value="a"><span class="opt">a. Can you send the contract?</span></label></li>
+            <li><label><input type="radio" name="a14q1" value="b" data-correct="true"><span class="opt">b. Could you send the contract when you have a moment?</span></label></li>
+          </ul>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0 0 18px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">2. To the colleague you sit beside every day:</legend>
+          <ul class="choices" data-group="a14q2">
+            <li><label><input type="radio" name="a14q2" value="a"><span class="opt">a. Could you possibly let me know whether the file has been updated at your earliest convenience?</span></label></li>
+            <li><label><input type="radio" name="a14q2" value="b" data-correct="true"><span class="opt">b. Can you let me know if the file's updated?</span></label></li>
+          </ul>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0 0 6px">
+          <legend class="q-label" style="padding:0;margin-bottom:6px">3. To your director, to move a meeting:</legend>
+          <ul class="choices" data-group="a14q3">
+            <li><label><input type="radio" name="a14q3" value="a"><span class="opt">a. I need to move the meeting. Pick a new time.</span></label></li>
+            <li><label><input type="radio" name="a14q3" value="b" data-correct="true"><span class="opt">b. Would it be possible to move the meeting? I could do any time after two.</span></label></li>
+          </ul>
+        </fieldset>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1. b.</b> A new client gets the polite version. You have no relationship yet, so distance is correct and safe.</li>
+            <li><b>2. b.</b> This is the one most learners get wrong, in the direction of over-politeness. To someone you talk to all day, the long version sounds sarcastic or unkind.</li>
+            <li><b>3. b.</b> It gives a reason, offers an alternative, and keeps the decision open. Version a gives an instruction to someone more senior than you.</li>
+          </ul>
+          <p>Politeness is relational, not absolute. It is set by distance, hierarchy and how often you already speak.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s14" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s14" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s14" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- 15 ---------- -->
+      <section class="slide" id="s15" data-title="Fix your own" role="group" aria-roledescription="slide" aria-label="Slide 16 of 18: Fix your own" tabindex="-1">
+        <p class="kicker">Activity 15</p>
+        <h2>Fix your own</h2>
+        <p class="lead">These are lines from a real work email. Three are correct. Three have a problem. Which ones?</p>
+
+        <div class="grid2">
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">1. Do you know when the deadline is?</legend>
+            <ul class="choices" data-group="a15q1">
+              <li><label><input type="radio" name="a15q1" value="a" data-correct="true"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q1" value="b"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">2. I couldn't attend the training last week because I was ill.</legend>
+            <ul class="choices" data-group="a15q2">
+              <li><label><input type="radio" name="a15q2" value="a" data-correct="true"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q2" value="b"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">3. Is she be at the conference on Thursday?</legend>
+            <ul class="choices" data-group="a15q3">
+              <li><label><input type="radio" name="a15q3" value="a"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q3" value="b" data-correct="true"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">4. Do you can send me the link?</legend>
+            <ul class="choices" data-group="a15q4">
+              <li><label><input type="radio" name="a15q4" value="a"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q4" value="b" data-correct="true"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">5. Could we move the call to 3pm? I can't make 2pm.</legend>
+            <ul class="choices" data-group="a15q5">
+              <li><label><input type="radio" name="a15q5" value="a" data-correct="true"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q5" value="b"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="q-label" style="padding:0;margin-bottom:6px">6. Where you want to sit?</legend>
+            <ul class="choices" data-group="a15q6">
+              <li><label><input type="radio" name="a15q6" value="a"><span class="opt">Correct</span></label></li>
+              <li><label><input type="radio" name="a15q6" value="b" data-correct="true"><span class="opt">Has a problem</span></label></li>
+            </ul>
+          </fieldset>
+        </div>
+
+        <details class="model"><summary>Model answer</summary><div class="model-body">
+          <ul>
+            <li><b>1.</b> Correct. <b>2.</b> Correct. <b>3.</b> Has a problem: "Is she at the conference on Thursday?" An auxiliary already says be.</li>
+            <li><b>4.</b> Has a problem: "Can you send me the link?" One auxiliary per question.</li>
+            <li><b>5.</b> Correct. could for the suggestion, can't for the reason.</li>
+            <li><b>6.</b> Has a problem: "Where do you want to sit?" A present simple question needs do, and it goes before the subject.</li>
+          </ul>
+          <p>Item 5 is worth pausing on, because it is correct and it does two jobs at once. Explain both halves and you have the whole system in one sentence.</p>
+        </div></details>
+
+        <div class="actions">
+          <button class="btn primary" data-check="s15" type="button">Check answers</button>
+          <button class="btn accent2" data-complete="s15" type="button">Mark complete</button>
+        </div>
+        <div class="fb" id="fb-s15" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ---------- HOMEWORK ---------- -->
+      <section class="slide" id="s16" data-title="Homework" role="group" aria-roledescription="slide" aria-label="Slide 17 of 18: Homework" tabindex="-1">
+        <p class="kicker">Before the next lesson</p>
+        <h2>Homework</h2>
+        <p class="lead">Send a short message to a colleague, ideally a real one. Under 60 words. It must contain:</p>
+        <ul class="checklist">
+          <li>one is or are question</li>
+          <li>one do or does question</li>
+          <li>one can or could request</li>
+          <li>one could suggestion</li>
+        </ul>
+        <p class="lead" style="margin-top:16px">Then rewrite the same message twice: once more formal, once more casual. Bring all three.</p>
+        <p class="hint">This targets the register problem from Activity 14, because it forces you to hold the same message at three levels of formality.</p>
+      </section>
+
+      <!-- ---------- FINALE ---------- -->
+      <section class="slide" id="s17" data-title="Lesson complete" role="group" aria-roledescription="slide" aria-label="Slide 18 of 18: Lesson complete" tabindex="-1">
+        <div class="finale">
+          <p class="kicker">Finished</p>
+          <h2>Lesson complete</h2>
+          <p class="lead">You have worked through all 15 activities. Here is the whole system on one card.</p>
+          <div class="recap">
+            <div><b>is</b>now, this week, states</div>
+            <div><b>do</b>habits, facts, routines</div>
+            <div><b>can</b>ability, permission, availability</div>
+            <div><b>could</b>past, possibility, suggestion, polite request</div>
+          </div>
+          <p class="lead">Final points: <b id="finalXp">0</b> &middot; best streak <b id="finalStreak">0</b> &middot; activities completed <b id="finalDone">0</b>/15</p>
+          <div class="actions" style="justify-content:center">
+            <button class="btn primary" data-goto="0" type="button">Back to the start</button>
+            <button class="btn ghost" id="restartBtn" type="button">Reset progress</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+<footer class="deck-foot"><p>Is and Do, Can and Could at Work. 15 activities. High contrast, keyboard friendly.</p><p><a href="../../index.html#b1-business">All B1 Business lessons</a> | <a href="Listening-Skills-Interview-B1-Learner.html">Listening Skills: The Interview</a> | <a href="Workplace-Tenses-Review-B1-Learner.html">Workplace Tenses Review</a></p></footer>
+
+  <!-- ================= NAV ================= -->
+  <nav id="nav" aria-label="Slide navigation">
+    <div class="nav-group">
+      <button class="btn ghost" id="prevBtn" type="button">
+        <span class="ico" aria-hidden="true">&#8592;</span>
+        <span class="btn-label">Back</span>
+      </button>
+    </div>
+    <div class="nav-mid">
+      <span class="counter"><b id="curNum">1</b> of <b id="totNum">18</b> &middot; <span id="curTitle">Start here</span></span>
+      <div class="progress"><i id="barFill"></i></div>
+    </div>
+    <div class="nav-group">
+      <button class="btn primary" id="nextBtn" type="button">
+        <span class="btn-label" id="nextLabel">Next</span>
+        <span class="ico" aria-hidden="true">&#8594;</span>
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+  "use strict";
+
+  var TOTAL_ACTIVITIES = 15;
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var TOTAL = slides.length;
+  var idx = 0;
+
+  var state = { done:0, xp:0, streak:0, best:0, set:{} };
+  var KEY = 'b2-aux-deck-v1';
+
+  var deck    = document.getElementById('deck');
+  var live    = document.getElementById('live');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var nextLbl = document.getElementById('nextLabel');
+  var curNum  = document.getElementById('curNum');
+  var totNum  = document.getElementById('totNum');
+  var curTtl  = document.getElementById('curTitle');
+  var barFill = document.getElementById('barFill');
+  var app     = document.getElementById('app');
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- persistence ---------- */
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === 'object'){
+          state.done = o.done|0; state.xp = o.xp|0;
+          state.streak = o.streak|0; state.best = o.best|0;
+          state.set = o.set || {};
+        }
+      }
+    }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  /* ---------- text helpers ---------- */
+  function normalize(s){
+    return String(s).toLowerCase()
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[.,!?;:"]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function matches(clean, acceptList, exact){
+    var toks = acceptList.split('|').map(function(t){ return normalize(t); })
+                    .filter(function(t){ return t.length > 0; });
+    if(!toks.length) return false;
+    if(exact) return toks.indexOf(clean) !== -1;
+    return toks.some(function(t){ return clean.indexOf(t) !== -1; });
+  }
+
+  /* ---------- HUD ---------- */
+  function updateHud(){
+    document.getElementById('hudDone').textContent = state.done;
+    document.getElementById('hudXp').textContent = state.xp;
+    document.getElementById('hudStreak').textContent = state.streak;
+    if(state.streak > state.best) state.best = state.streak;
+    barFill.style.width = Math.round(((idx + 1) / TOTAL) * 100) + '%';
+
+    var f = document.getElementById('finalXp');
+    if(f) f.textContent = state.xp;
+    var fs = document.getElementById('finalStreak');
+    if(fs) fs.textContent = state.best;
+    var fd = document.getElementById('finalDone');
+    if(fd) fd.textContent = state.done;
+
+    if(state.done >= TOTAL_ACTIVITIES && idx === TOTAL - 1) celebrate();
+  }
+
+  /* ---------- navigation ---------- */
+  function goTo(n, focusIt){
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    slides.forEach(function(s, i){
+      var on = i === n;
+      s.classList.toggle('is-current', on);
+      if(on){
+        s.removeAttribute('aria-hidden');
+        s.removeAttribute('inert');
+      }else{
+        s.setAttribute('aria-hidden','true');
+        s.setAttribute('inert','');
+      }
+    });
+    idx = n;
+    deck.scrollTop = 0;
+
+    curNum.textContent = n + 1;
+    totNum.textContent = TOTAL;
+    curTtl.textContent = slides[n].getAttribute('data-title') || '';
+    prevBtn.disabled = (n === 0);
+    nextLbl.textContent = (n === TOTAL - 1) ? 'Finish' : 'Next';
+
+    live.textContent = 'Slide ' + (n + 1) + ' of ' + TOTAL + ': ' +
+      (slides[n].getAttribute('data-title') || '');
+
+    if(focusIt !== false){ slides[n].focus({ preventScroll:true }); }
+    updateHud();
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(idx - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(idx + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target;
+    var typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+    if(typing && e.key !== 'Escape') return;
+
+    switch(e.key){
+      case 'ArrowRight': case 'PageDown':
+        goTo(idx + 1); e.preventDefault(); break;
+      case 'ArrowLeft': case 'PageUp':
+        goTo(idx - 1); e.preventDefault(); break;
+      case 'Home':
+        goTo(0); e.preventDefault(); break;
+      case 'End':
+        goTo(TOTAL - 1); e.preventDefault(); break;
+      case 'f': case 'F':
+        toggleFullscreen(); e.preventDefault(); break;
+    }
+  });
+
+  /* touch swipe */
+  var tx = 0, ty = 0, tracking = false;
+  deck.addEventListener('touchstart', function(e){
+    if(e.touches.length !== 1) return;
+    tracking = true;
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+  }, { passive:true });
+  deck.addEventListener('touchend', function(e){
+    if(!tracking) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - tx, dy = t.clientY - ty;
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6){
+      goTo(dx < 0 ? idx + 1 : idx - 1);
+    }
+  }, { passive:true });
+
+  /* ---------- fullscreen ----------
+     Large screens : nav docks as a RIGHT RAIL, outside the slide
+                      content box (separate grid column).
+     Small screens : nav docks as a BOTTOM BAR inside the fullscreen
+                      viewport, in its own reserved grid row.
+     Neither mode overlays the slide.
+  ------------------------------------------- */
+  var fsBtn = document.getElementById('fsBtn');
+  var fsLbl = document.getElementById('fsLabel');
+  var pseudoFs = false;
+
+  function isFs(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || pseudoFs);
+  }
+  function setFsUI(on){
+    fsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    fsLbl.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.querySelector('.ico').innerHTML = on ? '&#10005;' : '&#9974;';
+  }
+  function toggleFullscreen(){
+    var el = app;
+    var req = el.requestFullscreen || el.webkitRequestFullscreen;
+    var exit = document.exitFullscreen || document.webkitExitFullscreen;
+
+    if(isFs()){
+      if(pseudoFs){
+        pseudoFs = false;
+        el.classList.remove('pseudo-fs');
+        setFsUI(false);
+        return;
+      }
+      if(exit){ exit.call(document); }
+      return;
+    }
+    if(req){
+      var p = req.call(el);
+      if(p && typeof p.catch === 'function'){ p.catch(function(){ fallbackFs(); }); }
+      else { /* older WebKit returns undefined */ }
+    }else{
+      fallbackFs();
+    }
+  }
+  function fallbackFs(){
+    pseudoFs = true;
+    app.classList.add('pseudo-fs');
+    setFsUI(true);
+  }
+  function exitFallback(){
+    if(pseudoFs){
+      pseudoFs = false;
+      app.classList.remove('pseudo-fs');
+      setFsUI(false);
+    }
+  }
+  fsBtn.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', function(){ setFsUI(isFs()); });
+  document.addEventListener('webkitfullscreenchange', function(){ setFsUI(isFs()); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && pseudoFs){ exitFallback(); }
+  });
+
+  /* ---------- grading ---------- */
+  function mark(el, ok){
+    el.classList.remove('correct','wrong');
+    el.classList.add(ok ? 'correct' : 'wrong');
+    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'){
+      el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    }
+  }
+
+  function checkSlide(id){
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    var right = 0, total = 0, misses = [];
+
+    sec.querySelectorAll('[data-check]').forEach(function(el){
+      if(el.dataset.check !== id) return;
+      if(el.tagName === 'UL') return;             /* handled below */
+      /* the Check answers button carries data-check too, but it is a
+         control, not a graded item, so never count it */
+      if(el.tagName === 'BUTTON' || el.tagName === 'A') return;
+      total++;
+      var ok, val;
+      if(el.tagName === 'SELECT'){
+        val = el.value.trim();
+        ok = val !== '' && matches(normalize(val), el.dataset.accept, el.dataset.exact === 'true');
+      }else{
+        val = el.value;
+        ok = val.trim() !== '' && matches(normalize(val), el.dataset.accept, el.dataset.exact === 'true');
+      }
+      mark(el, ok);
+      if(ok){
+        right++;
+        if(!el.dataset.wasRight){ el.dataset.wasRight = '1'; state.xp += 10; }
+      }else{
+        el.dataset.wasRight = '';
+        misses.push(el.dataset.model || '');
+      }
+    });
+
+    sec.querySelectorAll('ul.choices[data-group]').forEach(function(grp){
+      total++;
+      var chosen = grp.querySelector('input:checked');
+      var ok = false;
+      grp.querySelectorAll('input').forEach(function(o){
+        var li = o.closest('li');
+        li.classList.remove('correct','wrong');
+        if(o.dataset.correct === 'true'){ li.classList.add('correct'); }
+        if(chosen === o && o.dataset.correct === 'true'){ ok = true; }
+      });
+      if(ok){
+        right++;
+        if(!grp.dataset.wasRight){ grp.dataset.wasRight = '1'; state.xp += 10; }
+      }else{
+        grp.dataset.wasRight = '';
+        var rightOpt = grp.querySelector('input[data-correct="true"] .opt');
+        misses.push(rightOpt ? rightOpt.textContent.trim() : '');
+      }
+    });
+
+    var fb = document.getElementById('fb-' + id);
+    if(!fb) return;
+
+    if(total === 0){
+      fb.className = 'fb';
+      fb.innerHTML = '<strong>Nothing to check on this slide.</strong> Use Mark complete when you are ready.';
+      return;
+    }
+
+    var perfect = (right === total);
+    if(perfect){ state.streak++; state.xp += 5; } else { state.streak = 0; }
+    save();
+    updateHud();
+
+    fb.className = 'fb ' + (perfect ? 'ok' : 'no');
+    var head = perfect
+      ? '<strong>All correct.</strong>'
+      : '<strong>' + right + ' of ' + total + ' correct.</strong>';
+    var extra = perfect
+      ? ' Nice work. Streak: ' + state.streak + '.'
+      : ' Look again at the highlighted answers, then check once more.';
+    var list = '';
+    if(!perfect && misses.length){
+      list = '<ul>' + misses.slice(0,4).map(function(m){
+        return m ? '<li>' + m + '</li>' : '';
+      }).join('') + '</ul>';
+    }
+    fb.innerHTML = head + extra + list;
+  }
+
+  document.querySelectorAll('button[data-check]').forEach(function(b){
+    b.addEventListener('click', function(){ checkSlide(b.getAttribute('data-check')); });
+  });
+
+  document.querySelectorAll('button[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){ goTo(parseInt(b.getAttribute('data-goto'), 10)); });
+  });
+
+  document.querySelectorAll('button[data-complete]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var id = b.getAttribute('data-complete');
+      if(state.set[id]){
+        b.disabled = true;
+        b.textContent = 'Marked complete';
+        return;
+      }
+      state.set[id] = 1;
+      state.done = Object.keys(state.set).length;
+      state.xp += 15;
+      state.streak++;
+      if(state.streak > state.best) state.best = state.streak;
+      b.disabled = true;
+      b.textContent = 'Marked complete';
+      b.setAttribute('aria-label','Activity completed');
+      save();
+      updateHud();
+    });
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', function(){
+    state = { done:0, xp:0, streak:0, best:0, set:{} };
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    slides.forEach(function(s){
+      s.querySelectorAll('.correct,.wrong').forEach(function(el){
+        el.classList.remove('correct','wrong');
+        el.removeAttribute('aria-invalid');
+      });
+      s.querySelectorAll('[data-was-right]').forEach(function(el){ el.dataset.wasRight=''; });
+      var fb = s.querySelector('.fb');
+      if(fb){ fb.className='fb'; fb.innerHTML=''; }
+    });
+    document.querySelectorAll('button[data-complete]').forEach(function(b){
+      b.disabled = false;
+      b.textContent = 'Mark complete';
+      b.removeAttribute('aria-label');
+    });
+    updateHud();
+    goTo(0);
+    live.textContent = 'Progress reset.';
+  });
+
+  /* ---------- confetti (skipped when reduced motion) ---------- */
+  var celebrated = false;
+  function celebrate(){
+    if(reduced || celebrated) return;
+    celebrated = true;
+    var c = document.getElementById('confetti');
+    var ctx = c.getContext('2d');
+    var W = c.width = window.innerWidth, H = c.height = window.innerHeight;
+    var colors = ['#ffd400','#38e0c8','#f5f9ff','#7ee8d6'];
+    var bits = [];
+    for(var i = 0; i < 90; i++){
+      bits.push({
+        x: W / 2 + (Math.random() - 0.5) * W * 0.7,
+        y: -20 - Math.random() * H * 0.4,
+        vx: (Math.random() - 0.5) * 2.4,
+        vy: 2 + Math.random() * 3.2,
+        s: 4 + Math.random() * 5,
+        c: colors[i % colors.length],
+        rot: Math.random() * 6
+      });
+    }
+    var frames = 0;
+    function loop(){
+      ctx.clearRect(0, 0, W, H);
+      var alive = 0;
+      bits.forEach(function(b){
+        b.x += b.vx; b.y += b.vy; b.rot += 0.08;
+        if(b.y < H + 20) alive++;
+        ctx.save();
+        ctx.translate(b.x, b.y); ctx.rotate(b.rot);
+        ctx.fillStyle = b.c;
+        ctx.fillRect(-b.s / 2, -b.s / 2, b.s, b.s * 1.6);
+        ctx.restore();
+      });
+      frames++;
+      if(alive > 0 && frames < 260){ requestAnimationFrame(loop); }
+      else { ctx.clearRect(0, 0, W, H); }
+    }
+    loop();
+  }
+
+  /* ---------- resize: keep fullscreen layout honest ---------- */
+  var rT;
+  window.addEventListener('resize', function(){
+    clearTimeout(rT);
+    rT = setTimeout(function(){
+      if(pseudoFs){ app.classList.add('pseudo-fs'); }
+    }, 120);
+  });
+
+  /* ---------- boot ---------- */
+  load();
+  document.querySelectorAll('button[data-complete]').forEach(function(b){
+    var id = b.getAttribute('data-complete');
+    if(state.set[id]){
+      b.disabled = true;
+      b.textContent = 'Marked complete';
+      b.setAttribute('aria-label','Activity completed');
+    }
+  });
+  totNum.textContent = TOTAL;
+  goTo(0, false);
+  prevBtn.disabled = true;
+})();
+</script>
+<script>
+// Is and Do, Can and Could at Work - granular LRS (B1 Business English)
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched:   vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered:   vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked:     vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    experienced:vb('http://id.tincanapi.com/verb/experienced', 'experienced'),
+    wrote:      vb('http://adlnet.gov/expapi/verbs/wrote', 'wrote')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({
+      verb: verb,
+      object: {
+        objectType: 'Activity',
+        id: objId,
+        definition: { name: { 'en-US': objName }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson') }
+      }
+    });
+  }
+  var SLIDE_IDS = ["s0","s1","s2","s3","s4","s5","s6","s7","s8","s9","s10","s11","s12","s13","s14","s15","s16","s17"];
+  var slides = SLIDE_IDS.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+  // per-slide viewed
+  var seen = {};
+  function viewed(sec) {
+    if (!sec || !sec.id || seen[sec.id]) return;
+    seen[sec.id] = true;
+    sendPrecise(VERBS.launched, LESSON_ID + '/' + sec.id,
+      'Slide viewed: ' + (sec.getAttribute('data-title') || sec.id).substring(0, 60), 'slide');
+  }
+  var tries = 0;
+  var poll = setInterval(function () {
+    tries++;
+    var cur = document.querySelector('.slide.is-current') || document.querySelector('.slide');
+    if (cur && window.LRS.send) { clearInterval(poll); viewed(cur); }
+    if (tries > 60) clearInterval(poll);
+  }, 500);
+  if (window.MutationObserver) {
+    var moView = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var el = m.target;
+        if (el && el.classList && el.classList.contains('is-current')) viewed(el);
+      });
+    });
+    slides.forEach(function (sec) { moView.observe(sec, { attributes: true, attributeFilter: ['class'] }); });
+  }
+
+  // per-item answered, fired once per slide the first time its Check answers runs
+  var sentChecks = {};
+  document.querySelectorAll('button[data-check]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-check');
+      var sec = document.getElementById(id);
+      if (!sec || sentChecks[id]) return;
+      sentChecks[id] = true;
+      var n = 0;
+      sec.querySelectorAll('[data-check="' + id + '"], ul.choices[data-group]').forEach(function (item) {
+        /* skip the Check answers button: it carries data-check but is a control */
+        if (item.tagName === 'BUTTON' || item.tagName === 'A') return;
+        n++;
+        var name = 'Item ' + n;
+        if (item.id) name = item.id;
+        if (item.dataset && item.dataset.model) name = item.dataset.model.substring(0, 60);
+        if (item.tagName === 'UL') name = 'Multiple choice question ' + (item.getAttribute('data-group') || n);
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + id + '/item-' + n, id + ': ' + name, 'question');
+      });
+    }, true);
+  });
+
+  // marked-as-complete when the Mark complete button is pressed
+  var marked = {};
+  document.querySelectorAll('button[data-complete]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-complete');
+      if (marked[id]) return;
+      marked[id] = true;
+      var sec = document.getElementById(id);
+      var nm = sec ? (sec.getAttribute('data-title') || id) : id;
+      sendPrecise(VERBS.marked, LESSON_ID + '/' + id, nm + ' completed', 'activity');
+      var real = Object.keys(marked).filter(function (k) { return k !== 's0'; }).length;
+      if (real >= 15) sendPrecise(VERBS.experienced, LESSON_ID, document.title, 'lesson');
+    }, true);
+  });
+
+  // written learner text, tracked per field, only where the learner writes freely
+  var WRITE_FIELDS = ['a1q1', 'a1q2', 'a11q', 'a12q', 'a13q'];
+  WRITE_FIELDS.forEach(function (id) {
+    var node = document.getElementById(id);
+    if (!node) return;
+    var sec = node.closest('.slide');
+    var sid = sec ? sec.id : 'unknown';
+    var handler = function () {
+      var v = (node.value || '').trim();
+      if (v.length < 3) return;
+      sendPrecise(VERBS.wrote, LESSON_ID + '/' + sid + '/' + id, sid + ': written response ' + id, 'writing');
+    };
+    node.addEventListener('change', handler);
+    node.addEventListener('blur', handler);
+  });
+});
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>

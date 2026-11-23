@@ -390,6 +390,12 @@
       { file: 'adverbial-wh-clauses', act: 'act14', fields: ['a14-3', 'a14-4', 'a14-5'] },
       { file: 'adverbial-wh-clauses', act: 'act15', fields: ['a15-draft'] },
       { file: 'lesson-19', act: 'act12', fields: ['a12sum', 'a12q'], input: true },
+      { file: 'lesson-21', act: 'act12', fields: ['a12sum', 'a12move'], input: true },
+      { file: 'is-do-can-could', act: 's1', fields: ['a1q1', 'a1q2'] },
+      { file: 'is-do-can-could', act: 's11', fields: ['a11q'] },
+      { file: 'is-do-can-could', act: 's12', fields: ['a12q'] },
+      { file: 'is-do-can-could', act: 's13', fields: ['a13q'] },
+      { file: 'lesson-20', act: 'act13', fields: ['a13sum', 'a13move'], input: true },
       { file: 'lesson-18', act: 'act10', fields: ['a10input'], input: true },
       { file: 'lesson-18', act: 'act13', fields: ['a13input'], input: true },
       { file: 'lesson-18', act: 'act15', fields: ['a15q1', 'a15q2'] },
@@ -405,10 +411,26 @@
       { file: 'listening-skills-interview', act: 'act8', fields: ['sp8'] },
       { file: 'listening-skills-interview', act: 'act9', fields: ['sp9'] },
       { file: 'delta', act: 'a10', fields: ['writeBox'] },
-      { file: 'lesson06-cafe', act: 'slide-16-act15-mycafe', fields: ['menuItem1', 'menuPrice1', 'menuItem2', 'menuPrice2', 'menuItem3', 'menuPrice3'], input: true }
+      { file: 'lesson06-cafe', act: 'slide-16-act15-mycafe', fields: ['menuItem1', 'menuPrice1', 'menuItem2', 'menuPrice2', 'menuItem3', 'menuPrice3'], input: true },
+      { file: 'lesson07-market', act: 'slide-11-act10-clinic', fields: ['clinicWrite1', 'clinicWrite2', 'clinicWrite3'], input: true },
+      { file: 'lesson07-market', act: 'slide-16-act15-list', fields: ['listItem1', 'listPrice1', 'listItem2', 'listPrice2', 'listItem3', 'listPrice3'], input: true },
+      { file: 'lesson09-home', act: 'slide-16-act15-list', fields: ['listItem1', 'listPrice1', 'listItem2', 'listPrice2', 'listItem3', 'listPrice3'], input: true },
+      { file: 'chemist', act: 'slide-04-act1', fields: ['chemistFeel'], input: true },
+      { file: 'motivation', act: 'slide-04-act1', fields: ['motivationFeel'], input: true },
+      { file: 'motivation', act: 'slide-19-act16', fields: ['a16_1', 'a16_2', 'a16_3'], input: true },
+      { file: 'motivation', act: 'slide-20-act17', fields: ['a17_1', 'a17_2', 'a17_3'], input: true },
+      { file: 'motivation', act: 'slide-21-act18', fields: ['a18_1', 'a18_2', 'a18_3'], input: true },
+      { file: 'month3-listening', act: 's5', fields: ['i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7'] },
+      { file: 'month3-listening', act: 's7', fields: ['n1', 'n2', 'n3', 'n4'] },
+      { file: 'lesson24-kwkva', act: 'slide-08-inference', fields: ['inf0', 'inf1', 'inf2', 'inf3', 'inf4'] },
+      { file: 'lesson24-kwkva', act: 'slide-10-shadow', fields: ['a9'] },
+      { file: 'lesson24-kwkva', act: 'slide-11-respond', fields: ['a10'] }
     ];
     function fileTag(){
       var f = location.pathname.toLowerCase();
+      if (f.indexOf('lesson-21-monthly-review') > -1) return 'lesson-21';
+      if (f.indexOf('is-do-can-could-workplace') > -1) return 'is-do-can-could';
+      if (f.indexOf('lesson-20') > -1) return 'lesson-20';
       if (f.indexOf('lesson-19') > -1) return 'lesson-19';
       if (f.indexOf('lesson-18') > -1) return 'lesson-18';
       if (f.indexOf('lesson-17') > -1) return 'lesson-17';
@@ -455,6 +477,14 @@
       if (f.indexOf('annisa-day02') > -1) return 'annisa-day02';
       if (f.indexOf('lesson06-atthecafe') > -1) return 'lesson06-cafe';
       if (f.indexOf('lesson06-cafepractice') > -1) return 'lesson06-cafepractice';
+      if (f.indexOf('lesson07-atthemarket') > -1) return 'lesson07-market';
+      if (f.indexOf('lesson07-marketpractice') > -1) return 'lesson07-marketpractice';
+      if (f.indexOf('lesson09-ourhome') > -1) return 'lesson09-home';
+      if (f.indexOf('lesson09-homepractice') > -1) return 'lesson09-homepractice';
+      if (f.indexOf('the-chemist') > -1) return 'chemist';
+      if (f.indexOf('talk-about-motivation') > -1) return 'motivation';
+      if (f.indexOf('month3-listening-price') > -1) return 'month3-listening';
+      if (f.indexOf('lesson24-kw-kva') > -1) return 'lesson24-kwkva';
       return '';
     }
     function fieldLabel(container, ta){

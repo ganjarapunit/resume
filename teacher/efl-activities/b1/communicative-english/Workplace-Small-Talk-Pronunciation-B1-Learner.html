@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workplace Small Talk Pronunciation (B1) Interactive</title>
+<meta name="description" content="B1 pronunciation deck: workplace small talk stress, intonation, connected speech and shadow reading. 15 activities with model audio and a record-and-check task.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/b1/communicative-english/Workplace-Small-Talk-Pronunciation-B1-Learner.html">
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b;
+  --ink:#f5f9ff; --muted:#b9c6d8; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;
+  overflow:hidden;
+}
+.skip-link{
+  position:absolute;left:-9999px;top:0;background:var(--accent);color:#000;
+  padding:.5rem 1rem;font-weight:700;z-index:1000;border-radius:0 0 6px 0;
+}
+.skip-link:focus{left:0}
+
+/* Login Overlay */
+.login-overlay{
+  position:fixed;inset:0;background:var(--bg);z-index:2000;
+  display:flex;align-items:center;justify-content:center;padding:1rem;
+}
+.login-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:2.5rem;max-width:480px;width:100%;text-align:center;
+}
+.login-box h1{color:var(--accent);font-size:1.6rem;margin-bottom:.5rem}
+.login-box p{color:var(--muted);margin-bottom:1.5rem;font-size:.95rem}
+.login-box label{display:block;text-align:left;font-size:.85rem;color:var(--muted);margin-bottom:.3rem}
+.login-box input{
+  width:100%;padding:.75rem;border:1px solid var(--border);border-radius:8px;
+  background:var(--bg);color:var(--ink);font-size:1rem;margin-bottom:1rem;
+}
+.login-box input:focus{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--accent)}
+.login-box .btn{
+  width:100%;padding:.8rem;background:var(--accent);color:#000;border:none;
+  border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;
+}
+.login-box .btn:hover{background:#e6c000}
+.login-box .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* App Container - Fixed layout to prevent overflow */
+.app{display:none;height:100vh;flex-direction:column;overflow:hidden}
+.app.active{display:flex}
+
+/* HUD */
+.hud{
+  display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;
+  background:var(--surface);border-bottom:1px solid var(--border);
+  flex-shrink:0;flex-wrap:wrap;min-height:44px;
+}
+.hud .xp{font-weight:700;color:var(--accent);font-size:.85rem;white-space:nowrap}
+.hud .streak{color:var(--accent-2);font-size:.85rem;font-weight:600;white-space:nowrap}
+.hud .progress-wrap{flex:1;min-width:80px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.hud .progress-bar{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
+.hud .progress-text{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.fullscreen-btn{
+  background:var(--surface-2);border:1px solid var(--border);color:var(--ink);
+  padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.8rem;
+  display:flex;align-items:center;gap:.25rem;white-space:nowrap;
+}
+.fullscreen-btn:hover{border-color:var(--accent)}
+.fullscreen-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* Slides Area - Takes remaining space, scrolls internally */
+.slides-container{
+  flex:1;overflow-y:auto;overflow-x:hidden;padding:1rem;
+  scroll-behavior:smooth;min-height:0;
+}
+.slide{
+  display:none;max-width:860px;margin:0 auto 1rem;
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:1.5rem;animation:fadeIn .3s ease;
+}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.slide h2{color:var(--accent);font-size:1.4rem;margin-bottom:.75rem}
+.slide .instruction{color:var(--muted);margin-bottom:1rem;font-size:.9rem}
+.slide .instruction strong{color:var(--accent-2)}
+
+/* Fullscreen: use the empty side space, fill the screen */
+html:fullscreen .slides-container{
+  padding:1.5rem clamp(1rem,6vw,5rem);
+  display:flex;flex-direction:column;align-items:stretch;
+}
+html:fullscreen .slide{
+  max-width:1150px;width:100%;margin:0 auto 1rem;
+  padding:2rem clamp(1.5rem,4vw,3.5rem);
+  font-size:1.08rem;border-radius:20px;
+}
+html:fullscreen .slide h2{font-size:1.85rem;margin-bottom:1rem}
+html:fullscreen .slide .instruction{font-size:1.05rem}
+html:fullscreen .mcq-option label{font-size:1.02rem}
+html:fullscreen .text-input{font-size:1.05rem;padding:.8rem}
+html:fullscreen .btn,html:fullscreen .nav-btn{font-size:1rem}
+html:fullscreen .activity-content .example{font-size:1.02rem}
+
+/* Navigation - Fixed at bottom, always visible */
+.nav-buttons{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.6rem .75rem;background:var(--surface);border-top:1px solid var(--border);
+  flex-shrink:0;min-height:52px;
+}
+.nav-btn{
+  background:var(--accent);color:#000;border:none;padding:.5rem 1.25rem;
+  border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:.3rem;white-space:nowrap;
+}
+.nav-btn:hover{background:#e6c000}
+.nav-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.nav-btn.secondary{background:var(--surface-2);color:var(--ink);border:1px solid var(--border)}
+.nav-btn.secondary:hover{border-color:var(--accent)}
+.slide-counter{font-size:.8rem;color:var(--muted);white-space:nowrap}
+
+/* Mobile nav - hidden on desktop */
+.mobile-nav{display:none}
+
+/* Activity Content */
+.activity-content{margin-bottom:1rem}
+.activity-content p{margin-bottom:.5rem}
+.activity-content .example{
+  background:var(--surface-2);border-left:4px solid var(--accent-2);
+  padding:.75rem 1rem;border-radius:0 8px 8px 0;margin:.75rem 0;font-style:italic;
+  font-size:.9rem;
+}
+
+/* Audio Button (Web Speech API - expressive natural voice) */
+.audio-controls{
+  display:flex;align-items:center;gap:.6rem;margin:.75rem 0;flex-wrap:wrap;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+  padding:.6rem .75rem;
+}
+.speak-btn{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--accent);color:#000;border:none;padding:.5rem 1rem;
+  border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;
+}
+.speak-btn:hover{background:#e6c000}
+.speak-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.speak-btn.speaking{background:var(--accent-2)}
+.speak-btn.slow{background:var(--surface);color:var(--ink);border:1px solid var(--accent-2)}
+.speak-btn.slow:hover{border-color:var(--accent)}
+.speak-btn.stop-btn{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.5rem .8rem}
+.audio-controls audio{width:100%;border-radius:8px;display:block}
+.audio-note{font-size:.78rem;color:var(--muted);flex:1;min-width:160px}
+.voice-badge{font-size:.72rem;color:var(--accent-2);display:block;margin-top:.15rem}
+
+/* Collapsible transcript at bottom (hidden by default, does not give away answers) */
+.transcript{
+  margin-top:1rem;border-top:1px dashed var(--border);padding-top:.6rem;
+}
+.transcript summary{
+  cursor:pointer;color:var(--muted);font-weight:600;font-size:.85rem;
+  padding:.25rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;
+}
+.transcript summary::before{content:"\25B8";font-size:.7rem;transition:transform .2s;display:inline-block}
+.transcript[open] summary::before{transform:rotate(90deg)}
+.transcript summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.transcript .transcript-content{padding:.5rem 0;font-size:.85rem;color:var(--muted);font-style:italic}
+
+/* MCQ */
+.mcq{margin:.75rem 0}
+.mcq-option{
+  display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .75rem;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:.4rem;cursor:pointer;transition:border-color .2s;
+}
+.mcq-option:hover{border-color:var(--accent)}
+.mcq-option input[type="radio"]{margin-top:.2rem;accent-color:var(--accent);width:1.1rem;height:1.1rem;cursor:pointer;flex-shrink:0}
+.mcq-option label{cursor:pointer;flex:1;font-size:.9rem}
+.mcq-option.correct{border-color:var(--good);background:rgba(56,224,200,.1)}
+.mcq-option.wrong{border-color:var(--bad);background:rgba(255,138,138,.1)}
+
+/* Text Input */
+.text-input{
+  width:100%;padding:.6rem;border:1px solid var(--border);border-radius:8px;
+  background:var(--bg);color:var(--ink);font-size:.95rem;margin:.4rem 0;
+}
+.text-input:focus{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--accent)}
+.text-input.correct{border-color:var(--good)}
+.text-input.wrong{border-color:var(--bad)}
+
+/* Feedback */
+.feedback{
+  margin:.75rem 0;padding:.6rem .75rem;border-radius:8px;font-size:.85rem;
+  display:none;
+}
+.feedback.show{display:block}
+.feedback.good{background:rgba(56,224,200,.15);border:1px solid var(--good);color:var(--good)}
+.feedback.bad{background:rgba(255,138,138,.15);border:1px solid var(--bad);color:var(--bad)}
+.feedback.neutral{background:var(--surface-2);border:1px solid var(--border);color:var(--muted)}
+
+/* Buttons */
+.btn-row{display:flex;gap:.5rem;margin:.75rem 0;flex-wrap:wrap}
+.btn{
+  padding:.5rem 1rem;border-radius:8px;font-size:.85rem;font-weight:600;
+  cursor:pointer;border:1px solid var(--border);background:var(--surface-2);color:var(--ink);
+}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn.primary{background:var(--accent);color:#000;border-color:var(--accent)}
+.btn.primary:hover{background:#e6c000}
+
+/* Answer Key */
+.answer-key{
+  margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem;
+}
+.answer-key summary{
+  cursor:pointer;color:var(--accent);font-weight:600;font-size:.85rem;
+  padding:.25rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;
+}
+.answer-key summary::before{content:"\25B8";font-size:.7rem;transition:transform .2s;display:inline-block}
+.answer-key[open] summary::before{transform:rotate(90deg)}
+.answer-key summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.answer-key .key-content{padding:.5rem 0 .25rem;font-size:.85rem;color:var(--muted)}
+.answer-key .key-content p{margin-bottom:.4rem}
+
+/* Results */
+.results-box{
+  text-align:center;padding:1.5rem;
+}
+.results-box h2{color:var(--accent);font-size:1.8rem;margin-bottom:.75rem}
+.results-box .score{font-size:2.5rem;font-weight:700;color:var(--accent-2);margin:.75rem 0}
+.results-box p{color:var(--muted);margin-bottom:1rem}
+.certificate{
+  background:var(--surface-2);border:2px solid var(--accent);border-radius:16px;
+  padding:1.5rem;margin:1rem 0;
+}
+.certificate h3{color:var(--accent);font-size:1.2rem;margin-bottom:.4rem}
+.certificate p{color:var(--muted);font-size:.85rem}
+
+/* Confetti */
+#confetti-canvas{
+  position:fixed;inset:0;pointer-events:none;z-index:3000;
+}
+
+/* Footer - inside flow, not fixed */
+.footer-credit{
+  padding:.5rem .75rem;background:var(--surface);border-top:1px solid var(--border);
+  text-align:center;font-size:.7rem;color:var(--muted);flex-shrink:0;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .slide{padding:1rem}
+  .slide h2{font-size:1.15rem}
+  .nav-buttons{display:none}
+  .mobile-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.5rem .75rem;background:var(--surface);border-top:1px solid var(--border);
+    flex-shrink:0;min-height:48px;
+  }
+  .hud{gap:.4rem;padding:.4rem .5rem}
+  .hud .xp,.hud .streak{font-size:.75rem}
+  .fullscreen-btn{padding:.25rem .5rem;font-size:.7rem}
+  .mcq-option{padding:.5rem}
+  .mcq-option label{font-size:.85rem}
+}
+@media(min-width:769px){
+  .mobile-nav{display:none}
+}
+
+/* Reduced Motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* Focus visible */
+*:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+</style>
+<style id="deck-foot-css">
+.deck-foot{flex:0 0 auto;text-align:center;color:var(--muted);font-size:.72rem;line-height:1.5;padding:.4rem clamp(.9rem,3vw,1.5rem) .5rem;border-top:1px solid var(--border)}
+.deck-foot p{margin:.1rem 0}
+.deck-foot a{color:var(--accent);font-weight:700}
+</style></head>
+<body>
+<a class="skip-link" href="#main">Skip to lesson content</a>
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- Main App -->
+<div class="app" id="app">
+  <!-- HUD -->
+  <div class="hud" role="region" aria-label="Lesson progress">
+    <span class="xp" id="xp-display">XP: 0</span>
+    <span class="streak" id="streak-display">Streak: 0</span>
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <span class="progress-text" id="progress-text">0 / 17</span>
+    <button class="fullscreen-btn" id="fullscreen-btn" aria-label="Toggle full screen" title="Full screen">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <span>Fullscreen</span>
+    </button>
+  </div>
+
+  <!-- Slides -->
+  <div class="slides-container" id="slides-container">
+    <main id="main">
+
+      <!-- SLIDE 1: Welcome -->
+      <section class="slide active" id="slide-1" role="region" aria-labelledby="slide1-title">
+        <h2 id="slide1-title">Welcome!</h2>
+        <div class="activity-content">
+          <p>Today you will work on <strong>small talk at work</strong>. How to sound friendly with work friends.</p>
+          <p>We will work on:</p>
+          <p>* Strong parts of words</p>
+          <p>* Strong words in a sentence</p>
+          <p>* Voice up and voice down</p>
+          <p>* Words that join together</p>
+          <p>* Small groups of words</p>
+          <div class="example">
+            <strong>Example:</strong> "How ARE you DOing?" (voice goes up on "doing")
+          </div>
+          <p>There are <strong>15 activities</strong>. Take your time. You can check answers after each activity.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn primary" onclick="nextSlide()">Start Activity 1</button>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Activity 1 -->
+      <section class="slide" id="slide-2" role="region" aria-labelledby="act1-title">
+        <h2 id="act1-title">Activity 1: Listen and Notice</h2>
+        <div class="activity-content">
+          <p class="instruction">Listen first. Do not open the words yet. Two work friends talk fast.</p>
+          <div class="audio-controls">
+            <audio controls preload="none" src="small_talk_audio/elllo-1034-weekend-weather.mp3" aria-label="Small talk audio: Buddhi and Edwin discuss the weekend, weather and seasons">
+              Your browser does not support audio. Open the transcript at the bottom after listening.
+            </audio>
+          </div>
+          <p class="audio-note">Audio: ELLLO, Views #1034 Small Talk. Listen twice if needed.</p>
+          <p class="instruction">What did you notice? Choose the best answer:</p>
+          <div class="mcq" data-group="g1" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g1" id="g1a" value="a">
+              <label for="g1a">Their voices were flat and monotonous</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g1" id="g1b" value="b">
+              <label for="g1b">Their voices went up and down, and they sounded friendly</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g1" id="g1c" value="c">
+              <label for="g1c">They spoke very slowly and carefully</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g1" id="g1d" value="d">
+              <label for="g1d">They whispered quietly</label>
+            </div>
+          </div>
+          <p class="instruction">Edwin opens with "how ya going". What does he mean?</p>
+          <div class="mcq" data-group="g101" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g101" id="g101a" value="a">
+              <label for="g101a">How are you? (short fast hello)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g101" id="g101b" value="b">
+              <label for="g101b">Where are you going?</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g101" id="g101c" value="c">
+              <label for="g101c">How will you travel?</label>
+            </div>
+          </div>
+          <p class="instruction">How does Edwin feel about winter?</p>
+          <div class="mcq" data-group="g102" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g102" id="g102a" value="a">
+              <label for="g102a">He loves winter and cold weather</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g102" id="g102b" value="b">
+              <label for="g102b">He does not like winter. He likes summer.</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g102" id="g102c" value="c">
+              <label for="g102c">We do not know.</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act1">Check Answers</button>
+          </div>
+          <div class="feedback" id="feedback-act1" aria-live="polite"></div>
+        </div>
+        <details class="transcript">
+          <summary>Transcript (open only after listening)</summary>
+          <div class="transcript-content">
+            <p>Edwin: Hey Buddhi, how ya going? Buddhi: I am good Edwin, how are you? Edwin: I am not too bad. Did you do anything last weekend? Buddhi: Yes, I did. I went out with a bunch of friends after a very long time. Edwin: What did you guys do downtown? Buddhi: We went out for lunch, did some window shopping, then karaoke and dancing. Edwin: I spent about two hundred dollars on winter clothing. I prefer to sweat rather than freeze.</p>
+          </div>
+        </details>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Q1:</strong> Their voices went up and down, and they sounded friendly</p>
+            <p><strong>Q2:</strong> How are you? Edwin says it short and fast.</p>
+            <p><strong>Q3:</strong> He does not like winter. He likes summer ("I prefer to sweat rather than freeze").</p>
+            <p><strong>Key point:</strong> Fast talk: listen for short forms and feelings. You do not need every word.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 3: Activity 2 -->
+      <section class="slide" id="slide-3" role="region" aria-labelledby="act2-title">
+        <h2 id="act2-title">Activity 2: Word Stress</h2>
+        <div class="activity-content">
+          <p class="instruction">One part of a word is strong. Which one is strong?</p>
+          <div class="mcq" data-group="g2" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g2" id="g2a" value="a">
+              <label for="g2a">COLleague (first part strong)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g2" id="g2b" value="b">
+              <label for="g2b">colLEAGue (second part strong)</label>
+            </div>
+          </div>
+          <div class="mcq" data-group="g3" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g3" id="g3a" value="a">
+              <label for="g3a">proJECT (an action)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g3" id="g3b" value="b">
+              <label for="g3b">PROject (a thing, like "work project")</label>
+            </div>
+          </div>
+          <div class="mcq" data-group="g4" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g4" id="g4a" value="a">
+              <label for="g4a">COMfortable (first part strong)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g4" id="g4b" value="b">
+              <label for="g4b">comforTAble (third part strong)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act2">Check Answers</button>
+          </div>
+          <div class="feedback" id="feedback-act2" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>COLleague</strong> (first part strong)</p>
+            <p><strong>PROject</strong> (a thing: first part strong)</p>
+            <p><strong>COMfortable</strong> (first part strong)</p>
+            <p><strong>Many learners say it wrong. Say it strong and right.</strong></p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 4: Activity 3 -->
+      <section class="slide" id="slide-4" role="region" aria-labelledby="act3-title">
+        <h2 id="act3-title">Activity 3: Sentence Stress</h2>
+        <div class="activity-content">
+          <p class="instruction">Important words are strong (like nouns and verbs). Small words are weak (like a, the, to).</p>
+          <p class="instruction">Which words are strong?</p>
+          <div class="mcq" data-group="g5" data-correct="c">
+            <div class="mcq-option">
+              <input type="radio" name="g5" id="g5a" value="a">
+              <label for="g5a">"How are you doing?" (strong: "How")</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g5" id="g5b" value="b">
+              <label for="g5b">"How ARE you doing?" (strong only: "ARE")</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g5" id="g5c" value="c">
+              <label for="g5c">"How ARE you DOing?" (strong: "ARE" and "DOing")</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g5" id="g5d" value="d">
+              <label for="g5d">"How are you doing?" (strong: "you")</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act3">Check Answer</button>
+          </div>
+          <div class="feedback" id="feedback-act3" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Correct answer:</strong> "How ARE you DOing?" (strong: "ARE" and "DOing")</p>
+            <p><strong>Why:</strong> "ARE" and "DOing" are important. "How" and "you" are small.</p>
+            <p><strong>Key point:</strong> Weak small words = natural fast English.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 5: Activity 4 -->
+      <section class="slide" id="slide-5" role="region" aria-labelledby="act4-title">
+        <h2 id="act4-title">Activity 4: Sound Friendly with Your Voice</h2>
+        <div class="activity-content">
+          <p class="instruction">Voice up = friendly. Voice down = finished.</p>
+          <p class="instruction">Which question sounds friendly?</p>
+          <div class="mcq" data-group="g6" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g6" id="g6a" value="a">
+              <label for="g6a">"Did you have a good weekend?" (voice goes up on "weekend")</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g6" id="g6b" value="b">
+              <label for="g6b">"Did you have a good weekend?" (voice goes down on "weekend")</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g6" id="g6c" value="c">
+              <label for="g6c">"Did you have a good weekend?" (no up, no down)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act4">Check Answer</button>
+          </div>
+          <div class="feedback" id="feedback-act4" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Correct answer:</strong> "Did you have a good weekend?" (voice goes up on "weekend")</p>
+            <p><strong>Why:</strong> Voice up shows you want to hear the answer.</p>
+            <p><strong>Key point:</strong> Voice up = warm and friendly.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 6: Activity 5 -->
+      <section class="slide" id="slide-6" role="region" aria-labelledby="act5-title">
+        <h2 id="act5-title">Activity 5: Connected Speech</h2>
+        <div class="activity-content">
+          <p class="instruction">Fast people join words. Which one is right?</p>
+          <div class="mcq" data-group="g7" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g7" id="g7a" value="a">
+              <label for="g7a">"How are you" (slow, one word at a time)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g7" id="g7b" value="b">
+              <label for="g7b">"Howaryou" (joined, fast)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g7" id="g7c" value="c">
+              <label for="g7c">"How you are" (wrong order)</label>
+            </div>
+          </div>
+          <div class="mcq" data-group="g8" data-correct="c">
+            <div class="mcq-option">
+              <input type="radio" name="g8" id="g8a" value="a">
+              <label for="g8a">"What about you" (slow, one word at a time)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g8" id="g8b" value="b">
+              <label for="g8b">"Whataboutyou" (joined, t stays as t)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g8" id="g8c" value="c">
+              <label for="g8c">"Whaddaboutyou" (joined, t becomes d)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act5">Check Answers</button>
+          </div>
+          <div class="feedback" id="feedback-act5" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Connected speech examples:</strong></p>
+            <p>"How are you" becomes "Howaryou" (join, no stops)</p>
+            <p>"What about you" becomes "Whaddaboutyou" (the t in the middle sounds like d)</p>
+            <p><strong>Key point:</strong> Joined words are why fast English is hard. Good listening!</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 7: Activity 6 -->
+      <section class="slide" id="slide-7" role="region" aria-labelledby="act6-title">
+        <h2 id="act6-title">Activity 6: Small Groups</h2>
+        <div class="activity-content">
+          <p class="instruction">Speak in small groups. Stop at /. Which one is right?</p>
+          <div class="mcq" data-group="g9" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g9" id="g9a" value="a">
+              <label for="g9a">"I / went / out / with / a / bunch / of / friends." (pause after every word)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g9" id="g9b" value="b">
+              <label for="g9b">"I went out with a bunch of friends / after a long time." (what + when)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g9" id="g9c" value="c">
+              <label for="g9c">"I went out / with a bunch / of friends after / a long time." (wrong groups)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act6">Check Answer</button>
+          </div>
+          <div class="feedback" id="feedback-act6" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Correct answer:</strong> "I went out with a bunch of friends / after a long time." (what + when)</p>
+            <p><strong>Why:</strong> Groups follow meaning. First: what. Second: when.</p>
+            <p><strong>Key point:</strong> Chunking helps the listener follow your meaning.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 8: Activity 7 -->
+      <section class="slide" id="slide-8" role="region" aria-labelledby="act7-title">
+        <h2 id="act7-title">Activity 7: Shadow Reading</h2>
+        <div class="activity-content">
+          <p class="instruction">Listen to Todd and Edwin. They talk about weekend shopping. Repeat fast, right after them. Copy their music.</p>
+          <div class="audio-controls">
+            <audio controls preload="none" src="small_talk_audio/elllo-1033-weekend-shopping.mp3" aria-label="Shadow reading audio: Todd and Edwin on weekend shopping">
+              Your browser does not support audio. Open the transcript at the bottom after listening.
+            </audio>
+          </div>
+          <p class="audio-note">Audio: ELLLO, Views #1033 Weekend Wrap-up. New people. Same small talk.</p>
+          <p class="instruction">Now type one short fast phrase you heard:</p>
+          <label for="act7-input" class="instruction">Type it exactly as you heard it:</label>
+          <input type="text" class="text-input" id="act7-input" data-accept="how you doing,couple of friends,going clubbing,strike me,couple of hundred,freeze,took the bus,winter clothes,warm trousers,saturday" data-model="a couple of hundred dollars" placeholder="e.g., a couple of hundred dollars">
+          <div class="btn-row">
+            <button class="btn primary" data-check="act7">Check Answer</button>
+            <button class="btn" data-reveal="model7">Show Model</button>
+          </div>
+          <div class="feedback" id="feedback-act7" aria-live="polite"></div>
+          <div id="model7" style="display:none;margin-top:1rem;padding:1rem;background:var(--surface-2);border-radius:8px;border-left:4px solid var(--accent-2)">
+            <p><strong>Model answers:</strong> "how you doing" (are dropped) | "a couple of friends" | "You don't strike me as the shopping type" | "a couple of hundred dollars" | "I don't want to freeze"</p>
+          </div>
+        </div>
+        <details class="transcript">
+          <summary>Transcript (open only after listening)</summary>
+          <div class="transcript-content">
+            <p>Todd: Hey Edwin, how you doing? Edwin: I went down to the city with a couple of friends. Todd: You don't strike me as the shopping type. Edwin: I bought a jacket and warm trousers, about a couple of hundred dollars. I don't want to freeze. We took the bus.</p>
+          </div>
+        </details>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Target features:</strong></p>
+            <p>* Short form: "how you doing" ("are" goes away in fast talk)</p>
+            <p>* Special phrase: "You don't strike me as..." (you do not seem like...)</p>
+            <p>* Strong: "COUple of HUNdred", "FREEZE", "WINter clothes"</p>
+            <p><strong>Key point:</strong> Copy a new voice. Your ear learns fast.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 9: Activity 8 -->
+      <section class="slide" id="slide-9" role="region" aria-labelledby="act8-title">
+        <h2 id="act8-title">Activity 8: Which Stress Is Right?</h2>
+        <div class="activity-content">
+          <p class="instruction">Which stress is right?</p>
+          <div class="mcq" data-group="g10" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g10" id="g10a" value="a">
+              <label for="g10a">deVELopment (second part strong)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g10" id="g10b" value="b">
+              <label for="g10b">DEvelopment (first part strong)</label>
+            </div>
+          </div>
+          <div class="mcq" data-group="g11" data-correct="a">
+            <div class="mcq-option">
+              <input type="radio" name="g11" id="g11a" value="a">
+              <label for="g11a">MEETing (first part strong)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g11" id="g11b" value="b">
+              <label for="g11b">meetING (second part strong)</label>
+            </div>
+          </div>
+          <div class="mcq" data-group="g12" data-correct="b">
+            <div class="mcq-option">
+              <input type="radio" name="g12" id="g12a" value="a">
+              <label for="g12a">colLEAGue (second part strong)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g12" id="g12b" value="b">
+              <label for="g12b">COLleague (first part strong)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act8">Check Answers</button>
+          </div>
+          <div class="feedback" id="feedback-act8" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>deVELopment</strong> (second part strong)</p>
+            <p><strong>MEETing</strong> (first part strong)</p>
+            <p><strong>COLleague</strong> (first part strong)</p>
+            <p><strong>Key point:</strong> Strong first part = easy to hear.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 10: Activity 9 -->
+      <section class="slide" id="slide-10" role="region" aria-labelledby="act9-title">
+        <h2 id="act9-title">Activity 9: Say It Strong</h2>
+        <div class="activity-content">
+          <p class="instruction">Listen to Tom and Martin. They meet. Then open the words below. Say each line 3 times.</p>
+          <div class="audio-controls">
+            <audio controls preload="none" src="small_talk_audio/elllo-633-first-meeting.mp3" aria-label="Practice audio: Tom and Martin meet">
+              Your browser does not support audio. Open the transcript at the bottom after listening.
+            </audio>
+          </div>
+          <p class="audio-note">Audio: ELLLO, Views #633 First Meeting. Good hellos to copy.</p>
+          <p class="instruction">Type the line that is easy for you:</p>
+          <label for="act9-input" class="instruction">Easy line:</label>
+          <input type="text" class="text-input" id="act9-input" data-accept="nice to meet you,graduate student,my name is,where are you from,are you a teacher,hi how are you,northwest,wetter than cold,seattle" data-model="Nice to meet you" placeholder="Type the easiest phrase...">
+          <div class="btn-row">
+            <button class="btn primary" data-check="act9">Check Answer</button>
+            <button class="btn" data-complete="act9">Mark Complete</button>
+          </div>
+          <div class="feedback" id="feedback-act9" aria-live="polite"></div>
+        </div>
+        <details class="transcript">
+          <summary>Transcript (open only after listening)</summary>
+          <div class="transcript-content">
+            <p>"Are you a teacher here?" (voice goes UP. Yes or no.)</p>
+            <p>"No, I am actually a graduate student." (strong: GRADuate, ACtually)</p>
+            <p>"My name is Martin." (voice goes DOWN. Hello.)</p>
+            <p>"Nice to meet you, Tom." (voice goes DOWN. Warm and nice.)</p>
+            <p>"Where are you from?" (voice goes DOWN. What/Where question.)</p>
+          </div>
+        </details>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Target pronunciation:</strong></p>
+            <p>* Voice UP: "Are you a teacher here?" (yes or no)</p>
+            <p>* Voice DOWN: "Where are you from?" (What/Where)</p>
+            <p>* Voice DOWN: "My name is Martin", "Nice to meet you" (hello)</p>
+            <p>* Strong: GRADuate STUdent</p>
+            <p><strong>Key point:</strong> Good hellos start good talks.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 11: Activity 10 -->
+      <section class="slide" id="slide-11" role="region" aria-labelledby="act10-title">
+        <h2 id="act10-title">Activity 10: Show Feelings with Your Voice</h2>
+        <div class="activity-content">
+          <p class="instruction">Your voice shows feelings. Which answer shows you are excited and happy?</p>
+          <div class="mcq" data-group="g13" data-correct="c">
+            <div class="mcq-option">
+              <input type="radio" name="g13" id="g13a" value="a">
+              <label for="g13a">"Really." (falling, bored)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g13" id="g13b" value="b">
+              <label for="g13b">"That's nice." (flat, no feeling)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g13" id="g13c" value="c">
+              <label for="g13c">"Wow! That's amazing!" (big happy voice)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g13" id="g13d" value="d">
+              <label for="g13d">"I see." (no feeling)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act10">Check Answer</button>
+          </div>
+          <div class="feedback" id="feedback-act10" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Correct answer:</strong> "Wow! That's amazing!" (big happy voice going down)</p>
+            <p><strong>Why:</strong> A big happy voice going down shows you are excited.</p>
+            <p><strong>Key point:</strong> Your voice shows you care.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 12: Activity 11 -->
+      <section class="slide" id="slide-12" role="region" aria-labelledby="act11-title">
+        <h2 id="act11-title">Activity 11: Build Your Dialogue</h2>
+        <div class="activity-content">
+          <p class="instruction">Finish the talk with me.</p>
+          <div class="example">
+            <strong>Dialogue framework:</strong><br>
+            A: "Morning! How are you?"<br>
+            B: "_______________, thanks. What about you?"<br>
+            A: "___________. Did you have a good weekend?"<br>
+            B: "Yes, I went to _______________. It was really _______________."<br>
+            A: "_______________! That sounds _______________."<br>
+            B: "Thanks. Anyway, we should _______________."
+          </div>
+          <p class="instruction">Type B's first answer here:</p>
+          <input type="text" class="text-input" id="act11-input" data-accept="good,fine,okay,pretty good,not bad,alright,well" data-model="Good, thanks. What about you?" placeholder="e.g., Good, thanks. What about you?">
+          <div class="btn-row">
+            <button class="btn primary" data-check="act11">Check Answer</button>
+            <button class="btn" data-complete="act11">Mark Complete</button>
+          </div>
+          <div class="feedback" id="feedback-act11" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Example completed dialogue:</strong></p>
+            <p>A: "Morning! How are you?"</p>
+            <p>B: "Good, thanks. What about you?"</p>
+            <p>A: "Fine, thanks. Did you have a good weekend?"</p>
+            <p>B: "Yes, I went to a party. It was really fun."</p>
+            <p>A: "Wow! That sounds great."</p>
+            <p>B: "Thanks. Anyway, we should get to work."</p>
+            <p><strong>Focus:</strong> Strong words. Voice up on questions. Small groups.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 13: Activity 12 -->
+      <section class="slide" id="slide-13" role="region" aria-labelledby="act12-title">
+        <h2 id="act12-title">Activity 12: Coffee Machine Talk</h2>
+        <div class="activity-content">
+          <p class="instruction">You + teacher: talk at the coffee machine. Use:</p>
+          <p>* 1 hello (voice up)</p>
+          <p>* 2 weekend questions (strong words)</p>
+          <p>* 1 weather line (join the words)</p>
+          <p>* 1 goodbye (small group)</p>
+          <div class="example">
+            <strong>Start:</strong> "Morning! Did you have a good weekend?"
+          </div>
+          <p class="instruction">Ready? Click Mark Complete:</p>
+          <div class="btn-row">
+            <button class="btn primary" data-complete="act12">Mark Complete</button>
+          </div>
+          <div class="feedback" id="feedback-act12" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Expected language:</strong></p>
+            <p>Opening: "Morning!" or "Hey!" (rising)</p>
+            <p>Questions: "How was your weekend?" or "What did you do?"</p>
+            <p>Comment: "The weather was nice." (weak "was" sounds like "wuz")</p>
+            <p>Closing: "We should get to work." (small groups: "get to / work")</p>
+            <p><strong>Focus:</strong> Strong words. Voice up on questions. Small groups.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 14: Activity 13 -->
+      <section class="slide" id="slide-14" role="region" aria-labelledby="act13-title">
+        <h2 id="act13-title">Activity 13: Tricky Moments</h2>
+        <div class="activity-content">
+          <p class="instruction">What do you say? Choose the best answer:</p>
+          <p class="instruction"><strong>You need to go. Be nice. What do you say?</strong></p>
+          <div class="mcq" data-group="g14" data-correct="c">
+            <div class="mcq-option">
+              <input type="radio" name="g14" id="g14a" value="a">
+              <label for="g14a">"I am busy." (short, not warm)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g14" id="g14b" value="b">
+              <label for="g14b">"Excuse me." (too fast, no reason)</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g14" id="g14c" value="c">
+              <label for="g14c">"I should get back to work. It was nice talking to you."</label>
+            </div>
+            <div class="mcq-option">
+              <input type="radio" name="g14" id="g14d" value="d">
+              <label for="g14d">"OK, bye." (too fast, no nice end)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act13">Check Answer</button>
+          </div>
+          <div class="feedback" id="feedback-act13" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Correct answer:</strong> "I should get back to work. It was nice talking to you."</p>
+            <p><strong>Why:</strong> Nice and warm. It gives a reason and a happy end.</p>
+            <p><strong>Key point:</strong> A good goodbye keeps friends.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 15: Activity 14 -->
+      <section class="slide" id="slide-15" role="region" aria-labelledby="act14-title">
+        <h2 id="act14-title">Activity 14: Record and Check Yourself</h2>
+        <div class="activity-content">
+          <p class="instruction">Use your phone. Record your voice. Say:</p>
+          <p>* "Morning! How are you doing?"</p>
+          <p>* "I had a really good weekend, thanks."</p>
+          <p>* "What about you?"</p>
+          <p>* "We should get on with the meeting."</p>
+          <p class="instruction">Listen. Ask:</p>
+          <p>* Strong words OK?</p>
+          <p>* Voice up on questions?</p>
+          <p>* Small groups?</p>
+          <p class="instruction">Type one good thing:</p>
+          <input type="text" class="text-input" id="act14-input" data-accept="stress,intonation,chunking,rhythm,pronunciation,confident,fluent,good,fine,well" data-model="I stressed the content words correctly" placeholder="I did well on...">
+          <div class="btn-row">
+            <button class="btn primary" data-check="act14">Check Answer</button>
+            <button class="btn" data-complete="act14">Mark Complete</button>
+          </div>
+          <div class="feedback" id="feedback-act14" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Check yourself:</strong></p>
+            <p>* Strong words: can you hear them?</p>
+            <p>* Voice up: did questions go up?</p>
+            <p>* Small groups: did you stop at /?</p>
+            <p><strong>Key point:</strong> Listen to yourself. You will get better.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 16: Activity 15 -->
+      <section class="slide" id="slide-16" role="region" aria-labelledby="act15-title">
+        <h2 id="act15-title">Activity 15: Action Plan</h2>
+        <div class="activity-content">
+          <p class="instruction">Today: strong words, voice up/down, joined words, small groups.</p>
+          <p class="instruction">Choose ONE. Work on it this week. Type it:</p>
+          <label for="act15-input" class="instruction">This week, I work on:</label>
+          <input type="text" class="text-input" id="act15-input" data-accept="word stress,sentence stress,intonation,connected speech,chunking,rhythm,strong words,voice up,joined words,small groups" data-model="voice up and down" placeholder="e.g., voice up and down">
+          <p class="instruction">Tell your teacher: Where? How? What day do you check?</p>
+          <div class="btn-row">
+            <button class="btn primary" data-check="act15">Check Answer</button>
+            <button class="btn" data-complete="act15">Mark Complete</button>
+          </div>
+          <div class="feedback" id="feedback-act15" aria-live="polite"></div>
+        </div>
+        <details class="answer-key">
+          <summary>Answer Key</summary>
+          <div class="key-content">
+            <p><strong>Example plan:</strong></p>
+            <p>"This week, I work on voice up and down. I listen at the coffee machine. I copy my work friends. I check on Friday."</p>
+            <p><strong>Key point:</strong> Small plans work. Do it every day.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- SLIDE 17: Results -->
+      <section class="slide" id="slide-17" role="region" aria-labelledby="results-title">
+        <div class="results-box">
+          <h2 id="results-title">Well Done!</h2>
+          <p>You have completed all 15 pronunciation activities.</p>
+          <div class="score" id="final-score">0 XP</div>
+          <p id="final-message">Keep practising your workplace small talk pronunciation!</p>
+          <div class="certificate" id="certificate" style="display:none">
+            <h3>Certificate of Completion</h3>
+            <p>This certifies that <strong id="cert-name">Learner</strong> has completed the Workplace Small Talk Pronunciation lesson at B2 level.</p>
+          </div>
+          <div class="btn-row" style="justify-content:center">
+            <button class="btn primary" onclick="restartLesson()">Start Again</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Desktop Nav (outside slides, always visible) -->
+  <div class="nav-buttons" role="region" aria-label="Slide navigation">
+    <button class="btn secondary" id="back-btn" onclick="prevSlide()" aria-label="Previous slide">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Back
+    </button>
+    <span class="slide-counter" id="slide-counter">1 / 17</span>
+    <button class="btn primary" id="next-btn" onclick="nextSlide()" aria-label="Next slide">
+      Next
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile Nav (visible only on small screens) -->
+  <div class="mobile-nav" role="region" aria-label="Slide navigation">
+    <button class="btn secondary" id="back-btn-mobile" onclick="prevSlide()" aria-label="Previous slide">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Back
+    </button>
+    <span class="slide-counter" id="slide-counter-mobile">1 / 17</span>
+    <button class="btn primary" id="next-btn-mobile" onclick="nextSlide()" aria-label="Next slide">
+      Next
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- Footer (inside flow, not fixed) -->
+  <div class="deck-foot">
+    <p>Audio: ELLLO Views #1034, #1033, #633. Used for free, non-commercial educational purposes.</p>
+    <p><a href="../../index.html#b1-communicative">All B1 Communicative lessons</a> | <a href="Adverbial-Wh-Clauses-B1-B2-Shirley-Learner.html">Wh-Clauses for Daily Life</a> | <a href="The-Martian-Book-Review-B1-Learner.html">The Martian: A Book Review</a></p>
+  </div>
+</div>
+
+<script>
+// LRS Configuration
+var LRS = {
+  endpoint: "YOUR_LRS_ENDPOINT_HERE/xapi/",
+  username: "YOUR_LRS_KEY",
+  password: "YOUR_LRS_SECRET"
+};
+var LEARNER = "";
+var LESSON_ID = "https://github.com/ganjarapunit/resume/lessons/workplace-small-talk-pronunciation-b1";
+
+var VERBS = {
+  launched: ["http://adlnet.gov/expapi/verbs/launched", "launched"],
+  answered: ["http://adlnet.gov/expapi/verbs/answered", "answered"],
+  completed: ["https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete", "marked as complete"],
+  experienced: ["http://id.tincanapi.com/verb/experienced", "experienced"]
+};
+
+function send(verbKey, objectId, objectName){
+  if(!LRS.endpoint || LRS.endpoint.indexOf("YOUR_LRS")!==-1) return;
+  var v = VERBS[verbKey];
+  var stmt = {
+    actor:{objectType:"Agent", name: LEARNER||"Anonymous Learner"},
+    verb:{id:v[0], display:{"en-US":v[1]}},
+    object:{id:objectId, definition:{name:{"en-US":objectName}}},
+    timestamp:new Date().toISOString(),
+    context:{contextActivities:{parent:[{id:LESSON_ID}]}}
+  };
+  var xhr=new XMLHttpRequest();
+  xhr.open("POST", LRS.endpoint+"statements", true);
+  xhr.setRequestHeader("Authorization","Basic "+btoa(LRS.username+":"+LRS.password));
+  xhr.setRequestHeader("Content-Type","application/json");
+  xhr.setRequestHeader("X-Experience-API-Version","1.0.3");
+  xhr.send(JSON.stringify(stmt));
+}
+
+// State
+var state = { currentSlide: 1, totalSlides: 17, xp: 0, streak: 0, done: 0, completed: {} };
+
+// DOM Elements
+var slides = document.querySelectorAll('.slide');
+var progressBar = document.getElementById('progress-bar');
+var progressText = document.getElementById('progress-text');
+var xpDisplay = document.getElementById('xp-display');
+var streakDisplay = document.getElementById('streak-display');
+var slideCounter = document.getElementById('slide-counter');
+var slideCounterMobile = document.getElementById('slide-counter-mobile');
+var backBtn = document.getElementById('back-btn');
+var nextBtn = document.getElementById('next-btn');
+var backBtnMobile = document.getElementById('back-btn-mobile');
+var nextBtnMobile = document.getElementById('next-btn-mobile');
+var loginOverlay = null;
+var startBtn = null;
+var learnerNameInput = null;
+var app = document.getElementById('app');
+
+// Initialize
+function init(){
+  updateNav();
+  setupCheckButtons();
+  setupCompleteButtons();
+  setupRevealButtons();
+  setupSpeakButtons();
+  setupFullscreen();
+}
+
+// Navigation
+function showSlide(n){
+  if(n < 1) n = 1;
+  if(n > state.totalSlides) n = state.totalSlides;
+  try{ if(typeof stopSpeech==="function") stopSpeech(); }catch(e){}
+  state.currentSlide = n;
+  slides.forEach(function(s){ s.classList.remove('active'); });
+  var target = document.getElementById('slide-' + n);
+  if(target) target.classList.add('active');
+  updateNav();
+  document.getElementById('slides-container').scrollTop = 0;
+}
+
+function nextSlide(){
+  if(state.currentSlide < state.totalSlides){
+    showSlide(state.currentSlide + 1);
+  }
+}
+
+function prevSlide(){
+  if(state.currentSlide > 1){
+    showSlide(state.currentSlide - 1);
+  }
+}
+
+function updateNav(){
+  var n = state.currentSlide;
+  slideCounter.textContent = n + ' / ' + state.totalSlides;
+  slideCounterMobile.textContent = n + ' / ' + state.totalSlides;
+  backBtn.disabled = (n === 1);
+  backBtnMobile.disabled = (n === 1);
+  nextBtn.disabled = (n === state.totalSlides);
+  nextBtnMobile.disabled = (n === state.totalSlides);
+  if(n === state.totalSlides){
+    showResults();
+  }
+}
+
+// Check buttons
+function setupCheckButtons(){
+  document.querySelectorAll('[data-check]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var act = btn.getAttribute('data-check');
+      checkActivity(act);
+    });
+  });
+}
+
+function checkActivity(act){
+  var feedback = document.getElementById('feedback-' + act);
+  var allCorrect = true;
+  var firstWrong = false;
+  
+  // Check MCQs in this activity
+  var slide = document.getElementById('slide-' + (getSlideNumber(act)));
+  if(!slide) return;
+  
+  var mcqs = slide.querySelectorAll('.mcq');
+  mcqs.forEach(function(mcq){
+    var group = mcq.getAttribute('data-group');
+    var correctAnswers = mcq.getAttribute('data-correct').split(',');
+    var selected = mcq.querySelector('input[name="' + group + '"]:checked');
+    
+    if(!selected){
+      allCorrect = false;
+      return;
+    }
+    
+    var isCorrect = correctAnswers.indexOf(selected.value) !== -1;
+    var options = mcq.querySelectorAll('.mcq-option');
+    options.forEach(function(opt){
+      var input = opt.querySelector('input');
+      opt.classList.remove('correct', 'wrong');
+      if(isCorrect && input.value === selected.value){
+        opt.classList.add('correct');
+      } else if(!isCorrect && input.value === selected.value){
+        opt.classList.add('wrong');
+        allCorrect = false;
+        firstWrong = true;
+      }
+    });
+  });
+  
+  // Check text inputs in this activity
+  var inputs = slide.querySelectorAll('.text-input[data-accept]');
+  inputs.forEach(function(input){
+    var accepted = input.getAttribute('data-accept').split(',');
+    var val = normalize(input.value);
+    var isCorrect = false;
+    for(var i = 0; i < accepted.length; i++){
+      if(val.indexOf(accepted[i]) !== -1){
+        isCorrect = true;
+        break;
+      }
+    }
+    input.classList.remove('correct', 'wrong');
+    if(isCorrect){
+      input.classList.add('correct');
+    } else {
+      input.classList.add('wrong');
+      allCorrect = false;
+      firstWrong = true;
+    }
+  });
+  
+  // Show feedback
+  if(allCorrect){
+    feedback.className = 'feedback show good';
+    feedback.innerHTML = 'Correct! Well done.';
+    state.xp += 10;
+    state.streak++;
+    send('answered', 'activity-' + act, 'Activity ' + act);
+  } else {
+    feedback.className = 'feedback show bad';
+    feedback.innerHTML = 'Not quite. Check the answer key and try again.';
+    state.streak = 0;
+  }
+  
+  updateHUD();
+}
+
+function normalize(s){
+  return s.toLowerCase().trim().replace(/[.,!?;:'"]/g, '');
+}
+
+function getSlideNumber(act){
+  var map = {act1:2, act2:3, act3:4, act4:5, act5:6, act6:7, act7:8, act8:9, act9:10, act10:11, act11:12, act12:13, act13:14, act14:15, act15:16};
+  return map[act] || 0;
+}
+
+// Complete buttons
+function setupCompleteButtons(){
+  document.querySelectorAll('[data-complete]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var act = btn.getAttribute('data-complete');
+      var feedback = document.getElementById('feedback-' + act);
+      feedback.className = 'feedback show neutral';
+      feedback.innerHTML = 'Activity marked complete. Well done!';
+      state.completed[act] = true;
+      state.xp += 5;
+      state.done++;
+      send('completed', 'activity-' + act, 'Activity ' + act);
+      updateHUD();
+    });
+  });
+}
+
+// Reveal buttons
+function setupRevealButtons(){
+  document.querySelectorAll('[data-reveal]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-reveal');
+      var el = document.getElementById(id);
+      if(el){
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+  });
+}
+
+// Text-to-Speech: expressive natural voice with accurate stress and intonation
+var BEST_VOICE = null;
+var VOICE_LABEL = "system voice";
+
+function scoreVoice(v){
+  var name = (v.name||"").toLowerCase();
+  var lang = (v.lang||"").toLowerCase();
+  var s = 0;
+  if(lang.indexOf("en-gb")===0) s += 20;
+  else if(lang.indexOf("en_uk")===0) s += 20;
+  else if(lang.indexOf("en-us")===0) s += 10;
+  else if(lang.indexOf("en")===0) s += 5;
+  else return -100;
+  if(name.indexOf("natural")!==-1 || name.indexOf("online")!==-1) s += 12;
+  if(name.indexOf("google uk english female")!==-1) s += 14;
+  if(name.indexOf("google uk english male")!==-1) s += 13;
+  if(name.indexOf("google us english")!==-1) s += 8;
+  if(name.indexOf("sonia")!==-1 || name.indexOf("ryan")!==-1 || name.indexOf("libby")!==-1) s += 8;
+  if(name.indexOf("hazel")!==-1 || name.indexOf("george")!==-1) s += 6;
+  if(name.indexOf("samantha")!==-1 || name.indexOf("daniel")!==-1 || name.indexOf("serena")!==-1 || name.indexOf("moira")!==-1 || name.indexOf("tessa")!==-1) s += 6;
+  if(name.indexOf("zira")!==-1 || name.indexOf("david")!==-1 || name.indexOf("mark")!==-1) s += 3;
+  if(name.indexOf("compact")!==-1 || name.indexOf("espeak")!==-1 || name.indexOf("robot")!==-1) s -= 15;
+  if(v.localService===false) s += 2;
+  return s;
+}
+
+function pickBestVoice(){
+  try{
+    var vs = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    if(!vs || !vs.length) return null;
+    var best = null, bestScore = -1000;
+    for(var i=0;i<vs.length;i++){
+      var sc = scoreVoice(vs[i]);
+      if(sc > bestScore){ bestScore = sc; best = vs[i]; }
+    }
+    return best;
+  }catch(e){ return null; }
+}
+
+function refreshVoiceLabel(){
+  BEST_VOICE = pickBestVoice();
+  if(BEST_VOICE){
+    VOICE_LABEL = BEST_VOICE.name + " (" + BEST_VOICE.lang + ")";
+  }
+  document.querySelectorAll('[data-voice-label]').forEach(function(el){
+    el.textContent = BEST_VOICE ? "Voice: " + BEST_VOICE.name : "Voice: system default";
+  });
+}
+
+function splitSentences(text){
+  var m = text.match(/[^.!?]+[.!?]+["']?|\S[^.!?]*$/g);
+  return m && m.length ? m.map(function(s){ return s.trim(); }) : [text];
+}
+
+function prosodyFor(sentence, mode){
+  var s = sentence.trim();
+  var isQ = /\?\s*$/.test(s);
+  var isEx = /!\s*$/.test(s);
+  var base = (mode==="slow") ? 0.62 : 0.92;
+  var pitch = 1.0, rate = base;
+  if(isQ){ pitch = 1.25; rate = base; }
+  else if(isEx){ pitch = 1.2; rate = (mode==="slow") ? 0.68 : 0.95; }
+  else { pitch = 1.05; }
+  return {pitch:pitch, rate:rate};
+}
+
+function stopSpeech(){
+  try{ if(window.speechSynthesis) window.speechSynthesis.cancel(); }catch(e){}
+  document.querySelectorAll('.speak-btn').forEach(function(b){ b.classList.remove('speaking'); });
+}
+
+function speakExpressive(text, mode, btn){
+  if(!window.speechSynthesis){
+    alert("Sorry, your browser does not support audio playback. Please use Chrome or Edge.");
+    return;
+  }
+  stopSpeech();
+  var sentences = splitSentences(text);
+  var idx = 0;
+  if(btn) btn.classList.add('speaking');
+  function next(){
+    if(idx >= sentences.length){
+      if(btn) btn.classList.remove('speaking');
+      return;
+    }
+    var u = new SpeechSynthesisUtterance(sentences[idx]);
+    if(BEST_VOICE) u.voice = BEST_VOICE;
+    u.lang = (BEST_VOICE && BEST_VOICE.lang) ? BEST_VOICE.lang : 'en-GB';
+    var p = prosodyFor(sentences[idx], mode);
+    u.pitch = p.pitch;
+    u.rate = p.rate;
+    u.onend = function(){ idx++; next(); };
+    u.onerror = function(){ idx++; next(); };
+    window.speechSynthesis.speak(u);
+  }
+  next();
+}
+
+function setupSpeakButtons(){
+  refreshVoiceLabel();
+  try{
+    if(window.speechSynthesis){
+      window.speechSynthesis.onvoiceschanged = refreshVoiceLabel;
+      window.speechSynthesis.getVoices();
+      setTimeout(refreshVoiceLabel, 500);
+    }
+  }catch(e){}
+  document.querySelectorAll('[data-stop]').forEach(function(btn){
+    btn.addEventListener('click', stopSpeech);
+  });
+  document.querySelectorAll('[data-speak]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-speak');
+      var mode = btn.getAttribute('data-mode') || 'natural';
+      speakExpressive(text, mode, btn);
+    });
+  });
+}
+
+// Fullscreen
+function setupFullscreen(){
+  var btn = document.getElementById('fullscreen-btn');
+  btn.addEventListener('click', function(){
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen().catch(function(){});
+    } else {
+      document.exitFullscreen();
+    }
+  });
+}
+
+// HUD
+function updateHUD(){
+  xpDisplay.textContent = 'XP: ' + state.xp;
+  streakDisplay.textContent = 'Streak: ' + state.streak;
+  var pct = (state.done / 17) * 100;
+  progressBar.style.width = pct + '%';
+  progressText.textContent = state.done + ' / 17';
+}
+
+// Results
+function showResults(){
+  document.getElementById('final-score').textContent = state.xp + ' XP';
+  if(state.done >= 17){
+    document.getElementById('certificate').style.display = 'block';
+    document.getElementById('final-message').textContent = 'You have mastered workplace small talk pronunciation!';
+    send('experienced', 'lesson-complete', 'Workplace Small Talk Pronunciation - Complete');
+    launchConfetti();
+  }
+}
+
+// Confetti
+function launchConfetti(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var canvas = document.getElementById('confetti-canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var particles = [];
+  for(var i = 0; i < 100; i++){
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: -10,
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 2,
+      color: ['#ffd400', '#38e0c8', '#ff8a8a', '#f5f9ff'][Math.floor(Math.random() * 4)],
+      size: Math.random() * 8 + 4
+    });
+  }
+  var frame = 0;
+  function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p){
+      p.x += p.vx;
+      p.y += p.vy;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+    frame++;
+    if(frame < 120) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+// Restart
+function restartLesson(){
+  state = { currentSlide: 1, totalSlides: 17, xp: 0, streak: 0, done: 0, completed: {} };
+  updateHUD();
+  showSlide(1);
+}
+
+// Start
+// The shared LRS gate handles the learner's name, so reveal the deck directly.
+(function(){
+  var l = null;
+  try { l = JSON.parse(localStorage.getItem('lrs_learner') || 'null'); } catch (e) {}
+  LEARNER = (l && l.name) ? l.name : 'Learner';
+  app.classList.add('active');
+  app.style.display = 'flex';
+  showSlide(1);
+})();
+
+// Init
+init();
+</script>
+
+<script>
+// Workplace Small Talk Pronunciation B1 - granular LRS via the shared proxy
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.LRS || !window.LRS.send) return;
+  var HOME = 'https://punitganjara.com';
+  var LESSON_ID = HOME + location.pathname.split('#')[0];
+  function vb(id, display) { return { id: id, display: { 'en-US': display } }; }
+  var VERBS = {
+    launched:    vb('http://adlnet.gov/expapi/verbs/launched', 'launched'),
+    answered:    vb('http://adlnet.gov/expapi/verbs/answered', 'answered'),
+    marked:      vb('https://w3id.org/xapi/acrossx/profile/verbs/marked-as-complete', 'marked as complete'),
+    experienced: vb('http://id.tincanapi.com/verb/experienced', 'experienced'),
+    listened:    vb(HOME + '/expapi/verbs/listened', 'listened to'),
+    recorded:    vb('http://adlnet.gov/expapi/verbs/recorded', 'recorded'),
+    spoke:       vb(HOME + '/expapi/verbs/spoke', 'spoke aloud')
+  };
+  function sendPrecise(verb, objId, objName, type) {
+    window.LRS.send({
+      verb: verb,
+      object: {
+        objectType: 'Activity',
+        id: objId,
+        definition: { name: { 'en-US': objName }, type: 'http://adlnet.gov/expapi/activities/' + (type || 'lesson') }
+      }
+    });
+  }
+  var SLIDES = ["slide-1","slide-2","slide-3","slide-4","slide-5","slide-6","slide-7","slide-8","slide-9","slide-10","slide-11","slide-12","slide-13","slide-14","slide-15","slide-16","slide-17"];
+  var slides = SLIDES.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+  // per-slide viewed
+  var seen = {};
+  function viewed(sec) {
+    if (!sec || !sec.id || seen[sec.id]) return;
+    seen[sec.id] = true;
+    var h = sec.querySelector('h2');
+    var nm = (h ? h.textContent.trim() : sec.id).substring(0, 60);
+    sendPrecise(VERBS.launched, LESSON_ID + '/' + sec.id, 'Slide viewed: ' + nm, 'slide');
+  }
+  var tries = 0;
+  var poll = setInterval(function () {
+    tries++;
+    var cur = document.querySelector('.slide.active') || document.querySelector('.slide');
+    if (cur && window.LRS.send) { clearInterval(poll); viewed(cur); }
+    if (tries > 60) clearInterval(poll);
+  }, 500);
+  if (window.MutationObserver) {
+    var moView = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var el = m.target;
+        if (el && el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function (sec) { moView.observe(sec, { attributes: true, attributeFilter: ['class'] }); });
+  }
+
+  // per-item answered, once per activity, on its Check
+  var sentChecks = {};
+  document.querySelectorAll('button[data-check]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var act = b.getAttribute('data-check');
+      if (sentChecks[act]) return;
+      sentChecks[act] = true;
+      var n = 0;
+      document.querySelectorAll('.mcq[data-group]').forEach(function (mcq) {
+        var slide = mcq.closest('.slide');
+        if (!slide) return;
+        var label = mcq.querySelector('.mcq-question') || mcq.previousElementSibling;
+        var stem = label ? label.textContent.trim().replace(/\s+/g, ' ').substring(0, 70) : mcq.getAttribute('data-group');
+        n++;
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + slide.id + '/q-' + n, stem || ('Question ' + n), 'question');
+      });
+      document.querySelectorAll('.text-input[data-accept]').forEach(function (inp) {
+        var slide = inp.closest('.slide');
+        if (!slide) return;
+        n++;
+        sendPrecise(VERBS.answered, LESSON_ID + '/' + slide.id + '/q-' + n,
+          (slide.id + ': ' + (inp.placeholder || 'short answer').substring(0, 50)), 'question');
+      });
+    }, true);
+  });
+
+  // marked-as-complete per activity
+  var marked = {};
+  document.querySelectorAll('button[data-complete]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var act = b.getAttribute('data-complete');
+      if (marked[act]) return;
+      marked[act] = true;
+      var slide = b.closest('.slide');
+      var sid = slide ? slide.id : act;
+      var h = slide ? slide.querySelector('h2') : null;
+      sendPrecise(VERBS.marked, LESSON_ID + '/' + sid,
+        ((h ? h.textContent.trim() : act) + ' completed').substring(0, 70), 'activity');
+    }, true);
+  });
+
+  // model audio playback
+  document.querySelectorAll('audio').forEach(function (aud) {
+    aud.addEventListener('play', function () {
+      var slide = aud.closest('.slide');
+      sendPrecise(VERBS.listened, LESSON_ID + '/' + (slide ? slide.id : 'audio') + '/model',
+        (slide ? slide.id : 'audio') + ': model audio played', 'audio');
+    });
+  });
+  // speak buttons (browser speech synthesis model lines)
+  document.querySelectorAll('.speak-btn, [data-speak]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var slide = btn.closest('.slide');
+      sendPrecise(VERBS.spoke, LESSON_ID + '/' + (slide ? slide.id : 'line') + '/model',
+        (slide ? slide.id : 'line') + ': model line played', 'audio');
+    });
+  });
+  // typed answers
+  document.querySelectorAll('.text-input').forEach(function (inp) {
+    var handler = function () {
+      if (!inp.value || !inp.value.trim()) return;
+      var slide = inp.closest('.slide');
+      sendPrecise(VERBS.answered, LESSON_ID + '/' + (slide ? slide.id : 'answer') + '/' + inp.id,
+        (slide ? slide.id : '') + ': ' + inp.id + ' answered', 'writing');
+    };
+    inp.addEventListener('change', handler);
+    inp.addEventListener('blur', handler);
+  });
+});
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>

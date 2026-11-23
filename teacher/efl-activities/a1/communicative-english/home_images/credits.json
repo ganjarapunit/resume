@@ -1,0 +1,152 @@
+{
+  "bed": {
+    "file": "bed.jpg",
+    "source": "Canopy bed of Amantaka Suite in Amantaka luxury Resort & Hotel in Luang Prabang Laos.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x675"
+  },
+  "kitchen": {
+    "file": "kitchen.jpg",
+    "source": "Modern kitchen gnangarra.JPG",
+    "license": "CC BY 2.5 au",
+    "size": "900x587"
+  },
+  "bathroom": {
+    "file": "bathroom.jpg",
+    "source": "Fin bathroom in Fin garden, Kashan, Iran.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x697"
+  },
+  "living_room": {
+    "file": "living_room.jpg",
+    "source": "Cozy living room setup with a warm sofa, coffee cup, and an open book in a softly lit environment.jpg",
+    "license": "CC BY 2.0",
+    "size": "900x1348"
+  },
+  "bedroom": {
+    "file": "bedroom.jpg",
+    "source": "Bedroom, Interior of apartment in Brisbane, 2025, 02.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x675"
+  },
+  "dining_room": {
+    "file": "dining_room.jpg",
+    "source": "Small dining room of Château de Cheverny.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x720"
+  },
+  "door": {
+    "file": "door.jpg",
+    "source": "Fischerkirche (main door), Born a. Darß.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x1240"
+  },
+  "window": {
+    "file": "window.jpg",
+    "source": "Window in The Bridge Inn, Port Sunlight.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x836"
+  },
+  "table": {
+    "file": "table.jpg",
+    "source": "Dining table in Standen House 2024-10-08.jpg",
+    "license": "CC0",
+    "size": "900x1195"
+  },
+  "chair": {
+    "file": "chair.jpg",
+    "source": "Cebu Wooden chair.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x1203"
+  },
+  "sofa": {
+    "file": "sofa.jpg",
+    "source": "Gustave Caillebotte - Nude on a Couch - Google Art Project.jpg",
+    "license": "Public domain",
+    "size": "900x599"
+  },
+  "tv": {
+    "file": "tv.jpg",
+    "source": "A flat-screen television.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x675"
+  },
+  "fridge": {
+    "file": "fridge.jpg",
+    "source": "Open refrigerator with food at night.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x1194"
+  },
+  "stove": {
+    "file": "stove.jpg",
+    "source": "Hobo stove convection 2.jpg",
+    "license": "CC BY-SA 3.0",
+    "size": "900x1200"
+  },
+  "sink": {
+    "file": "sink.jpg",
+    "source": "Messy kitchen sink.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x551"
+  },
+  "toilet": {
+    "file": "toilet.jpg",
+    "source": "1823 Bathroom -tub and toilet - New Orleans.jpg",
+    "license": "CC BY 2.0",
+    "size": "900x675"
+  },
+  "shower": {
+    "file": "shower.jpg",
+    "source": "1823 Bathroom New Orleans - Shower Stall.jpg",
+    "license": "CC BY 2.0",
+    "size": "900x1200"
+  },
+  "mirror": {
+    "file": "mirror.jpg",
+    "source": "Raymond Manupelli, Wall Mirror, c. 1938, NGA 17574.jpg",
+    "license": "CC0",
+    "size": "900x1113"
+  },
+  "lamp": {
+    "file": "lamp.jpg",
+    "source": "Lamp with a lampshade illuminated by sunlight.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x1236"
+  },
+  "bookshelf": {
+    "file": "bookshelf.jpg",
+    "source": "Part of a bookshelf containing books by ancient philosophers (1.1).jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x600"
+  },
+  "carpet": {
+    "file": "carpet.jpg",
+    "source": "Flatweave rug, Caucasus, 1875-1925.jpg",
+    "license": "Public domain",
+    "size": "900x966"
+  },
+  "curtain": {
+    "file": "curtain.jpg",
+    "source": "Curtain.tif",
+    "license": "CC0",
+    "size": "900x1259"
+  },
+  "clock": {
+    "file": "clock.jpg",
+    "source": "Pendulum clock by Jacob Kock, antique furniture photography, IMG 0931 edit.jpg",
+    "license": "CC0",
+    "size": "900x1232"
+  },
+  "keys": {
+    "file": "keys.jpg",
+    "source": "Various keys on keyring.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x736"
+  },
+  "phone": {
+    "file": "phone.jpg",
+    "source": "Blackview A60 Smartphone Android mobile phone and folio case.jpg",
+    "license": "CC BY-SA 4.0",
+    "size": "900x675"
+  }
+}

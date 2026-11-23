@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9 Our Home Interactive</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<meta name="description" content="A1 communicative lesson: our home with Bao and Linh. Ask where things are, say here and there, welcome a guest. 20 slides with instant AI feedback on the home list.">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/a1/communicative-english/Bao-Linh-Lesson09-OurHome-A1-Learner.html">
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b; --card:#0c1628;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:5%; background:var(--accent)}
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; overflow-wrap:break-word}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.checklist{list-style:none; padding:0; margin:.8rem 0}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer; overflow-wrap:break-word}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+details.key{margin:.8rem 0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem 1rem}
+details.key summary{min-height:48px; font-weight:800; font-size:1.05rem; cursor:pointer; color:var(--accent); display:flex; align-items:center}
+details.key p{margin:.4rem 0; font-size:1.05rem; overflow-wrap:break-word}
+details.key p.ipa{font-size:1.02rem; color:var(--accent-2); font-weight:700}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:var(--card)}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to lesson</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>Lesson 9: Our Home. Bao and Linh</h1>
+        <p class="sub">Together on one screen. Speak aloud. 60 minutes.</p>
+      </div>
+      <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 20</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1" id="progressBar"><div id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Lesson slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+
+
+<style>
+/* ===== Lesson 7 components ===== */
+.row-actions{display:grid; gap:.7rem; grid-template-columns:1fr 1fr; margin:.7rem 0}
+.check-btn{border-color:var(--accent); background:var(--accent); color:#111}
+
+/* chain: alternating speaker cards */
+.chain{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0}
+.chain-card{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.75rem .9rem; display:flex; gap:.8rem; align-items:center; text-align:left}
+.chain-card .who{flex-shrink:0; width:3.4rem; min-height:2.4rem; border-radius:999px; background:var(--accent-2); color:#06231f; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.9rem}
+.chain-card:nth-child(2) .who{background:var(--accent); color:#111}
+.chain-card .line{flex:1; font-size:clamp(1.02rem,2.8vw,1.2rem); font-weight:700}
+.chain-card.done{border-color:var(--good); background:#0f2f2b}
+.mini-tick{flex-shrink:0; min-width:48px; min-height:48px; border-radius:10px; border:2px solid var(--border); background:var(--surface-2); color:var(--ink); font-weight:800; cursor:pointer}
+.mini-tick[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b; color:var(--ink)}
+
+/* word sort */
+.sort-pool{display:flex; flex-wrap:wrap; gap:.6rem; margin:.7rem 0; justify-content:center}
+.sort-chip{min-height:52px; padding:.55rem .95rem; font-size:1.1rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:var(--card); color:var(--ink); cursor:pointer}
+.sort-chip[aria-pressed="true"]{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.sort-chip.placed{border-color:var(--good); background:#0f2f2b}
+.zones{display:grid; gap:.7rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,9.5rem),1fr)); margin:.7rem 0}
+.zone{background:#0c1628; border:2px dashed var(--border); border-radius:12px; padding:.6rem; min-height:7rem; cursor:pointer; text-align:center}
+.zone .zone-title{font-weight:800; color:var(--accent); font-size:1rem; margin-bottom:.4rem}
+.zone.hot{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.zone .slot{display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center}
+
+/* turn ladder: two speakers, swap roles */
+.turns{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0}
+.turn{display:flex; align-items:center; gap:.7rem; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.6rem .8rem; text-align:left}
+.turn .who{flex-shrink:0; width:3.4rem; min-height:2.2rem; border-radius:999px; background:var(--accent-2); color:#06231f; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.85rem}
+.turn:nth-child(even) .who{background:var(--accent); color:#111}
+.turn .line{flex:1; font-size:clamp(1rem,2.7vw,1.15rem); font-weight:700}
+.turn.done{border-color:var(--good); background:#0f2f2b}
+.swap-btn{min-height:48px; padding:.5rem 1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); cursor:pointer; width:100%}
+
+/* politeness ladder */
+.ladder{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0}
+.rung{display:flex; align-items:center; gap:.8rem; background:var(--card); border:2px dashed var(--border); border-radius:12px; padding:.6rem .8rem; min-height:62px; text-align:left}
+.rung .num{flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center}
+.rung .text{flex:1; font-size:clamp(1rem,2.7vw,1.2rem); font-weight:700}
+.rung.hot{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.rung.filled{border-style:solid; border-color:var(--good); background:#0f2f2b}
+.rung .sort-chip.placed{width:auto; min-height:0; padding:0; border-color:transparent; background:transparent; color:var(--ink)}
+
+/* listen and match */
+.turn-out{
+  width:100%; background:var(--surface-2); border:2px solid var(--accent-2);
+  border-radius:12px; padding:.75rem 1rem; text-align:center;
+  font-size:clamp(1.05rem,3vw,1.3rem); font-weight:800; color:var(--ink); margin:.7rem 0;
+}
+.listen-lines{display:grid; gap:.6rem; grid-template-columns:repeat(2,1fr); margin:.7rem 0}
+.line-card{display:flex; align-items:center; gap:.7rem; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.55rem .7rem}
+.line-card .ln{flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--accent); color:#111; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.95rem}
+.line-card .say{flex:1; min-height:52px; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); font-weight:800; font-size:1rem; cursor:pointer}
+.line-card .say.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.line-card.done{border-color:var(--good); background:#0f2f2b}
+.line-card.done .ln{background:var(--good); color:#06231f}
+@media (max-width:23.75rem){ .listen-lines{grid-template-columns:1fr} }
+
+.match-wrap{display:grid; gap:.8rem; grid-template-columns:1fr; margin:.8rem 0}
+.match-col{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center}
+.match-col .zone-title{width:100%; font-weight:800; color:var(--accent); font-size:1rem}
+.mchip{min-height:52px; padding:.5rem .85rem; font-size:1.05rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:var(--card); color:var(--ink); cursor:pointer}
+.mchip[aria-pressed="true"]{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.mchip.locked{border-color:var(--good); background:#0f2f2b; opacity:.95}
+.mchip.locked::after{content:" ✓"; color:var(--good)}
+.mchip.wrong-chip{border-color:var(--bad); background:#33151a}
+
+/* dictation */
+.dict{display:grid; gap:.6rem; grid-template-columns:1fr; margin:.8rem 0}
+.dict-row{display:flex; align-items:center; gap:.7rem; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.6rem .8rem; flex-wrap:wrap}
+.dict-row .say{flex-shrink:0; min-width:7rem; min-height:48px; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); font-weight:800; cursor:pointer}
+.dict-row input{flex:1 1 7rem; min-height:52px; font-size:1.2rem; font-weight:800; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:10px; padding:.4rem .7rem; min-width:0}
+.dict-row input.correct{border-color:var(--good)}
+.dict-row input.wrong{border-color:var(--bad)}
+.dict-row .gsen{font-weight:700; font-size:clamp(1.02rem,2.8vw,1.18rem)}
+
+/* error clinic */
+.clinic{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0}
+.clinic-item{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem .85rem}
+.clinic-item .wrong{font-size:clamp(1rem,2.7vw,1.2rem); font-weight:800; color:var(--bad)}
+.clinic-item .fix{margin-top:.5rem; font-size:clamp(1rem,2.7vw,1.2rem); font-weight:800; color:var(--good)}
+.reveal-fix{min-height:48px; margin-top:.55rem; width:100%; border-radius:10px; border:2px solid var(--accent); background:var(--accent); color:#111; font-weight:800; cursor:pointer}
+
+/* random roles */
+.role-out{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0; align-items:center}
+.role-card{width:100%; background:var(--card); border:2px solid var(--accent-2); border-radius:14px; padding:.9rem 1rem; text-align:center}
+.role-card .big2{font-size:clamp(1.3rem,3.6vw,1.8rem); font-weight:800; color:var(--accent)}
+.roll-btn{min-height:56px; width:100%; max-width:22rem; border-radius:12px; border:2px solid var(--accent); background:var(--accent); color:#111; font-size:1.1rem; font-weight:800; cursor:pointer}
+
+/* info-gap private cards */
+.gap-cards{display:grid; gap:.8rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); margin:.8rem 0}
+.gap-card{background:var(--card); border:2px solid var(--border); border-radius:14px; padding:.85rem .9rem; text-align:center}
+.gap-card .owner{font-weight:800; color:var(--accent); font-size:1.05rem; margin-bottom:.35rem}
+.gap-card .secret{background:#060d1a; border:1px dashed var(--border); border-radius:10px; padding:.7rem; font-size:clamp(1rem,2.7vw,1.15rem); font-weight:700; min-height:6.5rem; display:flex; align-items:center; justify-content:center; text-align:center}
+.gap-card .secret.blurred{color:transparent; text-shadow:0 0 11px rgba(245,249,255,.75)}
+.peek-btn{min-height:48px; width:100%; margin-top:.55rem; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); font-weight:800; cursor:pointer}
+
+/* tap the answer */
+.choice-list{display:flex; flex-direction:column; gap:.6rem; margin:.8rem 0}
+.q-item{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem .8rem}
+.q-item .q{font-size:clamp(1.02rem,2.8vw,1.18rem); font-weight:800; margin-bottom:.5rem}
+.choice{display:block; width:100%; text-align:left; margin:.4rem 0 0; min-height:52px; font-size:clamp(1rem,2.7vw,1.12rem); font-weight:700; border-radius:10px; cursor:pointer; border:2px solid var(--border); background:var(--surface-2); color:var(--ink); padding:.6rem .85rem}
+.choice.is-right{border-color:var(--good); background:#0f2f2b}
+.choice.is-wrong{border-color:var(--bad); background:#33151a}
+.choice.locked{cursor:default}
+.choice[aria-pressed="true"]{border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.choice.is-right[aria-pressed="true"]{border-color:var(--good); outline:none}
+.choice.is-wrong[aria-pressed="true"]{border-color:var(--bad); outline:none}
+
+/* buy it or walk away */
+.buy-list{display:flex; flex-direction:column; gap:.55rem; margin:.8rem 0}
+.buy-row{display:flex; align-items:center; gap:.6rem; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.55rem .7rem; flex-wrap:wrap}
+.buy-row .item{flex:1 1 7rem; font-weight:800; font-size:clamp(1rem,2.7vw,1.15rem)}
+.buy-row .price{flex:0 0 auto; font-weight:800; color:var(--accent); font-size:1.05rem}
+.buy-row button{min-height:48px; min-width:6.2rem; font-weight:800; border-radius:10px; border:2px solid var(--border); background:var(--surface-2); color:var(--ink); cursor:pointer}
+.buy-row button[aria-pressed="true"]{border-color:var(--accent); background:var(--accent); color:#111}
+.buy-row button.is-right{border-color:var(--good); background:#0f2f2b; color:var(--ink)}
+.buy-row button.is-wrong{border-color:var(--bad); background:#33151a; color:var(--ink)}
+
+/* order the market talk */
+.order-list{display:flex; flex-direction:column; gap:.55rem; margin:.8rem 0}
+.oline{display:flex; align-items:center; gap:.75rem; min-height:56px; width:100%; text-align:left; font-size:clamp(1rem,2.7vw,1.15rem); font-weight:700; border-radius:12px; border:2px solid var(--border); background:var(--card); color:var(--ink); padding:.6rem .8rem; cursor:pointer}
+.oline .num{flex-shrink:0; width:2.1rem; height:2.1rem; border-radius:50%; border:2px solid var(--border); font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.95rem}
+.oline[aria-pressed="true"]{border-color:var(--good); background:#0f2f2b}
+.oline[aria-pressed="true"] .num{border-color:var(--good); color:var(--good)}
+
+/* my market list */
+.mycafe{display:grid; gap:.6rem; grid-template-columns:1fr; margin:.8rem 0}
+.mycafe-row{display:flex; gap:.6rem; align-items:center; flex-wrap:wrap}
+.mycafe-row .lab{flex-shrink:0; width:5.2rem; font-weight:800; color:var(--muted)}
+.mycafe-row input{flex:1 1 8rem; min-width:0; min-height:52px; font-size:1.05rem; font-weight:700; color:var(--ink); background:#060d1a; border:2px solid var(--border); border-radius:10px; padding:.4rem .7rem}
+.menu-card{margin-top:.8rem; background:#f7fafc; color:#0f1b2e; border-radius:14px; padding:1rem 1.1rem; text-align:left}
+.menu-card h3{margin:.1rem 0 .5rem; font-size:clamp(1.2rem,3.4vw,1.5rem); color:#0f1b2e}
+.menu-card .mrow{display:flex; justify-content:space-between; gap:1rem; padding:.4rem .2rem; border-bottom:1px dashed #9aa8bd; font-size:clamp(1rem,2.7vw,1.15rem); font-weight:700}
+.menu-card .mrow:last-child{border-bottom:none}
+.menu-card .mempty{color:#5a6675; font-weight:600}
+
+/* step tracker */
+.steps{display:flex; flex-direction:column; gap:.55rem; margin:.8rem 0}
+.step{display:flex; align-items:center; gap:.8rem; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.6rem .8rem; text-align:left; min-height:56px; width:100%; cursor:pointer; color:var(--ink)}
+.step .n{flex-shrink:0; width:2rem; height:2rem; border-radius:50%; border:2px solid var(--border); font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.95rem}
+.step.done{border-color:var(--good); background:#0f2f2b}
+.step.done .n{border-color:var(--good); color:var(--good)}
+
+@media (max-width:23.75rem){
+  .row-actions{grid-template-columns:1fr}
+  .dict-row .say{min-width:100%}
+  .mycafe-row .lab{width:100%}
+  .buy-row .item{flex:1 1 100%}
+  .buy-row button{flex:1 1 0; min-width:0}
+}
+</style>
+<style id="alignment-normalisation">
+.row-actions > *:only-child{grid-column:1 / -1; max-width:20rem; width:100%; margin:0 auto; justify-self:center}
+.sort-pool{display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; justify-content:stretch}
+@media (min-width:34rem){ .sort-pool{grid-template-columns:repeat(5,1fr)} }
+.sort-chip{width:100%; text-align:center}
+.zones{grid-template-columns:repeat(3,1fr); gap:.7rem}
+@media (max-width:34rem){ .zones{grid-template-columns:1fr} }
+.zone{min-height:6.5rem; display:flex; flex-direction:column; align-items:center; justify-content:flex-start}
+.zone .slot{flex:1; align-content:center; width:100%}
+.zone .zone-title{width:100%}
+.match-col{align-items:stretch}
+.match-wrap{gap:.9rem}
+#fsRoot, #fsRoot .viewport{text-align:center}
+.slide{text-align:center}
+.slide h1, .slide h2, .slide h3, .slide .lead, .slide .instruction,
+.slide .target, .slide .eyebrow, .slide .feedback, .slide .turn-out{text-align:center}
+.slide .cards, .slide .card, .slide .role-card{text-align:center}
+.slide .speak-btn, .slide .sort-chip, .slide .roll-btn, .slide .mini-tick,
+.slide .swap-btn, .slide .buy-row button, .slide .bottom-nav button,
+.slide .side-nav button, .slide .reveal-fix{text-align:center}
+.lines{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap:.6rem; margin:.7rem 0; width:100%}
+.lines .speak-btn{margin-top:0; width:100%}
+.slide .cards{justify-items:center; align-items:stretch}
+.slide .cards > *{justify-self:center; width:100%}
+.slide .checklist, .slide .checklist li, .slide .checklist label{text-align:left}
+.slide .choice, .slide .oline, .slide .q-item .q{text-align:left}
+.slide details.key summary{text-align:left; display:flex; align-items:center; gap:.5rem}
+.slide details.key p{text-align:center}
+.slide .menu-card, .slide .menu-card *{text-align:left}
+footer.foot{text-align:center}
+@media (max-width:23.75rem){
+  .slide .cards{justify-content:center}
+}
+</style>
+<section class="slide active" id="slide-01-cover" role="group" aria-roledescription="slide" aria-label="1 of 20 Cover">
+            <span class="eyebrow">Home day</span>
+            <h2 tabindex="-1">Our Home</h2>
+            <p class="lead">Today you can:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">&#127968;</div><div class="big">Ask where</div><div class="small">Where is the bed?</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128205;</div><div class="big">Say here</div><div class="small">It is here.</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128065;</div><div class="big">Say there</div><div class="small">It is there.</div></div>
+            </div>
+            <p class="instruction">Together. Speak aloud.</p>
+            <div class="target">Hello! We are Bao and Linh.</div>
+            <details class="key"><summary>Check</summary><p>One is the host. One is the guest. Change!</p></details>
+          </section>
+
+          <section class="slide" id="slide-02-act1-sayfast" role="group" aria-roledescription="slide" aria-label="2 of 20 Activity 1">
+            <span class="eyebrow teal">Activity 1 of 15 . Warm up</span>
+            <h2 tabindex="-1">Say it fast</h2>
+            <p class="instruction">One thing. One answer. Then change.</p>
+            <div data-chain>
+              <div class="chain-card">
+                <span class="who">Bao</span>
+                <span class="line">Hello! <br><strong>Linh:</strong> Hi! I am Linh.</span>
+                <button class="mini-tick" type="button" aria-pressed="false" aria-label="Round 1 said">1</button>
+              </div>
+              <div class="chain-card">
+                <span class="who">Linh</span>
+                <span class="line">I am from Vietnam. <br><strong>Bao:</strong> We live in Hanoi.</span>
+                <button class="mini-tick" type="button" aria-pressed="false" aria-label="Round 2 said">2</button>
+              </div>
+              <div class="chain-card">
+                <span class="who">Bao</span>
+                <span class="line">What time is it? <br><strong>Linh:</strong> It is 7 o'clock.</span>
+                <button class="mini-tick" type="button" aria-pressed="false" aria-label="Round 3 said">3</button>
+              </div>
+              <div class="chain-card">
+                <span class="who">Linh</span>
+                <span class="line">Where is the bed? <br><strong>Bao:</strong> It is here.</span>
+                <button class="mini-tick" type="button" aria-pressed="false" aria-label="Round 4 said">4</button>
+              </div>
+              <div class="feedback" data-chain-status aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 Hello! Hi! I am Linh. 2 I am from Vietnam. We live in Hanoi. 3 What time is it? It is 7 o'clock. 4 Where is the bed? It is here.</p></details>
+          </section>
+
+          <section class="slide" id="slide-03-act2-homewords" role="group" aria-roledescription="slide" aria-label="3 of 20 Activity 2">
+            <span class="eyebrow">Activity 2 of 15 . New words</span>
+            <h2 tabindex="-1">The home words</h2>
+            <p class="instruction">Tap. Listen. Say it 3 times.</p>
+            <div class="cards">
+              <div class="card"><div class="big">Bed</div><div class="small">you sleep here</div><button class="speak-btn" type="button" data-say="Bed." data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">Kitchen</div><div class="small">you cook here</div><button class="speak-btn" type="button" data-say="Kitchen." data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">Bathroom</div><div class="small">you wash here</div><button class="speak-btn" type="button" data-say="Bathroom." data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">Where</div><div class="small">ask about place</div><button class="speak-btn" type="button" data-say="Where?" data-voice="female">Listen</button></div>
+              <div class="card"><div class="big">Here</div><div class="small">this place</div><button class="speak-btn" type="button" data-say="Here." data-voice="male">Listen</button></div>
+              <div class="card"><div class="big">There</div><div class="small">that place</div><button class="speak-btn" type="button" data-say="There." data-voice="female">Listen</button></div>
+            </div>
+            <div class="target">Where is the bed? It is here.</div>
+            <details class="key"><summary>Check</summary><p>Say the big lines: Where is the bed? It is here. It is there. Where is the kitchen? It is there.</p></details>
+          </section>
+
+          <section class="slide" id="slide-04-act3-roomthing" role="group" aria-roledescription="slide" aria-label="4 of 20 Activity 3">
+            <span class="eyebrow teal">Activity 3 of 15 . Sort</span>
+            <h2 tabindex="-1">Room or thing?</h2>
+            <p class="instruction">Tap a word. Tap a group. Then Check.</p>
+            <div data-sort>
+              <div class="sort-pool" role="group" aria-label="Nine home words">
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="room">kitchen</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="room">bathroom</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="room">bedroom</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="room">living room</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="thing">bed</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="thing">table</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="thing">chair</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="thing">door</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-group="thing">window</button>
+              </div>
+              <div class="zones">
+                <div class="zone" data-group="room"><div class="zone-title">Room. A place to be.</div><div class="slot" data-group="room"></div></div>
+                <div class="zone" data-group="thing"><div class="zone-title">Thing. An object.</div><div class="slot" data-group="thing"></div></div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-sort-check>Check</button>
+              </div>
+              <div class="feedback" data-sort-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>Room: kitchen, bathroom, bedroom, living room. Thing: bed, table, chair, door, window.</p></details>
+          </section>
+
+          <section class="slide" id="slide-05-act4-match" role="group" aria-roledescription="slide" aria-label="5 of 20 Activity 4">
+            <span class="eyebrow">Activity 4 of 15 . Listen and match</span>
+            <h2 tabindex="-1">Hear the place. Match it.</h2>
+            <p class="instruction">Listen. Match the thing.</p>
+            <div class="turn-out" data-turn-out aria-live="polite">Bao's turn. Listen and match.</div>
+            <div class="listen-lines" role="group" aria-label="Four spoken home lines">
+              <div class="line-card" data-line="bed"><span class="ln">1</span><button class="say" type="button" data-say="Where is the bed? It is here." data-voice="female">Listen</button></div>
+              <div class="line-card" data-line="kitchen"><span class="ln">2</span><button class="say" type="button" data-say="Where is the kitchen? It is there." data-voice="male">Listen</button></div>
+              <div class="line-card" data-line="bathroom"><span class="ln">3</span><button class="say" type="button" data-say="Where is the bathroom? It is here." data-voice="female">Listen</button></div>
+              <div class="line-card" data-line="door"><span class="ln">4</span><button class="say" type="button" data-say="Where is the door? It is there." data-voice="male">Listen</button></div>
+            </div>
+            <div data-match>
+              <div class="match-wrap">
+                <div class="match-col"><span class="zone-title">Thing</span>
+                <button class="mchip" type="button" aria-pressed="false" data-item="bed">bed</button>
+                <button class="mchip" type="button" aria-pressed="false" data-item="kitchen">kitchen</button>
+                <button class="mchip" type="button" aria-pressed="false" data-item="bathroom">bathroom</button>
+                <button class="mchip" type="button" aria-pressed="false" data-item="door">door</button>
+                </div>
+                <div class="match-col"><span class="zone-title">Place</span>
+                <button class="mchip" type="button" aria-pressed="false" data-price="bed">here</button>
+                <button class="mchip" type="button" aria-pressed="false" data-price="kitchen">there</button>
+                <button class="mchip" type="button" aria-pressed="false" data-price="bathroom">here</button>
+                <button class="mchip" type="button" aria-pressed="false" data-price="door">there</button>
+                </div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn" type="button" data-turnchange>Change turn</button>
+                <button class="speak-btn" type="button" data-match-clear>Clear</button>
+              </div>
+              <div class="feedback" data-match-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>Line 1: Where is the bed? It is here. Line 2: Where is the kitchen? It is there. Line 3: Where is the bathroom? It is here. Line 4: Where is the door? It is there.</p></details>
+          </section>
+
+          <section class="slide" id="slide-06-act5-dict" role="group" aria-roledescription="slide" aria-label="6 of 20 Activity 5">
+            <span class="eyebrow teal">Activity 5 of 15 . Listen and write</span>
+            <h2 tabindex="-1">Write the place</h2>
+            <p class="instruction">Listen. Write the word.</p>
+            <div data-dict>
+              <div class="dict-row"><button class="say" type="button" data-say="Here." data-voice="male">Listen</button><input type="text" autocomplete="off" data-dict-answer="here" aria-label="Place, row 1"></div>
+              <div class="dict-row"><button class="say" type="button" data-say="There." data-voice="male">Listen</button><input type="text" autocomplete="off" data-dict-answer="there" aria-label="Place, row 2"></div>
+              <div class="dict-row"><button class="say" type="button" data-say="In the kitchen." data-voice="male">Listen</button><input type="text" autocomplete="off" data-dict-answer="inthekitchen" aria-label="Place, row 3"></div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-dict-check>Check</button>
+              </div>
+              <div class="feedback" data-dict-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 here. 2 there. 3 in the kitchen. Spaces do not matter.</p></details>
+          </section>
+
+          <section class="slide" id="slide-07-act6-whereis" role="group" aria-roledescription="slide" aria-label="7 of 20 Activity 6">
+            <span class="eyebrow">Activity 6 of 15 . Turn ladder</span>
+            <h2 tabindex="-1">Where is it?</h2>
+            <p class="instruction">One asks. One answers. Then change.</p>
+            <div data-turns>
+              <div class="turns">
+                <div class="turn"><span class="who" data-who>Bao</span><span class="line">Where is the bed? <br><strong>Linh:</strong> It is here.</span><button class="mini-tick" type="button" aria-pressed="false" aria-label="Turn 1 said">1</button></div>
+                <div class="turn"><span class="who" data-who>Linh</span><span class="line">Where is the kitchen? <br><strong>Bao:</strong> It is there.</span><button class="mini-tick" type="button" aria-pressed="false" aria-label="Turn 2 said">2</button></div>
+                <div class="turn"><span class="who" data-who>Bao</span><span class="line">Where is the bathroom? <br><strong>Linh:</strong> It is here. Come and see.</span><button class="mini-tick" type="button" aria-pressed="false" aria-label="Turn 3 said">3</button></div>
+              </div>
+              <button class="swap-btn" type="button" data-turn-swap>Change</button>
+              <div class="feedback" data-turn-status aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 Bao: Where is the bed? Linh: It is here. 2 Linh: Where is the kitchen? Bao: It is there. 3 Bao: Where is the bathroom? Linh: It is here. Come and see. Then tap Change and do it again.</p></details>
+          </section>
+
+<section class="slide" id="slide-08-act7-find" role="group" aria-roledescription="slide" aria-label="8 of 20 Activity 7">
+            <span class="eyebrow teal">Activity 7 of 15 . Find it</span>
+            <h2 tabindex="-1">Find the right one</h2>
+            <p class="instruction">Read. Tap the right sentence. Then Check.</p>
+            <div data-find>
+              <div class="choice-list">
+                <div class="q-item">
+                  <div class="q">1. Bed</div>
+                  <button class="choice" type="button" aria-pressed="false" data-right="true">It is here.</button>
+                  <button class="choice" type="button" aria-pressed="false">It is in here.</button>
+                  <button class="choice" type="button" aria-pressed="false">Here is the bed.</button>
+                </div>
+                <div class="q-item">
+                  <div class="q">2. Kitchen</div>
+                  <button class="choice" type="button" aria-pressed="false" data-right="true">It is there.</button>
+                  <button class="choice" type="button" aria-pressed="false">It is at there.</button>
+                  <button class="choice" type="button" aria-pressed="false">There is the kitchen.</button>
+                </div>
+                <div class="q-item">
+                  <div class="q">3. Bathroom</div>
+                  <button class="choice" type="button" aria-pressed="false" data-right="true">It is here. Come and see.</button>
+                  <button class="choice" type="button" aria-pressed="false">It is in here. Come and see.</button>
+                  <button class="choice" type="button" aria-pressed="false">Here is bathroom. Come and see.</button>
+                </div>
+                <div class="q-item">
+                  <div class="q">4. Door</div>
+                  <button class="choice" type="button" aria-pressed="false" data-right="true">It is there.</button>
+                  <button class="choice" type="button" aria-pressed="false">It is at there.</button>
+                  <button class="choice" type="button" aria-pressed="false">There is door.</button>
+                </div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-find-check>Check</button>
+              </div>
+              <div class="feedback" data-find-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 It is here. 2 It is there. 3 It is here. Come and see. 4 It is there. No in, no at. Use It is here.</p></details>
+          </section>
+
+          <section class="slide" id="slide-09-act8-grammar" role="group" aria-roledescription="slide" aria-label="9 of 20 Activity 8">
+            <span class="eyebrow">Activity 8 of 15 . Grammar</span>
+            <h2 tabindex="-1">Write here or there</h2>
+            <p class="instruction">Read. Write here or there. Then Check.</p>
+            <div data-grammar>
+              <div class="dict">
+                <div class="dict-row"><span class="gsen">1. You are in the bedroom. Where is the bed? It is</span><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-grammar-answer="here" aria-label="Answer 1: write here or there"><span class="gsen">.</span></div>
+                <div class="dict-row"><span class="gsen">2. You are in the bedroom. Where is the kitchen? It is</span><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-grammar-answer="there" aria-label="Answer 2: write here or there"><span class="gsen">.</span></div>
+                <div class="dict-row"><span class="gsen">3. You are in the bathroom. Where is the bathroom? It is</span><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-grammar-answer="here" aria-label="Answer 3: write here or there"><span class="gsen">.</span></div>
+                <div class="dict-row"><span class="gsen">4. You are in the kitchen. Where is the door? It is</span><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-grammar-answer="here|there" aria-label="Answer 4: write here or there"><span class="gsen">.</span></div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-grammar-check>Check</button>
+              </div>
+              <div class="feedback" data-grammar-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 here. You are in the bedroom. 2 there. The kitchen is not here. 3 here. You are in the bathroom. 4 here or there. Both are possible.</p></details>
+          </section>
+
+          <section class="slide" id="slide-10-act9-sayclearly" role="group" aria-roledescription="slide" aria-label="10 of 20 Activity 9">
+            <span class="eyebrow teal">Activity 9 of 15 . Say it clearly</span>
+            <h2 tabindex="-1">Say it clearly</h2>
+            <p class="instruction">Tap. Then tap the rung. Clearest last.</p>
+            <div data-ladder>
+              <div class="sort-pool" role="group" aria-label="Three ways to say where">
+              <button class="sort-chip" type="button" aria-pressed="false" data-rung="1">It is there.</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-rung="2">It is in the kitchen.</button>
+              <button class="sort-chip" type="button" aria-pressed="false" data-rung="3">It is on your left, in the kitchen.</button>
+              </div>
+              <div class="ladder">
+                <div class="rung" data-rung="1"><span class="num">1</span><span class="text"></span></div>
+                <div class="rung" data-rung="2"><span class="num">2</span><span class="text"></span></div>
+                <div class="rung" data-rung="3"><span class="num">3</span><span class="text"></span></div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-ladder-check>Check</button>
+              </div>
+              <div class="feedback" data-ladder-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 It is there. 2 It is in the kitchen. 3 It is on your left, in the kitchen. Number 3 is the clearest. It tells the most.</p></details>
+          </section>
+
+          <section class="slide" id="slide-11-act10-clinic" role="group" aria-roledescription="slide" aria-label="11 of 20 Activity 10">
+            <span class="eyebrow">Activity 10 of 15 . Error clinic</span>
+            <h2 tabindex="-1">One mistake each</h2>
+            <p class="instruction">Read it. Then show the fix.</p>
+            <div class="clinic">
+              <div class="clinic-item">
+                <div class="wrong">Where is the bed? It is in here.</div>
+                <div class="fix" id="fix1" hidden>Where is the bed? It is here.</div>
+                <button class="reveal-fix" type="button" aria-expanded="false" aria-controls="fix1">Show the fix</button>
+              </div>
+              <div class="clinic-item">
+                <div class="wrong">Where is the kitchen? It is at there.</div>
+                <div class="fix" id="fix2" hidden>Where is the kitchen? It is there.</div>
+                <button class="reveal-fix" type="button" aria-expanded="false" aria-controls="fix2">Show the fix</button>
+              </div>
+              <div class="clinic-item">
+                <div class="wrong">Where is the bed? Here is the bed.</div>
+                <div class="fix" id="fix3" hidden>Where is the bed? It is here.</div>
+                <button class="reveal-fix" type="button" aria-expanded="false" aria-controls="fix3">Show the fix</button>
+              </div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 No in: It is here. 2 No at: It is there. 3 Use it is: Where is the bed? It is here.</p></details>
+          </section>
+
+          <section class="slide" id="slide-12-act11-host" role="group" aria-roledescription="slide" aria-label="12 of 20 Activity 11">
+            <span class="eyebrow teal">Activity 11 of 15 . Roles</span>
+            <h2 tabindex="-1">Who is the host?</h2>
+            <p class="instruction">Tap. One is host, one is guest. Then change.</p>
+            <div class="role-out" data-roll data-roll-a="host" data-roll-b="guest">
+              <div class="role-card"><div class="big2" data-roll-out aria-live="polite">Bao is the host. Linh is the guest.</div></div>
+              <button class="roll-btn" type="button">Tap to change</button>
+            </div>
+            <p class="instruction">Listen to one line. Then say it.</p>
+            <div class="lines" role="group" aria-label="Home talk lines">
+              <button class="speak-btn" type="button" data-say="Welcome! Come in." data-voice="male">1 A: Welcome! Come in.</button>
+              <button class="speak-btn" type="button" data-say="Thank you. Where is the bathroom?" data-voice="female">2 B: Thank you. Where is the bathroom?</button>
+              <button class="speak-btn" type="button" data-say="It is there. On your left." data-voice="male">3 A: It is there. On your LEFT.</button>
+              <button class="speak-btn" type="button" data-say="Where is the kitchen?" data-voice="female">4 B: Where is the kitchen?</button>
+              <button class="speak-btn" type="button" data-say="It is here. Come and see." data-voice="male">5 A: It is here. Come and SEE.</button>
+              <button class="speak-btn" type="button" data-say="Thank you! Nice home." data-voice="female">6 B: Thank you! Nice HOME.</button>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 A: Welcome! Come in. 2 B: Thank you. Where is the bathroom? 3 A: It is there. On your left. 4 B: Where is the kitchen? 5 A: It is here. Come and see. 6 B: Thank you! Nice home.</p></details>
+          </section>
+
+          <section class="slide" id="slide-13-act12-infogap" role="group" aria-roledescription="slide" aria-label="13 of 20 Activity 12">
+            <span class="eyebrow">Activity 12 of 15 . Info gap</span>
+            <h2 tabindex="-1">Read your card only</h2>
+            <p class="instruction">Read your card. Hide it. Talk.</p>
+            <div data-gapcards data-gap-role="guest">
+              <div class="gap-cards">
+                <div class="gap-card">
+                  <div class="owner">Bao</div>
+                  <div class="secret blurred" id="secBao">You are the host. Your home: bed in the bedroom. The kitchen is on your left. The bathroom is there. You know where everything is. Answer: It is here. Or: It is there.</div>
+                  <button class="peek-btn" type="button" aria-expanded="false" aria-controls="secBao">Read my card</button>
+                </div>
+                <div class="gap-card">
+                  <div class="owner">Linh</div>
+                  <div class="secret blurred" id="secLinh">You are the guest. You do not know this home. Ask: Where is the bed? Where is the kitchen? Where is the bathroom? Find all three rooms.</div>
+                  <button class="peek-btn" type="button" aria-expanded="false" aria-controls="secLinh">Read my card</button>
+                </div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn" type="button" data-gapswap>Change roles</button>
+              </div>
+              <div class="feedback" data-gap-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>Guest asks: Where is the bed? Host: It is here. Guest: Where is the kitchen? Host: It is there. Guest: Where is the bathroom? Host: It is there. On your left. Then tap Change roles and talk again.</p></details>
+          </section>
+
+          <section class="slide" id="slide-14-act13-buy" role="group" aria-roledescription="slide" aria-label="14 of 20 Activity 13">
+            <span class="eyebrow teal">Activity 13 of 15 . Here or there?</span>
+            <h2 tabindex="-1">Where is it?</h2>
+            <p class="instruction">You are in the bedroom. Tap here or there.</p>
+            <div data-buy>
+              <div class="buy-list">
+                <div class="buy-row"><span class="item">bed</span><span class="price">in the bedroom</span><button type="button" aria-pressed="false" data-yes="true">Here</button><button type="button" aria-pressed="false">There</button></div>
+                <div class="buy-row"><span class="item">kitchen</span><span class="price">on your left</span><button type="button" aria-pressed="false">Here</button><button type="button" aria-pressed="false" data-yes="true">There</button></div>
+                <div class="buy-row"><span class="item">bathroom</span><span class="price">down the hall</span><button type="button" aria-pressed="false">Here</button><button type="button" aria-pressed="false" data-yes="true">There</button></div>
+                <div class="buy-row"><span class="item">door</span><span class="price">behind you</span><button type="button" aria-pressed="false">Here</button><button type="button" aria-pressed="false" data-yes="true">There</button></div>
+                <div class="buy-row"><span class="item">window</span><span class="price">in this room</span><button type="button" aria-pressed="false" data-yes="true">Here</button><button type="button" aria-pressed="false">There</button></div>
+                <div class="buy-row"><span class="item">table</span><span class="price">in the kitchen</span><button type="button" aria-pressed="false">Here</button><button type="button" aria-pressed="false" data-yes="true">There</button></div>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-buy-check>Check</button>
+              </div>
+              <div class="feedback" data-buy-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>Here: bed, window. There: kitchen, bathroom, door, table. You are in the bedroom. Say it: It is here. It is there.</p></details>
+          </section>
+
+          <section class="slide" id="slide-15-act14-order" role="group" aria-roledescription="slide" aria-label="15 of 20 Activity 14">
+            <span class="eyebrow">Activity 14 of 15 . Order the talk</span>
+            <h2 tabindex="-1">Put the talk in order</h2>
+            <p class="instruction">Tap the first line. Then the next.</p>
+            <div data-order>
+              <div class="order-list">
+                <button class="oline" type="button" aria-pressed="false" data-answer="6"><span class="num"></span><span>Thank you! Nice home.</span></button>
+                <button class="oline" type="button" aria-pressed="false" data-answer="4"><span class="num"></span><span>Where is the kitchen?</span></button>
+                <button class="oline" type="button" aria-pressed="false" data-answer="1"><span class="num"></span><span>Welcome! Come in.</span></button>
+                <button class="oline" type="button" aria-pressed="false" data-answer="5"><span class="num"></span><span>It is here. Come and see.</span></button>
+                <button class="oline" type="button" aria-pressed="false" data-answer="3"><span class="num"></span><span>It is there. On your left.</span></button>
+                <button class="oline" type="button" aria-pressed="false" data-answer="2"><span class="num"></span><span>Thank you. Where is the bathroom?</span></button>
+              </div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="button" data-order-check>Check</button>
+                <button class="speak-btn" type="button" data-order-clear>Clear</button>
+              </div>
+              <div class="feedback" data-order-fb aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>1 Welcome! Come in. 2 Thank you. Where is the bathroom? 3 It is there. On your left. 4 Where is the kitchen? 5 It is here. Come and see. 6 Thank you! Nice home.</p></details>
+          </section>
+
+          <section class="slide" id="slide-16-act15-list" role="group" aria-roledescription="slide" aria-label="16 of 20 Activity 15">
+            <span class="eyebrow teal">Activity 15 of 15 . My home list</span>
+            <h2 tabindex="-1">Make your home list</h2>
+            <p class="instruction">Type. Then say it to your partner.</p>
+            <form class="mycafe" id="homeForm">
+              <div class="mycafe-row"><span class="lab">Thing 1</span><input type="text" id="listItem1" autocomplete="off" data-menu-item aria-label="Thing 1"><input type="text" id="listPrice1" autocomplete="off" data-menu-price placeholder="here or there" aria-label="Place 1"></div>
+              <div class="mycafe-row"><span class="lab">Thing 2</span><input type="text" id="listItem2" autocomplete="off" data-menu-item aria-label="Thing 2"><input type="text" id="listPrice2" autocomplete="off" data-menu-price placeholder="here or there" aria-label="Place 2"></div>
+              <div class="mycafe-row"><span class="lab">Thing 3</span><input type="text" id="listItem3" autocomplete="off" data-menu-item aria-label="Thing 3"><input type="text" id="listPrice3" autocomplete="off" data-menu-price placeholder="here or there" aria-label="Place 3"></div>
+              <div class="row-actions">
+                <button class="speak-btn check-btn" type="submit">Show my list</button>
+              </div>
+            </form>
+            <div class="menu-card" id="listCard"><h3>My Home List</h3><p class="mempty">Type a thing and a place, then tap Show my list.</p></div>
+            <div class="feedback" id="listFb" aria-live="polite"></div>
+            <div class="target">This is my home. The bed is here. The kitchen is there.</div>
+            <details class="key"><summary>Check</summary><p>Ask about each thing: Where is the bed? Then say: It is here. Change and ask about your partner's home.</p></details>
+          </section>
+
+<section class="slide" id="slide-17-ourhome" role="group" aria-roledescription="slide" aria-label="17 of 20 Our home">
+            <span class="eyebrow">Our home</span>
+            <h2 tabindex="-1">Put 5 things in your home</h2>
+            <p class="lead">Today's home. The host knows where everything is.</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">&#128716;</div><div class="big">bed</div><div class="small">in the bedroom</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#127859;</div><div class="big">kitchen</div><div class="small">on your left</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128703;</div><div class="big">bathroom</div><div class="small">down the hall</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128682;</div><div class="big">door</div><div class="small">behind you</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#127752;</div><div class="big">window</div><div class="small">in front of you</div></div>
+            </div>
+            <p class="instruction">One is host. One is guest. Ask, then find.</p>
+            <details class="key"><summary>Check</summary><p>Ask for every place. The host says here or there. Then the guest finds it. Change roles and do it again.</p></details>
+          </section>
+
+          <section class="slide" id="slide-18-dotogether" role="group" aria-roledescription="slide" aria-label="18 of 20 Do together">
+            <span class="eyebrow teal">Do together</span>
+            <h2 tabindex="-1">Walk and ask</h2>
+            <p class="instruction">All 6 steps. Then change.</p>
+            <div data-steps>
+              <div class="steps">
+                <button class="step" type="button" aria-pressed="false"><span class="n">1</span><span>Excuse me. Where is the bed?</span></button>
+                <button class="step" type="button" aria-pressed="false"><span class="n">2</span><span>It is here. / It is there.</span></button>
+                <button class="step" type="button" aria-pressed="false"><span class="n">3</span><span>Where is the kitchen?</span></button>
+                <button class="step" type="button" aria-pressed="false"><span class="n">4</span><span>It is there. On your left.</span></button>
+                <button class="step" type="button" aria-pressed="false"><span class="n">5</span><span>Where is the bathroom?</span></button>
+                <button class="step" type="button" aria-pressed="false"><span class="n">6</span><span>It is here. Come and see. Thank you!</span></button>
+              </div>
+              <div class="feedback" data-steps-status aria-live="polite"></div>
+            </div>
+            <details class="key"><summary>Check</summary><p>Do all six steps twice. The second time, change roles. Then say it again without reading.</p></details>
+          </section>
+
+          <section class="slide" id="slide-19-done" role="group" aria-roledescription="slide" aria-label="19 of 20 Done">
+            <span class="eyebrow">Done</span>
+            <h2 tabindex="-1">We did it!</h2>
+            <p class="instruction">Tick. I can say:</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox"> Where is the bed?</label></li>
+              <li><label><input type="checkbox"> It is here.</label></li>
+              <li><label><input type="checkbox"> It is there.</label></li>
+              <li><label><input type="checkbox"> Where is the kitchen?</label></li>
+              <li><label><input type="checkbox"> Welcome! Come in.</label></li>
+            </ul>
+            <div class="target">Tonight: walk in your home. Only English!</div>
+            <details class="key"><summary>Check</summary><p>Say all five lines to your partner without reading.</p></details>
+          </section>
+
+          <section class="slide" id="slide-20-next" role="group" aria-roledescription="slide" aria-label="20 of 20 Next">
+            <span class="eyebrow">Next lesson</span>
+            <h2 tabindex="-1">In the Street</h2>
+            <p class="lead">Next time you can say:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">&#128664;</div><div class="big">Ask the way</div><div class="small">Where is the market?</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#11014;</div><div class="big">Say straight</div><div class="small">Go straight. Turn left.</div></div>
+            </div>
+            <div class="target">Bao + Linh = English. You can do it!</div>
+            <details class="key"><summary>Check</summary><p>Where is the market? Go straight. Turn left. Is it near or far?</p></details>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 20</div>
+        <div class="bottom-nav" aria-label="Lesson navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Arrows on keyboard work. Listen buttons use the best British voice on your device. Bao is male voice. Linh is female voice. Rooms are practice only. Best in full screen.</p>
+  <p><a href="../../index.html#a1-communicative" style="color:var(--accent)">All A1 Communicative lessons</a> | <a href="Bao-Linh-Lesson09-HomePractice-A1-Learner.html" style="color:var(--accent)">25 home pictures drill</a> | <a href="Bao-Linh-Lesson07-AtTheMarket-A1-Learner.html" style="color:var(--accent)">Lesson 7</a></p>
+</footer>
+
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  var VOICES=[];
+  function loadVoices(){ try{ VOICES = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }catch(e){ VOICES=[]; } }
+  if('speechSynthesis' in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+  function scoreVoice(v, prefer){
+    var name=((v.name||'')+' '+(v.lang||'')).toLowerCase();
+    var s=0;
+    var lang=(v.lang||'').toLowerCase();
+    if(lang.indexOf('en-gb')===0) s+=80;
+    else if(lang.indexOf('en-gb')>-1 || name.indexOf('british')>-1 || name.indexOf('uk english')>-1 || name.indexOf('england')>-1) s+=70;
+    else if(lang.indexOf('en-us')===0) s+=15;
+    else if(lang.indexOf('en_')===0 || lang.indexOf('en-')===0) s+=10;
+    if(name.indexOf('natural')>-1) s+=45;
+    if(name.indexOf('online')>-1) s+=30;
+    if(name.indexOf('neural')>-1) s+=35;
+    if(name.indexOf('google uk english')>-1) s+=50;
+    else if(name.indexOf('google')>-1) s+=8;
+    if(name.indexOf('sonia')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s+=35;
+    if(name.indexOf('compact')>-1 || name.indexOf('mobile')>-1) s-=20;
+    if(prefer==='female'){
+      if(name.indexOf('female')>-1) s+=30;
+      if(name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1) s+=30;
+      if(name.indexOf('guy')>-1 || name.indexOf('david')>-1 || name.indexOf('daniel')>-1 || name.indexOf('alex')>-1 || name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s-=40;
+    } else if(prefer==='male'){
+      if(name.indexOf('male')>-1 && name.indexOf('female')===-1) s+=30;
+      if(name.indexOf('ryan')>-1 || name.indexOf('arthur')>-1) s+=30;
+      if(name.indexOf('jenny')>-1 || name.indexOf('aria')>-1 || name.indexOf('samantha')>-1 || name.indexOf('libby')>-1 || name.indexOf('hazel')>-1 || name.indexOf('sonia')>-1) s-=40;
+    }
+    return s;
+  }
+  function pickVoice(prefer){
+    if(!VOICES.length) loadVoices();
+    if(!VOICES.length) return null;
+    var best=null, bestScore=-999;
+    for(var i=0;i<VOICES.length;i++){
+      var sc=scoreVoice(VOICES[i], prefer);
+      if(sc>bestScore){ bestScore=sc; best=VOICES[i]; }
+    }
+    return best;
+  }
+  function speak(t, prefer, btn){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t);
+      u.lang='en-GB';
+      u.volume=1;
+      if(prefer==='male'){ u.rate=0.96; u.pitch=0.9; }
+      else { u.rate=0.97; u.pitch=1.1; }
+      var v=pickVoice(prefer);
+      if(v) u.voice=v;
+      if(btn){
+        btn.classList.add('speaking');
+        u.onend=function(){ btn.classList.remove('speaking'); };
+        u.onerror=function(){ btn.classList.remove('speaking'); };
+      }
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+      speak(b.getAttribute('data-say'), b.getAttribute('data-voice')||'female', b);
+    });
+  });
+
+  function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+
+</script>
+<script>
+
+/* ---------- chain of alternating speakers ---------- */
+document.querySelectorAll('[data-chain]').forEach(function(root){
+  var cards = root.querySelectorAll('.chain-card');
+  var status = root.querySelector('[data-chain-status]');
+  function refresh(){
+    var done = root.querySelectorAll('.chain-card.done').length;
+    cards.forEach(function(c){
+      c.querySelector('.mini-tick').setAttribute('aria-pressed', String(c.classList.contains('done')));
+    });
+    if(!status) return;
+    if(done === cards.length){ status.textContent = 'Great! Chain finished.'; status.className = 'feedback ok'; }
+    else if(done === 0){ status.textContent = ''; status.className = 'feedback'; }
+    else { status.textContent = done + ' of ' + cards.length + '. Next one!'; status.className = 'feedback'; }
+  }
+  cards.forEach(function(c){
+    c.querySelector('.mini-tick').addEventListener('click', function(){
+      c.classList.toggle('done');
+      refresh();
+    });
+  });
+  refresh();
+});
+
+/* ---------- tap a word, tap a group ---------- */
+document.querySelectorAll('[data-sort]').forEach(function(root){
+  var sel = null;
+  var chips = root.querySelectorAll('.sort-chip');
+  function refresh(){
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', String(c === sel)); });
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      sel = (sel === c) ? null : c;
+      if(sel && c.classList.contains('placed')) sel = null;
+      refresh();
+    });
+  });
+  root.querySelectorAll('.zone').forEach(function(z){
+    z.addEventListener('click', function(){
+      if(!sel){ return; }
+      var slot = z.querySelector('.slot');
+      var old = sel.parentNode;
+      if(old && old.classList.contains('slot')){
+        sel.classList.remove('placed');
+        root.querySelector('.sort-pool').appendChild(sel);
+      }
+      sel.classList.add('placed');
+      slot.appendChild(sel);
+      sel = null; refresh();
+    });
+  });
+  var chk = root.querySelector('[data-sort-check]');
+  if(chk) chk.addEventListener('click', function(){
+    var ok = true;
+    chips.forEach(function(c){
+      var right = c.dataset.group === (c.parentNode && c.parentNode.dataset ? c.parentNode.dataset.group : '');
+      if(!right) ok = false;
+    });
+    var fb = root.querySelector('[data-sort-fb]');
+    fb.textContent = ok ? 'Correct! Every price is in the right group.' : 'Not yet. Read the number on each box.';
+    fb.className = 'feedback ' + (ok ? 'ok' : 'no');
+  });
+});
+
+/* ---------- turn ladder with a swap ---------- */
+document.querySelectorAll('[data-turns]').forEach(function(root){
+  var turns = root.querySelectorAll('.turn');
+  var swap = root.querySelector('[data-turn-swap]');
+  var status = root.querySelector('[data-turn-status]');
+  function refresh(){
+    var done = root.querySelectorAll('.turn.done').length;
+    turns.forEach(function(t){
+      t.querySelector('.mini-tick').setAttribute('aria-pressed', String(t.classList.contains('done')));
+    });
+    if(status){
+      if(done === turns.length){ status.textContent = 'Great! Now change and do it again.'; status.className = 'feedback ok'; }
+      else if(done === 0){ status.textContent = ''; status.className = 'feedback'; }
+      else { status.textContent = done + ' of ' + turns.length + '. Keep going!'; status.className = 'feedback'; }
+    }
+  }
+  turns.forEach(function(t){
+    t.querySelector('.mini-tick').addEventListener('click', function(){
+      t.classList.toggle('done');
+      refresh();
+    });
+  });
+  if(swap) swap.addEventListener('click', function(){
+    // Swap the name badge AND the inline speaker label inside each line,
+    // otherwise Bao asks a question but Linh still appears to answer it.
+    function flip(name){ return name.trim() === 'Bao' ? 'Linh' : 'Bao'; }
+    root.querySelectorAll('[data-who]').forEach(function(w){
+      w.textContent = flip(w.textContent);
+    });
+    root.querySelectorAll('.line strong').forEach(function(st){
+      st.textContent = flip(st.textContent.replace(/\s*:\s*$/, '')) + ':';
+    });
+    root.querySelectorAll('.turn').forEach(function(t){ t.classList.remove('done'); });
+    refresh();
+    if(status){ status.textContent = 'You changed. Say it again.'; status.className = 'feedback'; }
+  });
+  refresh();
+});
+
+/* ---------- politeness ladder ---------- */
+document.querySelectorAll('[data-ladder]').forEach(function(root){
+  var sel = null;
+  var opts = root.querySelectorAll('.sort-chip');
+  var rungs = root.querySelectorAll('.rung');
+  function refresh(){
+    opts.forEach(function(o){ o.setAttribute('aria-pressed', String(o === sel)); });
+  }
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){
+      sel = (sel === o) ? null : o;
+      refresh();
+    });
+  });
+  rungs.forEach(function(r){
+    r.addEventListener('click', function(){
+      if(!sel) return;
+      var prev = r.querySelector('.text');
+      if(prev.firstChild && prev.firstChild.classList && prev.firstChild.classList.contains('sort-chip')){
+        var back = prev.firstChild;
+        back.classList.remove('placed');
+        root.querySelector('.sort-pool').insertBefore(back, root.querySelector('.sort-pool').firstChild);
+      }
+      sel.classList.add('placed');
+      prev.textContent = '';
+      prev.appendChild(sel);
+      r.classList.add('filled');
+      sel = null; refresh();
+    });
+  });
+  var chk = root.querySelector('[data-ladder-check]');
+  if(chk) chk.addEventListener('click', function(){
+    var ok = true;
+    opts.forEach(function(o){
+      var rung = o.closest('.rung');
+      var got = rung ? rung.getAttribute('data-rung') : '';
+      if(String(o.dataset.rung) !== String(got)) ok = false;
+    });
+    var fb = root.querySelector('[data-ladder-fb]');
+    fb.textContent = ok ? 'Correct! Number 3 tells the most.' : 'Try again. Number 3 tells the most.';
+    fb.className = 'feedback ' + (ok ? 'ok' : 'no');
+  });
+});
+
+/* ---------- listen and match ---------- */
+document.querySelectorAll('[data-turnout]').forEach(function(out){
+  var btn = document.querySelector('[data-turnchange]');
+  var who = 'Bao';
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    who = (who === 'Bao') ? 'Linh' : 'Bao';
+    out.textContent = who + "'s turn. Listen and match.";
+  });
+});
+
+document.querySelectorAll('[data-match]').forEach(function(root){
+  var items = Array.prototype.slice.call(root.querySelectorAll('.mchip[data-item]'));
+  var prices = Array.prototype.slice.call(root.querySelectorAll('.mchip[data-price]'));
+  var fb = root.querySelector('[data-match-fb]');
+  var selItem = null, selPrice = null;
+  function refresh(){
+    items.forEach(function(i){ i.setAttribute('aria-pressed', String(i === selItem)); });
+    prices.forEach(function(p){ p.setAttribute('aria-pressed', String(p === selPrice)); });
+  }
+  function evaluate(){
+    if(!selItem || !selPrice) return;
+    if(selItem.dataset.item === selPrice.dataset.price){
+      var key = selItem.dataset.item;
+      selItem.classList.add('locked'); selPrice.classList.add('locked');
+      var line = document.querySelector('.line-card[data-line="' + key + '"]');
+      if(line) line.classList.add('done');
+      var n = root.querySelectorAll('.mchip.locked').length / 2;
+      if(n === 4){
+        fb.textContent = 'All four! Now change turn and do it again.';
+        fb.className = 'feedback ok';
+      } else {
+        fb.textContent = 'Yes! ' + n + ' of 4 matched. Listen to the next line.';
+        fb.className = 'feedback';
+      }
+    } else {
+      var self = selPrice;
+      self.classList.add('wrong-chip');
+      setTimeout(function(){ self.classList.remove('wrong-chip'); }, 700);
+      fb.textContent = 'Not this price. Listen again.';
+      fb.className = 'feedback no';
+    }
+    selItem = null; selPrice = null; refresh();
+  }
+  items.forEach(function(i){
+    i.addEventListener('click', function(){
+      if(i.classList.contains('locked')) return;
+      selItem = (selItem === i) ? null : i;
+      refresh();
+      evaluate();
+    });
+  });
+  prices.forEach(function(p){
+    p.addEventListener('click', function(){
+      if(p.classList.contains('locked')) return;
+      selPrice = (selPrice === p) ? null : p;
+      refresh();
+      evaluate();
+    });
+  });
+  var clr = root.querySelector('[data-match-clear]');
+  if(clr) clr.addEventListener('click', function(){
+    items.concat(prices).forEach(function(c){ c.classList.remove('locked', 'wrong-chip'); });
+    document.querySelectorAll('.line-card.done').forEach(function(l){ l.classList.remove('done'); });
+    selItem = null; selPrice = null; refresh();
+    fb.textContent = ''; fb.className = 'feedback';
+  });
+});
+
+/* ---------- listen and write the place ---------- */
+document.querySelectorAll('[data-dict]').forEach(function(root){
+  function words(v){ return (v || '').toLowerCase().replace(/[^a-z]/g, ''); }
+  root.querySelector('[data-dict-check]').addEventListener('click', function(){
+    var inputs = root.querySelectorAll('input[data-dict-answer]');
+    var ok = true, firstBad = null;
+    inputs.forEach(function(inp){
+      var good = words(inp.value) === inp.getAttribute('data-dict-answer');
+      inp.classList.toggle('correct', good);
+      inp.classList.toggle('wrong', !good);
+      inp.setAttribute('aria-invalid', String(!good));
+      if(!good){ ok = false; if(!firstBad) firstBad = inp; }
+    });
+    var fb = root.querySelector('[data-dict-fb]');
+    fb.textContent = ok ? 'Correct! Here is this place. There is that place.' : 'Try again. Here or there? Listen again.';
+    fb.className = 'feedback ' + (ok ? 'ok' : 'no');
+    if(!ok && firstBad) firstBad.focus();
+  });
+});
+
+/* ---------- write here or there: reading-based grammar check ---------- */
+document.querySelectorAll('[data-grammar]').forEach(function(root){
+  var chk = root.querySelector('[data-grammar-check]');
+  if(!chk) return;
+  chk.addEventListener('click', function(){
+    var inputs = root.querySelectorAll('input[data-grammar-answer]');
+    var ok = true, done = 0, firstBad = null;
+    inputs.forEach(function(inp){
+      var v = (inp.value || '').trim().toLowerCase();
+      var accepted = (inp.getAttribute('data-grammar-answer') || '').split('|');
+      var good = accepted.indexOf(v) !== -1;
+      inp.classList.toggle('correct', good);
+      inp.classList.toggle('wrong', !good);
+      inp.setAttribute('aria-invalid', String(!good));
+      if(good){ done++; }
+      else { ok = false; if(!firstBad) firstBad = inp; }
+    });
+    var fb = root.querySelector('[data-grammar-fb]');
+    if(ok){
+      fb.textContent = 'Correct! Here is this place. There is that place.';
+      fb.className = 'feedback ok';
+    } else {
+      fb.textContent = 'Not yet. ' + done + ' of ' + inputs.length + '. Here or there? Read again.';
+      fb.className = 'feedback no';
+      if(firstBad) firstBad.focus();
+    }
+  });
+});
+
+/* ---------- error clinic ---------- */
+document.querySelectorAll('.reveal-fix').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var fix = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    fix.hidden = open;
+    btn.textContent = open ? 'Show the fix' : 'Hide the fix';
+  });
+});
+
+/* ---------- random roles, then a guaranteed swap on every tap ---------- */
+document.querySelectorAll('[data-roll]').forEach(function(root){
+  var out = root.querySelector('[data-roll-out]');
+  var btn = root.querySelector('.roll-btn');
+  var a = root.getAttribute('data-roll-a') || 'host';
+  var b = root.getAttribute('data-roll-b') || 'guest';
+  var who = (Math.random() < 0.5) ? ['Bao', 'Linh'] : ['Linh', 'Bao'];
+  function show(){
+    out.textContent = who[0] + ' is the ' + a + '. ' + who[1] + ' is the ' + b + '.';
+  }
+  show();
+  btn.addEventListener('click', function(){
+    var t = who[0]; who[0] = who[1]; who[1] = t;
+    show();
+  });
+});
+
+/* ---------- private info-gap cards ---------- */
+document.querySelectorAll('.peek-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var sec = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    sec.classList.toggle('blurred', open);
+    btn.textContent = open ? 'Read my card' : 'Hide my card';
+  });
+});
+
+document.querySelectorAll('[data-gapswap]').forEach(function(btn){
+  var root = btn.closest('[data-gapcards]');
+  if(!root) return;
+  var role = root.getAttribute('data-gap-role') || 'guest';
+  var cards = root.querySelectorAll('.gap-card');
+  btn.addEventListener('click', function(){
+    if(cards.length < 2) return;
+    var s0 = cards[0].querySelector('.secret');
+    var s1 = cards[1].querySelector('.secret');
+    var t = s0.textContent;
+    s0.textContent = s1.textContent;
+    s1.textContent = t;
+    root.querySelectorAll('.secret').forEach(function(s){ s.classList.add('blurred'); });
+    root.querySelectorAll('.peek-btn').forEach(function(p){
+      p.setAttribute('aria-expanded', 'false');
+      p.textContent = 'Read my card';
+    });
+    var fb = root.querySelector('[data-gap-fb]');
+    if(fb){
+      fb.textContent = cards[0].querySelector('.owner').textContent +
+        ' is now the ' + role + '. Read your new card. Talk.';
+      fb.className = 'feedback';
+    }
+  });
+});
+
+/* ---------- tap the best answer ---------- */
+document.querySelectorAll('[data-choices]').forEach(function(root){
+  var fb = root.querySelector('[data-choices-fb]');
+  root.querySelectorAll('.choice').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(btn.classList.contains('locked')) return;
+      if(btn.getAttribute('data-right') === 'true'){
+        var item = btn.closest('.q-item');
+        if(item) item.querySelectorAll('.choice').forEach(function(b){ b.classList.add('locked'); });
+        btn.classList.add('is-right');
+        fb.textContent = 'Yes! That is the answer.';
+        fb.className = 'feedback ok';
+      } else {
+        btn.classList.add('is-wrong');
+        setTimeout(function(){ btn.classList.remove('is-wrong'); }, 800);
+        fb.textContent = 'Not this one. Read it again.';
+        fb.className = 'feedback no';
+      }
+    });
+  });
+});
+
+/* ---------- find the right sentence, then Check ---------- */
+document.querySelectorAll('[data-find]').forEach(function(root){
+  var groups = root.querySelectorAll('.q-item');
+  var fb = root.querySelector('[data-find-fb]');
+  groups.forEach(function(g){
+    g.querySelectorAll('.choice').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        g.querySelectorAll('.choice').forEach(function(b){
+          b.setAttribute('aria-pressed', 'false');
+          b.classList.remove('is-right', 'is-wrong');
+        });
+        btn.setAttribute('aria-pressed', 'true');
+        fb.textContent = '';
+        fb.className = 'feedback';
+      });
+    });
+  });
+  var chk = root.querySelector('[data-find-check]');
+  if(chk) chk.addEventListener('click', function(){
+    var total = groups.length, answered = 0, correct = 0;
+    groups.forEach(function(g){
+      var sel = g.querySelector('.choice[aria-pressed="true"]');
+      g.querySelectorAll('.choice').forEach(function(b){ b.classList.remove('is-right', 'is-wrong'); });
+      if(!sel) return;
+      answered++;
+      if(sel.getAttribute('data-right') === 'true'){ sel.classList.add('is-right'); correct++; }
+      else { sel.classList.add('is-wrong'); }
+    });
+    if(answered < total){
+      fb.textContent = 'Tap one in each box, then Check. You have ' + answered + ' of ' + total + '.';
+      fb.className = 'feedback';
+    } else if(correct === total){
+      fb.textContent = 'Correct! No in, no at. It is here. It is there.';
+      fb.className = 'feedback ok';
+    } else {
+      fb.textContent = 'Not yet. ' + correct + ' of ' + total + '. Read again, then change it.';
+      fb.className = 'feedback no';
+    }
+  });
+});
+
+/* ---------- buy it or walk away ---------- */
+document.querySelectorAll('[data-buy]').forEach(function(root){
+  root.querySelectorAll('.buy-row').forEach(function(row){
+    row.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        row.querySelectorAll('button').forEach(function(x){
+          x.setAttribute('aria-pressed', String(x === b));
+          x.classList.remove('is-right', 'is-wrong');
+        });
+      });
+    });
+  });
+  var chk = root.querySelector('[data-buy-check]');
+  var fb = root.querySelector('[data-buy-fb]');
+  if(!chk || !fb) return;
+  chk.addEventListener('click', function(){
+    var wrong = 0, missing = 0;
+    root.querySelectorAll('.buy-row').forEach(function(row){
+      var pressed = row.querySelector('button[aria-pressed="true"]');
+      if(!pressed){ missing++; return; }
+      var good = pressed.getAttribute('data-yes') === 'true';
+      pressed.classList.toggle('is-right', good);
+      pressed.classList.toggle('is-wrong', !good);
+      if(!good) wrong++;
+    });
+    if(wrong){
+      fb.textContent = 'Look again. Here or there? Read the place.';
+      fb.className = 'feedback no';
+    } else if(missing){
+      fb.textContent = 'Good so far. Tap all six rows, then Check.';
+      fb.className = 'feedback';
+    } else {
+      fb.textContent = 'Correct! Now say: It is here. It is there.';
+      fb.className = 'feedback ok';
+    }
+  });
+});
+
+/* ---------- put the market talk in order ----------
+   The learner builds the sequence by tapping. Numbers appear in tap order,
+   so nothing is revealed until they tap Check. */
+document.querySelectorAll('[data-order]').forEach(function(root){
+  var lines = root.querySelectorAll('.oline');
+  var fb = root.querySelector('[data-order-fb]');
+  var seq = [];
+  function refresh(){
+    lines.forEach(function(l){
+      var on = seq.indexOf(l) !== -1;
+      l.setAttribute('aria-pressed', String(on));
+      var slot = on ? seq.indexOf(l) + 1 : '';
+      l.querySelector('.num').textContent = slot;
+    });
+  }
+  lines.forEach(function(l){
+    l.addEventListener('click', function(){
+      var i = seq.indexOf(l);
+      if(i === -1) seq.push(l); else seq.splice(i, 1);
+      fb.textContent = '';
+      fb.className = 'feedback';
+      refresh();
+    });
+  });
+  var clr = root.querySelector('[data-order-clear]');
+  if(clr) clr.addEventListener('click', function(){
+    seq = [];
+    fb.textContent = '';
+    fb.className = 'feedback';
+    refresh();
+  });
+  var chk = root.querySelector('[data-order-check]');
+  if(chk) chk.addEventListener('click', function(){
+    if(seq.length === 0){
+      fb.textContent = 'Tap the lines in the right order. 1 comes first.';
+      fb.className = 'feedback';
+      return;
+    }
+    if(seq.length !== lines.length){
+      fb.textContent = 'You have ' + seq.length + ' of ' + lines.length +
+        ' lines. Put all ' + lines.length + ' in order.';
+      fb.className = 'feedback no';
+      return;
+    }
+    var ok = true;
+    for(var i = 0; i < seq.length; i++){
+      if(seq[i].getAttribute('data-answer') !== String(i + 1)) ok = false;
+    }
+    fb.textContent = ok ? 'Correct! That is the market talk.'
+                        : 'Not yet. Read line 1 first. Then read on.';
+    fb.className = 'feedback ' + (ok ? 'ok' : 'no');
+  });
+  refresh();
+});
+
+/* ---------- build my own list: market (prices) or home (places) ---------- */
+[['marketForm','My Market List',' dong','Type a thing and a price, then tap Show my list.'],
+ ['homeForm','My Home List','','Type a thing and a place, then tap Show my list.']].forEach(function(cfg){
+  var form = document.getElementById(cfg[0]);
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var card = document.getElementById('listCard');
+    var items = form.querySelectorAll('input[data-menu-item]');
+    var places = form.querySelectorAll('input[data-menu-price]');
+    var html = '<h3>' + cfg[1] + '</h3>';
+    var any = false;
+    for(var i = 0; i < items.length; i++){
+      var it = items[i].value.trim();
+      var pr = places[i].value.trim();
+      if(!it && !pr) continue;
+      any = true;
+      html += '<div class="mrow"><span>' + (it || '...') + '</span><span>' + (pr ? pr + cfg[2] : '...') + '</span></div>';
+    }
+    if(!any){
+      html += '<p class="mempty">' + cfg[3] + '</p>';
+    }
+    card.innerHTML = html;
+    var fb = document.getElementById('listFb');
+    fb.textContent = any ? 'Now say it to your partner.' : '';
+    fb.className = 'feedback ' + (any ? 'ok' : '');
+  });
+});
+
+/* ---------- step tracker ---------- */
+document.querySelectorAll('[data-steps]').forEach(function(root){
+  var steps = root.querySelectorAll('.step');
+  var status = root.querySelector('[data-steps-status]');
+  function refresh(){
+    var done = root.querySelectorAll('.step.done').length;
+    if(status){
+      if(done === steps.length){ status.textContent = 'Done! Now change and do it again.'; status.className = 'feedback ok'; }
+      else if(done === 0){ status.textContent = ''; status.className = 'feedback'; }
+      else { status.textContent = done + ' of ' + steps.length + '. Keep going!'; status.className = 'feedback'; }
+    }
+  }
+  steps.forEach(function(s){
+    s.addEventListener('click', function(){
+      s.classList.toggle('done');
+      s.setAttribute('aria-pressed', String(s.classList.contains('done')));
+      refresh();
+    });
+  });
+  refresh();
+});
+
+</script>
+<script>
+/* Lesson 9 Our Home - granular LRS: per-slide views, per-activity interactions, completion on the last slide */
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(sl){
+    var h=sl.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (sl.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(sl){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(sl),'slide');
+      if(slides.indexOf(sl)===slides.length-1 && l.completed) l.completed({});
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  },500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(sl){ mo.observe(sl,{attributes:true,attributeFilter:['class']}); });
+  }
+  // Activity 2 home words: per-word vocabulary
+  document.querySelectorAll('[data-sort] .sort-chip').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 2 sort: '+(b.textContent.trim()),'vocabulary'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-sort-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 2 sort check: room or thing','question'); }catch(e){}
+    });
+  });
+  // Activity turn ladders (say it fast, where is it)
+  document.querySelectorAll('[data-turn-swap]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Turn ladder: swap roles','interaction'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-turns] .mini-tick').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Turn said: '+(b.textContent.trim()),'interaction'); }catch(e){}
+    });
+  });
+  // Activity politeness ladder
+  document.querySelectorAll('[data-ladder-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Say it clearly check','question'); }catch(e){}
+    });
+  });
+  // Activity 4 hear the place, match it
+  document.querySelectorAll('[data-match] .mchip').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 4 place match: '+(b.textContent.trim()),'question'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-match-clear]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 4 place match clear','interaction'); }catch(e){}
+    });
+  });
+  // Activity 5 dictation
+  document.querySelectorAll('[data-dict-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 5 place dictation check','question'); }catch(e){}
+    });
+  });
+  // Activity 7 find the right one
+  document.querySelectorAll('[data-find] .choice').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 7 find: '+(b.textContent.trim().replace(/\s+/g,' ').substring(0,50)),'question'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-find-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 7 find check','question'); }catch(e){}
+    });
+  });
+  // Activity 8 grammar: here or there
+  document.querySelectorAll('[data-grammar-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 8 grammar check','question'); }catch(e){}
+    });
+  });
+  // Activity 10 error clinic
+  document.querySelectorAll('.reveal-fix').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 10 error clinic: show the fix','question'); }catch(e){}
+    });
+  });
+  // Activity 11 roles
+  document.querySelectorAll('[data-roll] .roll-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 11 role change: host or guest','interaction'); }catch(e){}
+    });
+  });
+  // Activity 12 info gap
+  document.querySelectorAll('.peek-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 12 info gap: read my card','interaction'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-gapswap]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 12 info gap: change roles','interaction'); }catch(e){}
+    });
+  });
+  // Activity 13 here or there tap
+  document.querySelectorAll('[data-buy] button[data-yes], [data-buy] button:not([data-yes])').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 13 here-there: '+(b.textContent.trim()),'question'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-buy-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 13 here-there check','question'); }catch(e){}
+    });
+  });
+  // Activity 14 order the talk
+  document.querySelectorAll('[data-order] .oline').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 14 order: '+(b.textContent.trim().replace(/\s+/g,' ').substring(0,50)),'question'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-order-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Act 14 order check','question'); }catch(e){}
+    });
+  });
+  // Activity 15 My Home List: submit for feedback + completion
+  var form=document.getElementById('homeForm');
+  if(form){
+    form.addEventListener('submit',function(){
+      try{
+        var l=L(); if(l) l.itemAccessed('Act 15 My Home List: list shown','writing');
+        if(l && l.completed) l.completed({});
+      }catch(e){}
+    });
+  }
+  // Do together steps
+  document.querySelectorAll('[data-steps] .step').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Do together step '+(b.querySelector('.n')?b.querySelector('.n').textContent.trim():''),'interaction'); }catch(e){}
+    });
+  });
+  // Listen model buttons
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Listen model: '+(b.getAttribute('data-say')||'').substring(0,60),'audio'); }catch(e){}
+    });
+  });
+  // Self-check and done checklist
+  document.querySelectorAll('.selfcheck input, .checklist input').forEach(function(cb){
+    cb.addEventListener('change',function(){
+      if(!cb.checked) return;
+      try{ var l=L(); if(l) l.itemAccessed('Self-check ticked','interaction'); }catch(e){}
+    });
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>kW, kVA and Power Factor (B2) Interactive</title>
+<meta name="description" content="B2 business English practice on kW, kVA and power factor with Alex and Mr. Keller. 10 listening activities with inference, professional rewriting and customer response tasks.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/b2/business-english/Lesson24-kW-kVA-Practice-B2-Learner.html">
+<style>
+:root{
+--bg:#07101f;--surface:#0f1b2e;--surface-2:#13233b;--deep:#06121f;
+--ink:#f5f9ff;--muted:#c8d5e6;--accent:#ffd400;--accent2:#38e0c8;
+--good:#38e0c8;--bad:#ff9a9a;--border:#53719a;--focus:#ffd400;--warn:#ffb700;
+}
+*{box-sizing:border-box}
+html{font-size:clamp(16px,1.5vw,19px);scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14253f 0%,var(--bg) 60%) fixed,var(--bg);color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+a.skip{position:absolute;left:-9999px;top:auto}
+a.skip:focus{left:0;top:0;background:var(--accent);color:#000;padding:.7rem 1rem;z-index:200;font-weight:800;border:3px solid #fff}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hud{position:sticky;top:0;z-index:40;background:rgba(6,12,22,.96);border-bottom:2px solid var(--border);padding:.5rem .9rem}
+.hud-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between}
+.brand{font-weight:800;color:var(--accent);letter-spacing:.02em;font-size:.95rem}
+.hud-actions{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.btn{background:var(--accent);color:#06101c;border:2px solid #ffe680;border-radius:10px;padding:.5rem .85rem;font-weight:800;min-height:46px;font-family:inherit;font-size:1rem;cursor:pointer}
+.btn.ghost{background:var(--surface-2);color:var(--ink);border:2px solid var(--border)}
+.btn:hover{border-color:#fff}
+.count{font-weight:800;color:var(--accent2);white-space:nowrap}
+main{max-width:1100px;margin:0 auto;padding:.8rem}
+.hero{max-width:1100px;margin:0 auto;padding:1rem 1rem .2rem;text-align:center}
+.hero h1{font-size:clamp(1.35rem,3.6vw,2rem);margin:.2rem 0;color:#fff;line-height:1.2}
+.hero p{color:var(--muted);margin:.2rem auto;max-width:700px;font-size:.95rem}
+.pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);color:var(--accent);border-radius:999px;padding:.2rem .7rem;font-size:.8rem;font-weight:800;margin:.15rem}
+.deck-shell{border:1px solid var(--border);border-radius:18px;padding:.75rem;margin:.5rem 0 1rem}
+.deck-shell:fullscreen{background:var(--bg);border:0;border-radius:0;padding:1rem;overflow:auto}
+.deck-topbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.deck-layout{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.7rem;align-items:start}
+.nav-slot{display:flex;position:sticky;top:38vh}
+.nav-slot.nav-left{justify-content:flex-end}
+.nav-slot.nav-right{justify-content:flex-start}
+button.nav{min-height:56px;min-width:92px;background:var(--surface-2);color:var(--ink);border:2px solid var(--border);border-radius:12px;font-weight:800;font-size:1rem;padding:.6rem 1rem;cursor:pointer;font-family:inherit}
+button.nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+button.nav:disabled{opacity:.4;cursor:not-allowed}
+.deck{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem;scroll-margin-top:5.5rem}
+.slides{min-width:0}
+.slide{display:none;min-width:0}
+.slide.active{display:block}
+.slide h2:focus{outline:none}
+.slide h2:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.nav-inside{display:none}
+.act-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.4rem}
+.badge{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06121f;font-weight:800;font-size:1.15rem}
+.act-head h2{font-size:clamp(1.15rem,2.8vw,1.4rem);margin:0;color:#fff;flex:1 1 auto}
+.tag{background:var(--surface-2);border:1px solid var(--border);color:var(--accent2);border-radius:999px;padding:.15rem .6rem;font-size:.78rem;font-weight:800;white-space:nowrap}
+.intro{background:var(--surface-2);border:1px solid var(--border);border-left:6px solid var(--accent);border-radius:12px;padding:.9rem 1rem;margin:.6rem 0}
+.intro h2{margin:0 0 .4rem;color:var(--accent);font-size:1.15rem}
+.hint{color:var(--muted);font-size:.9rem;margin:.3rem 0 .6rem}
+.exercise{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:.8rem 1rem;margin:.6rem 0}
+.q{background:var(--deep);border:1px solid var(--border);border-radius:9px;padding:.6rem .75rem;margin:.5rem 0;overflow-wrap:anywhere}
+.q p{margin:.1rem 0;font-weight:700}
+.mcq label{display:block;background:var(--deep);border:2px solid var(--border);border-radius:8px;padding:.4rem .6rem;margin:.25rem 0;cursor:pointer;font-size:.94rem}
+.mcq label.correct{border-color:var(--good);background:#0c2b27}
+.mcq label.wrong{border-color:var(--bad);background:#32151a}
+.mcq input{width:19px;height:19px;accent-color:var(--accent2);margin-right:.5rem;vertical-align:middle}
+.mark{font-weight:800;font-size:.85rem;margin-left:.5rem}
+.mark.ok{color:var(--good)}.mark.no{color:var(--bad)}
+.gap{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:.4rem 0}
+.gap input,.fixin{background:var(--deep);color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:.35rem .5rem;min-width:170px;max-width:100%;font-family:inherit;font-size:.96rem}
+.gap input.correct,.gap input.wrong,.fixin.correct,.fixin.wrong{border-color:var(--good)}
+.gap input.wrong,.fixin.wrong{border-color:var(--bad)}
+textarea{width:100%;min-height:84px;background:var(--deep);color:var(--ink);border:2px solid var(--border);border-radius:9px;padding:.6rem;resize:vertical;font-family:inherit;font-size:.96rem}
+label.txt{display:block;font-weight:700;margin:.5rem 0 .25rem}
+.wordcount{font-size:.82rem;color:var(--warn);font-weight:700;margin-top:.25rem}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.5rem 0}
+.match-col{display:flex;flex-direction:column;gap:.35rem}
+.mw,.md{background:var(--deep);color:var(--ink);border:2px solid var(--border);border-radius:9px;padding:.5rem .6rem;text-align:left;min-height:46px;font-size:.92rem;font-family:inherit;cursor:pointer}
+.mw:hover,.md:hover{border-color:var(--accent)}
+.mw.sel,.md.sel{border-color:var(--accent);background:#102036}
+.mw.paired,.md.paired{border-color:var(--good);opacity:.6}
+.mw.bad,.md.bad{border-color:var(--bad)}
+@media(max-width:560px){.match-grid{grid-template-columns:1fr}}
+.order-box{background:var(--deep);border:2px dashed var(--accent2);border-radius:10px;padding:.6rem;min-height:56px;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.order-box:empty:before{content:"Tap the steps below in the right order";color:var(--muted);font-style:italic}
+.order-items{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.ord{background:var(--deep);color:var(--ink);border:2px solid var(--border);border-radius:9px;padding:.45rem .65rem;text-align:left;min-height:46px;font-size:.92rem;font-family:inherit;cursor:pointer}
+.ord:hover{border-color:var(--accent)}
+.ord.used{opacity:.3;cursor:not-allowed}
+.ord.picked{border-color:var(--accent2)}
+.ord.picked.correct{border-color:var(--good)}
+.ord.picked.correct:after{content:"  Correct"}
+.ord.picked.wrong{border-color:var(--bad)}
+.ord.picked.wrong:after{content:"  Try again"}
+.feedback{margin-top:.6rem;background:var(--deep);border:1px solid var(--border);border-radius:9px;padding:.5rem .7rem;min-height:1.6rem;font-weight:700;font-size:.92rem}
+.feedback.good{border-color:var(--good);color:var(--good)}
+.feedback.bad{border-color:var(--bad);color:var(--bad)}
+.audio-slot{background:var(--deep);border:1px solid var(--border);border-radius:12px;padding:.7rem .8rem;margin:.7rem 0}
+.audio-slot h3{margin:.1rem 0 .3rem;color:var(--accent);font-size:.95rem}
+audio{width:100%;max-width:100%}
+details.key{border:2px solid var(--good);border-radius:11px;background:#0a241f;margin:.8rem 0}
+details.key summary{cursor:pointer;padding:.6rem .8rem;font-weight:800;color:var(--good);min-height:46px}
+details.key .key-body{border-top:1px solid var(--border);padding:.6rem .9rem 1rem;color:#eafff8;font-size:.92rem;overflow-wrap:anywhere}
+details.key ol,details.key ul{padding-left:1.2rem}
+details.transcript{border:1px solid var(--border);border-radius:11px;background:var(--deep);margin:.7rem 0}
+details.transcript summary{cursor:pointer;padding:.6rem .8rem;font-weight:800;color:var(--accent2);min-height:46px}
+details.transcript .tr-body{border-top:1px solid var(--border);padding:.6rem .9rem 1rem;max-height:24rem;overflow:auto;font-size:.92rem}
+details.transcript p{margin:.35rem 0}
+.checklist label{display:block;background:var(--deep);border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;margin:.25rem 0;cursor:pointer}
+.checklist input{width:19px;height:19px;accent-color:var(--accent2);margin-right:.5rem}
+.slide-nav{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;margin-top:1rem;border-top:1px solid var(--border);padding-top:.8rem}
+.toc{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.6rem 0;color:var(--muted)}
+select{background:var(--deep);color:var(--ink);border:2px solid var(--border);border-radius:8px;padding:.35rem .5rem;max-width:100%;font-family:inherit}
+.rule{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.rule span{background:var(--deep);border:1px solid var(--border);border-radius:999px;padding:.25rem .7rem;font-size:.85rem;font-weight:700}
+footer{text-align:center;color:var(--muted);padding:1.2rem .8rem;border-top:1px solid var(--border);font-size:.85rem}
+@media(max-width:760px){
+.deck-shell{padding:.55rem}
+.deck-layout{grid-template-columns:minmax(0,1fr)}
+.nav-slot{display:none}
+.nav-inside{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
+.nav-inside button.nav{width:100%;min-height:52px}
+.deck{padding:.8rem}
+.hero h1{font-size:1.4rem}
+}
+@media(max-width:520px){.nav-inside{grid-template-columns:1fr}.btn{width:100%;margin-right:0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson slides</a>
+<header class="hud">
+ <div class="hud-inner">
+  <div class="brand">EF Teach | Lesson 24 | kW, kVA and power factor</div>
+  <div class="hud-actions">
+   <span class="count" id="count" aria-live="polite">Slide 1 of 13</span>
+   <button class="btn ghost" id="prevTop" type="button" aria-label="Previous slide">Back</button>
+   <button class="btn" id="nextTop" type="button" aria-label="Next slide">Next</button>
+  </div>
+ </div>
+</header>
+<div class="hero">
+ <h1>kW, kVA and power factor</h1>
+ <p>Listen to Alex and Mr. Keller, then practise the language of power ratings.</p>
+ <div><span class="pill">10 activities</span><span class="pill">B1+ to B2</span><span class="pill">Technical English</span></div>
+</div>
+<main id="main">
+<div class="deck-shell" id="deckShell">
+ <div class="deck-topbar">
+  <div class="slide-count" id="slideCount" aria-live="polite">Slide 1 of 13</div>
+  <div class="deck-actions"><button class="btn ghost" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen for lesson slides">Full screen</button></div>
+ </div>
+ <div class="deck-layout" id="deckLayout">
+  <div class="nav-slot nav-left" id="navLeft"></div>
+  <div class="deck" id="deck">
+   <div class="slides" id="slides">
+<section class="slide" id="slide-01-start" data-title="Start here">
+<div class="intro">
+ <h2>Start here</h2>
+ <p>You will listen to a real business call, then do ten short practice and speaking activities. In the call, Alex, a Sales Engineer, explains kW, kVA and power factor to Mr. Keller, a customer.</p>
+ <div class="rule"><span>kW real power</span><span>kVA apparent power</span><span>power factor ratio</span><span>losses</span><span>efficiency</span></div>
+ <p class="hint">Say your answers out loud before you open the answer key. For the speaking activities, record yourself if you can.</p>
+ <button class="btn" id="startBtn" type="button">Start lesson</button>
+</div>
+<div class="audio-slot">
+ <h3>The conversation</h3>
+ <audio id="lessonAudio" controls preload="metadata" src="Lesson24_kW_kVA_Conversation.mp3">Your browser does not support audio. Use the transcript below.</audio>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+</section>
+<section class="slide activity" id="slide-02-gist" data-title="Activity 1: Listen for gist">
+<div class="act-head"><div class="badge" aria-hidden="true">1</div><h2 tabindex="-1">Listen for gist</h2><span class="tag">2 min</span></div>
+<p class="hint">Listen to the opening and the closing, then answer. Choose one option for each question.</p>
+<div class="exercise"><div class="q mcq"><p>Who are the two speakers?</p><label><input type="radio" name="g10" value="0" data-correct="false"> Two engineers</label><label><input type="radio" name="g10" value="1" data-correct="true"> A Sales Engineer and a customer</label><label><input type="radio" name="g10" value="2" data-correct="false"> A manager and a supplier</label></div><div class="q mcq"><p>What is the main problem in the call?</p><label><input type="radio" name="g11" value="0" data-correct="false"> The delivery time is too long</label><label><input type="radio" name="g11" value="1" data-correct="true"> The power ratings on the two offers look different</label><label><input type="radio" name="g11" value="2" data-correct="false"> The payment terms are unclear</label></div><div class="q mcq"><p>Which three numbers does Alex explain?</p><label><input type="radio" name="g12" value="0" data-correct="true"> 500 kVA, 400 kW and 0.8</label><label><input type="radio" name="g12" value="1" data-correct="false"> 500 kW, 400 kVA and 1.0</label><label><input type="radio" name="g12" value="2" data-correct="false"> 400 kVA, 500 kW and 0.8</label></div><div class="q mcq"><p>What does Alex agree to do at the end?</p><label><input type="radio" name="g13" value="0" data-correct="false"> Offer a discount at once</label><label><input type="radio" name="g13" value="1" data-correct="true"> Send the updated sheet with the power factor</label><label><input type="radio" name="g13" value="2" data-correct="false"> Visit the customer's site</label></div><div class="q mcq"><p>How would you describe the tone?</p><label><input type="radio" name="g14" value="0" data-correct="true"> Patient and professional</label><label><input type="radio" name="g14" value="1" data-correct="false"> Angry and tense</label><label><input type="radio" name="g14" value="2" data-correct="false"> Cold and rushed</label></div>
+ <button class="btn" type="button" data-check="mcq">Check answers</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Listen again</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>A Sales Engineer and a customer.</li><li>The power ratings on the two offers look different.</li><li>500 kVA, 400 kW and 0.8.</li><li>Send the updated sheet with the power factor.</li><li>Patient and professional.</li></ol></div></details>
+</section>
+<section class="slide activity" id="slide-03-vocab" data-title="Activity 2: Key vocabulary">
+<div class="act-head"><div class="badge" aria-hidden="true">2</div><h2 tabindex="-1">Key vocabulary</h2><span class="tag">3 min</span></div>
+<p class="hint">Tap a term, then tap its meaning. Say the term in a full sentence when you have matched it.</p>
+<div class="exercise">
+ <div class="match-grid"><div class="match-col" data-role="match-left" aria-label="Terms"><button type="button" class="mw" data-key="kW">kW</button><button type="button" class="mw" data-key="kVA">kVA</button><button type="button" class="mw" data-key="power factor">power factor</button><button type="button" class="mw" data-key="losses">losses</button><button type="button" class="mw" data-key="efficiency">efficiency</button></div><div class="match-col" data-role="match-right" aria-label="Meanings"><button type="button" class="md" data-key="kW">the real power the machine uses, the power that does the work</button><button type="button" class="md" data-key="kVA">the apparent power, including losses</button><button type="button" class="md" data-key="power factor">the ratio of kW to kVA</button><button type="button" class="md" data-key="losses">the part of the power you pay for and do not use</button><button type="button" class="md" data-key="efficiency">how much of the input you actually get</button></div></div>
+ <p class="hint" id="matchScore">Matched: 0 of 5</p>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Hear the terms</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><p>1 kW = the real power the machine uses.<br>2 kVA = the apparent power, including losses.<br>3 power factor = the ratio of kW to kVA.<br>4 losses = the part you pay for and do not use.<br>5 efficiency = how much of the input you actually get.</p><p><b>Model sentences:</b> kW is the real power the machine uses. kVA is the apparent power, including losses. Power factor is the ratio of kW to kVA. Losses are the part of the power you pay for and do not use. Efficiency is how much of the input you actually get.</p></div></details>
+</section>
+<section class="slide activity" id="slide-04-tf" data-title="Activity 3: True or false">
+<div class="act-head"><div class="badge" aria-hidden="true">3</div><h2 tabindex="-1">True or false</h2><span class="tag">3 min</span></div>
+<p class="hint">Listen and decide. Correct the false statements out loud before you check.</p>
+<div class="exercise"><div class="q mcq"><p>Alex says the two numbers describe the same thing.</p><label><input type="radio" name="t0" value="T" data-correct="false"> True</label><label><input type="radio" name="t0" value="F" data-correct="true"> False</label></div><div class="q mcq"><p>kW is the real power the machine uses.</p><label><input type="radio" name="t1" value="T" data-correct="true"> True</label><label><input type="radio" name="t1" value="F" data-correct="false"> False</label></div><div class="q mcq"><p>kVA is always lower than kW.</p><label><input type="radio" name="t2" value="T" data-correct="false"> True</label><label><input type="radio" name="t2" value="F" data-correct="true"> False</label></div><div class="q mcq"><p>Losses are the part of the power you pay for and do not use.</p><label><input type="radio" name="t3" value="T" data-correct="true"> True</label><label><input type="radio" name="t3" value="F" data-correct="false"> False</label></div><div class="q mcq"><p>A power factor of 1.0 means very high losses.</p><label><input type="radio" name="t4" value="T" data-correct="false"> True</label><label><input type="radio" name="t4" value="F" data-correct="true"> False</label></div><div class="q mcq"><p>Our unit has a power factor of 0.8.</p><label><input type="radio" name="t5" value="T" data-correct="true"> True</label><label><input type="radio" name="t5" value="F" data-correct="false"> False</label></div><div class="q mcq"><p>A low power factor means higher electricity costs.</p><label><input type="radio" name="t6" value="T" data-correct="true"> True</label><label><input type="radio" name="t6" value="F" data-correct="false"> False</label></div><div class="q mcq"><p>Alex will send the updated sheet tomorrow afternoon.</p><label><input type="radio" name="t7" value="T" data-correct="false"> True</label><label><input type="radio" name="t7" value="F" data-correct="true"> False</label></div>
+ <button class="btn" type="button" data-check="mcq">Check answers</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Listen and check</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>False. The two numbers describe two different things.</li><li>True.</li><li>False. kVA is always equal to or higher than kW.</li><li>True.</li><li>False. A power factor of 1.0 means no losses.</li><li>True. 400 divided by 500 is 0.8.</li><li>True. A high power factor means lower costs.</li><li>False. He will send the updated sheet today.</li></ol></div></details>
+</section>
+<section class="slide activity" id="slide-05-gaps" data-title="Activity 4: Listen and fill the gaps">
+<div class="act-head"><div class="badge" aria-hidden="true">4</div><h2 tabindex="-1">Listen and fill the gaps</h2><span class="tag">4 min</span></div>
+<p class="hint">Write the exact word from the audio. Do not guess from the key.</p>
+<div class="exercise"><div class="q gap"><b>1.</b> <span>kW is the <input class="gapinput" type="text" data-answer="real|the real" aria-label="Gap 1"> power the machine uses.</span> </div><div class="q gap"><b>2.</b> <span>kVA is the <input class="gapinput" type="text" data-answer="apparent" aria-label="Gap 2"> power, including losses.</span> </div><div class="q gap"><b>3.</b> <span>It is always equal to or <input class="gapinput" type="text" data-answer="higher" aria-label="Gap 3"> than kW.</span> </div><div class="q gap"><b>4.</b> <span>A power factor of 1.0 means no <input class="gapinput" type="text" data-answer="losses" aria-label="Gap 4">.</span> </div><div class="q gap"><b>5.</b> <span>Power factor is the <input class="gapinput" type="text" data-answer="ratio" aria-label="Gap 5"> of kW to kVA.</span> </div><div class="q gap"><b>6.</b> <span>A high power factor means <input class="gapinput" type="text" data-answer="lower" aria-label="Gap 6"> costs.</span> </div><div class="q gap"><b>7.</b> <span>The unit <input class="gapinput" type="text" data-answer="consumes" aria-label="Gap 7"> 500 kW of real power.</span> </div>
+ <button class="btn" type="button" data-check="gaps">Check answers</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Listen for the exact words</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>real</li><li>apparent</li><li>higher</li><li>losses</li><li>ratio</li><li>lower</li><li>consumes</li></ol></div></details>
+</section>
+<section class="slide activity" id="slide-06-order" data-title="Activity 5: Put the explanation in order">
+<div class="act-head"><div class="badge" aria-hidden="true">5</div><h2 tabindex="-1">Put the explanation in order</h2><span class="tag">3 min</span></div>
+<p class="hint">Tap the steps in the order Alex uses. Tap a step in the answer box to remove it.</p>
+<div class="exercise">
+ <div class="order-box" data-role="order-box" aria-label="Your answer, in order"></div>
+ <div class="order-items" data-role="order-items"><button type="button" class="ord" data-seq="1">Start with kW, the real power that does the work.</button><button type="button" class="ord" data-seq="2">Add kVA, the total including losses.</button><button type="button" class="ord" data-seq="3">Show the power factor, the ratio between them.</button><button type="button" class="ord" data-seq="4">Name the losses, the part you pay for and do not use.</button><button type="button" class="ord" data-seq="5">End with efficiency, which is the whole point.</button></div>
+ <button class="btn" type="button" data-check="order">Check order</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Hear the order</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><p>Correct order: 1 Start with kW, 2 Add kVA, 3 Show the power factor, 4 Name the losses, 5 End with efficiency.</p><p>Real first, then apparent, then the ratio between them, then the losses, then efficiency. The other way round and the customer loses the thread.</p></div></details>
+</section>
+<section class="slide activity" id="slide-07-numbers" data-title="Activity 6: Numbers check">
+<div class="act-head"><div class="badge" aria-hidden="true">6</div><h2 tabindex="-1">Numbers check</h2><span class="tag">3 min</span></div>
+<p class="hint">Answer with the number and what it means. One option for each question.</p>
+<div class="exercise"><div class="q mcq"><p>What is the real power of our unit?</p><label><input type="radio" name="g60" value="0" data-correct="true"> 400 kW</label><label><input type="radio" name="g60" value="1" data-correct="false"> 500 kW</label><label><input type="radio" name="g60" value="2" data-correct="false"> 500 kVA</label></div><div class="q mcq"><p>What is the apparent power of our unit?</p><label><input type="radio" name="g61" value="0" data-correct="false"> 400 kW</label><label><input type="radio" name="g61" value="1" data-correct="true"> 500 kVA</label><label><input type="radio" name="g61" value="2" data-correct="false"> 1.0</label></div><div class="q mcq"><p>What is the power factor of our unit?</p><label><input type="radio" name="g62" value="0" data-correct="false"> 1.0</label><label><input type="radio" name="g62" value="1" data-correct="false"> 0.5</label><label><input type="radio" name="g62" value="2" data-correct="true"> 0.8</label></div><div class="q mcq"><p>What does a power factor of 1.0 mean?</p><label><input type="radio" name="g63" value="0" data-correct="true"> No losses</label><label><input type="radio" name="g63" value="1" data-correct="false"> High losses</label><label><input type="radio" name="g63" value="2" data-correct="false"> More power</label></div><div class="q mcq"><p>What does Competitor X advertise?</p><label><input type="radio" name="g64" value="0" data-correct="true"> 500 kW</label><label><input type="radio" name="g64" value="1" data-correct="false"> 400 kW</label><label><input type="radio" name="g64" value="2" data-correct="false"> 500 kVA</label></div>
+ <button class="btn" type="button" data-check="mcq">Check answers</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Hear the numbers</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>400 kW. The real power the machine uses.</li><li>500 kVA. The apparent power, including losses.</li><li>0.8. kW divided by kVA, so 400 divided by 500.</li><li>No losses. Very few real machines reach 1.0.</li><li>500 kW. Alex says it is worth asking whether they mean kW or kVA.</li></ol><p>Remember: the number on its own is not enough. Compare the three numbers together.</p></div></details>
+</section>
+<section class="slide activity" id="slide-08-inference" data-title="Activity 7: Inference">
+<div class="act-head"><div class="badge" aria-hidden="true">7</div><h2 tabindex="-1">Inference, why questions</h2><span class="tag">4 min</span></div>
+<p class="hint">Say your answer out loud first, then write one or two sentences. There is more than one correct way.</p>
+<div class="exercise"><div class="q"><p>1. Why does Alex say the machine is the same size?</p><label class="txt" for="inf0">Your answer:</label><textarea id="inf0" aria-label="Your answer 1" placeholder="Answer in your own words..."></textarea></div><div class="q"><p>2. Why does Alex explain the terms one step at a time?</p><label class="txt" for="inf1">Your answer:</label><textarea id="inf1" aria-label="Your answer 2" placeholder="Answer in your own words..."></textarea></div><div class="q"><p>3. Why does Alex give three numbers together instead of one?</p><label class="txt" for="inf2">Your answer:</label><textarea id="inf2" aria-label="Your answer 3" placeholder="Answer in your own words..."></textarea></div><div class="q"><p>4. Why is it worth asking whether a competitor means kW or kVA?</p><label class="txt" for="inf3">Your answer:</label><textarea id="inf3" aria-label="Your answer 4" placeholder="Answer in your own words..."></textarea></div><div class="q"><p>5. Why does Alex close with a high power factor means lower costs?</p><label class="txt" for="inf4">Your answer:</label><textarea id="inf4" aria-label="Your answer 5" placeholder="Answer in your own words..."></textarea></div>
+ <button class="btn ghost" type="button" data-done="1">Mark complete</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Listen for the reason</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>Mr. Keller thinks 400 kW means a smaller machine. Alex corrects that before he explains.</li><li>The terms are easy to mix up. A clear order keeps the customer with him.</li><li>One number is not enough to compare two offers. You need kW, kVA and the ratio.</li><li>A competitor claiming 500 kW may be using the wrong unit or a different power factor. He wants a like-for-like comparison.</li><li>It turns a technical explanation into a customer benefit, which is the right way to finish.</li></ol></div></details>
+</section>
+<section class="slide activity" id="slide-09-professional" data-title="Activity 8: Make it professional">
+<div class="act-head"><div class="badge" aria-hidden="true">8</div><h2 tabindex="-1">Make it professional</h2><span class="tag">4 min</span></div>
+<p class="hint">Rewrite each informal note in professional English. Use consumes, rated at, apparent power and power factor.</p>
+<div class="exercise"><div class="q"><p>1. Informal: <i>It uses 500 kW stuff.</i></p><div class="gap"><span>Professional:</span> <input class="fixin" type="text" data-answer="The unit consumes 500 kW of real power|It consumes 500 kW of real power" aria-label="Professional version 1"></div></div><div class="q"><p>2. Informal: <i>The unit is 500 kVA.</i></p><div class="gap"><span>Professional:</span> <input class="fixin" type="text" data-answer="The unit is rated at 500 kVA|It is rated at 500 kVA" aria-label="Professional version 2"></div></div><div class="q"><p>3. Informal: <i>Power factor is 0.8.</i></p><div class="gap"><span>Professional:</span> <input class="fixin" type="text" data-answer="The power factor is 0.8" aria-label="Professional version 3"></div></div><div class="q"><p>4. Informal: <i>kW is less than kVA.</i></p><div class="gap"><span>Professional:</span> <input class="fixin" type="text" data-answer="kW is always less than or equal to kVA" aria-label="Professional version 4"></div></div>
+ <button class="btn" type="button" data-check="gaps">Check answers</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Hear the professional version</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><ol><li>The unit consumes 500 kW of real power.</li><li>The unit is rated at 500 kVA.</li><li>The power factor is 0.8.</li><li>kW is always less than or equal to kVA.</li></ol><p>Use consumes instead of uses, and name the unit and the type of power. Small changes, but much more professional.</p></div></details>
+</section>
+<section class="slide activity" id="slide-10-shadow" data-title="Activity 9: Shadow then explain">
+<div class="act-head"><div class="badge" aria-hidden="true">9</div><h2 tabindex="-1">Shadow, then explain</h2><span class="tag">5 min</span></div>
+<p class="hint">Three passes. Do not read the model until after the third pass.</p>
+<div class="exercise">
+ <p><b>Pass 1, shadowing:</b> play the part where Alex explains kW and kVA, then the part about power factor and costs. Pause after each sentence and repeat it with the same stress and calm pace.</p>
+ <p><b>Pass 2, with signposts:</b> say the five parts: kW is the real power; kVA is the apparent power; power factor is the ratio; losses are what you pay for; a high power factor means lower costs.</p>
+ <label class="txt" for="a9">Pass 3, no notes: explain the three terms in 60 to 90 seconds.</label>
+ <textarea id="a9" placeholder="kW is the real power..."></textarea>
+ <div class="wordcount" id="wc-a9" aria-live="polite">Words: 0. Aim: 60 to 90</div>
+ <button class="btn ghost" type="button" data-done="1">Mark complete</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Shadow these clips</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><p><b>Model:</b> kW is the real power the machine uses. It is the power that does the work. kVA is the apparent power, including losses. It is always equal to or higher than kW. Power factor is the ratio of kW to kVA. For our unit, 400 divided by 500 is 0.8. A power factor of 1.0 means no losses. Losses are the part of the power you pay for and do not use. A high power factor means the machine uses electricity efficiently, so electricity costs are lower. That is why we always compare the three numbers together, not just the headline figure.</p></div></details>
+</section>
+<section class="slide activity" id="slide-11-respond" data-title="Activity 10: Respond to the customer">
+<div class="act-head"><div class="badge" aria-hidden="true">10</div><h2 tabindex="-1">Respond to the customer</h2><span class="tag">5 min</span></div>
+<p class="hint">Mr. Keller says: Your quotation says 500 kVA and 400 kW. Competitor X just says 500 kW. Are you offering a smaller machine?</p>
+<div class="exercise">
+ <p>Answer in five or six sentences. Use at least four of these: the real power, does the work, apparent power, including losses, the ratio of kW to kVA, no losses, what you pay for and do not use, lower costs, consumes.</p>
+ <label class="txt" for="a10">Your answer:</label>
+ <textarea id="a10" aria-label="Your answer to the customer" placeholder="No, the machine is the same size..."></textarea>
+ <p><b>Self check:</b></p>
+ <div class="checklist"><label><input type="checkbox"> I corrected the misunderstanding calmly.</label><label><input type="checkbox"> I explained kW, kVA and power factor in that order.</label><label><input type="checkbox"> I said what losses are.</label><label><input type="checkbox"> I closed on the benefit and agreed a next step.</label><label><input type="checkbox"> I used consumes instead of uses.</label></div>
+ <button class="btn ghost" type="button" data-done="1">Mark complete</button>
+ <div class="feedback" aria-live="polite"></div>
+</div>
+<div class="audio-slot">
+ <h3>Hear the question again</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="key"><summary>Show answers and model</summary><div class="key-body"><p><b>Model:</b> No, the machine is the same size. The two numbers describe two different things. kW is the real power the machine uses, the power that does the work, and for your site that is 400 kW. kVA is the apparent power, including losses, and for our unit that is 500 kVA. Power factor is the ratio between them, 400 divided by 500, which is 0.8. Losses are the part of the power you pay for and do not use. A high power factor means lower costs, so I would add the power factor to the sheet and send it to you today. Does that work?</p></div></details>
+</section>
+<section class="slide" id="slide-12-transcript" data-title="Full transcript">
+<div class="intro"><h2>Full transcript</h2><p>Use this if you need to check what you heard. Try the activities first without it.</p></div>
+<div class="audio-slot">
+ <h3>The conversation</h3>
+ <p class="hint">Listen again as many times as you need. Use the player controls to pause and replay.</p>
+</div>
+<details class="transcript"><summary>Show the full conversation</summary><div class="tr-body"><p>Alex: Good morning, Mr. Keller. Thank you for calling back. Did you have a chance to look at the comparison sheet I sent?</p><p>Mr. Keller: Good morning, Alex. Yes, I did, and that is actually why I am calling. There is something I do not understand. Your quotation says 500 kVA and 400 kW. Competitor X simply says 500 kW. Are you offering a smaller machine?</p><p>Alex: That is a very good question, and a common one. No, the machine is the same size. The two numbers describe two different things. Let me explain them in simple words, one step at a time.</p><p>Mr. Keller: All right, go ahead.</p><p>Alex: First, kW. kW is the real power the machine uses. It is the power that does the work. For your site, that is 400 kW.</p><p>Mr. Keller: So 400 kW is the useful power.</p><p>Alex: Exactly. Second, kVA. kVA is the apparent power, including losses. It is always equal to or higher than kW. In our unit it is 500 kVA.</p><p>Mr. Keller: So the gap between 400 and 500, that is the losses?</p><p>Alex: Yes, that is exactly right. Losses are the part of the power you pay for and do not use.</p><p>Mr. Keller: And Competitor X says 500 kW. That would mean no losses at all?</p><p>Alex: That is the point I want to make carefully. A power factor of 1.0 means no losses. Very few real machines reach 1.0, most are around 0.8. If a competitor advertises 500 kW, it is worth asking whether they mean kW or kVA, and what their power factor is.</p><p>Mr. Keller: I see. So the number on its own is not enough.</p><p>Alex: Correct. That is why I always give three numbers together: kW, kVA and power factor. Third, power factor is the ratio of kW to kVA. For our unit, 400 divided by 500 is 0.8.</p><p>Mr. Keller: Okay. And why should I care about that ratio?</p><p>Alex: Because it tells you how efficiently the machine uses electricity. A low power factor means more losses and higher electricity costs. A high power factor means lower costs. In simple words, the better the power factor, the less you pay for power you never use.</p><p>Mr. Keller: That makes sense. We did talk about stable output voltage under load as well, didn't we?</p><p>Alex: We did, and that comes from the voltage regulator we discussed last time. It keeps the output voltage stable even when the load changes. That is a separate point from the rating, but it is part of the same story about quality.</p><p>Mr. Keller: Right. Now I understand why you always write the numbers in that order.</p><p>Alex: Exactly. We start with kW, the real power that does the work. Then we add kVA, the total including losses. Then we show the power factor, the ratio between them. Then we name the losses, the part you pay for and do not use. And we end with efficiency, which is the whole point.</p><p>Mr. Keller: Our engineer wrote in his note that it uses 500 kW stuff. I had to read it twice.</p><p>Alex: I am glad you mentioned that. In professional English we would say: The unit consumes 500 kW of real power. We say consumes, not uses, and we name the unit and the type of power. Small changes, but they sound much more professional.</p><p>Mr. Keller: Understood. Consumes, real power. I can use that.</p><p>Alex: Good. So if you remember one thing from this call, remember this: always compare the three numbers together, not just the headline figure. A high power factor means lower costs.</p><p>Mr. Keller: That is clear. Thank you, Alex. Could you add the power factor to the comparison sheet, so I can show my team?</p><p>Alex: Of course. I will send the updated sheet today. Does that work for you?</p><p>Mr. Keller: Yes, today is fine. Thank you. Goodbye.</p><p>Alex: Thank you, Mr. Keller. Goodbye.</p></div></details>
+</section>
+<section class="slide" id="slide-13-after" data-title="After the lesson">
+<div class="intro"><h2>After the lesson</h2><p>Save these in your notebook, then do the homework.</p></div>
+<div class="exercise">
+ <p><b>5 new words:</b> kW, kVA, power factor, losses, efficiency.</p>
+ <p><b>5 phrases:</b> the real power, does the work, including losses, the ratio of kW to kVA, lower costs.</p>
+ <p><b>3 corrections:</b> uses &#8594; consumes; is 500 kVA &#8594; is rated at 500 kVA; kW is less than kVA &#8594; kW is always less than or equal to kVA.</p>
+</div>
+<div class="intro"><h2>Homework</h2><p>Explain the three terms to a colleague in 90 seconds. Use the five-part order: kW, kVA, power factor, losses, efficiency.</p></div>
+</section>
+<div class="nav-inside" id="navInside" aria-label="Slide navigation"></div>
+   </div>
+  </div>
+  <div class="nav-slot nav-right" id="navRight"></div>
+ </div>
+ <div class="toc"><label for="tocSelect">Go to slide:</label><select id="tocSelect" aria-label="Go to slide"></select></div>
+ <p class="hint">Tip: arrow keys move between slides when you are not typing. Your answers stay saved while you move.</p>
+</div>
+</main>
+<footer style="padding:16px;border-top:2px solid var(--accent);color:var(--muted);font-size:.82rem;margin-top:24px;background:#080808;border-radius:12px;text-align:center">Lesson 24 practice: kW, kVA and power factor. 10 activities based on the Alex and Mr. Keller conversation. High contrast, keyboard and touch friendly, transcript provided, no time pressure.<p style="margin-top:.4rem"><a href="../../index.html#b2-business" style="color:var(--accent2)">All B2 Business lessons</a> | <a href="Lesson-21-Monthly-Review-B2-Learner.html" style="color:var(--accent2)">Lesson 21</a> | <a href="Month3-Listening-Price-Negotiation-B2-Learner.html" style="color:var(--accent2)">Month 3 Listening</a></p></footer>
+<div class="sr-only" id="slideLive" aria-live="polite"></div>
+
+<script>
+
+(function(){
+ var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+ var cur=0, audio=document.getElementById('lessonAudio');
+ var prevBtn=document.getElementById('prevTop'), nextBtn=document.getElementById('nextTop');
+ var navLeft=document.getElementById('navLeft'), navRight=document.getElementById('navRight'), navInside=document.getElementById('navInside');
+ var tocSelect=document.getElementById('tocSelect'), slideCount=document.getElementById('slideCount');
+ var count=document.getElementById('count'), slideLive=document.getElementById('slideLive');
+ var deck=document.getElementById('deck');
+
+ slides.forEach(function(s,i){var o=document.createElement('option');o.value=String(i);o.textContent=s.getAttribute('data-title')||('Slide '+(i+1));tocSelect.appendChild(o);});
+
+ function moveAudio(){
+  var s=slides[cur], slot=s.querySelector('.audio-slot');
+  if(slot && audio.parentElement!==slot){slot.insertBefore(audio,slot.firstChild);}
+ }
+ function show(n,focus){
+  if(n<0)n=0;if(n>slides.length-1)n=slides.length-1;cur=n;
+  slides.forEach(function(s,i){s.classList.toggle('active',i===cur);});
+  try{audio.pause();}catch(e){}
+  moveAudio();
+  var label='Slide '+(cur+1)+' of '+slides.length;
+  slideCount.textContent=label;count.textContent=label;tocSelect.value=String(cur);
+  prevBtn.disabled=(cur===0);nextBtn.disabled=(cur===slides.length-1);
+  slideLive.textContent=slides[cur].getAttribute('data-title')||label;
+  if(focus){var h=slides[cur].querySelector('h2');if(h){h.focus({preventScroll:true});}}
+  try{deck.scrollIntoView({block:'nearest'});}catch(e){}
+ }
+ prevBtn.addEventListener('click',function(){show(cur-1,true);});
+ nextBtn.addEventListener('click',function(){show(cur+1,true);});
+ tocSelect.addEventListener('change',function(){show(parseInt(tocSelect.value,10),true);});
+ var sb=document.getElementById('startBtn');if(sb){sb.addEventListener('click',function(){show(1,true);});}
+
+ var mq=window.matchMedia('(max-width:760px)');
+ function placeNav(){
+  if(mq.matches){navInside.appendChild(prevBtn);navInside.appendChild(nextBtn);}
+  else{navLeft.appendChild(prevBtn);navRight.appendChild(nextBtn);}
+ }
+ if(mq.addEventListener){mq.addEventListener('change',placeNav);}else if(mq.addListener){mq.addListener(placeNav);}
+ placeNav();
+
+ var fsBtn=document.getElementById('fsBtn'), shell=document.getElementById('deckShell');
+ function fsLabel(){
+  var on=(document.fullscreenElement===shell);
+  fsBtn.textContent=on?'Exit full screen':'Full screen';
+  fsBtn.setAttribute('aria-pressed',on?'true':'false');
+  fsBtn.setAttribute('aria-label',on?'Exit full screen for lesson slides':'Enter full screen for lesson slides');
+ }
+ if(!(document.fullscreenEnabled===false)&&shell.requestFullscreen){
+  fsBtn.addEventListener('click',function(){
+   if(document.fullscreenElement===shell){document.exitFullscreen();}
+   else if(shell.requestFullscreen){shell.requestFullscreen();}
+  });
+  document.addEventListener('fullscreenchange',fsLabel);
+ }else{fsBtn.hidden=true;}
+ fsLabel();
+
+ function norm(v){return (v||'').toLowerCase().trim().replace(/[.\s]+$/,'');}
+ function mark(el,ok){
+  var m=el.parentElement.querySelector('.mark');
+  if(!m){m=document.createElement('span');m.className='mark';el.parentElement.appendChild(m);}
+  m.textContent=ok?'Correct':'Try again';m.className='mark '+(ok?'ok':'no');
+ }
+ function fb(ex,ok,msg){var f=ex.querySelector('.feedback');f.className='feedback '+(ok?'good':'bad');f.textContent=msg;}
+
+ function checkMCQ(ex){
+  var groups={},any=false,total=0,ok=0;
+  ex.querySelectorAll('input[type=radio]').forEach(function(r){(groups[r.name]=groups[r.name]||[]).push(r);});
+  Object.keys(groups).forEach(function(name){
+   var arr=groups[name],chosen=null;total++;
+   arr.forEach(function(r){if(r.checked)chosen=r;});
+   if(!chosen)return;any=true;
+   var correct=arr.filter(function(r){return r.getAttribute('data-correct')==='true';})[0];
+   arr.forEach(function(r){var l=r.closest('label');l.classList.remove('correct','wrong');});
+   if(chosen===correct){ok++;chosen.closest('label').classList.add('correct');mark(chosen,true);}
+   else{chosen.closest('label').classList.add('wrong');mark(chosen,false);if(correct)correct.closest('label').classList.add('correct');}
+  });
+  return {total:total,ok:ok,any:any};
+ }
+ function checkGaps(ex){
+  var total=0,ok=0,any=false;
+  ex.querySelectorAll('input.gapinput,input.fixin').forEach(function(inp){
+   total++;var v=norm(inp.value);
+   var acc=(inp.getAttribute('data-answer')||'').split('|').map(norm);
+   inp.classList.remove('correct','wrong');
+   if(!v)return;any=true;
+   var good=acc.indexOf(v)>=0;
+   if(good){ok++;inp.classList.add('correct');mark(inp,true);}
+   else{inp.classList.add('wrong');mark(inp,false);}
+  });
+  return {total:total,ok:ok,any:any};
+ }
+ function checkOrder(ex){
+  var picks=Array.prototype.slice.call(ex.querySelectorAll('.order-box .ord'));
+  var seq=picks.map(function(p){return parseInt(p.getAttribute('data-back'),10);});
+  var good=seq.length===5&&seq.every(function(v,i){return v===i+1;});
+  picks.forEach(function(p){p.classList.remove('correct','wrong');p.classList.add(good?'correct':'wrong');});
+  fb(ex,good,good?'Correct order. Now say it aloud without looking.':'Try again. Open the answer key to see the five steps.');
+ }
+
+ document.addEventListener('click',function(ev){
+  var t=ev.target;
+  var chk=t.closest('[data-check]');
+  if(chk){
+   var ex=chk.closest('.exercise'),type=chk.getAttribute('data-check'),r;
+   if(type==='order'){checkOrder(ex);return;}
+   r=(type==='gaps')?checkGaps(ex):checkMCQ(ex);
+   if(!r.any){fb(ex,false,'Answer first, then press Check.');return;}
+   fb(ex,r.ok===r.total,r.ok+' of '+r.total+' correct. '+(r.ok===r.total?'Well done.':'Try again or open the answer key.'));
+   return;
+  }
+  if(t.closest('[data-done]')){var ex2=t.closest('.exercise');fb(ex2,true,'Marked complete. Say your answer out loud once more.');return;}
+  var ord=t.closest('.ord');
+  if(ord&&!ord.classList.contains('used')){
+   ord.classList.add('used');
+   var box=ord.closest('.exercise').querySelector('.order-box');
+   var c=ord.cloneNode(true);c.classList.remove('used');c.classList.add('picked');
+   c.setAttribute('data-back',ord.getAttribute('data-seq'));c.removeAttribute('data-seq');
+   c.addEventListener('click',function(){
+    if(c.parentNode)c.parentNode.removeChild(c);
+    ord.classList.remove('used');
+   });
+   box.appendChild(c);
+  }
+ });
+
+ document.addEventListener('input',function(e){
+  var t=e.target;
+  if(t.id==='a9'||t.id==='a10'){
+   var id=t.id==='a9'?'wc-a9':null;
+   if(id){var n=(t.value||'').trim().split(/\s+/).filter(Boolean).length;var w=document.getElementById(id);if(w)w.textContent='Words: '+n+'. Aim: 60 to 90';}
+  }
+ });
+
+ var selW=null;
+ document.addEventListener('click',function(ev){
+  var t=ev.target;
+  if(t.classList&&t.classList.contains('mw')){
+   if(t.classList.contains('paired'))return;
+   if(selW)selW.classList.remove('sel');
+   selW=t;t.classList.add('sel');t.classList.remove('bad');return;
+  }
+  if(t.classList&&t.classList.contains('md')){
+   if(t.classList.contains('paired'))return;
+   if(!selW)return;
+   if(selW.getAttribute('data-key')===t.getAttribute('data-key')){
+    selW.classList.remove('sel','bad');selW.classList.add('paired');
+    t.classList.add('paired');selW=null;
+    var grid=t.closest('.match-grid');
+    var n=grid.querySelectorAll('.md.paired').length;
+    var sc=grid.closest('.exercise').querySelector('#matchScore');
+    if(sc)sc.textContent='Matched: '+n+' of 5';
+    if(n===5){var ex=grid.closest('.exercise');fb(ex,true,'All five matched. Now say each term in a full sentence.');}
+   }else{
+    selW.classList.add('bad');t.classList.add('bad');
+    fb(t.closest('.exercise'),false,'Not quite. Try the other meaning.');
+    var w=selW;selW=null;
+    setTimeout(function(){w.classList.remove('bad');t.classList.remove('bad');},700);
+   }
+  }
+ });
+
+ document.addEventListener('keydown',function(e){
+  var tag=(e.target&&e.target.tagName)||'';
+  if(/INPUT|TEXTAREA|SELECT/.test(tag))return;
+  if(e.key==='ArrowRight')show(cur+1,true);
+  else if(e.key==='ArrowLeft')show(cur-1,true);
+  else if(e.key==='Home')show(0,true);
+  else if(e.key==='End')show(slides.length-1,true);
+ });
+
+ var saved=0;try{saved=parseInt(localStorage.getItem('l24kva')||'0',10);}catch(e){}
+ show(isNaN(saved)?0:saved,false);
+ try{localStorage.setItem('l24kva',String(cur));}catch(e){}
+})();
+
+</script>
+<script>
+/* Lesson 24 kW/kVA - granular LRS: per-slide views, per-activity answers, completion, listening */
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(sl){
+    var h=sl.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (sl.getAttribute('data-title')||sl.id)+(t?' — '+t:'');
+  }
+  function viewed(sl){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(sl),'slide');
+      if(slides.indexOf(sl)===slides.length-1 && l.completed) l.completed({});
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  },500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(sl){ mo.observe(sl,{attributes:true,attributeFilter:['class']}); });
+  }
+  var sent={};
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var sl=b.closest('.slide');
+      if(!sl||sent[sl.id]) return;
+      sent[sl.id]=true;
+      var n=0;
+      sl.querySelectorAll('input[type=radio]').forEach(function(r){
+        if(!r.name||sent[sl.id+r.name]) return;
+        sent[sl.id+r.name]=true;
+        n++;
+        try{ var l=L(); if(l) l.itemAccessed('MCQ: '+r.name,'question'); }catch(e){}
+      });
+      sl.querySelectorAll('[data-answer]').forEach(function(inp){
+        n++;
+        try{ var l=L(); if(l) l.itemAccessed((inp.getAttribute('aria-label')||'Gap '+n),'question'); }catch(e){}
+      });
+      sl.querySelectorAll('[data-seq]').forEach(function(o){
+        n++;
+        try{ var l=L(); if(l) l.itemAccessed('Order item '+n,'question'); }catch(e){}
+      });
+    },true);
+  });
+  var marked={};
+  document.querySelectorAll('[data-done]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var sl=b.closest('.slide');
+      var id=sl?sl.id:'done';
+      if(marked[id]) return;
+      marked[id]=true;
+      try{ var l=L(); if(l) l.itemAccessed(label(sl)+' completed','activity'); }catch(e){}
+    },true);
+  });
+  document.querySelectorAll('[data-key]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Key vocabulary revealed','vocabulary'); }catch(e){}
+    });
+  });
+  // timestamped clip playback
+  document.querySelectorAll('.ts, [data-start]').forEach(function(b){
+    if(!b.tagName) return;
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Clip played: '+(b.textContent.trim().replace(/\s+/g,' ').substring(0,40)),'audio'); }catch(e){}
+    });
+  });
+  var aud=document.getElementById('lessonAudio');
+  if(aud){
+    aud.addEventListener('play',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Full conversation played','audio'); }catch(e){}
+    });
+  }
+  ['inf0','inf1','inf2','inf3','inf4','a9','a10'].forEach(function(id){
+    var node=document.getElementById(id);
+    if(!node) return;
+    var handler=function(){
+      if(!node.value||!node.value.trim()) return;
+      var sec=node.closest('.slide');
+      try{ var l=L(); if(l) l.itemAccessed((sec?sec.id:'writing')+': '+id+' written','writing'); }catch(e){}
+    };
+    node.addEventListener('change',handler);
+    node.addEventListener('blur',handler);
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>

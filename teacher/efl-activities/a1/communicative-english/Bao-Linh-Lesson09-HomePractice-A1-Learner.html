@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Pictures A1 25 Pictures Interactive</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<meta name="description" content="A1 picture vocabulary practice: 25 home, room and furniture words with Bao and Linh. Picture prompts only, no writing.">
+<link rel="canonical" href="https://punitganjara.com/teacher/efl-activities/a1/communicative-english/Bao-Linh-Lesson09-HomePractice-A1-Learner.html">
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#0f1b2e; --surface-2:#13233b; --card:#0c1628;
+  --ink:#f5f9ff; --muted:#c2cfe1; --accent:#ffd400;
+  --accent-2:#38e0c8; --good:#38e0c8; --bad:#ff8a8a;
+  --border:#2a3d57; --focus:#ffd400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:clamp(17px,1.2vw + 14px,20px); line-height:1.6;
+}
+.skip-link{position:absolute; left:-9999px; top:0; background:var(--accent); color:#000; padding:.7rem 1rem; font-weight:800; z-index:200; border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:8px}
+#fsRoot{background:var(--bg); min-height:100vh; display:flex; flex-direction:column}
+#fsRoot:fullscreen{overflow:auto; padding:.8rem; background:var(--bg)}
+#fsRoot:-webkit-full-screen{overflow:auto; padding:.8rem; background:var(--bg)}
+.topbar{width:100%; max-width:72rem; margin:0 auto; padding:1rem clamp(.9rem,3vw,1.5rem) .4rem}
+.title-row{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+.topbar h1{font-size:clamp(1.05rem,2.5vw,1.3rem); margin:.1rem 0}
+.topbar .sub{margin:.1rem 0; color:var(--muted); font-size:clamp(.95rem,2vw,1.05rem)}
+.fs-btn{
+  min-height:48px; min-width:48px; font-size:1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); background:transparent;
+  color:var(--ink); padding:.6rem 1rem; cursor:pointer; flex-shrink:0;
+}
+.fs-btn[aria-pressed="true"]{background:var(--accent); color:#111}
+.progress-wrap{margin-top:.6rem}
+.progress-label{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:var(--muted); font-size:.95rem; margin-bottom:.3rem}
+.progress{height:12px; background:#1a2c47; border-radius:999px; border:1px solid var(--border); overflow:hidden}
+.progress>div{height:100%; width:5%; background:var(--accent)}
+.deck-layout{
+  width:100%; max-width:72rem; margin:.4rem auto 1.5rem; padding:0 clamp(.9rem,3vw,1.5rem);
+  display:flex; align-items:stretch; justify-content:center; gap:1rem; flex:1;
+}
+.side-nav{display:flex; align-items:center}
+.side-nav button{
+  min-height:56px; min-width:7rem; font-size:1.1rem; font-weight:800;
+  border-radius:12px; border:2px solid var(--accent); cursor:pointer; padding:.7rem 1.1rem;
+  background:var(--accent); color:#111;
+}
+.side-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.side-nav button:disabled{opacity:.38; cursor:not-allowed}
+.deck-card{
+  flex:1 1 auto; min-width:0; max-width:52rem; background:var(--surface);
+  border:2px solid var(--border); border-radius:18px; overflow:hidden;
+  display:flex; flex-direction:column; min-height:60vh;
+}
+.viewport{padding:clamp(1.1rem,3.5vw,2rem) clamp(1rem,3.5vw,2rem) .8rem; flex:1}
+.slide{display:none}
+.slide.active{display:block}
+.eyebrow{display:inline-block; font-size:.85rem; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:#111; background:var(--accent); padding:.2rem .7rem; border-radius:999px; margin-bottom:.7rem}
+.eyebrow.teal{background:var(--accent-2)}
+.slide h2{font-size:clamp(1.6rem,4.5vw,2.2rem); line-height:1.2; margin:.2rem 0 .5rem}
+.lead{font-size:clamp(1.1rem,3vw,1.3rem); margin:.3rem 0 .9rem}
+.target{font-size:clamp(1.4rem,4vw,2rem); font-weight:800; line-height:1.4; margin:.6rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; overflow-wrap:break-word}
+.cards{display:grid; gap:.8rem; margin:.9rem 0; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:.9rem; text-align:center}
+.card .big{font-size:clamp(1.25rem,3.5vw,1.7rem); font-weight:800}
+.card .small{color:var(--muted); font-size:.98rem}
+.card .icon{font-size:2.2rem; line-height:1.2}
+.speak-btn{margin-top:.55rem; min-height:48px; width:100%; font-size:1rem; font-weight:800; border-radius:10px; border:2px solid var(--accent-2); background:transparent; color:var(--ink); padding:.55rem .8rem; cursor:pointer}
+.speak-btn:hover{background:#143333}
+.speak-btn.speaking{background:#1a3a3a; border-color:var(--accent); outline:2px solid var(--accent); outline-offset:2px}
+.instruction{font-size:clamp(1.1rem,3vw,1.25rem); font-weight:800; color:var(--accent); margin:.9rem 0 .35rem}
+.feedback{min-height:1.8em; font-weight:800; margin-top:.5rem}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.checklist{list-style:none; padding:0; margin:.8rem 0}
+.checklist li{margin:.55rem 0; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:.65rem .9rem}
+.checklist label{display:flex; gap:.75rem; align-items:flex-start; font-size:clamp(1.02rem,3vw,1.15rem); cursor:pointer; overflow-wrap:break-word}
+.checklist input{width:28px; height:28px; flex-shrink:0; margin-top:.1rem; accent-color:var(--accent)}
+details.key{margin:.8rem 0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.7rem 1rem}
+details.key summary{min-height:48px; font-weight:800; font-size:1.05rem; cursor:pointer; color:var(--accent); display:flex; align-items:center}
+details.key p{margin:.4rem 0; font-size:1.05rem; overflow-wrap:break-word}
+details.key p.ipa{font-size:1.02rem; color:var(--accent-2); font-weight:700}
+.counter{color:var(--muted); font-size:.95rem; text-align:center; padding:.2rem 0 .3rem}
+.bottom-nav{display:none; gap:.8rem; padding:.9rem clamp(.9rem,3vw,1.2rem) 1.1rem; border-top:1px solid var(--border); background:var(--card)}
+.bottom-nav button{flex:1 1 0; min-height:56px; font-size:1.1rem; font-weight:800; border-radius:12px; cursor:pointer; padding:.7rem 1rem; border:2px solid var(--accent); background:var(--accent); color:#111}
+.bottom-nav button.secondary{background:transparent; color:var(--ink); border-color:var(--border)}
+.bottom-nav button:disabled{opacity:.38; cursor:not-allowed}
+@media (max-width:56.25rem){
+  .deck-layout{flex-direction:column; align-items:stretch}
+  .side-nav{display:none}
+  .bottom-nav{display:flex}
+}
+@media (min-width:56.26rem){
+  .bottom-nav{display:none !important}
+}
+img, audio, video{max-width:100%}
+button{touch-action:manipulation}
+#fsRoot{min-height:100vh; min-height:100dvh}
+@media (max-width:23.75rem){
+  .viewport{padding:1rem .8rem .7rem}
+  .target{padding:.75rem .8rem}
+  .bottom-nav{padding:.8rem .8rem 1rem}
+}
+footer.foot{max-width:72rem; margin:0 auto 2.5rem; padding:0 clamp(.9rem,3vw,1.5rem); color:var(--muted); font-size:.95rem}
+</style>
+<style id="alignment-normalisation">
+.row-actions > *:only-child{grid-column:1 / -1; max-width:20rem; width:100%; margin:0 auto; justify-self:center}
+.sort-pool{display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; justify-content:stretch}
+@media (min-width:34rem){ .sort-pool{grid-template-columns:repeat(5,1fr)} }
+.sort-chip{width:100%; text-align:center}
+.zones{grid-template-columns:repeat(3,1fr); gap:.7rem}
+@media (max-width:34rem){ .zones{grid-template-columns:1fr} }
+.zone{min-height:6.5rem; display:flex; flex-direction:column; align-items:center; justify-content:flex-start}
+.zone .slot{flex:1; align-content:center; width:100%}
+.zone .zone-title{width:100%}
+.match-col{align-items:stretch}
+.match-wrap{gap:.9rem}
+#fsRoot, #fsRoot .viewport{text-align:center}
+.slide{text-align:center}
+.slide h1, .slide h2, .slide h3, .slide .lead, .slide .instruction,
+.slide .target, .slide .eyebrow, .slide .feedback, .slide .turn-out{text-align:center}
+.slide .cards, .slide .card, .slide .role-card{text-align:center}
+.slide img, img.food, .pic-stage > *{display:block; margin-inline:auto; max-width:100%; height:auto; vertical-align:middle}
+.pic-stage{display:flex; flex-wrap:wrap; justify-content:center; align-items:center; width:100%}
+.slide .speak-btn, .slide .sort-chip, .slide .roll-btn, .slide .mini-tick,
+.slide .swap-btn, .slide .buy-row button, .slide .bottom-nav button,
+.slide .side-nav button, .slide .reveal-fix{text-align:center}
+.lines{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap:.6rem; margin:.7rem 0; width:100%}
+.lines .speak-btn{margin-top:0; width:100%}
+.slide .cards{justify-items:center; align-items:stretch}
+.slide .cards > *{justify-self:center; width:100%}
+.slide .checklist, .slide .checklist li, .slide .checklist label{text-align:left}
+.slide .choice, .slide .oline, .slide .q-item .q{text-align:left}
+.slide details.key summary{text-align:left; display:flex; align-items:center; gap:.5rem}
+.slide details.key p{text-align:center}
+.slide .menu-card, .slide .menu-card *{text-align:left}
+footer.foot{text-align:center}
+@media (max-width:23.75rem){
+  .slide .cards{justify-content:center}
+}
+
+/* ===== picture practice layout ===== */
+.pic-stage{display:flex; justify-content:center; align-items:center; width:100%; margin:.4rem 0 .2rem}
+img.food{width:min(100%,560px); height:auto}
+.answer-box{
+  width:100%; background:var(--card); border:1px solid var(--border); border-radius:12px;
+  padding:.85rem 1rem; text-align:center; display:flex; flex-direction:column; gap:.25rem;
+  margin:.6rem 0; overflow-wrap:break-word;
+}
+.answer-box .word{font-weight:800; font-size:clamp(1.25rem,3.6vw,1.7rem); color:var(--accent)}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to pictures</a>
+<div id="fsRoot">
+  <header class="topbar">
+    <div class="title-row">
+      <div>
+        <h1>Home Practice: 25 Pictures. Bao and Linh</h1>
+        <p class="sub">Look at the picture. Say the whole line. No audio.</p>
+      </div>
+      <button class="fs-btn" id="fsBtn" type="button" aria-pressed="false" aria-label="Enter full screen">Full screen</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="slideLabel">Slide 1 of 27</span><span id="fsStatus" aria-live="polite"></span></div>
+      <div class="progress" role="progressbar" aria-label="Practice progress" aria-valuemin="1" aria-valuemax="27" aria-valuenow="1" id="progressBar"><div id="progressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="deck-layout">
+      <div class="side-nav">
+        <button type="button" id="prevDesk" class="secondary">Back</button>
+      </div>
+
+      <div class="deck-card" aria-label="Practice slides">
+        <div class="viewport" id="viewport" aria-live="polite">
+          <section class="slide active" id="slide-01-cover" role="group" aria-roledescription="slide" aria-label="1 of 27 Cover">
+            <span class="eyebrow teal">Cover</span>
+            <h2 tabindex="-1">Where is this?</h2>
+            <p class="lead">Look at the picture. Then say:</p>
+            <div class="cards">
+              <div class="card"><div class="icon" aria-hidden="true">&#128205;</div><div class="big">One thing</div><div class="small">Where is this?</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128203;</div><div class="big">Two or more</div><div class="small">Where are these?</div></div>
+              <div class="card"><div class="icon" aria-hidden="true">&#128065;</div><div class="big">Say the place</div><div class="small">It is here. It is there.</div></div>
+            </div>
+            <p class="instruction">Look. Say the whole line. 25 pictures.</p>
+            <div class="target">Hello! We are Bao and Linh.</div>
+            <details class="key"><summary>Check</summary><p>One thing: Where is this? It is here. Two or more: Where are these? They are there.</p></details>
+          </section>
+
+          <section class="slide" id="slide-02-pic" role="group" aria-roledescription="slide" aria-label="2 of 27 Room . 1 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 1 of 25</span>
+            <h2 tabindex="-1">Bed</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/bed.jpg" alt="A canopy bed in a bedroom" width="900" height="675">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p2">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-03-pic" role="group" aria-roledescription="slide" aria-label="3 of 27 Room . 2 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 2 of 25</span>
+            <h2 tabindex="-1">Kitchen</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/kitchen.jpg" alt="A modern kitchen with cabinets" width="900" height="587">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p3">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-04-pic" role="group" aria-roledescription="slide" aria-label="4 of 27 Room . 3 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 3 of 25</span>
+            <h2 tabindex="-1">Bathroom</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/bathroom.jpg" alt="A bathroom with a tub and tiles" width="900" height="697">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p4">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-05-pic" role="group" aria-roledescription="slide" aria-label="5 of 27 Room . 4 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 4 of 25</span>
+            <h2 tabindex="-1">Living room</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/living_room.jpg" alt="A cozy living room with a sofa" width="900" height="1348">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p5">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-06-pic" role="group" aria-roledescription="slide" aria-label="6 of 27 Room . 5 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 5 of 25</span>
+            <h2 tabindex="-1">Bedroom</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/bedroom.jpg" alt="A bedroom interior with a bed" width="900" height="675">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p6">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-07-pic" role="group" aria-roledescription="slide" aria-label="7 of 27 Room . 6 of 25" data-number="singular">
+            <span class="eyebrow teal">Room . 6 of 25</span>
+            <h2 tabindex="-1">Dining room</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/dining_room.jpg" alt="A small dining room with a table" width="900" height="720">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p7">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-08-pic" role="group" aria-roledescription="slide" aria-label="8 of 27 Thing . 7 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 7 of 25</span>
+            <h2 tabindex="-1">Door</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/door.jpg" alt="A wooden main door" width="900" height="1240">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p8">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-09-pic" role="group" aria-roledescription="slide" aria-label="9 of 27 Thing . 8 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 8 of 25</span>
+            <h2 tabindex="-1">Window</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/window.jpg" alt="A window in a room" width="900" height="836">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p9">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-10-pic" role="group" aria-roledescription="slide" aria-label="10 of 27 Thing . 9 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 9 of 25</span>
+            <h2 tabindex="-1">Table</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/table.jpg" alt="A dining table in a house" width="900" height="1195">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p10">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-11-pic" role="group" aria-roledescription="slide" aria-label="11 of 27 Thing . 10 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 10 of 25</span>
+            <h2 tabindex="-1">Chair</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/chair.jpg" alt="A wooden chair" width="900" height="1203">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p11">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-12-pic" role="group" aria-roledescription="slide" aria-label="12 of 27 Thing . 11 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 11 of 25</span>
+            <h2 tabindex="-1">Sofa</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/sofa.jpg" alt="A comfortable gray sofa in a living room" width="900" height="601">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p12">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-13-pic" role="group" aria-roledescription="slide" aria-label="13 of 27 Thing . 12 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 12 of 25</span>
+            <h2 tabindex="-1">Television</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/tv.jpg" alt="A flat-screen television" width="900" height="675">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p13">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-14-pic" role="group" aria-roledescription="slide" aria-label="14 of 27 Thing . 13 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 13 of 25</span>
+            <h2 tabindex="-1">Refrigerator</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/fridge.jpg" alt="An open refrigerator with food" width="900" height="1194">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p14">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-15-pic" role="group" aria-roledescription="slide" aria-label="15 of 27 Thing . 14 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 14 of 25</span>
+            <h2 tabindex="-1">Stove</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/stove.jpg" alt="A kitchen stove" width="900" height="1200">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p15">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-16-pic" role="group" aria-roledescription="slide" aria-label="16 of 27 Thing . 15 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 15 of 25</span>
+            <h2 tabindex="-1">Sink</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/sink.jpg" alt="A kitchen sink" width="900" height="551">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p16">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-17-pic" role="group" aria-roledescription="slide" aria-label="17 of 27 Thing . 16 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 16 of 25</span>
+            <h2 tabindex="-1">Toilet</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/toilet.jpg" alt="A toilet in a bathroom" width="900" height="675">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p17">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-18-pic" role="group" aria-roledescription="slide" aria-label="18 of 27 Thing . 17 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 17 of 25</span>
+            <h2 tabindex="-1">Shower</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/shower.jpg" alt="A shower stall in a bathroom" width="900" height="1200">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p18">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-19-pic" role="group" aria-roledescription="slide" aria-label="19 of 27 Thing . 18 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 18 of 25</span>
+            <h2 tabindex="-1">Mirror</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/mirror.jpg" alt="A wall mirror" width="900" height="1113">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p19">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-20-pic" role="group" aria-roledescription="slide" aria-label="20 of 27 Thing . 19 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 19 of 25</span>
+            <h2 tabindex="-1">Lamp</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/lamp.jpg" alt="A lamp with a lampshade" width="900" height="1236">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p20">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-21-pic" role="group" aria-roledescription="slide" aria-label="21 of 27 Thing . 20 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 20 of 25</span>
+            <h2 tabindex="-1">Bookshelf</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/bookshelf.jpg" alt="A bookshelf with books" width="900" height="600">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p21">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is there.</p></details>
+          </section>
+          <section class="slide" id="slide-22-pic" role="group" aria-roledescription="slide" aria-label="22 of 27 Thing . 21 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 21 of 25</span>
+            <h2 tabindex="-1">Carpet</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/carpet.jpg" alt="A carpet on the floor" width="900" height="966">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p22">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-23-pic" role="group" aria-roledescription="slide" aria-label="23 of 27 Thing . 22 of 25" data-number="plural">
+            <span class="eyebrow teal">Thing . 22 of 25</span>
+            <h2 tabindex="-1">Curtains</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/curtain.jpg" alt="Curtains on a window" width="900" height="1259">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p23">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where are these? They are there.</p></details>
+          </section>
+          <section class="slide" id="slide-24-pic" role="group" aria-roledescription="slide" aria-label="24 of 27 Thing . 23 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 23 of 25</span>
+            <h2 tabindex="-1">Clock</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/clock.jpg" alt="A wall clock" width="900" height="1232">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p24">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-25-pic" role="group" aria-roledescription="slide" aria-label="25 of 27 Thing . 24 of 25" data-number="plural">
+            <span class="eyebrow teal">Thing . 24 of 25</span>
+            <h2 tabindex="-1">Keys</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/keys.jpg" alt="Various keys on a keyring" width="900" height="736">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p25">
+              <span class="word">there</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where are these? They are there.</p></details>
+          </section>
+          <section class="slide" id="slide-26-pic" role="group" aria-roledescription="slide" aria-label="26 of 27 Thing . 25 of 25" data-number="singular">
+            <span class="eyebrow teal">Thing . 25 of 25</span>
+            <h2 tabindex="-1">Phone</h2>
+            <div class="pic-stage">
+              <img class="food" src="home_images/phone.jpg" alt="A smartphone on a table" width="900" height="675">
+            </div>
+            <p class="instruction">Look. One or many? Say the whole line.</p>
+            <div class="answer-box" id="p26">
+              <span class="word">here</span>
+            </div>
+            <details class="key"><summary>Check</summary><p>Where is this? It is here.</p></details>
+          </section>
+          <section class="slide" id="slide-27-done" role="group" aria-roledescription="slide" aria-label="27 of 27 Done">
+            <span class="eyebrow teal">Done</span>
+            <h2 tabindex="-1">We did it!</h2>
+            <p class="instruction">Tick. I can say:</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox"> Where is this? It is here.</label></li>
+              <li><label><input type="checkbox"> Where are these? They are there.</label></li>
+              <li><label><input type="checkbox"> It is in the kitchen.</label></li>
+              <li><label><input type="checkbox"> Welcome! Come in.</label></li>
+            </ul>
+            <div class="target">Tonight: walk in your home. Only English!</div>
+            <details class="key">
+              <summary>Check all 25</summary>
+              <ul>
+<li>Bed: Where is this? It is here.</li>
+<li>Kitchen: Where is this? It is there.</li>
+<li>Bathroom: Where is this? It is here.</li>
+<li>Living room: Where is this? It is there.</li>
+<li>Bedroom: Where is this? It is here.</li>
+<li>Dining room: Where is this? It is there.</li>
+<li>Door: Where is this? It is there.</li>
+<li>Window: Where is this? It is here.</li>
+<li>Table: Where is this? It is there.</li>
+<li>Chair: Where is this? It is here.</li>
+<li>Sofa: Where is this? It is here.</li>
+<li>Television: Where is this? It is there.</li>
+<li>Refrigerator: Where is this? It is there.</li>
+<li>Stove: Where is this? It is there.</li>
+<li>Sink: Where is this? It is there.</li>
+<li>Toilet: Where is this? It is there.</li>
+<li>Shower: Where is this? It is there.</li>
+<li>Mirror: Where is this? It is here.</li>
+<li>Lamp: Where is this? It is here.</li>
+<li>Bookshelf: Where is this? It is there.</li>
+<li>Carpet: Where is this? It is here.</li>
+<li>Curtains: Where are these? They are there.</li>
+<li>Clock: Where is this? It is here.</li>
+<li>Keys: Where are these? They are there.</li>
+<li>Phone: Where is this? It is here.</li>
+              </ul>
+            </details>
+          </section>
+
+        </div>
+        <div class="counter" id="counter">1 / 27</div>
+        <div class="bottom-nav" aria-label="Practice navigation">
+          <button type="button" id="prevMob" class="secondary">Back</button>
+          <button type="button" id="nextMob">Next</button>
+        </div>
+      </div>
+
+      <div class="side-nav">
+        <button type="button" id="nextDesk">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Arrows on keyboard work. This deck has no audio. Pictures are practice only. Pictures from Wikimedia Commons, see home_images/credits.json for attributions. Best in full screen.</p>
+  <p><a href="../../index.html#a1-communicative" style="color:var(--accent)">All A1 Communicative lessons</a> | <a href="Bao-Linh-Lesson09-OurHome-A1-Learner.html" style="color:var(--accent)">Lesson 9 Our Home</a></p>
+</footer>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var label = document.getElementById('slideLabel');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var fill = document.getElementById('progressFill');
+  var prevD = document.getElementById('prevDesk');
+  var nextD = document.getElementById('nextDesk');
+  var prevM = document.getElementById('prevMob');
+  var nextM = document.getElementById('nextMob');
+  var fsRoot = document.getElementById('fsRoot');
+  var fsBtn = document.getElementById('fsBtn');
+  var fsStatus = document.getElementById('fsStatus');
+
+  function show(n){
+    if(n<0) n=0;
+    if(n>=total) n=total-1;
+    idx=n;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    label.textContent = 'Slide ' + (idx+1) + ' of ' + total;
+    counter.textContent = (idx+1) + ' / ' + total;
+    bar.setAttribute('aria-valuenow', String(idx+1));
+    fill.style.width = (((idx+1)/total)*100) + '%';
+    var atStart = idx===0, atEnd = idx===total-1;
+    [prevD,prevM].forEach(function(b){ if(b) b.disabled = atStart; });
+    [nextD,nextM].forEach(function(b){ if(!b) return; b.disabled = atEnd; b.textContent = atEnd ? 'Done' : 'Next'; });
+    var h = slides[idx].querySelector('h2');
+    if(h) h.focus({preventScroll:true});
+    fsRoot.scrollIntoView({block:'start'});
+  }
+  prevD.addEventListener('click', function(){ show(idx-1); });
+  nextD.addEventListener('click', function(){ show(idx+1); });
+  prevM.addEventListener('click', function(){ show(idx-1); });
+  nextM.addEventListener('click', function(){ show(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight') show(idx+1);
+    if(e.key==='ArrowLeft') show(idx-1);
+  });
+  var sx=0;
+  var vp=document.getElementById('viewport');
+  vp.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', function(e){
+    var dx=e.changedTouches[0].clientX - sx;
+    if(dx<-45) show(idx+1);
+    if(dx>45) show(idx-1);
+  }, {passive:true});
+
+  function isFs(){ return document.fullscreenElement===fsRoot || document.webkitFullscreenElement===fsRoot; }
+  function updateFsBtn(){
+    var on=isFs();
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? 'Exit full screen' : 'Full screen';
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    fsStatus.textContent = on ? 'Full screen on' : '';
+  }
+  fsBtn.addEventListener('click', function(){
+    try{
+      if(!isFs()){
+        if(fsRoot.requestFullscreen) fsRoot.requestFullscreen();
+        else if(fsRoot.webkitRequestFullscreen) fsRoot.webkitRequestFullscreen();
+      } else {
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){}
+    setTimeout(updateFsBtn, 100);
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  show(0);
+})();
+</script>
+<script>
+/* Home pictures deck - LRS only: per-slide views, per-picture vocabulary seen, completion on the last slide.
+   No Submit or AI buttons: this deck has no writing, only picture prompts. */
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function L(){ return (window.LRS && window.LRS.itemAccessed) ? window.LRS : null; }
+  function label(sl){
+    var h=sl.querySelector('h2');
+    var t=h?h.textContent.trim().replace(/\s+/g,' ').substring(0,60):'';
+    return (sl.getAttribute('aria-label')||'Slide')+(t?' — '+t:'');
+  }
+  function viewed(sl){
+    try{
+      var l=L(); if(!l) return;
+      l.itemAccessed(label(sl),'slide');
+      if(slides.indexOf(sl)===slides.length-1 && l.completed) l.completed({});
+    }catch(e){}
+  }
+  var tries=0;
+  var timer=setInterval(function(){
+    tries++;
+    if(L() || tries>60){
+      clearInterval(timer);
+      var cur=document.querySelector('.slide.active');
+      if(cur && L()) viewed(cur);
+    }
+  },500);
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el=m.target;
+        if(el.classList && el.classList.contains('active')) viewed(el);
+      });
+    });
+    slides.forEach(function(sl){ mo.observe(sl,{attributes:true,attributeFilter:['class']}); });
+  }
+  document.querySelectorAll('.slide img').forEach(function(img){
+    img.addEventListener('load',function(){
+      try{
+        var l=L(); if(!l) return;
+        var alt=(img.getAttribute('alt')||img.getAttribute('src')||'image').replace(/\.jpg$/,'').replace(/\//g,' ');
+        l.itemAccessed('Picture seen: '+alt.substring(0,60),'vocabulary');
+      }catch(e){}
+    });
+  });
+  document.querySelectorAll('[data-say]').forEach(function(b){
+    b.addEventListener('click',function(){
+      try{ var l=L(); if(l) l.itemAccessed('Listen model: '+(b.getAttribute('data-say')||'').substring(0,60),'audio'); }catch(e){}
+    });
+  });
+  document.querySelectorAll('.checklist input, .selfcheck input').forEach(function(cb){
+    cb.addEventListener('change',function(){
+      if(!cb.checked) return;
+      try{ var l=L(); if(l) l.itemAccessed('Self-check ticked','interaction'); }catch(e){}
+    });
+  });
+})();
+</script>
+<script src="../../xapi-include.js?v=8" defer></script>
+</body>
+</html>
